@@ -3,8 +3,8 @@
   <a href="https://github.com/createchsoftware/armony/stargazers"><img src="https://img.shields.io/github/stars/createchsoftware/armony?style=for-the-badge" alt="Stars Badge"/></a>
   <a href="https://github.com/createchsoftware/armony/blob/main/README.md"><img src="https://img.shields.io/github/license/createchsoftware/armony?style=for-the-badge"></a>
   <a href="https://github.com/createchsoftware/armony/graphs/contributors"><img alt="GitHub contributors" src="https://img.shields.io/github/contributors/createchsoftware/armony?color=2b9348&style=for-the-badge">
-  <a href="https://github.com/createchsoftware/armony/pulls"><img src="https://img.shields.io/github/issues-pr/createchsoftware/armony&style=for-the-badge"/></a>
-  <a href="https://github.com/createchsoftware/armony/issues"><img src="https://img.shields.io/github/issues/createchsoftware/armony&style=for-the-badge"/></a>
+  <a href="https://github.com/createchsoftware/armony/pulls"><img src="https://img.shields.io/github/issues-pr/createchsoftware/armony?style=for-the-badge"/></a>
+  <a href="https://github.com/createchsoftware/armony/issues"><img src="https://img.shields.io/github/issues/createchsoftware/armony?style=for-the-badge"/></a>
 <br>
     <img src="https://img.shields.io/badge/mysql-%2300f.svg?style=for-the-badge&logo=mysql&logoColor=white">
     <img src="https://img.shields.io/badge/express.js-%23404d59.svg?style=for-the-badge&logo=express&logoColor=%2361DAFB">
