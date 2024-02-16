@@ -1,5 +1,4 @@
-<p align="center"><img src="https://files.catbox.moe/vkww6i.png" width="240px" /></p>
-<p align="center"><img src="https://files.catbox.moe/5czi4z.png" width="240px" /></p>
+<p align="center">SE SUSTITUIRÁ LOGO POR OTRO MAS HD COMO EL QUE ENVIO LA PROFE</p>
 <div align="center" style="margin:0;">
   <a href="https://github.com/createchsoftware/armony/stargazers"><img src="https://img.shields.io/github/stars/createchsoftware/armony?style=for-the-badge"/></a>
   <a href="https://github.com/createchsoftware/armony/blob/main/README.md"><img src="https://img.shields.io/github/license/createchsoftware/armony?style=for-the-badge"></a>
