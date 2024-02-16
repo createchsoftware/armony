@@ -1,6 +1,7 @@
-<h1 align="center"> Armony 🌿</h1>
+<p align="center"><img src="https://files.catbox.moe/vkww6i.png" width="240px" /></p>
+<p align="center"><img src="https://files.catbox.moe/5czi4z.png" width="240px" /></p>
 <div align="center" style="margin:0;">
-  <a href="https://github.com/createchsoftware/armony/stargazers"><img src="https://img.shields.io/github/stars/createchsoftware/armony?style=for-the-badge" alt="Stars Badge"/></a>
+  <a href="https://github.com/createchsoftware/armony/stargazers"><img src="https://img.shields.io/github/stars/createchsoftware/armony?style=for-the-badge"/></a>
   <a href="https://github.com/createchsoftware/armony/blob/main/README.md"><img src="https://img.shields.io/github/license/createchsoftware/armony?style=for-the-badge"></a>
   <a href="https://github.com/createchsoftware/armony/graphs/contributors"><img alt="GitHub contributors" src="https://img.shields.io/github/contributors/createchsoftware/armony?color=2b9348&style=for-the-badge">
   <a href="https://github.com/createchsoftware/armony/pulls"><img src="https://img.shields.io/github/issues-pr/createchsoftware/armony?style=for-the-badge"/></a>
