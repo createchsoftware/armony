@@ -16,7 +16,7 @@
 <hr>
 
 # Descripción
-Una empresa local ha solicitado una aplicación web que permita ofrecer sus servicios en línea y, de esta forma, interactuar con sus clientes. En este caso, se trata de un spa, de nombre "Armony".
+Una empresa local ha solicitado una aplicación web que permita ofrecer sus servicios en línea y, de esta forma, interactuar con sus clientes.
 
 # Instalación
 > [!IMPORTANT]  
