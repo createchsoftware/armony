@@ -27,8 +27,8 @@ Una empresa local ha solicitado una aplicación web que permita ofrecer sus serv
 
 1. Reserva una carpeta exclusiva para el proyecto y clona este repositorio. No olvides verificar que puedes realizar *push* de archivos usando el branch de pruebas.
 2. Dentro de la carpeta que acabas de clonar, abre la subcarpeta correspondiente a la parte del proyecto en la que vas a contribuir.
-   - Los programadores usarán la carpeta de "*server*".
-   - Los diseñadores usarán la carpeta de "*client*".
+   - Los backend usarán la carpeta de "*server*".
+   - Los frontend usarán la carpeta de "*client*".
    - Los testers usarán las dos carpetas y también usarán la carpeta de "*testing*".
 3. Abre la consola de Windows o de PowerShell con permisos de administrador, abre nuevamente la carpeta del proyecto y la subcarpeta que corresponda. Escribe el comando `npm install` para instalar todas las dependencias.
    - Si deseas instalar también las dependencias para reiniciar automáticamente el programa en caso de fallos (`pm2` y `nodemon`), ejecuta `npm install --only=dev` después.
