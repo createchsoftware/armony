@@ -1,12 +1,18 @@
-import express from 'express';
+import * as server from "./main/server.js";
+/*
+const config = JSON.parse(
+	await fs.readFile(new URL("./config.json", import.meta.url))
+);*/
 
-const app = express();
-const port = 3000;
+process.title = "Proyecto Armony";
 
-app.get('/', (req, res) => {
-  res.send('Hello World!');
-});
-
-app.listen(port, () => {
-  console.log(`Example app listening on port ${port}`);
-});
+try {
+	await server.iniciar();
+} catch (e) {
+	console.log(
+		e.stack +
+			"\n\nError de inicialización. El programa no continuará con su " +
+			"ejecución."
+	);
+	process.exit(1);
+}
