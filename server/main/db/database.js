@@ -22,10 +22,20 @@ export async function endConection(db) {
   await db.end();
 }
 
-export async function getProductos() {
+export async function getProductos(data) {
   let db = await startConection();
   let prod = await db.execute(
-    'SELECT * FROM prodServ;'
+    `SELECT getProducto("${data}");`
+  );
+  await endConection(db);
+  prod = parseData(prod);
+  return await prod;
+}
+
+export async function getServicios(data) {
+  let db = await startConection();
+  let prod = await db.execute(
+    `SELECT getServicio("${data.servicio}", "${data.pilar}");`
   );
   await endConection(db);
   prod = parseData(prod);
@@ -122,6 +132,33 @@ export async function addValSucursal(data) {
   return await prod;
 }
 
+export async function addValEmpleado(data) {
+  let db = await startConection();
+  let res = await db.execute(
+    `CALL addValSucursal(${data.cliente}, ${data.empleado}, ${data.fecha}, ${data.hora}, ${data.comentario}, ${data.valoracion});`
+  );
+  await endConection(db);
+  return await prod;
+}
+
+export async function delFav(data) {
+  let db = await startConection();
+  let res = await db.execute(
+    `CALL delFav(${data.cliente}, ${data.producto});`
+  );
+  await endConection(db);
+  return await prod;
+}
+
+export async function delServEmp(data) {
+  let db = await startConection();
+  let res = await db.execute(
+    `CALL delServEmp(${data.empleado}, ${data.servicio});`
+  );
+  await endConection(db);
+  return await prod;
+}
+
 async function parseData(data) {
-  return data[0]
+  return data[0][0];
 }
