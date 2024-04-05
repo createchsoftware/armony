@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Armony</title>
+    <link rel="icon" href="../src/pngs/logoArmony.png">
+    <link rel="stylesheet" href="../src/estilos.css">
+    <script defer src="https://kit.fontawesome.com/425edfab38.js" crossorigin="anonymous"></script>
+    <script defer src="../src/index.js"></script>
+</head>
+
+<body>
+    <!-- ENCABEZADO TRANSPARTE / SÓLIDO -->
+    <header class="header">
+        <div>
+            <nav class="nav">
+                <a href="#"><img src="../src/pngs/armonyLogo.png" alt="" class="logo"></a>
+                <button class="nav-toggle" aria-label="Abrir Menú">
+                    <i class="fa-solid fa-bars"></i>
+                </button>
+                <ul class="menu">
+                    <li class="nav-menu-item">
+                        <a href="#inicio" class="menu-link">Inicio</a>
+                    </li>
+                    <li class="nav-menu-item">
+                        <a href="#nosotros" class="menu-link">Nosotros</a>
+                    </li>
+                    <li class="nav-menu-item">
+                        <a href="" class="menu-link">Contactos</a>
+                    </li>
+                    <li class="nav-menu-item">
+                        <a href="" class="menu-link menu-is">Inicia sesión</a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- VIDEO DE LOS PILARES -->
+    <div class="carrusel" id="inicio">
+        <div class="cont-carrusel" id="car-video">
+            <section class="videos">
+                <h1 class="title">Cafetería</h1>
+                <h2 class="title2">Cultura & Art</h2>
+                <p class="desc">Tu lugar de encuentro, donde el buen café y las sonrisas se mezclan.</p>
+                <video autoplay loop class="slider-video">
+                    <source src="../src/videos/1Cafeteria.mp4" type="video/mp4">
+                </video>
+            </section>
+            <section class="videos">
+                <h1 class="title">Wellness</h1>
+                <h2 class="title2">Hábitos saludables</h2>
+                <p class="desc">La salud es un hábito tan importante como ser feliz. Únete a nuestra comunidad y deja
+                    que nuestros expertos de guíen al bienestar.</p>
+                <video autoplay loop class="slider-video">
+                    <source src="../src/videos/2Wellness.mp4" type="video/mp4">
+                </video>
+            </section>
+            <section class="videos">
+                <h1 class="title">Spa</h1>
+                <h2 class="title2">Salon & Beauty</h2>
+                <p class="desc">Relájate y déjate llevar por la serenidad mientras nuestros expertos cuidan de tú
+                    bienestar en nuestro spa exclusivo.</p>
+                <video autoplay loop class="slider-video">
+                    <source src="../src/videos/3Spa.mp4" type="video/mp4">
+                </video>
+            </section>
+            <section class="videos">
+                <h1 class="title" id="title4">School</h1>
+                <h2 class="title2">Knowlegde & Learning</h2>
+                <p class="desc">No encontrarás mejor lugar de relajación y concentración que en nuestra biblioteca donde
+                    la calma es prioridad.</p>
+                <video autoplay loop class="slider-video">
+                    <source src="../src/videos/4School.mp4" type="video/mp4">
+                </video>
+            </section>
+            <section class="videos">
+                <h1 class="title"></h1>
+                <h2 class="title2">Emprendimiento & Fly</h2>
+                <p class="desc">Se bienvenida al departamento de emprendimiento, donde tus ideas van más allá que sólo
+                    alcanzar el éxito.</p>
+                <video autoplay loop class="slider-video">
+                    <source src="../src/videos/5Emprendimiento.mp4" type="video/mp4">
+                </video>
+            </section>
+            <section class="videos">
+                <h1 class="title">Colectivo</h1>
+                <h2 class="title2">Regalos & More</h2>
+                <p class="desc">Un regalo para una sonrisa que nos llena de alegría todos los días. Ven y encuentra tú
+                    favorito.</p>
+                <video autoplay loop class="slider-video">
+                    <source src="../src/videos/6Colectivo.mp4" type="video/mp4">
+                </video>
+            </section>
+            <section class="videos">
+                <h1 class="title"></h1>
+                <h2 class="title2">Clínica</h2>
+                <p class="desc">En nuestra clínica, tu salud en nuestra misión principal. Tú bienestar, nuestra
+                    prioridad.</p>
+                <video autoplay loop class="slider-video">
+                    <source src="../src/videos/7Clínica.mp4" type="video/mp4">
+                </video>
+            </section>
+            <div class="deg1"></div>
+            <div class="deg"></div>
+        </div>
+
+        <a href="#" class="show">Mostrar más...</a>
+
+        <ul class="slide-sec">
+            <li class="selec active" attr="0" onclick="cambio(this)">
+                <i class="fa-solid fa-diamond"></i>
+            </li>
+            <li class="selec" attr="1" onclick="cambio(this)">
+                <i class="fa-solid fa-diamond"></i>
+            </li>
+            <li class="selec" attr="2" onclick="cambio(this)">
+                <i class="fa-solid fa-diamond"></i>
+            </li>
+            <li class="selec" attr="3" onclick="cambio(this)">
+                <i class="fa-solid fa-diamond"></i>
+            </li>
+            <li class="selec" attr="4" onclick="cambio(this)">
+                <i class="fa-solid fa-diamond"></i>
+            </li>
+            <li class="selec" attr="5" onclick="cambio(this)">
+                <i class="fa-solid fa-diamond"></i>
+            </li>
+            <li class="selec" attr="6" onclick="cambio(this)">
+                <i class="fa-solid fa-diamond"></i>
+            </li>
+        </ul>
+    </div>
+
+    <!-- ¿Quiénes somos? -->
+    <div class="somos" id="nosotros">
+        <img src="../src/pngs/logoArmony.png" alt="" id="logo1">
+        <h1 id="titulo">resalta tu belleza interior.</h1>
+        <div class="somos-div">
+            <section class="somos-arm">
+                <h3 id="somos-text">
+                    Nos especializamos en brindarte servicios y productos que resalten tu belleza interior.
+                </h3>
+                <h3 id="somos-desc">
+                    En armony nos dedicamos a ofrecer una experiencia integral de bienestar y belleza, que incluye
+                    servicios de spa, tratamientos de belleza, atención clínica, oportunidades de emprendimiento y una
+                    tienda colectiva de regalos. Nuestro compromiso es proporcionar un enfoque integral para el cuidado
+                    personal, la relajación y el desarrollo personal. Te invitamos a descubrir todo lo que armony tiene
+                    para ofrecer, y a sumergirte en un mundo de serenidad, belleza y crecimiento personal. ¡Bienvenida a
+                    armony, donde la armonía es nuestra filosofía de vida!
+                </h3>
+            </section>
+            <section class="somos-fotos">
+                <img src="../src/pngs/decoArmony2.png" alt="" id="fondo">
+                <img src="../src/imagenes/armonyImagen1.png" alt="" id="foto1">
+                <div id="circulo1">
+                    <img src="../src/imagenes/armonyImagen2.png" alt="" id="foto2">
+                </div>
+                <div id="circulo2">
+                    <img src="../src/imagenes/armonyImagen3.png" alt="" id="foto3">
+                </div>
+            </section>
+        </div>
+    </div>
+
+    <!-- CARRUSEL PILARES -->
+    <div class="pilares">
+        <img src="../src/pngs/decoArmony1.png" alt="" id="deco1">
+        <img src="../src/pngs/decoArmony.png" alt="" id="deco2">
+        <h1 id="pilares-title">
+            Pilares de armony
+        </h1>
+        <div class="pilares-cont">
+            <div id="next1">
+                <i class="fa-solid fa-angle-right"></i>
+            </div>
+            <div id="prev1">
+                <i class="fa-solid fa-angle-left"></i>
+            </div>
+            <div id="pilares-visibles">
+                <div class="pilar no1" attr="0">
+                    <h3 class="pilar-text">Cafetería Cultura & Art</h3>
+                    <img src="../src/imagenes/1cafeteria.jpg" alt="" class="pilar-photo">
+                    <div class="deg2"></div>
+                </div>
+                <div class="pilar no2" attr="1">
+                    <h3 class="pilar-text">Wellness Hábitos saludables</h3>
+                    <img src="../src/imagenes/2wellness.jpg" alt="" class="pilar-photo">
+                    <div class="deg2"></div>
+                </div>
+                <div class="pilar no3" attr="2">
+                    <h3 class="pilar-text">Colectivo Regalos & More</h3>
+                    <img src="../src/imagenes/3colectivo.jpg" alt="" class="pilar-photo">
+                    <div class="deg2"></div>
+                </div>
+                <div class="pilar no4" attr="3">
+                    <h3 class="pilar-text">Emprendimiento & Fly</h3>
+                    <img src="../src/imagenes/4fly.jpg" alt="" class="pilar-photo">
+                    <div class="deg2"></div>
+                </div>
+                <div class="pilar no5" attr="4">
+                    <h3 class="pilar-text">School Knowlegde & Learning</h3>
+                    <img src="../src/imagenes/5school.png" alt="" class="pilar-photo">
+                    <div class="deg2"></div>
+                </div>
+                <div class="pilar" attr="5">
+                    <h3 class="pilar-text">Clínica</h3>
+                    <img src="../src/imagenes/6clinica.jpg" alt="" class="pilar-photo">
+                    <div class="deg2"></div>
+                </div>
+                <div class="pilar" attr="6">
+                    <h3 class="pilar-text">Spa Salon & Beauty</h3>
+                    <img src="../src/imagenes/7spa.jpg" alt="" class="pilar-photo">
+                    <div class="deg2"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- LO MAS POPULAR -->
+
+    <!-- MEMBRESIAS -->
+    <div class="members">
+
+    </div>
+
+    <!-- OPINIONES -->
+    <div class="opinion">
+
+    </div>
+
+    <!-- CONTACTANOS -->
+    <div class="contacto" id="contacto">
+
+    </div>
+
+    <!-- FOOTER -->
+    <footer class="final">
+        <div>
+            <nav class="pie">
+
+            </nav>
+        </div>
+    </footer>
+</body>
+
+</html>
