@@ -1,5 +1,5 @@
 <div align="center" style="margin:0;">
-<img src="https://files.catbox.moe/j1u8oc.png" width="256px"/><br>
+<img src="https://i.imgur.com/CCBFmSi.png" width="256px"/><br>
 <img src="https://files.catbox.moe/e53egz.png" width="256px"/>
 <br><br>
   <a href="https://github.com/createchsoftware/armony/stargazers"><img src="https://img.shields.io/github/stars/createchsoftware/armony?style=for-the-badge"/></a>
