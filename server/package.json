@@ -1,0 +1,157 @@
+{
+  "type": "module",
+  "name": "armony-server",
+  "version": "0.0.0",
+  "description": "Proyecto escolar para la materia de Ingenieria de Software en el Instituto Tecnológico de Mexicali.",
+  "private": true,
+  "main": "main.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/createchsoftware/armony.git"
+  },
+  "author": {
+    "name": "Createch",
+    "email": "proyectosw2024@gmail.com",
+    "url": "https://github.com/createchsoftware"
+  },
+  "contributors": [
+    {
+      "name": "Yahir Saavedra",
+      "email": "a21490577@itmexicali.edu.mx",
+      "url": "https://github.com/yahirsaavedra"
+    },
+    {
+      "name": "Adrian Santelis",
+      "email": "a21490580@itmexicali.edu.mx",
+      "url": "https://github.com/adriandrs"
+    },
+    {
+      "name": "Fernanda Rodríguez",
+      "email": "a21490574@itmexicali.edu.mx",
+      "url": "https://github.com/akarui712"
+    },
+    {
+      "name": "Alessandra Barajas",
+      "email": "a21490526@itmexicali.edu.mx",
+      "url": "https://github.com/alessandrabl"
+    },
+    {
+      "name": "Antonio Esparza",
+      "email": "a21490542@itmexicali.edu.mx",
+      "url": "https://github.com/antonioesb"
+    },
+    {
+      "name": "Armando Armendariz",
+      "email": "a21490524@itmexicali.edu.mx",
+      "url": "https://github.com/batmand0"
+    },
+    {
+      "name": "Cristian Echeverria",
+      "email": "a21490554@itmexicali.edu.mx",
+      "url": "https://github.com/cristian-echeverria"
+    },
+    {
+      "name": "Fernanda García",
+      "email": "a21490548@itmexicali.edu.mx",
+      "url": "https://github.com/fertz24"
+    },
+    {
+      "name": "Héctor Álvarez",
+      "email": "a21490518@itmexicali.edu.mx",
+      "url": "https://github.com/hectoralvarezc"
+    },
+    {
+      "name": "Ian Valenzuela",
+      "email": "a20490739@itmexicali.edu.mx",
+      "url": "https://github.com/ifvalenzuela"
+    },
+    {
+      "name": "Jorge Rosales",
+      "email": "a21490575@itmexicali.edu.mx",
+      "url": "https://github.com/itsjorgerdz03"
+    },
+    {
+      "name": "Jorge Lopez",
+      "email": "a21490559@itmexicali.edu.mx",
+      "url": "https://github.com/jorgeinge"
+    },
+    {
+      "name": "Julian Sandoval",
+      "email": "a21490579@itmexicali.edu.mx",
+      "url": "https://github.com/julian-sandoval-x"
+    },
+    {
+      "name": "Karim Soto",
+      "email": "a21490585@itmexicali.edu.mx",
+      "url": "https://github.com/karimsoto"
+    },
+    {
+      "name": "Cristian Gutiérrez",
+      "email": "a21490554@itmexicali.edu.mx",
+      "url": "https://github.com/krisg012"
+    },
+    {
+      "name": "Nicole Lugo",
+      "email": "a21490558@itmexicali.edu.mx",
+      "url": "https://github.com/nicolexalv"
+    },
+    {
+      "name": "William Diez",
+      "email": "a21490539@itmexicali.edu.mx",
+      "url": "https://github.com/william-diez"
+    },
+    {
+      "name": "Andrea Belman",
+      "email": "a21490528@itmexicali.edu.mx"
+    },
+    {
+      "name": "Adolfo Hernández",
+      "email": "a21490555@itmexicali.edu.mx"
+    },
+    {
+      "name": "Jahaziel Gerardo",
+      "email": "a21490550@itmexicali.edu.mx"
+    },
+    {
+      "name": "Jaime Rangel",
+      "email": "a21490880@itmexicali.edu.mx"
+    },
+    {
+      "name": "Juan Valverde",
+      "email": "a21490590@itmexicali.edu.mx"
+    },
+    {
+      "name": "Brandon Badillo",
+      "email": "a21490525@itmexicali.edu.mx"
+    },
+    {
+      "name": "Jesús Sánchez",
+      "email": "a20490735@itmexicali.edu.mx"
+    },
+    {
+      "name": "Marco Araujo",
+      "email": "a21490522@itmexicali.edu.mx"
+    }
+  ],
+  "license": "UNLICENSED",
+  "bugs": {
+    "url": "https://github.com/createchsoftware/armony/issues"
+  },
+  "homepage": "https://github.com/createchsoftware/armony#readme",
+  "dependencies": {
+    "body-parser": "^1.20.2",
+    "dotenv": "^16.4.2",
+    "express": "^4.19.2",
+    "mysql2": "^3.9.1"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.3",
+    "pm2": "^5.3.1"
+  },
+  "scripts": {
+    "start": "node main.js"
+  },
+  "engines": {
+    "node": ">=19.0.0"
+  }
+}
