@@ -1,13 +1,718 @@
-body {
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@font-face {
+  font-family: 'AbeatbyKai';
+  font-style: normal;
+  font-weight: normal;
+  src: url('../public/fuentes/abeatbyKaiRegular.otf');
+}
+@font-face {
+  font-family: 'Quinger';
+  font-style: normal;
+  font-weight: normal;
+  src: url('../public/fuentes/Quinger.otf');
+}
+@font-face {
+  font-family: 'ILoveGlitter';
+  font-style: normal;
+  font-weight: normal;
+  src: url('../public/fuentes/I\ Love\ Glitter\ -\ OTF.otf');
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+/* ================ CUERPO DE LA PAGINA */
+body {
+  background-color: white;
+  font-family: "AbeatbyKai", "Arial";
+}
+
+/* ================ ENCABEZADO ESTATICO */
+.header {
+  background: transparent;
+  height: 80px;
+  position: fixed;
+  width: 100%;
+  top: 0;
+  left: 0;
+  z-index: 10;
+  transition: 0.25s;
+}
+.header_scroll {
+  background-color: white;
+}
+.logo {
+  width: 200px;
+  line-height: 80px;
+  padding: 5%;
+  padding: 16px;
+  margin-left: 50px;
+}
+.nav {
+  display: flex;
+  justify-content: space-between;
+
+  max-width: 1200px;
+  margin: 0 auto;
+}
+.menu-link {
+  text-decoration: none;
+  color: rgb(236, 87, 102);
+  font-weight: bold;
+  padding: 8px 8px;
+  border-radius: 5px;
+  font-size: 16px;
+}
+.menu-is {
+  background-color: rgb(236, 87, 102);
+  color: white;
+}
+.menu {
+  display: flex;
+  margin-right: 50px;
+  list-style: none;
+}
+.nav-menu-item {
+  font-size: 20px;
+  margin: 0 20px;
+  line-height: 80px;
+  width: max-content;
+}
+.menu-link:hover {
+  background-color: rgb(236, 87, 102);
+  color: white;
+  transition: 0.25s;
+}
+.menu-is:hover {
+  background-color: rgb(255, 181, 167);
+}
+.nav-toggle {
+  color: rgb(236, 87, 102);
+  background: none;
+  border: none;
+  font-size: 30px;
+  padding: 0 20px;
+  line-height: 60px;
+  display: none;
+  cursor: pointer;
+}
+
+/* ============= CARRUSEL DE VIDEOS */
+.carrusel {
+  width: 100%;
+  height: 100vh;
+  overflow: hidden;
+}
+.cont-carrusel {
+  display: flex;
+  width: 700%;
+  height: 100%;
+}
+.videos {
+  position: relative;
+  width: calc(100% / 7);
+  height: 100%;
+  object-fit: cover;
+}
+.slider-video {
+  top: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.title {
+  font-family: "ILoveGlitter", "Arial";
+  position: absolute;
+  bottom: 380px;
+  z-index: 5;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 50px;
+  color: white;
+  font-weight: lighter;
+  animation: fadeIn 1s;
+}
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+.title2 {
+  font-family: "ILoveGlitter", "Arial";
+  position: absolute;
+  bottom: 310px;
+  z-index: 5;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 75px;
+  color: white;
+  font-weight: lighter;
+  width: max-content;
+  animation: fadeIn 1s;
+}
+.desc {
+  font-family: "ABeatByKai", "Arial";
+  position: absolute;
+  bottom: 240px;
+  z-index: 5;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 20px;
+  text-align: center;
+  padding: 0 auto;
+  color: white;
+  font-weight: lighter;
+}
+.show {
+  /* BOTON MOSTRAR MAS */
+  text-decoration: none;
+  background: transparent;
+  padding: 8px 12px;
+  border: 2px solid white;
+  border-radius: 5px;
+  color: white;
+  font-size: 20px;
+  font-family: "ABeatByKai", "Arial";
+  font-style: normal;
+  position: absolute;
+  bottom: 150px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 5;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+  cursor: pointer;
+}
+.show::before {
+  content: "";
+  position: absolute;
+  width: 100%;
+  height: 200%;
+  left: 0;
+  top: -200%;
+  background-color: rgb(236, 87, 102);
+  border-radius: 50%;
+  transition: all 0.5s ease;
+  z-index: -1;
+}
+.show:hover {
+  font-weight: bold;
+}
+.show:hover:before {
+  top: 0;
+  border-radius: 0%;
+}
+.slide-sec {
+  position: absolute;
+  bottom: 100px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 5;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  transition: 0.35;
+}
+.selec {
+  list-style-type: none;
+  margin: 0 5px;
+  color: white;
+}
+.selec:hover {
+  list-style-type: none;
+  margin: 0 5px;
+  color: rgb(255, 181, 167);
+}
+.active {
+  color: rgb(236, 87, 102);
+}
+
+/* DEGRADADOS EN EL CARRUSEL DEL VIDEO */
+.deg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    to bottom,
+    rgba(255, 255, 255, 0) 95%,
+    rgba(255, 255, 255, 1) 100%
+  );
+}
+.deg1 {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    to bottom,
+    rgba(0, 0, 0, 0.55) 0%,
+    rgba(0, 0, 0, 0.55) 100%
+  );
+  transition: 0.2s ease-in;
+}
+.deg1-1 {
+  background: linear-gradient(
+    to bottom,
+    rgba(0, 0, 0, 0.35) 0%,
+    rgba(0, 0, 0, 0.35) 100%
+  );
+}
+
+/* ============= SECCION QUIENES SOMOS */
+.somos {
+  padding: 100px 100px;
+  position: relative;
+}
+#logo1 {
+  width: 12%;
+  position: absolute;
+}
+#titulo {
+  font-size: 32px;
+  margin-left: 18%;
+  font-weight: lighter;
+  letter-spacing: 2px;
+  color: black;
+  margin-top: 60px;
+}
+.somos-div {
+  display: flex;
+}
+.somos-arm {
+  width: 50%;
+}
+#somos-text {
+  color: rgb(3, 109, 99);
+  font-size: 24px;
+  margin-top: 80px;
+  justify-content: left;
+  max-width: 95%;
+  letter-spacing: 3px;
+  text-align: justify;
+}
+#somos-desc {
+  color: black;
+  font-size: 14px;
+  margin-top: 40px;
+  justify-content: left;
+  max-width: 100%;
+  letter-spacing: 2px;
+  font-weight: lighter;
+  line-height: 18px;
+  /* text-align: justify; */
+}
+
+.somos-fotos {
+  width: 50%;
+}
+#fondo {
+  position: relative;
+  width: 80%;
+  float: right;
+  margin-right: 20px;
+  top: 80px;
+}
+#foto1 {
+  position: absolute;
+  border-radius: 50%;
+  width: 310px;
+  height: 310px;
+  margin-left: 16%;
+  margin-top: 4%;
+}
+#circulo1 {
+  position: relative;
+  width: 220px;
+  height: 220px;
+  border-radius: 50%;
+  background-color: rgb(247, 140, 160);
+  z-index: 3;
+  margin-top: 44%;
+  margin-left: 18%;
+}
+#foto2 {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+}
+#circulo2 {
+  position: absolute;
+  display: flex;
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  background: linear-gradient(
+    to left,
+    rgba(255, 181, 167, 1) 0%,
+    rgba(236, 239, 239, 1) 100%
+  );
+  z-index: 3;
+  margin-top: -18%;
+  margin-left: 32%;
+}
+#foto3 {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+}
+
+/* ================== SECCION CARRUSEL DE PILARES */
+.pilares {
+  background-color: rgb(231, 231, 231);
+  position: relative;
+  padding: 0 100px;
+  overflow: hidden;
+}
+#deco1 {
+  position: absolute;
+  transform: rotate(180deg);
+  right: 0;
+}
+#deco2 {
+  position: absolute;
+  transform: rotate(180deg);
+  align-items: end;
+  display: flex;
+  margin-left: -100px;
+  bottom: 0;
+}
+#pilares-title {
+  font-family: "ILoveGlitter", "Arial";
+  font-weight: lighter;
+  font-size: 60px;
+  color: rgb(3, 109, 99);
+  padding-top: 60px;
+  display: flex;
+  justify-content: center;
+}
+.pilares-cont {
+  padding-top: 40px;
+  padding-bottom: 40px;
+  width: 100%;
+  overflow: hidden;
+  position: relative;
+}
+#next1,
+#prev1 {
+  position: absolute;
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  background-color: rgb(217, 217, 217, 0.65);
+  justify-content: center;
+  align-items: center;
+  color: rgb(3, 109, 99);
+  font-size: 50px;
+  display: flex;
+  cursor: pointer;
+  z-index: 3;
+  transition: all 0.25s ease;
+  top: 125px;
+}
+#next1 {
+  right: 0;
+}
+#next1:hover {
+  opacity: 1;
+  background-color: white;
+  font-size: 55px;
+}
+#prev1:hover {
+  opacity: 1;
+  background-color: white;
+  font-size: 55px;
+}
+#pilares-visibles {
+  align-items: center;
+  height: 250px;
+  display: flex;
+  position: relative;
+  perspective: 1000px;
+}
+.pilar-text {
+  position: absolute;
+  color: white;
+  text-align: center;
+  align-items: center;
+  display: flex;
+  text-align: center;
+  z-index: 1;
+  width: 80%;
+  left: 50%;
+  transform: translateX(-50%);
+  bottom: 42%;
+}
+.pilar {
+  flex: 0 0 auto;
+  width: 250px;
+  height: 250px;
+  position: absolute;
+  border-radius: 50%;
+  background-size: contain;
+  display: flex;
+  z-index: 0;
+  opacity: 0;
+  object-fit: cover;
+  transition: all 0.5s ease-out;
+  left: 50%;
+}
+.deg2 {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    to bottom,
+    rgba(0, 0, 0, 0.5) 0%,
+    rgba(0, 0, 0, 0.5) 100%
+  );
+  transition: 0.2s ease-in;
+  border-radius: 50%;
+}
+.pilar-photo {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  object-fit: cover;
+}
+.no1 {
+  left: 13%;
+  transform: translateX(-50%);
+  width: 130px;
+  height: 130px;
+  opacity: 1;
+}
+.no2,
+.no4 {
+  width: 200px;
+  height: 200px;
+  z-index: 1;
+  opacity: 1;
+}
+.no2 {
+  left: 28%;
+  transform: translateX(-50%);
+}
+.no3 {
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 2;
+  opacity: 1;
+  cursor: pointer;
+}
+.no4 {
+  left: 72%;
+  transform: translateX(-50%);
+}
+.no5 {
+  left: 87%;
+  transform: translateX(-50%);
+  width: 130px;
+  height: 130px;
+  opacity: 1;
+}
+
+/* ======================= RESPONSIVE */
+@media (max-width: 768px) {
+  .header {
+    height: 60px;
+  }
+
+  .menu {
+    flex-direction: column;
+    align-items: center;
+    margin: 0;
+    background-color: rgb(236, 87, 102);
+    position: fixed;
+    left: 0;
+    top: 60px;
+    width: 100%;
+    padding: 20px 0;
+
+    height: calc(100% - 60px);
+    overflow-y: auto;
+
+    left: 100%;
+    transition: left 0.3s;
+  }
+
+  .logo {
+    width: 160px;
+    padding: 8px;
+    margin-left: 12px;
+  }
+
+  .menu-link {
+    color: white;
+  }
+
+  .nav-menu-item {
+    line-height: 70px;
+  }
+
+  .menu-link:hover {
+    background: none;
+    background-color: rgb(255, 181, 167);
+    color: white;
+  }
+
+  .nav-toggle {
+    display: block;
+  }
+
+  .menu_visible {
+    left: 0;
+  }
+
+  .title {
+    font-size: 40px;
+    bottom: 400px;
+  }
+  #title4 {
+    font-size: 40px;
+    bottom: 450px;
+  }
+
+  .title2 {
+    width: max-content;
+    max-width: 90%;
+    font-size: 60px;
+    bottom: 320px;
+    text-align: center;
+  }
+
+  .desc {
+    bottom: 220px;
+    width: 80%;
+  }
+
+  .somos {
+    padding: 100px 80px;
+    position: relative;
+  }
+
+  #logo1 {
+    margin-top: 25px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 75%;
+    position: relative;
+  }
+
+  #titulo {
+    margin-left: 0;
+    font-size: 24px;
+    justify-content: center;
+    display: flex;
+    font-weight: lighter;
+    text-align: center;
+    max-width: 100%;
+    margin-top: 5px;
+  }
+
+  .somos-div {
+    display: block;
+  }
+  .somos-arm {
+    width: 100%;
+  }
+  .somos-fotos {
+    width: 100%;
+  }
+
+  #somos-text {
+    color: rgb(3, 109, 99);
+    font-size: 24px;
+    margin-top: 50px;
+    justify-content: center;
+    max-width: 100%;
+    letter-spacing: 3px;
+    text-align: justify;
+  }
+
+  #somos-desc {
+    color: black;
+    font-size: 14px;
+    margin-top: 20px;
+    justify-content: left;
+    max-width: 100%;
+    letter-spacing: 2px;
+    font-weight: lighter;
+    line-height: 18px;
+    text-align: justify;
+  }
+
+  #fondo {
+    position: relative;
+    width: 100%;
+  }
+  #foto1 {
+    position: absolute;
+    border-radius: 50%;
+    width: 250px;
+    height: 250px;
+    margin-left: 19%;
+    margin-top: 4%;
+  }
+  #circulo1 {
+    position: absolute;
+    width: 170px;
+    height: 170px;
+    border-radius: 50%;
+    background-color: rgb(247, 140, 160);
+    z-index: 3;
+    margin-top: 35%;
+    margin-left: 2%;
+  }
+  #circulo2 {
+    position: absolute;
+    display: flex;
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    background: linear-gradient(
+      to left,
+      rgba(255, 181, 167, 1) 0%,
+      rgba(236, 239, 239, 1) 100%
+    );
+    z-index: 3;
+    margin-top: 40%;
+    margin-left: 50%;
+  }
+
+  .pilares {
+    margin-top: 300px;
+    position: relative;
+  }
 }

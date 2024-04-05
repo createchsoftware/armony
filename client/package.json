@@ -1,9 +1,15 @@
 {
-  "type": "module",
-  "name": "armony-client",
-  "version": "0.0.0",
-  "description": "Proyecto escolar para la materia de Ingenieria de Software en el Instituto Tecnológico de Mexicali.",
+  "name": "spa",
   "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "lint": "eslint . --ext js,jsx --report-unused-disable-directives --max-warnings 0",
+    "preview": "vite preview"
+  },
+  "description": "Proyecto escolar para la materia de Ingenieria de Software en el Instituto Tecnológico de Mexicali.",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/createchsoftware/armony.git"
@@ -95,11 +101,6 @@
       "url": "https://github.com/nicolexalv"
     },
     {
-      "name": "William Diez",
-      "email": "a21490539@itmexicali.edu.mx",
-      "url": "https://github.com/william-diez"
-    },
-    {
       "name": "Andrea Belman",
       "email": "a21490528@itmexicali.edu.mx"
     },
@@ -129,7 +130,8 @@
     },
     {
       "name": "Marco Araujo",
-      "email": "a21490522@itmexicali.edu.mx"
+      "email": "a21490522@itmexicali.edu.mx",
+      "url": "https://github.com/marcowapo"
     }
   ],
   "license": "UNLICENSED",
@@ -138,43 +140,34 @@
   },
   "homepage": "https://github.com/createchsoftware/armony#readme",
   "dependencies": {
-    "@testing-library/jest-dom": "^5.17.0",
-    "@testing-library/react": "^13.4.0",
-    "@testing-library/user-event": "^13.5.0",
+    "@emotion/react": "^11.11.4",
+    "@emotion/styled": "^11.11.5",
+    "@headlessui/react": "^1.7.18",
+    "@heroicons/react": "^2.1.3",
+    "@mui/material": "^5.15.15",
+    "flowbite-react": "^0.7.6",
+    "lucide-react": "^0.364.0",
+    "mui": "^0.0.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "react-scripts": "5.0.1",
-    "web-vitals": "^2.1.4"
+    "react-helmet": "^6.1.0",
+    "react-multi-carousel": "^2.8.5",
+    "react-responsive-carousel": "^3.2.23",
+    "react-router-dom": "^6.22.3"
   },
   "devDependencies": {
+    "@types/react": "^18.2.66",
+    "@types/react-dom": "^18.2.22",
+    "@vitejs/plugin-react-swc": "^3.5.0",
+    "autoprefixer": "^10.4.19",
+    "eslint": "^8.57.0",
+    "eslint-plugin-react": "^7.34.1",
+    "eslint-plugin-react-hooks": "^4.6.0",
+    "eslint-plugin-react-refresh": "^0.4.6",
+    "postcss": "^8.4.38",
+    "tailwindcss": "^3.4.3",
+    "vite": "^5.2.0",
     "nodemon": "^3.0.3",
     "pm2": "^5.3.1"
-  },
-  "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject"
-  },
-  "engines": {
-    "node": ">=19.0.0"
-  },
-  "eslintConfig": {
-    "extends": [
-      "react-app",
-      "react-app/jest"
-    ]
-  },
-  "browserslist": {
-    "production": [
-      ">0.2%",
-      "not dead",
-      "not op_mini all"
-    ],
-    "development": [
-      "last 1 chrome version",
-      "last 1 firefox version",
-      "last 1 safari version"
-    ]
   }
 }

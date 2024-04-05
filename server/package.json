@@ -96,11 +96,6 @@
       "url": "https://github.com/nicolexalv"
     },
     {
-      "name": "William Diez",
-      "email": "a21490539@itmexicali.edu.mx",
-      "url": "https://github.com/william-diez"
-    },
-    {
       "name": "Andrea Belman",
       "email": "a21490528@itmexicali.edu.mx"
     },
@@ -130,7 +125,8 @@
     },
     {
       "name": "Marco Araujo",
-      "email": "a21490522@itmexicali.edu.mx"
+      "email": "a21490522@itmexicali.edu.mx",
+      "url": "https://github.com/marcowapo"
     }
   ],
   "license": "UNLICENSED",
