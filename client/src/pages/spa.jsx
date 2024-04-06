@@ -10,30 +10,29 @@ import Tarjetas from '../components/ui/Tarjetas.jsx'
 import Comentarios from '../components/ui/Comentarios.jsx'
 import Opiniones from '../components/ui/Opiniones.jsx'
 import Productos from '../components/ui/Productos.jsx'
+import Favoritos from '../components/ui/Favoritos.jsx'
 import Button from '../components/ui/Button.jsx'
 import Start from '../components/ui/Start.jsx'
- 
-const heroCafeteria = {
-    url: '../videos/3Spa.mp4',
-    title: 'Spa',
-    subtitle: 'Salon & Beauty',
-    description: 'Relájate y déjate llevar por la serenidad mientras nuestros expertos cuidan de tú bienestar en nuestro spa exclusivo.'
-  }
-  
+import { Helmet } from "react-helmet";
+
+
 
 const Spa = () => {
-    return (
-        <>
-          {/*Pagina SPA */}
-      <Navbar />
-      <Hero {...heroCafeteria} ></Hero >
+  return (
+    <>
+      {/*Pagina SPA */}
+      <Helmet>
+        <script src="../../scripts/index.js"></script>
+      </Helmet>
+      <Hero />
       <Presentacion />
+      <Favoritos />
       <Productos />
       <Tarjetas />
       <Comentarios />
       <Foot />
-        </>
-      )
+    </>
+  )
 };
- 
+
 export default Spa;

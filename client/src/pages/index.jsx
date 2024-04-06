@@ -12,26 +12,26 @@ import Opiniones from '../components/ui/Opiniones.jsx'
 import Productos from '../components/ui/Productos.jsx'
 import Button from '../components/ui/Button.jsx'
 import Start from '../components/ui/Start.jsx'
-import {Helmet} from "react-helmet";
- 
+import { Helmet } from "react-helmet";
+
 const Home = () => {
-    return (
-        <>
-          <Helmet>
-            <script src="../../scripts/index.js"></script>
-          </Helmet>
-          {/* ENCABEZADO TRANSPARTE / SÓLIDO */}
-          <Start />
-          {/* LO MAS POPULAR */}
-          <Popular />
-          {/* MEMBRESIAS */}
-          <Membresias />
-          {/* OPINIONES */}
-          <Opiniones />
-          {/* CONTACTANOS / Footer */}
-          <Foot />
-        </>
-      )
+  return (
+    <>
+      <Helmet>
+        <script src="../../scripts/index.js"></script>
+      </Helmet>
+      {/* ENCABEZADO TRANSPARTE / SÓLIDO */}
+      <Start />
+      {/* LO MAS POPULAR */}
+      <Popular />
+      {/* MEMBRESIAS */}
+      <Membresias />
+      {/* OPINIONES */}
+      <Opiniones />
+      {/* CONTACTANOS / Footer */}
+      <Foot />
+    </>
+  )
 };
- 
+
 export default Home;
