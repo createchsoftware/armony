@@ -1,7 +1,7 @@
 function Foot() {
     return (
         <>
-            <footer class="selection:bg-[#EB5765] selection:text-white font-[abeatbyKai] text-white bg-gradient-to-b from-[#036C65] to-black">
+            <footer class="selection:bg-[#EB5765]  selection:text-white font-[abeatbyKai] text-white bg-gradient-to-b from-[#036C65] to-black">
                 {/* Top  */}
                 <div class="mx-auto max-w-screen-xl  w-[80%]">
                     <div class="grid grid-cols-1 gap-0 px-4 py-6 lg:py-8 md:grid-cols-3 md justify-items-center">

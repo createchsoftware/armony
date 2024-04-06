@@ -12,7 +12,7 @@ function Productos() {
             <img src={greenRight} alt="" className='absolute w-[12%] right-0 translate-y-[-6rem] ' />
             <div className='selection:bg-[#EB5765]  selection:text-white mt-20 md:w-[80%] md:m-auto'>
                 <h1 className='text-5xl  w-[80%] md:text-6xl mx-auto font  text-[#036C65] my-12 text-center items-center  font-[iloveglitter] mt-24'>Nuestros productoss</h1>
-                <div className='w-[80%] gap-20 mx-auto mb-0 grid md:grid-cols-3'>
+                <div className='w-[80%] gap-8 mx-auto mb-0 grid md:grid-cols-3'>
                     <div className=''>
                         <div className="w-[80vw] md:w-[20vw] border-2 text-[#036C65] bg-[#FFB5A8] text-xl text-center rounded-2xl p-2"><h6>Cuidado personal</h6></div>
                         <Carousel

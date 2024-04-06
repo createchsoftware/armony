@@ -20,8 +20,8 @@ const Home = () => {
       <Helmet>
         <script src="../../scripts/index.js"></script>
       </Helmet>
-      {/* ENCABEZADO TRANSPARTE / SÓLIDO */}
       <Start />
+      {/* ENCABEZADO TRANSPARTE / SÓLIDO */}
       {/* LO MAS POPULAR */}
       <Popular />
       {/* MEMBRESIAS */}
