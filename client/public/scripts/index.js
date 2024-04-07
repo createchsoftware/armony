@@ -7,6 +7,7 @@ const navToggle = document.querySelector(".nav-toggle"),
     navActive = document.querySelectorAll(".selec"),
     navStop = document.querySelector(".show");
 var header = document.querySelector("header");
+var tiempo;
 
 const menuScroll = document.querySelectorAll('.menu a[href^="#"]')
 
@@ -36,7 +37,7 @@ navToggle.addEventListener("click", () => {
         navToggle.setAttribute("aria-label", "Cerrar Menú");
     }
     else{
-        navToggle.setAttribute("aria-label", "Abrir Menú");
+         navToggle.setAttribute("aria-label", "Abrir Menú");
     }
 });
 
@@ -96,49 +97,53 @@ navStop.addEventListener('mouseout', function(){
 });
 
 function rombos(){
-    for(i = 0; i < navActive.length; i++)
+    for(var i = 0; i < navActive.length; i++)
     {
         navActive[i].className = navActive[i].className.replace(' active', '');
     }
     navActive[count].className += ' active'
 }
 
-function cambio(videoOn){
-    videoOn.classList.add('active');
-    var videoId = videoOn.getAttribute('attr');
-    if(videoId > count){
-        count = videoId;
-        if(count >= navVideo.length)
-        {
-            op = 0;
-            count = 0;
-            navSlide.style.transform = `translate(-${op}%)`;
-        }
-        else
-        {
-            op = img*count;
-            navSlide.style.transform = `translate(-${op}%)`;
-        }
+function cambio(){
+    window.onclick = e => {
+        if (e.target.tagName == "path" && e.target.parentElement.parentElement.classList.contains("selec")) {
+            e.target.parentElement.parentElement.classList.add('active');
+            var videoId = e.target.parentElement.getAttribute('rel');
+            if(videoId > count){
+                count = videoId;
+                if(count >= navVideo.length)
+                {
+                    op = 0;
+                    count = 0;
+                    navSlide.style.transform = `translate(-${op}%)`;
+                }
+                else   
+                {
+                    op = img*count;
+                    navSlide.style.transform = `translate(-${op}%)`;
+                }
+            }
+            else if(videoId == count)
+            {
+                return;
+            }
+            else{
+                count = videoId;
+                if(count >= navVideo.length)
+                {
+                    op = 0;
+                    count = 0;
+                    navSlide.style.transform = `translate(-${op}%)`;
+                }
+                else
+                {
+                    op = img*count;
+                    navSlide.style.transform = `translate(-${op}%)`;
+                }
+            }
+            rombos();
+        } 
     }
-    else if(videoId == count)
-    {
-        return;
-    }
-    else{
-        count = videoId;
-        if(count >= navVideo.length)
-        {
-            op = 0;
-            count = 0;
-            navSlide.style.transform = `translate(-${op}%)`;
-        }
-        else
-        {
-            op = img*count;
-            navSlide.style.transform = `translate(-${op}%)`;
-        }
-    }
-    rombos();
 }
 
 //SLIDE 3D DE PILARES
@@ -184,3 +189,7 @@ showPilar(actual);
 
 document.getElementById('next1').addEventListener('click', nextPilar);
 document.getElementById('prev1').addEventListener('click', prevPilar);
+const carrusel = document.getElementsByClassName('selec');
+for (let i = 0; i < carrusel.length; i++) {
+    carrusel[i].addEventListener('click', cambio);
+}

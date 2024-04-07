@@ -1,20 +1,21 @@
-import flowes from '../../../public/pictures/flowers.png'
+import flowes from '../../../public/pictures/flowers.png';
 import Rating from '@mui/material/Rating';
-
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faCrown } from '@fortawesome/free-solid-svg-icons';
 
 function Opiniones() {
     return (
         <div className='py-16 bg-[image:var(--image-url)] bg-cover' style={{ '--image-url': `url(${flowes})`, }} >
-            <div className='text-white text-center m-auto w-[80%]'>
+            <div className='text-white text-center m-auto'>
                 <h1 className="mb-10 font-[iloveglitter] text-6xl text-white ">Opiniones del cliente</h1>
                 <div className='text-lg font-[abeatbykai]'>
                     <p>Comparte tus experiencias con todos.</p>
                     <h1>¿Quiere dar su opinion?</h1>
-                    <button class="mt-6 transition-all duration-300 m-auto hover:bg-[#036C65] hover:ring-2 hover:ring-neutral-800 hover:ring-offset-1 group relative inline-flex h-10 items-center justify-center overflow-hidden rounded-lg border-2 bg-[#EB5765] px-6 font-[abeatbykai] text-neutral-200"><span>Agregar mi opinion</span><div class="w-0 translate-x-[100%] pl-0 opacity-0 transition-all duration-200 group-hover:w-5 group-hover:translate-x-0 group-hover:pl-1 group-hover:opacity-100"><svg width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg" class="h-5 w-5"><path d="M8.14645 3.14645C8.34171 2.95118 8.65829 2.95118 8.85355 3.14645L12.8536 7.14645C13.0488 7.34171 13.0488 7.65829 12.8536 7.85355L8.85355 11.8536C8.65829 12.0488 8.34171 12.0488 8.14645 11.8536C7.95118 11.6583 7.95118 11.3417 8.14645 11.1464L11.2929 8H2.5C2.22386 8 2 7.77614 2 7.5C2 7.22386 2.22386 7 2.5 7H11.2929L8.14645 3.85355C7.95118 3.65829 7.95118 3.34171 8.14645 3.14645Z" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"></path></svg></div></button>
+                    <button className="mt-6 transition-all duration-300 m-auto hover:bg-[#036C65] hover:ring-2 hover:ring-neutral-800 hover:ring-offset-1 group relative inline-flex h-10 items-center justify-center overflow-hidden rounded-lg border-2 bg-[#EB5765] px-6 font-[abeatbykai] text-neutral-200"><span>Agregar mi opinion</span><div class="w-0 translate-x-[100%] pl-0 opacity-0 transition-all duration-200 group-hover:w-5 group-hover:translate-x-0 group-hover:pl-1 group-hover:opacity-100"><svg width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg" class="h-5 w-5"><path d="M8.14645 3.14645C8.34171 2.95118 8.65829 2.95118 8.85355 3.14645L12.8536 7.14645C13.0488 7.34171 13.0488 7.65829 12.8536 7.85355L8.85355 11.8536C8.65829 12.0488 8.34171 12.0488 8.14645 11.8536C7.95118 11.6583 7.95118 11.3417 8.14645 11.1464L11.2929 8H2.5C2.22386 8 2 7.77614 2 7.5C2 7.22386 2.22386 7 2.5 7H11.2929L8.14645 3.85355C7.95118 3.65829 7.95118 3.34171 8.14645 3.14645Z" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"></path></svg></div></button>
 
                 </div>            </div>
-            <div className=''>
-                <div className=' font-[abeatbykai] w-[90%]  m-auto grid md:flex grid-cols-1 md:grid-cols-2 grid-rows-1'>
+            <div className='md:w-[80%] m-auto'>
+                <div className=' font-[abeatbykai]  m-auto grid md:flex grid-cols-1 md:grid-cols-2 grid-rows-1'>
                     <div className='p-8 bg-white rounded-xl text-[#036C65] m-8 w-auto md:w-3/5'>
                         <h1 className='text-2xl'>Calificación Global </h1>
                         <Rating name="read-only" value={5} readOnly size="large" />
@@ -33,13 +34,13 @@ function Opiniones() {
                         <Rating name="read-only" value={5} readOnly />
                     </div>
                     <div className='grid p-8 border-l-2 gap-y-6'>
-                        <div className='p-6 bg-[white] rounded-xl w-[90%] text-center md:text-left md:w-auto overflow-hidden'>
-                            <div className='flex text-xs md:text-xl place-content-between'>
+                        <div className='p-6 bg-white rounded-xl'>
+                            <div className='flex place-content-between'>
                                 <div className='flex'>
                                     <svg width="54" height="54" viewBox="0 0 54 54" fill="none" xmlns="http://www.w3.org/2000/svg">
                                         <path d="M26.9995 0.275391C19.9143 0.283313 13.1215 3.10143 8.11146 8.11146C3.10143 13.1215 0.283313 19.9143 0.275391 26.9995C0.287262 34.0836 3.10664 40.8741 8.11582 45.8832C13.125 50.8924 19.9155 53.7118 26.9995 53.7237C34.0872 53.7237 40.8846 50.9081 45.8964 45.8964C50.9081 40.8846 53.7237 34.0872 53.7237 26.9995C53.7237 19.9118 50.9081 13.1145 45.8964 8.10271C40.8846 3.09096 34.0872 0.275391 26.9995 0.275391ZM43.2542 42.4204C41.7533 39.3931 39.4363 36.8455 36.5646 35.065C33.6928 33.2845 30.3806 32.342 27.0017 32.3437C23.6228 32.3455 20.3116 33.2915 17.4417 35.0751C14.5718 36.8586 12.2575 39.4087 10.7598 42.4375C6.76383 38.2932 4.53723 32.7566 4.55125 26.9995C4.55125 21.0459 6.91633 15.3361 11.1262 11.1262C15.3361 6.91633 21.0459 4.55125 26.9995 4.55125C32.9532 4.55125 38.663 6.91633 42.8729 11.1262C47.0827 15.3361 49.4478 21.0459 49.4478 26.9995C49.4612 32.7485 47.2404 38.2778 43.2542 42.4204ZM26.9995 10.965C25.0967 10.965 23.2367 11.5293 21.6546 12.5864C20.0724 13.6436 18.8393 15.1461 18.1112 16.9041C17.383 18.662 17.1925 20.5964 17.5637 22.4626C17.9349 24.3289 18.8512 26.0431 20.1967 27.3886C21.5422 28.7341 23.2564 29.6504 25.1226 30.0216C26.9889 30.3928 28.9233 30.2023 30.6812 29.4741C32.4392 28.7459 33.9417 27.5128 34.9988 25.9307C36.056 24.3486 36.6202 22.4885 36.6202 20.5857C36.6202 19.3223 36.3714 18.0713 35.8879 16.9041C35.4044 15.7368 34.6957 14.6762 33.8024 13.7829C32.909 12.8895 31.8484 12.1809 30.6812 11.6974C29.514 11.2139 28.2629 10.965 26.9995 10.965Z" fill="#848484" />
                                     </svg>
-                                    <div className='pl-2 md:pl-8'>
+                                    <div className='pl-8'>
                                         <p>Cristina E.</p>
                                         <Rating name="read-only" value={5} readOnly />
                                         <p className='text-[#036C65]'>Recomendable</p>
@@ -47,7 +48,7 @@ function Opiniones() {
                                 </div>
                                 <div className='grid place-content-between'>
                                     <p className='text-[#848484] text-end'>05 Mar 2024</p>
-                                    <p className='text-[#EB5765]'>Miembro Platino</p>
+                                    <p className='text-[#EB5765]'><FontAwesomeIcon icon={faCrown} /> Miembro Platino</p>
                                 </div>
                             </div>
                             <hr className='h-0.5 my-2 bg-black' />
@@ -69,7 +70,7 @@ function Opiniones() {
                                     No me gusta</button>
                             </div>
                         </div>
-                        <div className='p-6 bg-white rounded-xl'>
+                        <div className='p-6 bg-white rounded-xl ' >
                             <div className='flex place-content-between'>
                                 <div className='flex'>
                                     <svg width="54" height="54" viewBox="0 0 54 54" fill="none" xmlns="http://www.w3.org/2000/svg">

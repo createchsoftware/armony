@@ -8,8 +8,8 @@ import pilar4 from '../../../public/pictures/pilar4.png'
 
 function Popular() {
     return (
-        <div className='mx-24 selection:bg-[#EB5765] selection:text-white'>
-            <h1 className='text-6xl font  text-[#036C65] mt-12 font-[iloveglitter] mx-4 mb-0'>Lo mas popular</h1>
+        <div className='mx-auto p-6 md:mx-28 md:p-0 selection:bg-[#EB5765] selection:text-white'>
+            <h1 className='text-6xl mx-14 font  text-[#036C65] mt-12 font-[iloveglitter] '>Lo mas popular</h1>
             <Carousel
                 additionalTransfrom={0}
                 arrows
@@ -17,7 +17,7 @@ function Popular() {
                 autoPlaySpeed={3000}
                 centerMode={false}
                 className=""
-                containerClass="container-with-dots"
+                containerClass="container-with-dots z-0"
                 dotListClass=""
                 // draggable
                 focusOnSelect={false}
@@ -66,7 +66,7 @@ function Popular() {
                 class=''
             >
                 <div className='m-4 p-8 font-[abeatbyKai]'>
-                   <a href="/spa"><img className='rounded-2xl w-72 h-96' src={pilar1} alt="" /></a>
+                    <a href="/spa"><img className='rounded-2xl w-72 h-96' src={pilar1} alt="" /></a>
                     <h6 className='pt-4 text-lg font-bold text-center'>SPA - Masaje facial</h6>
                     <p className='pt-2 text-center'>Encuentra la calma en un masaje facial que renueve tu piel y brinda un momento de paz</p>
                     <div className='flex justify-center mt-4'>

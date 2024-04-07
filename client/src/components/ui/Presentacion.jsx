@@ -1,30 +1,61 @@
-import presentacion from '../../../public/pictures/presentacion.png'
+import presentacion2 from '../../../public/pictures/presentacion2.png';
+import greenLeft2 from '../../../public/pictures/greenLeft2.png';
+
 function Presentacion() {
     return (
-        <div className='mx-32 font-[abeatbykai] selection:bg-[#EB5765] selection:text-white flex'>
-            <body className='w-1/2 px-10'>
-                <header className='flex items-center gap-20 justify-left'>
-                    <div className="text-2xl">
-                        <a href="#" className="m-1.5 p-1.5">
-                            <img className="w-48 w-30" src="https://camo.githubusercontent.com/204dc7eb356bf51bfa051c1e9b4e3d24c0bc9da4a4e5fb25c801e8797a12a154/68747470733a2f2f66696c65732e636174626f782e6d6f652f6a3175386f632e706e67" alt="" />
-                        </a>
+        <>
+            <div className='p-4 bg-gradient-to-r w-2/3 md:w-1/3  mt-16 from-[#FAD0C4] to-[#FF9A9E] rounded-r-full left-0 z-100' id="info">
+                <h1 className=" text-4xl md:text-6xl font-[iloveglitter] text-[#036C65]">En armony spa...</h1>
+            </div>
+            <img src={greenLeft2} alt="" className='absolute w-[12%] left-0 translate-y-[-8rem] z-[-1]' />
+            <div className="selection:text-white selection:bg-[#EB5765] m-auto w-[70%] grid place-content-center ">
+                <div className="items-center gap-0 text-center md:grid md:grid-cols-2 place-content-center">
+                    <div className='md:p-16 bg-gradient-[#F6EECF] mt-0  from-[#F6EECF] to-[#DDF3FA] rounded-xl'>
+                        <p className='font-[abeatbyKai] mt-6  md:text-2xl text-[rgb(3,108,101)]'>El que te veas hermosa y te sientas bien es nuetras prioridad, por ello,
+                            ven y consiéntete con nuestro equipo de terapeutas y estilistas expertos
+                            que te proporcionarán desde tratamientos faciales rejuvenecedores y masajes
+                            relajantes, hasta un nuevo corte de cabello y maquillaje para esas ocasiones
+                            específicas.</p>
+                        <div className='mt-4 m-auto w-24 h-24 bg-[#edd5d7] rounded-full p-6'>
+                            <img className='aspect-square w-28 ' src="../../../pictures/logoArmony.png" alt="" id="logo2" />
+                        </div>
                     </div>
-                    <div className='text-4xl font-black'>
-                        <h1>realza tu belleza interior.</h1>
+                    <img src={presentacion2} alt="" />
+                </div>
+            </div>
+        </>
+    )
+}
+
+export default Presentacion;
+
+{/* 
+import presentacion from '../../../public/pictures/presentacion.png'
+
+function Presentacion() {
+    return (
+        <div className='spa-armony'>
+            <h1 id="titulo-spa">En armony spa...</h1>
+            <div className="spa-present">
+                <section className="spa1">
+                    <h3 id="text-spa">
+                        El que te veas hermosa y te sientas bien es nuetras prioridad, por ello,
+                        ven y consiéntete con nuestro equipo de terapeutas y estilistas expertos
+                        que te proporcionarán desde tratamientos faciales rejuvenecedores y masajes
+                        relajantes, hasta un nuevo corte de cabello y maquillaje para esas ocasiones
+                        específicas.
+                    </h3>
+                    <div id="logo-circ">
+                        <img src="../../../pictures/logoArmony.png" alt="" id="logo2" />
                     </div>
-                </header>
-                <p className='text-2xl font-bold text-[#036C65] mt-12'>
-                    Nos especializamos en brindarte servicios y productos que resalten tu belleza interior.
-                </p>
-                <p className='mt-8'>
-                    En armony nos dedicamos a ofrecer una experiencia integral de bienestar y belleza, que incluye servicios de spa, tratamientos de belleza, atención clínica, oportunidades de emprendimiento y una tienda colectiva de regalos. Nuestro compromiso es proporcionar un enfoque integral para el cuidado personal, la relajación y el desarrollo personal. Te invitamos a descubrir todo lo que armony tiene para ofrecer, y a sumergirte en un mundo de serenidad, belleza y crecimiento personal. ¡Bienvenido a armony, donde la armonía es nuestra filosofía de vida!
-                </p>
-            </body>
-            <aside className='w-1/2 '>
-                <img src={presentacion} alt="" />
-            </aside>
+                </section>
+                <section className="spa2">
+                    <img src="../../../pictures/ArmonySpa.png" alt="" id="fondo1" />
+                </section>
+            </div>
         </div>
     )
 }
 
-export default Presentacion
+export default Presentacion;
+*/}

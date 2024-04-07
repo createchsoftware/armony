@@ -336,54 +336,8 @@ body {
 #fondo {
   position: relative;
   width: 80%;
-  float: right;
-  margin-right: 20px;
-  top: 80px;
-}
-#foto1 {
-  position: absolute;
-  border-radius: 50%;
-  width: 310px;
-  height: 310px;
-  margin-left: 16%;
-  margin-top: 4%;
-}
-#circulo1 {
-  position: relative;
-  width: 220px;
-  height: 220px;
-  border-radius: 50%;
-  background-color: rgb(247, 140, 160);
-  z-index: 3;
-  margin-top: 44%;
-  margin-left: 18%;
-}
-#foto2 {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  border-radius: 50%;
-}
-#circulo2 {
-  position: absolute;
-  display: flex;
-  width: 150px;
-  height: 150px;
-  border-radius: 50%;
-  background: linear-gradient(
-    to left,
-    rgba(255, 181, 167, 1) 0%,
-    rgba(236, 239, 239, 1) 100%
-  );
-  z-index: 3;
-  margin-top: -18%;
-  margin-left: 32%;
-}
-#foto3 {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  border-radius: 50%;
+  margin-left: 80px;
+  top: 50px;
 }
 
 /* ================== SECCION CARRUSEL DE PILARES */
@@ -470,7 +424,8 @@ body {
   width: 80%;
   left: 50%;
   transform: translateX(-50%);
-  bottom: 42%;
+  bottom: 40%;
+  font-size: 15px;
 }
 .pilar {
   flex: 0 0 auto;
@@ -520,6 +475,10 @@ body {
   z-index: 1;
   opacity: 1;
 }
+.no2 .pilar-text,
+.no4 .pilar-text {
+  font-size: 18px;
+}
 .no2 {
   left: 28%;
   transform: translateX(-50%);
@@ -531,6 +490,9 @@ body {
   opacity: 1;
   cursor: pointer;
 }
+.no3 .pilar-text {
+  font-size: 22px;
+}
 .no4 {
   left: 72%;
   transform: translateX(-50%);
@@ -541,6 +503,76 @@ body {
   width: 130px;
   height: 130px;
   opacity: 1;
+}
+
+/* ============================ NUEVO ======== Sobre Spa:  El armony spa... */
+.spa-armony {
+  padding: 0 100px;
+  position: relative;
+}
+#deco3 {
+  position: absolute;
+  left: 0;
+}
+#deco4 {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+}
+#titulo-spa {
+  position: absolute;
+  left: 0;
+  width: 35%;
+  padding-left: 60px;
+  margin-top: 20px;
+  font-family: "ILoveGlitter", "Arial";
+  font-size: 60px;
+  background: linear-gradient(
+    to right,
+    rgba(250, 208, 196, 1) 0%,
+    rgba(255, 181, 167, 1) 100%
+  );
+  color: rgb(3, 109, 99);
+  border-top-right-radius: 60px;
+  border-bottom-right-radius: 60px;
+}
+.spa-present {
+  width: 100%;
+  display: flex;
+}
+.spa1 {
+  width: 50%;
+  margin: 0 auto;
+}
+#text-spa {
+  color: rgb(3, 109, 99);
+  font-size: 25px;
+  text-align: center;
+  padding: 40px;
+  margin: 0 auto;
+  margin-top: 120px;
+}
+.spa2 {
+  width: 50%;
+  margin: 0 auto;
+}
+#logo-circ {
+  width: 120px;
+  height: 120px;
+  background-color: rgba(226, 179, 183, 0.8);
+  border-radius: 50%;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+}
+#logo2 {
+  margin: 0 auto;
+  width: 75%;
+  height: auto;
+}
+#fondo1 {
+  width: 100%;
+  margin: 100px auto;
 }
 
 /* ======================= RESPONSIVE */
@@ -676,39 +708,6 @@ body {
   #fondo {
     position: relative;
     width: 100%;
-  }
-  #foto1 {
-    position: absolute;
-    border-radius: 50%;
-    width: 250px;
-    height: 250px;
-    margin-left: 19%;
-    margin-top: 4%;
-  }
-  #circulo1 {
-    position: absolute;
-    width: 170px;
-    height: 170px;
-    border-radius: 50%;
-    background-color: rgb(247, 140, 160);
-    z-index: 3;
-    margin-top: 35%;
-    margin-left: 2%;
-  }
-  #circulo2 {
-    position: absolute;
-    display: flex;
-    width: 100px;
-    height: 100px;
-    border-radius: 50%;
-    background: linear-gradient(
-      to left,
-      rgba(255, 181, 167, 1) 0%,
-      rgba(236, 239, 239, 1) 100%
-    );
-    z-index: 3;
-    margin-top: 40%;
-    margin-left: 50%;
   }
 
   .pilares {

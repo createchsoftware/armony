@@ -1,16 +1,18 @@
 import { Fragment, useState } from 'react'
 import { Dialog, Disclosure, Popover, Transition } from '@headlessui/react'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faBars } from '@fortawesome/free-solid-svg-icons';
 
 function Navbar() {
     return (
         <header className="header">
                 <div>
                     <nav className="nav" >
-                        <a href="#">
+                        <a href="/">
                             <img src="../../../pictures/armonyLogo.png" alt="" className="logo" />
                         </a>
                         <button className="nav-toggle" aria-label="Abrir Menú">
-                            <i className="fa-solid fa-bars" />
+                            <FontAwesomeIcon icon={faBars} /> 
                         </button>
                         <ul className="menu">
                             <li className="nav-menu-item">
@@ -34,7 +36,7 @@ function Navbar() {
                                 </a>
                             </li>
                             <li className="nav-menu-item">
-                                <a href="" className="menu-link menu-is">
+                                <a href="#" className="menu-link menu-is">
                                     Inicia sesión
                                 </a>
                             </li>
