@@ -14,7 +14,7 @@ const Hero = () => {
                         <h2 className="title2">Salon & Beauty</h2>
                         <p className="desc">Relájate y déjate llevar por la serenidad mientras nuestros expertos cuidan de tú bienestar en nuestro spa exclusivo.</p>
                         <a href="#info" className="show">Ver mas</a>
-                        <video autoPlay loop className="slider-video">
+                        <video autoPlay loop className="slider-video" muted>
                             <source src="../../../videos/3Spa.mp4" type="video/mp4" />
                         </video>
                     </section>
