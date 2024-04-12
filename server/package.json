@@ -138,7 +138,7 @@
     "body-parser": "^1.20.2",
     "dotenv": "^16.4.2",
     "express": "^4.19.2",
-    "mysql2": "^3.9.1"
+    "mysql2": "^3.9.4"
   },
   "devDependencies": {
     "nodemon": "^3.0.3",
