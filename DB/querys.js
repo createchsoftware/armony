@@ -8,23 +8,6 @@ const mysql = require("mysql2");
 // CREATE
 
 //Funciona
-const createUser = (pool, data, callback) => {
-  let insertUserQuery = "CALL addUser(?, ?, ?, ?);"; // Procedimiento almacenado en MySQL
-  let query = mysql.format(insertUserQuery, [
-    data.email,
-    data.telefono,
-    data.pass,
-    data.tipo,
-  ]); // Parametros del query
-  pool.query(query, (err, result) => {
-    //Ejecucion del query
-    if (err) throw err;
-    callback(result);
-  });
-  pool.end();
-};
-
-//Funciona
 const createClientes = (pool, data, callback) => {
   if (
     searchUser(pool, data, callback) != undefined ||
@@ -51,7 +34,54 @@ const createClientes = (pool, data, callback) => {
 };
 
 // READ
-const readClientes = (pool, callback) => {};
+const readClientes = (pool, data, callback) => {
+  let readClientesQuery = "CALL searchClientes(?)";
+  let query = mysql.format(readClientesQuery, [data.fkUsuario]);
+  pool.query(query, (err, result) => {
+    if (err) throw err;
+    callback(result);
+  });
+  pool.release();
+};
+
+// UPDATE
+const updateClientes = (pool, callback) => {
+  let updateClientesQuery = "CALL";
+};
+// DELETE
+const deleteClientes = (pool, data, callback) => {
+  let deleteClientesQuery = "CALL delCliente(?)";
+  let query = mysql.format(deleteClientesQuery, [data.idCliente]);
+  pool.query(query, (err, result) => {
+    if (err) throw err;
+    callback(result);
+  });
+  pool.release();
+};
+//PRODUCTOS
+
+//CITAS
+
+// USUARIOS
+
+//Funciona
+const createUser = (pool, data, callback) => {
+  let insertUserQuery = "CALL addUser(?, ?, ?, ?);"; // Procedimiento almacenado en MySQL
+  let query = mysql.format(insertUserQuery, [
+    data.email,
+    data.telefono,
+    data.pass,
+    data.tipo,
+  ]); // Parametros del query
+  pool.query(query, (err, result) => {
+    //Ejecucion del query
+    if (err) throw err;
+    callback(result);
+  });
+  pool.end();
+};
+
+// READ
 
 // Funciona
 const searchUser = (pool, data, callback) => {
@@ -64,16 +94,17 @@ const searchUser = (pool, data, callback) => {
   });
 };
 
-// UPDATE
-const updateClientes = (pool, callback) => {};
-// DELETE
-const deleteClientes = (pool, callback) => {};
-//PRODUCTOS
+// SERVICIOS
 
-//CITAS
+// EMPLEADOS
+
+// CATEGORIA
+//
 
 module.exports = {
   createClientes,
+  readClientes,
   createUser,
   searchUser,
+  deleteClientes,
 };
