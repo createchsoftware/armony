@@ -36,10 +36,10 @@ app.use("/api/admin/empleados", routerEmpleados);
 //   password: conexionDB.PASSWORD,
 // });
 
-conexionDB.pool.getConnection((err) => {
-  if (err) throw err;
-  console.log("CONNECT TO DATABASE");
-});
+// conexionDB.pool.getConnection((err) => {
+//   if (err) throw err;
+//   console.log("CONNECT TO DATABASE");
+// });
 
 // pool.getConnection((err) => {
 //   if (err) throw err;
