@@ -1,7 +1,7 @@
 import { Fragment, useState } from 'react'
 import { Dialog, Disclosure, Popover, Transition } from '@headlessui/react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faBars } from '@fortawesome/free-solid-svg-icons';
+import { faBars, faCartShopping } from '@fortawesome/free-solid-svg-icons';
 
 function Navbar() {
     return (
@@ -39,6 +39,11 @@ function Navbar() {
                                 <a href="#" className="menu-link menu-is">
                                     Inicia sesión
                                 </a>
+                            </li>
+                            <li className="nav-menu-item">
+                                <button className="nav-cart" aria-label="Abrir Lista de Deseo">
+                                    <FontAwesomeIcon icon={faCartShopping} /> 
+                                </button>
                             </li>
                         </ul>
                     </nav>

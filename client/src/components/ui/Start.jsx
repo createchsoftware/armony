@@ -263,14 +263,8 @@ const Start = () => {
                         </h3>
                     </section>
                     <section className="somos-fotos">
-                        <img src="../../../pictures/decoArmony2.png" alt="" id="fondo" />
-                        <img src="../../../pictures/armonyImagen1.png" alt="" id="foto1" />
-                        <div id="circulo1">
-                            <img src="../../../pictures/armonyImagen2.png" alt="" id="foto2" />
-                        </div>
-                        <div id="circulo2">
-                            <img src="../../../pictures/armonyImagen3.png" alt="" id="foto3" />
-                        </div>
+                        <img src="../../../pictures/somosArmony.png" alt="" id="fondo" />
+                        {/* ^^^^^ MODIFICADO PARA USAR SOLO UN PNG EN VEZ DE VARIAS IMAGENES ^^^^^ */}
                     </section>
                 </div>
             </div>
@@ -288,61 +282,53 @@ const Start = () => {
                     </div>
                     <div id="pilares-visibles">
                         <div className="pilar no1" rel={0}>
-                            <h3 className="pilar-text">Cafetería Cultura &amp; Art</h3>
-                            <img
-                                src="../../../pictures/1cafeteria.jpg"
-                                alt=""
-                                className="pilar-photo"
-                            />
-                            <div className="deg2" />
+                            <a href="#" className="pilar-btn">
+                                <h3 className="pilar-text">Cafetería Cultura &amp; Art</h3>
+                                <img src="../../../pictures/1cafeteria.jpg" alt="" className="pilar-photo"/>
+                                <div className="deg2" />
+                            </a>
                         </div>
                         <div className="pilar no2" rel={1}>
-                            <h3 className="pilar-text">Wellness Hábitos saludables</h3>
-                            <img
-                                src="../../../pictures/2wellness.jpg"
-                                alt=""
-                                className="pilar-photo"
-                            />
-                            <div className="deg2" />
+                            <a href="#" className="pilar-btn">
+                                <h3 className="pilar-text">Wellness Hábitos saludables</h3>
+                                <img src="../../../pictures/2wellness.jpg" alt="" className="pilar-photo"/>
+                                <div className="deg2" />
+                            </a>
                         </div>
-                        <div className="pilar no3" rel={2}>
-                            <a href="/spa" target="_blank">
-                                <h3 className="pilar-text">Spa Salon &amp; Beauty</h3>
+                        <div className="pilar no7 no3" rel={2}>
+                            <a href="#" className="pilar-btn">
+                                <h3 className="pilar-text">Spa<br/>Salon &amp; Beauty</h3>
                                 <img src="../../../pictures/7spa.jpg" alt="" className="pilar-photo" />
                                 <div className="deg2" />
                             </a>
                         </div>
                         <div className="pilar no4" rel={3}>
-                            <h3 className="pilar-text">Colectivo Regalos &amp; More</h3>
-                            <img
-                                src="../../../pictures/3colectivo.jpg"
-                                alt=""
-                                className="pilar-photo"
-                            />
-                            <div className="deg2" />
+                            <a href="#" className="pilar-btn">
+                                <h3 className="pilar-text">Colectivo Regalos &amp; More</h3>
+                                <img src="../../../pictures/3colectivo.jpg" alt="" className="pilar-photo" />
+                                <div className="deg2" />
+                            </a>
                         </div>
                         <div className="pilar no5" rel={4}>
-                            <h3 className="pilar-text">Emprendimiento &amp; Fly</h3>
-                            <img src="../../../pictures/4fly.jpg" alt="" className="pilar-photo" />
-                            <div className="deg2" />
+                            <a href="#" target="_blank" className="pilar-btn">
+                                <h3 className="pilar-text">Emprendimiento &amp; Fly</h3>
+                                <img src="../../../pictures/4fly.jpg" alt="" className="pilar-photo" />
+                                <div className="deg2" />
+                            </a>
                         </div>
                         <div className="pilar no6" rel={5}>
-                            <h3 className="pilar-text">School Knowlegde &amp; Learning</h3>
-                            <img
-                                src="../../../pictures/5school.png"
-                                alt=""
-                                className="pilar-photo"
-                            />
-                            <div className="deg2" />
+                            <a href="#" target="_blank" className="pilar-btn">
+                                <h3 className="pilar-text">School Knowlegde &amp; Learning</h3>
+                                <img src="../../../pictures/5school.png" alt="" className="pilar-photo" />
+                                <div className="deg2" />
+                            </a>
                         </div>
                         <div className="pilar no7" rel={6}>
-                            <h3 className="pilar-text">Clínica</h3>
-                            <img
-                                src="../../../pictures/6clinica.jpg"
-                                alt=""
-                                className="pilar-photo"
-                            />
-                            <div className="deg2" />
+                            <a href="#" target="_blank" className="pilar-btn">
+                                <h3 className="pilar-text">Clínica</h3>
+                                <img src="../../../pictures/6clinica.jpg" alt=""  className="pilar-photo"/>
+                                <div className="deg2" />
+                            </a>
                         </div>
                     </div>
                 </div>

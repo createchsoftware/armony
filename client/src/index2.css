@@ -327,7 +327,7 @@ body {
   letter-spacing: 2px;
   font-weight: lighter;
   line-height: 18px;
-  /* text-align: justify; */
+  text-align: justify;
 }
 
 .somos-fotos {
@@ -413,20 +413,6 @@ body {
   position: relative;
   perspective: 1000px;
 }
-.pilar-text {
-  position: absolute;
-  color: white;
-  text-align: center;
-  align-items: center;
-  display: flex;
-  text-align: center;
-  z-index: 1;
-  width: 80%;
-  left: 50%;
-  transform: translateX(-50%);
-  bottom: 40%;
-  font-size: 15px;
-}
 .pilar {
   flex: 0 0 auto;
   width: 250px;
@@ -440,6 +426,26 @@ body {
   object-fit: cover;
   transition: all 0.5s ease-out;
   left: 50%;
+  margin: 0 auto;
+}
+.pilar-btn{
+  display: grid;
+  align-self: center;
+  justify-self: center;
+}
+.pilar-text {
+  position: absolute;
+  color: white;
+  display: flex;
+  text-align: center;
+  z-index: 1;
+  font-size: 12px;
+  width: 90%;
+  align-self: center;
+  justify-self: center;
+}
+.no7 .pilar-text{
+  width: auto;
 }
 .deg2 {
   position: absolute;
@@ -489,9 +495,10 @@ body {
   z-index: 2;
   opacity: 1;
   cursor: pointer;
+  font-weight: bold;
 }
 .no3 .pilar-text {
-  font-size: 22px;
+  font-size: 24px;
 }
 .no4 {
   left: 72%;
@@ -505,7 +512,16 @@ body {
   opacity: 1;
 }
 
-/* ============================ NUEVO ======== Sobre Spa:  El armony spa... */
+/* ======================== Pagina SPA ======================= */
+.nav-cart{
+  color: rgb(236, 87, 102);
+}
+.nav-cart:hover{
+  color: rgb(255, 181, 167);
+  transition: 0.25s;
+}
+
+/* Sobre Spa:  El armony spa... */
 .spa-armony {
   padding: 0 100px;
   position: relative;
@@ -567,7 +583,7 @@ body {
 }
 #logo2 {
   margin: 0 auto;
-  width: 75%;
+  width: auto;
   height: auto;
 }
 #fondo1 {
@@ -589,10 +605,10 @@ body {
     position: fixed;
     left: 0;
     top: 60px;
-    width: 100%;
+    width: 75%;
     padding: 20px 0;
 
-    height: calc(100% - 60px);
+    height: calc(80% - 60px);
     overflow-y: auto;
 
     left: 100%;
@@ -624,12 +640,12 @@ body {
   }
 
   .menu_visible {
-    left: 0;
+    left: 25%;
   }
 
   .title {
     font-size: 40px;
-    bottom: 400px;
+    bottom: 450px;
   }
   #title4 {
     font-size: 40px;
@@ -640,8 +656,9 @@ body {
     width: max-content;
     max-width: 90%;
     font-size: 60px;
-    bottom: 320px;
+    bottom: 350px;
     text-align: center;
+    line-height: 45px;
   }
 
   .desc {
@@ -650,7 +667,7 @@ body {
   }
 
   .somos {
-    padding: 100px 80px;
+    padding: 60px 50px;
     position: relative;
   }
 
@@ -681,12 +698,13 @@ body {
   }
   .somos-fotos {
     width: 100%;
+    justify-items: center;
   }
 
   #somos-text {
     color: rgb(3, 109, 99);
-    font-size: 24px;
-    margin-top: 50px;
+    font-size: 20px;
+    margin-top: 10px;
     justify-content: center;
     max-width: 100%;
     letter-spacing: 3px;
