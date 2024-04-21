@@ -1,12 +1,18 @@
-const express = require("express");
+import express from "express";
+import {
+  createClientes,
+  readClientesById,
+  deleteClientes,
+} from "../DB/query/queryCliente.js";
+import { enableConnect } from "../DB/connection.js";
 
-const routerCliente = express.Router();
+export const routerCliente = express.Router();
 
 // CLIENTES
 // CREATE
 routerCliente.get("/create", (req, res) => {
   createClientes(
-    pool,
+    connection,
     {
       usuario: 1,
       nombre: "julian",
@@ -20,12 +26,21 @@ routerCliente.get("/create", (req, res) => {
 });
 
 //READ
-routerCliente.get("/read", (req, res) => {
-  readClientes(pool, { fkUsuario: 1 }), (result) => res.json(result);
+routerCliente.get("/read", async (req, res) => {
+  try {
+    const connection = await enableConnect();
+    const resultado = await readClientesById(connection, { fkUsuario: 1 });
+    res.send(JSON.stringify(resultado));
+  } catch (err) {
+    console.error("Ha ocurrido un error: ", err);
+    res.status(500).send("Ha ocurrido un erro al procesar tu solicitud");
+  }
 });
 
 routerCliente.get("/update", (req, res) => {});
 
-routerCliente.get("/delete", (req, res) => {
-  deleteClientes(pool, { idCliente: 5 }, (result) => res.json(result));
+routerCliente.delete("/delete", (req, res) => {
+  deleteClientes(connection, { idCliente: 5 }, (result) =>
+    res.send(JSON.stringify(result))
+  );
 });

@@ -1,19 +1,29 @@
-const mysql = require("mysql2");
-const { conexionDB } = require("../data/datos.js");
+import * as mysql from "mysql2/promise.js";
+import { conexionDB } from "../data/datos.js";
 
-// Sintaxion para la conexion de pruebas con la BD
-const pool = mysql.createPool({
+export const config = {
   host: conexionDB.HOST,
   port: conexionDB.PORT,
-  database: conexionDB.NAME,
+  database: conexionDB.DATABASE,
   user: conexionDB.USER,
   password: conexionDB.PASSWORD,
-});
-
-const getConnection = (callback) => {
-  pool.getConnection((err, connection) => {
-    callback(err, connection);
-  });
+  connectionLimit: 5000,
+  charset: "utf8mb4",
 };
 
-module.exports = { pool, getConnection };
+export async function enableConnect() {
+  try {
+    const connection = await mysql.createConnection(config);
+    console.log("CONNECT TO DATABASE!");
+    return connection;
+  } catch (err) {
+    console.error("No pudo conectarse a la DB: ", err);
+    throw err;
+  }
+}
+
+// NO FUNCIONA, NO CIERRA LA CONEXION
+export async function endConnection() {
+  await console.log("RELEASE CONNECTION");
+  await connection.end();
+}

@@ -8,6 +8,7 @@
     "start": "node app.js",
     "dev": "nodemon --watch app.js"
   },
+  "type": "module",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/createchsoftware/armony.git"

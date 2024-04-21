@@ -1,2 +1,2 @@
-const { pool } = require("./connection.js");
-const mysql = require("mysql2");
+import { pool } from "./connection.js";
+import mysql from "mysql2";
