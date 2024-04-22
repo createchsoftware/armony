@@ -1,53 +1,20 @@
 import '../../index.css';
+import { Helmet } from "react-helmet";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBars, faDiamond, faAngleLeft, faAngleRight } from '@fortawesome/free-solid-svg-icons';
 
 const Start = () => {
     return (
         <>
-            <header className="header">
-                <div>
-                    <nav className="nav" >
-                        <img src="../../../pictures/armonyLogo.png" alt="" className="logo" />
-                        <button className="nav-toggle" aria-label="Abrir Menú">
-                            <FontAwesomeIcon icon={faBars} /> 
-                        </button>
-                        <ul className="menu">
-                            <li className="nav-menu-item">
-                                <a href="#inicio" className="menu-link">
-                                    Inicio
-                                </a>
-                            </li>
-                            <li className="nav-menu-item">
-                                <a href="#nosotros" className="menu-link">
-                                    Nosotros
-                                </a>
-                            </li>
-                            <li className="nav-menu-item">
-                                <a href="#servicios" className="menu-link">
-                                    Servicios
-                                </a>
-                            </li>
-                            <li className="nav-menu-item">
-                                <a href="#contacto" className="menu-link">
-                                    Contacto
-                                </a>
-                            </li>
-                            <li className="nav-menu-item">
-                                <a href="" className="menu-link menu-is">
-                                    Inicia sesión
-                                </a>
-                            </li>
-                        </ul>
-                    </nav>
-                </div>
-            </header>
+            <Helmet>
+                <script src="../../scripts/index.js"></script>
+            </Helmet>
             {/* VIDEO DE LOS PILARES */}
             <div className="carrusel" id="inicio">
                 <div className="cont-carrusel" id="car-video">
                     <section className="videos">
-                        <h1 className="title my-6 md:my-0">Spa</h1>
-                        <h2 className="title2 mb-12 md:mb-0">Salon & Beauty</h2>
+                        <h1 className="my-6 title md:my-0">Spa</h1>
+                        <h2 className="mb-12 title2 md:mb-0">Salon & Beauty</h2>
                         <p className="desc">Relájate y déjate llevar por la serenidad mientras nuestros expertos cuidan de tú bienestar en nuestro spa exclusivo.</p>
                         <a href="/spa" target="_blank" className="show">Mostrar más...</a>
                         <video autoPlay loop className="slider-video" muted>
@@ -64,8 +31,8 @@ const Start = () => {
                         </video>
                     </section>
                     <section className="videos">
-                        <h1 className="title my-48 md:my-0">Wellness</h1>
-                        <h2 className="title2 mb-24 md:mb-0">Hábitos saludables</h2>
+                        <h1 className="my-48 title md:my-0">Wellness</h1>
+                        <h2 className="mb-24 title2 md:mb-0">Hábitos saludables</h2>
                         <p className="desc">La salud es un hábito tan importante como ser feliz. Únete a nuestra comunidad y deja que nuestros expertos de guíen al bienestar.</p>
                         <a href="#" className="show">Mostrar más...</a>
                         <video autoPlay loop className="slider-video" muted>
@@ -73,8 +40,8 @@ const Start = () => {
                         </video>
                     </section>
                     <section className="videos">
-                        <h1 className="title my-24 md:my-0" id="title4">School</h1>
-                        <h2 className="title2 mb-12 md:mb-0">Knowlegde & Learning</h2>
+                        <h1 className="my-24 title md:my-0" id="title4">School</h1>
+                        <h2 className="mb-12 title2 md:mb-0">Knowlegde & Learning</h2>
                         <p className="desc">No encontrarás mejor lugar de relajación y concentración que en nuestra biblioteca donde la calma es prioridad.</p>
                         <a href="#" className="show">Mostrar más...</a>
                         <video autoPlay loop className="slider-video" muted>
@@ -83,7 +50,7 @@ const Start = () => {
                     </section>
                     <section className="videos">
                         <h1 className="title"></h1>
-                        <h2 className="title2 mb-6">Emprendimiento & Fly</h2>
+                        <h2 className="mb-6 title2">Emprendimiento & Fly</h2>
                         <p className="desc">Se bienvenida al departamento de emprendimiento, donde tus ideas van más allá que sólo alcanzar el éxito.</p>
                         <a href="#" className="show">Mostrar más...</a>
                         <video autoPlay loop className="slider-video" muted>
@@ -91,8 +58,8 @@ const Start = () => {
                         </video>
                     </section>
                     <section className="videos">
-                        <h1 className="title my-4 md:my-4">Colectivo</h1>
-                        <h2 className="title2 mb-6">Regalos & More</h2>
+                        <h1 className="my-4 title md:my-4">Colectivo</h1>
+                        <h2 className="mb-6 title2">Regalos & More</h2>
                         <p className="desc">Un regalo para una sonrisa que nos llena de alegría todos los días. Ven y encuentra tú favorito.</p>
                         <a href="#" className="show">Mostrar más...</a>
                         <video autoPlay loop className="slider-video" muted>
@@ -114,20 +81,20 @@ const Start = () => {
 
                 <ul className="slide-sec">
                     <li className="selec active" >
-                        <FontAwesomeIcon icon={faDiamond} rel="0"/></li>
+                        <FontAwesomeIcon icon={faDiamond} rel="0" /></li>
                     <li className="selec">
-                        <FontAwesomeIcon icon={faDiamond} rel="1"/>
+                        <FontAwesomeIcon icon={faDiamond} rel="1" />
                     </li>
                     <li className="selec">
-                        <FontAwesomeIcon icon={faDiamond} rel="2"/></li>
+                        <FontAwesomeIcon icon={faDiamond} rel="2" /></li>
                     <li className="selec">
-                        <FontAwesomeIcon icon={faDiamond} rel="3"/></li>
+                        <FontAwesomeIcon icon={faDiamond} rel="3" /></li>
                     <li className="selec">
-                        <FontAwesomeIcon icon={faDiamond} rel="4"/></li>
+                        <FontAwesomeIcon icon={faDiamond} rel="4" /></li>
                     <li className="selec">
-                        <FontAwesomeIcon icon={faDiamond} rel="5"/></li>
+                        <FontAwesomeIcon icon={faDiamond} rel="5" /></li>
                     <li className="selec">
-                        <FontAwesomeIcon icon={faDiamond} rel="6"/></li>
+                        <FontAwesomeIcon icon={faDiamond} rel="6" /></li>
                 </ul>
             </div>
             {/*<div className="carrusel" id="inicio">

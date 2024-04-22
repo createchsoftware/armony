@@ -6,19 +6,22 @@
   font-family: "AbeatbyKai";
   font-style: normal;
   font-weight: normal;
-  src: url("../public/fuentes/abeatbyKaiRegular.otf");
+  src: url("../fuentes/abeatbyKaiRegular.otf");
+  /* Cambiar ../fuentes a ../public/fuentes durante desarrollo, quitar para comando npm run build */
 }
 @font-face {
   font-family: "Quinger";
   font-style: normal;
   font-weight: normal;
-  src: url("../public/fuentes/Quinger.otf");
+  src: url("../fuentes/Quinger.otf");
+  /* Cambiar ../fuentes a ../public/fuentes durante desarrollo, quitar para comando npm run build */
 }
 @font-face {
   font-family: "ILoveGlitter";
   font-style: normal;
   font-weight: normal;
-  src: url("../public/fuentes/I\ Love\ Glitter\ -\ OTF.otf");
+  src: url("../fuentes/I\ Love\ Glitter\ -\ OTF.otf");
+  /* Cambiar ../fuentes a ../public/fuentes durante desarrollo, quitar para comando npm run build */
 }
 
 * {
@@ -459,19 +462,6 @@ body {
   position: relative;
   perspective: 1000px;
 }
-.pilar-text {
-  position: absolute;
-  color: white;
-  text-align: center;
-  align-items: center;
-  display: flex;
-  text-align: center;
-  z-index: 1;
-  width: 80%;
-  left: 50%;
-  transform: translateX(-50%);
-  bottom: 42%;
-}
 .pilar {
   flex: 0 0 auto;
   width: 250px;
@@ -484,7 +474,16 @@ body {
   opacity: 0;
   object-fit: cover;
   transition: all 0.5s ease-out;
-  left: 50%;
+  margin: 0 auto;
+}
+.pilar-text {
+  position: absolute;
+  color: white;
+  display: flex;
+  z-index: 1;
+  font-size: 15px;
+  width: 80%;
+  margin: 0 auto;
 }
 .deg2 {
   position: absolute;
@@ -520,6 +519,10 @@ body {
   z-index: 1;
   opacity: 1;
 }
+.no2 .pilar-text,
+.no4 .pilar-text {
+  font-size: 18px;
+}
 .no2 {
   left: 28%;
   transform: translateX(-50%);
@@ -530,6 +533,9 @@ body {
   z-index: 2;
   opacity: 1;
   cursor: pointer;
+}
+.no3 .pilar-text {
+  font-size: 22px;
 }
 .no4 {
   left: 72%;

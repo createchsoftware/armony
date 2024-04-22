@@ -1,11 +1,20 @@
 import { Fragment, useState } from 'react'
 import { Dialog, Disclosure, Popover, Transition } from '@headlessui/react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faBars } from '@fortawesome/free-solid-svg-icons';
+import { faBars, faCartShopping } from '@fortawesome/free-solid-svg-icons';
+import Carrito from './Carrito.jsx';
+import ModalLogin from './Login/ModalLogin.jsx';
 
-function Navbar() {
+function Navbar( ) {
+    const [cart, setCart, showModal, setShowModal] = useState(false);
+
+    const toggleCart = () => {
+        setCart(!cart)
+    };
+
     return (
-        <header className="header">
+        <>
+            <header className="header">
                 <div>
                     <nav className="nav" >
                         <a href="/">
@@ -16,7 +25,7 @@ function Navbar() {
                         </button>
                         <ul className="menu">
                             <li className="nav-menu-item">
-                                <a href="#" className="menu-link">
+                                <a href="/spa" className="menu-link">
                                     Inicio
                                 </a>
                             </li>
@@ -26,7 +35,7 @@ function Navbar() {
                                 </a>
                             </li>
                             <li className="nav-menu-item">
-                                <a href="#" className="menu-link">
+                                <a href="/spa/tienda" className="menu-link">
                                     Productos
                                 </a>
                             </li>
@@ -36,14 +45,29 @@ function Navbar() {
                                 </a>
                             </li>
                             <li className="nav-menu-item">
-                                <a href="#" className="menu-link menu-is">
-                                    Inicia sesión
-                                </a>
+                                <ModalLogin />
+                            </li>
+                            <li className="nav-menu-item">
+                                <button className="nav-cart" aria-label="Abrir Lista de Deseo" onClick={toggleCart}>
+                                    <FontAwesomeIcon icon={faCartShopping} />
+                                    <span className="badge badge-pill badge-warning text-xs">
+                                        {0}
+                                    </span>
+                                </button>
                             </li>
                         </ul>
                     </nav>
                 </div>
             </header>
+            {cart && (
+                <div className='cart-fondo'>
+                    <div className='cart-fx'>
+                        <Carrito cerrar={toggleCart}/>
+                    </div>
+                </div>
+            )}
+            
+        </>
     )
 }
 
