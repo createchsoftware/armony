@@ -8,8 +8,6 @@ import Productos from '../components/ui/Productos.jsx'
 import Favoritos from '../components/ui/Favoritos.jsx'
 import { Helmet } from "react-helmet";
 
-
-
 const Spa = () => {
   return (
     <>

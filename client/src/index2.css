@@ -591,6 +591,97 @@ body {
   margin: 100px auto;
 }
 
+/* CARRITO */
+.cart-fondo, .cart-fx{
+  width: 100vw;
+  height: 100vh;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  position: fixed;
+  z-index: 5;
+}
+.cart-fx{
+  background: rgba(0, 0, 0, 0.35);
+}
+.cart{
+  position: absolute;
+  top: 80px;
+  padding: 20px 20px;
+  width: 32%;
+  background-color: white;
+  border-radius: 8px;
+  right: 5%;
+}
+
+.cart-header{
+  display: flex;
+  padding-bottom: 8px;
+  justify-content: space-between;
+}
+
+.cart-empty{
+  font-size: 16px;
+  font-weight: bold;
+  margin-bottom: 16px;
+  text-align: center;
+}
+
+.cart-item{
+  background-color: rgb(150, 150, 150);
+  margin-bottom: 24px;
+  padding: 8px 12px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.cart-exit{
+  color: black;
+  transition: 0.3s;
+  font-size: 20px;
+}
+.cart-exit:hover{
+  color: rgb(236, 87, 102);
+}
+
+.cart-quan{
+  color: black;
+  transition: 0.3s;
+  font-size: 18px;
+}
+.cart-quan:hover{
+  color: rgb(255, 181, 167);
+}
+
+.cart-photo{
+  width: 15%;
+}
+
+
+.cart-remove{
+  color: black;
+  transition: 0.3s;
+  font-size: 22px;
+}
+.cart-remove:hover{
+  color: rgb(255, 181, 167);
+}
+
+#cart-mas{
+  background-color: rgb(69, 181, 156);
+  border-radius: 12px;
+  color: white;
+  padding: 4px 16px;
+  width: 100%;
+  text-align: right;
+  transition: ease 0.25s;
+}
+#cart-mas:hover{
+  background-color: rgb(3, 109, 99);
+  font-weight: bold;
+}
+
 /* ======================= RESPONSIVE */
 @media (max-width: 768px) {
   .header {
