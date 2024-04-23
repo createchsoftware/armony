@@ -1,13 +1,10 @@
 import { endConnection } from "../connection.js";
 import * as mysql from "mysql2";
 
-// const conexion = enableConnect();
 const messageError = "Ha ocurrido un error al ejecutar el query: ";
 
 // USUARIOS
-/* Funciona, pero si la password tiene encriptacion
-arroja el error 'ER_TRUNCATED_WRONG_VALUE_FOR_FIELD'*/
-//FALTA CERRAR CONEXION
+// CREATE FUNCIONAL
 export async function createUser(connection, data) {
   try {
     let insertUserQuery = "CALL addCliente(?, ?, ?, ?,?, ?, ?, ?);"; // Procedimiento almacenado en MySQL
@@ -15,41 +12,41 @@ export async function createUser(connection, data) {
       data.nom,
       data.ap,
       data.am,
-      data.mail,
+      data.email,
       data.tel,
       data.pass,
       data.tipo,
       data.img,
     ]); // parametros para el procedimiento
     const [rows, fields] = await connection.query(query); // Ejecutamos el query y almacenamos el resultado
-    return rows; // retornamos las filas afectadas
+    endConnection();
+    return rows[0]; // retornamos las filas afectadas
   } catch (err) {
     console.error(messageError, err);
   }
-  // endConnection(); // Cerramos la conexion
 }
 
-// READ
+// READ FUNCIONAL
 // Busqueda por Id
-// FALTA CERRAR CONEXION
 export async function readUserById(connection, data) {
   try {
     let readUserQuery = "CALL searchUserById(?)";
-    let query = mysql.format(readUserQuery, [data.idUser]);
-    const [rows, fields] = await connection.query(query);
-    return rows[0];
+    let query = mysql.format(readUserQuery, [data.idUser]); // Parametros
+    const [rows, fields] = await connection.query(query); // Ejecutamos query y guardamos resultados
+    endConnection(); // Cerramos conexion con la DB
+    return rows[0]; // Retornamos valores
   } catch (err) {
     console.error(messageError, err);
   }
-  // connection.endConnection();
 }
 
 export async function readUserByNP(connection, data) {
   try {
     let readUserByNPQuery = "CALL searchClienteByNombreApellido(?)";
-    let query = mysql.format(readUserByNPQuery, [data.nomAp]);
-    const [rows, fields] = await connection.query(query);
-    return rows[0];
+    let query = mysql.format(readUserByNPQuery, [data.nomAp]); // Parametros
+    const [rows, fields] = await connection.query(query); // Ejecutamos query y guardamos valores
+    endConnection(); // Cerramos conexion
+    return rows[0]; // Retornamos valores
   } catch (err) {
     console.error(messageError, err);
   }
@@ -58,9 +55,10 @@ export async function readUserByNP(connection, data) {
 export async function deleteUserById(connection, data) {
   try {
     let deleteUserQuery = "CALL delUsuario(?)";
-    let query = mysql.format(deleteUserQuery, [data.idUsuario]);
-    const [rows, fields] = await connection.query(query);
-    return rows;
+    let query = mysql.format(deleteUserQuery, [data.idUsuario]); // Parametros
+    const [rows, fields] = await connection.query(query); // Ejecutamos query y guardamos resultado
+    endConnection(); // Cerramos conexion con la DB
+    return rows[0]; // Retornamos valores
   } catch (err) {
     console.error(messageError, err);
   }
@@ -68,21 +66,21 @@ export async function deleteUserById(connection, data) {
 
 // UPDATE
 
-// INFO
-// FALTA PROBARLO
+// INFO FUNCIONAL
 export async function updateInfoUser(connection, data) {
   try {
     let updateInfoUserQuery = "CALL updUsuarioInfo(?, ?, ?, ?, ?, ?)";
     let query = mysql.format(updateInfoUserQuery, [
-      data.id,
-      data.nombre,
-      data.apPaterno,
-      data.apMaterno,
+      data.idUser,
+      data.name,
+      data.ap,
+      data.am,
       data.email,
       data.phone,
-    ]);
-    const [rows, fields] = await connection.query(query);
-    return rows;
+    ]); // Parametros
+    const [rows, fields] = await connection.query(query); // Ejecutamos query y almacenamos los valores
+    endConnection(); // Cerramos la conexion
+    return rows[0]; // Retornamos los valores
   } catch (err) {
     console.error(messageError, err);
   }
@@ -92,7 +90,7 @@ export async function updateInfoUser(connection, data) {
 export async function updateImgUser(connection, data) {
   try {
     let updateImgUserQuery = "CALL updUsuarioImg(?, ?)";
-    let query = mysql.format(updateImgUserQuery, [data.idUser, data.img]);
+    let query = mysql.format(updateImgUserQuery, [data.idUser, data.newImg]);
     const [rows, fields] = await connection.query(query);
     return rows;
   } catch (err) {
@@ -107,7 +105,7 @@ export async function updatePassUser(connection, data) {
     let updatePassUserQuery = "CALL updUsuarioPass(?, ?)";
     let query = mysql.format(updatePassUserQuery, [data.idUser, data.pass]);
     const [rows, fields] = await connection.query(query);
-    return rows;
+    return rows[0];
   } catch (err) {
     console.error(messageError, err);
   }

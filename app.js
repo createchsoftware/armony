@@ -15,6 +15,8 @@ import { routerServicio } from "./routers/servicios.js";
 app.use("/api/admin/servicios", routerServicio);
 import { routerEmpleado } from "./routers/empleados.js";
 app.use("/api/admin/empleados", routerEmpleado);
+import { routerProveedor } from "./routers/proveedores.js";
+app.use("/api/admin/proveedor", routerProveedor);
 
 // Middleware
 app.use(express.json());

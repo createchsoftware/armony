@@ -11,9 +11,11 @@ import {
 } from "../DB/query/queryUser.js";
 
 export const routerUser = express.Router();
+routerUser.use(express.json());
 
 const messageError = "Ha ocurrido un error al procesar tu peticion: ";
-const connection = await enableConnect(); // PENDIENTE A PROBAR
+const connection = await enableConnect();
+
 // USER
 // CREATE
 // FUNCIONAL
@@ -33,7 +35,7 @@ routerUser.post("/create", async (req, res) => {
     res.send(resultado);
   } catch (err) {
     console.error(messageError, err);
-    res.status(500).send(messageError);
+    res.status(500).send(messageError, err);
   }
 });
 
@@ -47,11 +49,12 @@ routerUser.get("/read/id/:id", async (req, res) => {
     res.send(JSON.stringify(resultado));
   } catch (err) {
     console.error(messageError, err);
-    res.status(500).send(messageError);
+    res.status(500).send(messageError, err);
   }
 });
 
 // READ BY NAME & LAST NAME
+// PENDIENTE (FALLA EN LA DB)
 routerUser.get("/read/nomAp/:nomAp", async (req, res) => {
   try {
     const resultado = await readUserByNP(connection, {
@@ -62,55 +65,73 @@ routerUser.get("/read/nomAp/:nomAp", async (req, res) => {
     res.status(200).send(JSON.stringify(resultado));
   } catch (err) {
     console.error(messageError, err);
-    res.status(500).send(messageError);
+    res.status(500).send(messageError, err);
   }
 });
 
 // UPDATE
 // INFO
-routerUser.put("/updateInfo/", async (req, res) => {
+routerUser.patch("/updateInfo/", async (req, res) => {
   try {
-    const usuarioNew = req.body;
-    const resultado = await updateInfoUser(connection, usuarioNew);
-    res.status(200).send(resultado);
+    const { idUser, name, ap, am, email, phone } = req.body;
+    const resultado = await updateInfoUser(connection, {
+      idUser: req.body.idUser,
+      name: req.body.name,
+      ap: req.body.ap,
+      am: req.body.am,
+      email: req.body.email,
+      phone: req.body.phone,
+    });
+    res.status(201).json({
+      message: "Usuario actualizado correctamente",
+      data: { idUser, name, ap, am, email, phone },
+    });
   } catch (err) {
     console.error(messageError, err);
-    res.status(500).send(messageError);
+    res.status(500).send(messageError, err);
   }
 });
 
 // IMG
 routerUser.patch("/updateImg/:id/img", async (req, res) => {
   try {
-    datos = req.body;
-    const usuarioImgNew = await updateImgUser(connection, datos);
+    const img = req.body.img;
+    const usuarioImgNew = await updateImgUser(connection, {
+      idUser: req.params.id,
+      newImg: img,
+    });
     res.status(200).send(usuarioImgNew);
   } catch (err) {
-    console.error(messageError);
-    res.status(500).send(messageError);
+    console.error(messageError, err);
+    res.status(500).send(messageError, err);
   }
 });
 
 // PASSWORD
 routerUser.patch("/update/password", async (req, res) => {
   try {
-    pass = req.body;
-    const usuarioNewPass = await updatePassUser(connection, pass);
-    res.status(200).send(usuarioNewPass);
+    const { idUser, pass } = req.body;
+    const usuarioNewPass = await updatePassUser(connection, {
+      idUser: req.body.idUser,
+      pass: req.body.pass,
+    });
+    res.status(201).json({ message: "Contraseña actualizada correctamente" });
   } catch (err) {
     console.error(messageError, err);
-    res.status(500).send(messageError);
+    res.status(500).send(messageError, err);
   }
 });
 
 // DELETE
-// Pendiente a resolver
-routerUser.delete("/delete", async (req, res) => {
+// FUNCIONA
+routerUser.delete("/delete/:id", async (req, res) => {
   try {
-    const resultado = await deleteUserById(connection, { idUsuario: 6 });
-    res.send("Usuario eliminado: ", resultado);
+    const resultado = await deleteUserById(connection, {
+      idUsuario: req.params.id,
+    });
+    res.send(resultado);
   } catch (err) {
     console.error(messageError, err);
-    res.status(500).send(messageError);
+    res.status(500).send(messageError, err);
   }
 });

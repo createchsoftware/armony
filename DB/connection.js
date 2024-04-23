@@ -22,8 +22,10 @@ export async function enableConnect() {
   }
 }
 
+export const conexion = await enableConnect();
+
 // NO FUNCIONA, NO CIERRA LA CONEXION
 export async function endConnection() {
-  await console.log("RELEASE CONNECTION");
-  await connection.end();
+  console.log("RELEASE CONNECTION");
+  await conexion.end();
 }
