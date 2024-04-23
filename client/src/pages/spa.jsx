@@ -10,13 +10,20 @@ import { Helmet } from "react-helmet";
 
 
 
+
 const Spa = () => {
+
+  
+
   return (
     <>
-      {/*Pagina SPA */}
+    <script src="/socket.io/socket.io.js"></script>
+      {/*Pagina SPA */  socket = io()}
       <Helmet>
+      
         <script src="../../scripts/index.js"></script>
       </Helmet>
+      
       <Navbar />
       <Hero />
       <Presentacion />
