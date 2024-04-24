@@ -9,11 +9,11 @@ export async function createUser(connection, data) {
   try {
     let insertUserQuery = "CALL addCliente(?, ?, ?, ?,?, ?, ?, ?);"; // Procedimiento almacenado en MySQL
     let query = mysql.format(insertUserQuery, [
-      data.nom,
+      data.name,
       data.ap,
       data.am,
       data.email,
-      data.tel,
+      data.phone,
       data.pass,
       data.tipo,
       data.img,
@@ -42,8 +42,8 @@ export async function readUserById(connection, data) {
 
 export async function readUserByNP(connection, data) {
   try {
-    let readUserByNPQuery = "CALL searchClienteByNombreApellido(?)";
-    let query = mysql.format(readUserByNPQuery, [data.nomAp]); // Parametros
+    let readUserByNPQuery = "CALL searchClienteByNombreApellido(?, ?, ?)";
+    let query = mysql.format(readUserByNPQuery, [data.name, data.ap, data.am]); // Parametros
     const [rows, fields] = await connection.query(query); // Ejecutamos query y guardamos valores
     endConnection(); // Cerramos conexion
     return rows[0]; // Retornamos valores
@@ -52,9 +52,10 @@ export async function readUserByNP(connection, data) {
   }
 }
 
+// DELETE FUNCIONAL
 export async function deleteUserById(connection, data) {
   try {
-    let deleteUserQuery = "CALL delUsuario(?)";
+    let deleteUserQuery = "CALL delCliente(?)";
     let query = mysql.format(deleteUserQuery, [data.idUsuario]); // Parametros
     const [rows, fields] = await connection.query(query); // Ejecutamos query y guardamos resultado
     endConnection(); // Cerramos conexion con la DB
@@ -85,8 +86,7 @@ export async function updateInfoUser(connection, data) {
     console.error(messageError, err);
   }
 }
-// IMG
-// FALTA PROBARLO
+// IMG FUNCIONAL (FALTA MODULO PARA CARGA DE ARCHIVOS)
 export async function updateImgUser(connection, data) {
   try {
     let updateImgUserQuery = "CALL updUsuarioImg(?, ?)";

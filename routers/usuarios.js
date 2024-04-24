@@ -21,18 +21,21 @@ const connection = await enableConnect();
 // FUNCIONAL
 routerUser.post("/create", async (req, res) => {
   try {
-    // const { nombre, ap, am, mail, tel, pass, tipo } = req.body;
+    const { name, ap, am, email, phone, pass, tipo, img } = req.body;
     const resultado = await createUser(connection, {
-      nom: "Brandon",
-      ap: "Badillo",
-      am: "Jimenez",
-      mail: "a21490524@itmexicali.edu.mx",
-      tel: "6864567890",
-      pass: "4rM0nyS3cure!",
-      tipo: 1,
-      img: null,
+      name: req.body.name,
+      ap: req.body.ap,
+      am: req.body.am,
+      email: req.body.email,
+      phone: req.body.phone,
+      pass: req.body.pass,
+      tipo: req.body.tipo,
+      img: req.body.img,
     });
-    res.send(resultado);
+    resultado = JSON.stringify(resultado);
+    res
+      .status(201)
+      .json({ message: "El usuario se creo exitosamente", data: resultado });
   } catch (err) {
     console.error(messageError, err);
     res.status(500).send(messageError, err);
@@ -53,23 +56,27 @@ routerUser.get("/read/id/:id", async (req, res) => {
   }
 });
 
-// READ BY NAME & LAST NAME
-// PENDIENTE (FALLA EN LA DB)
-routerUser.get("/read/nomAp/:nomAp", async (req, res) => {
+// READ BY NAME & LAST NAME FUNCIONAL
+routerUser.get("/read/nomAp", async (req, res) => {
   try {
+    const { name, ap, am } = req.body; // Parametros para el body
     const resultado = await readUserByNP(connection, {
-      nomAp: req.params.nomAp,
-    });
+      name: req.body.name,
+      ap: req.body.ap,
+      am: req.body.am,
+    }); // Parametros obtenidos por body
     if (resultado.length === 0)
       res.status(500).send("No se encontro el usuario.");
-    res.status(200).send(JSON.stringify(resultado));
+    res
+      .status(201)
+      .json({ message: "Se encontro el usuario", data: name, ap, am });
   } catch (err) {
     console.error(messageError, err);
     res.status(500).send(messageError, err);
   }
 });
 
-// UPDATE
+// UPDATE FUNCIONAL
 // INFO
 routerUser.patch("/updateInfo/", async (req, res) => {
   try {
@@ -92,22 +99,27 @@ routerUser.patch("/updateInfo/", async (req, res) => {
   }
 });
 
-// IMG
+// IMG FUNCIONAL
 routerUser.patch("/updateImg/:id/img", async (req, res) => {
   try {
-    const img = req.body.img;
-    const usuarioImgNew = await updateImgUser(connection, {
+    const img = req.body;
+    const idUser = req.params;
+    await updateImgUser(connection, {
       idUser: req.params.id,
-      newImg: img,
+      newImg: req.body.img,
     });
-    res.status(200).send(usuarioImgNew);
+    res.status(201).json({
+      message: "Se actualizo correctamente la imagen",
+      data: idUser,
+      img,
+    });
   } catch (err) {
     console.error(messageError, err);
     res.status(500).send(messageError, err);
   }
 });
 
-// PASSWORD
+// PASSWORD FUNCIONAL
 routerUser.patch("/update/password", async (req, res) => {
   try {
     const { idUser, pass } = req.body;
@@ -122,14 +134,17 @@ routerUser.patch("/update/password", async (req, res) => {
   }
 });
 
-// DELETE
-// FUNCIONA
+// DELETE FUNCIONAL
 routerUser.delete("/delete/:id", async (req, res) => {
+  const idUsuario = req.params;
   try {
     const resultado = await deleteUserById(connection, {
       idUsuario: req.params.id,
     });
-    res.send(resultado);
+    res.status(201).json({
+      message: "El usuario se elimino corectamente.",
+      data: idUsuario,
+    });
   } catch (err) {
     console.error(messageError, err);
     res.status(500).send(messageError, err);
