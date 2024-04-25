@@ -12,7 +12,7 @@ app.use("/api/admin/productos", routerProductos);
 import { routerServicio } from "./routers/servicios.js";
 app.use("/api/admin/servicios", routerServicio);
 import { routerEmpleado } from "./routers/empleados.js";
-app.use("/api/admin/empleados", routerEmpleado);
+app.use("/api/admin/empleado", routerEmpleado);
 import { routerProveedor } from "./routers/proveedores.js";
 app.use("/api/admin/proveedor", routerProveedor);
 import { routerSucursal } from "./routers/sucursal.js";

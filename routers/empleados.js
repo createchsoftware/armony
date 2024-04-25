@@ -5,6 +5,7 @@ import {
   readEmpleadoById,
   readEmpleadoByNombre,
   updateEmpleado,
+  deleteEmpleadoById,
 } from "../DB/query/queryEmpleado.js";
 
 export const routerEmpleado = express.Router();
@@ -32,7 +33,7 @@ routerEmpleado.post("/create", async (req, res) => {
       colonia,
       numero,
     } = req.body;
-    await createEmpleado(connection, {
+    const resultado = await createEmpleado(connection, {
       name: req.body.name,
       ap: req.body.ap,
       am: req.body.am,
@@ -48,7 +49,9 @@ routerEmpleado.post("/create", async (req, res) => {
       numero: req.body.numero,
     }); // Parametros
 
-    res.status(201).json({ message: "Empleada creada exitosamente" });
+    res
+      .status(201)
+      .json({ message: "Empleada creada exitosamente", data: resultado });
   } catch (err) {
     console.error(messageError, err);
     res.status(500).send(messageError);
@@ -89,7 +92,7 @@ routerEmpleado.get("/read/name", async (req, res) => {
   }
 });
 
-// UPDATE PENDIENTE A PROBAR
+// UPDATE FUNCIONAL
 routerEmpleado.patch("/update", async (req, res) => {
   try {
     const { idEmp, checkIn, checkOut, act, calle, colonia, numero } = req.body;
@@ -107,4 +110,15 @@ routerEmpleado.patch("/update", async (req, res) => {
     console.error(messageError, err);
     res.status(500).send(messageError);
   }
+});
+
+// DELETE FUNCIONAL
+routerEmpleado.delete("/delete", async (req, res) => {
+  const { idEmp } = req.body;
+  const resultado = await deleteEmpleadoById(connection, {
+    idEmp: req.body.idEmp,
+  });
+  res
+    .status(201)
+    .json({ message: "Empleada eliminada correctamente", data: resultado });
 });

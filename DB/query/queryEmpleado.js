@@ -60,7 +60,7 @@ export async function readEmpleadoByNombre(connection, data) {
   }
 }
 
-// FALTA PROCEDIMIENTO
+// UPDATE FUNCIONAL
 export async function updateEmpleado(connection, data) {
   try {
     let updateEmpQuery = "CALL updEmpleado(?, ?, ?, ?, ?, ?, ?)";
@@ -75,15 +75,20 @@ export async function updateEmpleado(connection, data) {
     ]);
     const [rows, fields] = await connection.query(query);
     endConnection();
-    return rows[0];
+    return rows;
   } catch (err) {
     console.error(messageError, err);
   }
 }
 
-// FALTA PROCEDIMIENTO
+// DELETE FUNCIONAL
 export async function deleteEmpleadoById(connection, data) {
   try {
+    let deleteEmpQuery = "CALL delEmpleado(?)";
+    let query = mysql.format(deleteEmpQuery, [data.idEmp]);
+    const [rows, fields] = await connection.query(query);
+    endConnection();
+    return rows;
   } catch (err) {
     console.error(messageError, err);
   }
