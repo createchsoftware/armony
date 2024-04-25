@@ -74,7 +74,7 @@ export async function updateSucursal(connection, data) {
   }
 }
 
-// DELETE
+// DELETE FUNCIONAL
 export async function deleteSucursal(connection, data) {
   try {
     let deleteSucur = "CALL delSucursal(?)";

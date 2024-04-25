@@ -3,8 +3,27 @@ import * as mysql from "mysql2";
 
 const messageError = "Ha ocurrido un error al ejecutar el query: ";
 
-// CREATE
-// FALTA ACTUALIZAR LAS LLAVER FORANEA CON INVENTARIO DENTRO DE LA DB
+// CREATE SERVICIOS FUNCIONAL
+export async function createServicios(connection, data) {
+  try {
+    let insertServQuery = "CALL addServicio(?, ?, ?, ?, ?)";
+    let query = mysql.format(insertServQuery, [
+      data.name,
+      data.price,
+      data.descr,
+      data.time,
+      data.pilar,
+    ]);
+    const rows = await connection.query(query);
+    endConnection();
+    return rows;
+  } catch (err) {
+    console.error(messageError, err);
+  }
+}
+
+// CREATE PRODUCTOS FUNCIONAL
+/* NOTA: DEBE EXISTIR LA SUCURSAL PARA PODER HACER LA ALTA */
 export async function createProducto(connection, data) {
   try {
     let insertProductoQuery = "CALL addProducto(?, ?, ?, ?, ?, ?)";
@@ -16,7 +35,7 @@ export async function createProducto(connection, data) {
       data.suc,
       data.stockIni,
     ]); // Parametros
-    const [rows, fields] = await connection.query(query); // Ejecutamos query y guardamos resultado
+    const rows = await connection.query(query); // Ejecutamos query y guardamos resultado
     endConnection(); // Cerramos conexion
     return rows[0]; // Retornamos valores
   } catch (err) {
@@ -24,8 +43,8 @@ export async function createProducto(connection, data) {
   }
 }
 
-// READ BY ID
-export async function readProductoById(connection, data) {
+// READ BY ID FUNCIONAL
+export async function readProdServById(connection, data) {
   try {
     let searchProductoId = "CALL searchProdServById(?)";
     let query = mysql.format(searchProductoId, [data.idProdServ]); // Parametros
@@ -38,7 +57,7 @@ export async function readProductoById(connection, data) {
 }
 
 // READ BY CATEGORIA
-export async function readProductoByCategoria(connection, data) {
+export async function readProdServByCategoria(connection, data) {
   try {
     let searchProductoCategoria = "CALL searchProdServByCategoria(?)";
     let query = mysql.format(searchProductoCategoria, [data.categoria]); // Parametros
@@ -50,17 +69,17 @@ export async function readProductoByCategoria(connection, data) {
   }
 }
 
-// UPDATE
-export async function updateProducto(connection, data) {
+// UPDATE FUNCIONAL
+export async function updateProdServ(connection, data) {
   try {
     let updateProdQuery = "CALL updProdServ(?, ?, ?, ?, ?, ?, ?)";
     let query = mysql.format(updateProdQuery, [
-      data.idProd,
+      data.idProdServ,
       data.name,
       data.price,
       data.descr,
-      data.est,
-      data.tiem,
+      data.status,
+      data.time,
       data.img,
     ]); // Parametros
     const [rows, fields] = await connection.query(query); // Ejecutamos y guardamos valores
@@ -71,11 +90,11 @@ export async function updateProducto(connection, data) {
   }
 }
 
-// DELETE
-export async function deleteProducto(connection, data) {
+// DELETE FUNCIONAL
+export async function deleteProdServ(connection, data) {
   try {
     let deleteProdQuery = "CALL delProdServ(?)";
-    let query = mysql.format(deleteProdQuery, [data.idProd]); // Parametros
+    let query = mysql.format(deleteProdQuery, [data.idProdServ]); // Parametros
     const [rows, fields] = await connection.query(query); // Ejecutamos y guardamos valores
     endConnection(); // Cierre de conexion
     return rows[0]; // Retornamos valores
@@ -88,7 +107,7 @@ export async function deleteProducto(connection, data) {
 export async function deleteProdCat(connection, data) {
   try {
     let deleteProdCatQuery = "CALL delPSCategoria(?, ?)";
-    let query = mysql.format(deleteProdCatQuery, [data.idProd, data.idCat]);
+    let query = mysql.format(deleteProdCatQuery, [data.idProdServ, data.idCat]);
     const [rows, fields] = await connection.query(query);
     endConnection();
     return rows[0];

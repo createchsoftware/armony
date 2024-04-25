@@ -6,9 +6,10 @@ const messageError = "Ha ocurrido un error al ejecutar el query: ";
 // CREATE FUNCIONAL
 export async function createEmpleado(connection, data) {
   try {
-    let insertQueryEmpleado = "CALL addEmpleado(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+    let insertQueryEmpleado =
+      "CALL addEmpleado(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
     let query = mysql.format(insertQueryEmpleado, [
-      data.nom,
+      data.name,
       data.ap,
       data.am,
       data.email,
@@ -16,8 +17,11 @@ export async function createEmpleado(connection, data) {
       data.pass,
       data.tipo,
       data.img,
-      data.horaE,
-      data.horaS,
+      data.checkIn,
+      data.checkOut,
+      data.calle,
+      data.colonia,
+      data.numero,
     ]); // Parametros para el procedimiento
     const [rows, fields] = await connection.query(query); // Ejecutamos el query
     endConnection(); // Cerramos conexion con la DB
@@ -26,7 +30,7 @@ export async function createEmpleado(connection, data) {
     console.error(messageError, err);
   }
 }
-
+// READ BY ID FUNCIONAL
 export async function readEmpleadoById(connection, data) {
   try {
     let readEmpleadoIdQuery = "CALL searchEmpleadoById(?)";
@@ -39,13 +43,18 @@ export async function readEmpleadoById(connection, data) {
   }
 }
 
+// READ BY NAME FUNCIONAL
 export async function readEmpleadoByNombre(connection, data) {
   try {
-    let readEmpleadoNomQuery = "CALL searchEmpleadoByNombreApellido(?)";
-    let query = mysql.format(readEmpleadoNomQuery, [data.nom]);
+    let readEmpleadoNomQuery = "CALL searchEmpleadoByNombreApellido(?, ?, ?)";
+    let query = mysql.format(readEmpleadoNomQuery, [
+      data.name,
+      data.ap,
+      data.am,
+    ]);
     const [rows, fields] = await connection.query(query);
     endConnection(); // Cerramos la conexion con la DB
-    return rows[0]; // Regresamos las filas afectadas
+    return rows; // Regresamos las filas afectadas
   } catch (err) {
     console.error(messageError, err);
   }
@@ -54,6 +63,19 @@ export async function readEmpleadoByNombre(connection, data) {
 // FALTA PROCEDIMIENTO
 export async function updateEmpleado(connection, data) {
   try {
+    let updateEmpQuery = "CALL updEmpleado(?, ?, ?, ?, ?, ?, ?)";
+    let query = mysql.format(updateEmpQuery, [
+      data.idEmp,
+      data.checkIn,
+      data.checkOut,
+      data.act,
+      data.calle,
+      data.colonia,
+      data.numero,
+    ]);
+    const [rows, fields] = await connection.query(query);
+    endConnection();
+    return rows[0];
   } catch (err) {
     console.error(messageError, err);
   }

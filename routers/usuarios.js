@@ -49,7 +49,7 @@ routerUser.get("/read/id/:id", async (req, res) => {
     const resultado = await readUserById(connection, { idUser: req.params.id });
     if (resultado.length === 0)
       res.status(500).send("No se encontro el usuario.");
-    res.send(JSON.stringify(resultado));
+    res.status(201).json({ message: "Usuario encontrado ", data: resultado });
   } catch (err) {
     console.error(messageError, err);
     res.status(500).send(messageError, err);

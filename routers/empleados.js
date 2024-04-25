@@ -4,6 +4,7 @@ import {
   createEmpleado,
   readEmpleadoById,
   readEmpleadoByNombre,
+  updateEmpleado,
 } from "../DB/query/queryEmpleado.js";
 
 export const routerEmpleado = express.Router();
@@ -13,36 +14,95 @@ const connection = await enableConnect();
 
 const messageError = "Ha ocurrido un error al procesar tu peticion: ";
 
-routerEmpleado.get("/create", async (req, res) => {
+// CREATE FUNCIONAL
+routerEmpleado.post("/create", async (req, res) => {
   try {
-    const horaE = new Date();
-    const horaF = new Date();
-    horaE.setHours(12, 0, 0);
-    horaF.setHours(8, 0, 0);
-    const resultado = await createEmpleado(connection, {
-      nom: "Armando",
-      ap: "Armendariz",
-      am: "Magaña",
-      email: "armando@correo.com",
-      phone: "1234567890",
-      pass: "armandoArmendariz",
-      tipo: 1,
-      img: null,
-      horaE: horaE,
-      horaS: horaF,
-    });
-    res.send(resultado);
+    const {
+      name,
+      ap,
+      am,
+      email,
+      phone,
+      pass,
+      tipo,
+      img,
+      checkIn,
+      checkOut,
+      calle,
+      colonia,
+      numero,
+    } = req.body;
+    await createEmpleado(connection, {
+      name: req.body.name,
+      ap: req.body.ap,
+      am: req.body.am,
+      email: req.body.email,
+      phone: req.body.phone,
+      pass: req.body.pass,
+      tipo: req.body.tipo,
+      img: req.body.img,
+      checkIn: req.body.checkIn,
+      checkOut: req.body.checkOut,
+      calle: req.body.calle,
+      colonia: req.body.colonia,
+      numero: req.body.numero,
+    }); // Parametros
+
+    res.status(201).json({ message: "Empleada creada exitosamente" });
   } catch (err) {
     console.error(messageError, err);
     res.status(500).send(messageError);
   }
 });
 
-// READ FUNCIONAL
+// READ BY ID FUNCIONAL
 routerEmpleado.get("/read", async (req, res) => {
   try {
-    const resultado = await readEmpleadoById(connection, { idEmp: 14 });
-    res.send(resultado);
+    const { idEmp } = req.body;
+    const resultado = await readEmpleadoById(connection, {
+      idEmp: req.body.idEmp,
+    });
+    res
+      .status(201)
+      .json({ message: "Empleada encontrada con exito", data: resultado });
+  } catch (err) {
+    console.error(messageError, err);
+    res.status(500).send(messageError);
+  }
+});
+
+// READ BY NAME FUNCIONAL
+routerEmpleado.get("/read/name", async (req, res) => {
+  try {
+    const { name, ap, am } = req.body;
+    const resultado = await readEmpleadoByNombre(connection, {
+      name: req.body.name,
+      ap: req.body.ap,
+      am: req.body.am,
+    }); // Parametros y ejecutamos la peticion
+    res
+      .status(201)
+      .json({ message: "Se encontro el usuario", data: resultado });
+  } catch (err) {
+    console.error(messageError, err);
+    res.status(500).send(messageError);
+  }
+});
+
+// UPDATE PENDIENTE A PROBAR
+routerEmpleado.patch("/update", async (req, res) => {
+  try {
+    const { idEmp, checkIn, checkOut, act, calle, colonia, numero } = req.body;
+    const resultado = await updateEmpleado(connection, {
+      idEmp: req.body.idEmp,
+      checkIn: req.body.checkIn,
+      checkOut: req.body.checkOut,
+      act: req.body.act,
+      calle: req.body.calle,
+      colonia: req.body.colonia,
+      numero: req.body.numero,
+    });
+    res.status(201).json({ message: "Empleada actualizado", data: resultado });
   } catch (err) {
     console.error(messageError, err);
     res.status(500).send(messageError);

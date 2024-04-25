@@ -34,7 +34,7 @@ routerSucursal.post("/create", async (req, res) => {
   }
 });
 
-// READ BY ID
+// READ BY ID FUNCIONAL
 routerSucursal.get("/read/id", async (req, res) => {
   try {
     const { idSuc } = req.body;
@@ -45,7 +45,7 @@ routerSucursal.get("/read/id", async (req, res) => {
   }
 });
 
-// READ BY ADDRESS
+// READ BY ADDRESS FUNCIONAL
 routerSucursal.get("/read/address", async (req, res) => {
   try {
     const { calle, colonia, numero } = req.body;
@@ -65,7 +65,7 @@ routerSucursal.get("/read/address", async (req, res) => {
   }
 });
 
-// UPDATE
+// UPDATE FUNCIONAL
 routerSucursal.patch("/update", async (req, res) => {
   try {
     const { idSuc, calle, colonia, numero, cp, apertura, cierre } = req.body;
@@ -92,7 +92,7 @@ routerSucursal.patch("/update", async (req, res) => {
   }
 });
 
-// DELETE
+// DELETE FUNCIONAL
 routerSucursal.delete("/delete", async (req, res) => {
   try {
     const { idSuc } = req.body;

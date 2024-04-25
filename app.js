@@ -1,6 +1,4 @@
 import express from "express";
-import mysql from "mysql2";
-import { enableConnect, endConnection } from "./DB/connection.js";
 import { servidor } from "./data/datos.js";
 const app = express();
 
@@ -19,6 +17,8 @@ import { routerProveedor } from "./routers/proveedores.js";
 app.use("/api/admin/proveedor", routerProveedor);
 import { routerSucursal } from "./routers/sucursal.js";
 app.use("/api/admin/sucursal", routerSucursal);
+import { routerCategoria } from "./routers/categoria.js";
+app.use("api/admin/categoria", routerCategoria);
 
 // Middleware
 app.use(express.json());
