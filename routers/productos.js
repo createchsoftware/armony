@@ -7,11 +7,15 @@ import {
   updateProdServ,
   deleteProdServ,
 } from "../DB/query/queryProductos.js";
+
+// Router
 export const routerProductos = express.Router();
-routerProductos.use(express.json());
+
+// Middleware
+routerProductos.use(express.json()); //  Analiza las request entrantes con carga JSON basado en body-parse
 
 const messageError = "Ha ocurrido un error al procesar tu peticion: ";
-const connection = await enableConnect();
+const connection = await enableConnect(); // Almacenamos la conexion con la base de datos
 
 // CREATE
 routerProductos.post("/create", async (req, res) => {
@@ -24,7 +28,7 @@ routerProductos.post("/create", async (req, res) => {
       pilar: req.body.pilar,
       suc: req.body.suc,
       stockIni: req.body.stockIni,
-    });
+    }); // Parametros enviados por body
     res.status(201).json({
       message: "El producto se creo correctamente",
       data: name,
@@ -33,10 +37,11 @@ routerProductos.post("/create", async (req, res) => {
       descr,
       suc,
       stockIni,
-    });
+    }); // Status Created, mandamos informacion en formato JSON
   } catch (err) {
-    console.error(messageError, err);
-    res.status(500).send(messageError, err);
+    // Capturamos errores
+    console.error(messageError, err); // Mostramos errores por consola
+    res.status(500).send(messageError, err); // Enviamos un error INTERNAL SERVER ERROR y el error al navegador
   }
 });
 
@@ -46,14 +51,18 @@ routerProductos.get("/read/id", async (req, res) => {
     const { idProdServ } = req.body;
     const resultado = await readProdServById(connection, {
       idProdServ: req.body.idProdServ,
-    });
-    const row = resultado[0];
+    }); // Parametros enviados por body
     res
-      .status(201)
-      .json({ message: "Se encontro el producto.", data: idProdServ, row });
+      .status(202)
+      .json({
+        message: "Se encontro el producto.",
+        data: idProdServ,
+        resultado,
+      }); // Status Accepted, mandamos informacion en formato JSON
   } catch (err) {
-    console.error(messageError, err);
-    res.status(500).send(messageError, err);
+    // Capturamos errores
+    console.error(messageError, err); // Mostramos errores por consola
+    res.status(500).send(messageError, err); // Enviamos un error INTERNAL SERVER ERROR y el error al navegador
   }
 });
 
@@ -64,11 +73,12 @@ routerProductos.get("/read/name", async (req, res) => {
     const { categoria } = req.body;
     const resultado = await readProdServByCategoria(connection, {
       categoria: req.body.categoria,
-    });
+    }); // Parametros enviados por body
     const row = resultado[0];
   } catch (err) {
-    console.error(messageError, err);
-    res.status(500).send(messageError, err);
+    // Capturamos errores
+    console.error(messageError, err); // Mostramos errores por consola
+    res.status(500).send(messageError, err); // Enviamos un error INTERNAL SERVER ERROR y el error al navegador
   }
 });
 
@@ -84,8 +94,8 @@ routerProductos.patch("/update", async (req, res) => {
       status: req.body.status,
       time: req.body.time,
       img: req.body.img,
-    });
-    res.status(201).json({
+    }); // Parametros enviados por body
+    res.status(202).json({
       message: "Se actualizo exitosamente el producto",
       data: idProdServ,
       name,
@@ -94,10 +104,11 @@ routerProductos.patch("/update", async (req, res) => {
       status,
       time,
       img,
-    });
+    }); // Status Accepted, mandamos informacion en formato JSON
   } catch (err) {
-    console.error(messageError, err);
-    res.status(500).send(messageError, err);
+    // Capturamos errores
+    console.error(messageError, err); // Mostramos errores por consola
+    res.status(500).send(messageError, err); // Enviamos un error INTERNAL SERVER ERROR y el error al navegador
   }
 });
 
@@ -107,15 +118,15 @@ routerProductos.delete("/delete", async (req, res) => {
     const { idProdServ } = req.body;
     const resultado = await deleteProdServ(connection, {
       idProdServ: req.body.idProdServ,
-    });
-    res
-      .status(201)
-      .json({
-        message: "Se elimino correctamente el producto",
-        data: idProdServ,
-      });
+    }); // Parametros enviados por body
+    res.status(202).json({
+      // Status Accepted
+      message: "Se elimino correctamente el producto",
+      data: idProdServ,
+    }); // Enviamos informacion en formato JSON
   } catch (err) {
-    console.error(messageError, err);
-    res.status(500).send(messageError, err);
+    // Capturamos errores
+    console.error(messageError, err); // Mostramos errores por consola
+    res.status(500).send(messageError, err); // Enviamos un error INTERNAL SERVER ERROR y el error al navegador
   }
 });

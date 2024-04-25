@@ -8,11 +8,13 @@ import {
   deleteEmpleadoById,
 } from "../DB/query/queryEmpleado.js";
 
+// Router
 export const routerEmpleado = express.Router();
-routerEmpleado.use(express.json());
 
-const connection = await enableConnect();
+// Middleware
+routerEmpleado.use(express.json()); // Analiza las request entrantes con carga JSON basado en body-parse
 
+const connection = await enableConnect(); // Almacenamos conexion de base de datos
 const messageError = "Ha ocurrido un error al procesar tu peticion: ";
 
 // CREATE FUNCIONAL
@@ -50,11 +52,12 @@ routerEmpleado.post("/create", async (req, res) => {
     }); // Parametros
 
     res
-      .status(201)
-      .json({ message: "Empleada creada exitosamente", data: resultado });
+      .status(201) // Status created
+      .json({ message: "Empleada creada exitosamente", data: resultado }); // Enviamos informacion en formato JSON
   } catch (err) {
-    console.error(messageError, err);
-    res.status(500).send(messageError);
+    // Capturamos errores
+    console.error(messageError, err); // Mostramos errores por consola
+    res.status(500).send(messageError); // Enviamos un error INTERNAL SERVER ERROR y el error al navegador
   }
 });
 
@@ -64,13 +67,14 @@ routerEmpleado.get("/read", async (req, res) => {
     const { idEmp } = req.body;
     const resultado = await readEmpleadoById(connection, {
       idEmp: req.body.idEmp,
-    });
+    }); // Parametros enviados por body
     res
-      .status(201)
-      .json({ message: "Empleada encontrada con exito", data: resultado });
+      .status(202) // Status Accepted
+      .json({ message: "Empleada encontrada con exito", data: resultado }); // Enviamos informacion en formato JSON
   } catch (err) {
-    console.error(messageError, err);
-    res.status(500).send(messageError);
+    // Capturamos errores
+    console.error(messageError, err); // Mostramos errores por consola
+    res.status(500).send(messageError); // Enviamos un error INTERNAL SERVER ERROR y el error al navegador
   }
 });
 
@@ -84,11 +88,12 @@ routerEmpleado.get("/read/name", async (req, res) => {
       am: req.body.am,
     }); // Parametros y ejecutamos la peticion
     res
-      .status(201)
-      .json({ message: "Se encontro el usuario", data: resultado });
+      .status(202) // Status Accepted
+      .json({ message: "Se encontro el usuario", data: resultado }); // Enviamos informacion en formato JSON
   } catch (err) {
-    console.error(messageError, err);
-    res.status(500).send(messageError);
+    // Capturamos errores
+    console.error(messageError, err); // Mostramos errores por consola
+    res.status(500).send(messageError); // Enviamos un error INTERNAL SERVER ERROR y el error al navegador
   }
 });
 
@@ -104,21 +109,28 @@ routerEmpleado.patch("/update", async (req, res) => {
       calle: req.body.calle,
       colonia: req.body.colonia,
       numero: req.body.numero,
-    });
-    res.status(201).json({ message: "Empleada actualizado", data: resultado });
+    }); // Parametros por body
+    res.status(202).json({ message: "Empleada actualizado", data: resultado }); // Status Accepted, enviamos informacion en formato JSON
   } catch (err) {
-    console.error(messageError, err);
-    res.status(500).send(messageError);
+    // Capturamos errores
+    console.error(messageError, err); // Mostramos errores por consola
+    res.status(500).send(messageError); // Enviamos un error INTERNAL SERVER ERROR y el error al navegador
   }
 });
 
 // DELETE FUNCIONAL
 routerEmpleado.delete("/delete", async (req, res) => {
-  const { idEmp } = req.body;
-  const resultado = await deleteEmpleadoById(connection, {
-    idEmp: req.body.idEmp,
-  });
-  res
-    .status(201)
-    .json({ message: "Empleada eliminada correctamente", data: resultado });
+  try {
+    const { idEmp } = req.body;
+    const resultado = await deleteEmpleadoById(connection, {
+      idEmp: req.body.idEmp,
+    }); // Parametro por body
+    res
+      .status(202) // Status Accepted
+      .json({ message: "Empleada eliminada correctamente", data: resultado }); // Enviamos informacion en formato JSON
+  } catch (err) {
+    // Capturamos errores
+    console.error(messageError, err); // Mostramos errores por consola
+    res.status(500).send(messageError); // Enviamos un error INTERNAL SERVER ERROR y el error al navegador
+  }
 });

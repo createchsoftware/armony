@@ -1,5 +1,7 @@
 import express from "express";
 import { servidor } from "./data/datos.js";
+
+// Objeto de express
 const app = express();
 
 // Routers
@@ -19,13 +21,16 @@ import { routerSucursal } from "./routers/sucursal.js";
 app.use("/api/admin/sucursal", routerSucursal);
 import { routerCategoria } from "./routers/categoria.js";
 app.use("api/admin/categoria", routerCategoria);
+import { routerEspecialidad } from "./routers/especialidad.js"; // NOTA: NO SE A PROBADO AUN, NO FUNCIONAL
+app.use("api/admin/especialidad", routerEspecialidad);
 
 // Middleware
-app.use(express.json());
+app.use(express.json()); // Analiza las request entrantes con carga JSON basado en body-parse
 
+// Pagina principal
 app.get("/api/admin", (req, res) => {
   res.send("Funcionando");
-}); // Pagina principal
+});
 
 app.listen(servidor.SERVER_PORT, () => {
   console.log(`Servidor en puerto ${servidor.SERVER_PORT}`);

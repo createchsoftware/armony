@@ -10,18 +10,19 @@ import {
   updatePassUser,
 } from "../DB/query/queryUser.js";
 
+// Router
 export const routerUser = express.Router();
-routerUser.use(express.json());
+
+// Middleware
+routerUser.use(express.json()); // Analiza las request entrantes con carga JSON basado en body-parse
 
 const messageError = "Ha ocurrido un error al procesar tu peticion: ";
-const connection = await enableConnect();
+const connection = await enableConnect(); // Almacenamos la conexion con la base de datos
 
-// USER
-// CREATE
-// FUNCIONAL
+// CREATE FUNCIONAL
 routerUser.post("/create", async (req, res) => {
   try {
-    const { name, ap, am, email, phone, pass, tipo, img } = req.body;
+    const { name, ap, am, email, phone, pass, tipo, img } = req.body; // Atributos para el body (Parametros de procedimiento)
     const resultado = await createUser(connection, {
       name: req.body.name,
       ap: req.body.ap,
@@ -31,14 +32,15 @@ routerUser.post("/create", async (req, res) => {
       pass: req.body.pass,
       tipo: req.body.tipo,
       img: req.body.img,
-    });
+    }); // Parametros obtenidos por body
     resultado = JSON.stringify(resultado);
     res
       .status(201)
-      .json({ message: "El usuario se creo exitosamente", data: resultado });
+      .json({ message: "El usuario se creo exitosamente", data: resultado }); // Status Created, enviamos informacion en formato JSON
   } catch (err) {
-    console.error(messageError, err);
-    res.status(500).send(messageError, err);
+    // Capturamos errores
+    console.error(messageError, err); // Mostramos errores por consola
+    res.status(500).send(messageError, err); // Enviamos un error INTERNAL SERVER ERROR y el error al navegador
   }
 });
 
@@ -51,7 +53,8 @@ routerUser.get("/read/id/:id", async (req, res) => {
       res.status(500).send("No se encontro el usuario.");
     res.status(201).json({ message: "Usuario encontrado ", data: resultado });
   } catch (err) {
-    console.error(messageError, err);
+    // Capturamos errores
+    console.error(messageError, err); // Mostramos errores por consola
     res.status(500).send(messageError, err);
   }
 });
@@ -59,7 +62,7 @@ routerUser.get("/read/id/:id", async (req, res) => {
 // READ BY NAME & LAST NAME FUNCIONAL
 routerUser.get("/read/nomAp", async (req, res) => {
   try {
-    const { name, ap, am } = req.body; // Parametros para el body
+    const { name, ap, am } = req.body; // Atributos para el body (Parametros de procedimiento)
     const resultado = await readUserByNP(connection, {
       name: req.body.name,
       ap: req.body.ap,
@@ -71,8 +74,9 @@ routerUser.get("/read/nomAp", async (req, res) => {
       .status(201)
       .json({ message: "Se encontro el usuario", data: name, ap, am });
   } catch (err) {
-    console.error(messageError, err);
-    res.status(500).send(messageError, err);
+    // Capturamos errores
+    console.error(messageError, err); // Mostramos errores por consola
+    res.status(500).send(messageError, err); // Enviamos un error INTERNAL SERVER ERROR y el error al navegador
   }
 });
 
@@ -80,7 +84,7 @@ routerUser.get("/read/nomAp", async (req, res) => {
 // INFO
 routerUser.patch("/updateInfo/", async (req, res) => {
   try {
-    const { idUser, name, ap, am, email, phone } = req.body;
+    const { idUser, name, ap, am, email, phone } = req.body; // Atributos para el body (Parametros de procedimiento)
     const resultado = await updateInfoUser(connection, {
       idUser: req.body.idUser,
       name: req.body.name,
@@ -88,14 +92,15 @@ routerUser.patch("/updateInfo/", async (req, res) => {
       am: req.body.am,
       email: req.body.email,
       phone: req.body.phone,
-    });
+    }); // Parametros obtenidos por body
     res.status(201).json({
       message: "Usuario actualizado correctamente",
       data: { idUser, name, ap, am, email, phone },
     });
   } catch (err) {
-    console.error(messageError, err);
-    res.status(500).send(messageError, err);
+    // Capturamos errores
+    console.error(messageError, err); // Mostramos errores por consola
+    res.status(500).send(messageError, err); // Enviamos un error INTERNAL SERVER ERROR y el error al navegador
   }
 });
 
@@ -107,30 +112,32 @@ routerUser.patch("/updateImg/:id/img", async (req, res) => {
     await updateImgUser(connection, {
       idUser: req.params.id,
       newImg: req.body.img,
-    });
+    }); // Parametros obtenidos por body
     res.status(201).json({
       message: "Se actualizo correctamente la imagen",
       data: idUser,
       img,
     });
   } catch (err) {
-    console.error(messageError, err);
-    res.status(500).send(messageError, err);
+    // Capturamos errores
+    console.error(messageError, err); // Mostramos errores por consola
+    res.status(500).send(messageError, err); // Enviamos un error INTERNAL SERVER ERROR y el error al navegador
   }
 });
 
 // PASSWORD FUNCIONAL
 routerUser.patch("/update/password", async (req, res) => {
   try {
-    const { idUser, pass } = req.body;
+    const { idUser, pass } = req.body; // Atributos para el body (Parametros de procedimiento)
     const usuarioNewPass = await updatePassUser(connection, {
       idUser: req.body.idUser,
       pass: req.body.pass,
-    });
-    res.status(201).json({ message: "Contraseña actualizada correctamente" });
+    }); // Parametros obtenidos por body
+    res.status(202).json({ message: "Contraseña actualizada correctamente" }); // Status Accepted, enviamos informacion en formato JSON
   } catch (err) {
-    console.error(messageError, err);
-    res.status(500).send(messageError, err);
+    // Capturamos errores
+    console.error(messageError, err); // Mostramos errores por consola
+    res.status(500).send(messageError, err); // Enviamos un error INTERNAL SERVER ERROR y el error al navegador
   }
 });
 
@@ -141,12 +148,13 @@ routerUser.delete("/delete/:id", async (req, res) => {
     const resultado = await deleteUserById(connection, {
       idUsuario: req.params.id,
     });
-    res.status(201).json({
+    res.status(202).json({
       message: "El usuario se elimino corectamente.",
       data: idUsuario,
-    });
+    }); // Status accepted, enviamos informacion en formato JSON
   } catch (err) {
-    console.error(messageError, err);
-    res.status(500).send(messageError, err);
+    // Capturamos errores
+    console.error(messageError, err); // Mostramos errores por consola
+    res.status(500).send(messageError, err); // Enviamos un error INTERNAL SERVER ERROR y el error al navegador
   }
 });

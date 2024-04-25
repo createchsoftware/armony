@@ -16,7 +16,8 @@ export async function createCategoria(connection, data) {
     endConnection(); // Cierre de conexion
     return rows[0]; // Retorno de valores
   } catch (err) {
-    console.error(messageError, err);
+    // Capturamos errores de ejecucion de query
+    console.error(messageError, err); // Mostramos errores por consola
   }
 }
 
@@ -24,7 +25,8 @@ export async function createCategoria(connection, data) {
 export async function readCategoriaById(connection, data) {
   try {
   } catch (err) {
-    console.error(messageError, err);
+    // Capturamos errores de ejecucion de query
+    console.error(messageError, err); // Mostramos errores por consola
   }
 }
 
@@ -32,7 +34,8 @@ export async function readCategoriaById(connection, data) {
 export async function updateCategoria(connection, data) {
   try {
   } catch (err) {
-    console.error(messageError, err);
+    // Capturamos errores de ejecucion de query
+    console.error(messageError, err); // Mostramos errores por consola
   }
 }
 
@@ -40,6 +43,7 @@ export async function updateCategoria(connection, data) {
 export async function deleteCategoria(connection, data) {
   try {
   } catch (err) {
-    console.error(messageError, err);
+    // Capturamos errores de ejecucion de query
+    console.error(messageError, err); // Mostramos errores por consola
   }
 }

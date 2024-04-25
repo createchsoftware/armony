@@ -6,19 +6,20 @@ const messageError = "Ha ocurrido un error al ejecutar el query: ";
 // CREATE SERVICIOS FUNCIONAL
 export async function createServicios(connection, data) {
   try {
-    let insertServQuery = "CALL addServicio(?, ?, ?, ?, ?)";
+    let insertServQuery = "CALL addServicio(?, ?, ?, ?, ?)"; // Procedimiento almacenado de la DB
     let query = mysql.format(insertServQuery, [
       data.name,
       data.price,
       data.descr,
       data.time,
       data.pilar,
-    ]);
-    const rows = await connection.query(query);
-    endConnection();
-    return rows;
+    ]); // Parametros para el procedimiento
+    const [rows, fields] = await connection.query(query); // Ejecucion de query y almacenamos resultados
+    endConnection(); // Cierre de conexion
+    return rows; // Retornamos valores
   } catch (err) {
-    console.error(messageError, err);
+    // Capturamos errores de ejecucion de query
+    console.error(messageError, err); // Mostramos los errores por consola
   }
 }
 
@@ -26,7 +27,7 @@ export async function createServicios(connection, data) {
 /* NOTA: DEBE EXISTIR LA SUCURSAL PARA PODER HACER LA ALTA */
 export async function createProducto(connection, data) {
   try {
-    let insertProductoQuery = "CALL addProducto(?, ?, ?, ?, ?, ?)";
+    let insertProductoQuery = "CALL addProducto(?, ?, ?, ?, ?, ?)"; // Procedimiento almacenado de la DB
     let query = mysql.format(insertProductoQuery, [
       data.name,
       data.price,
@@ -34,45 +35,48 @@ export async function createProducto(connection, data) {
       data.pilar,
       data.suc,
       data.stockIni,
-    ]); // Parametros
+    ]); // Parametros para el procedimiento
     const rows = await connection.query(query); // Ejecutamos query y guardamos resultado
     endConnection(); // Cerramos conexion
     return rows[0]; // Retornamos valores
   } catch (err) {
-    console.error(messageError, err);
+    // Capturamos errores de ejecucion de query
+    console.error(messageError, err); // Mostramos los errores por consola
   }
 }
 
 // READ BY ID FUNCIONAL
 export async function readProdServById(connection, data) {
   try {
-    let searchProductoId = "CALL searchProdServById(?)";
-    let query = mysql.format(searchProductoId, [data.idProdServ]); // Parametros
-    const [rows, fields] = await connection.query(query); // Ejecutamos y guardamos resultados
+    let searchProductoId = "CALL searchProdServById(?)"; // Procedimiento almacenado de la DB
+    let query = mysql.format(searchProductoId, [data.idProdServ]); // Parametros para el procedimiento
+    const [rows, fields] = await connection.query(query); // Ejecutamos query y guardamos resultados
     endConnection(); // Cerramos conexion
     return rows[0]; // Retornamos valores
   } catch (err) {
-    console.error(messageError, err);
+    // Capturamos errores de ejecucion de query
+    console.error(messageError, err); // Mostramos los errores por consola
   }
 }
 
 // READ BY CATEGORIA
 export async function readProdServByCategoria(connection, data) {
   try {
-    let searchProductoCategoria = "CALL searchProdServByCategoria(?)";
-    let query = mysql.format(searchProductoCategoria, [data.categoria]); // Parametros
-    const [rows, fields] = await connection.query(query); // Ejecutamos y guardamos los valores
+    let searchProductoCategoria = "CALL searchProdServByCategoria(?)"; // Procedimiento almacenado de la DB
+    let query = mysql.format(searchProductoCategoria, [data.categoria]); // Parametros para el procedimiento
+    const [rows, fields] = await connection.query(query); // Ejecutamos query y guardamos los valores
     endConnection(); // Cerramos conexion
     return rows[0]; // Retornamos valores
   } catch (err) {
-    console.error(messageError, err);
+    // Capturamos errores de ejecucion de query
+    console.error(messageError, err); // Mostramos los errores por consola
   }
 }
 
 // UPDATE FUNCIONAL
 export async function updateProdServ(connection, data) {
   try {
-    let updateProdQuery = "CALL updProdServ(?, ?, ?, ?, ?, ?, ?)";
+    let updateProdQuery = "CALL updProdServ(?, ?, ?, ?, ?, ?, ?)"; // Procedimiento almacenado de la DB
     let query = mysql.format(updateProdQuery, [
       data.idProdServ,
       data.name,
@@ -81,37 +85,40 @@ export async function updateProdServ(connection, data) {
       data.status,
       data.time,
       data.img,
-    ]); // Parametros
-    const [rows, fields] = await connection.query(query); // Ejecutamos y guardamos valores
+    ]); // Parametros para el procedimiento
+    const [rows, fields] = await connection.query(query); // Ejecutamos query y guardamos valores
     endConnection(); // Cierre de conexion
     return rows[0];
   } catch (err) {
-    console.error(messageError, err);
+    // Capturamos errores de ejecucion de query
+    console.error(messageError, err); // Mostramos los errores por consola
   }
 }
 
 // DELETE FUNCIONAL
 export async function deleteProdServ(connection, data) {
   try {
-    let deleteProdQuery = "CALL delProdServ(?)";
-    let query = mysql.format(deleteProdQuery, [data.idProdServ]); // Parametros
-    const [rows, fields] = await connection.query(query); // Ejecutamos y guardamos valores
+    let deleteProdQuery = "CALL delProdServ(?)"; // Procedimiento almacenado de la DB
+    let query = mysql.format(deleteProdQuery, [data.idProdServ]); // Parametros para el procedimiento
+    const [rows, fields] = await connection.query(query); // Ejecutamos query y guardamos valores
     endConnection(); // Cierre de conexion
     return rows[0]; // Retornamos valores
   } catch (err) {
-    console.error(messageError, err);
+    // Capturamos errores de ejecucion de query
+    console.error(messageError, err); // Mostramos los errores por consola
   }
 }
 
-// DELETE PRODUCTO DE CATEGORIA
+// DELETE PRODUCTO DE CATEGORIA (PENDIENTE)
 export async function deleteProdCat(connection, data) {
   try {
-    let deleteProdCatQuery = "CALL delPSCategoria(?, ?)";
-    let query = mysql.format(deleteProdCatQuery, [data.idProdServ, data.idCat]);
-    const [rows, fields] = await connection.query(query);
-    endConnection();
-    return rows[0];
+    let deleteProdCatQuery = "CALL delPSCategoria(?, ?)"; // Procedimiento almacenado de la DB
+    let query = mysql.format(deleteProdCatQuery, [data.idProdServ, data.idCat]); // Parametros para el procedimiento
+    const [rows, fields] = await connection.query(query); // Ejecutamos el query y almacenamos los valores
+    endConnection(); // Cierre de conexion
+    return rows; // retornamos valores
   } catch (err) {
-    console.error(messageError, err);
+    // Capturamos errores de ejecucion de query
+    console.error(messageError, err); // Mostramos los errores por consola
   }
 }

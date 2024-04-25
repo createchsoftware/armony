@@ -6,7 +6,7 @@ const messageError = "Ha ocurrido un error al ejecutar el query: ";
 // CREATE FUNCIONAL
 export async function createSucursal(connection, data) {
   try {
-    let insertSucursalQuery = "CALL addSucursal(?, ?, ?, ?, ?, ?)";
+    let insertSucursalQuery = "CALL addSucursal(?, ?, ?, ?, ?, ?)"; // Procedimiento almacenado de la DB
     let query = mysql.format(insertSucursalQuery, [
       data.calle,
       data.colonia,
@@ -14,12 +14,13 @@ export async function createSucursal(connection, data) {
       data.cp,
       data.apertura,
       data.cierre,
-    ]); // Parametros
+    ]); // Parametros para el procedimiento
     const [rows, fields] = await connection.query(query); // Ejecucion y almacenado de valores
     endConnection(); // Cierre de conexion
     return rows[0]; // Retorno de valores
   } catch (err) {
-    console.error(messageError, err);
+    // Capturamos errores de ejecucion de query
+    console.error(messageError, err); // Mostramos errores por consola
   }
 }
 
@@ -32,7 +33,8 @@ export async function readSucursalById(connection, data) {
     endConnection(); // Cierre de conexion
     return rows[0]; // Retorno de valores
   } catch (err) {
-    console.error(messageError, err);
+    // Capturamos errores de ejecucion de query
+    console.error(messageError, err); // Mostramos errores por consola
   }
 }
 
@@ -44,19 +46,20 @@ export async function readSucursalByAddr(connection, data) {
       data.calle,
       data.colonia,
       data.numero,
-    ]); // Parametros del procedimiento
+    ]); // Parametros para el procedimiento
     const [rows, fields] = await connection.query(query); // Ejecucion de query y almacenamiento de valores
     endConnection(); // Cierre de conexion
     return rows[0]; // Retorno de valores
   } catch (err) {
-    console.error(messageError, err);
+    // Capturamos errores de ejecucion de query
+    console.error(messageError, err); // Mostramos errores por consola
   }
 }
 
 // UPDATE FUNCIONAL
 export async function updateSucursal(connection, data) {
   try {
-    let updateSucursalQuery = "CALL updSucursal(?, ?, ?, ?, ?, ?, ?)";
+    let updateSucursalQuery = "CALL updSucursal(?, ?, ?, ?, ?, ?, ?)"; // Procedimiento almacenado de la DB
     let query = mysql.format(updateSucursalQuery, [
       data.idSuc,
       data.calle,
@@ -65,23 +68,26 @@ export async function updateSucursal(connection, data) {
       data.cp,
       data.apertura,
       data.cierre,
-    ]);
-    const [rows, fields] = await connection.query(query);
-    endConnection();
-    return rows[0];
+    ]); // Parametros para el procedimiento
+    const [rows, fields] = await connection.query(query); // Ejecutamos query y almacenamos valores
+    endConnection(); // Cierre de conexion
+    return rows[0]; // Retornamos valores
   } catch (err) {
-    console.error(messageError, err);
+    // Capturamos errores de ejecucion de query
+    console.error(messageError, err); // Mostramos errores por consola
   }
 }
 
 // DELETE FUNCIONAL
 export async function deleteSucursal(connection, data) {
   try {
-    let deleteSucur = "CALL delSucursal(?)";
-    let query = mysql.format(deleteSucur, [data.idSuc]);
-    const [rows, fields] = await connection.query(query);
-    return rows[0];
+    let deleteSucur = "CALL delSucursal(?)"; // Procedimiento almacenado de la DB
+    let query = mysql.format(deleteSucur, [data.idSuc]); // Parametros para el procedimiento
+    const [rows, fields] = await connection.query(query); // Ejecutamos query y almacenamos valores
+    endConnection(); // Cierre de conexion
+    return rows[0]; // Retornamos valores
   } catch (err) {
-    console.error(messageError, err);
+    // Capturamos errores de ejecucion de query
+    console.error(messageError, err); // Mostramos errores por consola
   }
 }
