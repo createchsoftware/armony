@@ -1,5 +1,5 @@
 import express from "express";
-import { enableConnect } from "../DB/connection.js";
+import { conexion } from "../DB/connection.js";
 import {
   createProveedor,
   readProveedorById,
@@ -15,13 +15,13 @@ export const routerProveedor = express.Router();
 routerProveedor.use(express.json()); // Analiza las request entrantes con carga JSON basado en body-parse
 
 const messageError = "Ha ocurrido un error al procesar tu peticion: ";
-const connection = await enableConnect(); // Almacenamos la conexion con la base de datos
+// const connection = await enableConnect(); // Almacenamos la conexion con la base de datos
 
 // CREATE FUNCIONAL
 routerProveedor.post("/create", async (req, res) => {
   try {
     const { name, phone, email, webSite } = req.body; // Atributos para el body (Parametros de procedimiento)
-    const resultado = await createProveedor(connection, {
+    const resultado = await createProveedor(conexion, {
       name: req.body.name,
       phone: req.body.phone,
       email: req.body.email,
@@ -41,7 +41,7 @@ routerProveedor.post("/create", async (req, res) => {
 routerProveedor.get("/read/id", async (req, res) => {
   try {
     const { idProv } = req.body; // Atributos para el body (Parametros de procedimiento)
-    const resultado = await readProveedorById(connection, {
+    const resultado = await readProveedorById(conexion, {
       idProv: req.body.idProv,
     }); // // Atributos para el body (Parametros de procedimiento)
     if (resultado.length === 0)
@@ -61,7 +61,7 @@ routerProveedor.get("/read/id", async (req, res) => {
 routerProveedor.get("/read/name", async (req, res) => {
   try {
     const { nameProv } = req.body; // Atributos para el body (Parametros de procedimiento)
-    const resultado = await readProveedorByName(connection, {
+    const resultado = await readProveedorByName(conexion, {
       nameProv: req.body.nameProv,
     }); // // Atributos para el body (Parametros de procedimiento)
     if (resultado.length === 0)
@@ -81,7 +81,7 @@ routerProveedor.get("/read/name", async (req, res) => {
 routerProveedor.patch("/update", async (req, res) => {
   try {
     const { idProv, name, phone, email, webSite } = req.body; // Atributos para el body (Parametros de procedimiento)
-    const resultado = await updateProveedor(connection, {
+    const resultado = await updateProveedor(conexion, {
       idProv: req.body.idProv,
       name: req.body.name,
       phone: req.body.phone,
@@ -103,7 +103,7 @@ routerProveedor.patch("/update", async (req, res) => {
 routerProveedor.delete("/delete", async (req, res) => {
   try {
     const { idProv } = req.body; // Atributos para el body (Parametros de procedimiento)
-    const resultado = await deleteProveedor(connection, {
+    const resultado = await deleteProveedor(conexion, {
       idProv: req.body.idProv,
     }); // // Atributos para el body (Parametros de procedimiento)
     res

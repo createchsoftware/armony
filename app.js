@@ -20,9 +20,11 @@ app.use("/api/admin/proveedor", routerProveedor);
 import { routerSucursal } from "./routers/sucursal.js";
 app.use("/api/admin/sucursal", routerSucursal);
 import { routerCategoria } from "./routers/categoria.js";
-app.use("api/admin/categoria", routerCategoria);
+app.use("/api/admin/categoria", routerCategoria);
 import { routerEspecialidad } from "./routers/especialidad.js"; // NOTA: NO SE A PROBADO AUN, NO FUNCIONAL
-app.use("api/admin/especialidad", routerEspecialidad);
+app.use("/api/admin/especialidad", routerEspecialidad);
+import { routerLogIn } from "./auth/login.js";
+app.use("/api/admin/login", routerLogIn);
 
 // Middleware
 app.use(express.json()); // Analiza las request entrantes con carga JSON basado en body-parse

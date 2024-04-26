@@ -1,5 +1,5 @@
 import express from "express";
-import { enableConnect } from "../DB/connection.js";
+import { conexion } from "../DB/connection.js";
 import {
   createServicios,
   readProdServByCategoria,
@@ -15,13 +15,13 @@ export const routerServicio = express.Router();
 routerServicio.use(express.json()); // Analiza las request entrantes con carga JSON basado en body-parse
 
 const messageError = "Ha ocurrido un error al procesar tu peticion: ";
-const connection = await enableConnect(); // Almacenamos conexion de base de datos
+// const connection = await enableConnect(); // Almacenamos conexion de base de datos
 
 // CREATE FUNCIONAL
 routerServicio.post("/create", async (req, res) => {
   try {
     const { name, price, descr, time, pilar } = req.body; // Atributos para el body (Parametros de procedimiento)
-    const resultado = await createServicios(connection, {
+    const resultado = await createServicios(conexion, {
       name: req.body.name,
       price: req.body.price,
       descr: req.body.descr,
@@ -42,7 +42,7 @@ routerServicio.post("/create", async (req, res) => {
 routerServicio.get("/read/id", async (req, res) => {
   try {
     const { idProdServ } = req.body; // Atributos para el body (Parametros de procedimiento)
-    const resultado = await readProdServById(connection, {
+    const resultado = await readProdServById(conexion, {
       idProdServ: req.body.idProdServ,
     }); // Parametros obtenidos por body
     if (resultado.length === 0)
@@ -63,7 +63,7 @@ routerServicio.get("/read/id", async (req, res) => {
 routerServicio.get("/read/name", async (req, res) => {
   try {
     const { categoria } = req.body; // Atributos para el body (Parametros de procedimiento)
-    const resultado = await readProdServByCategoria(connection, {
+    const resultado = await readProdServByCategoria(conexion, {
       categoria: req.body.categoria,
     }); // Parametros obtenidos por body
     const row = resultado[0];
@@ -78,7 +78,7 @@ routerServicio.get("/read/name", async (req, res) => {
 routerServicio.patch("/update", async (req, res) => {
   try {
     const { idProdeServ, name, price, descr, status, time, img } = req.body; // Atributos para el body (Parametros de procedimiento)
-    const resultado = await updateProdServ(connection, {
+    const resultado = await updateProdServ(conexion, {
       idProdServ: req.body.idProdServ,
       name: req.body.name,
       price: req.body.price,
@@ -102,7 +102,7 @@ routerServicio.patch("/update", async (req, res) => {
 routerServicio.delete("/delete", async (req, res) => {
   try {
     const { idProdServ } = req.body; // Atributos para el body (Parametros de procedimiento)
-    const resultado = await deleteProdServ(connection, {
+    const resultado = await deleteProdServ(conexion, {
       idProdServ: req.body.idProdServ,
     }); // Parametros obtenidos por body
     res.status(202).json({

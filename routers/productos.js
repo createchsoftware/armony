@@ -1,5 +1,5 @@
 import express from "express";
-import { enableConnect } from "../DB/connection.js";
+import { conexion } from "../DB/connection.js";
 import {
   createProducto,
   readProdServById,
@@ -15,13 +15,13 @@ export const routerProductos = express.Router();
 routerProductos.use(express.json()); //  Analiza las request entrantes con carga JSON basado en body-parse
 
 const messageError = "Ha ocurrido un error al procesar tu peticion: ";
-const connection = await enableConnect(); // Almacenamos la conexion con la base de datos
+// const connection = await enableConnect(); // Almacenamos la conexion con la base de datos
 
 // CREATE
 routerProductos.post("/create", async (req, res) => {
   try {
     const { name, price, descr, pilar, suc, stockIni } = req.body;
-    await createProducto(connection, {
+    await createProducto(conexion, {
       name: req.body.name,
       price: req.body.price,
       descr: req.body.descr,
@@ -49,16 +49,14 @@ routerProductos.post("/create", async (req, res) => {
 routerProductos.get("/read/id", async (req, res) => {
   try {
     const { idProdServ } = req.body;
-    const resultado = await readProdServById(connection, {
+    const resultado = await readProdServById(conexion, {
       idProdServ: req.body.idProdServ,
     }); // Parametros enviados por body
-    res
-      .status(202)
-      .json({
-        message: "Se encontro el producto.",
-        data: idProdServ,
-        resultado,
-      }); // Status Accepted, mandamos informacion en formato JSON
+    res.status(202).json({
+      message: "Se encontro el producto.",
+      data: idProdServ,
+      resultado,
+    }); // Status Accepted, mandamos informacion en formato JSON
   } catch (err) {
     // Capturamos errores
     console.error(messageError, err); // Mostramos errores por consola
@@ -71,7 +69,7 @@ routerProductos.get("/read/id", async (req, res) => {
 routerProductos.get("/read/name", async (req, res) => {
   try {
     const { categoria } = req.body;
-    const resultado = await readProdServByCategoria(connection, {
+    const resultado = await readProdServByCategoria(conexion, {
       categoria: req.body.categoria,
     }); // Parametros enviados por body
     const row = resultado[0];
@@ -86,7 +84,7 @@ routerProductos.get("/read/name", async (req, res) => {
 routerProductos.patch("/update", async (req, res) => {
   try {
     const { idProdServ, name, price, descr, status, time, img } = req.body;
-    const resultado = await updateProdServ(connection, {
+    const resultado = await updateProdServ(conexion, {
       idProdServ: req.body.idProdServ,
       name: req.body.name,
       price: req.body.price,
@@ -116,7 +114,7 @@ routerProductos.patch("/update", async (req, res) => {
 routerProductos.delete("/delete", async (req, res) => {
   try {
     const { idProdServ } = req.body;
-    const resultado = await deleteProdServ(connection, {
+    const resultado = await deleteProdServ(conexion, {
       idProdServ: req.body.idProdServ,
     }); // Parametros enviados por body
     res.status(202).json({

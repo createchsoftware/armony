@@ -1,4 +1,4 @@
-import { endConnection } from "../connection.js";
+import { endConnection, enableConnect } from "../connection.js";
 import * as mysql from "mysql2";
 
 const messageError = "Ha ocurrido un error al ejecutar el query: ";
@@ -6,6 +6,7 @@ const messageError = "Ha ocurrido un error al ejecutar el query: ";
 // CREATE
 export async function createEspecialidad(connection, data) {
   try {
+    enableConnect();
     let insertEspQuery = "CALL addEspecialidades(?)"; // Procedimiento almacenado de la DB
     let query = mysql.format(insertEspQuery, [data.name]); // Parametros para el procedimiento
     const [rows, fields] = await connection.query(query); // Ejecucion y almacenamos los valores
@@ -20,6 +21,7 @@ export async function createEspecialidad(connection, data) {
 // READ BY ID
 export async function readEspecialidadById(connection, data) {
   try {
+    enableConnect();
     let readEspIdQuery = "CALL searchEspecialidadById(?)"; // Procedimiento almacenado de la DB
     let query = mysql.format(readEspIdQuery, [data.idEsp]); // Parametros para el procedimiento
     const [rows, fields] = await connection.query(query); // Ejecutamos query y almacenamos resultados

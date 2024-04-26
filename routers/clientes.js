@@ -1,6 +1,6 @@
 import express from "express";
 import { readClientesById } from "../DB/query/queryCliente.js";
-import { enableConnect } from "../DB/connection.js";
+import { conexion } from "../DB/connection.js";
 import { createUser } from "../DB/query/queryUser.js";
 
 // Router
@@ -9,7 +9,7 @@ export const routerCliente = express.Router();
 // Middleware
 routerCliente.use(express.json()); // Analiza las request entrantes con carga JSON basado en body-parse
 
-const connection = await enableConnect(); // Almacenamos la conexion con la base de datos
+// const conexion = await enableConnect(); // Almacenamos la conexion con la base de datos
 const messageError = "Ha ocurrido un error al procesar tu peticion: ";
 
 // CLIENTES
@@ -18,7 +18,7 @@ const messageError = "Ha ocurrido un error al procesar tu peticion: ";
 // FUNCIONA
 routerCliente.get("/read/:id", async (req, res) => {
   try {
-    const resultado = await readClientesById(connection, {
+    const resultado = await readClientesById(conexion, {
       fkUsuario: req.params.id,
     }); // Parametros de ruta
     res
@@ -34,7 +34,7 @@ routerCliente.get("/read/:id", async (req, res) => {
 routerCliente.get("/update", (req, res) => {});
 
 routerCliente.delete("/delete", (req, res) => {
-  deleteClientes(connection, { idCliente: 5 }, (result) =>
+  deleteClientes(conexion, { idCliente: 5 }, (result) =>
     res.send(JSON.stringify(result))
   );
 });

@@ -1,5 +1,5 @@
 import express from "express";
-import { enableConnect } from "../DB/connection.js";
+import { conexion } from "../DB/connection.js";
 import {
   createSucursal,
   updateSucursal,
@@ -15,13 +15,13 @@ export const routerSucursal = express.Router();
 routerSucursal.use(express.json()); // Analiza las request entrantes con carga JSON basado en body-parse
 
 const messageError = "Ha ocurrido un error al procesar tu peticion: ";
-const connection = await enableConnect(); // Almacenamos la conexion con la base de datos
+// const connection = await enableConnect(); // Almacenamos la conexion con la base de datos
 
 // CREATE FUNCIONAL
 routerSucursal.post("/create", async (req, res) => {
   try {
     const { calle, colonia, numero, cp, apertura, cierre } = req.body; // Atributos para el body (Parametros de procedimiento)
-    const resultado = await createSucursal(connection, {
+    const resultado = await createSucursal(conexion, {
       calle: req.body.calle,
       colonia: req.body.colonia,
       numero: req.body.numero,
@@ -43,7 +43,7 @@ routerSucursal.post("/create", async (req, res) => {
 routerSucursal.get("/read/id", async (req, res) => {
   try {
     const { idSuc } = req.body; // Atributos para el body (Parametros de procedimiento)
-    await readSucursalById(connection, { idSuc: req.body.idSuc }); // Parametros obtenidos del body (atributos)
+    await readSucursalById(conexion, { idSuc: req.body.idSuc }); // Parametros obtenidos del body (atributos)
     res.status(202).json({ message: "Se encontro la sucursal", data: idSuc }); //Status accepted, enviamos informacion en formato JSON
   } catch (err) {
     // Capturamos errores
@@ -56,7 +56,7 @@ routerSucursal.get("/read/id", async (req, res) => {
 routerSucursal.get("/read/address", async (req, res) => {
   try {
     const { calle, colonia, numero } = req.body; // Atributos para el body (Parametros de procedimiento)
-    const resultado = await readSucursalByAddr(connection, {
+    const resultado = await readSucursalByAddr(conexion, {
       calle: req.body.calle,
       colonia: req.body.colonia,
       numero: req.body.numero,
@@ -76,7 +76,7 @@ routerSucursal.get("/read/address", async (req, res) => {
 routerSucursal.patch("/update", async (req, res) => {
   try {
     const { idSuc, calle, colonia, numero, cp, apertura, cierre } = req.body; // Atributos para el body (Parametros de procedimiento)
-    const resultado = await updateSucursal(connection, {
+    const resultado = await updateSucursal(conexion, {
       idSuc: req.body.idSuc,
       calle: req.body.calle,
       colonia: req.body.colonia,
@@ -100,7 +100,7 @@ routerSucursal.patch("/update", async (req, res) => {
 routerSucursal.delete("/delete", async (req, res) => {
   try {
     const { idSuc } = req.body; // Atributos para el body (Parametros de procedimiento)
-    const resultado = await deleteSucursal(connection, {
+    const resultado = await deleteSucursal(conexion, {
       idSuc: req.body.idSuc,
     }); // Parametros obtenidos del body (atributos)
     res.status(202).json({

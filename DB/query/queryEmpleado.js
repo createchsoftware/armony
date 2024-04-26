@@ -7,7 +7,7 @@ const messageError = "Ha ocurrido un error al ejecutar el query: ";
 export async function createEmpleado(connection, data) {
   try {
     let insertQueryEmpleado =
-      "CALL addEmpleado(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)"; // Procedimiento almacenado de la DB
+      "CALL addEmpleado(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)"; // Procedimiento almacenado de la DB
     let query = mysql.format(insertQueryEmpleado, [
       data.name,
       data.ap,
@@ -22,6 +22,7 @@ export async function createEmpleado(connection, data) {
       data.calle,
       data.colonia,
       data.numero,
+      data.cp,
     ]); // Parametros para el procedimiento
     const [rows, fields] = await connection.query(query); // Ejecutamos el query y almacenamos resultados
     endConnection(); // Cerramos conexion con la DB
@@ -53,12 +54,25 @@ export async function readEmpleadoByNombre(connection, data) {
       data.name,
       data.ap,
       data.am,
-    ]); // Parametros pra el procedimiento
+    ]); // Parametros para el procedimiento
     const [rows, fields] = await connection.query(query); // Ejecutamos query y guardamos resultados
     endConnection(); // Cerramos la conexion con la DB
     return rows; // Regresamos las filas afectadas
   } catch (err) {
     // Capturamos error de query en caso que exista
+    console.error(messageError, err); // Mostramos el error por consola
+  }
+}
+
+// READ EMPLEADOS ACTIVOS (PENDIENTE)
+export async function readEmpAct(connection, data) {
+  try {
+    let searchEmpAct = "CALL"; // Procedimiento de la DB
+    let query = mysql.format(searchEmpAct, []); // Parametros para el procedimiento
+    const [rows, fields] = await connection.query(query); // Ejecutamos y almacenamos valores
+    return rows; // Retornamos valores
+  } catch (err) {
+    // Capturamos errores de query en caso que exista
     console.error(messageError, err); // Mostramos el error por consola
   }
 }

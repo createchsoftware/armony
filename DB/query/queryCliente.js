@@ -14,7 +14,7 @@ export async function readClientesById(connection, data) {
     let query = mysql.format(readClientesQuery, [data.fkUsuario]); // Parametros para el procedimiento
     const [rows, fields] = await connection.query(query); // Ejecutamos query y guardamos resultados
     endConnection(); // Cerramos la conexion con la DB
-    return rows[0]; // Retornamos resultado
+    return rows; // Retornamos resultado
   } catch (err) {
     // Capturamos en caso de error de ejecucion de query
     console.error(messageError, err); // mostramos el error

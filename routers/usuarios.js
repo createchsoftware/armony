@@ -1,5 +1,5 @@
 import express from "express";
-import { enableConnect } from "../DB/connection.js";
+import { conexion } from "../DB/connection.js";
 import {
   createUser,
   deleteUserById,
@@ -17,13 +17,13 @@ export const routerUser = express.Router();
 routerUser.use(express.json()); // Analiza las request entrantes con carga JSON basado en body-parse
 
 const messageError = "Ha ocurrido un error al procesar tu peticion: ";
-const connection = await enableConnect(); // Almacenamos la conexion con la base de datos
+// const connection = await enableConnect(); // Almacenamos la conexion con la base de datos
 
 // CREATE FUNCIONAL
 routerUser.post("/create", async (req, res) => {
   try {
     const { name, ap, am, email, phone, pass, tipo, img } = req.body; // Atributos para el body (Parametros de procedimiento)
-    const resultado = await createUser(connection, {
+    const resultado = await createUser(conexion, {
       name: req.body.name,
       ap: req.body.ap,
       am: req.body.am,
@@ -48,7 +48,7 @@ routerUser.post("/create", async (req, res) => {
 // FUNCIONAL
 routerUser.get("/read/id/:id", async (req, res) => {
   try {
-    const resultado = await readUserById(connection, { idUser: req.params.id });
+    const resultado = await readUserById(conexion, { idUser: req.params.id });
     if (resultado.length === 0)
       res.status(500).send("No se encontro el usuario.");
     res.status(201).json({ message: "Usuario encontrado ", data: resultado });
@@ -63,7 +63,7 @@ routerUser.get("/read/id/:id", async (req, res) => {
 routerUser.get("/read/nomAp", async (req, res) => {
   try {
     const { name, ap, am } = req.body; // Atributos para el body (Parametros de procedimiento)
-    const resultado = await readUserByNP(connection, {
+    const resultado = await readUserByNP(conexion, {
       name: req.body.name,
       ap: req.body.ap,
       am: req.body.am,
@@ -85,7 +85,7 @@ routerUser.get("/read/nomAp", async (req, res) => {
 routerUser.patch("/updateInfo/", async (req, res) => {
   try {
     const { idUser, name, ap, am, email, phone } = req.body; // Atributos para el body (Parametros de procedimiento)
-    const resultado = await updateInfoUser(connection, {
+    const resultado = await updateInfoUser(conexion, {
       idUser: req.body.idUser,
       name: req.body.name,
       ap: req.body.ap,
@@ -109,7 +109,7 @@ routerUser.patch("/updateImg/:id/img", async (req, res) => {
   try {
     const img = req.body;
     const idUser = req.params;
-    await updateImgUser(connection, {
+    await updateImgUser(conexion, {
       idUser: req.params.id,
       newImg: req.body.img,
     }); // Parametros obtenidos por body
@@ -129,7 +129,7 @@ routerUser.patch("/updateImg/:id/img", async (req, res) => {
 routerUser.patch("/update/password", async (req, res) => {
   try {
     const { idUser, pass } = req.body; // Atributos para el body (Parametros de procedimiento)
-    const usuarioNewPass = await updatePassUser(connection, {
+    const usuarioNewPass = await updatePassUser(conexion, {
       idUser: req.body.idUser,
       pass: req.body.pass,
     }); // Parametros obtenidos por body
@@ -145,7 +145,7 @@ routerUser.patch("/update/password", async (req, res) => {
 routerUser.delete("/delete/:id", async (req, res) => {
   const idUsuario = req.params;
   try {
-    const resultado = await deleteUserById(connection, {
+    const resultado = await deleteUserById(conexion, {
       idUsuario: req.params.id,
     });
     res.status(202).json({

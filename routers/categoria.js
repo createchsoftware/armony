@@ -1,19 +1,22 @@
 import express from "express";
-import { enableConnect } from "../DB/connection.js";
-import { createCategoria } from "../DB/query/queryCategoria.js";
+import { conexion } from "../DB/connection.js";
+import {
+  createCategoria,
+  deleteCategoria,
+} from "../DB/query/queryCategoria.js";
 
 export const routerCategoria = express.Router(); // Creamos router
 // Middleware
 routerCategoria.use(express.json()); // Analiza las request entrantes con carga JSON basado en body-parse
 
 const messageError = "Ha ocurrido un error al procesar tu peticion: ";
-const connection = await enableConnect(); // Almacenamos la conexion de la base de datos
+// const conexion = await enableConnect(); // Almacenamos la conexion de la base de datos
 
 // CREATE
 routerCategoria.post("/create", async (req, res) => {
   try {
-    const { pilar, name, descr } = req.body;
-    const resultado = await createCategoria(connection, {
+    const { pilar, name, descr } = req.body; // Atributos para el body (Parametros para el procedimiento)
+    const resultado = await createCategoria(conexion, {
       pilar: req.body.pilar,
       name: req.body.name,
       descr: req.body.descr,
@@ -33,3 +36,18 @@ routerCategoria.post("/create", async (req, res) => {
 // UPDATE
 
 // DELETE
+routerCategoria.delete("/delete", async (req, res) => {
+  try {
+    const { idCat } = req.body; // Atributos para el body (Parametros para el procedimiento)
+    const resultado = await deleteCategoria(conexion, {
+      idCat: req.body.idCat,
+    });
+    res
+      .status(202)
+      .json({ message: "Categoria eliminada correctamente", data: resultado });
+  } catch (err) {
+    // Capturamos errores
+    console.error(messageError, err); // Mostramos errores por consola
+    res.status(500).send(messageError); // Enviamos el mensaje al navegador
+  }
+});
