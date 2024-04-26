@@ -1,39 +1,33 @@
 import express from "express";
-import {
-  createClientes,
-  readClientesById,
-  deleteClientes,
-} from "../db/query/queryCliente.js";
-import { enableConnect } from "../db/connection.js";
+import { readClientesById } from "../DB/query/queryCliente.js";
+import { enableConnect } from "../DB/connection.js";
+import { createUser } from "../DB/query/queryUser.js";
 
+// Router
 export const routerCliente = express.Router();
 
-// CLIENTES
-// CREATE
-routerCliente.get("/create", (req, res) => {
-  createClientes(
-    connection,
-    {
-      usuario: 1,
-      nombre: "julian",
-      paterno: "sandoval",
-      materno: "godinez",
-    },
-    (result) => {
-      res.json(result);
-    }
-  );
-});
+// Middleware
+routerCliente.use(express.json()); // Analiza las request entrantes con carga JSON basado en body-parse
 
-//READ
-routerCliente.get("/read", async (req, res) => {
+const connection = await enableConnect(); // Almacenamos la conexion con la base de datos
+const messageError = "Ha ocurrido un error al procesar tu peticion: ";
+
+// CLIENTES
+
+// READ
+// FUNCIONA
+routerCliente.get("/read/:id", async (req, res) => {
   try {
-    const connection = await enableConnect();
-    const resultado = await readClientesById(connection, { fkUsuario: 1 });
-    res.send(JSON.stringify(resultado));
+    const resultado = await readClientesById(connection, {
+      fkUsuario: req.params.id,
+    }); // Parametros de ruta
+    res
+      .status(201)
+      .json({ message: "Se encontro el usuario.", data: resultado });
   } catch (err) {
-    console.error("Ha ocurrido un error: ", err);
-    res.status(500).send("Ha ocurrido un erro al procesar tu solicitud");
+    // Capturamos errores
+    console.error(messageError, err); // Mostramos errores por consola
+    res.status(500).send(messageError); // Enviamos un error INTERNAL SERVER ERROR y el error al navegador
   }
 });
 

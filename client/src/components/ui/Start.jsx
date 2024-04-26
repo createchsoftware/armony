@@ -1,14 +1,16 @@
 import '../../index.css';
-import { Helmet } from "react-helmet";
+import { Helmet, HelmetProvider } from "react-helmet-async";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBars, faDiamond, faAngleLeft, faAngleRight } from '@fortawesome/free-solid-svg-icons';
 
 const Start = () => {
     return (
         <>
-            <Helmet>
-                <script src="../../scripts/index.js"></script>
-            </Helmet>
+            <HelmetProvider>
+                <Helmet>
+                    <script src="../../scripts/index.js"></script>
+                </Helmet>
+            </HelmetProvider>
             {/* VIDEO DE LOS PILARES */}
             <div className="carrusel" id="inicio">
                 <div className="cont-carrusel" id="car-video">
@@ -25,7 +27,7 @@ const Start = () => {
                         <h1 className="title">Cafetería</h1>
                         <h2 className="title2">Cultura & Art</h2>
                         <p className="desc">Tu lugar de encuentro, donde el buen café y las sonrisas se mezclan.</p>
-                        <a href="#" className="show">Mostrar más...</a>
+                        <a className="show">Próximamente</a>
                         <video autoPlay loop className="slider-video" muted>
                             <source src="../../../videos/1Cafeteria.mp4" type="video/mp4" />
                         </video>
@@ -34,7 +36,7 @@ const Start = () => {
                         <h1 className="my-48 title md:my-0">Wellness</h1>
                         <h2 className="mb-24 title2 md:mb-0">Hábitos saludables</h2>
                         <p className="desc">La salud es un hábito tan importante como ser feliz. Únete a nuestra comunidad y deja que nuestros expertos de guíen al bienestar.</p>
-                        <a href="#" className="show">Mostrar más...</a>
+                        <a className="show">Próximamente</a>
                         <video autoPlay loop className="slider-video" muted>
                             <source src="../../../videos/2Wellness.mp4" type="video/mp4" />
                         </video>
@@ -43,7 +45,7 @@ const Start = () => {
                         <h1 className="my-24 title md:my-0" id="title4">School</h1>
                         <h2 className="mb-12 title2 md:mb-0">Knowlegde & Learning</h2>
                         <p className="desc">No encontrarás mejor lugar de relajación y concentración que en nuestra biblioteca donde la calma es prioridad.</p>
-                        <a href="#" className="show">Mostrar más...</a>
+                        <a className="show">Próximamente</a>
                         <video autoPlay loop className="slider-video" muted>
                             <source src="../../../videos/4School.mp4" type="video/mp4" />
                         </video>
@@ -52,7 +54,7 @@ const Start = () => {
                         <h1 className="title"></h1>
                         <h2 className="mb-6 title2">Emprendimiento & Fly</h2>
                         <p className="desc">Se bienvenida al departamento de emprendimiento, donde tus ideas van más allá que sólo alcanzar el éxito.</p>
-                        <a href="#" className="show">Mostrar más...</a>
+                        <a className="show">Próximamente</a>
                         <video autoPlay loop className="slider-video" muted>
                             <source src="../../../videos/5Emprendimiento.mp4" type="video/mp4" />
                         </video>
@@ -61,7 +63,7 @@ const Start = () => {
                         <h1 className="my-4 title md:my-4">Colectivo</h1>
                         <h2 className="mb-6 title2">Regalos & More</h2>
                         <p className="desc">Un regalo para una sonrisa que nos llena de alegría todos los días. Ven y encuentra tú favorito.</p>
-                        <a href="#" className="show">Mostrar más...</a>
+                        <a className="show">Próximamente</a>
                         <video autoPlay loop className="slider-video" muted>
                             <source src="../../../videos/6Colectivo.mp4" type="video/mp4" />
                         </video>
@@ -70,7 +72,7 @@ const Start = () => {
                         <h1 className="title"></h1>
                         <h2 className="title2">Clínica</h2>
                         <p className="desc">En nuestra clínica, tu salud en nuestra misión principal. Tú bienestar, nuestra prioridad.</p>
-                        <a href="#" className="show">Mostrar más...</a>
+                        <a className="show">Próximamente</a>
                         <video autoPlay loop className="slider-video" muted>
                             <source src="../../../videos/7Clínica.mp4" type="video/mp4" />
                         </video>

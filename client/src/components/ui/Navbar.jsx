@@ -3,7 +3,7 @@ import { Dialog, Disclosure, Popover, Transition } from '@headlessui/react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBars, faCartShopping } from '@fortawesome/free-solid-svg-icons';
 import Carrito from './Carrito.jsx';
-import ModalLogin from './Login/ModalLogin.jsx';
+import ModalLogin from './Login/PopupLogin.jsx';
 
 function Navbar( ) {
     const [cart, setCart, showModal, setShowModal] = useState(false);
@@ -45,7 +45,9 @@ function Navbar( ) {
                                 </a>
                             </li>
                             <li className="nav-menu-item">
-                                <ModalLogin />
+                                <ModalLogin actionElement={
+                                    <a href="#" className="menu-link menu-is">Inicia sesión</a>
+                                }/>
                             </li>
                             <li className="nav-menu-item">
                                 <button className="nav-cart" aria-label="Abrir Lista de Deseo" onClick={toggleCart}>

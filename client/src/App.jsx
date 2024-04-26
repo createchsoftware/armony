@@ -8,6 +8,7 @@ import Home from "./pages";
 import Spa from "./pages/spa";
 import Tienda from "./pages/Tienda";
 import Error from "./pages/Error";
+import PasswordReset from "./pages/spa/passwordReset";
 import Favicon from "react-favicon";
  
 function App() {
@@ -19,6 +20,7 @@ function App() {
                     <Route exact path="/" element={<Home />} />
                     <Route path="/spa" element={<Spa />} />
                     <Route path="/spa/tienda" element={<Tienda />} />
+                    <Route path="/spa/resetPassword" element={<PasswordReset />} />
                     <Route path="*" element={<Error />} />
                 </Routes>
             </Router>
