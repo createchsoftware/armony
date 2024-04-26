@@ -6,19 +6,22 @@
   font-family: "AbeatbyKai";
   font-style: normal;
   font-weight: normal;
-  src: url("../public/fuentes/abeatbyKaiRegular.otf");
+  src: url("../fuentes/abeatbyKaiRegular.otf");
+  /* Cambiar ../fuentes a ../public/fuentes durante desarrollo, quitar para comando npm run build */
 }
 @font-face {
   font-family: "Quinger";
   font-style: normal;
   font-weight: normal;
-  src: url("../public/fuentes/Quinger.otf");
+  src: url("../fuentes/Quinger.otf");
+  /* Cambiar ../fuentes a ../public/fuentes durante desarrollo, quitar para comando npm run build */
 }
 @font-face {
   font-family: "ILoveGlitter";
   font-style: normal;
   font-weight: normal;
-  src: url("../public/fuentes/I\ Love\ Glitter\ -\ OTF.otf");
+  src: url("../fuentes/I\ Love\ Glitter\ -\ OTF.otf");
+  /* Cambiar ../fuentes a ../public/fuentes durante desarrollo, quitar para comando npm run build */
 }
 
 * {
@@ -327,7 +330,7 @@ body {
   letter-spacing: 2px;
   font-weight: lighter;
   line-height: 18px;
-  /* text-align: justify; */
+  text-align: justify;
 }
 
 .somos-fotos {
@@ -413,20 +416,6 @@ body {
   position: relative;
   perspective: 1000px;
 }
-.pilar-text {
-  position: absolute;
-  color: white;
-  text-align: center;
-  align-items: center;
-  display: flex;
-  text-align: center;
-  z-index: 1;
-  width: 80%;
-  left: 50%;
-  transform: translateX(-50%);
-  bottom: 40%;
-  font-size: 15px;
-}
 .pilar {
   flex: 0 0 auto;
   width: 250px;
@@ -440,6 +429,26 @@ body {
   object-fit: cover;
   transition: all 0.5s ease-out;
   left: 50%;
+  margin: 0 auto;
+}
+.pilar-btn{
+  display: grid;
+  align-self: center;
+  justify-self: center;
+}
+.pilar-text {
+  position: absolute;
+  color: white;
+  display: flex;
+  text-align: center;
+  z-index: 1;
+  font-size: 12px;
+  width: 90%;
+  align-self: center;
+  justify-self: center;
+}
+.no7 .pilar-text{
+  width: auto;
 }
 .deg2 {
   position: absolute;
@@ -489,9 +498,10 @@ body {
   z-index: 2;
   opacity: 1;
   cursor: pointer;
+  font-weight: bold;
 }
 .no3 .pilar-text {
-  font-size: 22px;
+  font-size: 24px;
 }
 .no4 {
   left: 72%;
@@ -505,7 +515,16 @@ body {
   opacity: 1;
 }
 
-/* ============================ NUEVO ======== Sobre Spa:  El armony spa... */
+/* ======================== Pagina SPA ======================= */
+.nav-cart{
+  color: rgb(236, 87, 102);
+}
+.nav-cart:hover{
+  color: rgb(255, 181, 167);
+  transition: 0.25s;
+}
+
+/* Sobre Spa:  El armony spa... */
 .spa-armony {
   padding: 0 100px;
   position: relative;
@@ -567,12 +586,103 @@ body {
 }
 #logo2 {
   margin: 0 auto;
-  width: 75%;
+  width: auto;
   height: auto;
 }
 #fondo1 {
   width: 100%;
   margin: 100px auto;
+}
+
+/* CARRITO */
+.cart-fondo, .cart-fx{
+  width: 100vw;
+  height: 100vh;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  position: fixed;
+  z-index: 5;
+}
+.cart-fx{
+  background: rgba(0, 0, 0, 0.35);
+}
+.cart{
+  position: absolute;
+  top: 80px;
+  padding: 20px 20px;
+  width: 32%;
+  background-color: white;
+  border-radius: 8px;
+  right: 5%;
+}
+
+.cart-header{
+  display: flex;
+  padding-bottom: 8px;
+  justify-content: space-between;
+}
+
+.cart-empty{
+  font-size: 16px;
+  font-weight: bold;
+  margin-bottom: 16px;
+  text-align: center;
+}
+
+.cart-item{
+  background-color: rgb(150, 150, 150);
+  margin-bottom: 24px;
+  padding: 8px 12px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.cart-exit{
+  color: black;
+  transition: 0.3s;
+  font-size: 20px;
+}
+.cart-exit:hover{
+  color: rgb(236, 87, 102);
+}
+
+.cart-quan{
+  color: black;
+  transition: 0.3s;
+  font-size: 18px;
+}
+.cart-quan:hover{
+  color: rgb(255, 181, 167);
+}
+
+.cart-photo{
+  width: 15%;
+}
+
+
+.cart-remove{
+  color: black;
+  transition: 0.3s;
+  font-size: 22px;
+}
+.cart-remove:hover{
+  color: rgb(255, 181, 167);
+}
+
+#cart-mas{
+  background-color: rgb(69, 181, 156);
+  border-radius: 12px;
+  color: white;
+  padding: 4px 16px;
+  width: 100%;
+  text-align: right;
+  transition: ease 0.25s;
+}
+#cart-mas:hover{
+  background-color: rgb(3, 109, 99);
+  font-weight: bold;
 }
 
 /* ======================= RESPONSIVE */
@@ -589,10 +699,10 @@ body {
     position: fixed;
     left: 0;
     top: 60px;
-    width: 100%;
+    width: 75%;
     padding: 20px 0;
 
-    height: calc(100% - 60px);
+    height: calc(80% - 60px);
     overflow-y: auto;
 
     left: 100%;
@@ -624,12 +734,12 @@ body {
   }
 
   .menu_visible {
-    left: 0;
+    left: 25%;
   }
 
   .title {
     font-size: 40px;
-    bottom: 400px;
+    bottom: 450px;
   }
   #title4 {
     font-size: 40px;
@@ -640,8 +750,9 @@ body {
     width: max-content;
     max-width: 90%;
     font-size: 60px;
-    bottom: 320px;
+    bottom: 350px;
     text-align: center;
+    line-height: 45px;
   }
 
   .desc {
@@ -650,7 +761,7 @@ body {
   }
 
   .somos {
-    padding: 100px 80px;
+    padding: 60px 50px;
     position: relative;
   }
 
@@ -681,12 +792,13 @@ body {
   }
   .somos-fotos {
     width: 100%;
+    justify-items: center;
   }
 
   #somos-text {
     color: rgb(3, 109, 99);
-    font-size: 24px;
-    margin-top: 50px;
+    font-size: 20px;
+    margin-top: 10px;
     justify-content: center;
     max-width: 100%;
     letter-spacing: 3px;

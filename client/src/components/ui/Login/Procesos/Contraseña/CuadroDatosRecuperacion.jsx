@@ -38,7 +38,7 @@ const ProcesoPassword1 = () => {
           <a href="" className="text-sm">
             Recuperación
           </a>
-          <div class="flex-grow border-t border-gray-400 px-1 mx-0"></div>
+          <div className="flex-grow border-t border-gray-400 px-1 mx-0"></div>
           <span className="">
             <FontAwesomeIcon
               style={{ fontSize: "16px", color: "#FFFFFF" }}
@@ -53,7 +53,7 @@ const ProcesoPassword1 = () => {
           <a href="" className="text-sm">
             Verificación
           </a>
-          <div class="flex-grow border-t border-gray-400"></div>
+          <div className="flex-grow border-t border-gray-400"></div>
           <span className="">
             <FontAwesomeIcon
               style={{ fontSize: "16px", color: "#FFFFFF" }}
@@ -68,7 +68,7 @@ const ProcesoPassword1 = () => {
           <a href="" className="text-sm">
             Nueva Contraseña
           </a>
-          <div class="flex-grow border-t border-gray-400"></div>
+          <div className="flex-grow border-t border-gray-400"></div>
           <span className="">
             <FontAwesomeIcon
               style={{ fontSize: "16px", color: "#FFFFFF" }}
@@ -98,10 +98,10 @@ const ProcesoPassword1 = () => {
             className="bg-slate-200 rounded-full mb-5 mt-2 mx-3 py-3 focus:outline-none focus:ring-1 focus:ring-rose-400 focus:border-transparent px-6"
           />
         </form>
-        <div class="relative flex py-2 place-items-center mx-auto w-2/5">
-          <div class="flex-grow border-t border-gray-400"></div>
-          <span class="flex-shrink mx-4 text-gray-400">o</span>
-          <div class="flex-grow border-t border-gray-400"></div>
+        <div className="relative flex py-2 place-items-center mx-auto w-2/5">
+          <div className="flex-grow border-t border-gray-400"></div>
+          <span className="flex-shrink mx-4 text-gray-400">o</span>
+          <div className="flex-grow border-t border-gray-400"></div>
         </div>
         <a href="" className="mb-5 text-teal-700 text-center">
           Restablecer mediante teléfono

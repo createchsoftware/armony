@@ -3,7 +3,7 @@ import Password1 from "../../components/ui/Login/Procesos/Contraseña/CuadroDato
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBars } from "@fortawesome/free-solid-svg-icons";
 
-const passwordReset = () => {
+const PasswordReset = () => {
   return (
     <>
       <Navbar />
@@ -12,4 +12,4 @@ const passwordReset = () => {
   );
 };
 
-export default passwordReset;
+export default PasswordReset;

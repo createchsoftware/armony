@@ -17,12 +17,12 @@ function Popular() {
                 autoPlaySpeed={3000}
                 centerMode={false}
                 className=""
-                containerClass="container-with-dots z-0"
-                dotListClass=""
+                containerclassName="container-with-dots z-0"
+                dotListclassName=""
                 // draggable
                 focusOnSelect={false}
                 infinite
-                itemClass=""
+                itemclassName=""
                 keyBoardControl
                 minimumTouchDrag={80}
                 pauseOnHover
@@ -60,10 +60,10 @@ function Popular() {
                 rtl={false}
                 shouldResetAutoplay
                 showDots={false}
-                sliderClass=""
+                sliderclassName=""
                 slidesToSlide={1}
                 swipeable
-                class=''
+                className=''
             >
                 <div className='m-4 p-8 font-[abeatbyKai]'>
                     <a href="/spa"><img className='rounded-2xl w-72 h-96' src={pilar1} alt="" /></a>
@@ -71,7 +71,7 @@ function Popular() {
                     <p className='pt-2 text-center'>Encuentra la calma en un masaje facial que renueve tu piel y brinda un momento de paz</p>
                     <div className='flex justify-center mt-4'>
                         <a className='flex justify-center' href="/spa"
-                            class="relative flex cursor-pointer  before:bg-[#036C65]  before:absolute before:-bottom-1 before:block before:h-[3px] before:w-full before:origin-bottom-right before:scale-x-0 before:transition before:duration-300 before:ease-in-out hover:before:origin-bottom-left hover:before:scale-x-100">
+                            className="relative flex cursor-pointer  before:bg-[#036C65]  before:absolute before:-bottom-1 before:block before:h-[3px] before:w-full before:origin-bottom-right before:scale-x-0 before:transition before:duration-300 before:ease-in-out hover:before:origin-bottom-left hover:before:scale-x-100">
                             Ver más<ChevronRight color="#036c65" />
                         </a>
                     </div>
@@ -82,7 +82,7 @@ function Popular() {
                     <p className='pt-2 text-center'>Disfruta de cafe y snacks en nuestra cafeteria. ¡Momentos de cafe garantizados!</p>
                     <div className='flex justify-center mt-4'>
                         <a className='flex justify-center' href="#"
-                            class="relative flex cursor-pointer  before:bg-[#036C65]  before:absolute before:-bottom-1 before:block before:h-[3px] before:w-full before:origin-bottom-right before:scale-x-0 before:transition before:duration-300 before:ease-in-out hover:before:origin-bottom-left hover:before:scale-x-100">
+                            className="relative flex cursor-pointer  before:bg-[#036C65]  before:absolute before:-bottom-1 before:block before:h-[3px] before:w-full before:origin-bottom-right before:scale-x-0 before:transition before:duration-300 before:ease-in-out hover:before:origin-bottom-left hover:before:scale-x-100">
                             Ver más<ChevronRight color="#036c65" />
                         </a>
                     </div>
@@ -93,7 +93,7 @@ function Popular() {
                     <p className='pt-2 text-center'>En Wellness, cada elección es un voto a favor de tu bienestar fisíco, mental y emocional.</p>
                     <div className='flex justify-center mt-4'>
                         <a className='flex justify-center' href="#"
-                            class="relative flex cursor-pointer  before:bg-[#036C65]  before:absolute before:-bottom-1 before:block before:h-[3px] before:w-full before:origin-bottom-right before:scale-x-0 before:transition before:duration-300 before:ease-in-out hover:before:origin-bottom-left hover:before:scale-x-100">
+                            className="relative flex cursor-pointer  before:bg-[#036C65]  before:absolute before:-bottom-1 before:block before:h-[3px] before:w-full before:origin-bottom-right before:scale-x-0 before:transition before:duration-300 before:ease-in-out hover:before:origin-bottom-left hover:before:scale-x-100">
                             Ver más<ChevronRight color="#036c65" />
                         </a>
                     </div>
@@ -104,7 +104,7 @@ function Popular() {
                     <p className='pt-2 text-center'>Cada regalo unico expresa tu amor y crea momentos inolvidables</p>
                     <div className='flex justify-center mt-4'>
                         <a className='flex justify-center' href="#"
-                            class="relative flex cursor-pointer  before:bg-[#036C65]  before:absolute before:-bottom-1 before:block before:h-[3px] before:w-full before:origin-bottom-right before:scale-x-0 before:transition before:duration-300 before:ease-in-out hover:before:origin-bottom-left hover:before:scale-x-100">
+                            className="relative flex cursor-pointer  before:bg-[#036C65]  before:absolute before:-bottom-1 before:block before:h-[3px] before:w-full before:origin-bottom-right before:scale-x-0 before:transition before:duration-300 before:ease-in-out hover:before:origin-bottom-left hover:before:scale-x-100">
                             Ver más<ChevronRight color="#036c65" />
                         </a>
                     </div>
