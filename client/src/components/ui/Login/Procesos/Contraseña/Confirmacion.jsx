@@ -12,11 +12,9 @@ const NuevaContr = () => {
   return (
     <div className="flex flex-col h-screen justify-center items-center">
       <div className="h-[470px] flex flex-col rounded-xl ring-1 ring-slate-200 bg-white bg-clip-border text-gray-700 shadow-md mx-auto">
-        {/*
         <div className="relative max-w-[110px] min-w-[110px] mx-auto -mt-20 grid h-28 place-items-center overflow-hidden rounded-full bg-white bg-clip-border shadow-lg">
           <img src={user1} alt="" className="logo1 absolute h-full" />
         </div>
-        */}
         <h1 className="mx-auto p-7 text-rose-400 text-4xl">
           Restablecer contraseña
         </h1>
