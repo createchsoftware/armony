@@ -24,6 +24,14 @@
   /* Cambiar ../fuentes a ../public/fuentes durante desarrollo, quitar para comando npm run build */
 }
 
+@font-face {
+  font-family: "ABeeZee";
+  font-style: normal;
+  font-weight: normal;
+  src: url("../fuentes/ABeeZee-Regular.ttf");
+  /* Cambiar ../fuentes a ../public/fuentes durante desarrollo, quitar para comando npm run build */
+}
+
 * {
   padding: 0;
   margin: 0;
