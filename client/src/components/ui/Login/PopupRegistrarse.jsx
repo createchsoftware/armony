@@ -41,12 +41,13 @@ const PopupRegistrarse = ({ actionElement }) => {
               Crear cuenta nueva
             </h1>
             <div className="grid place-items-center mx-16">
-              <button
+              <a
+                href="/spa/signUp"
                 className="mt-5 bg-teal-700 text-white text-xs px-4 py-4 hover:bg-teal-500"
                 aria-label="Crear cuenta"
               >
                 Crear cuenta con correo electrónico y contraseña
-              </button>
+              </a>
             </div>
             <div className="relative flex py-2 place-items-center mx-auto w-2/5">
               <div className="flex-grow border-t border-gray-400"></div>

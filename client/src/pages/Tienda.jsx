@@ -32,14 +32,6 @@ const Tienda = () => {
                         </div>
                     </section>
 
-                    <section className='w-[80%] m-auto'>
-                        <Filtros />
-                    </section>
-
-                    <section className='w-[80%] m-auto mt-12'>
-                        <ContenedorProductos />
-                    </section>
-
                     <section className='w-[80%] bg-white my-6 m-auto p-6 rounded-xl border-8 border-[#E2B3B7]'>
                         <h1 className='pb-4 text-xl ml-28'>Ofertas en descuento</h1>
                         <hr />
@@ -180,6 +172,14 @@ const Tienda = () => {
                             </div>
                             </button>
                         </a>
+                    </section>
+
+                    <section className='w-[80%] m-auto'>
+                        <Filtros />
+                    </section>
+
+                    <section className='w-[80%] m-auto mt-12'>
+                        <ContenedorProductos />
                     </section>
 
                 </main>

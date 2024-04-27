@@ -89,10 +89,10 @@ const ModalLogin = ({ actionElement }) => {
             >
               Inicia Sesión
             </button>
-            <div className="relative flex py-2 place-items-center mx-auto w-2/5">
-              <div className="flex-grow border-t border-gray-400"></div>
-              <span className="flex-shrink mx-4 text-gray-400">o</span>
-              <div className="flex-grow border-t border-gray-400"></div>
+            <div class="relative flex py-2 place-items-center mx-auto w-2/5">
+              <div class="flex-grow border-t border-gray-400"></div>
+              <span class="flex-shrink mx-4 text-gray-400">o</span>
+              <div class="flex-grow border-t border-gray-400"></div>
             </div>
             <img src={gl} className="absolute size-6 bottom-28 left-36" />
             <button
