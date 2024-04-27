@@ -11,7 +11,7 @@ const messageError = "Ha ocurrido un error al ejecutar el query: ";
 export async function readClientesById(connection, data) {
   try {
     let readClientesQuery = "CALL searchClienteById(?)"; // Procedimiento almacenado de la DB
-    let query = mysql.format(readClientesQuery, [data.fkUsuario]); // Parametros para el procedimiento
+    let query = mysql.format(readClientesQuery, [data.idCliente]); // Parametros para el procedimiento
     const [rows, fields] = await connection.query(query); // Ejecutamos query y guardamos resultados
     endConnection(); // Cerramos la conexion con la DB
     return rows; // Retornamos resultado
@@ -33,3 +33,53 @@ export const updateClientes = (connection, callback) => {
 };
 // DELETE
 // AL ELIMINAR UN USUARIO SE BORRA UN CLIENTE
+
+//CREATE PATOLOGICA CLIENTE
+export async function addPatoCliente(connection, data) {
+  try {
+    let addPCQuery = "CALL addClientePato(?, ?, ?)";
+    let query = mysql.format(addPCQuery, [
+      data.idCliente,
+      data.idPato,
+      data.descr,
+    ]); // Parametros para el procedimiento
+    const [rows, fields] = await connection.query(query); // Ejecutamos el query y almacenamos resultados
+    endConnection(); // Cerramos conexion con la DB
+    return rows; // Retornamos las filas afectadas
+  } catch (err) {
+    // Capturamos error de query en caso de suceder
+    console.error(messageError, err); // Mostramos el error
+  }
+}
+
+// UPDATE PATOLOGIA CLIENTE
+export async function updatePatoCliente(connection, data) {
+  try {
+    let updatePCQuery = "CALL updClientePato(?, ?, ?)"; // Procedimiento almacenado de la DB
+    let query = mysql.format(updatePCQuery, [
+      data.idCliente,
+      data.idPato,
+      data.descr,
+    ]); // Parametros para el procedimiento
+    const [rows, fields] = await connection.query(query); // Ejecutamos el query y almacenamos resultados
+    endConnection(); // Cerramos conexion con la DB
+    return rows; // Retornamos las filas afectadas
+  } catch (err) {
+    // Capturamos error de query en caso de suceder
+    console.error(messageError, err); // Mostramos el error
+  }
+}
+
+// DELETE PATOLOGIA CLIENTE
+export async function deletePatoCliente(connection, data) {
+  try {
+    let deletePCQuery = "CALL delClientePato(?,?)"; // Procedimiento almacenado de la DB
+    let query = mysql.format(deletePCQuery, [data.idCliente, data.idPato]);
+    const [rows, fields] = await connection.query(query); // Ejecutamos el query y almacenamos resultados
+    endConnection(); // Cerramos conexion con la DB
+    return rows; // Retornamos las filas afectadas
+  } catch (err) {
+    // Capturamos error de query en caso de suceder
+    console.error(messageError, err); // Mostramos el error
+  }
+}

@@ -20,7 +20,6 @@ const messageError = "Ha ocurrido un error al procesar tu peticion: ";
 // CREATE FUNCIONAL
 routerServicio.post("/create", async (req, res) => {
   try {
-    const { name, price, descr, time, pilar } = req.body; // Atributos para el body (Parametros de procedimiento)
     const resultado = await createServicios(conexion, {
       name: req.body.name,
       price: req.body.price,
@@ -41,7 +40,6 @@ routerServicio.post("/create", async (req, res) => {
 // READ BY ID FUNCIONAL
 routerServicio.get("/read/id", async (req, res) => {
   try {
-    const { idProdServ } = req.body; // Atributos para el body (Parametros de procedimiento)
     const resultado = await readProdServById(conexion, {
       idProdServ: req.body.idProdServ,
     }); // Parametros obtenidos por body
@@ -49,8 +47,8 @@ routerServicio.get("/read/id", async (req, res) => {
       // No encontro el usuario
       res.status(404).send("No se encontro el servicio."); // Status Not Found, Enviamos informacion al navegador
     res
-      .status(202)
-      .json({ message: "Se encontro el servicio.", data: resultado }); // Status Accepted, enviamos informacion en formato JSON
+      .status(302)
+      .json({ message: "Se encontro el servicio.", data: resultado }); // Status found, enviamos informacion en formato JSON
   } catch (err) {
     // Capturamos errores
     console.error(messageError, err); // Mostramos errores por consola
@@ -62,7 +60,6 @@ routerServicio.get("/read/id", async (req, res) => {
 // PENDIENTE, FALTA CRUD DE CATEGORIA
 routerServicio.get("/read/name", async (req, res) => {
   try {
-    const { categoria } = req.body; // Atributos para el body (Parametros de procedimiento)
     const resultado = await readProdServByCategoria(conexion, {
       categoria: req.body.categoria,
     }); // Parametros obtenidos por body
@@ -77,7 +74,6 @@ routerServicio.get("/read/name", async (req, res) => {
 // UPDATE FUNCIONAL
 routerServicio.patch("/update", async (req, res) => {
   try {
-    const { idProdeServ, name, price, descr, status, time, img } = req.body; // Atributos para el body (Parametros de procedimiento)
     const resultado = await updateProdServ(conexion, {
       idProdServ: req.body.idProdServ,
       name: req.body.name,
@@ -101,14 +97,13 @@ routerServicio.patch("/update", async (req, res) => {
 // DELETE FUNCIONAL
 routerServicio.delete("/delete", async (req, res) => {
   try {
-    const { idProdServ } = req.body; // Atributos para el body (Parametros de procedimiento)
     const resultado = await deleteProdServ(conexion, {
       idProdServ: req.body.idProdServ,
     }); // Parametros obtenidos por body
-    res.status(202).json({
+    res.status(204).json({
       message: "Se elimino correctamente el servicio",
       data: resultado,
-    }); // Status Accepted, enviamos informacion en formato JSON
+    }); // Status NO-CONTENT, enviamos informacion en formato JSON
   } catch (err) {
     // Capturamos errores
     console.error(messageError, err); // Mostramos errores por consola

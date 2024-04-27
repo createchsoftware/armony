@@ -20,7 +20,6 @@ const messageError = "Ha ocurrido un error al procesar tu peticion: ";
 // CREATE
 routerProductos.post("/create", async (req, res) => {
   try {
-    const { name, price, descr, pilar, suc, stockIni } = req.body;
     await createProducto(conexion, {
       name: req.body.name,
       price: req.body.price,
@@ -31,12 +30,7 @@ routerProductos.post("/create", async (req, res) => {
     }); // Parametros enviados por body
     res.status(201).json({
       message: "El producto se creo correctamente",
-      data: name,
-      price,
-      pilar,
-      descr,
-      suc,
-      stockIni,
+      data: resultado,
     }); // Status Created, mandamos informacion en formato JSON
   } catch (err) {
     // Capturamos errores
@@ -48,15 +42,13 @@ routerProductos.post("/create", async (req, res) => {
 // READ BY ID FUNCIONAL
 routerProductos.get("/read/id", async (req, res) => {
   try {
-    const { idProdServ } = req.body;
     const resultado = await readProdServById(conexion, {
       idProdServ: req.body.idProdServ,
     }); // Parametros enviados por body
-    res.status(202).json({
+    res.status(302).json({
       message: "Se encontro el producto.",
-      data: idProdServ,
-      resultado,
-    }); // Status Accepted, mandamos informacion en formato JSON
+      data: resultado,
+    }); // Status found, mandamos informacion en formato JSON
   } catch (err) {
     // Capturamos errores
     console.error(messageError, err); // Mostramos errores por consola
@@ -68,7 +60,6 @@ routerProductos.get("/read/id", async (req, res) => {
 // PENDIENTE, FALTA CRUD DE CATEGORIA
 routerProductos.get("/read/name", async (req, res) => {
   try {
-    const { categoria } = req.body;
     const resultado = await readProdServByCategoria(conexion, {
       categoria: req.body.categoria,
     }); // Parametros enviados por body
@@ -83,7 +74,6 @@ routerProductos.get("/read/name", async (req, res) => {
 // UPDATE FUNCIONAL
 routerProductos.patch("/update", async (req, res) => {
   try {
-    const { idProdServ, name, price, descr, status, time, img } = req.body;
     const resultado = await updateProdServ(conexion, {
       idProdServ: req.body.idProdServ,
       name: req.body.name,
@@ -95,13 +85,7 @@ routerProductos.patch("/update", async (req, res) => {
     }); // Parametros enviados por body
     res.status(202).json({
       message: "Se actualizo exitosamente el producto",
-      data: idProdServ,
-      name,
-      price,
-      descr,
-      status,
-      time,
-      img,
+      data: resultado,
     }); // Status Accepted, mandamos informacion en formato JSON
   } catch (err) {
     // Capturamos errores
@@ -113,14 +97,13 @@ routerProductos.patch("/update", async (req, res) => {
 // DELETE FUNCIONAL
 routerProductos.delete("/delete", async (req, res) => {
   try {
-    const { idProdServ } = req.body;
     const resultado = await deleteProdServ(conexion, {
       idProdServ: req.body.idProdServ,
     }); // Parametros enviados por body
-    res.status(202).json({
-      // Status Accepted
+    res.status(204).json({
+      // Status NO-CONTENT
       message: "Se elimino correctamente el producto",
-      data: idProdServ,
+      data: resultado,
     }); // Enviamos informacion en formato JSON
   } catch (err) {
     // Capturamos errores

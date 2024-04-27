@@ -20,22 +20,6 @@ const messageError = "Ha ocurrido un error al procesar tu peticion: ";
 // CREATE FUNCIONAL
 routerEmpleado.post("/create", async (req, res) => {
   try {
-    const {
-      name,
-      ap,
-      am,
-      email,
-      phone,
-      pass,
-      tipo,
-      img,
-      checkIn,
-      checkOut,
-      calle,
-      colonia,
-      numero,
-      cp,
-    } = req.body; // Atributos para el body (Parametros de procedimiento)
     const resultado = await createEmpleado(conexion, {
       name: req.body.name,
       ap: req.body.ap,
@@ -65,12 +49,11 @@ routerEmpleado.post("/create", async (req, res) => {
 // READ BY ID FUNCIONAL
 routerEmpleado.get("/read", async (req, res) => {
   try {
-    const { idEmp } = req.body;
     const resultado = await readEmpleadoById(conexion, {
       idEmp: req.body.idEmp,
     }); // Parametros enviados por body
     res
-      .status(202) // Status Accepted
+      .status(302) // Status found
       .json({ message: "Empleada encontrada con exito", data: resultado }); // Enviamos informacion en formato JSON
   } catch (err) {
     // Capturamos errores
@@ -82,14 +65,13 @@ routerEmpleado.get("/read", async (req, res) => {
 // READ BY NAME FUNCIONAL
 routerEmpleado.get("/read/name", async (req, res) => {
   try {
-    const { name, ap, am } = req.body;
     const resultado = await readEmpleadoByNombre(conexion, {
       name: req.body.name,
       ap: req.body.ap,
       am: req.body.am,
     }); // Parametros y ejecutamos la peticion
     res
-      .status(202) // Status Accepted
+      .status(302) // Status found
       .json({ message: "Se encontro el usuario", data: resultado }); // Enviamos informacion en formato JSON
   } catch (err) {
     // Capturamos errores
@@ -101,7 +83,6 @@ routerEmpleado.get("/read/name", async (req, res) => {
 // UPDATE FUNCIONAL
 routerEmpleado.patch("/update", async (req, res) => {
   try {
-    const { idEmp, checkIn, checkOut, act, calle, colonia, numero } = req.body;
     const resultado = await updateEmpleado(conexion, {
       idEmp: req.body.idEmp,
       checkIn: req.body.checkIn,
@@ -122,12 +103,11 @@ routerEmpleado.patch("/update", async (req, res) => {
 // DELETE FUNCIONAL
 routerEmpleado.delete("/delete", async (req, res) => {
   try {
-    const { idEmp } = req.body;
     const resultado = await deleteEmpleadoById(conexion, {
       idEmp: req.body.idEmp,
     }); // Parametro por body
     res
-      .status(200) // Status OK
+      .status(204) // Status NO-CONTENT
       .json({ message: "Empleada eliminada correctamente", data: resultado }); // Enviamos informacion en formato JSON
   } catch (err) {
     // Capturamos errores

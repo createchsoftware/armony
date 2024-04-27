@@ -42,6 +42,7 @@ export async function readUserById(connection, data) {
   }
 }
 
+// READ BY NAME
 export async function readUserByNP(connection, data) {
   try {
     let readUserByNPQuery = "CALL searchClienteByNombreApellido(?, ?, ?)"; // Procedimiento almacenado de la DB

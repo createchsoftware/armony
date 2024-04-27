@@ -1,8 +1,11 @@
 import express from "express";
 import { readClientesById } from "../DB/query/queryCliente.js";
 import { conexion } from "../DB/connection.js";
-import { createUser } from "../DB/query/queryUser.js";
-
+import {
+  addPatoCliente,
+  updatePatoCliente,
+  deletePatoCliente,
+} from "../DB/query/queryCliente.js";
 // Router
 export const routerCliente = express.Router();
 
@@ -12,18 +15,18 @@ routerCliente.use(express.json()); // Analiza las request entrantes con carga JS
 // const conexion = await enableConnect(); // Almacenamos la conexion con la base de datos
 const messageError = "Ha ocurrido un error al procesar tu peticion: ";
 
-// CLIENTES
-
-// READ
-// FUNCIONA
-routerCliente.get("/read/:id", async (req, res) => {
+// CREATE CLIENTE-PATO FUNCIONAL
+routerCliente.post("/create/cliente_patologia", async (req, res) => {
   try {
-    const resultado = await readClientesById(conexion, {
-      fkUsuario: req.params.id,
-    }); // Parametros de ruta
-    res
-      .status(201)
-      .json({ message: "Se encontro el usuario.", data: resultado });
+    const resultado = await addPatoCliente(conexion, {
+      idCliente: req.body.idCliente,
+      idPato: req.body.idPato,
+      descr: req.body.descr,
+    });
+    res.status(201).json({
+      message: "Se creo el usuario con patologia.",
+      data: resultado,
+    });
   } catch (err) {
     // Capturamos errores
     console.error(messageError, err); // Mostramos errores por consola
@@ -31,10 +34,59 @@ routerCliente.get("/read/:id", async (req, res) => {
   }
 });
 
+// READ
+// FUNCIONA
+routerCliente.get("/read", async (req, res) => {
+  try {
+    const resultado = await readClientesById(conexion, {
+      idCliente: req.body.idCliente,
+    }); // Parametros de ruta
+    res
+      .status(302)
+      .json({ message: "Se encontro el usuario.", data: resultado }); // Status found, enviamos informacion en formato JSON
+  } catch (err) {
+    // Capturamos errores
+    console.error(messageError, err); // Mostramos errores por consola
+    res.status(500).send(messageError); // Enviamos un error INTERNAL SERVER ERROR y el error al navegador
+  }
+});
+
+// UPDATE
 routerCliente.get("/update", (req, res) => {});
 
-routerCliente.delete("/delete", (req, res) => {
-  deleteClientes(conexion, { idCliente: 5 }, (result) =>
-    res.send(JSON.stringify(result))
-  );
+// UPDATE CLIENTE-PATO FUNCIONAL
+routerCliente.patch("/update/cliente_patologia", async (req, res) => {
+  try {
+    const resultado = await updatePatoCliente(conexion, {
+      idCliente: req.body.idCliente,
+      idPato: req.body.idPato,
+      descr: req.body.descr,
+    });
+    res.status(202).json({
+      message: "Se actualizo el usuario con patologia.",
+      data: resultado,
+    }); // Status Accepted, enviamos informacion en formato JSON
+  } catch (err) {
+    // Capturamos errores
+    console.error(messageError, err); // Mostramos errores por consola
+    res.status(500).send(messageError); // Enviamos un error INTERNAL SERVER ERROR y el error al navegador
+  }
+});
+
+// DELETE CLIENTE-PATO FUNCIONAL
+routerCliente.delete("/delete/cliente_patologia", async (req, res) => {
+  try {
+    const resultado = await deletePatoCliente(conexion, {
+      idCliente: req.body.idCliente,
+      idPato: req.body.idPato,
+    });
+    res.status(204).json({
+      message: "Se elimino el usuario con patologia.",
+      data: resultado,
+    }); // Status NO-CONTENT, enviamos informacion en formato JSON
+  } catch (err) {
+    // Capturamos errores
+    console.error(messageError, err); // Mostramos errores por consola
+    res.status(500).send(messageError); // Enviamos un error INTERNAL SERVER ERROR y el error al navegador
+  }
 });
