@@ -6,19 +6,22 @@
   font-family: "AbeatbyKai";
   font-style: normal;
   font-weight: normal;
-  src: url("../public/fuentes/abeatbyKaiRegular.otf");
+  src: url("../fuentes/abeatbyKaiRegular.otf");
+  /* Cambiar ../fuentes a ../public/fuentes durante desarrollo, quitar para comando npm run build */
 }
 @font-face {
   font-family: "Quinger";
   font-style: normal;
   font-weight: normal;
-  src: url("../public/fuentes/Quinger.otf");
+  src: url("../fuentes/Quinger.otf");
+  /* Cambiar ../fuentes a ../public/fuentes durante desarrollo, quitar para comando npm run build */
 }
 @font-face {
   font-family: "ILoveGlitter";
   font-style: normal;
   font-weight: normal;
-  src: url("../public/fuentes/I\ Love\ Glitter\ -\ OTF.otf");
+  src: url("../fuentes/I\ Love\ Glitter\ -\ OTF.otf");
+  /* Cambiar ../fuentes a ../public/fuentes durante desarrollo, quitar para comando npm run build */
 }
 
 * {
@@ -326,7 +329,7 @@ body {
   max-width: 100%;
   letter-spacing: 2px;
   font-weight: lighter;
-  line-height: 18px;
+  line-height: 20px;
   text-align: justify;
 }
 
@@ -337,7 +340,7 @@ body {
   position: relative;
   width: 80%;
   margin-left: 80px;
-  top: 50px;
+  top: 0;
 }
 
 /* ================== SECCION CARRUSEL DE PILARES */
@@ -521,6 +524,14 @@ body {
   transition: 0.25s;
 }
 
+.nav-fav{
+  color: rgb(236, 87, 102);
+}
+.nav-fav:hover{
+  color: rgb(255, 181, 167);
+  transition: 0.25s;
+}
+
 /* Sobre Spa:  El armony spa... */
 .spa-armony {
   padding: 0 100px;
@@ -682,6 +693,48 @@ body {
   font-weight: bold;
 }
 
+
+/* Próximamente */
+.soon-fondo, .soon-fx{
+  width: 100vw;
+  height: 100vh;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  position: fixed;
+  z-index: 5;
+}
+.soon-fx{
+  display: flex;
+  background: rgba(0, 0, 0, 0.35);
+  justify-content: center;
+  align-items: center;
+}
+
+.soon{
+  display: grid;
+  position: absolute;
+  padding: 20px 20px;
+  width: 32%;
+  background-color: white;
+  border-radius: 8px;
+  justify-content: center;
+  border: 5px solid rgb(255, 181, 167);
+}
+.soon-title{
+  text-align: center;
+  font-weight: bold;
+  font-size: xx-large ;
+}
+#alarm{
+  color: rgb(255, 181, 167);
+}
+.soon-desc{
+  text-align: center;
+  font-size: large ;
+}
+
 /* ======================= RESPONSIVE */
 @media (max-width: 768px) {
   .header {
@@ -692,14 +745,15 @@ body {
     flex-direction: column;
     align-items: center;
     margin: 0;
-    background-color: rgb(236, 87, 102);
+    background-color: rgba(236, 87, 102, 1);
     position: fixed;
     left: 0;
     top: 60px;
-    width: 75%;
-    padding: 20px 0;
+    width: 60%;
+    padding: 10px 0;
 
-    height: calc(80% - 60px);
+    height: calc(fit-content - 60px);
+
     overflow-y: auto;
 
     left: 100%;
@@ -717,7 +771,15 @@ body {
   }
 
   .nav-menu-item {
-    line-height: 70px;
+    line-height: 50px;
+  }
+
+  .nav-cart{
+    color: white;
+  }
+  .nav-cart:hover{
+    color: rgb(255, 181, 167);
+    transition: 0.25s;
   }
 
   .menu-link:hover {
@@ -731,7 +793,7 @@ body {
   }
 
   .menu_visible {
-    left: 25%;
+    left: 40%;
   }
 
   .title {
@@ -822,5 +884,34 @@ body {
   .pilares {
     margin-top: 300px;
     position: relative;
+    padding: 0 0;
+  }
+  #pilares-title{
+    justify-self: center;
+    text-align: center;
+  }
+
+  .no1 {
+    z-index: 0;
+    opacity: 0;
+  }
+  .no2,
+  .no4 {
+    width: 120px;
+    height: 120px;
+  }
+  .no2 .pilar-text,
+  .no4 .pilar-text {
+    font-size: 10px;
+  }
+  .no2 {
+    left: 12%;
+  }
+  .no4 {
+    left: 88%;
+  }
+  .no5 {
+    z-index: 0;
+    opacity: 0;
   }
 }

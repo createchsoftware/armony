@@ -1,3 +1,5 @@
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faChevronLeft } from '@fortawesome/free-solid-svg-icons';
 
 const Error = () => {
     return(
@@ -9,6 +11,10 @@ const Error = () => {
                 <h2 className="text-center content-center text-l">
                     ¡Oh vaya! Parece que está vacío por aquí.
                 </h2>
+                <a href="/" className='text-black text-center content-center'>
+                    <FontAwesomeIcon icon={faChevronLeft} />
+                    Regresar
+                </a>
             </div>
         </>
     )
