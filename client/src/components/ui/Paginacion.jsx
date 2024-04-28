@@ -5,9 +5,6 @@ function Paginacion({ currentPage, totalProducts, productsPerPage, setCurrentPag
         pageNumbers.push(i);
     }
 
-    console.log(pageNumbers);
-    console.log(currentPage);
-    console.log(pageNumbers.length);
 
     const getButtonClassName = () => {
         return 'flex items-center gap-2 px-6 py-3 font-sans text-xs font-bold text-center text-gray-900 uppercase align-middle transition-all rounded-lg select-none disabled hover:bg-gray-900/10 active:bg-gray-900/20 disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none';
@@ -15,7 +12,7 @@ function Paginacion({ currentPage, totalProducts, productsPerPage, setCurrentPag
 
     const getLinkClassName = (page) => {
         if (currentPage === page) {
-            return 'flex items-center justify-center w-8 h-8 font-sans text-xs font-bold text-center text-gray-900 uppercase align-middle transition-all rounded-lg select-none disabled hover:bg-gray-900/10 active:bg-gray-900/20 disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none';
+            return 'flex items-center justify-center w-8 h-8 bg-[#EB5765] text-white font-sans text-xs font-bold text-center text-gray-900 uppercase align-middle transition-all rounded-lg select-none disabled hover:bg-gray-900/10 active:bg-gray-900/20 disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none';
         } else {
             return 'flex items-center justify-center w-8 h-8 font-sans text-xs font-bold text-center text-gray-900 uppercase align-middle transition-all rounded-lg select-none disabled hover:bg-gray-900/10 active:bg-gray-900/20 disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none';
         }
@@ -23,7 +20,7 @@ function Paginacion({ currentPage, totalProducts, productsPerPage, setCurrentPag
     }
 
     return (
-        <nav className="ml-[30%] my-12">
+        <nav className="m-auto my-12 ">
             <ul className="flex">
                 <button
                     disabled={currentPage === 1}
@@ -37,7 +34,7 @@ function Paginacion({ currentPage, totalProducts, productsPerPage, setCurrentPag
                     Anterior
                 </button>
                 {pageNumbers.map((page, index) => (
-                    <a key={index} href="#" onClick={() => setCurrentPage(page)} className={getLinkClassName()}>
+                    <a key={index} onClick={() => setCurrentPage(page)} className={getLinkClassName(page)}>
                         {page}
                     </a>
                 ))}

@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import '../../index.css';
 import Soon from '../ui/Proximamente'
-import { Helmet } from "react-helmet";
+import { Helmet, HelmetProvider } from "react-helmet-async";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faDiamond, faAngleLeft, faAngleRight } from '@fortawesome/free-solid-svg-icons';
 
@@ -12,12 +12,15 @@ const Start = () => {
     const toggleSoon = () => {
         setSoon(!soon)
     };
+    // ^^^ POP-UP EMERGENTE DE "PROXIMAMENTE"
 
     return (
         <>
-            <Helmet>
-                <script src="../../scripts/index.js"></script>
-            </Helmet>
+            <HelmetProvider>
+                <Helmet>
+                    <script src="../../scripts/index.js"></script>
+                </Helmet>
+            </HelmetProvider>
             {/* VIDEO DE LOS PILARES */}
             <div className="carrusel" id="inicio">
                 <div className="cont-carrusel" id="car-video">

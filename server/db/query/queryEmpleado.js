@@ -1,1 +1,100 @@
-import express from "express";
+import * as mysql from "mysql2";
+import { endConnection } from "../connection.js";
+
+const messageError = "Ha ocurrido un error al ejecutar el query: ";
+
+// CREATE FUNCIONAL
+export async function createEmpleado(connection, data) {
+  try {
+    let insertQueryEmpleado =
+      "CALL addEmpleado(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)"; // Procedimiento almacenado de la DB
+    let query = mysql.format(insertQueryEmpleado, [
+      data.name,
+      data.ap,
+      data.am,
+      data.email,
+      data.phone,
+      data.pass,
+      data.tipo,
+      data.img,
+      data.checkIn,
+      data.checkOut,
+      data.calle,
+      data.colonia,
+      data.numero,
+    ]); // Parametros para el procedimiento
+    const [rows, fields] = await connection.query(query); // Ejecutamos el query y almacenamos resultados
+    endConnection(); // Cerramos conexion con la DB
+    return rows[0]; // Retornamos las filas afectadas
+  } catch (err) {
+    // Capturamos error de query en caso de suceder
+    console.error(messageError, err); // Mostramos el error
+  }
+}
+// READ BY ID FUNCIONAL
+export async function readEmpleadoById(connection, data) {
+  try {
+    let readEmpleadoIdQuery = "CALL searchEmpleadoById(?)"; // Procedimiento almacenado de la DB
+    let query = mysql.format(readEmpleadoIdQuery, [data.idEmp]); // Parametros para el procedimiento
+    const [rows, fields] = await connection.query(query); // Ejecutamso query y almacenamos resultados
+    endConnection(); // Cerramos conexion con la DB
+    return rows[0]; // Retornamos las filas afectadas
+  } catch (err) {
+    // Capturamos el error de query en caso de suceder
+    console.error(messageError, err); // Mostramos el error por consola
+  }
+}
+
+// READ BY NAME FUNCIONAL
+export async function readEmpleadoByNombre(connection, data) {
+  try {
+    let readEmpleadoNomQuery = "CALL searchEmpleadoByNombreApellido(?, ?, ?)"; // Procedimiento de la DB
+    let query = mysql.format(readEmpleadoNomQuery, [
+      data.name,
+      data.ap,
+      data.am,
+    ]); // Parametros pra el procedimiento
+    const [rows, fields] = await connection.query(query); // Ejecutamos query y guardamos resultados
+    endConnection(); // Cerramos la conexion con la DB
+    return rows; // Regresamos las filas afectadas
+  } catch (err) {
+    // Capturamos error de query en caso que exista
+    console.error(messageError, err); // Mostramos el error por consola
+  }
+}
+
+// UPDATE FUNCIONAL
+export async function updateEmpleado(connection, data) {
+  try {
+    let updateEmpQuery = "CALL updEmpleado(?, ?, ?, ?, ?, ?, ?)"; // Procedimiento almacenado de la DB
+    let query = mysql.format(updateEmpQuery, [
+      data.idEmp,
+      data.checkIn,
+      data.checkOut,
+      data.act,
+      data.calle,
+      data.colonia,
+      data.numero,
+    ]); // Parametros para el procedimiento
+    const [rows, fields] = await connection.query(query); // Ejecucion de query y almacenamiento de datos
+    endConnection(); // Cierre de conexion
+    return rows; // Retornamos valores
+  } catch (err) {
+    // Capturamos error de ejecucion de query en caso que exista
+    console.error(messageError, err); // Mostramos el error por consola
+  }
+}
+
+// DELETE FUNCIONAL
+export async function deleteEmpleadoById(connection, data) {
+  try {
+    let deleteEmpQuery = "CALL delEmpleado(?)"; // Procedimiento almacenado de la DB
+    let query = mysql.format(deleteEmpQuery, [data.idEmp]); // Parametros para el procedimiento
+    const [rows, fields] = await connection.query(query); // Ejecucion de query y almacenamiento de datos
+    endConnection(); // Cierre de conexion
+    return rows; // Retorno de valores
+  } catch (err) {
+    // Capturamos errores de ejecucion de query
+    console.error(messageError, err); // Mostramos errores de query por consola
+  }
+}

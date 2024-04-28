@@ -4,18 +4,30 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBars, faCartShopping } from '@fortawesome/free-solid-svg-icons';
 import { faHeart } from '@fortawesome/free-regular-svg-icons';
 import Carrito from './Carrito.jsx';
-import ModalLogin from './Login/ModalLogin.jsx';
+import ModalLogin from './Login/PopupLogin.jsx';
+import MenuServicios from './SubMenuServicios.jsx'
+import MenuPerfil from './MenuPerfil.jsx'
 
 function Navbar( ) {
     const [cart, setCart, showModal, setShowModal] = useState(false);
-    const [items, setItems] = useState(0);
+    const [servicios, setServicios] = useState(false);
+    const [perfil, setPerfil] = useState(false);
+    const [items, setItems,] = useState(0);
 
     const toggleCart = () => {
         setCart(!cart)
     };
 
     const recibirDato = (datoRecibido) => {
-        setItems(datoRecibido);
+        setItems(datoRecibido)
+    };
+
+    const toggleServicio = () => {
+        setServicios(!servicios)
+    };
+
+    const togglePerfil = () => {
+        setPerfil(!perfil)
     };
 
     return (
@@ -27,7 +39,7 @@ function Navbar( ) {
                             <img src="../../../pictures/armonyLogo.png" alt="" className="logo" />
                         </a>
                         <button className="nav-toggle" aria-label="Abrir Menú">
-                            <FontAwesomeIcon icon={faBars} /> 
+                            <FontAwesomeIcon icon={faBars} />
                         </button>
                         <ul className="menu">
                             <li className="nav-menu-item">
@@ -51,8 +63,8 @@ function Navbar( ) {
                             )}
                             {location.pathname !== "/" && (
                                 <>
-                                    <li className="nav-menu-item">
-                                        <a href="#" className="menu-link">
+                                    <li className="nav-menu-item cursor-pointer">
+                                        <a className="menu-link" onClick={toggleServicio}>
                                             Servicios
                                         </a>
                                     </li>
@@ -64,17 +76,28 @@ function Navbar( ) {
                                         <a href="#" className="menu-link">
                                             Agendar
                                         </a>
+                                    </li><li className="nav-menu-item">
+                                        <a href="#" className="menu-link">
+                                            Membresías
+                                        </a>
                                     </li>
                                 </>
                             )}
-                            <li className="nav-menu-item">
-                                <ModalLogin />
+                            <li className="nav-menu-item cursor-pointer">
+                                <ModalLogin actionElement={
+                                    <a href="#" className="menu-link menu-is">Inicia sesión</a>
+                                }/>
+                                {/* <a className="menu-link flex items-center" onClick={togglePerfil} >
+                                    <img src="../../../public/pictures/userCl.png" alt="" className='rounded-full w-10 h-10'/>
+                                    Usuario
+                                </a> */}
+                                {/* ^^^^^ PARA TESTEAR EL MENU DESPLEGABLE DEL PERFIL, DESCOMENTAR Y COMENTAR EL BOTON "INICIAR SESION" */}
                             </li>
                             {location.pathname !== "/" && (
                                 <li className="nav-menu-item">
-                                    <button className="nav-fav" aria-label="Ir a Favoritos" >
+                                    <a href='/favoritos' className="nav-fav" aria-label="Ir a Favoritos" >
                                         <FontAwesomeIcon icon={faHeart} />
-                                    </button>
+                                    </a>
                                 </li>
                             )}
                             {location.pathname == "/spa/tienda" && (
@@ -91,10 +114,26 @@ function Navbar( ) {
                     </nav>
                 </div>
             </header>
+            {servicios && (
+                <div className="submenu-fondo">
+                    <div className='submenu-fx'>
+                        <MenuServicios />
+                    </div>
+                </div>
+            )}
+
             {cart && (
                 <div className='cart-fondo'>
                     <div className='cart-fx'>
                         <Carrito cerrar={toggleCart} enviarDato={recibirDato} />
+                    </div>
+                </div>
+            )}
+
+            {perfil && (
+                <div className='usermenu-fondo'>
+                    <div className='usermenu-fx'>
+                        <MenuPerfil />
                     </div>
                 </div>
             )}
@@ -103,4 +142,4 @@ function Navbar( ) {
     )
 }
 
-export default Navbar
+export default Navbar;

@@ -1,12 +1,8 @@
 import express from "express";
 import { servidor } from "./data/datos.js";
-import cors from "cors";
-/*import * as path from 'path';
-import { fileURLToPath } from 'url';*/
-const app = express();
 
-/*const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);*/
+// Objeto de express
+const app = express();
 
 // Routers
 import { routerCliente } from "./routers/clientes.js";
@@ -18,17 +14,23 @@ app.use("/api/admin/productos", routerProductos);
 import { routerServicio } from "./routers/servicios.js";
 app.use("/api/admin/servicios", routerServicio);
 import { routerEmpleado } from "./routers/empleados.js";
-app.use("/api/admin/empleados", routerEmpleado);
+app.use("/api/admin/empleado", routerEmpleado);
+import { routerProveedor } from "./routers/proveedores.js";
+app.use("/api/admin/proveedor", routerProveedor);
+import { routerSucursal } from "./routers/sucursal.js";
+app.use("/api/admin/sucursal", routerSucursal);
+import { routerCategoria } from "./routers/categoria.js";
+app.use("api/admin/categoria", routerCategoria);
+import { routerEspecialidad } from "./routers/especialidad.js"; // NOTA: NO SE A PROBADO AUN, NO FUNCIONAL
+app.use("api/admin/especialidad", routerEspecialidad);
 
 // Middleware
-app.use(express.json());
+app.use(express.json()); // Analiza las request entrantes con carga JSON basado en body-parse
 
+// Pagina principal
 app.get("/api/admin", (req, res) => {
   res.send("Funcionando");
-  console.log("Abriendo API en navegador");
-}); // Pagina principal
-
-app.use(cors())
+});
 
 app.listen(servidor.SERVER_PORT, () => {
   console.log(`Servidor en puerto ${servidor.SERVER_PORT}`);

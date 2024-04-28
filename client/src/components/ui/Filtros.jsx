@@ -1,24 +1,32 @@
-import { Fragment, useState } from 'react'
+import { Fragment, useEffect, useState } from 'react'
 import { Dialog, Disclosure, Menu, Transition } from '@headlessui/react'
 import { XMarkIcon } from '@heroicons/react/24/outline'
 import { ChevronDownIcon, FunnelIcon, MinusIcon, PlusIcon, Squares2X2Icon } from '@heroicons/react/20/solid'
 import ContenedorProductos from './ContenedorProductos'
+import { products } from '../../data/productos.json'
+
+
+
+function classNames(...clases) {
+    return clases.filter(Boolean).join(' ')
+}
 
 const sortOptions = [
-    { name: 'Más Popular', href: '#', current: true },
-    { name: 'Mejor Calificado', href: '#', current: false },
-    { name: 'Más Nuevo', href: '#', current: false },
-    { name: 'Precio: Bajo a Alto', href: '#', current: false },
-    { name: 'Precio: Alto a Bajo', href: '#', current: false },
+    { name: 'Más Popular', current: true },
+    { name: 'Mejor Calificado', current: false },
+    { name: 'Más Nuevo', current: false },
+    { name: 'Precio: Bajo a Alto', current: false },
+    { name: 'Precio: Alto a Bajo', current: false },
 ]
-const subCategories = [
-    { name: 'Tipo 1', href: '#' },
-    { name: 'Tipo 2', href: '#' },
-    { name: 'Tipo 3', href: '#' },
-    { name: 'Tipo 4', href: '#' },
-    { name: 'Tipo 5', href: '#' },
 
+const subCategories = [
+    { name: 'smartphones' },
+    { name: 'laptops' },
+    { name: 'Tipo 3' },
+    { name: 'Tipo 4' },
+    { name: 'Tipo 5' },
 ]
+
 const filters = [
     {
         id: 'color',
@@ -52,7 +60,7 @@ const filters = [
             { value: '12l', label: '12L', checked: false },
             { value: '18l', label: '18L', checked: false },
             { value: '20l', label: '20L', checked: false },
-            { value: '40l', label: '40L', checked: true },
+            { value: '40l', label: '40L', checked: false },
         ],
     },
     {
@@ -80,16 +88,76 @@ const filters = [
         ],
     },
 ]
-
-function classNames(...classes) {
-    return classes.filter(Boolean).join(' ')
-}
-
 export default function Filtros() {
     const [mobileFiltersOpen, setMobileFiltersOpen] = useState(false)
+    const [sortOption, setSortOption] = useState(sortOptions[0])
+    const [filteredProducts, setFilteredProducts] = useState(products)
+    const [category, setCategory] = useState()
+    const [search, setSearch] = useState('');
+    //    const [filter, setFilter] = useState();
+
+    useEffect(() => {
+        setFilteredProducts(products.filter((product) => product.title.toLowerCase().includes(search.toLowerCase())))
+    }, [search])
+
+    const handleSearch = (e) => {
+        setSearch(e.target.value)
+    }
+
+    useEffect(() => {
+        let updatedProducts = products;
+
+        // Filtrar por búsqueda
+        if (search) {
+            updatedProducts = updatedProducts.filter(product =>
+                product.title.toLowerCase().includes(search.toLowerCase())
+            );
+        }
+
+        // Aplicar filtros adicionales
+        // filters.forEach(filter => {
+        //     filter.options.forEach(option => {
+        //         if (option.checked) {
+        //             updatedProducts = updatedProducts.filter(product =>
+        //                 product[filter.id] === option.value
+        //             );
+        //         }
+        //     });
+        // });
+
+        // Filtrar por categoría
+        if (category && category.name) {
+            updatedProducts = updatedProducts.filter(product =>
+                product.category === category.name
+            );
+        }
+
+        // Ordenar productos
+        switch (sortOption.name) {
+            case 'Más Popular':
+                break;
+            case 'Mejor Calificado':
+                updatedProducts = [...updatedProducts].sort((a, b) => b.rating - a.rating);
+                break;
+            case 'Más Nuevo':
+                updatedProducts = [...updatedProducts].sort((a, b) => new Date(b.date) - new Date(a.date));
+                break;
+            case 'Precio: Bajo a Alto':
+                updatedProducts = [...updatedProducts].sort((a, b) => a.price - b.price);
+                break;
+            case 'Precio: Alto a Bajo':
+                updatedProducts = [...updatedProducts].sort((a, b) => b.price - a.price);
+                break;
+            default:
+                break;
+        }
+
+        setFilteredProducts(updatedProducts);
+    }, [search, category, sortOption, products]);
 
     return (
         <div className="mt-6 bg-white">
+
             <div>
                 {/* Mobile filter dialog */}
                 <Transition.Root show={mobileFiltersOpen} as={Fragment}>
@@ -132,10 +200,12 @@ export default function Filtros() {
                                     {/* Filters */}
                                     <form className="mt-4 border-t border-gray-200">
                                         <h3 className="sr-only">Categorias</h3>
-                                        <ul role="list" className="px-2 py-3 font-medium text-gray-900">
+                                        <ul role="list" className="px-2 py-3 font-medium text-gray-90">
                                             {subCategories.map((category) => (
                                                 <li key={category.name}>
-                                                    <a href={category.href} className="block px-2 py-3">
+                                                    <a href={category.href}
+                                                        onClick={() => { setCategory(category) }}
+                                                        className="block px-2 py-3 cursor-pointer">
                                                         {category.name}
                                                     </a>
                                                 </li>
@@ -191,10 +261,12 @@ export default function Filtros() {
                     </Dialog>
                 </Transition.Root>
 
-                <main className="px-4 mx-auto max-w-7xl sm:px-6 lg:px-8">
-                    <div className="flex items-baseline justify-between pt-24 pb-6 border-b border-gray-200">
-                        <h1 className="text-4xl font-bold tracking-tight text-gray-900">Categorias</h1>
 
+                <main className="px-4 mx-auto max-w-7xl sm:px-6 lg:px-8">
+
+                    <div className="grid justify-around gap-8 pt-24 pb-6 border-b border-gray-200 md:grid-cols-3 grid-cols2 ">
+
+                        <h1 className="text-xl font-bold tracking-tight text-gray-900 md:text-4xl">Categorias</h1>
                         <div className="flex items-center">
                             <Menu as="div" className="relative inline-block text-left">
                                 <div>
@@ -222,11 +294,12 @@ export default function Filtros() {
                                                 <Menu.Item key={option.name}>
                                                     {({ active }) => (
                                                         <a
+                                                            onClick={() => { setSortOption(option) }}
                                                             href={option.href}
                                                             className={classNames(
-                                                                option.current ? 'font-medium text-gray-900' : 'text-gray-500',
-                                                                active ? 'bg-gray-100' : '',
-                                                                'block px-4 py-2 text-sm'
+                                                                option.current ? 'font-medium text-gray-900 cursor-pointer' : 'text-gray-500',
+                                                                active ? 'bg-gray-100 cursor-pointer' : 'cursor-pointer',
+                                                                'block px-4 py-2 text-sm cursor-pointer'
                                                             )}
                                                         >
                                                             {option.name}
@@ -252,6 +325,23 @@ export default function Filtros() {
                                 <FunnelIcon className="w-5 h-5" aria-hidden="true" />
                             </button>
                         </div>
+                        <div class='max-w-md mx-auto border-1 border-gray-400'>
+                            <div class="relative flex items-center w-full h-12 rounded-lg focus-within:shadow-lg bg-white overflow-hidden border-b-2 border-gray">
+                                <div class="grid place-items-center h-full w-12 text-gray-300">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                                    </svg>
+                                </div>
+
+                                <input
+                                    class="peer h-full w-full outline-none text-sm text-gray-700 pr-2"
+                                    type="text"
+                                    id="search"
+                                    placeholder="Buscar..."
+                                    onChange={(e) => { handleSearch(e) }}
+                                />
+                            </div>
+                        </div>
                     </div>
 
                     <section aria-labelledby="products-heading" className="pt-6 pb-24">
@@ -259,14 +349,16 @@ export default function Filtros() {
                             Products
                         </h2>
 
-                        <div className="grid grid-cols-1 gap-x-8 gap-y-10 lg:grid-cols-4">
+                        <div className="grid md:flex">
                             {/* Filters */}
                             <form className="hidden lg:block">
                                 <h3 className="sr-only">Categories</h3>
                                 <ul role="list" className="pb-6 space-y-4 text-sm font-medium text-gray-900 border-b border-gray-200">
                                     {subCategories.map((category) => (
                                         <li key={category.name}>
-                                            <a href={category.href}>{category.name}</a>
+                                            <a className='cursor-pointer' href={category.href}
+                                                onClick={() => { setCategory(category) }}
+                                            >{category.name}</a>
                                         </li>
                                     ))}
                                 </ul>
@@ -315,8 +407,11 @@ export default function Filtros() {
                                 ))}
                             </form>
 
+                            <ContenedorProductos products={filteredProducts} />
+
 
                         </div>
+
                     </section>
                 </main>
             </div>

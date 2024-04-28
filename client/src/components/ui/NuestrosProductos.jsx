@@ -22,11 +22,11 @@ function Productos() {
                             autoPlaySpeed={3000}
                             centerMode={false}
                             className="m-4 p-0 w-[70vw] md:w-[100%] z-0"
-                            dotListClass=""
+                            dotListclassName=""
                             // draggable
                             focusOnSelect={false}
                             infinite
-                            itemClass=""
+                            itemclassName=""
                             keyBoardControl
                             minimumTouchDrag={80}
                             pauseOnHover
@@ -64,10 +64,10 @@ function Productos() {
                             rtl={false}
                             shouldResetAutoplay
                             showDots={false}
-                            sliderClass=""
+                            sliderclassName=""
                             slidesToSlide={1}
                             swipeable
-                            class=''
+                            className=''
                         >
 
                             <div className='m-4 font-[abeatbyKai] '>
@@ -92,12 +92,12 @@ function Productos() {
                             autoPlaySpeed={3000}
                             centerMode={false}
                             className="m-4 p-0 w-[70vw] md:w-[100%] z-0"
-                            containerClass="container-with-dots"
-                            dotListClass=""
+                            containerclassName="container-with-dots"
+                            dotListclassName=""
                             // draggable
                             focusOnSelect={false}
                             infinite
-                            itemClass=""
+                            itemclassName=""
                             keyBoardControl
                             minimumTouchDrag={80}
                             pauseOnHover
@@ -135,10 +135,10 @@ function Productos() {
                             rtl={false}
                             shouldResetAutoplay
                             showDots={false}
-                            sliderClass=""
+                            sliderclassName=""
                             slidesToSlide={1}
                             swipeable
-                            class=''
+                            className=''
                         >
 
                             <div className='m-4 font-[abeatbyKai] '>
@@ -164,12 +164,12 @@ function Productos() {
                             autoPlaySpeed={3000}
                             centerMode={false}
                             className="m-4 p-0 w-[70vw] md:w-[100%] z-0"
-                            containerClass="container-with-dots"
-                            dotListClass=""
+                            containerclassName="container-with-dots"
+                            dotListclassName=""
                             // draggable
                             focusOnSelect={false}
                             infinite
-                            itemClass=""
+                            itemclassName=""
                             keyBoardControl
                             minimumTouchDrag={80}
                             pauseOnHover
@@ -207,10 +207,10 @@ function Productos() {
                             rtl={false}
                             shouldResetAutoplay
                             showDots={false}
-                            sliderClass=""
+                            sliderclassName=""
                             slidesToSlide={1}
                             swipeable
-                            class=''
+                            className=''
                         >
 
                             <div className='m-4 font-[abeatbyKai]'>
@@ -258,12 +258,12 @@ export default Productos;
 //                         autoPlaySpeed={3000}
 //                         centerMode={false}
 //                         className="w-1/4 m-4"
-//                         containerClass="container-with-dots"
-//                         dotListClass=""
+//                         containerclassName="container-with-dots"
+//                         dotListclassName=""
 //                         // draggable
 //                         focusOnSelect={false}
 //                         infinite
-//                         itemClass=""
+//                         itemclassName=""
 //                         keyBoardControl
 //                         minimumTouchDrag={80}
 //                         pauseOnHover
@@ -301,10 +301,10 @@ export default Productos;
 //                         rtl={false}
 //                         shouldResetAutoplay
 //                         showDots={false}
-//                         sliderClass=""
+//                         sliderclassName=""
 //                         slidesToSlide={1}
 //                         swipeable
-//                         class=''
+//                         className=''
 //                     >
 
 //                         <div className='m-4 font-[abeatbyKai]'>
@@ -323,12 +323,12 @@ export default Productos;
 //                         autoPlaySpeed={3000}
 //                         centerMode={false}
 //                         className="w-1/4 m-4"
-//                         containerClass="container-with-dots"
-//                         dotListClass=""
+//                         containerclassName="container-with-dots"
+//                         dotListclassName=""
 //                         // draggable
 //                         focusOnSelect={false}
 //                         infinite
-//                         itemClass=""
+//                         itemclassName=""
 //                         keyBoardControl
 //                         minimumTouchDrag={80}
 //                         pauseOnHover
@@ -366,10 +366,10 @@ export default Productos;
 //                         rtl={false}
 //                         shouldResetAutoplay
 //                         showDots={false}
-//                         sliderClass=""
+//                         sliderclassName=""
 //                         slidesToSlide={1}
 //                         swipeable
-//                         class=''
+//                         className=''
 //                     >
 
 //                         <div className='m-4 font-[abeatbyKai]'>
@@ -389,12 +389,12 @@ export default Productos;
 //                         autoPlaySpeed={3000}
 //                         centerMode={false}
 //                         className="w-1/4 m-4"
-//                         containerClass="container-with-dots"
-//                         dotListClass=""
+//                         containerclassName="container-with-dots"
+//                         dotListclassName=""
 //                         // draggable
 //                         focusOnSelect={false}
 //                         infinite
-//                         itemClass=""
+//                         itemclassName=""
 //                         keyBoardControl
 //                         minimumTouchDrag={80}
 //                         pauseOnHover
@@ -432,10 +432,10 @@ export default Productos;
 //                         rtl={false}
 //                         shouldResetAutoplay
 //                         showDots={false}
-//                         sliderClass=""
+//                         sliderclassName=""
 //                         slidesToSlide={1}
 //                         swipeable
-//                         class=''
+//                         className=''
 //                     >
 
 //                         <div className='m-4 font-[abeatbyKai]'>

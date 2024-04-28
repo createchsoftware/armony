@@ -1,13 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import Productos from '../ui/Productos';
 import Paginacion from '../ui/Paginacion';
-import { products } from '../../data/productos.json'
 
-function ContenedorProductos() {
+function ContenedorProductos({ products }) {
     // const [products2, setProducts] = useState([]);
     const [currentPage, setCurrentPage] = useState(1);
-    const [productsPerPage] = useState(8); // Cambia esto según la cantidad de productos por página que desees
-
+    const [productsPerPage] = useState(8); // Cambia esto según la cantidad de productos por página que desees mostrar    
 
     // useEffect(() => {
     //     const fetchProducts = async () => {
@@ -39,12 +37,14 @@ function ContenedorProductos() {
     //     setCurrentPage(pageNumber);
     // };
 
+    if (!products || products.length === 0) return <p className='m-auto'>No se encontraron productos</p>;
+
     const lastPostIndex = currentPage * productsPerPage;
     const firstPostIndex = lastPostIndex - productsPerPage;
     const currentProducts = products.slice(firstPostIndex, lastPostIndex);
 
     return (
-        < div >
+        <div className='grid  w-[80%] gap-2 place-content-center '>
             <Productos productos={currentProducts} />
             <Paginacion
                 currentPage={currentPage}

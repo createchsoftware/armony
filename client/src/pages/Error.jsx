@@ -11,7 +11,7 @@ const Error = () => {
                 <h2 className="text-center content-center text-l">
                     ¡Oh vaya! Parece que está vacío por aquí.
                 </h2>
-                <a href="/" className='text-black text-center content-center'>
+                <a href="/" className='text-black text-center content-center underline'>
                     <FontAwesomeIcon icon={faChevronLeft} />
                     Regresar
                 </a>

@@ -24,6 +24,14 @@
   /* Cambiar ../fuentes a ../public/fuentes durante desarrollo, quitar para comando npm run build */
 }
 
+@font-face {
+  font-family: "ABeeZee";
+  font-style: normal;
+  font-weight: normal;
+  src: url("../fuentes/ABeeZee-Regular.ttf");
+  /* Cambiar ../fuentes a ../public/fuentes durante desarrollo, quitar para comando npm run build */
+}
+
 * {
   padding: 0;
   margin: 0;
@@ -108,6 +116,104 @@ body {
   line-height: 60px;
   display: none;
   cursor: pointer;
+}
+
+/* =========== SUBMENU SERVICIOS */
+.submenu-fondo, .submenu-fx{
+  width: 100vw;
+  height: 100vh;
+  top: 60px;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  position: fixed;
+  z-index: 11;
+}
+.submenu-fx{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.menu-serv {
+  position: absolute;
+  top: 0;
+  padding: 5px 5px;
+  width: 140px;
+  display: grid;
+  list-style: none;
+  background-color: white;
+  border-radius: 5px;
+  justify-content: left;
+  left: 36%;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
+}
+.menu-item-serv {
+  font-size: 20px;
+  margin: 0 10px;
+  width: max-content;
+}
+.menu-link-serv {
+  text-decoration: none;
+  color: rgb(236, 87, 102);
+  font-weight: bold;
+  padding: 8px 0;
+  padding-right: 52px;
+  font-size: 16px;
+}
+#estetica{
+  border-top: 2px solid black;
+}
+.menu-link-serv:hover{
+  color: rgb(255, 181, 167);
+}
+
+
+/* ======= MENU DESPLEGABLE PERFIL */
+.usermenu-fondo, .usermenu-fx{
+  width: 100vw;
+  height: 100vh;
+  top: 65px;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  position: fixed;
+  z-index: 11;
+}
+.usermenu-fx{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.menu-perfil {
+  position: absolute;
+  top: 0;
+  padding: 5px 5px;
+  width: 180px;
+  display: grid;
+  list-style: none;
+  background-color: white;
+  border-radius: 5px;
+  right: 18%;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
+}
+.menu-item-perfil {
+  font-size: 20px;
+  margin: 0 10px;
+  width: max-content;
+}
+.menu-link-perfil {
+  display: flex;
+  justify-content: space-between;
+  text-decoration: none;
+  color: rgb(236, 87, 102);
+  font-weight: bold;
+  padding: 8px 0;
+  font-size: 16px;
+  align-items: center;
+  transition: 0.25s;
+}
+.menu-link-perfil:hover{
+  color: rgb(255, 181, 167);
 }
 
 /* ============= CARRUSEL DE VIDEOS */
@@ -431,7 +537,7 @@ body {
   left: 50%;
   margin: 0 auto;
 }
-.pilar-btn{
+.pilar-btn {
   display: grid;
   align-self: center;
   justify-self: center;
@@ -447,7 +553,7 @@ body {
   align-self: center;
   justify-self: center;
 }
-.no7 .pilar-text{
+.no7 .pilar-text {
   width: auto;
 }
 .deg2 {
@@ -516,10 +622,10 @@ body {
 }
 
 /* ======================== Pagina SPA ======================= */
-.nav-cart{
+.nav-cart {
   color: rgb(236, 87, 102);
 }
-.nav-cart:hover{
+.nav-cart:hover {
   color: rgb(255, 181, 167);
   transition: 0.25s;
 }
@@ -603,7 +709,8 @@ body {
 }
 
 /* CARRITO */
-.cart-fondo, .cart-fx{
+.cart-fondo,
+.cart-fx {
   width: 100vw;
   height: 100vh;
   top: 0;
@@ -613,10 +720,10 @@ body {
   position: fixed;
   z-index: 5;
 }
-.cart-fx{
+.cart-fx {
   background: rgba(0, 0, 0, 0.35);
 }
-.cart{
+.cart {
   position: absolute;
   top: 80px;
   padding: 20px 20px;
@@ -626,20 +733,20 @@ body {
   right: 5%;
 }
 
-.cart-header{
+.cart-header {
   display: flex;
   padding-bottom: 8px;
   justify-content: space-between;
 }
 
-.cart-empty{
+.cart-empty {
   font-size: 16px;
   font-weight: bold;
   margin-bottom: 16px;
   text-align: center;
 }
 
-.cart-item{
+.cart-item {
   background-color: rgb(150, 150, 150);
   margin-bottom: 24px;
   padding: 8px 12px;
@@ -647,39 +754,38 @@ body {
   justify-content: space-between;
   align-items: center;
 }
-.cart-exit{
+.cart-exit {
   color: black;
   transition: 0.3s;
   font-size: 20px;
 }
-.cart-exit:hover{
+.cart-exit:hover {
   color: rgb(236, 87, 102);
 }
 
-.cart-quan{
+.cart-quan {
   color: black;
   transition: 0.3s;
   font-size: 18px;
 }
-.cart-quan:hover{
+.cart-quan:hover {
   color: rgb(255, 181, 167);
 }
 
-.cart-photo{
+.cart-photo {
   width: 15%;
 }
 
-
-.cart-remove{
+.cart-remove {
   color: black;
   transition: 0.3s;
   font-size: 22px;
 }
-.cart-remove:hover{
+.cart-remove:hover {
   color: rgb(255, 181, 167);
 }
 
-#cart-mas{
+#cart-mas {
   background-color: rgb(69, 181, 156);
   border-radius: 12px;
   color: white;
@@ -688,7 +794,7 @@ body {
   text-align: right;
   transition: ease 0.25s;
 }
-#cart-mas:hover{
+#cart-mas:hover {
   background-color: rgb(3, 109, 99);
   font-weight: bold;
 }
