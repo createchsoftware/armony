@@ -4,7 +4,32 @@ import * as mysql from "mysql2";
 const messageError = "Ha ocurrido un error al ejecutar el query: ";
 
 // CREATE
-//Funciona (SE CREA UN CLIENTE A LA HORA DE CREAR UN USUARIO)
+export async function createCliente(connection, data) {
+  try {
+    let insertClienteQuery =
+      "CALL addCliente(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);"; // Procedimiento almacenado en MySQL
+    let query = mysql.format(insertClienteQuery, [
+      data.name,
+      data.ap,
+      data.am,
+      data.email,
+      data.phone,
+      data.pass,
+      data.tipo,
+      data.img,
+      data.calle,
+      data.colonia,
+      data.numero,
+      data.cp,
+    ]); // parametros para el procedimiento
+    const [rows, fields] = await connection.query(query); // Ejecutamos el query y almacenamos el resultado
+    endConnection(); // Cierre de conexion
+    return rows[0]; // retornamos las filas afectadas
+  } catch (err) {
+    // Capturamos errores de ejecucion de query
+    console.error(messageError, err); // Mostramos los errores por consola
+  }
+}
 
 // READ
 // Busqueda por id (FUNCIONA)

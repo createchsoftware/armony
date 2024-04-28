@@ -30,6 +30,10 @@ routerUser.post("/create", async (req, res) => {
       pass: req.body.pass,
       tipo: req.body.tipo,
       img: req.body.img,
+      calle: req.body.calle,
+      colonia: req.body.colonia,
+      numero: req.body.numero,
+      cp: req.body.cp,
     }); // Parametros obtenidos por body
     resultado = JSON.stringify(resultado);
     res
@@ -89,6 +93,10 @@ routerUser.patch("/updateInfo/", async (req, res) => {
       am: req.body.am,
       email: req.body.email,
       phone: req.body.phone,
+      calle: req.body.calle,
+      colonia: req.body.colonia,
+      numero: req.body.numero,
+      cp: req.body.cp,
     }); // Parametros obtenidos por body
     res.status(202).json({
       message: "Usuario actualizado correctamente",
