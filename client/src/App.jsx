@@ -16,6 +16,7 @@ import Tarjetas from "./pages/perfil/Tarjetas";
 import Error from "./pages/Error";
 import PasswordReset from "./pages/spa/passwordReset";
 import SignUp from "./pages/spa/signUp";
+import Favoritos from "./pages/perfil/ListaDeseo";
 import Favicon from "react-favicon";
  
 function App() {
@@ -29,13 +30,14 @@ function App() {
                     <Route path="/spa/tienda" element={<Tienda />} />
                     <Route path="/spa/resetPassword" element={<PasswordReset />} />
                     <Route path="/spa/signUp" element={<SignUp />} />
-                    <Route path="/spa/perfil" element={<Perfil />} />
-                    <Route path="/spa/perfil/informacion" element={<InformacionPersonal />} />
-                    <Route path="/spa/perfil/seguridad" element={<Seguridad />} />
-                    <Route path="/spa/perfil/monedero" element={<Monedero />} />
-                    <Route path="/spa/perfil/direcciones" element={<Direcciones />} />
-                    <Route path="/spa/perfil/suscripciones" element={<Suscripciones />} />
-                    <Route path="/spa/perfil/tarjetas" element={<Tarjetas />} />
+                    <Route path="/perfil" element={<Perfil />} />
+                    <Route path="/perfil/informacion" element={<InformacionPersonal />} />
+                    <Route path="/perfil/seguridad" element={<Seguridad />} />
+                    <Route path="/perfil/monedero" element={<Monedero />} />
+                    <Route path="/perfil/direcciones" element={<Direcciones />} />
+                    <Route path="/perfil/suscripciones" element={<Suscripciones />} />
+                    <Route path="/perfil/tarjetas" element={<Tarjetas />} />
+                    <Route path="/favoritos" element={<Favoritos/>} />
                     <Route path="*" element={<Error />} />
                 </Routes>
             </Router>

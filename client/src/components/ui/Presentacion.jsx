@@ -16,8 +16,8 @@ function Presentacion() {
                             que te proporcionarán desde tratamientos faciales rejuvenecedores y masajes
                             relajantes, hasta un nuevo corte de cabello y maquillaje para esas ocasiones
                             específicas.</p>
-                        <div className='mt-4 m-auto w-24 h-24 bg-[#edd5d7] rounded-full p-6'>
-                            <img className='aspect-square w-28 ' src="../../../pictures/logoArmony.png" alt="" id="logo2" />
+                        <div className='mt-4 m-auto w-24 h-24 bg-[#edd5d7] rounded-full p-4'>
+                            <img className=' w-4/5 ' src="../../../pictures/logoArmony.png" alt="" id="logo2" />
                         </div>
                     </div>
                     <img src={presentacion2} alt="" />

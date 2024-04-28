@@ -1,24 +1,39 @@
-import { useState } from 'react';
+import React, { useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrash, faCircleXmark, faMinus, faPlus } from '@fortawesome/free-solid-svg-icons';
 
 // eslint-disable-next-line react/prop-types
-function Carrito({cerrar}) {
+function Carrito({cerrar, enviarDato}) {
     const [cartItems, setCartItems] = useState([
         { id: 1, name: 'Crema', price: 50.00, quantity: 1 , image: "../../../public/pictures/crema2.png" },
         { id: 2, name: 'Shampoo', price: 75.00, quantity: 1, image: "../../../public/pictures/crema1.png" }
     ]);
     //  ^^^ ES SOLO TEST PARA PROBAR LA FUNCIONALIDAD DEL POP-UP EMERGENTE DEL CARRITO.
 
+    const [datoLocal, setDatoLocal] = useState(0);
+
+    const sendItem = () => {
+        const dato = cartItems.reduce((total, item) => total + item.quantity, 0);
+        console.log("Total de artículos recibidos: ", dato);
+        setDatoLocal(dato);
+        enviarDato(dato);
+    }; 
+    function funcSend(){
+        sendItem();
+    }
+
     const removeItem = (itemId) => {
         setCartItems(cartItems.filter(item => item.id !== itemId));
+        
     };
     const increaseQuantity = (itemId) => {
         setCartItems(cartItems.map(item => 
             item.id === itemId ? { ...item, quantity: item.quantity + 1 } : item
         ));
+       
     };
     const decreaseQuantity = (itemId, itemQuan) => {
+        funcSend();
         if(itemQuan == 1){
             removeItem(itemId);
         }else{
@@ -29,10 +44,6 @@ function Carrito({cerrar}) {
     };
 
     const total = cartItems.reduce((acc, item) => acc + item.price * item.quantity, 0).toFixed(2);
-
-    // const totalItems = () => {
-    //     cartItems.reduce((total, item) => total + item.quantity, 0);
-    // };
 
     const cartList = cartItems.map(item => (
         <li key={item.id} className="cart-item">
@@ -47,7 +58,7 @@ function Carrito({cerrar}) {
                         <FontAwesomeIcon icon={faMinus} />
                     </button>
                     <span>{item.quantity}</span>
-                    <button className='cart-quan' onClick={() => increaseQuantity(item.id)}>
+                    <button className='cart-quan' onClick={() => increaseQuantity(item.id, item.quantity)}>
                         <FontAwesomeIcon icon={faPlus} />
                     </button>
                 </div>
@@ -63,7 +74,6 @@ function Carrito({cerrar}) {
             <div className="cart-header">
                 <h2 className='cart-title'>Mi Carrito</h2>
                 <button className='cart-exit' onClick={cerrar} >
-                    {/* ^^^ FALTA HACER FUNCIONAL ESTE BOTON */}
                     <FontAwesomeIcon icon={faCircleXmark} />
                 </button>
             </div> 
