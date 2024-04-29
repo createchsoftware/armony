@@ -5,7 +5,7 @@ import Paginacion from '../ui/Paginacion';
 function ContenedorProductos({ products }) {
     // const [products2, setProducts] = useState([]);
     const [currentPage, setCurrentPage] = useState(1);
-    const [productsPerPage] = useState(8); // Cambia esto según la cantidad de productos por página que desees mostrar    
+    const [productsPerPage] = useState(12); // Cambia esto según la cantidad de productos por página que desees mostrar    
 
     // useEffect(() => {
     //     const fetchProducts = async () => {
@@ -44,7 +44,7 @@ function ContenedorProductos({ products }) {
     const currentProducts = products.slice(firstPostIndex, lastPostIndex);
 
     return (
-        <div className='grid  w-[80%] gap-2 place-content-center '>
+        <div className='grid  w-[100%] gap-2 place-content-center '>
             <Productos productos={currentProducts} />
             <Paginacion
                 currentPage={currentPage}

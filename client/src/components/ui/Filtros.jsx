@@ -4,6 +4,7 @@ import { XMarkIcon } from '@heroicons/react/24/outline'
 import { ChevronDownIcon, FunnelIcon, MinusIcon, PlusIcon, Squares2X2Icon } from '@heroicons/react/20/solid'
 import ContenedorProductos from './ContenedorProductos'
 import { products } from '../../data/productos.json'
+import Rating from '@mui/material/Rating';
 
 
 
@@ -20,73 +21,63 @@ const sortOptions = [
 ]
 
 const subCategories = [
-    { name: 'smartphones' },
-    { name: 'laptops' },
-    { name: 'Tipo 3' },
-    { name: 'Tipo 4' },
-    { name: 'Tipo 5' },
+    { name: 'Cosméticos' },
+    { name: 'Facial' },
+    { name: 'Crema' },
+    { name: 'Spray' },
+    { name: 'Serúm' },
+    { name: 'Depilación' },
 ]
 
 const filters = [
+    // {
+    //     id: 'precio',
+    //     name: 'Precio',
+    //     options: [
+    //         { value: 'white', label: 'Blanco', checked: false },
+    //         { value: 'beige', label: 'Beige', checked: false },
+    //         { value: 'blue', label: 'Azul', checked: true },
+    //         { value: 'brown', label: 'Café', checked: false },
+    //         { value: 'green', label: 'Verde', checked: false },
+    //         { value: 'purple', label: 'Morado', checked: false },
+    //     ],
+    // },
+    // {
+    //     id: 'valoraciones',
+    //     name: 'Valoraciones',
+    //     options: [
+    //         { value: 'new', label: 'Nuevos', checked: false },
+    //         { value: 'sale', label: 'Ofertas', checked: false },
+    //         { value: 'travel', label: 'Próximamente', checked: true },
+    //         { value: 'organization', label: 'Organización', checked: false },
+    //         { value: 'accessories', label: 'Accesorios', checked: false },
+    //     ],
+    // },
     {
-        id: 'color',
-        name: 'Pestañas',
+        id: 'Marca',
+        name: 'Marca',
         options: [
-            { value: 'white', label: 'Blanco', checked: false },
-            { value: 'beige', label: 'Beige', checked: false },
-            { value: 'blue', label: 'Azul', checked: true },
-            { value: 'brown', label: 'Café', checked: false },
-            { value: 'green', label: 'Verde', checked: false },
-            { value: 'purple', label: 'Morado', checked: false },
+            { value: 'ponds', label: 'POND’S', checked: false },
+            { value: 'hidraSense', label: 'Hidra Sense', checked: false },
+            { value: 'savasana', label: 'Savasana', checked: false },
+            { value: 'ceraVe', label: 'CeraVe', checked: false },
+            { value: 'cetaphil', label: 'Cetaphil', checked: false },
+            { value: 'mizon', label: 'Mizon', checked: false },
+            { value: 'gojo', label: 'Gojo', checked: false },
         ],
     },
-    {
-        id: 'category',
-        name: 'Facial',
-        options: [
-            { value: 'new', label: 'Nuevos', checked: false },
-            { value: 'sale', label: 'Ofertas', checked: false },
-            { value: 'travel', label: 'Próximamente', checked: true },
-            { value: 'organization', label: 'Organización', checked: false },
-            { value: 'accessories', label: 'Accesorios', checked: false },
-        ],
-    },
-    {
-        id: 'size',
-        name: 'Cejas',
-        options: [
-            { value: '2l', label: '2L', checked: false },
-            { value: '6l', label: '6L', checked: false },
-            { value: '12l', label: '12L', checked: false },
-            { value: '18l', label: '18L', checked: false },
-            { value: '20l', label: '20L', checked: false },
-            { value: '40l', label: '40L', checked: false },
-        ],
-    },
-    {
-        id: 'size',
-        name: 'Depilación',
-        options: [
-            { value: '2l', label: '2L', checked: false },
-            { value: '6l', label: '6L', checked: false },
-            { value: '12l', label: '12L', checked: false },
-            { value: '18l', label: '18L', checked: false },
-            { value: '20l', label: '20L', checked: false },
-            { value: '40l', label: '40L', checked: true },
-        ],
-    },
-    {
-        id: 'size',
-        name: 'Spa',
-        options: [
-            { value: '2l', label: '2L', checked: false },
-            { value: '6l', label: '6L', checked: false },
-            { value: '12l', label: '12L', checked: false },
-            { value: '18l', label: '18L', checked: false },
-            { value: '20l', label: '20L', checked: false },
-            { value: '40l', label: '40L', checked: true },
-        ],
-    },
+    // {
+    //     id: 'masVendidos',
+    //     name: 'Más Vendidos',
+    //     options: [
+    //         { value: '2l', label: '2L', checked: false },
+    //         { value: '6l', label: '6L', checked: false },
+    //         { value: '12l', label: '12L', checked: false },
+    //         { value: '18l', label: '18L', checked: false },
+    //         { value: '20l', label: '20L', checked: false },
+    //         { value: '40l', label: '40L', checked: true },
+    //     ],
+    // },
 ]
 export default function Filtros() {
     const [mobileFiltersOpen, setMobileFiltersOpen] = useState(false)
@@ -156,7 +147,7 @@ export default function Filtros() {
     }, [search, category, sortOption, products]);
 
     return (
-        <div className="mt-6 bg-white">
+        <div className="mt-6 bg-[#F4F1ED]">
 
             <div>
                 {/* Mobile filter dialog */}
@@ -212,6 +203,7 @@ export default function Filtros() {
                                             ))}
                                         </ul>
 
+
                                         {filters.map((section) => (
                                             <Disclosure as="div" key={section.id} className="px-4 py-6 border-t border-gray-200">
                                                 {({ open }) => (
@@ -223,7 +215,7 @@ export default function Filtros() {
                                                                     {open ? (
                                                                         <MinusIcon className="w-5 h-5" aria-hidden="true" />
                                                                     ) : (
-                                                                        <PlusIcon className="w-5 h-5" aria-hidden="true" />
+                                                                        <PlusIcon classNa me="w-5 h-5" aria-hidden="true" />
                                                                     )}
                                                                 </span>
                                                             </Disclosure.Button>
@@ -260,7 +252,6 @@ export default function Filtros() {
                         </div>
                     </Dialog>
                 </Transition.Root>
-
 
                 <main className="px-4 mx-auto max-w-7xl sm:px-6 lg:px-8">
 
@@ -312,6 +303,8 @@ export default function Filtros() {
                                 </Transition>
                             </Menu>
 
+
+
                             <button type="button" className="p-2 ml-5 -m-2 text-gray-400 hover:text-gray-500 sm:ml-7">
                                 <span className="sr-only">View grid</span>
                                 <Squares2X2Icon className="w-5 h-5" aria-hidden="true" />
@@ -344,6 +337,8 @@ export default function Filtros() {
                         </div>
                     </div>
 
+
+
                     <section aria-labelledby="products-heading" className="pt-6 pb-24">
                         <h2 id="products-heading" className="sr-only">
                             Products
@@ -363,12 +358,64 @@ export default function Filtros() {
                                     ))}
                                 </ul>
 
+                                <Disclosure as="div" className="py-6 border-b border-gray-200">
+                                    {({ open }) => (
+                                        <>
+                                            <h3 className="flow-root -my-3">
+                                                <Disclosure.Button className="flex items-center justify-between w-full py-3 text-sm text-gray-400 hover:text-gray-500">
+                                                    <span className="font-medium text-gray-900">Precio</span>
+                                                    <span className="flex items-center ml-6">
+                                                        {open ? (
+                                                            <MinusIcon className="w-5 h-5" aria-hidden="true" />
+                                                        ) : (
+                                                            <PlusIcon className="w-5 h-5" aria-hidden="true" />
+                                                        )}
+                                                    </span>
+                                                </Disclosure.Button>
+                                            </h3>
+                                            <Disclosure.Panel className="pt-6">
+                                                <div className="space-y-4">
+
+                                                    <input id="default-range" type="range" value="50" class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer dark:bg-gray-700" />
+
+                                                </div>
+                                            </Disclosure.Panel>
+                                        </>
+                                    )}
+                                </Disclosure>
+
+                                <Disclosure as="div" className="py-6 border-b border-gray-200">
+                                    {({ open }) => (
+                                        <>
+                                            <h3 className="flow-root -my-3">
+                                                <Disclosure.Button className="flex items-center justify-between w-full py-3 text-sm text-gray-400 hover:text-gray-500">
+                                                    <span className="font-medium text-gray-900">Valoraciones</span>
+                                                    <span className="flex items-center ml-6">
+                                                        {open ? (
+                                                            <MinusIcon className="w-5 h-5" aria-hidden="true" />
+                                                        ) : (
+                                                            <PlusIcon className="w-5 h-5" aria-hidden="true" />
+                                                        )}
+                                                    </span>
+                                                </Disclosure.Button>
+                                            </h3>
+                                            <Disclosure.Panel className="pt-6">
+                                                <div className="space-y-4">
+
+                                                    <Rating className='m-auto' value={0} unratedColor="amber" ratedColor="amber" />
+
+                                                </div>
+                                            </Disclosure.Panel>
+                                        </>
+                                    )}
+                                </Disclosure>
+
                                 {filters.map((section) => (
                                     <Disclosure as="div" key={section.id} className="py-6 border-b border-gray-200">
                                         {({ open }) => (
                                             <>
                                                 <h3 className="flow-root -my-3">
-                                                    <Disclosure.Button className="flex items-center justify-between w-full py-3 text-sm text-gray-400 bg-white hover:text-gray-500">
+                                                    <Disclosure.Button className="flex items-center justify-between w-full py-3 text-sm text-gray-400 hover:text-gray-500">
                                                         <span className="font-medium text-gray-900">{section.name}</span>
                                                         <span className="flex items-center ml-6">
                                                             {open ? (
@@ -382,6 +429,7 @@ export default function Filtros() {
                                                 <Disclosure.Panel className="pt-6">
                                                     <div className="space-y-4">
                                                         {section.options.map((option, optionIdx) => (
+
                                                             <div key={option.value} className="flex items-center">
                                                                 <input
                                                                     id={`filter-${section.id}-${optionIdx}`}
@@ -401,11 +449,38 @@ export default function Filtros() {
                                                         ))}
                                                     </div>
                                                 </Disclosure.Panel>
+
+
                                             </>
+
                                         )}
                                     </Disclosure>
                                 ))}
+
+                                <Disclosure as="div" className="py-6 border-b border-gray-200">
+                                    {({ open }) => (
+                                        <>
+                                            <h3 className="flow-root -my-3">
+                                                <Disclosure.Button className="flex items-center justify-between w-full py-3 text-sm text-gray-400 hover:text-gray-500">
+                                                    <span className="font-medium text-gray-900">Más Vendidos</span>
+
+                                                </Disclosure.Button>
+                                            </h3>
+                                            <Disclosure.Panel className="pt-6">
+                                                <div className="space-y-4">
+
+
+                                                </div>
+                                            </Disclosure.Panel>
+                                        </>
+                                    )}
+                                </Disclosure>
+
+
                             </form>
+
+
+
 
                             <ContenedorProductos products={filteredProducts} />
 

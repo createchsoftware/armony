@@ -6,8 +6,8 @@ function Productos({ productos }) {
             <ul className='grid grid-cols-1 gap-2 md:grid-cols-4 md:ml-28'>
                 {
                     productos.map(producto => (
-                        <li key={productos.id} className='grid place-content-between justify-between  border-4 bg-white border-[#E2B3B7] p-6 rounded-xl'>
-                            <img className='m-auto rounded-lg w-36 md:w-48 aspect-square'
+                        <li key={productos.id} className='grid place-content-between justify-between h-auto border-4 bg-white border-[#E2B3B7] p-6 rounded-xl'>
+                            <img className='m-auto rounded-lg aspect-square'
                                 src={producto.thumbnail}
                                 alt={producto.title}
                             />
@@ -19,7 +19,7 @@ function Productos({ productos }) {
                                 </p>
                             </div>
                             <div className='mt-4'>
-                                <button className=" text-sm w-48 transition-all duration-300  hover:bg-[#036C65] hover:ring-2 hover:[#036C65] hover:ring-offset-1 group relative flex h-10 items-center justify-center overflow-hidden rounded-xl border-2 bg-[#EB5765] p-4 font-[abeatbykai] text-neutral-200"><span>Agregar al carrito</span> <IconoAgregarAlCarrito /> <div class="w-0 translate-x-[100%] pl-0 opacity-0 transition-all duration-200 group-hover:w-0 group-hover:translate-x-0 group-hover:pl-1 group-hover:opacity-100"></div></button>
+                                <button class=" text-xs transition-all duration-300 px-2 m-auto hover:bg-[#036C65] hover:ring-1  hover:[#036C65] hover:ring-offset-1 group relative flex h-10 items-center justify-center overflow-hidden rounded-xl border-2 bg-[#EB5765] font-[abeatbykai] text-neutral-200"><span>Agregar al carrito</span> <IconoAgregarAlCarrito /> <div class="w-0 translate-x-[100%] pl-0 opacity-0 transition-all duration-200 group-hover:w-0 group-hover:translate-x-0 group-hover:pl-1 group-hover:opacity-100"></div></button>
                             </div>
                         </li>
                     ))

@@ -17,6 +17,7 @@ import Error from "./pages/Error";
 import PasswordReset from "./pages/spa/passwordReset";
 import SignUp from "./pages/spa/signUp";
 import Favoritos from "./pages/perfil/ListaDeseo";
+import Test from "./components/ui/Test";
 import Favicon from "react-favicon";
  
 function App() {
@@ -39,6 +40,9 @@ function App() {
                     <Route path="/perfil/tarjetas" element={<Tarjetas />} />
                     <Route path="/favoritos" element={<Favoritos/>} />
                     <Route path="*" element={<Error />} />
+
+                    {/* Tests */}
+                    <Route path="/test" element={<Test />} />
                 </Routes>
             </Router>
         </>
