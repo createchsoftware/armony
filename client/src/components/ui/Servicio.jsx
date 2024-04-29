@@ -41,7 +41,7 @@ function Servicio({ nombre, descripcion, precio, imagen, rating, isFavorite }) {
                 </div>
                 <div className='grid gap-2'>
                     <div className='flex gap-4 m-auto'>
-                        <img className='w-6' src="../../../public/pictures/precio.png" alt="" />
+                        <img className='w-6' src="../../../pictures/precio.png" alt="" />
                         <p> ${precio} MXN</p>
                     </div>
                     <Rating className='m-auto' value={rating} unratedColor="amber" ratedColor="amber" readonly />

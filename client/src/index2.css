@@ -7,21 +7,21 @@
   font-style: normal;
   font-weight: normal;
   src: url("../fuentes/abeatbyKaiRegular.otf");
-  /* Cambiar ../fuentes a ../public/fuentes durante desarrollo, quitar para comando npm run build */
+  /* Cambiar ../fuentes a ../fuentes durante desarrollo, quitar para comando npm run build */
 }
 @font-face {
   font-family: "Quinger";
   font-style: normal;
   font-weight: normal;
   src: url("../fuentes/Quinger.otf");
-  /* Cambiar ../fuentes a ../public/fuentes durante desarrollo, quitar para comando npm run build */
+  /* Cambiar ../fuentes a ../fuentes durante desarrollo, quitar para comando npm run build */
 }
 @font-face {
   font-family: "ILoveGlitter";
   font-style: normal;
   font-weight: normal;
   src: url("../fuentes/I\ Love\ Glitter\ -\ OTF.otf");
-  /* Cambiar ../fuentes a ../public/fuentes durante desarrollo, quitar para comando npm run build */
+  /* Cambiar ../fuentes a ../fuentes durante desarrollo, quitar para comando npm run build */
 }
 
 @font-face {
@@ -29,7 +29,7 @@
   font-style: normal;
   font-weight: normal;
   src: url("../fuentes/ABeeZee-Regular.ttf");
-  /* Cambiar ../fuentes a ../public/fuentes durante desarrollo, quitar para comando npm run build */
+  /* Cambiar ../fuentes a ../fuentes durante desarrollo, quitar para comando npm run build */
 }
 
 * {

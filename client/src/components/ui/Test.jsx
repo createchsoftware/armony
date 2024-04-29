@@ -6,7 +6,7 @@ function Test() {
             nombre: 'Masaje relajante',
             descripcion: 'Un masaje relajante es un masaje que tiene como objetivo principal relajar la musculatura y eliminar las tensiones acumuladas en el cuerpo.',
             precio: 500,
-            imagen: '../../../public/pictures/2wellness.jpg',
+            imagen: '../../../pictures/2wellness.jpg',
             categoria: 'Masajes'
         },
         {

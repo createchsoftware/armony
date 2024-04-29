@@ -1,8 +1,13 @@
 import express from "express";
 import { servidor } from "./data/datos.js";
+import path, { dirname } from 'path';
+import { fileURLToPath } from 'url';
+const _dirname = path.dirname(fileURLToPath(import.meta.url));
 
 // Objeto de express
 const app = express();
+
+app.use(express.static(path.join(_dirname, '../client/dist')));
 
 // Routers
 import { routerCliente } from "./routers/clientes.js";
@@ -26,6 +31,10 @@ app.use("api/admin/especialidad", routerEspecialidad);
 
 // Middleware
 app.use(express.json()); // Analiza las request entrantes con carga JSON basado en body-parse
+
+app.get('*', (solicitud,respuesta)=>{
+  respuesta.sendFile(path.join(_dirname ,'../client/dist/index.html'))
+})
 
 // Pagina principal
 app.get("/api/admin", (req, res) => {

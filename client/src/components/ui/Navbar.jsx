@@ -88,7 +88,7 @@ function Navbar( ) {
                                     <a href="#" className="menu-link menu-is">Inicia sesión</a>
                                 }/>
                                 {/* <a className="menu-link flex items-center" onClick={togglePerfil} >
-                                    <img src="../../../public/pictures/userCl.png" alt="" className='rounded-full w-10 h-10'/>
+                                    <img src="../../../pictures/userCl.png" alt="" className='rounded-full w-10 h-10'/>
                                     Usuario
                                 </a> */}
                                 {/* ^^^^^ PARA TESTEAR EL MENU DESPLEGABLE DEL PERFIL, DESCOMENTAR Y COMENTAR EL BOTON "INICIAR SESION" */}
