@@ -11,6 +11,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 
 const ModalLogin = ({ actionElement }) => {
+
   return (
     <Popup trigger={actionElement} modal nested>
       {(close) => (
@@ -82,13 +83,15 @@ const ModalLogin = ({ actionElement }) => {
                   Recuerdame
                 </label>
               </div>
+              <button
+                type="submit"
+                id="iniciar-sesion-fet"
+                className="bg-rose-400 text-white text-xl rounded-full px-4 py-2 mx-auto hover:bg-red-200"
+                aria-label="Iniciar Sesión"
+                >
+                   Inicia Sesión
+                </button>
             </form>
-            <button
-              className="bg-rose-400 text-white text-xl rounded-full px-4 py-2 mx-auto hover:bg-red-200"
-              aria-label="Iniciar Sesión"
-            >
-              Inicia Sesión
-            </button>
             <div class="relative flex py-2 place-items-center mx-auto w-2/5">
               <div class="flex-grow border-t border-gray-400"></div>
               <span class="flex-shrink mx-4 text-gray-400">o</span>

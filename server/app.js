@@ -1,8 +1,18 @@
 import express from "express";
 import { servidor } from "./data/datos.js";
+import path, { dirname } from 'path';
+import { fileURLToPath } from 'url';
+const _dirname = path.dirname(fileURLToPath(import.meta.url));
+import {methods as authentication} from './controllers/authentication.controllers.js';
+import {methods as authorization} from './middlewares/authorization.js';
+
 
 // Objeto de express
 const app = express();
+
+app.use(express.static(path.join(_dirname, '../client/dist')));
+
+
 
 // Routers
 import { routerCliente } from "./routers/clientes.js";
@@ -35,3 +45,16 @@ app.get("/api/admin", (req, res) => {
 app.listen(servidor.SERVER_PORT, () => {
   console.log(`Servidor en puerto ${servidor.SERVER_PORT}`);
 });
+
+
+app.get('/', (solicitud,respuesta)=>{
+  respuesta.sendFile(path.join(_dirname ,'../client/dist/index.html'))
+})
+
+
+app.get('/spa', (solicitud,respuesta)=>{
+    respuesta.sendFile(path.join(_dirname ,'../client/dist/index.html'))
+})
+
+
+app.post('/api/login',authentication.login);

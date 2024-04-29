@@ -1,4 +1,4 @@
-console.log("¿Qué buscas? Aquí no hay nada. ¡AGUANTE CREATECH!")
+console.log("¿Qué buscas? Me gusta las papas con chorizo")
 
 const navToggle = document.querySelector(".nav-toggle"),
     navMenu = document.querySelector(".menu"),

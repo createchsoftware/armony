@@ -12,7 +12,7 @@ const Home = () => {
     <>
       <HelmetProvider>
         <Helmet>
-          <script src="../../scripts/index.js"></script>
+          <script src="../../../scripts/index.js"></script>
         </Helmet>
       </HelmetProvider>
       <LayoutPrincipal>
