@@ -32,14 +32,14 @@ app.use("api/admin/especialidad", routerEspecialidad);
 // Middleware
 app.use(express.json()); // Analiza las request entrantes con carga JSON basado en body-parse
 
-app.get('*', (solicitud,respuesta)=>{
-  respuesta.sendFile(path.join(_dirname ,'../client/dist/index.html'))
-})
-
 // Pagina principal
 app.get("/api/admin", (req, res) => {
   res.send("Funcionando");
 });
+
+app.get('*', (req, res) =>{
+  res.sendFile(path.join(_dirname ,'../client/dist/index.html'));
+})
 
 app.listen(servidor.SERVER_PORT, () => {
   console.log(`Servidor en puerto ${servidor.SERVER_PORT}`);
