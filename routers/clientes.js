@@ -1,12 +1,15 @@
 import express from "express";
-import { readClientesById } from "../DB/query/queryCliente.js";
-import { conexion } from "../DB/connection.js";
+import { conexion } from "../DB/connection.js"; // Conexion DB
 import {
   createCliente,
   addPatoCliente,
+  readClientesById,
   updatePatoCliente,
+  updateApodo,
   deletePatoCliente,
-} from "../DB/query/queryCliente.js";
+} from "../DB/query/queryCliente.js"; // Querys
+import { encontrado } from "../auth/validaciones.js"; // Validaciones
+
 // Router
 export const routerCliente = express.Router();
 
@@ -32,6 +35,7 @@ routerCliente.post("/create", async (req, res) => {
       colonia: req.body.colonia,
       numero: req.body.numero,
       cp: req.body.cp,
+      apodo: req.body.apodo,
     });
     res.status(201).json({
       message: "Se creo el usuario con patologia.",
@@ -70,6 +74,10 @@ routerCliente.get("/read", async (req, res) => {
     const resultado = await readClientesById(conexion, {
       idCliente: req.body.idCliente,
     }); // Parametros de ruta
+    if (encontrado(resultado))
+      res
+        .status(404)
+        .send(`No se encontro un cliente con el id ${req.body.idCliente}`);
     res
       .status(302)
       .json({ message: "Se encontro el usuario.", data: resultado }); // Status found, enviamos informacion en formato JSON
@@ -80,8 +88,22 @@ routerCliente.get("/read", async (req, res) => {
   }
 });
 
-// UPDATE
-routerCliente.get("/update", (req, res) => {});
+// UPDATE APODO
+routerCliente.patch("/update/apodo", async (req, res) => {
+  try {
+    const resultado = await updateApodo(conexion, {
+      idCliente: req.body.idCliente,
+      apodo: req.body.apodo,
+    });
+    res
+      .status(202)
+      .json({ message: "Apodo actualizado correctamente", data: resultado });
+  } catch (err) {
+    // Capturamos errores
+    console.error(messageError, err); // Mostramos errores por consola
+    res.status(500).send(messageError); // Enviamos un error INTERNAL SERVER ERROR y el error al navegador
+  }
+});
 
 // UPDATE CLIENTE-PATO FUNCIONAL
 routerCliente.patch("/update/cliente_patologia", async (req, res) => {

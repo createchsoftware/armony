@@ -35,7 +35,7 @@ app.use(express.json()); // Analiza las request entrantes con carga JSON basado 
 
 // Pagina principal
 app.get("/api/admin", (req, res) => {
-  res.send("Funcionando");
+  res.send("Modulo de administrador");
 });
 
 app.listen(servidor.SERVER_PORT, () => {

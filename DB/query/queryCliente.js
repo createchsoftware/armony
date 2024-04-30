@@ -7,7 +7,7 @@ const messageError = "Ha ocurrido un error al ejecutar el query: ";
 export async function createCliente(connection, data) {
   try {
     let insertClienteQuery =
-      "CALL addCliente(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);"; // Procedimiento almacenado en MySQL
+      "CALL addCliente(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);"; // Procedimiento almacenado en MySQL
     let query = mysql.format(insertClienteQuery, [
       data.name,
       data.ap,
@@ -21,6 +21,7 @@ export async function createCliente(connection, data) {
       data.colonia,
       data.numero,
       data.cp,
+      data.apodo,
     ]); // parametros para el procedimiento
     const [rows, fields] = await connection.query(query); // Ejecutamos el query y almacenamos el resultado
     endConnection(); // Cierre de conexion
@@ -39,7 +40,7 @@ export async function readClientesById(connection, data) {
     let query = mysql.format(readClientesQuery, [data.idCliente]); // Parametros para el procedimiento
     const [rows, fields] = await connection.query(query); // Ejecutamos query y guardamos resultados
     endConnection(); // Cerramos la conexion con la DB
-    return rows; // Retornamos resultado
+    return rows[0]; // Retornamos resultado
   } catch (err) {
     // Capturamos en caso de error de ejecucion de query
     console.error(messageError, err); // mostramos el error
@@ -56,6 +57,22 @@ export const updateClientes = (connection, callback) => {
     console.error(messageError, err); // Mostramos erroes por consola
   }
 };
+
+// UPDATE APODO
+export async function updateApodo(connection, data) {
+  try {
+    let updateApodo = "CALL updClienteApodo(?, ?)"; // Procedimiento almacenado de la DB
+    let query = mysql.format(updateApodo, [data.idCliente, data.apodo]); // Parametros para el procedimiento
+
+    const [rows, fields] = await connection.query(query); // Ejecutamos los querys y guardamos resultados
+    endConnection(); // Cerramos conexion
+    return rows[0]; // Retornamos valores
+  } catch (err) {
+    // Capturamos errores de ejecucion de query
+    console.error(messageError, err); // Mostramos erroes por consola
+  }
+}
+
 // DELETE
 // AL ELIMINAR UN USUARIO SE BORRA UN CLIENTE
 
