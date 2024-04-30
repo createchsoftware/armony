@@ -1,6 +1,6 @@
 import express from "express";
 export const routerFavoritos = express.Router();
-import { addFavorito } from "../db/query/queryfavoritos.js";
+import { addFavorito } from "../db/query/queryFavoritos.js";
 import { enableConnect } from "../DB/connection.js";
 
 
