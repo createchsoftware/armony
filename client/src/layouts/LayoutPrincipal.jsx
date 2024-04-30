@@ -12,7 +12,7 @@ function LayoutPrincipal(props) {
             </HelmetProvider>
             <div>
                 <Navbar />
-                {<div className="container">
+                {<div>
                     {props.children}
                 </div>}
                 <Footer />

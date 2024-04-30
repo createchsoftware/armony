@@ -21,6 +21,7 @@ document.getElementById('iniciar-sesion-fet').addEventListener('click', async()=
 
     if(respuestaJson.redirect){
         console.log("usuario logueado exitosamente");
+        window.location.reload();
     }
     
 })  

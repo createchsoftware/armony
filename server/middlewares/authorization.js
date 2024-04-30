@@ -114,7 +114,7 @@ async function revisar_cookie(solicitud){
         
         try{
             let decodificada = await jsonwebtoken.verify(galleta, process.env.JWT_SECRET);
-            let consulta = "select * from usuarios where usuario_id = ? or correo = ?"
+            let consulta = "select * from usuario where pkIdUsuario = ? or email = ?"
             let parametros = [decodificada.user,decodificada.user]
 
 
