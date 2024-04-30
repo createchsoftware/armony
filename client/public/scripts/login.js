@@ -1,11 +1,7 @@
-console.log("hola mundo");
+document.getElementById('iniciar-sesion-fet').addEventListener('click', async()=>{
 
-
-document.getElementById('iniciar-sesion-fet').addEventListener('submit', async(e)=>{
-
-    console.log("se mando a llamar el metodo");
-
-    e.preventDefault();
+    let input_pass = document.getElementById('pass');
+    let input_user_email = document.getElementById('user');
     
     const respuesta = await fetch("http://localhost:3000/api/login",{
         method:"POST",
@@ -13,8 +9,8 @@ document.getElementById('iniciar-sesion-fet').addEventListener('submit', async(e
             "Content-Type":"application/json",
         },
         body:JSON.stringify({
-            user_or_email:e.target.children.user.value,
-            password:e.target.children.pass.value
+            user_or_email:input_user_email.value,
+            password:input_pass.value
         })
     })
 

@@ -2,6 +2,7 @@ import user1 from "../../../../public/pictures/userCl.png";
 import gl from "../../../../public/pictures/googlelogo.png";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Popup from "reactjs-popup";
+import { Helmet, HelmetProvider } from "react-helmet-async";
 import PopupAdmin from "./PopupLoginAdmin";
 import PopupRegistro from "./PopupRegistrarse";
 import {
@@ -11,42 +12,6 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 
 const ModalLogin = ({ actionElement }) => {
-
-  async function evento(){
-
-    let input_pass = document.getElementById('pass');
-    let input_user_email = document.getElementById('user');
-    
-  
-    const res = await fetch("http://localhost:3000/api/login",{
-        method:"POST",
-        headers:{
-            "Content-Type":"application/json",
-        },
-        body:JSON.stringify({
-            user_or_email:input_user_email.value,
-            password:input_pass.value
-        })
-    })
-
-    
-
-    
-
-    if(!res.ok)
-      return;
-    
-    input_user_email.value='';
-    input_pass.value = '';   
-
-    const respuestaJson = await res.json();
-
-    if(respuestaJson.redirect){
-        console.log("usuario logueado exitosamente");
-    }
-  }
-
-
   return (
     <Popup trigger={actionElement} modal nested>
       
@@ -119,12 +84,20 @@ const ModalLogin = ({ actionElement }) => {
                   Recuerdame
                 </label>
               </div>
+
+
+
+              <HelmetProvider>
+                  <Helmet>
+                    <script src="../../../scripts/login.js"></script>
+                  </Helmet>
+              </HelmetProvider>
+
               <button
                 type="button"
                 id="iniciar-sesion-fet"
                 className="bg-rose-400 text-white text-xl rounded-full px-4 py-2 mx-auto hover:bg-red-200"
                 aria-label="Iniciar Sesión"
-                onClick={evento}
                 >
                    Inicia Sesión
                 </button>

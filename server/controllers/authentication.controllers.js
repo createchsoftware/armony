@@ -84,7 +84,7 @@ async function login(solicitud,respuesta){
                         // esto es un objeto
                         let galleta = {
                             // el expires es de tipo fecha
-                            maxAge:1800000,
+                            maxAge:180000,
                             expires: new Date(Date.now() + process.env.JWT_COOKIE_EXPIRES * 24 * 60 * 60 * 1000),
                             path:'/'
                         }
