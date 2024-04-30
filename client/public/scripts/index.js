@@ -193,3 +193,6 @@ const carrusel = document.getElementsByClassName('selec');
 for (let i = 0; i < carrusel.length; i++) {
     carrusel[i].addEventListener('click', cambio);
 }
+
+
+
