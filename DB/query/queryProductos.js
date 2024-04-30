@@ -117,7 +117,7 @@ export async function updateProdServ(connection, data) {
     ]); // Parametros para el procedimiento
     const [rows, fields] = await connection.query(query); // Ejecutamos query y guardamos valores
     endConnection(); // Cierre de conexion
-    return rows[0];
+    return rows;
   } catch (err) {
     // Capturamos errores de ejecucion de query
     console.error(messageError, err); // Mostramos los errores por consola

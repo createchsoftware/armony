@@ -8,6 +8,7 @@ import {
   updateProdServ,
   deleteProdServ,
 } from "../DB/query/queryProductos.js";
+import { errorUpdate } from "../auth/validaciones.js";
 
 // Router
 export const routerProductos = express.Router();
@@ -120,6 +121,12 @@ routerProductos.patch("/update", async (req, res) => {
       time: req.body.time,
       img: req.body.img,
     }); // Parametros enviados por body
+    if (errorUpdate(resultado))
+      res
+        .status(404)
+        .send(
+          `No se pudo actualizar el producto/servicio con id ${req.body.idProdServ}`
+        );
     res.status(202).json({
       message: "Se actualizo exitosamente el producto",
       data: resultado,
