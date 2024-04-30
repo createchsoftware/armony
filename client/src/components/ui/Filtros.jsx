@@ -3,7 +3,7 @@ import { Dialog, Disclosure, Menu, Transition } from '@headlessui/react'
 import { XMarkIcon } from '@heroicons/react/24/outline'
 import { ChevronDownIcon, FunnelIcon, MinusIcon, PlusIcon, Squares2X2Icon } from '@heroicons/react/20/solid'
 import ContenedorProductos from './ContenedorProductos'
-import { products } from '../../data/productos.json'
+//import { products } from '../../data/productos.json'
 import Rating from '@mui/material/Rating';
 
 
@@ -13,21 +13,28 @@ function classNames(...clases) {
 }
 
 const sortOptions = [
-    { name: 'Más Popular', current: true },
-    { name: 'Mejor Calificado', current: false },
-    { name: 'Más Nuevo', current: false },
+    { name: 'Más Relevante', current: true },
+    { name: 'Más Reciente', current: false },
+    { name: 'Top Ventas', current: false },
     { name: 'Precio: Bajo a Alto', current: false },
     { name: 'Precio: Alto a Bajo', current: false },
 ]
 
 const subCategories = [
-    { name: 'Cosméticos' },
-    { name: 'Facial' },
-    { name: 'Crema' },
-    { name: 'Spray' },
-    { name: 'Serúm' },
-    { name: 'Depilación' },
+    {
+        id: 'categoria',
+        name: 'Categorias',
+        options: [
+            { label: 'Cosméticos', checked: false },
+            { label: 'Facial', checked: false },
+            { label: 'Crema', checked: false },
+            { label: 'Spray', checked: false },
+            { label: 'Serúm', checked: false },
+            { label: 'Depilación', checked: false },
+        ],
+    },
 ]
+
 
 const filters = [
     // {
@@ -82,20 +89,37 @@ const filters = [
 export default function Filtros() {
     const [mobileFiltersOpen, setMobileFiltersOpen] = useState(false)
     const [sortOption, setSortOption] = useState(sortOptions[0])
-    const [filteredProducts, setFilteredProducts] = useState(products)
+    const [filteredProducts, setFilteredProducts] = useState([])
     const [category, setCategory] = useState()
     const [search, setSearch] = useState('');
     //    const [filter, setFilter] = useState();
 
+    //useEffect from api call
+    // useEffect(() => {
+    //     fetch('/products')
+    //         .then(res => res.json())
+    //         .then(data => setProducts(data))
+    //         .catch(err => console.log(err))
+    // }, [])
+
+
     useEffect(() => {
-        setFilteredProducts(products.filter((product) => product.title.toLowerCase().includes(search.toLowerCase())))
-    }, [search])
+        fetch("/api/admin/productos/getProducts")
+        .then(response => response.json())  
+        .then(data => {
+            setFilteredProducts(data);  
+
+        })
+        .catch(error => {
+            console.log('error', error);
+        });
+    }, []);
 
     const handleSearch = (e) => {
         setSearch(e.target.value)
     }
 
-    useEffect(() => {
+    /*useEffect(() => {
         let updatedProducts = products;
 
         // Filtrar por búsqueda
@@ -144,7 +168,7 @@ export default function Filtros() {
         }
 
         setFilteredProducts(updatedProducts);
-    }, [search, category, sortOption, products]);
+    }, [search, category, sortOption, products]);*/
 
     return (
         <div className="mt-6 bg-[#F4F1ED]">
@@ -190,7 +214,6 @@ export default function Filtros() {
 
                                     {/* Filters */}
                                     <form className="mt-4 border-t border-gray-200">
-                                        <h3 className="sr-only">Categorias</h3>
                                         <ul role="list" className="px-2 py-3 font-medium text-gray-90">
                                             {subCategories.map((category) => (
                                                 <li key={category.name}>
@@ -257,7 +280,7 @@ export default function Filtros() {
 
                     <div className="grid justify-around gap-8 pt-24 pb-6 border-b border-gray-200 md:grid-cols-3 grid-cols2 ">
 
-                        <h1 className="text-xl font-bold tracking-tight text-gray-900 md:text-4xl">Categorias</h1>
+                        <h1 className="text-xl font-bold tracking-tight text-gray-900 md:text-4xl">Filtrar por:</h1>
                         <div className="flex items-center">
                             <Menu as="div" className="relative inline-block text-left">
                                 <div>
@@ -318,16 +341,16 @@ export default function Filtros() {
                                 <FunnelIcon className="w-5 h-5" aria-hidden="true" />
                             </button>
                         </div>
-                        <div class='max-w-md mx-auto border-1 border-gray-400'>
-                            <div class="relative flex items-center w-full h-12 rounded-lg focus-within:shadow-lg bg-white overflow-hidden border-b-2 border-gray">
-                                <div class="grid place-items-center h-full w-12 text-gray-300">
-                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                        <div className='max-w-md mx-auto border-1 border-gray-400'>
+                            <div className="relative flex items-center w-full h-12 rounded-lg focus-within:shadow-lg bg-white overflow-hidden border-b-2 border-gray">
+                                <div className="grid place-items-center h-full w-12 text-gray-300">
+                                    <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
                                     </svg>
                                 </div>
 
                                 <input
-                                    class="peer h-full w-full outline-none text-sm text-gray-700 pr-2"
+                                    className="peer h-full w-full outline-none text-sm text-gray-700 pr-2"
                                     type="text"
                                     id="search"
                                     placeholder="Buscar..."
@@ -341,22 +364,58 @@ export default function Filtros() {
 
                     <section aria-labelledby="products-heading" className="pt-6 pb-24">
                         <h2 id="products-heading" className="sr-only">
-                            Products
+                            Productos
                         </h2>
 
                         <div className="grid md:flex">
                             {/* Filters */}
                             <form className="hidden lg:block">
-                                <h3 className="sr-only">Categories</h3>
-                                <ul role="list" className="pb-6 space-y-4 text-sm font-medium text-gray-900 border-b border-gray-200">
-                                    {subCategories.map((category) => (
-                                        <li key={category.name}>
-                                            <a className='cursor-pointer' href={category.href}
-                                                onClick={() => { setCategory(category) }}
-                                            >{category.name}</a>
-                                        </li>
-                                    ))}
-                                </ul>
+                                {subCategories.map((section) => (
+                                    <Disclosure as="div" key={section.id} className="py-6 border-b border-gray-200">
+                                        {({ open }) => (
+                                            <>
+                                                <h3 className="flow-root -my-3">
+                                                    <Disclosure.Button className="flex items-center justify-between w-full py-3 text-sm text-gray-400 hover:text-gray-500">
+                                                        <span className="font-medium text-gray-900">{section.name}</span>
+                                                        <span className="flex items-center ml-6">
+                                                            {open ? (
+                                                                <MinusIcon className="w-5 h-5" aria-hidden="true" />
+                                                            ) : (
+                                                                <PlusIcon className="w-5 h-5" aria-hidden="true" />
+                                                            )}
+                                                        </span>
+                                                    </Disclosure.Button>
+                                                </h3>
+                                                <Disclosure.Panel className="pt-6">
+                                                    <div className="space-y-4">
+                                                        {section.options.map((option, optionIdx) => (
+
+                                                            <div key={option.value} className="flex items-center">
+                                                                <input
+                                                                    id={`filter-${section.id}-${optionIdx}`}
+                                                                    name={`${section.id}[]`}
+                                                                    defaultValue={option.value}
+                                                                    type="checkbox"
+                                                                    defaultChecked={option.checked}
+                                                                    className="w-4 h-4 text-indigo-600 border-gray-300 rounded focus:ring-indigo-500"
+                                                                />
+                                                                <label
+                                                                    htmlFor={`filter-${section.id}-${optionIdx}`}
+                                                                    className="ml-3 text-sm text-gray-600"
+                                                                >
+                                                                    {option.label}
+                                                                </label>
+                                                            </div>
+                                                        ))}
+                                                    </div>
+                                                </Disclosure.Panel>
+
+
+                                            </>
+
+                                        )}
+                                    </Disclosure>
+                                ))}
 
                                 <Disclosure as="div" className="py-6 border-b border-gray-200">
                                     {({ open }) => (

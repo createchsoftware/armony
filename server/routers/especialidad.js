@@ -1,9 +1,9 @@
 import express from "express";
-import { enableConnect } from "../DB/connection.js";
+import { enableConnect } from "../db/connection.js";
 import {
   createEspecialidad,
   readEspecialidadById,
-} from "../DB/query/queryEspecialidad.js";
+} from "../db/query/queryEspecialidad.js";
 
 // Router
 export const routerEspecialidad = express.Router();

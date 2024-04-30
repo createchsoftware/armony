@@ -4,10 +4,20 @@ import path, { dirname } from 'path';
 import { fileURLToPath } from 'url';
 const _dirname = path.dirname(fileURLToPath(import.meta.url));
 
+import { methods as authentication } from './controllers/authentication.controllers.js';
+import { methods as authorization } from './middlewares/authorization.js';
+
+import { conexion } from "./db/connection.js";
+
 // Objeto de express
 const app = express();
 
 app.use(express.static(path.join(_dirname, '../client/dist')));
+
+app.use((req, res, next) => {
+  req.database = conexion;
+  next();
+});
 
 // Routers
 import { routerCliente } from "./routers/clientes.js";
@@ -28,17 +38,27 @@ import { routerCategoria } from "./routers/categoria.js";
 app.use("api/admin/categoria", routerCategoria);
 import { routerEspecialidad } from "./routers/especialidad.js"; // NOTA: NO SE A PROBADO AUN, NO FUNCIONAL
 app.use("api/admin/especialidad", routerEspecialidad);
+import { routerCitas } from "./routers/citas.js";
+app.use("/api/admin/citas", routerCitas);
+import { routerFavoritos } from "./routers/favoritos.js";
+app.use("/api/admin/favoritos", routerFavoritos);
 
 // Middleware
 app.use(express.json()); // Analiza las request entrantes con carga JSON basado en body-parse
 
+app.post("/api/login", authentication.login);
+
+app.get("/api/logout", authentication.logout);
+
+app.get("/api/logueado", authorization.verificar_cookie);
+
 // Pagina principal
-app.get("/api/admin", (req, res) => {
-  res.send("Funcionando");
+app.get("/api/admin", async (req, res) => {
+  await res.send("Funcionando");
 });
 
-app.get('*', (req, res) =>{
-  res.sendFile(path.join(_dirname ,'../client/dist/index.html'));
+app.get("*", async (req, res) =>{
+  await res.sendFile(path.join(_dirname ,'../client/dist/index.html'));
 })
 
 app.listen(servidor.SERVER_PORT, () => {

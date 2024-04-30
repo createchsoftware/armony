@@ -8,7 +8,7 @@ function InformacionPersonal() {
                 <main className='grid p-12 m-12 md:flex'>
                     <div className='grid gap-6 md:w-3/5'>
                         <section className=' flex justify-around rounded-2xl w-[80%] m-auto p-6 shadow-[0_3px_10px_rgb(0,0,0,0.2)]'>
-                            <a className='flex items-baseline text-md gap-x-4' href="#"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-4 h-4">
+                            <a className='flex items-baseline text-md gap-x-4' href="/perfil"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-4 h-4">
                                 <path strokeLinecap="round" strokeLinejoin="round" d="M9 15 3 9m0 0 6-6M3 9h12a6 6 0 0 1 0 12h-3" />
                             </svg> Volver</a>
                             <h1 className=''>Informacion Personal</h1>

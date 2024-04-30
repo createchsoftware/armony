@@ -12,7 +12,7 @@ import {
 const Patologias = () => {
   return (
     <div className="flex flex-col h-screen justify-center items-center">
-      <div className="min-h-[680px] max-w-[1170px] min-w-[1170px] flex flex-col rounded-xl ring-1 ring-slate-200 bg-white bg-clip-border text-gray-700 shadow-md mx-auto">
+      <div className="min-h-[740px] max-w-[1170px] min-w-[1170px] flex flex-col rounded-xl ring-1 ring-slate-200 bg-white bg-clip-border text-gray-700 shadow-md mx-auto">
         <div className="relative max-w-[110px] min-w-[110px] mx-auto -mt-20 grid h-28 place-items-center overflow-hidden rounded-full bg-white bg-clip-border shadow-lg">
           <img src={user1} alt="" className="logo1 absolute h-full" />
         </div>
@@ -40,7 +40,7 @@ const Patologias = () => {
           >
             Información Básica
           </a>
-          <div class="flex-grow border-t border-gray-400 pl-4 mx-0"></div>
+          <div className="flex-grow border-t border-gray-400 pl-4 mx-0"></div>
           <span className="">
             <FontAwesomeIcon
               style={{ fontSize: "16px", color: "#FFFFFF" }}
@@ -61,7 +61,7 @@ const Patologias = () => {
           >
             Patologías
           </a>
-          <div class="flex-grow border-t border-gray-400 pl-4 mx-0"></div>
+          <div className="flex-grow border-t border-gray-400 pl-4 mx-0"></div>
           <span className="">
             <FontAwesomeIcon
               style={{ fontSize: "16px", color: "#FFFFFF" }}
@@ -82,7 +82,7 @@ const Patologias = () => {
           >
             Contraseña
           </a>
-          <div class="flex-grow border-t border-gray-400 pl-4 mx-0"></div>
+          <div className="flex-grow border-t border-gray-400 pl-4 mx-0"></div>
           <span className="">
             <FontAwesomeIcon
               style={{ fontSize: "16px", color: "#FFFFFF" }}
@@ -112,9 +112,9 @@ const Patologias = () => {
         </div>
         <form
           action=""
-          className="grid grid-cols-[32%_32%_32%] place-content-center"
+          className="grid grid-cols-[32%_32%_32%] place-content-center mt-5"
         >
-          <div className="my-auto">
+          <div className="my-1">
             <div className="mr-2">
               <label htmlFor="" className="text-xs">
                 ¿Tienes alguna condición médica crónica? {"("}Ejemplo: diabetes,
@@ -147,7 +147,7 @@ const Patologias = () => {
               />
             </div>
           </div>
-          <div className="my-auto">
+          <div className="my-1">
             <div className="mr-2">
               <label htmlFor="" className="text-xs">
                 ¿Tienes alguna intolerancia a ciertos ingredientes o productos
@@ -179,7 +179,7 @@ const Patologias = () => {
               />
             </div>
           </div>
-          <div className="my-auto">
+          <div className="my-1">
             <div className="mr-2">
               <label htmlFor="" className="text-xs">
                 ¿Tiene alguna restricción médica que debamos tener en cuenta
@@ -212,7 +212,7 @@ const Patologias = () => {
               />
             </div>
           </div>
-          <div className="my-auto">
+          <div className="my-1">
             <div className="mr-2">
               <label htmlFor="" className="text-xs">
                 ¿Ha sido diagnosticado con alguna afección de la piel?
@@ -245,7 +245,7 @@ const Patologias = () => {
               />
             </div>
           </div>
-          <div className="my-auto">
+          <div className="my-1">
             <div className="mr-2">
               <label htmlFor="" className="text-xs">
                 ¿Esta tomando actualmente algún medicamento? Si es así, por
@@ -277,7 +277,7 @@ const Patologias = () => {
               />
             </div>
           </div>
-          <div className="my-auto">
+          <div className="my-1">
             <div className="mr-2">
               <label htmlFor="" className="text-xs">
                 ¿Hay alguna otra condición de salud o información relevante que
@@ -310,7 +310,7 @@ const Patologias = () => {
               />
             </div>
           </div>
-          <div className="my-auto">
+          <div className="my-1">
             <div className="mr-2">
               <label htmlFor="" className="text-xs">
                 ¿Ha experimentado alguna lesión reciente o cirugía? Si es así,
@@ -342,7 +342,7 @@ const Patologias = () => {
               />
             </div>
           </div>
-          <div className="my-auto">
+          <div className="my-1">
             <div className="mr-2">
               <label htmlFor="" className="text-xs">
                 ¿Ha experimentado alguna reacción alérgica o adversa a
@@ -375,7 +375,7 @@ const Patologias = () => {
               />
             </div>
           </div>
-          <div className="my-auto">
+          <div className="my-1">
             <div className="mr-2">
               <label htmlFor="" className="text-xs">
                 ¿Tiene alguna preferencia especial o requerimiento específico
@@ -408,7 +408,8 @@ const Patologias = () => {
               />
             </div>
           </div>
-          <div className="my-auto">
+          <div></div>
+          <div className="my-1">
             <div className="mr-2">
               <label htmlFor="" className="text-xs">
                 ¿Tiene alergias conocidas? Por favor, especifique.

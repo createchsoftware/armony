@@ -1,13 +1,10 @@
 import bcryptjs from 'bcryptjs';
 import JsonWebToken from 'jsonwebtoken';
-import dotenv from 'dotenv';
+import { jwt } from "../data/datos.js";
 import CrearCuentaEmail from '../services/mail.service.js';
-
-dotenv.config()
 
 const regex_email = /.+@(gmail|hotmail|icloud|outlook)\.com/;
 const regex_usuarioID = /\d{1,5}/;
-
 
 async function login(solicitud,respuesta){
 
@@ -20,7 +17,7 @@ async function login(solicitud,respuesta){
    }
    else{
 
-       let consulta = 'select * from usuario where pkIdUsuario = ? or email = ?'
+       let consulta = `SELECT * FROM usuario WHERE pkIdUsuario = ? OR email = "?"`
        parametros = [usuarioID_o_correo,usuarioID_o_correo];
 
        // primero validar el ID o el correo
@@ -32,17 +29,14 @@ async function login(solicitud,respuesta){
            respuesta.send({campos_incorrectos:true});
        }
        else{
-
             let a_buscar;
             if(correo_valido == true) a_buscar = "correo";
             else a_buscar = "usuario";
 
             // segundo buscar al usuario o el email
-            solicitud.database.query(consulta,parametros, async (error,resultados)=>{
-                if(error)
-                  throw error;
+            let [results] = await solicitud.database.query(consulta, parametros);
                 
-                if(resultados.length == 0){
+                if(results.length == 0){
                     respuesta.send({busqueda_vacia:a_buscar,valor:usuarioID_o_correo});
                 }
                 else{
@@ -51,7 +45,8 @@ async function login(solicitud,respuesta){
                     // ahora sigue validar la contrasena con la base de datos
 
                     //bcryptjs.compare() es una funcion asincrona, por lo que debemos usar el await
-                    let contraseña_correcta = await bcryptjs.compare(contraseña,resultados[0].pass);
+
+                    let contraseña_correcta = await bcryptjs.compare(contraseña, Buffer.from(results[0].pass, 'hex').toString('utf8'));
 
                     if(contraseña_correcta == false){
                         respuesta.send({contraseña_incorrecta:true});
@@ -60,10 +55,10 @@ async function login(solicitud,respuesta){
                         let ingreso;
 
                         if(usuarioID_valido == true){
-                            ingreso = resultados[0].pkIdUsuario;
+                            ingreso = results[0].pkIdUsuario;
                         } 
                         else {
-                            ingreso = resultados[0].email;
+                            ingreso = results[0].email;
                         } 
 
 
@@ -73,19 +68,17 @@ async function login(solicitud,respuesta){
  
                         // console.log(sendingLog); // nos deberia imprimir la informacion acerca del envio
 
-
-
                         let token = JsonWebToken.sign(
                             {user:ingreso},
-                            process.env.JWT_SECRET,
-                            {expiresIn:process.env.JWT_EXPIRATION}
+                            jwt.SECRET,
+                            {expiresIn:jwt.EXPIRATION}
                         );
 
                         // esto es un objeto
                         let galleta = {
                             // el expires es de tipo fecha
-                            maxAge:10000,
-                            expires: new Date(Date.now() + process.env.JWT_COOKIE_EXPIRES * 24 * 60 * 60 * 1000),
+                            maxAge:2592000,
+                            expires: new Date(Date.now() + jwt.COOKIE_EXPIRES * 24 * 60 * 60 * 1000),
                             path:'/'
                         }
 
@@ -103,14 +96,14 @@ async function login(solicitud,respuesta){
 
                     }
                 }
-                }
-                
-            )
        }
-
-       
        
    }
+}
+
+async function logout(solicitud,respuesta){
+    await respuesta.clearCookie("Naruto_cookie");
+    await respuesta.redirect('/');
 }
 
 
@@ -120,6 +113,8 @@ async function register(solicitud, respuesta){
     let repetido = false;
     let consulta ='';
     let parametros = [];
+
+    const salt = await bcryptjs.genSalt(5);
 
     console.log("mensaje para comprobar que se ejecute");
 
@@ -147,36 +142,29 @@ async function register(solicitud, respuesta){
         else{
             // el correo valido si cumple con el regex, ahora sigue verificar si el correo no esta repetido
 
-            consulta = 'select * from usuarios where correo = ?';
+            consulta = 'SELECT * FROM usuarios WHERE correo = ?';
             parametros = [email];
-            solicitud.database.query(consulta,parametros,(error,resultados)=>{
-                if(error){
-                    throw error;
-                    return;
-                }
-                repetido = resultados.some((usuario)=>{
+            let [results] = solicitud.database.query(consulta, parametros)
+                
+                repetido = results.some((usuario)=>{
                     usuario.email == email
                 })
-            })
 
             if(repetido == true){
                 respuesta.send({correo_repetido:true});
             }
             else{
                 // perfecto, el correo no existe
-                let salt =  await bcryptjs.genSalt(5);
 
                 //clave cryptografica de la contraseña del usuario
-                let hashPassword =  await bcryptjs.hash(contraseña,salt);  // la contraseña que vamos a guardar en nuestro usuario
+                let hashPassword = await bcryptjs.hash(contraseña, salt);  // la contraseña que vamos a guardar en nuestro usuario
 
-                consulta = 'insert into usuarios values (null,?,?,?,?,?)';
+                consulta = 'INSERT INTO usuarios VALUES (null,?,?,?,?,?)';
                 parametros = [nombre,paterno,materno,email,hashPassword];
-                solicitud.database.query(consulta,parametros, async(error,resultados)=>{
-                    if(error){
-                        throw error;
-                        return;
-                    }
 
+                let [results] = solicitud.database.query(consulta, parametros)
+                
+                if (results.length > 0) {
                     /*
                       a diferencia de un select, que nos arroja un arreglo de objetos,
                       en un insert into, nos arroja un objeto, claro si nomas es asi, 
@@ -186,15 +174,15 @@ async function register(solicitud, respuesta){
 
                     let token_register = JsonWebToken.sign(
                         {user:resultados.insertId},
-                        process.env.JWT_SECRET,
-                        {expiresIn:process.env.JWT_EXPIRATION}
+                        jwt.SECRET,
+                        {expiresIn:jwt.EXPIRATION}
                     );
 
                     // esto es un objeto
                     let galleta_register = {
-                        maxAge:10000,
+                        maxAge:2592000,
                         // el expires es de tipo fecha
-                        expires: new Date(Date.now() + process.env.JWT_COOKIE_EXPIRES * 24 * 60 * 60 * 1000),
+                        expires: new Date(Date.now() + jwt.COOKIE_EXPIRES * 24 * 60 * 60 * 1000),
                         path:'/'
 
                         /*
@@ -218,7 +206,7 @@ async function register(solicitud, respuesta){
                     console.log(sending); // nos deberia imprimir la informacion acerca del envio
 
                     respuesta.send({redirect:'/admin'});
-                })
+                }
             }
         }
         
@@ -230,5 +218,6 @@ async function register(solicitud, respuesta){
 
 export const methods = {
     login,
+    logout,
     register
 }

@@ -7,21 +7,18 @@
   font-style: normal;
   font-weight: normal;
   src: url("../fuentes/abeatbyKaiRegular.otf");
-  /* Cambiar ../fuentes a ../fuentes durante desarrollo, quitar para comando npm run build */
 }
 @font-face {
   font-family: "Quinger";
   font-style: normal;
   font-weight: normal;
   src: url("../fuentes/Quinger.otf");
-  /* Cambiar ../fuentes a ../fuentes durante desarrollo, quitar para comando npm run build */
 }
 @font-face {
   font-family: "ILoveGlitter";
   font-style: normal;
   font-weight: normal;
   src: url("../fuentes/I\ Love\ Glitter\ -\ OTF.otf");
-  /* Cambiar ../fuentes a ../fuentes durante desarrollo, quitar para comando npm run build */
 }
 
 @font-face {
@@ -29,7 +26,6 @@
   font-style: normal;
   font-weight: normal;
   src: url("../fuentes/ABeeZee-Regular.ttf");
-  /* Cambiar ../fuentes a ../fuentes durante desarrollo, quitar para comando npm run build */
 }
 
 * {
@@ -154,7 +150,7 @@ body {
 }
 .menu-link-serv {
   text-decoration: none;
-  color: rgb(236, 87, 102);
+  color: #ec5766;
   font-weight: bold;
   padding: 8px 0;
   padding-right: 52px;
@@ -164,7 +160,7 @@ body {
   border-top: 2px solid black;
 }
 .menu-link-serv:hover{
-  color: rgb(255, 181, 167);
+  color: #ffb5a7;
 }
 
 
@@ -205,7 +201,7 @@ body {
   display: flex;
   justify-content: space-between;
   text-decoration: none;
-  color: rgb(236, 87, 102);
+  color: #ec5766;
   font-weight: bold;
   padding: 8px 0;
   font-size: 16px;
@@ -727,7 +723,7 @@ body {
   position: absolute;
   top: 80px;
   padding: 20px 20px;
-  width: 32%;
+  width: 400px;
   background-color: white;
   border-radius: 8px;
   right: 5%;
@@ -735,7 +731,8 @@ body {
 
 .cart-header {
   display: flex;
-  padding-bottom: 8px;
+  border-bottom: 2px solid lightgray;
+  margin-bottom: 8px;
   justify-content: space-between;
 }
 
@@ -747,7 +744,7 @@ body {
 }
 
 .cart-item {
-  background-color: rgb(150, 150, 150);
+  background-color: rgb(200, 200, 200);
   margin-bottom: 24px;
   padding: 8px 12px;
   display: flex;
@@ -773,7 +770,7 @@ body {
 }
 
 .cart-photo {
-  width: 15%;
+  width: 25%;
 }
 
 .cart-remove {
@@ -784,6 +781,9 @@ body {
 .cart-remove:hover {
   color: rgb(255, 181, 167);
 }
+.cart-total{
+  border-top: 2px solid lightgray;
+}
 
 #cart-mas {
   background-color: rgb(69, 181, 156);
@@ -791,7 +791,7 @@ body {
   color: white;
   padding: 4px 16px;
   width: 100%;
-  text-align: right;
+  text-align: center;
   transition: ease 0.25s;
 }
 #cart-mas:hover {
@@ -839,6 +839,18 @@ body {
 .soon-desc{
   text-align: center;
   font-size: large ;
+}
+
+/* =================== LISTA DE DESEOS */
+.menu-deseo{
+  margin-top: 80px;
+  height: calc(100vh - 80px);
+}
+.deseo-buscador{
+  width: 50%;
+  padding: 8px 18px;
+  border: 2px solid rgb(255, 181, 167);
+  border-radius: 10px;
 }
 
 /* ======================= RESPONSIVE */
