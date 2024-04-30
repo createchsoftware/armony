@@ -1,8 +1,13 @@
 import express from "express";
 import { servidor } from "./data/datos.js";
+import path, { dirname } from 'path';
+import { fileURLToPath } from 'url';
+const _dirname = path.dirname(fileURLToPath(import.meta.url));
 
 // Objeto de express
 const app = express();
+
+app.use(express.static(path.join(_dirname, '../client/dist')));
 
 // Routers
 import { routerCliente } from "./routers/clientes.js";
@@ -31,6 +36,10 @@ app.use(express.json()); // Analiza las request entrantes con carga JSON basado 
 app.get("/api/admin", (req, res) => {
   res.send("Funcionando");
 });
+
+app.get('*', (req, res) =>{
+  res.sendFile(path.join(_dirname ,'../client/dist/index.html'));
+})
 
 app.listen(servidor.SERVER_PORT, () => {
   console.log(`Servidor en puerto ${servidor.SERVER_PORT}`);

@@ -138,7 +138,7 @@ const Contrasena = () => {
                 id="email"
                 type="text"
                 placeholder="Ingresa tu nueva contraseña"
-                className="bg-slate-200 rounded-full w-[365px] mb-3 mt-2 py-3 focus:outline-none focus:ring-1 focus:ring-rose-400 focus:border-transparent px-6"
+                className="bg-slate-200 rounded-full w-[365px] mb-3 mt-2 py-2 focus:outline-none focus:ring-1 focus:ring-rose-400 focus:border-transparent px-6"
               />
               <div>
                 <label htmlFor="">Confirmar contraseña</label>
@@ -150,7 +150,7 @@ const Contrasena = () => {
                 id="email"
                 type="text"
                 placeholder="Vuelve a ingresar tu nueva contraseña"
-                className="bg-slate-200 rounded-full w-[365px] mb-3 mt-2 py-3 focus:outline-none focus:ring-1 focus:ring-rose-400 focus:border-transparent px-6"
+                className="bg-slate-200 rounded-full w-[365px] mb-3 mt-2 py-2 focus:outline-none focus:ring-1 focus:ring-rose-400 focus:border-transparent px-6"
               />
             </form>
           </div>

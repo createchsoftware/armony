@@ -1,7 +1,8 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUser, faUserPen, faBagShopping, faCalendarDays, faMoneyBill ,faClockRotateLeft, faCreditCard, faArrowRightFromBracket } from '@fortawesome/free-solid-svg-icons';
 
-function MenuPerfil(){
+// eslint-disable-next-line react/prop-types
+function MenuPerfil({cerrarsesion}){
     return (
         <div className="menu-perfil">
             <ul className="menu-nav-perfil">
@@ -48,7 +49,7 @@ function MenuPerfil(){
                     </a>
                 </li>
                 <li className="menu-item-perfil">
-                    <a href="#" className="menu-link-perfil">
+                    <a className="menu-link-perfil" onClick={cerrarsesion}>
                         <FontAwesomeIcon icon={faArrowRightFromBracket} className='text-black' />
                         <p className='ml-5'>Cerrar sesión</p>
                     </a>

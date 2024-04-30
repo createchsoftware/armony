@@ -12,6 +12,7 @@ function Navbar( ) {
     const [cart, setCart, showModal, setShowModal] = useState(false);
     const [servicios, setServicios] = useState(false);
     const [perfil, setPerfil] = useState(false);
+    const [log, setLog] = useState(false); //<<< PARA EL INICIO DE SESION
     const [items, setItems,] = useState(0);
 
     const toggleCart = () => {
@@ -28,6 +29,16 @@ function Navbar( ) {
 
     const togglePerfil = () => {
         setPerfil(!perfil)
+    };
+
+    //PROCESO DEL LOG IN
+    const LogIn = () => {
+        setLog(true)
+
+    };
+    const LogOut = () => {
+        setLog(false)
+
     };
 
     return (
@@ -84,14 +95,16 @@ function Navbar( ) {
                                 </>
                             )}
                             <li className="nav-menu-item cursor-pointer">
-                                <ModalLogin actionElement={
-                                    <a href="#" className="menu-link menu-is">Inicia sesión</a>
-                                }/>
-                                {/* <a className="menu-link flex items-center" onClick={togglePerfil} >
-                                    <img src="../../../public/pictures/userCl.png" alt="" className='rounded-full w-10 h-10'/>
+                                { log ? (
+                                    <a className="menu-link flex items-center" onClick={togglePerfil} >
+                                    <img src="../../../pictures/userCl.png" alt="" className='rounded-full w-10 h-10'/>
                                     Usuario
-                                </a> */}
-                                {/* ^^^^^ PARA TESTEAR EL MENU DESPLEGABLE DEL PERFIL, DESCOMENTAR Y COMENTAR EL BOTON "INICIAR SESION" */}
+                                    </a>  
+                                ):(
+                                    <ModalLogin actionElement={
+                                        <a href="#" className="menu-link menu-is">Inicia sesión</a>
+                                    }/>
+                                )}
                             </li>
                             {location.pathname !== "/" && (
                                 <li className="nav-menu-item">
@@ -133,7 +146,7 @@ function Navbar( ) {
             {perfil && (
                 <div className='usermenu-fondo'>
                     <div className='usermenu-fx'>
-                        <MenuPerfil />
+                        <MenuPerfil cerrarsesion={LogOut} />
                     </div>
                 </div>
             )}
