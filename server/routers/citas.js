@@ -5,8 +5,8 @@ import { addCita,
       searchEmpleadobyCita,
       getAllCitaById,
       getCitasPendById,
-      delCita} from "../DB/query/queryCitas.js";
-import { enableConnect } from "../DB/connection.js";
+      delCita} from "../db/query/queryCitas.js";
+import { enableConnect } from "../db/connection.js";
 
 
 routerCitas.use(express.json()); 
