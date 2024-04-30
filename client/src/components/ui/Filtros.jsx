@@ -3,8 +3,7 @@ import { Dialog, Disclosure, Menu, Transition } from '@headlessui/react'
 import { XMarkIcon } from '@heroicons/react/24/outline'
 import { ChevronDownIcon, FunnelIcon, MinusIcon, PlusIcon, Squares2X2Icon } from '@heroicons/react/20/solid'
 import ContenedorProductos from './ContenedorProductos'
-import { products } from '../../data/productos.json'
-
+// import { products } from '../../data/productos.json'
 
 
 function classNames(...clases) {
@@ -91,38 +90,44 @@ const filters = [
 export default function Filtros() {
     const [mobileFiltersOpen, setMobileFiltersOpen] = useState(false)
     const [sortOption, setSortOption] = useState(sortOptions[0])
-    const [filteredProducts, setFilteredProducts] = useState(products)
+    const [filteredProducts, setFilteredProducts] = useState([])
     const [category, setCategory] = useState()
     const [search, setSearch] = useState('');
     //    const [filter, setFilter] = useState();
-
-
-    //parte para cargar los productos en menu
-    useEffect(() => {
-        fetch("http://localhost:4000/api/admin/productos/getProducts")//fetch para api 
-        .then(res=>res.json())
-        .then(json => setFilteredProducts(json.data.children.map(c => c.data)))//se cargan los datos a setFilteredProducts
-        .catch(err=>console.log(err))//aqui capturamos errores
-    },[])
-
+    
 
     useEffect(() => {
-        setFilteredProducts(products.filter((product) => product.title.toLowerCase().includes(search.toLowerCase())))
-    }, [search])
+        fetch("http://localhost:4000/api/admin/productos/getProducts")
+        .then(response => response.json())  
+        .then(data => {
+            setFilteredProducts(data);  
+        
+        })
+        .catch(error => {
+            console.log('error', error);
+        });
+    }, []);
+
+    
+
+
+    // useEffect(() => {
+    //     setFilteredProducts(products.filter((product) => product.title.toLowerCase().includes(search.toLowerCase())))
+    // }, [search])
 
     const handleSearch = (e) => {
         setSearch(e.target.value)
     }
 
-    useEffect(() => {
-        let updatedProducts = products;
+    // useEffect(() => {
+    //     let updatedProducts = products;
 
-        // Filtrar por búsqueda
-        if (search) {
-            updatedProducts = updatedProducts.filter(product =>
-                product.title.toLowerCase().includes(search.toLowerCase())
-            );
-        }
+    //     // Filtrar por búsqueda
+    //     if (search) {
+    //         updatedProducts = updatedProducts.filter(product =>
+    //             product.title.toLowerCase().includes(search.toLowerCase())
+    //         );
+    //     }
 
         // Aplicar filtros adicionales
         // filters.forEach(filter => {
@@ -135,35 +140,35 @@ export default function Filtros() {
         //     });
         // });
 
-        // Filtrar por categoría
-        if (category && category.name) {
-            updatedProducts = updatedProducts.filter(product =>
-                product.category === category.name
-            );
-        }
+    //     // Filtrar por categoría
+    //     if (category && category.name) {
+    //         updatedProducts = updatedProducts.filter(product =>
+    //             product.category === category.name
+    //         );
+    //     }
 
-        // Ordenar productos
-        switch (sortOption.name) {
-            case 'Más Popular':
-                break;
-            case 'Mejor Calificado':
-                updatedProducts = [...updatedProducts].sort((a, b) => b.rating - a.rating);
-                break;
-            case 'Más Nuevo':
-                updatedProducts = [...updatedProducts].sort((a, b) => new Date(b.date) - new Date(a.date));
-                break;
-            case 'Precio: Bajo a Alto':
-                updatedProducts = [...updatedProducts].sort((a, b) => a.price - b.price);
-                break;
-            case 'Precio: Alto a Bajo':
-                updatedProducts = [...updatedProducts].sort((a, b) => b.price - a.price);
-                break;
-            default:
-                break;
-        }
+    //     // Ordenar productos
+    //     switch (sortOption.name) {
+    //         case 'Más Popular':
+    //             break;
+    //         case 'Mejor Calificado':
+    //             updatedProducts = [...updatedProducts].sort((a, b) => b.rating - a.rating);
+    //             break;
+    //         case 'Más Nuevo':
+    //             updatedProducts = [...updatedProducts].sort((a, b) => new Date(b.date) - new Date(a.date));
+    //             break;
+    //         case 'Precio: Bajo a Alto':
+    //             updatedProducts = [...updatedProducts].sort((a, b) => a.price - b.price);
+    //             break;
+    //         case 'Precio: Alto a Bajo':
+    //             updatedProducts = [...updatedProducts].sort((a, b) => b.price - a.price);
+    //             break;
+    //         default:
+    //             break;
+    //     }
 
-        setFilteredProducts(updatedProducts);
-    }, [search, category, sortOption, products]);
+    //     setFilteredProducts(updatedProducts);
+    // }, [search, category, sortOption, products]);
 
     return (
         <div className="mt-6 bg-white">

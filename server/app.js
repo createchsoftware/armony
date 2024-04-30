@@ -3,7 +3,7 @@ import { servidor } from "./data/datos.js";
 
 // Objeto de express
 const app = express();
-app.use(express.static(path.join(__dirname,'./armony/client/main/public')))
+// app.use(express.static(path.join(__dirname,'./armony/client/main/public')))
 
 // Routers
 import { routerCliente } from "./routers/clientes.js";
@@ -37,14 +37,14 @@ app.get("/api/admin", (req, res) => {
   res.send("Funcionando");
 });
 
-app.use('/',(req,res)=>{
-  res.sendFile(path.join(__dirname,'./armony/client/main/public','index.html'))
-})
+// app.use('/',(req,res)=>{
+//   res.sendFile(path.join(__dirname,'./armony/client/main/public','index.html'))
+// })
 
 
-app.get('/about',(req,res)=>{
-  res.render(path.join(__dirname,'./armony/client/main/public','about.html'))
-})
+// app.get('/about',(req,res)=>{
+//   res.render(path.join(__dirname,'./armony/client/main/public','about.html'))
+// })
 
 
 

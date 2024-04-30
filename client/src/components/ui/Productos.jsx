@@ -8,14 +8,14 @@ function Productos({ productos }) {
                     productos.map(producto => (
                         <li key={productos.id} className='grid place-content-between justify-between  border-4 bg-white border-[#E2B3B7] p-6 rounded-xl'>
                             <img className='m-auto rounded-lg w-36 md:w-48 aspect-square'
-                                src={producto.thumbnail}
-                                alt={producto.title}
+                                src={'https://www.gravatar.com/avatar/8ddae1579d3e5b9bb2ebb9be0f7ace48?s=64&d=identicon&r=PG&f=y&so-version=2'}
+                                alt={producto.nombre}
                             />
                             <div>
-                                <p className='mt-4  text-[#0BC26A] text-lg'>{'$' + producto.price + ' MXN'}</p>
-                                <h3 className='mt-2 text-lg'>{producto.title}</h3>
+                                <p className='mt-4  text-[#0BC26A] text-lg'>{'$' + producto.precio + ' MXN'}</p>
+                                <h3 className='mt-2 text-lg'>{producto.name}</h3>
                                 <p className='mt-2 text-xs text-justify'>
-                                    {producto.description.length > 70 ? producto.description.substring(0, 60) + "..." : producto.description}
+                                    {producto.descripcion}
                                 </p>
                             </div>
                             <div className='mt-4'>

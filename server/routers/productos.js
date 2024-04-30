@@ -8,9 +8,10 @@ import {
   deleteProdServ,
   getProducts
 } from "../DB/query/queryProductos.js";
-
+import  cors from 'cors';
 // Router
 export const routerProductos = express.Router();
+const corsOptions = {origin: '*', optionsSuccessStatus: 200 };
 
 // Middleware
 routerProductos.use(express.json()); //  Analiza las request entrantes con carga JSON basado en body-parse
@@ -133,14 +134,13 @@ routerProductos.delete("/delete", async (req, res) => {
 });
 
 
-//funcional
-routerProductos.get("/getProducts", async (req, res) => {
-    try {
-      const connection = await enableConnect();
-      const resultado = await getProducts(connection,{data:req.query});
-      res.send(JSON.stringify(resultado));
-    } catch (err) {
-      console.error("Ha ocurrido un error: ", err);
-      res.status(500).send("Ha ocurrido un error al procesar tu solicitud");
-    }
-  });
+routerProductos.get("/getProducts", cors(corsOptions), async (req, res) => {
+  try {
+    const connection = await enableConnect();
+    const resultado = await getProducts(connection, { data: req.query });
+    res.json(resultado); 
+  } catch (err) {
+    console.error("Ha ocurrido un error: ", err);
+    res.status(500).send("Ha ocurrido un error al procesar tu solicitud");
+  }
+});
