@@ -8,7 +8,6 @@ const _dirname = path.dirname(fileURLToPath(import.meta.url));
 
 
 
-
 import {methods as authentication} from './controllers/authentication.controllers.js';
 import {methods as authorization} from './middlewares/authorization.js';
 
@@ -64,14 +63,21 @@ app.listen(servidor.SERVER_PORT, () => {
 });
 
 
+// app.get('/estado-logueado', (solicitud, respuesta) => {
+//   respuesta.json({ logueado: true }); // Aquí puedes verificar el estado de logueado como lo haces en la ruta principal
+// });
+
+
 app.get('/', (solicitud,respuesta)=>{
-  respuesta.sendFile(path.join(_dirname ,'../client/dist/index.html'))
+  respuesta.sendFile(path.join(_dirname ,'../client/dist/index.html'));
 })
 
 
-app.get('/spa', (solicitud,respuesta)=>{
+app.get('/spa', authorization.verificar_cookie, (solicitud,respuesta)=>{
     respuesta.sendFile(path.join(_dirname ,'../client/dist/index.html'))
 })
 
 
 app.post('/api/login',authentication.login);
+
+app.get('/api/logueado',authorization.verificar_cookie);

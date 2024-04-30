@@ -1,4 +1,4 @@
-import React, { Fragment, useState } from 'react'
+import React, { Fragment, useEffect, useState } from 'react'
 //import { Dialog, Disclosure, Popover, Transition } from '@headlessui/react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBars, faCartShopping } from '@fortawesome/free-solid-svg-icons';
@@ -8,10 +8,12 @@ import ModalLogin from './Login/PopupLogin.jsx';
 import MenuServicios from './SubMenuServicios.jsx'
 import MenuPerfil from './MenuPerfil.jsx'
 
+
 function Navbar( ) {
     const [cart, setCart, showModal, setShowModal] = useState(false);
     const [servicios, setServicios] = useState(false);
     const [perfil, setPerfil] = useState(false);
+    const [log, setLog] = useState(false);
     const [items, setItems,] = useState(0);
 
     const toggleCart = () => {
@@ -29,6 +31,35 @@ function Navbar( ) {
     const togglePerfil = () => {
         setPerfil(!perfil)
     };
+
+    async function recibido(){
+        const respuesta = await fetch('http://localhost:3000/api/logueado',{
+            method:"GET",
+            headers:{
+                "Content-Type":"application/json",
+            }
+        })
+
+        if(!respuesta.ok)
+           setLog(false);
+
+        let respuestaJson = await respuesta.json();
+
+        if(respuestaJson.logueado == true){
+            setLog(true);
+        }
+        else 
+            setLog(false);
+
+
+    }
+
+    useEffect(()=>{
+        recibido()
+    },[]);
+    
+
+    
 
     return (
         <>
@@ -84,11 +115,16 @@ function Navbar( ) {
                                 </>
                             )}
                             <li className="nav-menu-item cursor-pointer">
-                                <ModalLogin actionElement={
-                                    <a href="#" className="menu-link menu-is">Inicia sesión</a>
-                                }/>
-                                {/* */}
-                                {/* ^^^^^ PARA TESTEAR EL MENU DESPLEGABLE DEL PERFIL, DESCOMENTAR Y COMENTAR EL BOTON "INICIAR SESION" */}
+                                { log ? (
+                                    <a className="menu-link flex items-center" onClick={togglePerfil} >
+                                    <img src="../../../pictures/userCl.png" alt="" className='rounded-full w-10 h-10'/>
+                                    Usuario
+                                    </a>
+                                ):(
+                                    <ModalLogin actionElement={
+                                        <a href="#" className="menu-link menu-is">Inicia sesión</a>
+                                    }/>
+                                )}
                             </li>
                             {location.pathname !== "/" && (
                                 <li className="nav-menu-item">

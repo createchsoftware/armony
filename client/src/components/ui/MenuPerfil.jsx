@@ -1,9 +1,17 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUser, faUserPen, faBagShopping, faCalendarDays, faMoneyBill ,faClockRotateLeft, faCreditCard, faArrowRightFromBracket } from '@fortawesome/free-solid-svg-icons';
+import { Helmet, HelmetProvider } from "react-helmet-async";
+
 
 function MenuPerfil(){
     return (
         <div className="menu-perfil">
+            <HelmetProvider>
+                  <Helmet>
+                    <script src="../../../scripts/logout.js"></script>
+                  </Helmet>
+              </HelmetProvider>
+
             <ul className="menu-nav-perfil">
                 <li className="menu-item-perfil">
                     <a href="/perfil" className="menu-link-perfil">
@@ -50,7 +58,7 @@ function MenuPerfil(){
                 <li className="menu-item-perfil">
                     <a href="#" className="menu-link-perfil">
                         <FontAwesomeIcon icon={faArrowRightFromBracket} className='text-black' />
-                        <p className='ml-5'>Cerrar sesión</p>
+                        <p className='ml-5'><button id='close'>Cerrar sesión</button></p>
                     </a>
                 </li>
             </ul>
