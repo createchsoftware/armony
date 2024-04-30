@@ -96,6 +96,16 @@ export default function Filtros() {
     const [search, setSearch] = useState('');
     //    const [filter, setFilter] = useState();
 
+
+    //parte para cargar los productos en menu
+    useEffect(() => {
+        fetch("http://localhost:4000/api/admin/productos/getProducts")//fetch para api 
+        .then(res=>res.json())
+        .then(json => setFilteredProducts(json.data.children.map(c => c.data)))//se cargan los datos a setFilteredProducts
+        .catch(err=>console.log(err))//aqui capturamos errores
+    },[])
+
+
     useEffect(() => {
         setFilteredProducts(products.filter((product) => product.title.toLowerCase().includes(search.toLowerCase())))
     }, [search])

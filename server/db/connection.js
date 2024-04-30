@@ -3,11 +3,11 @@ import { conexionDB } from "../data/datos.js";
 
 export const config = {
   // Configuracion para la conexion de la base de datos
-  host: conexionDB.HOST,
-  port: conexionDB.PORT,
-  database: conexionDB.DATABASE,
-  user: conexionDB.USER,
-  password: conexionDB.PASSWORD,
+  host:process.env.DB_Host,
+  port:process.env.DB_port,
+  database:process.env.DB_database,
+  user:process.env.DB_user,
+  password:process.env.DB_password,
   connectionLimit: 5000,
   charset: "utf8mb4",
 };

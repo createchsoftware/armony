@@ -3,6 +3,7 @@ import { servidor } from "./data/datos.js";
 
 // Objeto de express
 const app = express();
+app.use(express.static(path.join(__dirname,'./armony/client/main/public')))
 
 // Routers
 import { routerCliente } from "./routers/clientes.js";
@@ -23,6 +24,10 @@ import { routerCategoria } from "./routers/categoria.js";
 app.use("api/admin/categoria", routerCategoria);
 import { routerEspecialidad } from "./routers/especialidad.js"; // NOTA: NO SE A PROBADO AUN, NO FUNCIONAL
 app.use("api/admin/especialidad", routerEspecialidad);
+import { routerCitas } from "./routers/citas.js";
+app.use("/api/admin/citas", routerCitas);
+import { routerFavoritos } from "./routers/favoritos.js";
+app.use("/api/admin/favoritos", routerFavoritos);
 
 // Middleware
 app.use(express.json()); // Analiza las request entrantes con carga JSON basado en body-parse
@@ -31,6 +36,18 @@ app.use(express.json()); // Analiza las request entrantes con carga JSON basado 
 app.get("/api/admin", (req, res) => {
   res.send("Funcionando");
 });
+
+app.use('/',(req,res)=>{
+  res.sendFile(path.join(__dirname,'./armony/client/main/public','index.html'))
+})
+
+
+app.get('/about',(req,res)=>{
+  res.render(path.join(__dirname,'./armony/client/main/public','about.html'))
+})
+
+
+
 
 app.listen(servidor.SERVER_PORT, () => {
   console.log(`Servidor en puerto ${servidor.SERVER_PORT}`);

@@ -6,6 +6,7 @@ import {
   readProdServByCategoria,
   updateProdServ,
   deleteProdServ,
+  getProducts
 } from "../DB/query/queryProductos.js";
 
 // Router
@@ -130,3 +131,16 @@ routerProductos.delete("/delete", async (req, res) => {
     res.status(500).send(messageError, err); // Enviamos un error INTERNAL SERVER ERROR y el error al navegador
   }
 });
+
+
+//funcional
+routerProductos.get("/getProducts", async (req, res) => {
+    try {
+      const connection = await enableConnect();
+      const resultado = await getProducts(connection,{data:req.query});
+      res.send(JSON.stringify(resultado));
+    } catch (err) {
+      console.error("Ha ocurrido un error: ", err);
+      res.status(500).send("Ha ocurrido un error al procesar tu solicitud");
+    }
+  });
