@@ -11,6 +11,7 @@ import InformacionPersonal from "./pages/perfil/InformacionPersonal";
 import Seguridad from "./pages/perfil/Seguridad";
 import Monedero from "./pages/perfil/Monedero";
 import Direcciones from "./pages/perfil/Direcciones";
+import Agenda from "./pages/perfil/Agenda";
 import Suscripciones from "./pages/perfil/Suscripciones";
 import Tarjetas from "./pages/perfil/Tarjetas";
 import Error from "./pages/Error";
@@ -19,11 +20,14 @@ import SignUp from "./pages/spa/signUp";
 import Favoritos from "./pages/perfil/ListaDeseo";
 import Test from "./components/ui/Test";
 import Favicon from "react-favicon";
- 
+import EditarPerfil from "./pages/perfil/EditarPerfil";
+import Historial from "./pages/perfil/Historial";
+import Compras from "./components/ui/Compras";
+
 function App() {
     return (
         <>
-        <Favicon url="/favicon.ico" />
+            <Favicon url="/favicon.ico" />
             <Router>
                 <Routes>
                     <Route exact path="/" element={<Home />} />
@@ -38,8 +42,12 @@ function App() {
                     <Route path="/perfil/direcciones" element={<Direcciones />} />
                     <Route path="/perfil/suscripciones" element={<Suscripciones />} />
                     <Route path="/perfil/tarjetas" element={<Tarjetas />} />
-                    <Route path="/favoritos" element={<Favoritos/>} />
+                    <Route path="/perfil/agenda" element={<Agenda />} />
+                    <Route path="/favoritos" element={<Favoritos />} />
                     <Route path="*" element={<Error />} />
+                    <Route path="/editar-perfil" element={<EditarPerfil />} />
+                    <Route path="/perfil/historial" element={<Historial />} />
+                    <Route path="/perfil/compras" element={<Compras />} />
 
                     {/* Tests */}
                     <Route path="/test" element={<Test />} />
@@ -48,5 +56,5 @@ function App() {
         </>
     );
 }
- 
+
 export default App;

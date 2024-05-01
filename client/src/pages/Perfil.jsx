@@ -13,13 +13,13 @@ function Perfil() {
         const respuesta = await fetch('/api/logueado', {
             method: "GET",
             headers: {
-                "Content-Type":"application/json",
+                "Content-Type": "application/json",
             }
         })
 
         if (!respuesta.ok) {
-           setNombre(null);
-           setCorreo(null);
+            setNombre(null);
+            setCorreo(null);
         }
 
         let respuestaJson = await respuesta.json();
@@ -34,7 +34,7 @@ function Perfil() {
         }
     }
 
-    useEffect (() => {
+    useEffect(() => {
         recibido()
     }, []);
 
@@ -64,7 +64,7 @@ function Perfil() {
                                 <MdNavigateNext />
                             </div>
                         </a>
-                        <a href='#' className='flex justify-between p-5 hover:underline rounded-xl hover:bg-slate-100'>
+                        <a href='/perfil/seguridad' className='flex justify-between p-5 hover:underline rounded-xl hover:bg-slate-100'>
                             <div className='flex gap-6'>
                                 <div className='rounded-full place-content-center md:bg-[#D9D9D9]'><img className='w-12' src="../../pictures/seguridad.png" alt="" /></div>
                                 <div>
@@ -76,7 +76,7 @@ function Perfil() {
                                 <MdNavigateNext />
                             </div>
                         </a>
-                        <a href='#' className='flex justify-between p-5 hover:underline rounded-xl hover:bg-slate-100'>
+                        <a href='/perfil/direcciones' className='flex justify-between p-5 hover:underline rounded-xl hover:bg-slate-100'>
                             <div className='flex gap-6'>
                                 <div className='rounded-full place-content-center md:bg-[#D9D9D9]'><img className='w-12' src="../../pictures/direccion.png" alt="" /></div>
                                 <div>
@@ -88,7 +88,7 @@ function Perfil() {
                                 <MdNavigateNext />
                             </div>
                         </a>
-                        <a href='#' className='flex justify-between p-5 hover:underline rounded-xl hover:bg-slate-100'>
+                        <a href='/perfil/tarjetas' className='flex justify-between p-5 hover:underline rounded-xl hover:bg-slate-100'>
                             <div className='flex gap-6'>
                                 <div className='rounded-full place-content-center md:bg-[#D9D9D9]'><img className='w-12' src="../../pictures/tarjetas.png" alt="" /></div>
                                 <div>
@@ -100,7 +100,7 @@ function Perfil() {
                                 <MdNavigateNext />
                             </div>
                         </a>
-                        <a href='#' className='flex justify-between p-5 hover:underline rounded-xl hover:bg-slate-100'>
+                        <a href='/perfil/suscripciones' className='flex justify-between p-5 hover:underline rounded-xl hover:bg-slate-100'>
                             <div className='flex gap-6'>
                                 <div className='rounded-full place-content-center md:bg-[#D9D9D9]'><img className='w-10 md:w-12' src="../../pictures/suscripciones.png" alt="" /></div>
                                 <div>
@@ -112,7 +112,7 @@ function Perfil() {
                                 <MdNavigateNext />
                             </div>
                         </a>
-                        <a href='#' className='flex justify-between p-5 hover:underline rounded-xl hover:bg-slate-100'>
+                        <a href='/perfil/monedero' className='flex justify-between p-5 hover:underline rounded-xl hover:bg-slate-100'>
                             <div className='flex gap-6'>
                                 <div className='rounded-full place-content-center md:bg-[#D9D9D9]'><img className='w-12' src="../../pictures/monedero.png" alt="" /></div>
                                 <div>
