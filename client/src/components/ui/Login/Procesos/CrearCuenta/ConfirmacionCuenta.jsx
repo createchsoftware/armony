@@ -39,7 +39,7 @@ const ConfirmacionCuenta = () => {
           >
             Información básica
           </a>
-          <div class="flex-grow border-t border-gray-400 pl-4 mx-0"></div>
+          <div className="flex-grow border-t border-gray-400 pl-4 mx-0"></div>
           <span className="">
             <FontAwesomeIcon
               style={{ fontSize: "16px", color: "#FFFFFF" }}
@@ -60,7 +60,7 @@ const ConfirmacionCuenta = () => {
           >
             Patologías
           </a>
-          <div class="flex-grow border-t border-gray-400 pl-4 mx-0"></div>
+          <div className="flex-grow border-t border-gray-400 pl-4 mx-0"></div>
           <span className="">
             <FontAwesomeIcon
               style={{ fontSize: "16px", color: "#FFFFFF" }}
@@ -81,7 +81,7 @@ const ConfirmacionCuenta = () => {
           >
             Contraseña
           </a>
-          <div class="flex-grow border-t border-gray-400 pl-4 mx-0"></div>
+          <div className="flex-grow border-t border-gray-400 pl-4 mx-0"></div>
           <span className="">
             <FontAwesomeIcon
               style={{ fontSize: "16px", color: "#FFFFFF" }}

@@ -1,5 +1,5 @@
 import { endConnection } from "../connection.js";
-import * as mysql from "mysql2";
+import  mysql from "mysql2";
 
 const messageError = "Ha ocurrido un error al ejecutar el query: ";
 
@@ -122,3 +122,22 @@ export async function deleteProdCat(connection, data) {
     console.error(messageError, err); // Mostramos los errores por consola
   }
 }
+
+//funcional
+//creado para las paginas de productos
+//esto aumenta el rendimiento ya que solo carga los productos que se ocupan
+export async function getProducts (pool,data,res){
+try{
+    const pages=data.pages||1;/*por defecto sera pagina 1 */
+    const limit =data.limit||5;/*capacidad por defecto de 5, esto cambiara dependiendo el front */
+    const offset=(pages-1)*limit;
+    const query=`SELECT *FROM  prodServ LIMIT ${limit} OFFSET ${offset}`
+    const [rows,fields]=await pool.query(query);
+        return rows;
+}catch(err){
+console.log("Ha ocurrido un error al ejecutar el query: ",err)
+throw err;
+}
+   
+    }
+    

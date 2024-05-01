@@ -14,7 +14,7 @@ export default {
         
         'hero-pattern': "url('/img/hero-pattern.svg')",
         'footer-texture': "url('/img/footer-texture.png')",
-        'flowers': "url('./public/pictures.flowers.png')"
+        'flowers': "url('./pictures.flowers.png')"
       },
       textShadow: {
         sm: '0 1px 2px var(--tw-shadow-color)',

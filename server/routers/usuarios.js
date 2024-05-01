@@ -1,5 +1,5 @@
 import express from "express";
-import { enableConnect } from "../DB/connection.js";
+import { enableConnect } from "../db/connection.js";
 import {
   createUser,
   deleteUserById,
@@ -8,7 +8,7 @@ import {
   updateImgUser,
   updateInfoUser,
   updatePassUser,
-} from "../DB/query/queryUser.js";
+} from "../db/query/queryUser.js";
 
 // Router
 export const routerUser = express.Router();

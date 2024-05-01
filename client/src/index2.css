@@ -7,21 +7,18 @@
   font-style: normal;
   font-weight: normal;
   src: url("../fuentes/abeatbyKaiRegular.otf");
-  /* Cambiar ../fuentes a ../public/fuentes durante desarrollo, quitar para comando npm run build */
 }
 @font-face {
   font-family: "Quinger";
   font-style: normal;
   font-weight: normal;
   src: url("../fuentes/Quinger.otf");
-  /* Cambiar ../fuentes a ../public/fuentes durante desarrollo, quitar para comando npm run build */
 }
 @font-face {
   font-family: "ILoveGlitter";
   font-style: normal;
   font-weight: normal;
   src: url("../fuentes/I\ Love\ Glitter\ -\ OTF.otf");
-  /* Cambiar ../fuentes a ../public/fuentes durante desarrollo, quitar para comando npm run build */
 }
 
 @font-face {
@@ -29,7 +26,6 @@
   font-style: normal;
   font-weight: normal;
   src: url("../fuentes/ABeeZee-Regular.ttf");
-  /* Cambiar ../fuentes a ../public/fuentes durante desarrollo, quitar para comando npm run build */
 }
 
 * {
@@ -116,6 +112,105 @@ body {
   line-height: 60px;
   display: none;
   cursor: pointer;
+}
+
+/* =========== SUBMENU SERVICIOS */
+.submenu-fondo,
+.submenu-fx {
+  width: 100vw;
+  height: 100vh;
+  top: 60px;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  position: fixed;
+  z-index: 11;
+}
+.submenu-fx {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.menu-serv {
+  position: absolute;
+  top: 0;
+  padding: 5px 5px;
+  width: 140px;
+  display: grid;
+  list-style: none;
+  background-color: white;
+  border-radius: 5px;
+  justify-content: left;
+  left: 36%;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
+}
+.menu-item-serv {
+  font-size: 20px;
+  margin: 0 10px;
+  width: max-content;
+}
+.menu-link-serv {
+  text-decoration: none;
+  color: #ec5766;
+  font-weight: bold;
+  padding: 8px 0;
+  padding-right: 52px;
+  font-size: 16px;
+}
+#estetica {
+  border-top: 2px solid black;
+}
+.menu-link-serv:hover {
+  color: #ffb5a7;
+}
+
+/* ======= MENU DESPLEGABLE PERFIL */
+.usermenu-fondo,
+.usermenu-fx {
+  width: 100vw;
+  height: 100vh;
+  top: 65px;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  position: fixed;
+  z-index: 11;
+}
+.usermenu-fx {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.menu-perfil {
+  position: absolute;
+  top: 0;
+  padding: 5px 5px;
+  width: 180px;
+  display: grid;
+  list-style: none;
+  background-color: white;
+  border-radius: 5px;
+  right: 18%;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
+}
+.menu-item-perfil {
+  font-size: 20px;
+  margin: 0 10px;
+  width: max-content;
+}
+.menu-link-perfil {
+  display: flex;
+  justify-content: space-between;
+  text-decoration: none;
+  color: #ec5766;
+  font-weight: bold;
+  padding: 8px 0;
+  font-size: 16px;
+  align-items: center;
+  transition: 0.25s;
+}
+.menu-link-perfil:hover {
+  color: rgb(255, 181, 167);
 }
 
 /* ============= CARRUSEL DE VIDEOS */
@@ -337,7 +432,7 @@ body {
   max-width: 100%;
   letter-spacing: 2px;
   font-weight: lighter;
-  line-height: 18px;
+  line-height: 20px;
   text-align: justify;
 }
 
@@ -348,7 +443,7 @@ body {
   position: relative;
   width: 80%;
   margin-left: 80px;
-  top: 50px;
+  top: 0;
 }
 
 /* ================== SECCION CARRUSEL DE PILARES */
@@ -532,6 +627,14 @@ body {
   transition: 0.25s;
 }
 
+.nav-fav {
+  color: rgb(236, 87, 102);
+}
+.nav-fav:hover {
+  color: rgb(255, 181, 167);
+  transition: 0.25s;
+}
+
 /* Sobre Spa:  El armony spa... */
 .spa-armony {
   padding: 0 100px;
@@ -621,7 +724,7 @@ body {
   position: absolute;
   top: 80px;
   padding: 20px 20px;
-  width: 32%;
+  width: 400px;
   background-color: white;
   border-radius: 8px;
   right: 5%;
@@ -629,7 +732,8 @@ body {
 
 .cart-header {
   display: flex;
-  padding-bottom: 8px;
+  border-bottom: 2px solid lightgray;
+  margin-bottom: 8px;
   justify-content: space-between;
 }
 
@@ -641,7 +745,7 @@ body {
 }
 
 .cart-item {
-  background-color: rgb(150, 150, 150);
+  background-color: rgb(200, 200, 200);
   margin-bottom: 24px;
   padding: 8px 12px;
   display: flex;
@@ -667,7 +771,7 @@ body {
 }
 
 .cart-photo {
-  width: 15%;
+  width: 25%;
 }
 
 .cart-remove {
@@ -678,6 +782,9 @@ body {
 .cart-remove:hover {
   color: rgb(255, 181, 167);
 }
+.cart-total {
+  border-top: 2px solid lightgray;
+}
 
 #cart-mas {
   background-color: rgb(69, 181, 156);
@@ -685,12 +792,66 @@ body {
   color: white;
   padding: 4px 16px;
   width: 100%;
-  text-align: right;
+  text-align: center;
   transition: ease 0.25s;
 }
 #cart-mas:hover {
   background-color: rgb(3, 109, 99);
   font-weight: bold;
+}
+
+/* Próximamente */
+.soon-fondo,
+.soon-fx {
+  width: 100vw;
+  height: 100vh;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  position: fixed;
+  z-index: 5;
+}
+.soon-fx {
+  display: flex;
+  background: rgba(0, 0, 0, 0.35);
+  justify-content: center;
+  align-items: center;
+}
+
+.soon {
+  display: grid;
+  position: absolute;
+  padding: 20px 20px;
+  width: 32%;
+  background-color: white;
+  border-radius: 8px;
+  justify-content: center;
+  border: 5px solid rgb(255, 181, 167);
+}
+.soon-title {
+  text-align: center;
+  font-weight: bold;
+  font-size: xx-large;
+}
+#alarm {
+  color: rgb(255, 181, 167);
+}
+.soon-desc {
+  text-align: center;
+  font-size: large;
+}
+
+/* =================== LISTA DE DESEOS */
+.menu-deseo {
+  margin-top: 80px;
+  height: calc(100vh - 80px);
+}
+.deseo-buscador {
+  width: 50%;
+  padding: 8px 18px;
+  border: 2px solid rgb(255, 181, 167);
+  border-radius: 10px;
 }
 
 /* ======================= RESPONSIVE */
@@ -703,14 +864,15 @@ body {
     flex-direction: column;
     align-items: center;
     margin: 0;
-    background-color: rgb(236, 87, 102);
+    background-color: rgba(236, 87, 102, 1);
     position: fixed;
     left: 0;
     top: 60px;
-    width: 75%;
-    padding: 20px 0;
+    width: 60%;
+    padding: 10px 0;
 
-    height: calc(80% - 60px);
+    height: calc(fit-content - 60px);
+
     overflow-y: auto;
 
     left: 100%;
@@ -728,7 +890,15 @@ body {
   }
 
   .nav-menu-item {
-    line-height: 70px;
+    line-height: 50px;
+  }
+
+  .nav-cart {
+    color: white;
+  }
+  .nav-cart:hover {
+    color: rgb(255, 181, 167);
+    transition: 0.25s;
   }
 
   .menu-link:hover {
@@ -742,7 +912,7 @@ body {
   }
 
   .menu_visible {
-    left: 25%;
+    left: 40%;
   }
 
   .title {
@@ -833,5 +1003,34 @@ body {
   .pilares {
     margin-top: 300px;
     position: relative;
+    padding: 0 0;
+  }
+  #pilares-title {
+    justify-self: center;
+    text-align: center;
+  }
+
+  .no1 {
+    z-index: 0;
+    opacity: 0;
+  }
+  .no2,
+  .no4 {
+    width: 120px;
+    height: 120px;
+  }
+  .no2 .pilar-text,
+  .no4 .pilar-text {
+    font-size: 10px;
+  }
+  .no2 {
+    left: 12%;
+  }
+  .no4 {
+    left: 88%;
+  }
+  .no5 {
+    z-index: 0;
+    opacity: 0;
   }
 }

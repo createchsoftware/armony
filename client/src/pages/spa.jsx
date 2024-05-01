@@ -8,8 +8,6 @@ import NuestrosProductos from '../components/ui/NuestrosProductos.jsx'
 import Favoritos from '../components/ui/Favoritos.jsx'
 import { Helmet, HelmetProvider } from "react-helmet-async";
 
-
-
 const Spa = () => {
   return (
     <>
