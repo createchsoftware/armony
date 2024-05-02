@@ -1,5 +1,5 @@
 import express from "express";
-import { enableConnect } from "../DB/connection.js";
+import { enableConnect } from "../db/connection.js";
 import {
   createProducto,
   readProdServById,
@@ -7,7 +7,7 @@ import {
   updateProdServ,
   deleteProdServ,
   getProducts
-} from "../DB/query/queryProductos.js";
+} from "../db/query/queryProductos.js";
 import  cors from 'cors';
 // Router
 export const routerProductos = express.Router();

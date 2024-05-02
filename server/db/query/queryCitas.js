@@ -45,6 +45,8 @@ export const addCita=(conexion,Data,callback)=>{
         }
 
 //query para buscar empleados de determinada especialidad 
+
+//se cambiara se hicieron cambios
 //se cambiara por un prodedure
 export async function searchEmpleadobyCita(conexion,Data){
 try{

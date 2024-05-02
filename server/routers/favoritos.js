@@ -1,7 +1,7 @@
 import express from "express";
 export const routerFavoritos = express.Router();
 import { addfavorito } from "../db/query/queryfavoritos.js";
-import { enableConnect } from "../DB/connection.js";
+import { enableConnect } from "../db/connection.js";
 
 
 routerFavoritos.use(express.json()); 
