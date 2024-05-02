@@ -64,7 +64,6 @@ routerUser.get("/read/id/:id", async (req, res) => {
 // READ BY NAME & LAST NAME FUNCIONAL
 routerUser.get("/read/nomAp", async (req, res) => {
   try {
-    ody; // Atributos para el body (Parametros de procedimiento)
     const resultado = await readUserByNP(conexion, {
       name: req.body.name,
       ap: req.body.ap,
