@@ -27,7 +27,7 @@ const Recuperacion = () => {
               className="relative left-6 bottom-2"
             />
             <FontAwesomeIcon
-              style={{ fontSize: "36px" }}
+              style={{ fontSize: "36px", color: "#036C65" }}
               icon={faCircle}
             ></FontAwesomeIcon>
           </span>
@@ -35,6 +35,7 @@ const Recuperacion = () => {
             href=""
             style={{
               fontFamily: "ABeeZee",
+              color: "#036C65",
             }}
             className="text-base mx-2"
           >
