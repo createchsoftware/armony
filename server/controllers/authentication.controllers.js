@@ -6,6 +6,9 @@ import CrearCuentaEmail from '../services/mail.service.js';
 const regex_email = /.+@(gmail|hotmail|icloud|outlook)\.com/;
 const regex_usuarioID = /\d{1,5}/;
 
+
+
+
 async function login(solicitud,respuesta){
 
    let parametros = [];
