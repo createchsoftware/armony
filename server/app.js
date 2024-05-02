@@ -1,9 +1,23 @@
 import express from "express";
 import { servidor } from "./data/datos.js";
+import path, { dirname } from 'path';
+import { fileURLToPath } from 'url';
+const _dirname = path.dirname(fileURLToPath(import.meta.url));
+
+import { methods as authentication } from './controllers/authentication.controllers.js';
+import { methods as authorization } from './middlewares/authorization.js';
+
+import { conexion } from "./db/connection.js";
 
 // Objeto de express
 const app = express();
-// app.use(express.static(path.join(__dirname,'./armony/client/main/public')))
+
+app.use(express.static(path.join(_dirname, '../client/dist')));
+
+app.use((req, res, next) => {
+  req.database = conexion;
+  next();
+});
 
 // Routers
 import { routerCliente } from "./routers/clientes.js";
@@ -32,22 +46,20 @@ app.use("/api/admin/favoritos", routerFavoritos);
 // Middleware
 app.use(express.json()); // Analiza las request entrantes con carga JSON basado en body-parse
 
+app.post("/api/login", authentication.login);
+
+app.get("/api/logout", authentication.logout);
+
+app.get("/api/logueado", authorization.verificar_cookie);
+
 // Pagina principal
-app.get("/api/admin", (req, res) => {
-  res.send("Funcionando");
+app.get("/api/admin", async (req, res) => {
+  await res.send("Funcionando");
 });
 
-// app.use('/',(req,res)=>{
-//   res.sendFile(path.join(__dirname,'./armony/client/main/public','index.html'))
-// })
-
-
-// app.get('/about',(req,res)=>{
-//   res.render(path.join(__dirname,'./armony/client/main/public','about.html'))
-// })
-
-
-
+app.get("*", async (req, res) =>{
+  await res.sendFile(path.join(_dirname ,'../client/dist/index.html'));
+})
 
 app.listen(servidor.SERVER_PORT, () => {
   console.log(`Servidor en puerto ${servidor.SERVER_PORT}`);

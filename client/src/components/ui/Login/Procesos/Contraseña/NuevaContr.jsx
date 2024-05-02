@@ -40,7 +40,7 @@ const NuevaContr = () => {
           >
             Recuperación
           </a>
-          <div class="flex-grow border-t border-gray-400 pl-4 mx-0"></div>
+          <div className="flex-grow border-t border-gray-400 pl-4 mx-0"></div>
           <span className="">
             <FontAwesomeIcon
               style={{ fontSize: "16px", color: "#FFFFFF" }}
@@ -61,7 +61,7 @@ const NuevaContr = () => {
           >
             Verificación
           </a>
-          <div class="flex-grow border-t border-gray-400 pl-4 mx-0"></div>
+          <div className="flex-grow border-t border-gray-400 pl-4 mx-0"></div>
           <span className="">
             <FontAwesomeIcon
               style={{ fontSize: "16px", color: "#FFFFFF" }}
@@ -82,7 +82,7 @@ const NuevaContr = () => {
           >
             Nueva Contraseña
           </a>
-          <div class="flex-grow border-t border-gray-400 pl-4 mx-0"></div>
+          <div className="flex-grow border-t border-gray-400 pl-4 mx-0"></div>
           <span className="">
             <FontAwesomeIcon
               style={{ fontSize: "16px", color: "#FFFFFF" }}
