@@ -1,5 +1,6 @@
 const plugin = require('tailwindcss/plugin')
 
+
 /** @type {import('tailwindcss').Config} */
 export default {
   content: [
@@ -24,6 +25,7 @@ export default {
     }},
   },
   plugins: [
+    require('flowbite/plugin'),
     plugin(function ({ matchUtilities, theme }) {
       matchUtilities(
         {

@@ -8,7 +8,7 @@ import ModalLogin from './Login/PopupLogin.jsx';
 import MenuServicios from './SubMenuServicios.jsx'
 import MenuPerfil from './MenuPerfil.jsx'
 
-function Navbar( ) {
+function Navbar() {
     const [cart, setCart, showModal, setShowModal] = useState(false);
     const [servicios, setServicios] = useState(false);
     const [perfil, setPerfil] = useState(false);
@@ -32,17 +32,17 @@ function Navbar( ) {
         setPerfil(!perfil)
     };
 
-    async function recibido(){
+    async function recibido() {
         const respuesta = await fetch('/api/logueado', {
             method: "GET",
             headers: {
-                "Content-Type":"application/json",
+                "Content-Type": "application/json",
             }
         })
 
         if (!respuesta.ok) {
-           setLog(false);
-           setUsuario(null);
+            setLog(false);
+            setUsuario(null);
         }
 
         let respuestaJson = await respuesta.json();
@@ -57,7 +57,7 @@ function Navbar( ) {
         }
     }
 
-    useEffect (() => {
+    useEffect(() => {
         recibido()
     }, []);
 
@@ -94,7 +94,7 @@ function Navbar( ) {
                             )}
                             {location.pathname !== "/" && (
                                 <>
-                                    <li className="nav-menu-item cursor-pointer">
+                                    <li className="cursor-pointer nav-menu-item">
                                         <a className="menu-link" onClick={toggleServicio}>
                                             Servicios
                                         </a>
@@ -107,23 +107,24 @@ function Navbar( ) {
                                         <a href="#" className="menu-link">
                                             Agendar
                                         </a>
-                                    </li><li className="nav-menu-item">
+                                    </li>
+                                    {/* <li className="nav-menu-item">
                                         <a href="#" className="menu-link">
                                             Membresías
                                         </a>
-                                    </li>
+                                    </li> */}
                                 </>
                             )}
-                            <li className="nav-menu-item cursor-pointer">
-                                { log ? (
-                                    <a className="menu-link flex items-center h-20" onClick={togglePerfil} >
-                                    <img src="../../../pictures/userCl.png" alt="" className='rounded-full w-10 h-10 mr-5'/>
-                                    {usuario}
-                                    </a>  
+                            <li className="cursor-pointer nav-menu-item">
+                                {log ? (
+                                    <a className="flex items-center h-20 menu-link" onClick={togglePerfil} >
+                                        <img src="../../../pictures/userCl.png" alt="" className='w-10 h-10 mr-5 rounded-full' />
+                                        {usuario}
+                                    </a>
                                 ) : (
                                     <ModalLogin actionElement={
                                         <a href="#" className="menu-link menu-is">Inicia sesión</a>
-                                    }/>
+                                    } />
                                 )}
                             </li>
                             {location.pathname !== "/" && (
@@ -137,7 +138,7 @@ function Navbar( ) {
                                 <li className="nav-menu-item">
                                     <button className="nav-cart" aria-label="Abrir Carrito" onClick={toggleCart}>
                                         <FontAwesomeIcon icon={faCartShopping} />
-                                        <span className="badge badge-pill badge-warning text-xs">
+                                        <span className="text-xs badge badge-pill badge-warning">
                                             {items}
                                         </span>
                                     </button>
@@ -170,7 +171,7 @@ function Navbar( ) {
                     </div>
                 </div>
             )}
-            
+
         </>
     )
 }

@@ -56,8 +56,8 @@ function Perfil() {
                             <div className='flex gap-6'>
                                 <div className='rounded-full place-content-center md:bg-[#D9D9D9]'><img className='w-12' src="../../pictures/personal.png" alt="" /></div>
                                 <div>
-                                    <h2>Informacion Personal</h2>
-                                    <p className='text-gray-500'>Informacion de tu identificacion personal</p>
+                                    <h2>Información Personal</h2>
+                                    <p className='text-gray-500'>Información de tu identificacion personal</p>
                                 </div>
                             </div>
                             <div className='flex items-center justify-end'>
@@ -104,8 +104,8 @@ function Perfil() {
                             <div className='flex gap-6'>
                                 <div className='rounded-full place-content-center md:bg-[#D9D9D9]'><img className='w-10 md:w-12' src="../../pictures/suscripciones.png" alt="" /></div>
                                 <div>
-                                    <h2>Suscripciones</h2>
-                                    <p className='text-gray-500'>Mis membresias</p>
+                                    <h2>Suscripción</h2>
+                                    <p className='text-gray-500'>Mi membresía</p>
                                 </div>
                             </div>
                             <div className='flex items-center justify-end'>

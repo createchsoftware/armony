@@ -171,7 +171,7 @@ export default function Filtros() {
     }, [search, category, sortOption, products]);*/
 
     return (
-        <div className="mt-6 bg-[#F4F1ED]">
+        <div className="bg-[#F4F1ED]">
 
             <div>
                 {/* Mobile filter dialog */}
@@ -253,7 +253,7 @@ export default function Filtros() {
                                                                             defaultValue={option.value}
                                                                             type="checkbox"
                                                                             defaultChecked={option.checked}
-                                                                            className="w-4 h-4 text-indigo-600 border-gray-300 rounded focus:ring-indigo-500"
+                                                                            className="w-4 h-4 border-gray-300 rounded text-rose-400 focus:ring-rose-400 "
                                                                         />
                                                                         <label
                                                                             htmlFor={`filter-mobile-${section.id}-${optionIdx}`}
@@ -397,7 +397,7 @@ export default function Filtros() {
                                                                     defaultValue={option.value}
                                                                     type="checkbox"
                                                                     defaultChecked={option.checked}
-                                                                    className="w-4 h-4 text-indigo-600 border-gray-300 rounded focus:ring-indigo-500"
+                                                                    className="w-4 h-4 border-gray-300 rounded text-rose-400 focus:ring-rose-400 "
                                                                 />
                                                                 <label
                                                                     htmlFor={`filter-${section.id}-${optionIdx}`}
@@ -435,6 +435,7 @@ export default function Filtros() {
                                             <Disclosure.Panel className="pt-6">
                                                 <div className="space-y-4">
 
+
                                                     <input id="default-range" type="range" value="50" class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer dark:bg-gray-700" />
 
                                                 </div>
@@ -461,7 +462,7 @@ export default function Filtros() {
                                             <Disclosure.Panel className="pt-6">
                                                 <div className="space-y-4">
 
-                                                    <Rating className='m-auto' value={0} unratedColor="amber" ratedColor="amber" />
+                                                    <Rating className='m-auto' value={0} unratedColor="red" ratedColor="blue" />
 
                                                 </div>
                                             </Disclosure.Panel>
@@ -496,7 +497,7 @@ export default function Filtros() {
                                                                     defaultValue={option.value}
                                                                     type="checkbox"
                                                                     defaultChecked={option.checked}
-                                                                    className="w-4 h-4 text-indigo-600 border-gray-300 rounded focus:ring-indigo-500"
+                                                                    className="w-4 h-4 border-gray-300 rounded text-rose-400 focus:ring-rose-400 "
                                                                 />
                                                                 <label
                                                                     htmlFor={`filter-${section.id}-${optionIdx}`}
@@ -538,11 +539,7 @@ export default function Filtros() {
 
                             </form>
 
-
-
-
                             <ContenedorProductos products={filteredProducts} />
-
 
                         </div>
 

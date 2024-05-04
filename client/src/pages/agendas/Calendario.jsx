@@ -14,6 +14,7 @@ import { PickersDay } from '@mui/x-date-pickers/PickersDay';
 import { DateCalendar } from '@mui/x-date-pickers/DateCalendar';
 import { DayCalendarSkeleton } from '@mui/x-date-pickers/DayCalendarSkeleton';
 import { ChevronRight } from 'lucide-react';
+import Especialista from '../../components/ui/Especialista';
 
 
 function getRandomNumber(min, max) {
@@ -138,64 +139,52 @@ function Calendario() {
     }, []);
 
 
-    const citasPendientes = [
+    const especialistas = [
         {
             id: 1,
-            nombre: 'Cita 1',
-            estado: 'Pendiente',
-            especialista: 'Especialista 1',
-            fecha: '2022-12-12',
-            hora: '10:00',
+            nombre: 'Dr. Juan Pérez',
+            especialidad: 'Dermatólogo',
+            imagen: 'https://cdn.pixabay.com/photo/2016/11/18/19/07/happy-1836445_960_720.jpg',
+            experiencia: '10 años de experiencia',
+            areas: ['Dermatología', 'Cirugía', 'Estética'],
+            calificacion: 5
         },
         {
             id: 2,
-            nombre: 'Cita 2',
-            estado: 'Pendiente',
-            especialista: 'Especialista 2',
-            fecha: '2022-12-12',
-            hora: '10:00',
+            nombre: 'Dra. María López',
+            especialidad: 'Nutricionista',
+            imagen: 'https://cdn.pixabay.com/photo/2016/11/18/19/07/happy-1836445_960_720.jpg',
+            experiencia: '5 años de experiencia',
+            areas: ['Nutrición', 'Dietas', 'Salud'],
+            calificacion: 4
         },
         {
             id: 3,
-            nombre: 'Cita 3',
-            estado: 'Pendiente',
-            especialista: 'Especialista 3',
-            fecha: '2022-12-12',
-            hora: '10:00',
+            nombre: 'Dr. Carlos Ramírez',
+            especialidad: 'Pediatra',
+            imagen: 'https://cdn.pixabay.com/photo/2016/11/18/19/07/happy-1836445_960_720.jpg',
+            experiencia: '15 años de experiencia',
+            areas: ['Pediatría', 'Cuidados', 'Salud'],
+            calificacion: 5
         },
         {
             id: 4,
-            nombre: 'Cita 4',
-            estado: 'Pendiente',
-            especialista: 'Especialista 4',
-            fecha: '2022-12-12',
-            hora: '10:00',
+            nombre: 'Dra. Ana Martínez',
+            especialidad: 'Ginecóloga',
+            imagen: 'https://cdn.pixabay.com/photo/2016/11/18/19/07/happy-1836445_960_720.jpg',
+            experiencia: '8 años de experiencia',
+            areas: ['Ginecología', 'Salud', 'Cuidados'],
+            calificacion: 4
         },
         {
             id: 5,
-            nombre: 'Cita 5',
-            estado: 'Pendiente',
-            especialista: 'Especialista 5',
-            fecha: '2022-12-12',
-            hora: '10:00',
-        },
-        {
-            id: 6,
-            nombre: 'Cita 6',
-            estado: 'Pendiente',
-            especialista: 'Especialista 6',
-            fecha: '2022-12-12',
-            hora: '10:00',
-        },
-        {
-            id: 7,
-            nombre: 'Cita 7',
-            estado: 'Pendiente',
-            especialista: 'Especialista 7',
-            fecha: '2022-12-12',
-            hora: '10:00',
-        },
-    ]
+            nombre: 'Dr. José González',
+            especialidad: 'Cardiólogo',
+            imagen: 'https://cdn.pixabay.com/photo/2016/11/18/19/07/happy-1836445_960_720.jpg',
+            experiencia: '12 años de experiencia',
+            areas: ['Cardiología', 'Salud', 'Cuidados'],
+            calificacion: 5
+        },]
 
     return (
         <LayoutPrincipal>
@@ -222,7 +211,7 @@ function Calendario() {
 
                 </section>
                 <section className='w-1/2 ring-1'>
-                    <h1 className='text-xl  text-[#036C65]'>Selecciona tu especialista</h1>
+                    <h1 className='text-xl  text-[#036C65] text-center my-6'>Selecciona tu especialista</h1>
                     <Carousel
                         additionalTransfrom={0}
                         arrows
@@ -264,7 +253,7 @@ function Calendario() {
                                     max: 1024,
                                     min: 464
                                 },
-                                items: 2,
+                                items: 1,
                                 partialVisibilityGutter: 30
                             }
                         }}
@@ -272,24 +261,21 @@ function Calendario() {
                         rewindWithAnimation={false}
                         rtl={false}
                         shouldResetAutoplay
-                        showDots={false}
+                        showDots={true}
                         sliderclassName=""
                         slidesToSlide={1}
                         swipeable
                     >
-                        <div className='p-8 font-[abeatbyKai] ring-1 w-2/3 m-auto bg-rose-200'>
-                            <a href="#"><img className='m-auto rounded-2xl' src="../../../public/pictures/2wellness.jpg" alt="" /></a>
-                            <h6 className='pt-4 text-lg font-bold text-center'>SPA - Masaje facial</h6>
-                            <p className='pt-2 text-center'>Encuentra la calma en un masaje facial que renueve tu piel y brinda un momento de paz</p>
-                            <div className='flex justify-center mt-4'>
-                                <a class='flex justify-center' href="#"
-                                    className="relative flex cursor-pointer  before:bg-[#036C65]  before:absolute before:-bottom-1 before:block before:h-[3px] before:w-full before:origin-bottom-right before:scale-x-0 before:transition before:duration-300 before:ease-in-out hover:before:origin-bottom-left hover:before:scale-x-100">
-                                    Ver más<ChevronRight color="#036c65" />
-                                </a>
-                            </div>
-                        </div>
+                        {especialistas.map((especialista) => (
+                            <Especialista key={especialista.id} especialista={especialista} />
+                        ))}
                     </Carousel>
-
+                    <div class="mt-6 flex gap-2 justify-center">
+                        <div class="flex items-center mb-4">
+                            <input id="default-checkbox" type="checkbox" value="" class="w-5 h-5 text-rose-400 bg-gray-100 border-gray-300 rounded focus:ring-rose-400  focus:ring-2" />
+                            <label for="default-checkbox" class="ms-2 text-lg font-medium text-gray-900 dark:text-gray-300">Indiferente</label>
+                        </div>
+                    </div>
                 </section>
             </main>
         </LayoutPrincipal >
