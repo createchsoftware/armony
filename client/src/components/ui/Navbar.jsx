@@ -74,7 +74,7 @@ function Navbar( ) {
                         </button>
                         <ul className="menu">
                             <li className="nav-menu-item">
-                                <a href="#" className="menu-link">
+                                <a href="/Spa" className="menu-link">
                                     Inicio
                                 </a>
                             </li>

@@ -105,14 +105,14 @@ export default function Filtros() {
 
     useEffect(() => {
         fetch("/api/admin/productos/getProducts")
-        .then(response => response.json())  
-        .then(data => {
-            setFilteredProducts(data);  
+            .then(response => response.json())
+            .then(data => {
+                setFilteredProducts(data);
 
-        })
-        .catch(error => {
-            console.log('error', error);
-        });
+            })
+            .catch(error => {
+                console.log('error', error);
+            });
     }, []);
 
     const handleSearch = (e) => {
@@ -341,16 +341,16 @@ export default function Filtros() {
                                 <FunnelIcon className="w-5 h-5" aria-hidden="true" />
                             </button>
                         </div>
-                        <div className='max-w-md mx-auto border-1 border-gray-400'>
-                            <div className="relative flex items-center w-full h-12 rounded-lg focus-within:shadow-lg bg-white overflow-hidden border-b-2 border-gray">
-                                <div className="grid place-items-center h-full w-12 text-gray-300">
-                                    <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <div className='max-w-md mx-auto border-gray-400 border-1'>
+                            <div className="relative flex items-center w-full h-12 overflow-hidden bg-white border-b-2 rounded-lg focus-within:shadow-lg border-gray">
+                                <div className="grid w-12 h-full text-gray-300 place-items-center">
+                                    <svg xmlns="http://www.w3.org/2000/svg" className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
                                     </svg>
                                 </div>
 
                                 <input
-                                    className="peer h-full w-full outline-none text-sm text-gray-700 pr-2"
+                                    className="w-full h-full pr-2 text-sm text-gray-700 outline-none peer"
                                     type="text"
                                     id="search"
                                     placeholder="Buscar..."

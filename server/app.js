@@ -54,7 +54,7 @@ app.get("/api/logueado", authorization.verificar_cookie);
 
 // Pagina principal
 app.get("/api/admin", async (req, res) => {
-  await res.send("Funcionando");
+  await res.send("Modulo de administrador");
 });
 
 app.get("*", async (req, res) =>{

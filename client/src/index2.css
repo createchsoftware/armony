@@ -115,7 +115,8 @@ body {
 }
 
 /* =========== SUBMENU SERVICIOS */
-.submenu-fondo, .submenu-fx{
+.submenu-fondo,
+.submenu-fx {
   width: 100vw;
   height: 100vh;
   top: 60px;
@@ -125,7 +126,7 @@ body {
   position: fixed;
   z-index: 11;
 }
-.submenu-fx{
+.submenu-fx {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -156,16 +157,16 @@ body {
   padding-right: 52px;
   font-size: 16px;
 }
-#estetica{
+#estetica {
   border-top: 2px solid black;
 }
-.menu-link-serv:hover{
+.menu-link-serv:hover {
   color: #ffb5a7;
 }
 
-
 /* ======= MENU DESPLEGABLE PERFIL */
-.usermenu-fondo, .usermenu-fx{
+.usermenu-fondo,
+.usermenu-fx {
   width: 100vw;
   height: 100vh;
   top: 65px;
@@ -175,7 +176,7 @@ body {
   position: fixed;
   z-index: 11;
 }
-.usermenu-fx{
+.usermenu-fx {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -208,7 +209,7 @@ body {
   align-items: center;
   transition: 0.25s;
 }
-.menu-link-perfil:hover{
+.menu-link-perfil:hover {
   color: rgb(255, 181, 167);
 }
 
@@ -626,10 +627,10 @@ body {
   transition: 0.25s;
 }
 
-.nav-fav{
+.nav-fav {
   color: rgb(236, 87, 102);
 }
-.nav-fav:hover{
+.nav-fav:hover {
   color: rgb(255, 181, 167);
   transition: 0.25s;
 }
@@ -781,7 +782,7 @@ body {
 .cart-remove:hover {
   color: rgb(255, 181, 167);
 }
-.cart-total{
+.cart-total {
   border-top: 2px solid lightgray;
 }
 
@@ -799,9 +800,9 @@ body {
   font-weight: bold;
 }
 
-
 /* Próximamente */
-.soon-fondo, .soon-fx{
+.soon-fondo,
+.soon-fx {
   width: 100vw;
   height: 100vh;
   top: 0;
@@ -811,14 +812,14 @@ body {
   position: fixed;
   z-index: 5;
 }
-.soon-fx{
+.soon-fx {
   display: flex;
   background: rgba(0, 0, 0, 0.35);
   justify-content: center;
   align-items: center;
 }
 
-.soon{
+.soon {
   display: grid;
   position: absolute;
   padding: 20px 20px;
@@ -828,25 +829,25 @@ body {
   justify-content: center;
   border: 5px solid rgb(255, 181, 167);
 }
-.soon-title{
+.soon-title {
   text-align: center;
   font-weight: bold;
-  font-size: xx-large ;
+  font-size: xx-large;
 }
-#alarm{
+#alarm {
   color: rgb(255, 181, 167);
 }
-.soon-desc{
+.soon-desc {
   text-align: center;
-  font-size: large ;
+  font-size: large;
 }
 
 /* =================== LISTA DE DESEOS */
-.menu-deseo{
+.menu-deseo {
   margin-top: 80px;
   height: calc(100vh - 80px);
 }
-.deseo-buscador{
+.deseo-buscador {
   width: 50%;
   padding: 8px 18px;
   border: 2px solid rgb(255, 181, 167);
@@ -892,10 +893,10 @@ body {
     line-height: 50px;
   }
 
-  .nav-cart{
+  .nav-cart {
     color: white;
   }
-  .nav-cart:hover{
+  .nav-cart:hover {
     color: rgb(255, 181, 167);
     transition: 0.25s;
   }
@@ -1004,7 +1005,7 @@ body {
     position: relative;
     padding: 0 0;
   }
-  #pilares-title{
+  #pilares-title {
     justify-self: center;
     text-align: center;
   }

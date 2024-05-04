@@ -7,7 +7,8 @@ const messageError = "Ha ocurrido un error al ejecutar el query: ";
 // CREATE FUNCIONAL
 export async function createUser(connection, data) {
   try {
-    let insertUserQuery = "CALL addCliente(?, ?, ?, ?,?, ?, ?, ?);"; // Procedimiento almacenado en MySQL
+    let insertUserQuery =
+      "CALL addCliente(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);"; // Procedimiento almacenado en MySQL
     let query = mysql.format(insertUserQuery, [
       data.name,
       data.ap,
@@ -17,6 +18,10 @@ export async function createUser(connection, data) {
       data.pass,
       data.tipo,
       data.img,
+      data.calle,
+      data.colonia,
+      data.numero,
+      data.cp,
     ]); // parametros para el procedimiento
     const [rows, fields] = await connection.query(query); // Ejecutamos el query y almacenamos el resultado
     endConnection(); // Cierre de conexion
@@ -42,6 +47,7 @@ export async function readUserById(connection, data) {
   }
 }
 
+// READ BY NAME
 export async function readUserByNP(connection, data) {
   try {
     let readUserByNPQuery = "CALL searchClienteByNombreApellido(?, ?, ?)"; // Procedimiento almacenado de la DB
@@ -74,7 +80,8 @@ export async function deleteUserById(connection, data) {
 // INFO FUNCIONAL
 export async function updateInfoUser(connection, data) {
   try {
-    let updateInfoUserQuery = "CALL updUsuarioInfo(?, ?, ?, ?, ?, ?)"; // Procedimiento almacenado de la DB
+    let updateInfoUserQuery =
+      "CALL updUsuarioInfo(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)"; // Procedimiento almacenado de la DB
     let query = mysql.format(updateInfoUserQuery, [
       data.idUser,
       data.name,
@@ -82,6 +89,10 @@ export async function updateInfoUser(connection, data) {
       data.am,
       data.email,
       data.phone,
+      data.calle,
+      data.colonia,
+      data.numero,
+      data.cp,
     ]); // Parametros para el procedimiento
     const [rows, fields] = await connection.query(query); // Ejecutamos query y almacenamos los valores
     endConnection(); // Cerramos la conexion

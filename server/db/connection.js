@@ -15,7 +15,7 @@ export const config = {
 // Establecemos conexion con la base de datos
 export async function enableConnect() {
   try {
-    const connection = await mysql.createConnection(config); // Creamos la conexion con la configuracion declarada anteriormente
+    const connection = await mysql.createPool(config); // Creamos la conexion con la configuracion declarada anteriormente
     await connection.query("USE " + conexionDB.DATABASE + ";");
     console.log("CONNECT TO DATABASE!"); // Mesaje de exito de conexion
     return connection; // Retornamos la conexion
@@ -31,5 +31,5 @@ export const conexion = await enableConnect(); // almacenamos la conexion
 // Cierre de conexion con la base de datos
 export async function endConnection() {
   console.log("RELEASE CONNECTION");
-  await conexion.end(); // Cerramos la conexion
+  await conexion.releaseConnection(); // Cerramos la conexion
 }

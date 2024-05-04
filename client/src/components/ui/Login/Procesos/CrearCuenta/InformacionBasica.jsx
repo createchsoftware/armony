@@ -28,7 +28,7 @@ const InformacionBasica = () => {
               className="relative left-6 bottom-2"
             />
             <FontAwesomeIcon
-              style={{ fontSize: "36px" }}
+              style={{ fontSize: "36px", color: "#036C65" }}
               icon={faCircle}
             ></FontAwesomeIcon>
           </span>
@@ -36,6 +36,7 @@ const InformacionBasica = () => {
             href=""
             style={{
               fontFamily: "ABeeZee",
+              color: "#036C65",
             }}
             className="text-base mx-2"
           >

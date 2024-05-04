@@ -1,5 +1,5 @@
 import express from "express";
-import { enableConnect } from "../db/connection.js";
+import { conexion } from "../db/connection.js";
 import {
   createUser,
   deleteUserById,
@@ -17,13 +17,11 @@ export const routerUser = express.Router();
 routerUser.use(express.json()); // Analiza las request entrantes con carga JSON basado en body-parse
 
 const messageError = "Ha ocurrido un error al procesar tu peticion: ";
-const connection = await enableConnect(); // Almacenamos la conexion con la base de datos
 
 // CREATE FUNCIONAL
 routerUser.post("/create", async (req, res) => {
   try {
-    const { name, ap, am, email, phone, pass, tipo, img } = req.body; // Atributos para el body (Parametros de procedimiento)
-    const resultado = await createUser(connection, {
+    const resultado = await createUser(conexion, {
       name: req.body.name,
       ap: req.body.ap,
       am: req.body.am,
@@ -32,6 +30,10 @@ routerUser.post("/create", async (req, res) => {
       pass: req.body.pass,
       tipo: req.body.tipo,
       img: req.body.img,
+      calle: req.body.calle,
+      colonia: req.body.colonia,
+      numero: req.body.numero,
+      cp: req.body.cp,
     }); // Parametros obtenidos por body
     resultado = JSON.stringify(resultado);
     res
@@ -48,10 +50,10 @@ routerUser.post("/create", async (req, res) => {
 // FUNCIONAL
 routerUser.get("/read/id/:id", async (req, res) => {
   try {
-    const resultado = await readUserById(connection, { idUser: req.params.id });
+    const resultado = await readUserById(conexion, { idUser: req.params.id });
     if (resultado.length === 0)
-      res.status(500).send("No se encontro el usuario.");
-    res.status(201).json({ message: "Usuario encontrado ", data: resultado });
+      res.status(204).send("No se encontro el usuario.");
+    res.status(302).json({ message: "Usuario encontrado ", data: resultado }); // Status found, enviamos informacion en formato JSON
   } catch (err) {
     // Capturamos errores
     console.error(messageError, err); // Mostramos errores por consola
@@ -62,8 +64,7 @@ routerUser.get("/read/id/:id", async (req, res) => {
 // READ BY NAME & LAST NAME FUNCIONAL
 routerUser.get("/read/nomAp", async (req, res) => {
   try {
-    const { name, ap, am } = req.body; // Atributos para el body (Parametros de procedimiento)
-    const resultado = await readUserByNP(connection, {
+    const resultado = await readUserByNP(conexion, {
       name: req.body.name,
       ap: req.body.ap,
       am: req.body.am,
@@ -71,8 +72,8 @@ routerUser.get("/read/nomAp", async (req, res) => {
     if (resultado.length === 0)
       res.status(500).send("No se encontro el usuario.");
     res
-      .status(201)
-      .json({ message: "Se encontro el usuario", data: name, ap, am });
+      .status(302)
+      .json({ message: "Se encontro el usuario", data: resultado }); // Status Found, enviamos informacion en formato JSON
   } catch (err) {
     // Capturamos errores
     console.error(messageError, err); // Mostramos errores por consola
@@ -84,19 +85,22 @@ routerUser.get("/read/nomAp", async (req, res) => {
 // INFO
 routerUser.patch("/updateInfo/", async (req, res) => {
   try {
-    const { idUser, name, ap, am, email, phone } = req.body; // Atributos para el body (Parametros de procedimiento)
-    const resultado = await updateInfoUser(connection, {
+    const resultado = await updateInfoUser(conexion, {
       idUser: req.body.idUser,
       name: req.body.name,
       ap: req.body.ap,
       am: req.body.am,
       email: req.body.email,
       phone: req.body.phone,
+      calle: req.body.calle,
+      colonia: req.body.colonia,
+      numero: req.body.numero,
+      cp: req.body.cp,
     }); // Parametros obtenidos por body
-    res.status(201).json({
+    res.status(202).json({
       message: "Usuario actualizado correctamente",
-      data: { idUser, name, ap, am, email, phone },
-    });
+      data: resultado,
+    }); // Status Accepted, enviamos informacion en formato JSON
   } catch (err) {
     // Capturamos errores
     console.error(messageError, err); // Mostramos errores por consola
@@ -107,17 +111,16 @@ routerUser.patch("/updateInfo/", async (req, res) => {
 // IMG FUNCIONAL
 routerUser.patch("/updateImg/:id/img", async (req, res) => {
   try {
-    const img = req.body;
     const idUser = req.params;
-    await updateImgUser(connection, {
+    await updateImgUser(conexion, {
       idUser: req.params.id,
       newImg: req.body.img,
     }); // Parametros obtenidos por body
-    res.status(201).json({
+    res.status(2002).json({
       message: "Se actualizo correctamente la imagen",
       data: idUser,
       img,
-    });
+    }); // Status Accepted, enviamos informacion en formato JSON
   } catch (err) {
     // Capturamos errores
     console.error(messageError, err); // Mostramos errores por consola
@@ -128,8 +131,7 @@ routerUser.patch("/updateImg/:id/img", async (req, res) => {
 // PASSWORD FUNCIONAL
 routerUser.patch("/update/password", async (req, res) => {
   try {
-    const { idUser, pass } = req.body; // Atributos para el body (Parametros de procedimiento)
-    const usuarioNewPass = await updatePassUser(connection, {
+    const usuarioNewPass = await updatePassUser(conexion, {
       idUser: req.body.idUser,
       pass: req.body.pass,
     }); // Parametros obtenidos por body
@@ -145,13 +147,13 @@ routerUser.patch("/update/password", async (req, res) => {
 routerUser.delete("/delete/:id", async (req, res) => {
   const idUsuario = req.params;
   try {
-    const resultado = await deleteUserById(connection, {
+    const resultado = await deleteUserById(conexion, {
       idUsuario: req.params.id,
     });
-    res.status(202).json({
+    res.status(204).json({
       message: "El usuario se elimino corectamente.",
       data: idUsuario,
-    }); // Status accepted, enviamos informacion en formato JSON
+    }); // Status NO CONTENT, enviamos informacion en formato JSON
   } catch (err) {
     // Capturamos errores
     console.error(messageError, err); // Mostramos errores por consola

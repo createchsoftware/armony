@@ -1,16 +1,16 @@
 import express from "express";
 export const routerCitas = express.Router();
-import { addCita,
+/*import { addCita,
       upCita,
       searchEmpleadobyCita,
       getAllCitaById,
       getCitasPendById,
       delCita} from "../db/query/queryCitas.js";
 import { enableConnect } from "../db/connection.js";
-
+*/
 
 routerCitas.use(express.json()); 
-
+/*
 
 //funcional
 //crear un cita
@@ -33,7 +33,7 @@ routerCitas.post("/upCita", async (req, res) => {
             const Data= req.body;
          const connection = await enableConnect();
       await upCita(connection,Data) /*el idventa no debe cambiar pero asi esta el procedura,si esto se cambiara no seria seguro*/
-res.status(201).send({message:'se actualizo con exito la cita'})
+/*res.status(201).send({message:'se actualizo con exito la cita'})
       }catch(err){
             res.status(500).json('ocurrio un problema',err)
       }
@@ -95,6 +95,6 @@ routerCitas.get("/getCitaById/:id", async (req, res) => {
         console.error("Ha ocurrido un error: ", err);
         res.status(500).send("Ha ocurrido un error al procesar tu solicitud");
       }
-    });
+    });*/
     
     

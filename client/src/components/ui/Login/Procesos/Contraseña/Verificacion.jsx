@@ -42,7 +42,7 @@ const Verificacion = () => {
           >
             Recuperación
           </a>
-          <div className="flex-grow border-t border-gray-400 pl-4 mx-0"></div>
+          <div className="flex-grow border-t border-[#036C65] pl-4 mx-0"></div>
           <span className="">
             <FontAwesomeIcon
               style={{ fontSize: "16px", color: "#FFFFFF" }}
@@ -50,7 +50,7 @@ const Verificacion = () => {
               className="relative left-6 bottom-2"
             />
             <FontAwesomeIcon
-              style={{ fontSize: "36px" }}
+              style={{ fontSize: "36px", color: "#036C65" }}
               icon={faCircle}
             ></FontAwesomeIcon>
           </span>
@@ -58,6 +58,7 @@ const Verificacion = () => {
             href=""
             style={{
               fontFamily: "ABeeZee",
+              color: "#036C65",
             }}
             className="text-base mx-1"
           >

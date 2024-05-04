@@ -1,5 +1,5 @@
 import { endConnection } from "../connection.js";
-import  mysql from "mysql2";
+import * as mysql from "mysql2";
 
 const messageError = "Ha ocurrido un error al ejecutar el query: ";
 
@@ -27,14 +27,18 @@ export async function createServicios(connection, data) {
 /* NOTA: DEBE EXISTIR LA SUCURSAL PARA PODER HACER LA ALTA */
 export async function createProducto(connection, data) {
   try {
-    let insertProductoQuery = "CALL addProducto(?, ?, ?, ?, ?, ?)"; // Procedimiento almacenado de la DB
+    let insertProductoQuery = "CALL addProducto(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)"; // Procedimiento almacenado de la DB
     let query = mysql.format(insertProductoQuery, [
       data.name,
-      data.price,
+      data.precioVenta,
       data.descr,
       data.pilar,
       data.suc,
       data.stockIni,
+      data.proveedor,
+      data.precioCompra,
+      data.tipo,
+      data.img,
     ]); // Parametros para el procedimiento
     const rows = await connection.query(query); // Ejecutamos query y guardamos resultado
     endConnection(); // Cerramos conexion
@@ -66,11 +70,36 @@ export async function readProdServByCategoria(connection, data) {
     let query = mysql.format(searchProductoCategoria, [data.categoria]); // Parametros para el procedimiento
     const [rows, fields] = await connection.query(query); // Ejecutamos query y guardamos los valores
     endConnection(); // Cerramos conexion
-    return rows[0]; // Retornamos valores
+    return rows; // Retornamos valores
   } catch (err) {
     // Capturamos errores de ejecucion de query
     console.error(messageError, err); // Mostramos los errores por consola
   }
+}
+
+// READ BY PRECIO MAX PENDIENTE
+export async function readProdServPrecio(connection, data) {
+  try {
+    let getProdServPrecio = "CALL getProductosRangoPrecio(?, ?)"; // Procedimiento almacenado de la DB
+    let query = mysql.format(getProdServPrecio, [data.pilar, data.precio]); // Parametros para el procedimiento
+    const [rows, fields] = await connection.query(query); // Ejecutamos query y guardamos los valores
+    endConnection(); // Cerramos conexion
+    return rows; // Retornamos valores
+  } catch (err) {
+    // Capturamos errores de ejecucion de query
+    console.error(messageError, err); // Mostramos los errores por consola
+  }
+}
+
+// READ BY A-Z OR Z-A
+export async function readProdServAZ(connection, data) {
+  try {
+    let getProdServAZ = "CALL getProductosOrdenAlfabetico(?)";
+    let query = mysql.format(getProdServAZ, [data.orden]);
+    const [rows, fields] = await connection.query(query);
+    endConnection();
+    return rows;
+  } catch (error) {}
 }
 
 // UPDATE FUNCIONAL
@@ -88,7 +117,7 @@ export async function updateProdServ(connection, data) {
     ]); // Parametros para el procedimiento
     const [rows, fields] = await connection.query(query); // Ejecutamos query y guardamos valores
     endConnection(); // Cierre de conexion
-    return rows[0];
+    return rows;
   } catch (err) {
     // Capturamos errores de ejecucion de query
     console.error(messageError, err); // Mostramos los errores por consola
@@ -122,22 +151,3 @@ export async function deleteProdCat(connection, data) {
     console.error(messageError, err); // Mostramos los errores por consola
   }
 }
-
-//funcional
-//creado para las paginas de productos
-//esto aumenta el rendimiento ya que solo carga los productos que se ocupan
-export async function getProducts (pool,data,res){
-try{
-    const pages=data.pages||1;/*por defecto sera pagina 1 */
-    const limit =data.limit||5;/*capacidad por defecto de 5, esto cambiara dependiendo el front */
-    const offset=(pages-1)*limit;
-    const query=`SELECT *FROM  prodServ LIMIT ${limit} OFFSET ${offset}`
-    const [rows,fields]=await pool.query(query);
-        return rows;
-}catch(err){
-console.log("Ha ocurrido un error al ejecutar el query: ",err)
-throw err;
-}
-   
-    }
-    
