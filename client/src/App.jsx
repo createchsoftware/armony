@@ -23,7 +23,8 @@ import Favicon from "react-favicon";
 import EditarPerfil from "./pages/perfil/EditarPerfil";
 import Historial from "./pages/perfil/Historial";
 import Compras from "./components/ui/Compras";
-
+import Paquetes from "./pages/agendas/Paquetes";
+import Calendario from "./pages/agendas/Calendario";
 function App() {
     return (
         <>
@@ -45,9 +46,11 @@ function App() {
                     <Route path="/perfil/agenda" element={<Agenda />} />
                     <Route path="/favoritos" element={<Favoritos />} />
                     <Route path="*" element={<Error />} />
-                    <Route path="/editar-perfil" element={<EditarPerfil />} />
+                    <Route path="/perfil/editar-perfil" element={<EditarPerfil />} />
                     <Route path="/perfil/historial" element={<Historial />} />
                     <Route path="/perfil/compras" element={<Compras />} />
+                    <Route path="/spa/agendar/paquetes" element={<Paquetes />} />
+                    <Route path="/spa/agendar/calendario" element={<Calendario />} />
 
                     {/* Tests */}
                     <Route path="/test" element={<Test />} />
