@@ -54,7 +54,10 @@ routerEmpleado.get("/read", async (req, res) => {
     }); // Parametros enviados por body
     res
       .status(302) // Status found
-      .json({ message: "Empleada encontrada con exito", data: resultado }); // Enviamos informacion en formato JSON
+      .json({
+        message: "Empleada encontrada con exito",
+        data: resultado,
+      }); // Enviamos informacion en formato JSON
   } catch (err) {
     // Capturamos errores
     console.error(messageError, err); // Mostramos errores por consola

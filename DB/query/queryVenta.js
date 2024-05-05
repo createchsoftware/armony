@@ -6,12 +6,17 @@ const messageError = "Ha ocurrido un error al ejecutar el query: ";
 //CREATE PENDIENTE
 export async function createVenta(connection, data) {
   try {
-    let insertVentaQuery = "CALL addVenta(?, ?, ?, ?);"; // Procedimiento almacenado en MySQL
+    let insertVentaQuery = "CALL addVenta(?, ?, ?, ?, ?, ?, ?, ?);"; // Procedimiento almacenado en MySQL
     let query = mysql.format(insertVentaQuery, [
       data.idCliente,
-      data.tipoComp,
-      data.idPromo,
-      data.cantidad,
+      data.tipoVenta,
+      data.nombre,
+      data.phone,
+      data.formaPago,
+      data.total,
+      data.impuesto,
+      data.estado,
+      data.fechaEntregado,
     ]); // parametros para el procedimiento
     const [rows, fields] = await connection.query(query); // Ejecutamos el query y almacenamos el resultado
     endConnection(); // Cierre de conexion
