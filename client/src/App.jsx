@@ -25,6 +25,8 @@ import Historial from "./pages/perfil/Historial";
 import Compras from "./components/ui/Compras";
 import Paquetes from "./pages/agendas/Paquetes";
 import Calendario from "./pages/agendas/Calendario";
+import Cita from "./pages/Cita";
+
 function App() {
     return (
         <>
@@ -51,6 +53,7 @@ function App() {
                     <Route path="/perfil/compras" element={<Compras />} />
                     <Route path="/spa/agendar/paquetes" element={<Paquetes />} />
                     <Route path="/spa/agendar/calendario" element={<Calendario />} />
+                    <Route path="/spa/agendar/" element={<Cita />} />
 
                     {/* Tests */}
                     <Route path="/test" element={<Test />} />

@@ -145,7 +145,7 @@ function Calendario() {
             nombre: 'Dr. Juan Pérez',
             especialidad: 'Dermatólogo',
             imagen: 'https://cdn.pixabay.com/photo/2016/11/18/19/07/happy-1836445_960_720.jpg',
-            experiencia: '10 años de experiencia',
+            experiencia: '10 años',
             areas: ['Dermatología', 'Cirugía', 'Estética'],
             calificacion: 5
         },
@@ -154,7 +154,7 @@ function Calendario() {
             nombre: 'Dra. María López',
             especialidad: 'Nutricionista',
             imagen: 'https://cdn.pixabay.com/photo/2016/11/18/19/07/happy-1836445_960_720.jpg',
-            experiencia: '5 años de experiencia',
+            experiencia: '5 años',
             areas: ['Nutrición', 'Dietas', 'Salud'],
             calificacion: 4
         },
@@ -163,7 +163,7 @@ function Calendario() {
             nombre: 'Dr. Carlos Ramírez',
             especialidad: 'Pediatra',
             imagen: 'https://cdn.pixabay.com/photo/2016/11/18/19/07/happy-1836445_960_720.jpg',
-            experiencia: '15 años de experiencia',
+            experiencia: '15 años',
             areas: ['Pediatría', 'Cuidados', 'Salud'],
             calificacion: 5
         },
@@ -172,7 +172,7 @@ function Calendario() {
             nombre: 'Dra. Ana Martínez',
             especialidad: 'Ginecóloga',
             imagen: 'https://cdn.pixabay.com/photo/2016/11/18/19/07/happy-1836445_960_720.jpg',
-            experiencia: '8 años de experiencia',
+            experiencia: '8 años',
             areas: ['Ginecología', 'Salud', 'Cuidados'],
             calificacion: 4
         },
@@ -181,104 +181,112 @@ function Calendario() {
             nombre: 'Dr. José González',
             especialidad: 'Cardiólogo',
             imagen: 'https://cdn.pixabay.com/photo/2016/11/18/19/07/happy-1836445_960_720.jpg',
-            experiencia: '12 años de experiencia',
+            experiencia: '12 años',
             areas: ['Cardiología', 'Salud', 'Cuidados'],
             calificacion: 5
         },]
 
     return (
-        <LayoutPrincipal>
-            <main className='flex justify-center gap-6 p-8 mt-24 mb-12 w-[90%]'>
-                <section className='w-1/2 p-6 '>
-                    {/* <Calendar onChange={onChange} value={value} /> */}
+        <main className='flex  gap-0  w-[90%]'>
+            <section className='w-2/3 p-6 ring-1'>
+                {/* <Calendar onChange={onChange} value={value} /> */}
 
-                    <LocalizationProvider dateAdapter={AdapterDayjs}>
-                        <DateCalendar
-                            defaultValue={initialValue}
-                            loading={isLoading}
-                            onMonthChange={handleMonthChange}
-                            renderLoading={() => <DayCalendarSkeleton />}
-                            slots={{
-                                day: ServerDay,
-                            }}
-                            slotProps={{
-                                day: {
-                                    highlightedDays,
-                                },
-                            }}
-                        />
-                    </LocalizationProvider>
 
-                </section>
-                <section className='w-1/2 ring-1'>
-                    <h1 className='text-xl  text-[#036C65] text-center my-6'>Selecciona tu especialista</h1>
-                    <Carousel
-                        additionalTransfrom={0}
-                        arrows
-                        autoPlay
-                        className='z-0'
-                        autoPlaySpeed={3000}
-                        centerMode={false}
-                        containerclassName=" z-0"
-                        dotListclassName=""
-                        // draggable
-                        focusOnSelect={false}
-                        infinite
-                        itemclassName=""
-                        keyBoardControl
-                        minimumTouchDrag={80}
-                        pauseOnHover
-                        renderArrowsWhenDisabled={false}
-                        renderButtonGroupOutside={false}
-                        renderDotsOutside={false}
-                        responsive={{
-                            desktop: {
-                                breakpoint: {
-                                    max: 3000,
-                                    min: 1024
-                                },
-                                items: 1,
-                                partialVisibilityGutter: 40
-                            },
-                            mobile: {
-                                breakpoint: {
-                                    max: 464,
-                                    min: 0
-                                },
-                                items: 1,
-                                partialVisibilityGutter: 30
-                            },
-                            tablet: {
-                                breakpoint: {
-                                    max: 1024,
-                                    min: 464
-                                },
-                                items: 1,
-                                partialVisibilityGutter: 30
-                            }
+                <LocalizationProvider dateAdapter={AdapterDayjs}>
+                    <DateCalendar
+                        className='ring-1'
+                        defaultValue={initialValue}
+                        loading={isLoading}
+                        onMonthChange={handleMonthChange}
+                        renderLoading={() => <DayCalendarSkeleton />}
+                        slots={{
+                            day: ServerDay,
                         }}
-                        rewind={false}
-                        rewindWithAnimation={false}
-                        rtl={false}
-                        shouldResetAutoplay
-                        showDots={true}
-                        sliderclassName=""
-                        slidesToSlide={1}
-                        swipeable
-                    >
-                        {especialistas.map((especialista) => (
-                            <Especialista key={especialista.id} especialista={especialista} />
-                        ))}
-                    </Carousel>
-                    <div class="mt-6 flex gap-2 justify-center">
-                        <div class="flex items-center mb-4">
-                            <input id="default-checkbox" type="checkbox" value="" class="w-5 h-5 text-rose-400 bg-gray-100 border-gray-300 rounded focus:ring-rose-400  focus:ring-2" />
-                            <label for="default-checkbox" class="ms-2 text-lg font-medium text-gray-900 dark:text-gray-300">Indiferente</label>
-                        </div>
+                        slotProps={{
+                            day: {
+                                highlightedDays,
+                            },
+                        }}
+                    />
+                </LocalizationProvider>
+
+            </section>
+            <section className='w-1/3 ring-1'>
+                <h1 className='text-xl  text-[#036C65] text-center'>Selecciona tu especialista</h1>
+                <div className='flex justify-center gap-4 m-4'>
+                    <button className='px-4 py-1 text-white rounded-xl bg-rose-400'>General</button>
+                    <button className='flex items-center justify-center gap-2 px-4 text-white rounded-xl bg-rose-400'>Favoritos
+                        <svg className="w-5 h-5 text-white dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="2" height="2" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="m12.75 20.66 6.184-7.098c2.677-2.884 2.559-6.506.754-8.705-.898-1.095-2.206-1.816-3.72-1.855-1.293-.034-2.652.43-3.963 1.442-1.315-1.012-2.678-1.476-3.973-1.442-1.515.04-2.825.76-3.724 1.855-1.806 2.201-1.915 5.823.772 8.706l6.183 7.097c.19.216.46.34.743.34a.985.985 0 0 0 .743-.34Z" />
+                        </svg>
+                    </button>
+                </div>
+                <Carousel
+                    additionalTransfrom={0}
+                    arrows
+                    autoPlay
+                    className='z-0'
+                    autoPlaySpeed={3000}
+                    centerMode={false}
+                    containerclassName=" z-0"
+                    dotListclassName=""
+                    // draggable
+                    focusOnSelect={false}
+                    infinite
+                    itemclassName=""
+                    keyBoardControl
+                    minimumTouchDrag={80}
+                    pauseOnHover
+                    renderArrowsWhenDisabled={false}
+                    renderButtonGroupOutside={false}
+                    renderDotsOutside={false}
+                    responsive={{
+                        desktop: {
+                            breakpoint: {
+                                max: 3000,
+                                min: 1024
+                            },
+                            items: 1,
+                            partialVisibilityGutter: 40
+                        },
+                        mobile: {
+                            breakpoint: {
+                                max: 464,
+                                min: 0
+                            },
+                            items: 1,
+                            partialVisibilityGutter: 30
+                        },
+                        tablet: {
+                            breakpoint: {
+                                max: 1024,
+                                min: 464
+                            },
+                            items: 1,
+                            partialVisibilityGutter: 30
+                        }
+                    }}
+                    rewind={false}
+                    rewindWithAnimation={false}
+                    rtl={false}
+                    shouldResetAutoplay
+                    showDots={false}
+                    sliderclassName=""
+                    slidesToSlide={1}
+                    swipeable
+                >
+                    {especialistas.map((especialista) => (
+                        <Especialista key={especialista.id} especialista={especialista} />
+                    ))}
+                </Carousel>
+                <div class="mt-2 flex gap-2 justify-center">
+                    <div class="flex items-center">
+                        <input id="default-checkbox" type="checkbox" value="" class="w-5 h-5 text-rose-400 bg-gray-100 border-gray-300 rounded focus:ring-rose-400  focus:ring-2" />
+                        <label for="default-checkbox" class="ms-2 text-lg font-medium text-gray-900 dark:text-gray-300">Indiferente</label>
                     </div>
-                </section>
-            </main>
-        </LayoutPrincipal >
+                </div>
+            </section>
+        </main>
     );
 }
 

@@ -17,7 +17,7 @@ const StyledRating = styled(Rating)({
 
 function Especialista({ especialista }) {
     return (
-        <div className='md:p-8 rounded-3xl font-[abeatbyKai] ring-1 w-2/3 m-auto bg-rose-200'>
+        <div className='md:px-8 md:py-2 rounded-3xl font-[abeatbyKai] ring-1 w-2/3 m-auto bg-rose-200'>
             <Box
                 className="float-right"
                 sx={{
@@ -36,18 +36,19 @@ function Especialista({ especialista }) {
             </Box>
             <img className='w-1/2 m-auto rounded-full aspect-square' src={especialista.imagen} alt="" />
             <p className='pt-4 text-lg font-bold text-center'>{especialista.nombre}</p>
-            <p className='pt-4 text-lg font-bold text-center'>{especialista.experiencia}</p>
+            <p className='pt-4 text-lg font-bold text-center'>Experiencia: {especialista.experiencia}</p>
             <div className='flex justify-center w-1/2 pt-4 m-auto'>
-                <Rating className='' value={0} unratedColor="amber" ratedColor="amber" />
+                <Rating className='' value={5} unratedColor="amber" readOnly ratedColor="amber" />
 
-            </div>            <p className='pt-4 text-lg font-bold'>Experta en:</p>
-            <div className='flex justify-start gap-2 pt-4 m-auto'>
+            </div>
+            <p className='pt-4 text-lg font-bold'>Experta en:</p>
+            <div className='flex justify-start gap-2 m-auto'>
                 {especialista.areas.map(area => (
                     <p className='gap-2 px-1 pt-2 text-center bg-white text-rose-400'>{area}</p>
                 ))}
             </div>
 
-            <div div className='flex justify-center mt-4'>
+            <div div className='flex justify-center mt-2'>
                 <button className="mt-2 transition-all duration-300  m-auto hover:bg-[#036C65] hover:ring-2 hover:[#036C65] hover:ring-offset-1 group relative inline-flex h-10 items-center justify-center overflow-hidden rounded-lg border-2 bg-[#EB5765] px-6 font-[abeatbykai] text-neutral-200"><span>Elegir</span></button>
             </div>
         </div >

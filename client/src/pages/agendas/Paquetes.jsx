@@ -18,29 +18,18 @@ const paquetes = [
         nombre: "Paquete 3",
         descripcion: "Facial suavizante",
         precio: 500
-    },
-    {
-        id: 4,
-        nombre: "Paquete 4",
-        descripcion: "Facial purificante",
-        precio: 500
-    },
-    {
-        id: 5,
-        nombre: "Paquete 5",
-        descripcion: "Facial rejuvenecedor",
-        precio: 500
     },]
 
 
 function Paquetes() {
     return (
-        <div className='grid m-12'>
-            <div className='gap-6 md:flex '>
-                <div className='text-center md:w-1/3 md:p-12'>
-                    <img className='m-auto rounded-2xl' src="./../../../public/pictures/1cafeteria.jpg" alt="" />
-                    <h1 className='m-4 text-2xl font-bold'>Facial</h1>
-                    <p className='p-8 m-8 text-justify text-white border-2 border-black md:m-4 rounded-3xl bg-rose-400'>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Aliquam distinctio hic doloremque facere officiis dignissimos provident mollitia pariatur aut quae temporibus ipsam suscipit fugiat, quas commodi dolores qui ratione praesentium!</p>
+        <div className='grid'>
+            <div className='mx-12 gap-28 md:flex'>
+                <div className='text-center md:w-1/4'>
+                    <img className='w-3/4 m-auto rounded-2xl' src="./../../../public/pictures/1cafeteria.jpg" alt="" />
+                    <div className='p-8 text-xs text-justify text-black border-4 border-rose-400 md:m-4 rounded-3xl bg-rose-200'>
+                        <h2 className='mb-4 text-2xl font-bold text-center'>Facial</h2>
+                        Lorem ipsum dolor sit amet consectetur, adipisicing elit. Aliquam distinctio hic doloremque facere officiis dignissimos provident mollitia pariatur aut quae temporibus ipsam suscipit fugiat, quas commodi dolores qui ratione praesentium!</div>
                 </div>
                 <div className='md:w-[60%] text-sm md:text-md py-6 '>
                     <h1 className='mb-6 text-3xl font-semibold text-center'>Paquetes</h1>
@@ -57,32 +46,7 @@ function Paquetes() {
                 </div>
 
             </div>
-            <div className="flex justify-center gap-2 my-12">
-                <div className="grid place-content-center">
-                    <button
-                        aria-label="Cancelar"
-                        className="px-4 py-2 mx-auto text-xl bg-white rounded-full text-rose-400 hover:bg-red-50 ring-2 ring-rose-400"
-                    >
-                        Regresar
-                    </button>
-                </div>
-                <div className="grid place-content-end">
-                    <button
-                        aria-label="Continuar"
-                        className="px-4 py-2 mx-auto text-xl text-white rounded-full bg-[#036C65] hover:bg-opacity-70"
-                    >
-                        Cancelar
-                    </button>
-                </div>
-                <div className="grid place-content-end">
-                    <button
-                        aria-label="Continuar"
-                        className="px-4 py-2 mx-auto text-xl text-white rounded-full bg-rose-400 hover:bg-red-200"
-                    >
-                        Continuar
-                    </button>
-                </div>
-            </div>
+
         </div>
     );
 }

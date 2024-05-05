@@ -3,7 +3,6 @@ import LayoutPrincipal from '../layouts/LayoutPrincipal'
 import { IoIosArrowBack } from "react-icons/io";
 import { MdNavigateNext } from "react-icons/md";
 
-
 function Perfil() {
 
     const [nombre, setNombre] = useState(false); //<<< PARA EL INICIO DE SESION
@@ -37,6 +36,7 @@ function Perfil() {
     useEffect(() => {
         recibido()
     }, []);
+
 
     return (
         <>
