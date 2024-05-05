@@ -28,6 +28,37 @@ export async function createCitas(connection, data) {
   }
 }
 
+// VENTA CITAS
+export async function ventaCita(connection, data) {
+  try {
+    let insertVentaCita =
+      "CALL addVentaCitaOnline(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+    let query = mysql.format(insertVentaCita, [
+      data.pilar,
+      data.idCliente,
+      data.name,
+      data.phone,
+      data.tarjeta,
+      data.monedero,
+      data.estadoPago,
+      data.servicio,
+      data.idEmp,
+      data.fechaPago,
+      data.horaPago,
+      data.descr,
+      data.subTotal,
+      data.total,
+      data.impuesto,
+    ]);
+    const [rows, fields] = await connection.query(query);
+    endConnection();
+    return rows;
+  } catch (err) {
+    // Capturamos errores de ejecucion de query
+    console.error(messageError, err); // Mostramos errores por consola
+  }
+}
+
 // READ
 export async function readCitas(connection, data) {
   try {
@@ -58,7 +89,9 @@ export async function deleteCita(connection, data) {
 // OBTENER HORAS DISPONIBLES
 export async function horasDisponibles(connection, data) {
   try {
-    let horasDispoQuery = "CALL getHorasDisponibles(?, ?, ?)";
+    horasNoDispo = await horasOcupadas(connection, data);
+
+    let horasDispoQuery = "CALL getHorasOcupadas(?, ?, ?)";
     let query = mysql.format(horasDispoQuery, [
       data.idServ,
       data.idEmp,

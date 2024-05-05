@@ -1,4 +1,4 @@
-import { endConnection } from "./connection.js";
+import { endConnection } from "../connection.js";
 import mysql from "mysql2";
 
 const messageError = "Ha ocurrido un error al ejecutar el query: ";
@@ -6,7 +6,7 @@ const messageError = "Ha ocurrido un error al ejecutar el query: ";
 //CREATE PENDIENTE
 export async function createVenta(connection, data) {
   try {
-    let insertVentaQuery = "CALL addVenta(?, ?, ?, ?, ?, ?, ?, ?);"; // Procedimiento almacenado en MySQL
+    let insertVentaQuery = "CALL addVenta(?, ?, ?, ?, ?, ?, ?, ?, ?);"; // Procedimiento almacenado en MySQL
     let query = mysql.format(insertVentaQuery, [
       data.idCliente,
       data.tipoVenta,
