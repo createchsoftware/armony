@@ -1,5 +1,7 @@
 import express from "express";
 import { servidor } from "./data/datos.js";
+import cookieParser from 'cookie-parser';
+
 
 
 import path, { dirname } from 'path';
@@ -10,15 +12,21 @@ const _dirname = path.dirname(fileURLToPath(import.meta.url));
 
 import {methods as authentication} from './controllers/authentication.controllers.js';
 import {methods as authorization} from './middlewares/authorization.js';
+import {methods as createAccount} from "./controllers/createAccount.controllers.js";
+import InsertUser from "./middlewares/register.js";
 
 
 import connection from "./database.js";
+
+
+
 
 
 // Objeto de express
 const app = express();
 
 app.use(express.static(path.join(_dirname, '../client/dist')));
+app.use(cookieParser())
 
 app.use((req, res, next) => {
   req.database = connection;
@@ -58,6 +66,31 @@ app.get("/api/admin", (req, res) => {
   res.send("Funcionando");
 });
 
+
+app.get('/spa/signUp/Patologia',(solicitud,respuesta)=>{
+  // if(solicitud.headers.cookie == undefined){
+  //   respuesta.send({megumin_cookie:false});
+  // }
+  // let galleta1 = galletas.find(galleta => galleta.startsWith("Megumin_cookie="));
+
+  respuesta.sendFile(path.join(_dirname,'../client/dist/index.html'));
+});
+
+
+app.get("/spa/signUp",(req,res)=>{
+  res.sendFile(path.join(_dirname,'../client/dist/index.html'));
+});
+
+app.get("/spa/signUp/Contrasena",(req,res)=>{
+  res.sendFile(path.join(_dirname,'../client/dist/index.html'));
+});
+
+app.get("/spa/resetPassword", InsertUser, (solicitud,respuesta)=>{
+  respuesta.sendFile(path.join(_dirname,'../client/dist/index.html'));
+});
+
+
+
 app.listen(servidor.SERVER_PORT, () => {
   console.log(`Servidor en puerto ${servidor.SERVER_PORT}`);
 });
@@ -73,11 +106,48 @@ app.get('/', (solicitud,respuesta)=>{
 })
 
 
-app.get('/spa', authorization.verificar_cookie, (solicitud,respuesta)=>{
+app.get('/spa', (solicitud,respuesta)=>{
     respuesta.sendFile(path.join(_dirname ,'../client/dist/index.html'))
 })
 
 
-app.post('/api/login',authentication.login);
+app.post('/api/login',authentication.login);  //verificar que el usuario hizo login
 
 app.get('/api/logueado',authorization.verificar_cookie);
+
+app.post('/api/step1', createAccount.paso1);
+
+app.post('/api/step2', createAccount.paso2);
+
+app.post('/api/step3', createAccount.paso3);
+
+
+
+
+app.get('/api/step1.5',(solicitud,respuesta)=>{
+
+  let consulta = "select * from patologia";
+  
+  solicitud.database.query(consulta,async (error,resultados)=>{
+    if(error)
+      throw error;
+
+    if(resultados.length == 0){
+        //respuesta.send({busqueda_vacia:true});
+       
+    }else{
+        //contruir un arreglo mas limpio
+        let arreglo = [];
+        for(let indice in resultados){
+          arreglo.push([resultados[indice].pregunta,parseInt(indice)+1]);
+        }
+        
+        respuesta.json(arreglo);
+       
+    }
+    
+});
+
+
+})
+

@@ -50,8 +50,12 @@ async function login(solicitud,respuesta){
 
                     // ahora sigue validar la contrasena con la base de datos
 
+                    
+                    let contraseña_bytes = resultados[0].pass; // contrasena en bytes desde la base de datos
+                    let contraseña_no_bytes = contraseña_bytes.toString('utf-8'); //contrasena en string, pero sigue estando encriptada
+
                     //bcryptjs.compare() es una funcion asincrona, por lo que debemos usar el await
-                    let contraseña_correcta = await bcryptjs.compare(contraseña,resultados[0].pass);
+                    let contraseña_correcta = await bcryptjs.compare(contraseña,contraseña_no_bytes);
 
                     if(contraseña_correcta == false){
                         respuesta.send({contraseña_incorrecta:true});
@@ -76,7 +80,23 @@ async function login(solicitud,respuesta){
 
 
                         let token = JsonWebToken.sign(
-                            {user:ingreso},
+                            {
+                                user:resultados[0].pkIdUsuario,
+                                nombre:resultados[0].nombre,
+                                paterno:resultados[0].apellidoP,
+                                materno:resultados[0].apellidoM,
+                                correo:resultados[0].email,
+                                telefono:resultados[0].telefono,
+                                contraseña:contraseña_no_bytes,  //contrasena encriptada dentro de la cookie
+                                tipo:resultados[0].tipo,
+                                imagen:resultados[0].img,
+                                calle:resultados[0].calle,
+                                colonia:resultados[0].colonia,
+                                numero:resultados[0].numero,
+                                postal:resultados[0].codigoPostal,
+                                nacimiento:resultados[0].fechaNac
+
+                            },
                             process.env.JWT_SECRET,
                             {expiresIn:process.env.JWT_EXPIRATION}
                         );
@@ -84,7 +104,7 @@ async function login(solicitud,respuesta){
                         // esto es un objeto
                         let galleta = {
                             // el expires es de tipo fecha
-                            maxAge:180000,
+                            maxAge:1*1000*60*30, // 30 minutos
                             expires: new Date(Date.now() + process.env.JWT_COOKIE_EXPIRES * 24 * 60 * 60 * 1000),
                             path:'/'
                         }
@@ -147,7 +167,7 @@ async function register(solicitud, respuesta){
         else{
             // el correo valido si cumple con el regex, ahora sigue verificar si el correo no esta repetido
 
-            consulta = 'select * from usuarios where correo = ?';
+            consulta = 'select * from usuario where email = ?';
             parametros = [email];
             solicitud.database.query(consulta,parametros,(error,resultados)=>{
                 if(error){
@@ -169,7 +189,7 @@ async function register(solicitud, respuesta){
                 //clave cryptografica de la contraseña del usuario
                 let hashPassword =  await bcryptjs.hash(contraseña,salt);  // la contraseña que vamos a guardar en nuestro usuario
 
-                consulta = 'insert into usuarios values (null,?,?,?,?,?)';
+                consulta = 'insert into usuario values (null,?,?,?,?,?)';
                 parametros = [nombre,paterno,materno,email,hashPassword];
                 solicitud.database.query(consulta,parametros, async(error,resultados)=>{
                     if(error){

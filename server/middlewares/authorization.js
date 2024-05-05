@@ -45,56 +45,55 @@ async function verificar_cookie(solicitud,respuesta){
     }
     else{
         let galletas = solicitud.headers.cookie.split("; ");
-        let galleta = galletas.find(galleta => galleta.startsWith("Naruto_cookie=")).slice(14);
-    
+        let galleta = galletas.find(galleta => galleta.startsWith("Naruto_cookie="))
         
+        if(galleta){
+                // la galleta si existe y debe hacer muchos mas pasos
+
+                galleta = galleta.slice(14);  // 14 es la longitud del nombre
          
-          // El slice() es para cortar el nombre de la cookie, ya que no lo ocupamos para poder trabajar con ello
-        
-
-        try{
-            let decodificada = await jsonwebtoken.verify(galleta, process.env.JWT_SECRET);
-            let consulta = "select * from usuario where pkIdUsuario = ? or email = ?"
-            let parametros = [decodificada.user,decodificada.user]
+                // El slice() es para cortar el nombre de la cookie, ya que no lo ocupamos para poder trabajar con ello
+                try{
+                    let decodificada = await jsonwebtoken.verify(galleta, process.env.JWT_SECRET);
+                    let consulta = "select * from usuario where pkIdUsuario = ?"
+                    let parametros = [decodificada.user]
 
 
-            // utilizamos una promesa para esperar que la funcion asincrona se termine
-            let resultadoConsulta = new Promise((resolve, reject) => {
-                solicitud.database.query(consulta, parametros, (error, resultados) => {
-                    if (error){
-                        reject(error);
+                    // utilizamos una promesa para esperar que la funcion asincrona se termine
+                    let resultadoConsulta = new Promise((resolve, reject) => {
+                        solicitud.database.query(consulta, parametros, (error, resultados) => {
+                            if (error){
+                                reject(error);
+                                respuesta.send({logueado:false});
+                        
+                            }
+                            resolve(resultados);
+                        });
+                    });
+
+                    let resultados = await resultadoConsulta;
+
+                    if (resultados.length == 0){
                         respuesta.send({logueado:false});
-                
+                        
                     }
-                    resolve(resultados);
-                });
-            });
-
-            let resultados = await resultadoConsulta;
-
-            if (resultados.length == 0){
-                respuesta.send({logueado:false});
-                
-            }
-            else {
-                respuesta.send({logueado:true});
-                
-            }
-        
-
-
-            
-            
+                    else {
+                        respuesta.send({logueado:true});
+                        
+                    }
+                    
+                }
+                catch(error){
+                    console.log("Hubo un error");
+                    respuesta.send({logueado:false});
+                }
         }
-        catch(error){
-            console.log("Hubo un error");
-            respuesta.send({logueado:false});
+        else{
+            console.log("la galleta naruto para iniciar sesion no existe");
         }
-
+           
         
     }
-
-    
 }
 
 

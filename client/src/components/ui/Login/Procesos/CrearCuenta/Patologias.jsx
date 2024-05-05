@@ -1,6 +1,7 @@
 import user1 from "../../../../../../public/pictures/userGuest.png";
-import { Helmet, HelmetProvider } from "react-helmet-async";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { Helmet, HelmetProvider } from "react-helmet-async";
+import React, { Fragment, useEffect, useState } from 'react'
 import {
   fa1,
   fa2,
@@ -10,10 +11,30 @@ import {
   faAngleLeft,
 } from "@fortawesome/free-solid-svg-icons";
 
-const Contrasena = () => {
+const Patologias = () => {
+
+  const [array, setArray] = useState([]);
+
+   useEffect(()=>{
+      fetch("http://localhost:3000/api/step1.5")
+         .then(response=> response.json())
+         .then(data => {
+            //console.log(typeof data);
+            setArray(data);
+         })
+         .catch(error=>{
+             console.log(error);
+         });
+   },[])
+
+   console.log(array);
+   
+
+
+
   return (
     <div className="flex flex-col h-screen justify-center items-center">
-      <div className="h-[470px] max-w-[765px] flex flex-col rounded-xl ring-1 ring-slate-200 bg-white bg-clip-border text-gray-700 shadow-md mx-auto">
+      <div className="min-h-[740px] max-w-[1170px] min-w-[1170px] flex flex-col rounded-xl ring-1 ring-slate-200 bg-white bg-clip-border text-gray-700 shadow-md mx-auto">
         <div className="relative max-w-[110px] min-w-[110px] mx-auto -mt-20 grid h-28 place-items-center overflow-hidden rounded-full bg-white bg-clip-border shadow-lg">
           <img src={user1} alt="" className="logo1 absolute h-full" />
         </div>
@@ -41,7 +62,7 @@ const Contrasena = () => {
           >
             Información Básica
           </a>
-          <div class="flex-grow border-t border-gray-400 pl-4 mx-0"></div>
+          <div className="flex-grow border-t border-gray-400 pl-4 mx-0"></div>
           <span className="">
             <FontAwesomeIcon
               style={{ fontSize: "16px", color: "#FFFFFF" }}
@@ -62,7 +83,7 @@ const Contrasena = () => {
           >
             Patologías
           </a>
-          <div class="flex-grow border-t border-gray-400 pl-4 mx-0"></div>
+          <div className="flex-grow border-t border-gray-400 pl-4 mx-0"></div>
           <span className="">
             <FontAwesomeIcon
               style={{ fontSize: "16px", color: "#FFFFFF" }}
@@ -83,7 +104,7 @@ const Contrasena = () => {
           >
             Contraseña
           </a>
-          <div class="flex-grow border-t border-gray-400 pl-4 mx-0"></div>
+          <div className="flex-grow border-t border-gray-400 pl-4 mx-0"></div>
           <span className="">
             <FontAwesomeIcon
               style={{ fontSize: "16px", color: "#FFFFFF" }}
@@ -111,68 +132,51 @@ const Contrasena = () => {
             Regresar
           </a>
         </div>
-        <div className="grid grid-cols-2 mt-5 mb-2">
-          <div className="ml-10 mr-4">
-            <h3 className="mx-auto mb-3 text-red-500">
-              Requisitos de la contraseña
-            </h3>
-            <h4 className="text-xs"> • Al menos 8 caracteres</h4>
-            <h4 className="text-xs"> • Una letra mayúscula</h4>
-            <h4 className="text-xs"> • Una letra minúscula</h4>
-            <h4 className="text-xs"> • Un número</h4>
-            <h4 className="text-xs"> • Al menos un carácter especial</h4>
-            <h4 className="text-xs">
-              {" "}
-              • La contraseña no debe coincidir con su ID de correo electrónico
-              y debe distinguir entre mayúsculas y minúsculas
-            </h4>
-          </div>
-          <div>
-            <form action="" className="grid grid-cols-1 place-content-start">
-              <div>
-                <label htmlFor="">Nueva contraseña</label>
-                <label htmlFor="" className="text-red-800">
-                  *
-                </label>
-              </div>
-              <input
-                id="contraseña"
-                type="text"
-                placeholder="Ingresa tu nueva contraseña"
-                className="bg-slate-200 rounded-full w-[365px] mb-3 mt-2 py-2 focus:outline-none focus:ring-1 focus:ring-rose-400 focus:border-transparent px-6"
-              />
-              <div>
-                <label htmlFor="">Confirmar contraseña</label>
-                <label htmlFor="" className="text-red-800">
-                  *
-                </label>
-              </div>
-              <input
-                id="nueva-contraseña"
-                type="text"
-                placeholder="Vuelve a ingresar tu nueva contraseña"
-                className="bg-slate-200 rounded-full w-[365px] mb-3 mt-2 py-2 focus:outline-none focus:ring-1 focus:ring-rose-400 focus:border-transparent px-6"
-              />
-            </form>
-          </div>
-        </div>
-        <div className="grid grid-cols-[5%_auto] ml-8">
-          <input type="checkbox" name="acept" id="state" value={true} />
-          <h4 className="text-xs">
-            Al hacer click en "Registrarme", aceptas nuestras{" "}
-            <a href="" className="text-blue-600">
-              Condiciones
-            </a>
-            , la{" "}
-            <a href="" className="text-blue-600">
-              Politica de Privacidad
-            </a>{" "}
-            y la{" "}
-            <a href="" className="text-blue-600">
-              Politica de Cookies
-            </a>
-          </h4>
-        </div>
+        <form
+          id={`${array.length}`}
+          action=""
+          className="grid grid-cols-[32%_32%_32%] place-content-center mt-5"
+        >
+          
+          {array.map(question=>{
+            return (
+              <>
+              <div className="my-1">
+                  <div className="mr-2">
+                    <label htmlFor="" className="text-xs">
+                      {question[0]}
+                    </label>
+                    <label htmlFor="" className="text-red-800">
+                      *
+                    </label>
+                  </div>
+                  <div className="grid grid-cols-[10%_80%]">
+                    <div>
+                      <div>
+                        <input type="radio" id={`no-${question[1]}`} name={`estado${question[1]}`} className="mr-2" />
+                        <label htmlFor="" className="text-xs">
+                          No
+                        </label>
+                      </div>
+                      <div>
+                        <input type="radio" id={`si-${question[1]}`} name={`estado${question[1]}`} className="mr-2" />
+                        <label htmlFor="" className="text-xs">
+                          Sí
+                        </label>
+                      </div>
+                    </div>
+                    <input
+                      id={`q${question[1]}`}
+                      type="text"
+                      className="bg-slate-200 rounded-full w-auto mb-1 mx-2 py-2 focus:outline-none focus:ring-1 focus:ring-rose-400 focus:border-transparent px-6"
+                    />
+                  </div>
+                </div>
+              </>
+            );
+          })}
+          
+        </form>
         <div className="grid grid-cols-2 my-auto">
           <div className="grid place-content-start ml-8">
             <button
@@ -182,14 +186,14 @@ const Contrasena = () => {
               Cancelar
             </button>
           </div>
-          <HelmetProvider>
+          <div className="grid place-content-end mr-8">
+            <HelmetProvider>
                 <Helmet>
-                      <script src="../../../scripts/step3.js"></script>
+                      <script src="../../../scripts/step2.js"></script>
                 </Helmet>
             </HelmetProvider>
-          <div className="grid place-content-end mr-8">
             <button
-              id="step3"
+              id='step2'
               aria-label="Continuar"
               className="bg-rose-400 text-white text-xl rounded-full px-4 py-2 mx-auto hover:bg-red-200"
             >
@@ -202,4 +206,4 @@ const Contrasena = () => {
   );
 };
 
-export default Contrasena;
+export default Patologias;
