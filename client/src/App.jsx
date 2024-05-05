@@ -23,9 +23,12 @@ import Favicon from "react-favicon";
 import EditarPerfil from "./pages/perfil/EditarPerfil";
 import Historial from "./pages/perfil/Historial";
 import Compras from "./components/ui/Compras";
-import Paquetes from "./pages/agendas/Paquetes";
-import Calendario from "./pages/agendas/Calendario";
+import Paquetes from "./pages/cita/Paquetes";
+import Calendario from "./pages/cita/Calendario";
 import Cita from "./pages/Cita";
+import ServiciosEstetica from "./components/ui/servicios/ServiciosEstetica";
+import ServiciosSpa from "./components/ui/servicios/ServiciosSpa";
+import AgendarServicios from "./components/ui/servicios/agendar/AgendarServicios";
 
 function App() {
     return (
@@ -54,6 +57,9 @@ function App() {
                     <Route path="/spa/agendar/paquetes" element={<Paquetes />} />
                     <Route path="/spa/agendar/calendario" element={<Calendario />} />
                     <Route path="/spa/agendar/" element={<Cita />} />
+                    <Route path="/spa/servicios/estetica" element={<ServiciosEstetica />} />
+                    <Route path="/spa/servicios/spa" element={<ServiciosSpa />} />
+                    <Route path="/spa/servicios/agendar-servicios" element={<AgendarServicios />} />
 
                     {/* Tests */}
                     <Route path="/test" element={<Test />} />

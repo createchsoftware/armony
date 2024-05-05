@@ -188,13 +188,13 @@ function Calendario() {
 
     return (
         <main className='flex  gap-0  w-[90%]'>
-            <section className='w-2/3 p-6 ring-1'>
+            <section className='w-2/3 p-6'>
                 {/* <Calendar onChange={onChange} value={value} /> */}
 
 
                 <LocalizationProvider dateAdapter={AdapterDayjs}>
                     <DateCalendar
-                        className='ring-1'
+                        className=''
                         defaultValue={initialValue}
                         loading={isLoading}
                         onMonthChange={handleMonthChange}
@@ -211,7 +211,7 @@ function Calendario() {
                 </LocalizationProvider>
 
             </section>
-            <section className='w-1/3 ring-1'>
+            <section className='w-1/3 '>
                 <h1 className='text-xl  text-[#036C65] text-center'>Selecciona tu especialista</h1>
                 <div className='flex justify-center gap-4 m-4'>
                     <button className='px-4 py-1 text-white rounded-xl bg-rose-400'>General</button>
