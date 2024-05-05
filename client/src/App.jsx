@@ -14,6 +14,7 @@ import PasswordReset from "./pages/spa/passwordReset";
 import SignUp from "./pages/spa/signUp";
 import ServiciosSpa from "./pages/spa/spaServicios";
 import ServiciosEstetica from "./pages/spa/esteticaServicios";
+import Agendar from "./pages/spa/agendar";
 import Favoritos from "./pages/perfil/ListaDeseo";
 import Test from "./components/ui/Test";
 import Favicon from "react-favicon";
@@ -34,6 +35,7 @@ function App() {
             path="/spa/serviciosEstetica"
             element={<ServiciosEstetica />}
           />
+          <Route path="/spa/agendar" element={<Agendar />} />
           <Route path="/perfil" element={<Perfil />} />
           <Route path="/perfil/informacion" element={<InformacionPersonal />} />
           <Route path="/perfil/seguridad" element={<Seguridad />} />

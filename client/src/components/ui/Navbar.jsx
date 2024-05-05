@@ -108,7 +108,7 @@ function Navbar() {
                     </a>
                   </li>
                   <li className="nav-menu-item">
-                    <a href="#" className="menu-link">
+                    <a href="/spa/agendar" className="menu-link">
                       Agendar
                     </a>
                   </li>
