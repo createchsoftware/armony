@@ -1,12 +1,12 @@
 import express from "express";
-import { enableConnect } from "../DB/connection.js";
+import { enableConnect } from "../db/connection.js";
 import {
   createSucursal,
   updateSucursal,
   readSucursalByAddr,
   readSucursalById,
   deleteSucursal,
-} from "../DB/query/querySucursal.js";
+} from "../db/query/querySucursal.js";
 
 // Router
 export const routerSucursal = express.Router();

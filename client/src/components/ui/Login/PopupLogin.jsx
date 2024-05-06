@@ -2,6 +2,7 @@ import user1 from "../../../../public/pictures/userCl.png";
 import gl from "../../../../public/pictures/googlelogo.png";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Popup from "reactjs-popup";
+import { Helmet, HelmetProvider } from "react-helmet-async";
 import PopupAdmin from "./PopupLoginAdmin";
 import PopupRegistro from "./PopupRegistrarse";
 import {
@@ -13,6 +14,7 @@ import {
 const ModalLogin = ({ actionElement }) => {
   return (
     <Popup trigger={actionElement} modal nested>
+      
       {(close) => (
         <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50 overflow-hidden">
           <div className="relative max-w-[470px] flex flex-col rounded-3xl bg-white bg-clip-border text-gray-700 shadow-md">
@@ -82,17 +84,28 @@ const ModalLogin = ({ actionElement }) => {
                   Recuerdame
                 </label>
               </div>
-            </form>
-            <button
-              className="bg-rose-400 text-white text-xl rounded-full px-4 py-2 mx-auto hover:bg-red-200"
-              aria-label="Iniciar Sesión"
-            >
-              Inicia Sesión
-            </button>
-            <div class="relative flex py-2 place-items-center mx-auto w-2/5">
-              <div class="flex-grow border-t border-gray-400"></div>
-              <span class="flex-shrink mx-4 text-gray-400">o</span>
-              <div class="flex-grow border-t border-gray-400"></div>
+              </form>
+
+              <HelmetProvider>
+                  <Helmet>
+                    <script src="../../../scripts/login.js"></script>
+                  </Helmet>
+              </HelmetProvider>
+
+              <button
+                type="button"
+                id="iniciar-sesion-fet"
+                className="bg-rose-400 text-white text-xl rounded-full px-4 py-2 mx-auto hover:bg-red-200"
+                aria-label="Iniciar Sesión"
+                >
+                   Inicia Sesión
+                </button>
+            
+            
+            <div className="relative flex py-2 place-items-center mx-auto w-2/5">
+              <div className="flex-grow border-t border-gray-400"></div>
+              <span className="flex-shrink mx-4 text-gray-400">o</span>
+              <div className="flex-grow border-t border-gray-400"></div>
             </div>
             <img src={gl} className="absolute size-6 bottom-28 left-36" />
             <button

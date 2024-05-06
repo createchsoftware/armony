@@ -1,7 +1,7 @@
 import express from "express";
-import { readClientesById } from "../DB/query/queryCliente.js";
-import { enableConnect } from "../DB/connection.js";
-import { createUser } from "../DB/query/queryUser.js";
+import { readClientesById } from "../db/query/queryCliente.js";
+import { enableConnect } from "../db/connection.js";
+import { createUser } from "../db/query/queryUser.js";
 
 // Router
 export const routerCliente = express.Router();

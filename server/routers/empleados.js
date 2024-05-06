@@ -1,12 +1,12 @@
 import express from "express";
-import { enableConnect } from "../DB/connection.js";
+import { enableConnect } from "../db/connection.js";
 import {
   createEmpleado,
   readEmpleadoById,
   readEmpleadoByNombre,
   updateEmpleado,
   deleteEmpleadoById,
-} from "../DB/query/queryEmpleado.js";
+} from "../db/query/queryEmpleado.js";
 
 // Router
 export const routerEmpleado = express.Router();

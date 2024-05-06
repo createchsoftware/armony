@@ -16,7 +16,7 @@ export const config = {
 export async function enableConnect() {
   try {
     const connection = await mysql.createConnection(config); // Creamos la conexion con la configuracion declarada anteriormente
-    await connection.query("USE armony;");
+    await connection.query("USE " + conexionDB.DATABASE + ";");
     console.log("CONNECT TO DATABASE!"); // Mesaje de exito de conexion
     return connection; // Retornamos la conexion
   } catch (err) {

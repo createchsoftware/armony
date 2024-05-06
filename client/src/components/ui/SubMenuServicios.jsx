@@ -9,7 +9,7 @@ function MenuServicios(){
                     </a>
                 </li>
                 <li className="menu-item-serv">
-                    <a href="#" className="menu-link-serv" id="estetica">
+                    <a href="/spa/estetica" className="menu-link-serv" id="estetica">
                         Estética
                     </a>
                 </li>

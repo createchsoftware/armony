@@ -7,21 +7,18 @@
   font-style: normal;
   font-weight: normal;
   src: url("../fuentes/abeatbyKaiRegular.otf");
-  /* Cambiar ../fuentes a ../fuentes durante desarrollo, quitar para comando npm run build */
 }
 @font-face {
   font-family: "Quinger";
   font-style: normal;
   font-weight: normal;
   src: url("../fuentes/Quinger.otf");
-  /* Cambiar ../fuentes a ../fuentes durante desarrollo, quitar para comando npm run build */
 }
 @font-face {
   font-family: "ILoveGlitter";
   font-style: normal;
   font-weight: normal;
   src: url("../fuentes/I\ Love\ Glitter\ -\ OTF.otf");
-  /* Cambiar ../fuentes a ../fuentes durante desarrollo, quitar para comando npm run build */
 }
 
 @font-face {
@@ -29,7 +26,6 @@
   font-style: normal;
   font-weight: normal;
   src: url("../fuentes/ABeeZee-Regular.ttf");
-  /* Cambiar ../fuentes a ../fuentes durante desarrollo, quitar para comando npm run build */
 }
 
 * {
@@ -122,7 +118,7 @@ body {
 .submenu-fondo, .submenu-fx{
   width: 100vw;
   height: 100vh;
-  top: 60px;
+  top: 55px;
   left: 0;
   right: 0;
   bottom: 0;
@@ -665,7 +661,7 @@ body {
     rgba(250, 208, 196, 1) 0%,
     rgba(255, 181, 167, 1) 100%
   );
-  color: rgb(3, 109, 99);
+  color: #036d63;
   border-top-right-radius: 60px;
   border-bottom-right-radius: 60px;
 }
@@ -761,7 +757,7 @@ body {
   font-size: 20px;
 }
 .cart-exit:hover {
-  color: rgb(236, 87, 102);
+  color: #ec5766;
 }
 
 .cart-quan {
@@ -770,7 +766,7 @@ body {
   font-size: 18px;
 }
 .cart-quan:hover {
-  color: rgb(255, 181, 167);
+  color: #ffb5a7;
 }
 
 .cart-photo {
@@ -857,6 +853,104 @@ body {
   border-radius: 10px;
 }
 
+/* ================== PAGINA SERVICIOS ESTETICA */
+/* .main-estetica {
+  width: 100%;
+  height: 100vh;
+  overflow: hidden;
+}
+.fondo-estetica{
+  width: 100%;
+  height: 100%;
+}
+.title-estetica {
+  font-family: "ILoveGlitter", "Arial";
+  position: absolute;
+  top: 80px;
+  z-index: 3;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 100px;
+  color: white;
+}
+.fx-estetica{
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(32, 141, 242, 0.2);
+  z-index: 2;
+}
+.cont-main-estetica{
+  position: absolute;
+  display: flex;
+  justify-content: space-between;
+  z-index: 3;
+  width: 100%;
+  top: 220px;
+  padding: 50px;
+}
+.more-estetica{
+  background-color: rgba(220, 222, 242, 0.2);
+  padding: 25px 35px;
+  border-radius: 25px;
+  width: 500px;
+  display: grid;
+}
+#vermas-estetica{
+  position: relative;
+  border-radius: 10px;
+  background-color: rgba(236, 87, 102, 1);
+  display: flex;
+  align-items: center;
+  padding: 10px 10px;
+  width: 190px;
+  justify-self: center;
+  transition: 0.25s ease;
+}
+#vermas-estetica:hover{
+  background-color: #ffb5a7;
+} 
+
+.spa-estetica{
+  background-color: rgba(220, 222, 242, 0.2);
+  padding: 25px 35px;
+  border-radius: 25px;
+  width: 500px;
+  display: grid;
+}
+#vermas-spa-estetica{
+  position: relative;
+  border-radius: 20px;
+  background-color: rgb(3, 109, 99);
+  display: flex;
+  align-items: center;
+  padding: 8px 20px;
+  width: 240px;
+  justify-self: center;
+  transition: 0.25s ease;
+  height: max-content;
+  margin-top: 40px;
+}
+#vermas-spa-estetica:hover{
+  background-color: rgb(69, 181, 156);
+}*/
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.loader {
+  border: 8px solid #f3f3f3; /* Color del borde */
+  border-top: 8px solid #3498db; /* Color del borde superior */
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  animation: spin 2s linear infinite; /* Duración, tipo de animación y repetición infinita */
+}
+
 /* ======================= RESPONSIVE */
 @media (max-width: 768px) {
   .header {
@@ -867,7 +961,7 @@ body {
     flex-direction: column;
     align-items: center;
     margin: 0;
-    background-color: rgba(236, 87, 102, 1);
+    background-color: #ec5766;
     position: fixed;
     left: 0;
     top: 60px;

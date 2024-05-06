@@ -1,4 +1,4 @@
-import React, { Fragment, useState } from 'react'
+import React, { Fragment, useEffect, useState } from 'react'
 //import { Dialog, Disclosure, Popover, Transition } from '@headlessui/react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBars, faCartShopping } from '@fortawesome/free-solid-svg-icons';
@@ -13,6 +13,7 @@ function Navbar( ) {
     const [servicios, setServicios] = useState(false);
     const [perfil, setPerfil] = useState(false);
     const [log, setLog] = useState(false); //<<< PARA EL INICIO DE SESION
+    const [usuario, setUsuario] = useState(false); //<<< PARA EL INICIO DE SESION
     const [items, setItems,] = useState(0);
 
     const toggleCart = () => {
@@ -31,15 +32,34 @@ function Navbar( ) {
         setPerfil(!perfil)
     };
 
-    //PROCESO DEL LOG IN
-    const LogIn = () => {
-        setLog(true)
+    async function recibido(){
+        const respuesta = await fetch('/api/logueado', {
+            method: "GET",
+            headers: {
+                "Content-Type":"application/json",
+            }
+        })
 
-    };
-    const LogOut = () => {
-        setLog(false)
+        if (!respuesta.ok) {
+           setLog(false);
+           setUsuario(null);
+        }
 
-    };
+        let respuestaJson = await respuesta.json();
+
+        if (respuestaJson.logueado == true) {
+            setLog(true);
+            setUsuario(respuestaJson.usuario);
+        }
+        else {
+            setLog(false);
+            setUsuario(null);
+        }
+    }
+
+    useEffect (() => {
+        recibido()
+    }, []);
 
     return (
         <>
@@ -87,20 +107,16 @@ function Navbar( ) {
                                         <a href="#" className="menu-link">
                                             Agendar
                                         </a>
-                                    </li><li className="nav-menu-item">
-                                        <a href="#" className="menu-link">
-                                            Membresías
-                                        </a>
                                     </li>
                                 </>
                             )}
                             <li className="nav-menu-item cursor-pointer">
                                 { log ? (
-                                    <a className="menu-link flex items-center" onClick={togglePerfil} >
-                                    <img src="../../../pictures/userCl.png" alt="" className='rounded-full w-10 h-10'/>
-                                    Usuario
+                                    <a className="menu-link flex items-center h-20" onClick={togglePerfil} >
+                                        <img src="../../../pictures/userCl.png" alt="" className='rounded-full w-10 h-10 mr-5'/>
+                                        {usuario}
                                     </a>  
-                                ):(
+                                ) : (
                                     <ModalLogin actionElement={
                                         <a href="#" className="menu-link menu-is">Inicia sesión</a>
                                     }/>

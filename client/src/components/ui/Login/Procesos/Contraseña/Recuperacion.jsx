@@ -40,7 +40,7 @@ const Recuperacion = () => {
           >
             Recuperación
           </a>
-          <div class="flex-grow border-t border-gray-400 pl-4 mx-0"></div>
+          <div className="flex-grow border-t border-gray-400 pl-4 mx-0"></div>
           <span className="">
             <FontAwesomeIcon
               style={{ fontSize: "16px", color: "#FFFFFF" }}
@@ -61,7 +61,7 @@ const Recuperacion = () => {
           >
             Verificación
           </a>
-          <div class="flex-grow border-t border-gray-400 pl-4 mx-0"></div>
+          <div className="flex-grow border-t border-gray-400 pl-4 mx-0"></div>
           <span className="">
             <FontAwesomeIcon
               style={{ fontSize: "16px", color: "#FFFFFF" }}
@@ -82,7 +82,7 @@ const Recuperacion = () => {
           >
             Nueva Contraseña
           </a>
-          <div class="flex-grow border-t border-gray-400 pl-4 mx-0"></div>
+          <div className="flex-grow border-t border-gray-400 pl-4 mx-0"></div>
           <span className="">
             <FontAwesomeIcon
               style={{ fontSize: "16px", color: "#FFFFFF" }}
@@ -125,10 +125,10 @@ const Recuperacion = () => {
             className="bg-slate-200 rounded-full w-96 mb-1 mt-2 mx-3 py-2 focus:outline-none focus:ring-1 focus:ring-rose-400 focus:border-transparent px-6"
           />
         </form>
-        <div class="relative flex py-2 place-items-center mx-auto w-2/5">
-          <div class="flex-grow border-t border-gray-400 pl-5 mx-0"></div>
-          <span class="flex-shrink mx-4 text-gray-400">o</span>
-          <div class="flex-grow border-t border-gray-400 pr-5 mx-0"></div>
+        <div className="relative flex py-2 place-items-center mx-auto w-2/5">
+          <div className="flex-grow border-t border-gray-400 pl-5 mx-0"></div>
+          <span className="flex-shrink mx-4 text-gray-400">o</span>
+          <div className="flex-grow border-t border-gray-400 pr-5 mx-0"></div>
         </div>
         <a href="" className="text-teal-700 text-center">
           Restablecer mediante teléfono

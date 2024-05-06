@@ -1,6 +1,6 @@
 import express from "express";
-import { enableConnect } from "../DB/connection.js";
-import { createCategoria } from "../DB/query/queryCategoria.js";
+import { enableConnect } from "../db/connection.js";
+import { createCategoria } from "../db/query/queryCategoria.js";
 
 export const routerCategoria = express.Router(); // Creamos router
 // Middleware
