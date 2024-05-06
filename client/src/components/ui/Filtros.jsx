@@ -97,7 +97,7 @@ export default function Filtros() {
     
 
     useEffect(() => {
-        fetch("http://localhost:4000/api/admin/productos/getProducts")
+        fetch("http://localhost:3000/api/admin/productos/getProducts")
         .then(response => response.json())  
         .then(data => {
             setFilteredProducts(data);  

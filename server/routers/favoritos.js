@@ -13,8 +13,9 @@ routerFavoritos.post('/addfavorito',async (req,res)=>{
 try{
 const data=req.body
     const conexion= await enableConnect()
-    addfavorito(conexion,data)
-    res.status(201).send({message:'Se anadio con exito'})
+    await addfavorito(conexion,data)
+    res.status(202).send({message:'Se anadio con exito'})
+    conexion.end()
 }catch(err){
 res.status(500).send({error: 'Hubo un problema',err})
 }
@@ -28,6 +29,7 @@ routerFavoritos.post('/delFavorito',async(req,res)=>{
     const conexion=await enableConnect()
      delFavorito(conexion,data)
     res.status(201).send({message:'Se elimino con exito'})
+
     }catch(err){
         res.status(500).send({error: 'Hubo un problema',err})
     }

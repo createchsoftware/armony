@@ -1,10 +1,53 @@
+import { useEffect,useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBasketShopping, faHandHoldingHeart, faBars, faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';
 import ContenedorProductos from '../../components/ui/ContenedorProductos';
+import { jwtDecode } from "jwt-decode";
 // ^^^ ICONOS PREPARADOS PARA EMPEZAR PAGINA DE "LISTA DE DESEOS"
 
 import Navbar from '../../components/ui/Navbar';
+/*
+const [filteredProducts, setFilteredProducts] = useState([])
+const [Uid,setUid]=useState(null)
 
+
+ useEffect(()=>{
+const getidUser=()=>{// aqui veificamos si hay una cookie con este nombre 
+const cookie=  obteneridCookie('Naruto_cookie')
+if(cookie){
+
+    const decode=jwtDecode(cookie)//aqui decodificaremos la cokie
+setUid(decode.user)
+}}
+getidUser()
+ },[])
+
+
+ const obteneridCookie=(namecookie)=>{ //en este metodo lo que hacemos es destructurar la cokie para 
+    //obtener el user y luego el id
+const cookies=document.cookie.split(';');
+for(let cokie of cookies){
+const [key,value]=cokie.split('=')
+if(key.trim()=== namecookie){
+    return value;//retornara el valor
+}
+}
+return null;
+ }
+
+useEffect(() => {
+    fetch(`http://localhost:3000/api/admin/favoritos/FavoritosbyId/${Uid}`)
+    .then(response => response.json())  
+    .then(data => {
+        setFilteredProducts(data);  
+    
+    })
+    .catch(error => {
+        console.log('error', error);
+    });
+}, []);
+
+*/
 function ListaDeseo() {
     return (
         <>

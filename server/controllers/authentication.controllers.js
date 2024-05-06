@@ -7,7 +7,7 @@ const regex_email = /.+@(gmail|hotmail|icloud|outlook)\.com/;
 const regex_usuarioID = /\d{1,5}/;
 
 
-
+ //let usuarioid=0;
 
 async function login(solicitud,respuesta){
 
@@ -59,6 +59,8 @@ async function login(solicitud,respuesta){
 
                         if(usuarioID_valido == true){
                             ingreso = results[0].pkIdUsuario;
+                            //usuarioid=ingreso;
+
                         } 
                         else {
                             ingreso = results[0].email;
@@ -102,6 +104,7 @@ async function login(solicitud,respuesta){
        }
        
    }
+
 }
 
 async function logout(solicitud,respuesta){
@@ -160,14 +163,7 @@ async function register(solicitud, respuesta){
                 // perfecto, el correo no existe
 
                 //clave cryptografica de la contraseña del usuario
-                let hashPassword = await bcryptjs.hash(contraseña, salt);  // la contraseña que vamos a guardar en nuestro usuario
-
-                consulta = 'INSERT INTO usuarios VALUES (null,?,?,?,?,?)';
-                parametros = [nombre,paterno,materno,email,hashPassword];
-
-                let [results] = solicitud.database.query(consulta, parametros)
-                
-                if (results.length > 0) {
+                let hashPassword = await bcryptjs.hash(contraseña, salt); 
                     /*
                       a diferencia de un select, que nos arroja un arreglo de objetos,
                       en un insert into, nos arroja un objeto, claro si nomas es asi, 
@@ -215,9 +211,6 @@ async function register(solicitud, respuesta){
         
     }
     
-}
-
-
 
 export const methods = {
     login,
