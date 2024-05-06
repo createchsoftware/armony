@@ -1,7 +1,7 @@
 import dotenv from 'dotenv';
 import jsonwebtoken from 'jsonwebtoken';
 import bcryptjs from 'bcryptjs';
-import CrearCuentaEmail from '../services/mail.service.js';
+import {methods as servicios} from "../services/mail.service.js";
 
 dotenv.config();
 
@@ -55,6 +55,8 @@ async function InsertUser(solicitud,respuesta,siguiente){
                     let parametros = [decodificada1.nombre,decodificada1.paterno,decodificada1.materno,decodificada1.correo,telefono_completo,hashPassword,1,decodificada1.imagen,decodificada1.calle,decodificada1.colonia,decodificada1.numero,decodificada1.codigo_postal,nacimiento]
     
     
+                    console.log(decodificada1);
+                    
                     // utilizamos una promesa para esperar que la funcion asincrona se termine
                 try{
     
@@ -129,7 +131,7 @@ async function InsertUser(solicitud,respuesta,siguiente){
     
                         let full_name = `${decodificada1.nombre} ${decodificada1.paterno} ${decodificada1.materno}`;
     
-                        let sending = await CrearCuentaEmail(decodificada1.correo,"token",full_name,id_usuario);
+                        let sending = await servicios.CrearCuentaEmail(decodificada1.correo,"token",full_name,id_usuario);
     
                         console.log(sending); // nos deberia imprimir la informacion acerca del envio
     

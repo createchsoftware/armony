@@ -18,10 +18,11 @@ async function logeado(solicitud, respuesta, siguiente){
 async function no_logeado(solicitud, respuesta, siguiente){
     let hizo_login = await revisar_cookie(solicitud);
     if(hizo_login == false) {
+        console.log("Feliz cumpleanos")
         return siguiente();
     }
     else{
-        return respuesta.redirect('/admin'); // si ya esta logueado que no lo deje entrar a register o login, que lo mande a admin
+        return respuesta.redirect('/'); // si ya esta logueado que no lo deje entrar a register o login, que lo mande a admin
     }
         
 }
@@ -53,40 +54,31 @@ async function verificar_cookie(solicitud,respuesta){
                 galleta = galleta.slice(14);  // 14 es la longitud del nombre
          
                 // El slice() es para cortar el nombre de la cookie, ya que no lo ocupamos para poder trabajar con ello
-                try{
+                
                     let decodificada = await jsonwebtoken.verify(galleta, process.env.JWT_SECRET);
-                    let consulta = "select * from usuario where pkIdUsuario = ?"
-                    let parametros = [decodificada.user]
 
 
-                    // utilizamos una promesa para esperar que la funcion asincrona se termine
-                    let resultadoConsulta = new Promise((resolve, reject) => {
-                        solicitud.database.query(consulta, parametros, (error, resultados) => {
-                            if (error){
-                                reject(error);
-                                respuesta.send({logueado:false});
+                    // // utilizamos una promesa para esperar que la funcion asincrona se termine
+                    // let resultadoConsulta = new Promise((resolve, reject) => {
+                    //     solicitud.database.query(consulta, parametros, (error, resultados) => {
+                    //         if (error){
+                    //             reject(error);
+                    //             respuesta.send({logueado:false});
                         
-                            }
-                            resolve(resultados);
-                        });
-                    });
+                    //         }
+                    //         resolve(resultados);
+                    //     });
+                    // });
 
-                    let resultados = await resultadoConsulta;
+                    // let resultados = await resultadoConsulta;
 
-                    if (resultados.length == 0){
-                        respuesta.send({logueado:false});
-                        
-                    }
-                    else {
-                        respuesta.send({logueado:true});
-                        
-                    }
+                
                     
-                }
-                catch(error){
-                    console.log("Hubo un error");
-                    respuesta.send({logueado:false});
-                }
+                    respuesta.send({logueado:true,nombre:decodificada.nombre,apellidoP:decodificada.paterno,apellidoM:decodificada.materno,email:decodificada.correo,telefono:decodificada.telefono,pass:decodificada.contraseña,imagen:decodificada.imagen,calle:decodificada.calle,clave:decodificada.user,colonia:decodificada.colonia,numero:decodificada.numero,codigoP:decodificada.postal,fechaNac:decodificada.nacimiento});
+                        
+                    
+                    
+                
         }
         else{
             console.log("la galleta naruto para iniciar sesion no existe");
@@ -113,13 +105,12 @@ async function revisar_cookie(solicitud){
         
         try{
             let decodificada = await jsonwebtoken.verify(galleta, process.env.JWT_SECRET);
-            let consulta = "select * from usuario where pkIdUsuario = ? or email = ?"
-            let parametros = [decodificada.user,decodificada.user]
+            let consulta = "select * from usuario where pkIdUsuario = ?";
 
 
             // utilizamos una promesa para esperar que la funcion asincrona se termine
             let resultadoConsulta = new Promise((resolve, reject) => {
-                solicitud.database.query(consulta, parametros, (error, resultados) => {
+                solicitud.database.query(consulta, decodificada.user, (error, resultados) => {
                     if (error)
                         reject(error);
                     resolve(resultados);

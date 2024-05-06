@@ -1,7 +1,7 @@
 import bcryptjs from 'bcryptjs';
 import JsonWebToken from 'jsonwebtoken';
 import dotenv from 'dotenv';
-import CrearCuentaEmail from '../services/mail.service.js';
+import {methods as servicios} from '../services/mail.service.js';
 
 dotenv.config()
 
@@ -77,6 +77,27 @@ async function login(solicitud,respuesta){
  
                         // console.log(sendingLog); // nos deberia imprimir la informacion acerca del envio
 
+                        let fecha = resultados[0].fechaNac;
+
+                        let year = fecha.getFullYear();
+                        let month = fecha.getMonth();
+                        let day = fecha.getDay();
+
+
+                        let dia = day.toString();;
+                        let mes = month.toString();
+                        if(day <= 10){
+                            dia = "0";
+                            dia+= day.toString();
+                        }
+                        if(month <=10){
+                            mes = "0";
+                            mes+= month.toString();
+                        }
+                        let año = year.toString();
+
+                        let fechaNacimiento = `${año}-${mes}-${dia}`;
+
 
 
                         let token = JsonWebToken.sign(
@@ -94,7 +115,7 @@ async function login(solicitud,respuesta){
                                 colonia:resultados[0].colonia,
                                 numero:resultados[0].numero,
                                 postal:resultados[0].codigoPostal,
-                                nacimiento:resultados[0].fechaNac
+                                nacimiento:fechaNacimiento
 
                             },
                             process.env.JWT_SECRET,

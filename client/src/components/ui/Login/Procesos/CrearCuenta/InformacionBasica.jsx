@@ -242,6 +242,62 @@ const InformacionBasica = () => {
                   className="bg-slate-200 rounded-full w-auto mb-1 mr-2 py-2 focus:outline-none focus:ring-1 focus:ring-rose-400 focus:border-transparent px-6"
                 />
               </div>
+              <div>
+                <label htmlFor="" className="text-sm">
+                  Calle
+                </label>
+                <label htmlFor="" className="text-red-800">
+                  *
+                </label>
+              </div>
+              <input
+                id="calle"
+                type="text"
+                placeholder="tu calle"
+                className="bg-slate-200 rounded-full w-[392px] mb-1 mx-0 py-2 focus:outline-none focus:ring-1 focus:ring-rose-400 focus:border-transparent px-6"
+              />
+              <div>
+                <label htmlFor="" className="text-sm">
+                  Colonia
+                </label>
+                <label htmlFor="" className="text-red-800">
+                  *
+                </label>
+              </div>
+              <input
+                id="colonia"
+                type="text"
+                placeholder="colonia"
+                className="bg-slate-200 rounded-full w-[392px] mb-1 mx-0 py-2 focus:outline-none focus:ring-1 focus:ring-rose-400 focus:border-transparent px-6"
+              />
+              <div>
+                <label htmlFor="" className="text-sm">
+                  Numero
+                </label>
+                <label htmlFor="" className="text-red-800">
+                  *
+                </label>
+              </div>
+              <input
+                id="numero"
+                type="text"
+                placeholder="numero de casa"
+                className="bg-slate-200 rounded-full w-[392px] mb-1 mx-0 py-2 focus:outline-none focus:ring-1 focus:ring-rose-400 focus:border-transparent px-6"
+              />
+              <div>
+                <label htmlFor="" className="text-sm">
+                  Codigo_postal
+                </label>
+                <label htmlFor="" className="text-red-800">
+                  *
+                </label>
+              </div>
+              <input
+                id="codigo_postal"
+                type="text"
+                placeholder="codigo postal"
+                className="bg-slate-200 rounded-full w-[392px] mb-1 mx-0 py-2 focus:outline-none focus:ring-1 focus:ring-rose-400 focus:border-transparent px-6"
+              />
             </div>
           </form>
 

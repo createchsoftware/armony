@@ -13,6 +13,7 @@ import Monedero from "./pages/perfil/Monedero";
 import Direcciones from "./pages/perfil/Direcciones";
 import Suscripciones from "./pages/perfil/Suscripciones";
 import Tarjetas from "./pages/perfil/Tarjetas";
+import EditarPerfil from "./pages/perfil/EditarPerfil";
 import Error from "./pages/Error";
 import PasswordReset from "./pages/spa/passwordReset";
 import SignUp from "./pages/spa/signUp";
@@ -41,6 +42,7 @@ function App() {
                     <Route path="/perfil/direcciones" element={<Direcciones />} />
                     <Route path="/perfil/suscripciones" element={<Suscripciones />} />
                     <Route path="/perfil/tarjetas" element={<Tarjetas />} />
+                    <Route path="/editar-perfil" element={<EditarPerfil />} />
                     <Route path="/favoritos" element={<Favoritos/>} />
                     <Route path="*" element={<Error />} />
                 </Routes>

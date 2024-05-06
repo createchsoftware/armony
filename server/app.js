@@ -13,6 +13,7 @@ const _dirname = path.dirname(fileURLToPath(import.meta.url));
 import {methods as authentication} from './controllers/authentication.controllers.js';
 import {methods as authorization} from './middlewares/authorization.js';
 import {methods as createAccount} from "./controllers/createAccount.controllers.js";
+import {methods as editarPerfil} from "./controllers/editarPerfil.controllers.js";
 import InsertUser from "./middlewares/register.js";
 
 
@@ -67,21 +68,17 @@ app.get("/api/admin", (req, res) => {
 });
 
 
-app.get('/spa/signUp/Patologia',(solicitud,respuesta)=>{
-  // if(solicitud.headers.cookie == undefined){
-  //   respuesta.send({megumin_cookie:false});
-  // }
-  // let galleta1 = galletas.find(galleta => galleta.startsWith("Megumin_cookie="));
-
+app.get('/spa/signUp/Patologia', authorization.no_logeado, (solicitud,respuesta)=>{
   respuesta.sendFile(path.join(_dirname,'../client/dist/index.html'));
 });
 
 
-app.get("/spa/signUp",(req,res)=>{
+//usar le middleware para verificar si no esta logueado
+app.get("/spa/signUp", authorization.no_logeado, (req,res)=>{
   res.sendFile(path.join(_dirname,'../client/dist/index.html'));
 });
 
-app.get("/spa/signUp/Contrasena",(req,res)=>{
+app.get("/spa/signUp/Contrasena",authorization.no_logeado, (req,res)=>{
   res.sendFile(path.join(_dirname,'../client/dist/index.html'));
 });
 
@@ -120,6 +117,57 @@ app.post('/api/step1', createAccount.paso1);
 app.post('/api/step2', createAccount.paso2);
 
 app.post('/api/step3', createAccount.paso3);
+
+
+app.post('/api/editarPerfil', editarPerfil.change_data);
+
+
+
+
+
+
+//seccion del perfil
+        app.get('/perfil', authorization.logeado, (solicitud,respuesta)=>{
+          respuesta.sendFile(path.join(_dirname ,'../client/dist/index.html'))
+        })
+
+        app.get('/perfil/informacion', authorization.logeado, (solicitud,respuesta)=>{
+          respuesta.sendFile(path.join(_dirname ,'../client/dist/index.html'))
+        })
+
+        app.get('/perfil/seguridad', authorization.logeado, (solicitud,respuesta)=>{
+          respuesta.sendFile(path.join(_dirname ,'../client/dist/index.html'))
+        })
+
+
+        app.get('/perfil/monedero', authorization.logeado, (solicitud,respuesta)=>{
+          respuesta.sendFile(path.join(_dirname ,'../client/dist/index.html'))
+        })
+
+
+        app.get('/perfil/direcciones', authorization.logeado, (solicitud,respuesta)=>{
+          respuesta.sendFile(path.join(_dirname ,'../client/dist/index.html'))
+        })
+        
+        app.get('/perfil/suscripciones', authorization.logeado, (solicitud,respuesta)=>{
+          respuesta.sendFile(path.join(_dirname ,'../client/dist/index.html'))
+        })
+
+        app.get('/perfil/tarjetas', authorization.logeado, (solicitud,respuesta)=>{
+          respuesta.sendFile(path.join(_dirname ,'../client/dist/index.html'))
+        })
+
+        app.get('/editar-perfil', authorization.logeado, (solicitud,respuesta)=>{
+          respuesta.sendFile(path.join(_dirname ,'../client/dist/index.html'))
+        })
+
+
+
+
+
+
+
+
 
 
 

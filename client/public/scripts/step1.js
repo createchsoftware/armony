@@ -13,6 +13,10 @@ document.getElementById('step-one').addEventListener('click',async ()=>{
      let dia = document.getElementById('day');
      let mes = document.getElementById('month');
      let año = document.getElementById('year');
+     let calle = document.getElementById('calle');
+     let postal = document.getElementById('codigo_postal');
+     let numero = document.getElementById('numero');
+     let colonia = document.getElementById('colonia');
 
 
     const respuesta = await fetch("http://localhost:3000/api/step1",{
@@ -31,7 +35,11 @@ document.getElementById('step-one').addEventListener('click',async ()=>{
                 dia:[dia.value,dia.id],
                 mes:[mes.value,mes.id],
                 año:[año.value,año.id],
-                imagen:"imagen.png"
+                imagen:["imagen.png","imagen"],
+                calle:[calle.value,calle.id],
+                colonia:[colonia.value,colonia.id],
+                codigo_postal:[postal.value,postal.id],
+                numero:[numero.value,numero.id]
             })
     })  // fin del fetch
 
