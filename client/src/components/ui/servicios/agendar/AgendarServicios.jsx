@@ -95,7 +95,6 @@ const AgendarServicios = () => {
   const [color1, setColor1] = useState("#6FC4B3");
   const [color2, setColor2] = useState("#FFE9EE");
   const [color3, setColor3] = useState("#FFE9EE");
-  let i = 0;
 
   const toggleService = (index) => {
     if (index === 1) {
@@ -114,12 +113,6 @@ const AgendarServicios = () => {
       setColor1("#FFE9EE");
       setToggleService(index);
     }
-    i++;
-    if (i > 20) {
-      console.log("Secreto bien secreto");
-    }
-    console.log(i);
-    console.log(index);
   };
   return (
     <div className="w-[50rem] h-[33rem] mx-auto">
