@@ -64,7 +64,7 @@ function Servicio({ nombre, descripcion, precio, imagen, rating, isFavorite }) {
             value={rating}
             unratedColor="amber"
             ratedColor="amber"
-            readonly
+            readOnly
           />
           <button className=" transition-all duration-300  m-auto hover:bg-[#036C65] hover:ring-2 hover:[#036C65] hover:ring-offset-1 group relative inline-flex h-10 items-center justify-center overflow-hidden rounded-lg border-2 bg-[#EB5765] px-6 font-[abeatbykai] text-neutral-200">
             <span>Ver más</span>
