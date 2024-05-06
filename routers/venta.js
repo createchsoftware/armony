@@ -1,6 +1,6 @@
 import { conexion } from "../DB/connection.js";
 import express from "express";
-import { createVenta } from "../DB/query/queryVenta.js";
+import { createVenta, createVentaCita } from "../DB/query/queryVenta.js";
 
 // Router
 export const routerVenta = express.Router();
@@ -25,6 +25,17 @@ routerVenta.post("/create", async (req, res) => {
       estado: req.body.estado,
       fechaEntregado: req.body.fechaEntregado,
     }); // Parametros para el procedimiento
+  } catch (err) {
+    // Capturamos errores
+    console.error(messageError, err); // Mostramos errores por consola
+    res.status(500).send(messageError, err); // Enviamos un error INTERNAL SERVER ERROR y el error al navegador
+  }
+});
+
+routerVenta.post("/cita", async (req, res) => {
+  try {
+    let {} = req.body;
+    const resultado = await createVentaCita(conexion, {});
   } catch (err) {
     // Capturamos errores
     console.error(messageError, err); // Mostramos errores por consola

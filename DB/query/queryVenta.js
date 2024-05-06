@@ -1,5 +1,6 @@
 import { endConnection } from "../connection.js";
 import mysql from "mysql2";
+import { createCitas } from "./queryCitas.js";
 
 const messageError = "Ha ocurrido un error al ejecutar el query: ";
 
@@ -21,6 +22,37 @@ export async function createVenta(connection, data) {
     const [rows, fields] = await connection.query(query); // Ejecutamos el query y almacenamos el resultado
     endConnection(); // Cierre de conexion
     return rows; // retornamos las filas afectadas
+  } catch (err) {
+    // Capturamos errores de ejecucion de query
+    console.error(messageError, err); // Mostramos errores por consola
+  }
+}
+
+// CREATE VENTA DE CITA
+export async function createVentaCita(connection, data) {
+  try {
+    let insertVentaCita =
+      "CALL addVentaCitaOnline(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+    let query = mysql.format(insertVentaCita, [
+      data.pilar,
+      data.idCliente,
+      data.name,
+      data.phone,
+      data.tarjeta,
+      data.monedero,
+      data.estadoPago,
+      data.servicio,
+      data.idEmp,
+      data.fechaPago,
+      data.horaPago,
+      data.descr,
+      data.subTotal,
+      data.total,
+      data.impuesto,
+    ]);
+    const [rows, fields] = await connection.query(query);
+    endConnection();
+    return rows;
   } catch (err) {
     // Capturamos errores de ejecucion de query
     console.error(messageError, err); // Mostramos errores por consola
