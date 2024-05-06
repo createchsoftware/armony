@@ -109,5 +109,9 @@ document.getElementById('guardar').addEventListener('click', async()=>{
             correo.placeholder = "El correo que quieres ingresar no es valido";
             correo.style.backgroundColor = 'yellow';
         }
+
+        if(respuestaJson.redirect){
+            window.location.href = respuestaJson.redirect;
+        }
     }
 })

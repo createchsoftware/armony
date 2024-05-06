@@ -248,6 +248,9 @@ async function change_data(solicitud,respuesta){
                             solicitud.database.query(ultima_consulta, C_L, async (error, resultados) => {
                                 if(error)
                                     throw error;
+
+                                let contraseña_bytes = resultados[0].pass; // contrasena en bytes desde la base de datos
+                                let contraseña_no_bytes = contraseña_bytes.toString('utf-8'); //contrasena en string, pero sigue estando encriptada
                                 
 
                                 // toca levantar una nueva Naruto_cookie
@@ -290,9 +293,11 @@ async function change_data(solicitud,respuesta){
                                     let full_name = `${resultados[0].nombre} ${resultados[0].apellidoP} ${resultados[0].apellidoM}`;
                                     let sending = await servicios.Cambio_de_correo("token",full_name,resultados[0].pkIdUsuario,resultados[0].email);
                                     console.log(sending);
+                                    respuesta.send({redirect:'/perfil/informacion'});
                                 }
                                 else{
-                                    console.log("como no modificaste tu correo, no se te mandara nada")
+                                    console.log("como no modificaste tu correo, no se te mandara nada");
+                                    respuesta.send({redirect:'/perfil/informacion'});
                                 }
 
 
