@@ -121,58 +121,58 @@ export default function Filtros() {
   };
 
   /*useEffect(() => {
-        let updatedProducts = products;
+      let updatedProducts = products;
 
-        // Filtrar por búsqueda
-        if (search) {
-            updatedProducts = updatedProducts.filter(product =>
-                product.title.toLowerCase().includes(search.toLowerCase())
-            );
-        }
+      // Filtrar por búsqueda
+      if (search) {
+          updatedProducts = updatedProducts.filter(product =>
+              product.title.toLowerCase().includes(search.toLowerCase())
+          );
+      }
 
-        // Aplicar filtros adicionales
-        // filters.forEach(filter => {
-        //     filter.options.forEach(option => {
-        //         if (option.checked) {
-        //             updatedProducts = updatedProducts.filter(product =>
-        //                 product[filter.id] === option.value
-        //             );
-        //         }
-        //     });
-        // });
+      // Aplicar filtros adicionales
+      // filters.forEach(filter => {
+      //     filter.options.forEach(option => {
+      //         if (option.checked) {
+      //             updatedProducts = updatedProducts.filter(product =>
+      //                 product[filter.id] === option.value
+      //             );
+      //         }
+      //     });
+      // });
 
-        // Filtrar por categoría
-        if (category && category.name) {
-            updatedProducts = updatedProducts.filter(product =>
-                product.category === category.name
-            );
-        }
+      // Filtrar por categoría
+      if (category && category.name) {
+          updatedProducts = updatedProducts.filter(product =>
+              product.category === category.name
+          );
+      }
 
-        // Ordenar productos
-        switch (sortOption.name) {
-            case 'Más Popular':
-                break;
-            case 'Mejor Calificado':
-                updatedProducts = [...updatedProducts].sort((a, b) => b.rating - a.rating);
-                break;
-            case 'Más Nuevo':
-                updatedProducts = [...updatedProducts].sort((a, b) => new Date(b.date) - new Date(a.date));
-                break;
-            case 'Precio: Bajo a Alto':
-                updatedProducts = [...updatedProducts].sort((a, b) => a.price - b.price);
-                break;
-            case 'Precio: Alto a Bajo':
-                updatedProducts = [...updatedProducts].sort((a, b) => b.price - a.price);
-                break;
-            default:
-                break;
-        }
+      // Ordenar productos
+      switch (sortOption.name) {
+          case 'Más Popular':
+              break;
+          case 'Mejor Calificado':
+              updatedProducts = [...updatedProducts].sort((a, b) => b.rating - a.rating);
+              break;
+          case 'Más Nuevo':
+              updatedProducts = [...updatedProducts].sort((a, b) => new Date(b.date) - new Date(a.date));
+              break;
+          case 'Precio: Bajo a Alto':
+              updatedProducts = [...updatedProducts].sort((a, b) => a.price - b.price);
+              break;
+          case 'Precio: Alto a Bajo':
+              updatedProducts = [...updatedProducts].sort((a, b) => b.price - a.price);
+              break;
+          default:
+              break;
+      }
 
-        setFilteredProducts(updatedProducts);
-    }, [search, category, sortOption, products]);*/
+      setFilteredProducts(updatedProducts);
+  }, [search, category, sortOption, products]);*/
 
   return (
-    <div className="mt-6 bg-[#F4F1ED]">
+    <div className="bg-[#F4F1ED]">
       <div>
         {/* Mobile filter dialog */}
         <Transition.Root show={mobileFiltersOpen} as={Fragment}>
@@ -281,7 +281,7 @@ export default function Filtros() {
                                       defaultValue={option.value}
                                       type="checkbox"
                                       defaultChecked={option.checked}
-                                      className="w-4 h-4 text-indigo-600 border-gray-300 rounded focus:ring-indigo-500"
+                                      className="w-4 h-4 border-gray-300 rounded text-rose-400 focus:ring-rose-400 "
                                     />
                                     <label
                                       htmlFor={`filter-mobile-${section.id}-${optionIdx}`}
@@ -376,12 +376,12 @@ export default function Filtros() {
                 <FunnelIcon className="w-5 h-5" aria-hidden="true" />
               </button>
             </div>
-            <div className="max-w-md mx-auto border-1 border-gray-400">
-              <div className="relative flex items-center w-full h-12 rounded-lg focus-within:shadow-lg bg-white overflow-hidden border-b-2 border-gray">
-                <div className="grid place-items-center h-full w-12 text-gray-300">
+            <div className="max-w-md mx-auto border-gray-400 border-1">
+              <div className="relative flex items-center w-full h-12 overflow-hidden bg-white border-b-2 rounded-lg focus-within:shadow-lg border-gray">
+                <div className="grid w-12 h-full text-gray-300 place-items-center">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
-                    className="h-6 w-6"
+                    className="w-6 h-6"
                     fill="none"
                     viewBox="0 0 24 24"
                     stroke="currentColor"
@@ -396,7 +396,7 @@ export default function Filtros() {
                 </div>
 
                 <input
-                  className="peer h-full w-full outline-none text-sm text-gray-700 pr-2"
+                  className="w-full h-full pr-2 text-sm text-gray-700 outline-none peer"
                   type="text"
                   id="search"
                   placeholder="Buscar..."
@@ -457,7 +457,7 @@ export default function Filtros() {
                                   defaultValue={option.value}
                                   type="checkbox"
                                   defaultChecked={option.checked}
-                                  className="w-4 h-4 text-indigo-600 border-gray-300 rounded focus:ring-indigo-500"
+                                  className="w-4 h-4 border-gray-300 rounded text-rose-400 focus:ring-rose-400 "
                                 />
                                 <label
                                   htmlFor={`filter-${section.id}-${optionIdx}`}
@@ -539,8 +539,8 @@ export default function Filtros() {
                           <Rating
                             className="m-auto"
                             value={0}
-                            unratedColor="amber"
-                            ratedColor="amber"
+                            unratedColor="red"
+                            ratedColor="blue"
                           />
                         </div>
                       </Disclosure.Panel>
@@ -589,7 +589,7 @@ export default function Filtros() {
                                   defaultValue={option.value}
                                   type="checkbox"
                                   defaultChecked={option.checked}
-                                  className="w-4 h-4 text-indigo-600 border-gray-300 rounded focus:ring-indigo-500"
+                                  className="w-4 h-4 border-gray-300 rounded text-rose-400 focus:ring-rose-400 "
                                 />
                                 <label
                                   htmlFor={`filter-${section.id}-${optionIdx}`}
