@@ -122,7 +122,7 @@ const AgendarServicios = () => {
     console.log(index);
   };
   return (
-    <div className="w-[50rem] h-[33rem] mx-auto">
+    <div className="w-[50rem] h-[33rem] mb-6 mx-auto">
       <div className="w-[16rem] mx-auto">
         <h1 className="mb-2 text-xl font-bold text-center">
           Selecciona tus servicios

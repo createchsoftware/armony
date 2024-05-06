@@ -6,6 +6,73 @@ import ContenedorProductos from './ContenedorProductos'
 //import { products } from '../../data/productos.json'
 import Rating from '@mui/material/Rating';
 
+const products = [
+    {
+        id: 1,
+        nombre: 'Producto 1',
+        precio: 100,
+        categoria: 'Cosméticos',
+        marca: 'POND’S',
+        valoracion: 4,
+        masVendido: false,
+        imagen: 'https://tailwindui.com/img/ecommerce-images/category-page-04-image-card-01.jpg',
+        descripcion: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit',
+    },
+    {
+        id: 2,
+        nombre: 'Producto 2',
+        precio: 200,
+        categoria: 'Facial',
+        marca: 'Hidra Sense',
+        valoracion: 3,
+        masVendido: true,
+        imagen: 'https://tailwindui.com/img/ecommerce-images/category-page-04-image-card-02.jpg',
+        descripcion: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit',
+    },
+    {
+        id: 3,
+        nombre: 'Producto 3',
+        precio: 300,
+        categoria: 'Crema',
+        marca: 'Savasana',
+        valoracion: 2,
+        masVendido: false,
+        imagen: 'https://tailwindui.com/img/ecommerce-images/category-page-04-image-card-03.jpg',
+        descripcion: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit',
+    },
+    {
+        id: 4,
+        nombre: 'Producto 4',
+        precio: 400,
+        categoria: 'Spray',
+        marca: 'CeraVe',
+        valoracion: 1,
+        masVendido: true,
+        imagen: 'https://tailwindui.com/img/ecommerce-images/category-page-04-image-card-04.jpg',
+        descripcion: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit',
+    },
+    {
+        id: 5,
+        nombre: 'Producto 5',
+        precio: 500,
+        categoria: 'Serúm',
+        marca: 'Cetaphil',
+        valoracion: 5,
+        masVendido: false,
+        imagen: 'https://tailwindui.com/img/ecommerce-images/category-page-04-image-card-05.jpg',
+        descripcion: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit',
+    },
+    {
+        id: 6,
+        nombre: 'Producto 6',
+        precio: 600,
+        categoria: 'Depilación',
+        marca: 'Mizon',
+        valoracion: 4,
+        masVendido: true,
+        imagen: 'https://tailwindui.com/img/ecommerce-images/category-page-04-image-card-06.jpg',
+        descripcion: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit',
+    },]
 
 
 function classNames(...clases) {
@@ -35,31 +102,7 @@ const subCategories = [
     },
 ]
 
-
 const filters = [
-    // {
-    //     id: 'precio',
-    //     name: 'Precio',
-    //     options: [
-    //         { value: 'white', label: 'Blanco', checked: false },
-    //         { value: 'beige', label: 'Beige', checked: false },
-    //         { value: 'blue', label: 'Azul', checked: true },
-    //         { value: 'brown', label: 'Café', checked: false },
-    //         { value: 'green', label: 'Verde', checked: false },
-    //         { value: 'purple', label: 'Morado', checked: false },
-    //     ],
-    // },
-    // {
-    //     id: 'valoraciones',
-    //     name: 'Valoraciones',
-    //     options: [
-    //         { value: 'new', label: 'Nuevos', checked: false },
-    //         { value: 'sale', label: 'Ofertas', checked: false },
-    //         { value: 'travel', label: 'Próximamente', checked: true },
-    //         { value: 'organization', label: 'Organización', checked: false },
-    //         { value: 'accessories', label: 'Accesorios', checked: false },
-    //     ],
-    // },
     {
         id: 'Marca',
         name: 'Marca',
@@ -72,26 +115,70 @@ const filters = [
             { value: 'mizon', label: 'Mizon', checked: false },
             { value: 'gojo', label: 'Gojo', checked: false },
         ],
-    },
-    // {
-    //     id: 'masVendidos',
-    //     name: 'Más Vendidos',
-    //     options: [
-    //         { value: '2l', label: '2L', checked: false },
-    //         { value: '6l', label: '6L', checked: false },
-    //         { value: '12l', label: '12L', checked: false },
-    //         { value: '18l', label: '18L', checked: false },
-    //         { value: '20l', label: '20L', checked: false },
-    //         { value: '40l', label: '40L', checked: true },
-    //     ],
-    // },
-]
+    },]
+
+
+// const filters = [
+// {
+//     id: 'precio',
+//     name: 'Precio',
+//     options: [
+//         { value: 'white', label: 'Blanco', checked: false },
+//         { value: 'beige', label: 'Beige', checked: false },
+//         { value: 'blue', label: 'Azul', checked: true },
+//         { value: 'brown', label: 'Café', checked: false },
+//         { value: 'green', label: 'Verde', checked: false },
+//         { value: 'purple', label: 'Morado', checked: false },
+//     ],
+// },
+// {
+//     id: 'valoraciones',
+//     name: 'Valoraciones',
+//     options: [
+//         { value: 'new', label: 'Nuevos', checked: false },
+//         { value: 'sale', label: 'Ofertas', checked: false },
+//         { value: 'travel', label: 'Próximamente', checked: true },
+//         { value: 'organization', label: 'Organización', checked: false },
+//         { value: 'accessories', label: 'Accesorios', checked: false },
+//     ],
+// },
+// {
+//     id: 'Marca',
+//     name: 'Marca',
+//     options: [
+//         { value: 'ponds', label: 'POND’S', checked: false },
+//         { value: 'hidraSense', label: 'Hidra Sense', checked: false },
+//         { value: 'savasana', label: 'Savasana', checked: false },
+//         { value: 'ceraVe', label: 'CeraVe', checked: false },
+//         { value: 'cetaphil', label: 'Cetaphil', checked: false },
+//         { value: 'mizon', label: 'Mizon', checked: false },
+//         { value: 'gojo', label: 'Gojo', checked: false },
+//     ],
+// },
+// {
+//     id: 'masVendidos',
+//     name: 'Más Vendidos',
+//     options: [
+//         { value: '2l', label: '2L', checked: false },
+//         { value: '6l', label: '6L', checked: false },
+//         { value: '12l', label: '12L', checked: false },
+//         { value: '18l', label: '18L', checked: false },
+//         { value: '20l', label: '20L', checked: false },
+//         { value: '40l', label: '40L', checked: true },
+//     ],
+// },
+// ]
+
 export default function Filtros() {
     const [mobileFiltersOpen, setMobileFiltersOpen] = useState(false)
     const [sortOption, setSortOption] = useState(sortOptions[0])
-    const [filteredProducts, setFilteredProducts] = useState([])
-    const [category, setCategory] = useState()
+    const [filteredProducts, setFilteredProducts] = useState(products)
+    const [category, setCategory] = useState('')
     const [search, setSearch] = useState('');
+    const [marca, setMarca] = useState('');
+    const [rating, setRating] = useState(0);
+
+
     //    const [filter, setFilter] = useState();
 
     //useEffect from api call
@@ -119,60 +206,63 @@ export default function Filtros() {
         setSearch(e.target.value)
     }
 
-    /*useEffect(() => {
+    useEffect(() => {
         let updatedProducts = products;
 
         // Filtrar por búsqueda
         if (search) {
             updatedProducts = updatedProducts.filter(product =>
-                product.title.toLowerCase().includes(search.toLowerCase())
+                product.nombre.toLowerCase().includes(search.toLowerCase())
             );
         }
 
-        // Aplicar filtros adicionales
-        // filters.forEach(filter => {
-        //     filter.options.forEach(option => {
-        //         if (option.checked) {
-        //             updatedProducts = updatedProducts.filter(product =>
-        //                 product[filter.id] === option.value
-        //             );
-        //         }
-        //     });
-        // });
 
-        // Filtrar por categoría
-        if (category && category.name) {
+        // Filtro por categoría
+        if (category) {
             updatedProducts = updatedProducts.filter(product =>
-                product.category === category.name
+                product.categoria === category
+            );
+        }
+
+        // Filtro por marca
+        if (marca) {
+            updatedProducts = updatedProducts.filter(product =>
+                product.marca === marca
+            );
+        }
+
+        // Filtro por valoración
+        if (rating > 0) {
+            updatedProducts = updatedProducts.filter(product =>
+                product.valoracion >= rating
             );
         }
 
         // Ordenar productos
         switch (sortOption.name) {
-            case 'Más Popular':
+            case 'Más Relevante':
                 break;
-            case 'Mejor Calificado':
-                updatedProducts = [...updatedProducts].sort((a, b) => b.rating - a.rating);
-                break;
-            case 'Más Nuevo':
+            case 'Más Reciente':
                 updatedProducts = [...updatedProducts].sort((a, b) => new Date(b.date) - new Date(a.date));
                 break;
+            case 'Top Ventas':
+                updatedProducts = [...updatedProducts].sort((a, b) => b.masVendido - a.masVendido);
+                break;
             case 'Precio: Bajo a Alto':
-                updatedProducts = [...updatedProducts].sort((a, b) => a.price - b.price);
+                updatedProducts = [...updatedProducts].sort((a, b) => a.precio - b.precio);
                 break;
             case 'Precio: Alto a Bajo':
-                updatedProducts = [...updatedProducts].sort((a, b) => b.price - a.price);
+                updatedProducts = [...updatedProducts].sort((a, b) => b.precio - a.precio);
                 break;
             default:
                 break;
         }
 
         setFilteredProducts(updatedProducts);
-    }, [search, category, sortOption, products]);*/
+    }, [search, category, sortOption, products, marca, rating]);
 
     return (
         <div className="bg-[#F4F1ED]">
-
             <div>
                 {/* Mobile filter dialog */}
                 <Transition.Root show={mobileFiltersOpen} as={Fragment}>
@@ -218,7 +308,7 @@ export default function Filtros() {
                                             {subCategories.map((category) => (
                                                 <li key={category.name}>
                                                     <a href={category.href}
-                                                        onClick={() => { setCategory(category) }}
+                                                        onClick={() => { setCategory(category.label) }}
                                                         className="block px-2 py-3 cursor-pointer">
                                                         {category.name}
                                                     </a>
@@ -362,7 +452,7 @@ export default function Filtros() {
 
 
 
-                    <section aria-labelledby="products-heading" className="pt-6 pb-24">
+                    <section aria-labelledby="products-heading " className="pt-6 pb-24">
                         <h2 id="products-heading" className="sr-only">
                             Productos
                         </h2>
@@ -402,6 +492,7 @@ export default function Filtros() {
                                                                 <label
                                                                     htmlFor={`filter-${section.id}-${optionIdx}`}
                                                                     className="ml-3 text-sm text-gray-600"
+                                                                    onClick={() => { setCategory(option.label) }}
                                                                 >
                                                                     {option.label}
                                                                 </label>
@@ -462,7 +553,7 @@ export default function Filtros() {
                                             <Disclosure.Panel className="pt-6">
                                                 <div className="space-y-4">
 
-                                                    <Rating className='m-auto' value={0} unratedColor="red" ratedColor="blue" />
+                                                    <Rating className='m-auto' onClick={setRating(rating)} value={rating} unratedColor="red" ratedColor="blue" />
 
                                                 </div>
                                             </Disclosure.Panel>
@@ -502,6 +593,7 @@ export default function Filtros() {
                                                                 <label
                                                                     htmlFor={`filter-${section.id}-${optionIdx}`}
                                                                     className="ml-3 text-sm text-gray-600"
+                                                                    onClick={() => { setMarca(option.label) }}
                                                                 >
                                                                     {option.label}
                                                                 </label>

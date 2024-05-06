@@ -17,8 +17,11 @@ import { Link } from 'react-router-dom';
 
 import Paquetes from './cita/Paquetes';
 import Calendario from './cita/Calendario';
+import Pago from '../components/ui/Pago';
+import Agenda from '../components/ui/Agenda';
+import Servicios from '../components/ui/servicios/agendar/AgendarServicios';
 
-const steps = ['Servicios', 'Especialista', 'Agenda', 'Pago', 'Confirmación'];
+const steps = ['Servicios', 'Paquetes', 'Especialista', 'Agenda', 'Pago', 'Confirmación'];
 
 export default function Cita() {
     const navigate = useNavigate();
@@ -56,7 +59,8 @@ export default function Cita() {
     };
 
     const handleCancel = () => {
-        navigate('/spa/servicios');
+        setActiveStep(0);
+        setCompleted({});
     };
 
     const handleStep = (step) => () => {
@@ -76,11 +80,13 @@ export default function Cita() {
     };
 
     const stepComponents = [
-        <Paquetes key={0} />,
-        <Calendario key={1} />,
-        <div key={2}>Agenda</div>,
-        <div key={3}>Pago</div>,
-        <div key={4}>Confirmación</div>
+        <Servicios key={0} />,
+        <Paquetes key={1} />,
+        <Calendario key={2} />,
+        <Pago key={3} />,
+        <Agenda key={4} />,
+        <div key={5}>En proceso</div>,
+        <div key={6}>QR</div>,
     ];
 
     return (
