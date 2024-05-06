@@ -1,5 +1,6 @@
 import user1 from "../../../../../../public/pictures/userGuest.png";
 import camara from "../../../../../../public/pictures/camara.png";
+import Pasos from "../../../PasosDeProcesos.jsx";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   fa1,
@@ -9,6 +10,7 @@ import {
   faCircle,
   faAngleLeft,
 } from "@fortawesome/free-solid-svg-icons";
+import PasosDeProcesos from "../../../PasosDeProcesos.jsx";
 
 const InformacionBasica = () => {
   return (
@@ -20,98 +22,14 @@ const InformacionBasica = () => {
         <h1 className="mx-auto p-5 text-rose-400 text-3xl">
           Crear cuenta nueva
         </h1>
-        <div className="grid grid-cols-[50px_auto_20px_50px_auto_20px_50px_auto_20px_50px_auto] place-items-center px-5 mx-auto">
-          <span className="">
-            <FontAwesomeIcon
-              style={{ fontSize: "16px", color: "#FFFFFF" }}
-              icon={fa1}
-              className="relative left-6 bottom-2"
-            />
-            <FontAwesomeIcon
-              style={{ fontSize: "36px", color: "#036C65" }}
-              icon={faCircle}
-            ></FontAwesomeIcon>
-          </span>
-          <a
-            href=""
-            style={{
-              fontFamily: "ABeeZee",
-              color: "#036C65",
-            }}
-            className="text-base mx-2"
-          >
-            Información Básica
-          </a>
-          <div className="flex-grow border-t border-gray-400 pl-4 mx-0"></div>
-          <span className="">
-            <FontAwesomeIcon
-              style={{ fontSize: "16px", color: "#FFFFFF" }}
-              icon={fa2}
-              className="relative left-6 bottom-2"
-            />
-            <FontAwesomeIcon
-              style={{ fontSize: "36px" }}
-              icon={faCircle}
-            ></FontAwesomeIcon>
-          </span>
-          <a
-            href=""
-            style={{
-              fontFamily: "ABeeZee",
-            }}
-            className="text-base mx-1"
-          >
-            Patologías
-          </a>
-          <div className="flex-grow border-t border-gray-400 pl-4 mx-0"></div>
-          <span className="">
-            <FontAwesomeIcon
-              style={{ fontSize: "16px", color: "#FFFFFF" }}
-              icon={fa3}
-              className="relative left-6 bottom-2"
-            />
-            <FontAwesomeIcon
-              style={{ fontSize: "36px" }}
-              icon={faCircle}
-            ></FontAwesomeIcon>
-          </span>
-          <a
-            href=""
-            style={{
-              fontFamily: "ABeeZee",
-            }}
-            className="text-base mx-1"
-          >
-            Contraseña
-          </a>
-          <div className="flex-grow border-t border-gray-400 pl-4 mx-0"></div>
-          <span className="">
-            <FontAwesomeIcon
-              style={{ fontSize: "16px", color: "#FFFFFF" }}
-              icon={fa4}
-              className="relative left-6 bottom-2"
-            />
-            <FontAwesomeIcon
-              style={{ fontSize: "36px" }}
-              icon={faCircle}
-            ></FontAwesomeIcon>
-          </span>
-          <a
-            href=""
-            style={{
-              fontFamily: "ABeeZee",
-            }}
-            className="text-base mx-1"
-          >
-            Confirmación
-          </a>
-        </div>
-        <div className="absolute mt-5">
-          <a className="ml-3">
-            <FontAwesomeIcon style={{ fontSize: "22px" }} icon={faAngleLeft} />{" "}
-            Regresar
-          </a>
-        </div>
+        <Pasos
+          props={{
+            paso1: "Información Básica",
+            paso2: "Patologías",
+            paso3: "Contraseña",
+            paso4: "Confirmación",
+          }}
+        />
         <div className="grid grid-cols-[55%_auto] ml-10">
           <form action="" className="mx-auto">
             <div className="grid grid-cols-1">

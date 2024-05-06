@@ -1,4 +1,5 @@
 import user1 from "../../../../../../public/pictures/userCl.png";
+import Pasos from "../../../PasosDeProcesos.jsx";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   fa1,
@@ -19,92 +20,14 @@ const Recuperacion = () => {
         <h1 className="mx-auto p-7 text-rose-400 text-4xl">
           Restablecer contraseña
         </h1>
-        <div className="grid grid-cols-[50px_auto_20px_50px_auto_20px_50px_auto_20px_50px_auto] place-items-center px-5 mx-auto">
-          <span className="">
-            <FontAwesomeIcon
-              style={{ fontSize: "16px", color: "#FFFFFF" }}
-              icon={fa1}
-              className="relative left-6 bottom-2"
-            />
-            <FontAwesomeIcon
-              style={{ fontSize: "36px", color: "#036C65" }}
-              icon={faCircle}
-            ></FontAwesomeIcon>
-          </span>
-          <a
-            href=""
-            style={{
-              fontFamily: "ABeeZee",
-              color: "#036C65",
-            }}
-            className="text-base mx-2"
-          >
-            Recuperación
-          </a>
-          <div className="flex-grow border-t border-gray-400 pl-4 mx-0"></div>
-          <span className="">
-            <FontAwesomeIcon
-              style={{ fontSize: "16px", color: "#FFFFFF" }}
-              icon={fa2}
-              className="relative left-6 bottom-2"
-            />
-            <FontAwesomeIcon
-              style={{ fontSize: "36px" }}
-              icon={faCircle}
-            ></FontAwesomeIcon>
-          </span>
-          <a
-            href=""
-            style={{
-              fontFamily: "ABeeZee",
-            }}
-            className="text-base mx-1"
-          >
-            Verificación
-          </a>
-          <div className="flex-grow border-t border-gray-400 pl-4 mx-0"></div>
-          <span className="">
-            <FontAwesomeIcon
-              style={{ fontSize: "16px", color: "#FFFFFF" }}
-              icon={fa3}
-              className="relative left-6 bottom-2"
-            />
-            <FontAwesomeIcon
-              style={{ fontSize: "36px" }}
-              icon={faCircle}
-            ></FontAwesomeIcon>
-          </span>
-          <a
-            href=""
-            style={{
-              fontFamily: "ABeeZee",
-            }}
-            className="text-base mx-1"
-          >
-            Nueva Contraseña
-          </a>
-          <div className="flex-grow border-t border-gray-400 pl-4 mx-0"></div>
-          <span className="">
-            <FontAwesomeIcon
-              style={{ fontSize: "16px", color: "#FFFFFF" }}
-              icon={fa4}
-              className="relative left-6 bottom-2"
-            />
-            <FontAwesomeIcon
-              style={{ fontSize: "36px" }}
-              icon={faCircle}
-            ></FontAwesomeIcon>
-          </span>
-          <a
-            href=""
-            style={{
-              fontFamily: "ABeeZee",
-            }}
-            className="text-base mx-1"
-          >
-            Confirmación
-          </a>
-        </div>
+        <Pasos
+          props={{
+            paso1: "Recuperación",
+            paso2: "Verificación",
+            paso3: "Nueva Contraseña",
+            paso4: "Confirmación",
+          }}
+        />
         <div className="absolute mt-5">
           <a className="ml-3">
             <FontAwesomeIcon style={{ fontSize: "22px" }} icon={faAngleLeft} />{" "}
