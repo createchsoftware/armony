@@ -4,28 +4,9 @@ import React, { useState } from "react";
 import Popup from "reactjs-popup";
 import Login from "./PopupLogin";
 import InputContrasena from "../InputContrasena.jsx";
-import {
-  faAngleLeft,
-  faEye,
-  faEyeSlash,
-  faCircleXmark,
-} from "@fortawesome/free-solid-svg-icons";
+import { faAngleLeft, faCircleXmark } from "@fortawesome/free-solid-svg-icons";
 
 const ModalLoginAdmin = ({ actionElement }) => {
-  /*const [password, setPassword] = useState("");
-  const [type, setType] = useState("password");
-  const [icon, setIcon] = useState(faEyeSlash);
-
-  const toggleEye = () => {
-    if (type === "password") {
-      setIcon(faEye);
-      setType("text");
-    } else {
-      setIcon(faEyeSlash);
-      setType("password");
-    }
-  };
-*/
   return (
     <Popup trigger={actionElement} modal nested>
       {(close) => (
@@ -79,21 +60,15 @@ const ModalLoginAdmin = ({ actionElement }) => {
                 <label htmlFor="pass" className="pt-3">
                   Contraseña
                 </label>
-                <InputContrasena props={{ 
-                  texto: "Ingresa tu Contraseña", 
-                  class: "bg-slate-200 rounded-full mb-3 mt-2 py-3 w-[22rem] md:w-[25rem] focus:outline-none focus:ring-1 focus:ring-[#036C65] focus:border-transparent px-6",
-                  classEye: "relative -bottom-[2.5rem] md:-bottom-[2.75rem] left-[15rem] md:left-[17rem]", 
-                }} />
-                {/*<a className="relative -bottom-[2.5rem] md:-bottom-[2.75rem] left-[15rem] md:left-[17rem]">
-                  <FontAwesomeIcon id="eye" icon={icon} onClick={toggleEye} />
-                </a>
-                <input
-                  className="bg-slate-200 rounded-full mb-3 mt-2 py-3 w-[22rem] md:w-[25rem] focus:outline-none focus:ring-1 focus:ring-[#036C65] focus:border-transparent px-6"
-                  type={type}
-                  id="pass"
-                  name="pass"
-                  placeholder="Ingresa tu Contraseña"
-              />*/}
+                <InputContrasena
+                  props={{
+                    texto: "Ingresa tu Contraseña",
+                    class:
+                      "bg-slate-200 rounded-full mb-3 mt-2 py-3 w-[22rem] md:w-[25rem] focus:outline-none focus:ring-1 focus:ring-[#036C65] focus:border-transparent px-6",
+                    classEye:
+                      "relative -bottom-[2.5rem] md:-bottom-[2.75rem] left-[15rem] md:left-[17rem]",
+                  }}
+                />
               </div>
             </form>
             <button

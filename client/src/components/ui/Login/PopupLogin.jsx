@@ -6,11 +6,7 @@ import { Helmet, HelmetProvider } from "react-helmet-async";
 import PopupAdmin from "./PopupLoginAdmin";
 import PopupRegistro from "./PopupRegistrarse";
 import InputContrasena from "../InputContrasena.jsx";
-import {
-  faAngleLeft,
-  faEye,
-  faEyeSlash,
-} from "@fortawesome/free-solid-svg-icons";
+import { faAngleLeft } from "@fortawesome/free-solid-svg-icons";
 
 const ModalLogin = ({ actionElement }) => {
   return (
@@ -63,21 +59,15 @@ const ModalLogin = ({ actionElement }) => {
                 <label htmlFor="pass" className="pt-3">
                   Contraseña
                 </label>
-                <InputContrasena props={{ 
-                  texto: "Ingresa tu Contraseña",
-                  class: "bg-slate-200 rounded-full mb-3 mt-2 py-3 w-[22rem] md:w-[25rem] focus:outline-none focus:ring-1 focus:ring-[#EB5765] focus:border-transparent px-6", 
-                  classEye: "relative -bottom-[2.5rem] md:-bottom-[2.75rem] left-[15rem] md:left-[17rem]", 
-                }} />
-                {/*<a className="relative -bottom-[2.5rem] md:-bottom-[2.75rem] left-[15rem] md:left-[17rem]">
-                  <FontAwesomeIcon id="eye" icon={faEyeSlash} />
-                </a>
-                <input
-                  className="bg-slate-200 rounded-full mb-3 mt-2 py-3 w-[22rem] md:w-[25rem] focus:outline-none focus:ring-1 focus:ring-[#EB5765] focus:border-transparent px-6"
-                  type="password"
-                  id="pass"
-                  name="pass"
-                  placeholder="Ingresa tu Contraseña"
-              />*/}
+                <InputContrasena
+                  props={{
+                    texto: "Ingresa tu Contraseña",
+                    class:
+                      "bg-slate-200 rounded-full mb-3 mt-2 py-3 w-[22rem] md:w-[25rem] focus:outline-none focus:ring-1 focus:ring-[#EB5765] focus:border-transparent px-6",
+                    classEye:
+                      "relative -bottom-[2.5rem] md:-bottom-[2.75rem] left-[15rem] md:left-[17rem]",
+                  }}
+                />
                 <div>
                   <input
                     type="checkbox"

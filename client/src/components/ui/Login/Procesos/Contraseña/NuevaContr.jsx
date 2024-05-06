@@ -9,7 +9,6 @@ import {
   faCircle,
   faAngleLeft,
 } from "@fortawesome/free-solid-svg-icons";
-import { text } from "@fortawesome/fontawesome-svg-core";
 
 const NuevaContr = () => {
   return (
@@ -124,19 +123,15 @@ const NuevaContr = () => {
             </label>
           </div>
           <div className="relative">
-            <InputContrasena props={{
-              texto: "Ingresa tu nueva contraseña", 
-              class: "bg-slate-200 rounded-full w-96 mb-5 mt-2 mx-3 py-2 focus:outline-none focus:ring-1 focus:ring-rose-400 focus:border-transparent px-6",
-              classEye: "absolute justify-end left-[22.75rem] top-[1rem]",
-            }} />
+            <InputContrasena
+              props={{
+                texto: "Ingresa tu nueva contraseña",
+                class:
+                  "bg-slate-200 rounded-full w-96 mb-5 mt-2 mx-3 py-2 focus:outline-none focus:ring-1 focus:ring-rose-400 focus:border-transparent px-6",
+                classEye: "absolute justify-end left-[22.75rem] top-[1rem]",
+              }}
+            />
           </div>
-
-          {/*<input
-            id="email"
-            type="text"
-            placeholder="Ingresa tu nueva contraseña"
-            className="bg-slate-200 rounded-full w-96 mb-5 mt-2 mx-3 py-2 focus:outline-none focus:ring-1 focus:ring-rose-400 focus:border-transparent px-6"
-          />*/}
           <div className="my-auto">
             <label htmlFor="">Confirmar contraseña</label>
             <label htmlFor="" className="text-red-800">
@@ -144,18 +139,15 @@ const NuevaContr = () => {
             </label>
           </div>
           <div className="relative">
-            <InputContrasena props={{
-              texto: "Vuelve a ingresar tu nueva contraseña", 
-              class: "bg-slate-200 rounded-full w-96 mb-5 mt-2 mx-3 py-2 focus:outline-none focus:ring-1 focus:ring-rose-400 focus:border-transparent px-6",
-              classEye: "absolute justify-end left-[22.75rem] top-[1rem]",
-            }} />
+            <InputContrasena
+              props={{
+                texto: "Vuelve a ingresar tu nueva contraseña",
+                class:
+                  "bg-slate-200 rounded-full w-96 mb-5 mt-2 mx-3 py-2 focus:outline-none focus:ring-1 focus:ring-rose-400 focus:border-transparent px-6",
+                classEye: "absolute justify-end left-[22.75rem] top-[1rem]",
+              }}
+            />
           </div>
-          {/*<input
-            id="email"
-            type="text"
-            placeholder="Vuelve a ingresar tu nueva contraseña"
-            className="bg-slate-200 rounded-full w-96 mb-5 mt-2 mx-3 py-2 focus:outline-none focus:ring-1 focus:ring-rose-400 focus:border-transparent px-6"
-        />*/}
         </form>
         <div className="grid grid-cols-2 my-auto">
           <div className="grid place-content-start ml-8">
