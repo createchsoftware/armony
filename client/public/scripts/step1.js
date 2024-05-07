@@ -53,7 +53,7 @@ document.getElementById('step-one').addEventListener('click',async ()=>{
 
     if(respuestaJson.faltantes){
         let arreglo = respuestaJson.faltantes
-        for(indice in arreglo){
+        for(let indice in arreglo){
            let temporal = document.getElementById(arreglo[indice])
            temporal.placeholder = "no llenaste este campo";
            temporal.style.backgroundColor = 'orange';
@@ -63,7 +63,7 @@ document.getElementById('step-one').addEventListener('click',async ()=>{
 
     if(respuestaJson.invalidos){
         let arreglo = respuestaJson.invalidos
-        for(indice in arreglo){
+        for(let indice in arreglo){
            let temporal = document.getElementById(arreglo[indice])
            temporal.placeholder = "llenaste incorrectamente este campo";
            temporal.style.backgroundColor = 'red';

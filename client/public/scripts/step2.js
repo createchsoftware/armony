@@ -45,7 +45,7 @@ document.getElementById('step2').addEventListener('click', async ()=>{
 
     if(respuestaJson.vacios){
         let arreglo = respuestaJson.vacios
-        for(indice in arreglo){
+        for(let indice in arreglo){
            let temporal = document.getElementById(arreglo[indice])
            temporal.placeholder = "no contestaste";
            temporal.style.backgroundColor = 'orange';
@@ -55,7 +55,7 @@ document.getElementById('step2').addEventListener('click', async ()=>{
 
     if(respuestaJson.incorrectos){
         let arreglo = respuestaJson.incorrectos
-        for(indice in arreglo){
+        for(let indice in arreglo){
            let temporal = document.getElementById(arreglo[indice])
            temporal.placeholder = "Se mas conciso";
            temporal.style.backgroundColor = 'red';

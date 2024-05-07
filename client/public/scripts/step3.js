@@ -48,7 +48,7 @@ document.getElementById('step3').addEventListener('click',async ()=>{
 
         let arreglo = respuestaJson.invalidas;
         let texto = "Te falta";
-        for(i in arreglo){
+        for(let i in arreglo){
             texto=texto+" "+arreglo[i].toString();
         }
         contraseña.value='';

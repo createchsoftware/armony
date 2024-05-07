@@ -59,20 +59,20 @@ const Recuperacion = () => {
         </a>
         <div className="grid grid-cols-2 my-auto">
           <div className="grid place-content-start ml-8">
-            <button
+          <a href="/"><button
               aria-label="Cancelar"
               className="bg-white text-rose-400 text-xl rounded-full px-4 py-2 mx-auto hover:bg-red-50 ring-2 ring-rose-400"
             >
               Cancelar
-            </button>
+            </button></a>
           </div>
           <div className="grid place-content-end mr-8">
-            <button
+          <a href="/spa/resetPassword/Verificacion"><button
               aria-label="Continuar"
               className="bg-rose-400 text-white text-xl rounded-full px-4 py-2 mx-auto hover:bg-red-200"
             >
               Continuar
-            </button>
+            </button></a>
           </div>
         </div>
       </div>

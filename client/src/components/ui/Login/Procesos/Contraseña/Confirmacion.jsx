@@ -113,12 +113,12 @@ const NuevaContr = () => {
           </h2>
           <h2 className="text-gray-500">¡No olvides tu contraseña!</h2>
         </div>
-        <button
+        <a href="/"><button
           aria-label="Finalizar"
           className="w-36 bg-rose-400 text-white text-xl rounded-full px-4 py-2 mx-auto my-10 hover:bg-red-200"
         >
           Finalizar
-        </button>
+        </button></a>
       </div>
     </div>
   );

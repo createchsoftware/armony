@@ -128,6 +128,8 @@ async function paso1(solicitud,respuesta){
 
             let [fields] = await solicitud.database.query(mysql.format(consulta,[correo[0]]))
 
+            console.log(fields);
+
                 if(fields.length > 0 ){
                   respuesta.send({correo_ya_existente:true});
                 }
@@ -235,7 +237,7 @@ async function paso2(solicitud,respuesta){
               if(campos[indice][1] == 1){
                 //significa que contestaron que si
 
-                //comprobar que hayan insertado algo valido no mames
+                //comprobar que hayan insertado algo valido
                 let insercion_valida = regex_descripcion.test(campos[indice][0]);
 
                 if(insercion_valida == false){
@@ -289,8 +291,6 @@ async function paso2(solicitud,respuesta){
 
               // el usuario podra continuar con el apartado patologias
               respuesta.send({redirect:"/spa/signUp/Contrasena"}); 
-              
-
             }
 
           }
@@ -388,8 +388,14 @@ async function paso3(solicitud,respuesta){
                     // genero la cookie
                     respuesta.cookie("Rem_cookie",token,galleta_register);
               
+                    
+              
+              respuesta.clearCookie('Megumin_cookie', { path: '/' });
+              respuesta.clearCookie('Nakano_Itsuki', { path: '/' });
+
+
                     // el usuario podra continuar con el apartado patologias
-                    respuesta.send({redirect:"/spa/resetPassword",logueado:true}); 
+                    respuesta.send({redirect:"/spa/signUp/Confirmacion",logueado:true}); 
 
                   }
                   

@@ -1,6 +1,5 @@
 import user1 from "../../../../../../public/pictures/userGuest.png";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import InputContrasena from "../../../InputContrasena.jsx";
 import {
   fa1,
   fa2,
@@ -41,7 +40,7 @@ const Contrasena = () => {
           >
             Información Básica
           </a>
-          <div className="flex-grow border-t border-gray-400 pl-4 mx-0"></div>
+          <div class="flex-grow border-t border-gray-400 pl-4 mx-0"></div>
           <span className="">
             <FontAwesomeIcon
               style={{ fontSize: "16px", color: "#FFFFFF" }}
@@ -62,7 +61,7 @@ const Contrasena = () => {
           >
             Patologías
           </a>
-          <div className="flex-grow border-t border-[#036C65] pl-4 mx-0"></div>
+          <div class="flex-grow border-t border-gray-400 pl-4 mx-0"></div>
           <span className="">
             <FontAwesomeIcon
               style={{ fontSize: "16px", color: "#FFFFFF" }}
@@ -70,7 +69,7 @@ const Contrasena = () => {
               className="relative left-6 bottom-2"
             />
             <FontAwesomeIcon
-              style={{ fontSize: "36px", color: "#036C65" }}
+              style={{ fontSize: "36px" }}
               icon={faCircle}
             ></FontAwesomeIcon>
           </span>
@@ -78,13 +77,12 @@ const Contrasena = () => {
             href=""
             style={{
               fontFamily: "ABeeZee",
-              color: "#036C65",
             }}
             className="text-base mx-1"
           >
             Contraseña
           </a>
-          <div className="flex-grow border-t border-gray-400 pl-4 mx-0"></div>
+          <div class="flex-grow border-t border-gray-400 pl-4 mx-0"></div>
           <span className="">
             <FontAwesomeIcon
               style={{ fontSize: "16px", color: "#FFFFFF" }}
@@ -136,34 +134,24 @@ const Contrasena = () => {
                   *
                 </label>
               </div>
-              <div className="relative">
-                <InputContrasena
-                  props={{
-                    texto: "Ingresa tu Contraseña",
-                    class:
-                      "bg-slate-200 rounded-full w-[365px] mb-3 mt-2 py-2 focus:outline-none focus:ring-1 focus:ring-rose-400 focus:border-transparent px-6",
-                    classEye:
-                      "absolute top-[2.5rem] md:top-[1rem] left-[15rem] md:left-[20.75rem]",
-                  }}
-                />
-              </div>
+              <input
+                id="contraseña"
+                type="text"
+                placeholder="Ingresa tu nueva contraseña"
+                className="bg-slate-200 rounded-full w-[365px] mb-3 mt-2 py-2 focus:outline-none focus:ring-1 focus:ring-rose-400 focus:border-transparent px-6"
+              />
               <div>
                 <label htmlFor="">Confirmar contraseña</label>
                 <label htmlFor="" className="text-red-800">
                   *
                 </label>
               </div>
-              <div className="relative">
-                <InputContrasena
-                  props={{
-                    texto: "Ingresa tu Contraseña",
-                    class:
-                      "bg-slate-200 rounded-full w-[365px] mb-3 mt-2 py-2 focus:outline-none focus:ring-1 focus:ring-rose-400 focus:border-transparent px-6",
-                    classEye:
-                      "absolute top-[2.5rem] md:top-[1rem] left-[15rem] md:left-[20.75rem]",
-                  }}
-                />
-              </div>
+              <input
+                id="nueva-contraseña"
+                type="text"
+                placeholder="Vuelve a ingresar tu nueva contraseña"
+                className="bg-slate-200 rounded-full w-[365px] mb-3 mt-2 py-2 focus:outline-none focus:ring-1 focus:ring-rose-400 focus:border-transparent px-6"
+              />
             </form>
           </div>
         </div>
@@ -195,6 +183,7 @@ const Contrasena = () => {
           </div>
           <div className="grid place-content-end mr-8">
             <button
+              id="step3"
               aria-label="Continuar"
               className="bg-rose-400 text-white text-xl rounded-full px-4 py-2 mx-auto hover:bg-red-200"
             >

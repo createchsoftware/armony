@@ -247,8 +247,15 @@ async function register(solicitud, respuesta){
         }
 
 
+        async function logout(solicitud,respuesta){
+            await respuesta.clearCookie("Naruto_cookie");
+            await respuesta.redirect('/');
+        }
+        
+
 
 export const methods = {
     login,
+    logout,
     register
 }

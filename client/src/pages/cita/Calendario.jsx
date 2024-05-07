@@ -153,9 +153,9 @@ function Calendario() {
     const especialistas = [
         {
             id: 1,
-            nombre: 'Dr. Juan Pérez',
+            nombre: 'Dra. Ana Martínez',
             especialidad: 'Dermatólogo',
-            imagen: 'https://cdn.pixabay.com/photo/2016/11/18/19/07/happy-1836445_960_720.jpg',
+            imagen: '/pictures/empleadaFoto1.png',
             experiencia: '10 años',
             areas: ['Dermatología', 'Cirugía', 'Estética'],
             calificacion: 5
@@ -164,38 +164,29 @@ function Calendario() {
             id: 2,
             nombre: 'Dra. María López',
             especialidad: 'Nutricionista',
-            imagen: 'https://cdn.pixabay.com/photo/2016/11/18/19/07/happy-1836445_960_720.jpg',
+            imagen: '/pictures/empleadaFoto2.png',
             experiencia: '5 años',
             areas: ['Nutrición', 'Dietas', 'Salud'],
             calificacion: 4
         },
         {
             id: 3,
-            nombre: 'Dr. Carlos Ramírez',
+            nombre: 'Dra. Claudia Pérez',
             especialidad: 'Pediatra',
-            imagen: 'https://cdn.pixabay.com/photo/2016/11/18/19/07/happy-1836445_960_720.jpg',
+            imagen: '/pictures/empleadaFoto3.png',
             experiencia: '15 años',
             areas: ['Pediatría', 'Cuidados', 'Salud'],
             calificacion: 5
         },
         {
             id: 4,
-            nombre: 'Dra. Ana Martínez',
+            nombre: 'Dra. Liliana Ponce',
             especialidad: 'Ginecóloga',
-            imagen: 'https://cdn.pixabay.com/photo/2016/11/18/19/07/happy-1836445_960_720.jpg',
+            imagen: '/pictures/empleadaFoto4.png',
             experiencia: '8 años',
             areas: ['Ginecología', 'Salud', 'Cuidados'],
             calificacion: 4
-        },
-        {
-            id: 5,
-            nombre: 'Dr. José González',
-            especialidad: 'Cardiólogo',
-            imagen: 'https://cdn.pixabay.com/photo/2016/11/18/19/07/happy-1836445_960_720.jpg',
-            experiencia: '12 años',
-            areas: ['Cardiología', 'Salud', 'Cuidados'],
-            calificacion: 5
-        },]
+        }]
 
     return (
         <main className='flex  gap-0  w-[90%]'>

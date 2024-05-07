@@ -120,7 +120,7 @@ const ModalLogin = ({ actionElement }) => {
               <h2 className="mr-5 justify-self-end">¿No tienes cuenta?</h2>
             </div>
             <div className="grid grid-cols-2 mb-5 text-sm md:text-base text-[#036C65]">
-              <a href="/spa/resetPassword" className="ml-7 justify-self-start">
+              <a href="/spa/resetPassword/Recuperacion" className="ml-7 justify-self-start">
                 Restablecer contraseña
               </a>
               <PopupRegistro

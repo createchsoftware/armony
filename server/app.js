@@ -73,6 +73,8 @@ app.post('/api/login',authentication.login);  //verificar que el usuario hizo lo
 
 app.get('/api/logueado',authorization.verificar_cookie);
 
+app.get('/api/logout',authentication.logout); 
+
 app.post('/api/step1', createAccount.paso1);
 
 app.post('/api/step2', createAccount.paso2);
