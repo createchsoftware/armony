@@ -273,7 +273,7 @@ async function change_data(solicitud,respuesta){
 
 
 
-                                if(buzon.length > 0 &&   buzon!=fields[0].email){
+                                if(buzon.length > 0 &&   buzon==fields[0].email){
                                     //toca mandar correo
                                     let full_name = `${fields[0].nombre} ${fields[0].apellidoP} ${fields[0].apellidoM}`;
                                     let sending = await servicios.Cambio_de_correo("token",full_name,fields[0].pkIdUsuario,fields[0].email);

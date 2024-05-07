@@ -109,6 +109,10 @@ async function InsertUser(solicitud,respuesta,siguiente){
                         let sending = await servicios.CrearCuentaEmail(decodificada1.correo,"token",full_name,id_usuario);
     
                         console.log(sending); // nos deberia imprimir la informacion acerca del envio
+
+                        respuesta.clearCookie('Megumin_cookie', { path: '/' });
+                        respuesta.clearCookie('Nakano_Itsuki', { path: '/' });
+                        respuesta.clearCookie('Rem_cookie', { path: '/' });
     
                         return siguiente();
                     

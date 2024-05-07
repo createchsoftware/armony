@@ -313,7 +313,7 @@ async function paso3(solicitud,respuesta){
     }
     else{
       let galletas = solicitud.headers.cookie.split("; ");
-      let galleta1 = galletas.find(galleta => galleta.startsWith("Naruto_cookie="));
+      let galleta1 = galletas.find(galleta => galleta.startsWith("Megumin_cookie="));
       let galleta2 = galletas.find(galleta => galleta.startsWith("Nakano_Itsuki="));
 
       if(galleta1){
@@ -334,7 +334,6 @@ async function paso3(solicitud,respuesta){
             let regex_Mayuscula = /[A-ZÁ-ÚÑ]/;
             let regex_minuscula = /[a-zá-úñ]/;
             let regex_mayor = /\w{20,}/;
-            let regex_menor = /\w{1,8}/;
             
             if(regex_numero.test(contraseña)==false){
               arreglo_regex.push("un numero");

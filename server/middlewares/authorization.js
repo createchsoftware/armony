@@ -84,33 +84,34 @@ async function revisar_cookie(solicitud){
     }
     else{
         let galletas = solicitud.headers.cookie.split("; ");
-        let galleta = galletas.find(galleta => galleta.startsWith("Naruto_cookie=")).slice(14);
+        let galleta = galletas.find(galleta => galleta.startsWith("Naruto_cookie="));
          
-          // El slice() es para cortar el nombre de la cookie, ya que no lo ocupamos para poder trabajar con ello
-        
-        try{
-            let decodificada = await jsonwebtoken.verify(galleta, process.env.JWT_SECRET);
-            let consulta = "select * from usuario where pkIdUsuario = ?";
+        if(galleta){
+
+            galleta = galleta.slice(14);  
+
+                let decodificada = await jsonwebtoken.verify(galleta, process.env.JWT_SECRET);
+                let consulta = "select * from usuario where pkIdUsuario = ?";
 
 
-            // utilizamos una promesa para esperar que la funcion asincrona se termine
-            let resultadoConsulta = new Promise(async (resolve, reject) => {
-                let [fields] = await solicitud.database.query(mysql.format(consulta, [decodificada.user]))
-                    resolve(fields);
-            });
+                // utilizamos una promesa para esperar que la funcion asincrona se termine
+                let resultadoConsulta = new Promise(async (resolve, reject) => {
+                    let [fields] = await solicitud.database.query(mysql.format(consulta, decodificada.user))
+                        resolve(fields);
+                    });
 
-            let resultados = await resultadoConsulta;
+                let resultados = await resultadoConsulta;
 
-            if (resultados.length == 0)
-                return false;
-            else 
-                return true;
-        
+                if (resultados.length == 0)
+                    return false;
+                else 
+                    return true;
+
         }
-        catch(error){
-            console.log("Hubo un error");
+        else{
             return false;
         }
+          // El slice() es para cortar el nombre de la cookie, ya que no lo ocupamos para poder trabajar con ello
      
     }
 

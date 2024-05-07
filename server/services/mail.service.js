@@ -4,6 +4,7 @@ import dotenv from 'dotenv';
 dotenv.config();
 
 
+
 // transporter es la configuracion del correo emisor
 let transporter = nodemailer.createTransport({
     host: process.env.EMAIL_HOST,
@@ -16,6 +17,7 @@ let transporter = nodemailer.createTransport({
 
 });
 
+
 async function CrearCuentaEmail(direccion,token,full_name,userID){
     return await transporter.sendMail({
         from:process.env.EMAIL_USER,
@@ -26,12 +28,12 @@ async function CrearCuentaEmail(direccion,token,full_name,userID){
 }
 
 
-async function Cambio_de_correo(token,full_name,correo){
+async function Cambio_de_correo(token,full_name,id,correo){
     return await transporter.sendMail({
         from:process.env.EMAIL_USER,
-        to:direccion,
+        to:correo,
         subject:'Armony te notifica que acabas de cambiar de correo',
-        html:cuerpoCorreoNuevo(token,full_name,correo)
+        html:cuerpoCorreoNuevo(token,full_name,id,correo)
     })
 }
 
@@ -42,7 +44,7 @@ async function Cambio_de_correo(token,full_name,correo){
 
 
 
-function cuerpoCorreoNuevo(token,full_name,correo){
+function cuerpoCorreoNuevo(token,full_name,id,correo){
     return `
     <!DOCTYPE html>
     <html lang="en">
@@ -79,13 +81,13 @@ function cuerpoCorreoNuevo(token,full_name,correo){
     <body>
         <div class="body-email">
         <div class="header">
-            <span>Cambio de correo exitoso.</span>
+            <span>Cambio de correo exitoso del usuario ${id}</span>
         </div>
         <div class="body">
             <span>Tu nuevo correo ya fue registrado, la proxima vez que inicies sesion, hazlo con tu correo</span>
             <ul>
-                <li><strong>nombre: </strong>Adolfo Hernandez</li>
-                <li><strong>nuevo correo: </strong>karim@gmail.com</li>
+                <li><strong>nombre: </strong>${full_name}</li>
+                <li><strong>nuevo correo: </strong>${correo}</li>
             </ul>
         </div>
             
