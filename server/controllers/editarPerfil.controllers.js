@@ -40,7 +40,7 @@ async function change_data(solicitud,respuesta){
         
             let consulta = "update usuario set ";
 
-            const buzon = '';
+            let buzon = '';
         
         
             //datos del usuario
@@ -200,7 +200,7 @@ async function change_data(solicitud,respuesta){
 
                         if(resultados.length > 0){
                             console.log("al parecer si hubo una coincidencia");
-                            reject(false);
+                            resolve(false);
                         }
                         else{
                             console.log("perfecto, no hubo coincidencias")
@@ -210,7 +210,7 @@ async function change_data(solicitud,respuesta){
                     })
                 });
 
-                let primer_resultado_mysql = await insercion_exitosa
+                let primer_resultado_mysql = await insercion_exitosa;
 
                 if( primer_resultado_mysql == true){
 
@@ -288,7 +288,7 @@ async function change_data(solicitud,respuesta){
 
 
 
-                                if(buzon.length > 0 &&   buzon!=resultados[0].email){
+                                if(buzon.length > 0 &&   buzon==resultados[0].email){
                                     //toca mandar correo
                                     let full_name = `${resultados[0].nombre} ${resultados[0].apellidoP} ${resultados[0].apellidoM}`;
                                     let sending = await servicios.Cambio_de_correo("token",full_name,resultados[0].pkIdUsuario,resultados[0].email);
