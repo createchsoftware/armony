@@ -92,7 +92,7 @@ const ServiciosSpa = () => {
       <Presentacion />
       <div className="w-full md:w-1/2 mx-auto my-16">
         <p className=" text-4xl md:text-6xl text-center font-[ILoveGlitter] text-[#036C65]">
-          Servicios faciales
+          Servicios del Spa
         </p>
         <div className="grid grid-cols-2 my-16">
           <a
