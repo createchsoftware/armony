@@ -101,18 +101,18 @@ const Tienda = () => {
 
                     <section className='my-20 grid grid-cols-2 w-[80%] m-auto rounded-xl overflow-hidden '>
                         <div>
-                            <img src="../../public/pictures/ofertas.png" alt="" />
+                            <img src="../../pictures/ofertas.png" alt="" />
                         </div>
                         <div className='grid'>
                             <div className='absolute bg-[#036C65]'>
-                                <img className='w-36' src="../../public/pictures/decoIzquierda.png" alt="" />
+                                <img className='w-36' src="../../pictures/decoIzquierda.png" alt="" />
                             </div>
                             <div className='grid gap-5 text-white text-center py-32 pt-40 pb-36 bg-[#036C65]'>
                                 <p className='text-3xl'>CONOCE NUESTRAS OFERTAS ÚNICAS HASTA 50% OFF</p>
                                 <a href="">Ver más {'>'} </a>
                             </div>
                             {/* <div className='-translate-y-36'>
-                                <img className='float-right w-28' src="../../public/pictures/decoDerecha.png" alt="" />
+                                <img className='float-right w-28' src="../../pictures/decoDerecha.png" alt="" />
                             </div> */}
                         </div>
                     </section>
@@ -190,7 +190,7 @@ const Tienda = () => {
                         </div>
                         <div className='grid grid-cols-3 gap-2 '>
                             <div className='grid bg-white '>
-                                <img src="../../public/pictures/ofertas1.png" alt="" />
+                                <img src="../../pictures/ofertas1.png" alt="" />
                                 <div className='grid gap-2 p-6'>
                                     <h3 className='font-bold'>Para este dia de las madres</h3>
                                     <p>Encuentra las mejores ofertas para la
@@ -201,7 +201,7 @@ const Tienda = () => {
                                 </div>
                             </div>
                             <div className='grid bg-white rounded-xl '>
-                                <img src="../../public/pictures/ofertas2.png" alt="" />
+                                <img src="../../pictures/ofertas2.png" alt="" />
                                 <div className='grid gap-2 p-6'>
                                     <h3 className='font-bold'>Para este dia de las madres</h3>
                                     <p>Encuentra las mejores ofertas para la
@@ -212,7 +212,7 @@ const Tienda = () => {
                                 </div>
                             </div>
                             <div className='grid bg-white rounded-xl '>
-                                <img src="../../public/pictures/ofertas3.png" alt="" />
+                                <img src="../../pictures/ofertas3.png" alt="" />
                                 <div className='grid gap-2 p-6'>
                                     <h3 className='font-bold'>Para este dia de las madres</h3>
                                     <p>Encuentra las mejores ofertas para la

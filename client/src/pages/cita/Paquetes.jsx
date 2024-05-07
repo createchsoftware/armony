@@ -26,7 +26,7 @@ function Paquetes() {
         <div className='grid'>
             <div className='mx-12 gap-28 md:flex'>
                 <div className='text-center md:w-1/4'>
-                    <img className='w-3/4 m-auto rounded-2xl' src="./../../../public/pictures/1cafeteria.jpg" alt="" />
+                    <img className='w-3/4 m-auto rounded-2xl' src="./../../../pictures/1cafeteria.jpg" alt="" />
                     <div className='p-8 text-xs text-justify text-black border-4 border-rose-400 md:m-4 rounded-3xl bg-rose-200'>
                         <h2 className='mb-4 text-2xl font-bold text-center'>Facial</h2>
                         Lorem ipsum dolor sit amet consectetur, adipisicing elit. Aliquam distinctio hic doloremque facere officiis dignissimos provident mollitia pariatur aut quae temporibus ipsam suscipit fugiat, quas commodi dolores qui ratione praesentium!</div>

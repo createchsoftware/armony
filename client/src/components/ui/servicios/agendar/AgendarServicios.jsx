@@ -9,7 +9,7 @@ const spa = [
     duracion: 60,
     descripcion:
       "Técnicas personalizadas para aliviar la tensión muscular, liberar el estrés y renovar tu bienestar. Sumérgete en un oasis de calma y deja que nuestros expertos te lleven a un estado de completa tranquilidad.",
-    img: "../../../../../public/pictures/MasajeAntiCelulitisColombiano.png",
+    img: "../../../../../pictures/MasajeAntiCelulitisColombiano.png",
     rating: 5,
   },
   {
@@ -19,7 +19,7 @@ const spa = [
     duracion: 90,
     descripcion:
       "Diseñados para mejorar la textura de la piel, reducir la apariencia de líneas finas y promover un brillo saludable.",
-    img: "../../../../../public/pictures/MasajeAntiCelulitisColombiano.png",
+    img: "../../../../../pictures/MasajeAntiCelulitisColombiano.png",
     rating: 5,
   },
   {
@@ -29,7 +29,7 @@ const spa = [
     duracion: 90,
     descripcion:
       "Obtén una piel suave y sin vello con nuestra depilación profesional. Desde cejas perfectamente arqueadas hasta piernas sedosas, nuestros especialistas utilizan técnicas avanzadas y productos de alta calidad para ofrecerte resultados duraderos y cómodos.",
-    img: "../../../../../public/pictures/MasajeAntiCelulitisColombiano.png",
+    img: "../../../../../pictures/MasajeAntiCelulitisColombiano.png",
     rating: 5,
   },
   {
@@ -39,7 +39,7 @@ const spa = [
     duracion: 60,
     descripcion:
       " Técnicas personalizadas para aliviar la tensión muscular, liberar el estrés y renovar tu bienestar. Sumérgete en un oasis de calma y deja que nuestros expertos te lleven a un estado de completa tranquilidad.",
-    img: "../../../../../public/pictures/MasajeAntiCelulitisColombiano.png",
+    img: "../../../../../pictures/MasajeAntiCelulitisColombiano.png",
     rating: 5,
   },
 ];
@@ -52,7 +52,7 @@ const estetica = [
     duracion: 60,
     descripcion:
       " Técnicas personalizadas para aliviar la tensión muscular, liberar el estrés y renovar tu bienestar. Sumérgete en un oasis de calma y deja que nuestros expertos te lleven a un estado de completa tranquilidad.",
-    img: "../../../../../public/pictures/MasajeAntiCelulitisColombiano.png",
+    img: "../../../../../pictures/MasajeAntiCelulitisColombiano.png",
     rating: 5,
   },
   {
@@ -62,7 +62,7 @@ const estetica = [
     duracion: 90,
     descripcion:
       "Diseñados para mejorar la textura de la piel, reducir la apariencia de líneas finas y promover un brillo saludable.",
-    img: "../../../../../public/pictures/MasajeAntiCelulitisColombiano.png",
+    img: "../../../../../pictures/MasajeAntiCelulitisColombiano.png",
     rating: 5,
   },
 ];
@@ -75,7 +75,7 @@ const favoritos = [
     duracion: 120,
     descripcion:
       "Técnicas personalizadas para aliviar la tensión muscular, liberar el estrés y renovar tu bienestar. Sumérgete en un oasis de calma y deja que nuestros expertos te lleven a un estado de completa tranquilidad.",
-    img: "../../../../../public/pictures/MasajeAntiCelulitisColombiano.png",
+    img: "../../../../../pictures/MasajeAntiCelulitisColombiano.png",
     rating: 5,
   },
   {
@@ -85,7 +85,7 @@ const favoritos = [
     duracion: 90,
     descripcion:
       "Diseñados para mejorar la textura de la piel, reducir la apariencia de líneas finas y promover un brillo saludable.",
-    img: "../../../../../public/pictures/MasajeAntiCelulitisColombiano.png",
+    img: "../../../../../pictures/MasajeAntiCelulitisColombiano.png",
     rating: 5,
   },
 ];

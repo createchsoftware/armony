@@ -55,7 +55,7 @@ function Tarjetas() {
                         Tu suscripción se actualizará automáticamente cuando llegues a la siguiente meta.</p>
                     <div className='rounded-xl text-center border-[#45B59C] mt-4 border-8 w-1/2 m-auto p-2'>
                         Rango Platino
-                        <img className='w-24 m-auto mt-2' src="../../../public/pictures/membresia3.png" alt="" />
+                        <img className='w-24 m-auto mt-2' src="../../../pictures/membresia3.png" alt="" />
                     </div>
                 </section>
 
@@ -75,7 +75,7 @@ function Tarjetas() {
                     <div className='flex justify-center gap-6'>
                         <div className='rounded-xl text-center bg-[#45B59C] mt-4 grid gap-4 my-auto  p-3'>
                             <p className='grid p-2 bg-white rounded-lg'> Rango Oro
-                                <img className='w-24 m-auto mt-2' src="../../../public/pictures/membresia2.png" alt="" />
+                                <img className='w-24 m-auto mt-2' src="../../../pictures/membresia2.png" alt="" />
                             </p>
                             <p className='p-2 bg-white rounded-lg'> Envío prioritario </p>
                             <p className='p-2 bg-white rounded-lg'> Contenido excluisvo </p>
@@ -83,7 +83,7 @@ function Tarjetas() {
                         </div>
                         <div className='rounded-xl text-center bg-[#45B59C] mt-4 grid gap-4 my-auto  p-3'>
                             <p className='grid p-2 bg-white rounded-lg'> Rango VIP
-                                <img className='w-24 m-auto mt-2' src="../../../public/pictures/membresia1.png" alt="" />
+                                <img className='w-24 m-auto mt-2' src="../../../pictures/membresia1.png" alt="" />
                             </p>
                             <p className='p-2 bg-white rounded-lg'> Todo el contenido de los rangos anteriores </p>
                             <p className='p-2 bg-white rounded-lg'> Regalos de alta gama </p>

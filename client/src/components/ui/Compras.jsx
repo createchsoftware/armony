@@ -6,7 +6,7 @@ function Compras({ compras }) {
             <hr />
             <div className="flex justify-between w-full">
                 <div className='flex justify-between gap-4 '>
-                    <img src="../../../public/favicon.ico"
+                    <img src="../../../favicon.ico"
                         alt={compras.nombre} className='w-24 h-24' />
                     <div className='grid place-content-center'>
                         <h1 className='text-xl'>{compras.nombre}</h1>

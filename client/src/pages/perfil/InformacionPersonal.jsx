@@ -148,9 +148,9 @@ function InformacionPersonal() {
                     </div>
                     <aside className='w-2/5 m-auto my-8'>
                         <div className='grid gap-6 text-center '>
-                            <img className='m-auto rounded-full md:w-1/3' src="../../../public/pictures/5school.png" alt="" />
+                            <img className='m-auto rounded-full md:w-1/3' src="../../../pictures/5school.png" alt="" />
                             <h2 className='text-[#EB5765]'>Rango platino</h2>
-                            <img className='w-48 m-auto' src="../../../public/pictures/membresiaEjemplo.png" alt="" />
+                            <img className='w-48 m-auto' src="../../../pictures/membresiaEjemplo.png" alt="" />
                             <a href="#_" className="m-auto px-12 py-2  font-medium text-white whitespace-no-wrap bg-[#EB5765] border border-gray-200 rounded-full shadow-sm hover:cursor-pointer hover:bg-[#eb7580] focus:outline-none focus:shadow-none">
                                 Editar
                             </a>
