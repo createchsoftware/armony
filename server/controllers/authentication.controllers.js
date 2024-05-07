@@ -1,10 +1,14 @@
 import bcryptjs from 'bcryptjs';
 import JsonWebToken from 'jsonwebtoken';
-import { jwt } from "../data/datos.js";
-import CrearCuentaEmail from '../services/mail.service.js';
+import dotenv from 'dotenv';
+import {methods as servicios} from '../services/mail.service.js';
+import mysql from "mysql2";
+
+dotenv.config()
 
 const regex_email = /.+@(gmail|hotmail|icloud|outlook)\.com/;
 const regex_usuarioID = /\d{1,5}/;
+
 
 async function login(solicitud,respuesta){
 
@@ -17,7 +21,7 @@ async function login(solicitud,respuesta){
    }
    else{
 
-       let consulta = `SELECT * FROM usuario WHERE pkIdUsuario = ? OR email = "?"`
+       let consulta = 'select * from usuario where pkIdUsuario = ? or email = ?'
        parametros = [usuarioID_o_correo,usuarioID_o_correo];
 
        // primero validar el ID o el correo
@@ -29,14 +33,16 @@ async function login(solicitud,respuesta){
            respuesta.send({campos_incorrectos:true});
        }
        else{
+
             let a_buscar;
             if(correo_valido == true) a_buscar = "correo";
             else a_buscar = "usuario";
 
             // segundo buscar al usuario o el email
-            let [results] = await solicitud.database.query(consulta, parametros);
-                
-                if(results.length == 0){
+            
+            let [fields] = await solicitud.database.query(mysql.format(consulta,parametros))
+
+                if(fields.length == 0){
                     respuesta.send({busqueda_vacia:a_buscar,valor:usuarioID_o_correo});
                 }
                 else{
@@ -44,9 +50,12 @@ async function login(solicitud,respuesta){
 
                     // ahora sigue validar la contrasena con la base de datos
 
-                    //bcryptjs.compare() es una funcion asincrona, por lo que debemos usar el await
+                    
+                    let contraseña_bytes = fields[0].pass; // contrasena en bytes desde la base de datos
+                    let contraseña_no_bytes = contraseña_bytes.toString('utf-8'); //contrasena en string, pero sigue estando encriptada
 
-                    let contraseña_correcta = await bcryptjs.compare(contraseña, Buffer.from(results[0].pass, 'hex').toString('utf8'));
+                    //bcryptjs.compare() es una funcion asincrona, por lo que debemos usar el await
+                    let contraseña_correcta = await bcryptjs.compare(contraseña,contraseña_no_bytes);
 
                     if(contraseña_correcta == false){
                         respuesta.send({contraseña_incorrecta:true});
@@ -55,30 +64,62 @@ async function login(solicitud,respuesta){
                         let ingreso;
 
                         if(usuarioID_valido == true){
-                            ingreso = results[0].pkIdUsuario;
+                            ingreso = fields[0].pkIdUsuario;
                         } 
                         else {
-                            ingreso = results[0].email;
+                            ingreso = fields[0].email;
                         } 
 
+                        let fecha = fields[0].fechaNac;
 
-                        // let full_name = `${resultados[0].nombre} ${resultados[0].apellidoP} ${resultados[0].apellidoM}`;
+                        let year = fecha.getFullYear();
+                        let month = fecha.getMonth();
+                        let day = fecha.getDay();
 
-                        // const sendingLog = await InicioSesionEmail(resultados[0].email,"token",full_name);
- 
-                        // console.log(sendingLog); // nos deberia imprimir la informacion acerca del envio
+
+                        let dia = day.toString();;
+                        let mes = month.toString();
+                        if(day <= 10){
+                            dia = "0";
+                            dia+= day.toString();
+                        }
+                        if(month <=10){
+                            mes = "0";
+                            mes+= month.toString();
+                        }
+                        let año = year.toString();
+
+                        let fechaNacimiento = `${año}-${mes}-${dia}`;
+
+
 
                         let token = JsonWebToken.sign(
-                            {user:ingreso},
-                            jwt.SECRET,
-                            {expiresIn:jwt.EXPIRATION}
+                            {
+                                user:fields[0].pkIdUsuario,
+                                nombre:fields[0].nombre,
+                                paterno:fields[0].apellidoP,
+                                materno:fields[0].apellidoM,
+                                correo:fields[0].email,
+                                telefono:fields[0].telefono,
+                                contraseña:contraseña_no_bytes,  //contrasena encriptada dentro de la cookie
+                                tipo:fields[0].tipo,
+                                imagen:fields[0].img,
+                                calle:fields[0].calle,
+                                colonia:fields[0].colonia,
+                                numero:fields[0].numero,
+                                postal:fields[0].codigoPostal,
+                                nacimiento:fechaNacimiento
+
+                            },
+                            process.env.JWT_SECRET,
+                            {expiresIn:process.env.JWT_EXPIRATION}
                         );
 
                         // esto es un objeto
                         let galleta = {
                             // el expires es de tipo fecha
-                            maxAge:2592000,
-                            expires: new Date(Date.now() + jwt.COOKIE_EXPIRES * 24 * 60 * 60 * 1000),
+                            maxAge:1*1000*60*30, // 30 minutos
+                            expires: new Date(Date.now() + process.env.JWT_COOKIE_EXPIRES * 24 * 60 * 60 * 1000),
                             path:'/'
                         }
 
@@ -96,15 +137,13 @@ async function login(solicitud,respuesta){
 
                     }
                 }
+                }
+                
        }
+
+       
        
    }
-}
-
-async function logout(solicitud,respuesta){
-    await respuesta.clearCookie("Naruto_cookie");
-    await respuesta.redirect('/');
-}
 
 
 
@@ -113,8 +152,6 @@ async function register(solicitud, respuesta){
     let repetido = false;
     let consulta ='';
     let parametros = [];
-
-    const salt = await bcryptjs.genSalt(5);
 
     console.log("mensaje para comprobar que se ejecute");
 
@@ -142,29 +179,28 @@ async function register(solicitud, respuesta){
         else{
             // el correo valido si cumple con el regex, ahora sigue verificar si el correo no esta repetido
 
-            consulta = 'SELECT * FROM usuarios WHERE correo = ?';
+            consulta = 'select * from usuario where email = ?';
             parametros = [email];
-            let [results] = solicitud.database.query(consulta, parametros)
-                
-                repetido = results.some((usuario)=>{
+            let [fields] = solicitud.database.query(mysql.format(consulta,parametros))
+            
+                repetido = fields.some((usuario)=>{
                     usuario.email == email
                 })
+            }
 
             if(repetido == true){
                 respuesta.send({correo_repetido:true});
             }
             else{
                 // perfecto, el correo no existe
+                let salt =  await bcryptjs.genSalt(5);
 
                 //clave cryptografica de la contraseña del usuario
-                let hashPassword = await bcryptjs.hash(contraseña, salt);  // la contraseña que vamos a guardar en nuestro usuario
+                let hashPassword =  await bcryptjs.hash(contraseña,salt);  // la contraseña que vamos a guardar en nuestro usuario
 
-                consulta = 'INSERT INTO usuarios VALUES (null,?,?,?,?,?)';
+                consulta = 'insert into usuario values (null,?,?,?,?,?)';
                 parametros = [nombre,paterno,materno,email,hashPassword];
-
-                let [results] = solicitud.database.query(consulta, parametros)
-                
-                if (results.length > 0) {
+                let [fields] = await solicitud.database.query(mysql.format(consulta,parametros))
                     /*
                       a diferencia de un select, que nos arroja un arreglo de objetos,
                       en un insert into, nos arroja un objeto, claro si nomas es asi, 
@@ -173,16 +209,16 @@ async function register(solicitud, respuesta){
                     */
 
                     let token_register = JsonWebToken.sign(
-                        {user:resultados.insertId},
-                        jwt.SECRET,
-                        {expiresIn:jwt.EXPIRATION}
+                        {user:fields.insertId},
+                        process.env.JWT_SECRET,
+                        {expiresIn:process.env.JWT_EXPIRATION}
                     );
 
                     // esto es un objeto
                     let galleta_register = {
-                        maxAge:2592000,
+                        maxAge:10000,
                         // el expires es de tipo fecha
-                        expires: new Date(Date.now() + jwt.COOKIE_EXPIRES * 24 * 60 * 60 * 1000),
+                        expires: new Date(Date.now() + process.env.JWT_COOKIE_EXPIRES * 24 * 60 * 60 * 1000),
                         path:'/'
 
                         /*
@@ -201,7 +237,7 @@ async function register(solicitud, respuesta){
 
                     let full_name = `${nombre} ${paterno} ${materno}`;
 
-                    const sending = await CrearCuentaEmail(email,"token",full_name,resultados.insertId);
+                    const sending = await CrearCuentaEmail(email,"token",full_name,fields.insertId);
 
                     console.log(sending); // nos deberia imprimir la informacion acerca del envio
 
@@ -209,15 +245,10 @@ async function register(solicitud, respuesta){
                 }
             }
         }
-        
-    }
-    
-}
 
 
 
 export const methods = {
     login,
-    logout,
     register
 }

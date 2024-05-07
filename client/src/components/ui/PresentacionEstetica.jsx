@@ -13,12 +13,12 @@ function PresentacionEstetica() {
             backgroundSize: "cover",
             height: "40rem",
           }}
-          className="w-full flex flex-col justify-center"
+          className="flex flex-col justify-center w-full"
         >
           <h1 className="text-4xl md:text-6xl text-center font-[ILoveGlitter] text-[#FFFFFF]">
             Servicios de Estética
           </h1>
-          <div className="grid grid-cols-2 place-items-center mt-10">
+          <div className="grid grid-cols-2 mt-10 place-items-center">
             <div className="w-[14rem] md:w-[30rem] bg-white bg-opacity-20 rounded-xl text-center">
               <p className="text-[#036C65] text-3xl md:text-5xl my-5 mx-8 text-left">
                 Deja que tu cuerpo hable por tí
@@ -44,7 +44,7 @@ function PresentacionEstetica() {
                 </p>
               </div>
               <a
-                href="/spa/serviciosSpa"
+                href="/spa/servicios/spa"
                 className="inline-block bg-[#036C65] text-white text-base md:text-xl rounded-full px-4 py-3 mx-auto my-5 hover:bg-teal-600"
                 aria-label="Ir a estética"
               >

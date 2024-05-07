@@ -1,12 +1,10 @@
 document.getElementById('iniciar-sesion-fet').addEventListener('click', async()=>{
 
-    console.log("Iniciado proceso de login")
-
     let input_pass = document.getElementById('pass');
     let input_user_email = document.getElementById('user');
     
     const respuesta = await fetch("/api/login",{
-        method: "POST",
+        method:"POST",
         headers:{
             "Content-Type":"application/json",
         },
@@ -15,8 +13,6 @@ document.getElementById('iniciar-sesion-fet').addEventListener('click', async()=
             password:input_pass.value
         })
     })
-
-    console.log(respuesta)
 
     if(!respuesta.ok)
        return;

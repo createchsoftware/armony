@@ -1,5 +1,6 @@
 import user1 from "../../../../../../public/pictures/userGuest.png";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import InputContrasena from "../../../InputContrasena.jsx";
 import {
   fa1,
   fa2,
@@ -135,24 +136,34 @@ const Contrasena = () => {
                   *
                 </label>
               </div>
-              <input
-                id="email"
-                type="text"
-                placeholder="Ingresa tu nueva contraseña"
-                className="bg-slate-200 rounded-full w-[365px] mb-3 mt-2 py-2 focus:outline-none focus:ring-1 focus:ring-rose-400 focus:border-transparent px-6"
-              />
+              <div className="relative">
+                <InputContrasena
+                  props={{
+                    texto: "Ingresa tu Contraseña",
+                    class:
+                      "bg-slate-200 rounded-full w-[365px] mb-3 mt-2 py-2 focus:outline-none focus:ring-1 focus:ring-rose-400 focus:border-transparent px-6",
+                    classEye:
+                      "absolute top-[2.5rem] md:top-[1rem] left-[15rem] md:left-[20.75rem]",
+                  }}
+                />
+              </div>
               <div>
                 <label htmlFor="">Confirmar contraseña</label>
                 <label htmlFor="" className="text-red-800">
                   *
                 </label>
               </div>
-              <input
-                id="email"
-                type="text"
-                placeholder="Vuelve a ingresar tu nueva contraseña"
-                className="bg-slate-200 rounded-full w-[365px] mb-3 mt-2 py-2 focus:outline-none focus:ring-1 focus:ring-rose-400 focus:border-transparent px-6"
-              />
+              <div className="relative">
+                <InputContrasena
+                  props={{
+                    texto: "Ingresa tu Contraseña",
+                    class:
+                      "bg-slate-200 rounded-full w-[365px] mb-3 mt-2 py-2 focus:outline-none focus:ring-1 focus:ring-rose-400 focus:border-transparent px-6",
+                    classEye:
+                      "absolute top-[2.5rem] md:top-[1rem] left-[15rem] md:left-[20.75rem]",
+                  }}
+                />
+              </div>
             </form>
           </div>
         </div>

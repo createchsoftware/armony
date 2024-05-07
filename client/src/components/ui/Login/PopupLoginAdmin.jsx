@@ -3,26 +3,8 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React, { useState } from "react";
 import Popup from "reactjs-popup";
 import Login from "./PopupLogin";
-import {
-  faAngleLeft,
-  faEye,
-  faEyeSlash,
-  faCircleXmark,
-} from "@fortawesome/free-solid-svg-icons";
-/* NO FUNCIONA
-const [password, setPassword] = useState("");
-const [type, setType] = useState('password');
-const [icon, setIcon] = useState(faEyeSlash);
-
-const toggleEye = () => {
-  if (type === "password") {
-    setIcon(faEye);
-    setType("text");
-  } else {
-    setIcon(faEyeSlash);
-    setType("password");
-  }
-}; */
+import InputContrasena from "../InputContrasena.jsx";
+import { faAngleLeft, faCircleXmark } from "@fortawesome/free-solid-svg-icons";
 
 const ModalLoginAdmin = ({ actionElement }) => {
   return (
@@ -78,19 +60,14 @@ const ModalLoginAdmin = ({ actionElement }) => {
                 <label htmlFor="pass" className="pt-3">
                   Contraseña
                 </label>
-                <a className="relative -bottom-[2.5rem] md:-bottom-[2.75rem] left-[15rem] md:left-[17rem]">
-                  <FontAwesomeIcon
-                    id="eye"
-                    icon={faEyeSlash} /*onClick={toggleEye}*/
-                  />
-                </a>
-                <input
-                  className="bg-slate-200 rounded-full mb-3 mt-2 py-3 w-[22rem] md:w-[25rem] focus:outline-none focus:ring-1 focus:ring-[#036C65] focus:border-transparent px-6"
-                  type="text"
-                  id="pass"
-                  name="pass"
-                  /*onChange={(e) => setPassword(e.target.value)}*/
-                  placeholder="Ingresa tu Contraseña"
+                <InputContrasena
+                  props={{
+                    texto: "Ingresa tu Contraseña",
+                    class:
+                      "bg-slate-200 rounded-full mb-3 mt-2 py-3 w-[22rem] md:w-[25rem] focus:outline-none focus:ring-1 focus:ring-[#036C65] focus:border-transparent px-6",
+                    classEye:
+                      "relative -bottom-[2.5rem] md:-bottom-[2.75rem] left-[15rem] md:left-[17rem]",
+                  }}
                 />
               </div>
             </form>

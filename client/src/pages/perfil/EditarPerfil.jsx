@@ -1,6 +1,8 @@
 import user1 from "../../../public/pictures/1cafeteria.jpg";
 import camara from "../../../public/pictures/2wellness.jpg";
+import React, { useState, useEffect } from 'react'
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { Helmet, HelmetProvider } from "react-helmet-async";
 import {
     fa1,
     fa2,
@@ -13,6 +15,85 @@ import {
 import LayoutPrincipal from "../../layouts/LayoutPrincipal";
 
 const EditarPerfil = ({ usuario }) => {
+
+    const [nombre, setNombre] = useState(false); //<<< PARA EL INICIO DE SESION
+    const [correo, setCorreo] = useState(false); //<<< PARA EL INICIO DE SESION
+    const [apellidoP, setPaterno] = useState(false); //<<< PARA EL INICIO DE SESION
+    const [apellidoM, setMaterno] = useState(false); //<<< PARA EL INICIO DE SESION
+    const [codigoP, setPostal] = useState(false); //<<< PARA EL INICIO DE SESION
+    const [telefono, setTelefono] = useState(false); //<<< PARA EL INICIO DE SESION
+    const [calle, setCalle] = useState(false); //<<< PARA EL INICIO DE SESION
+    const [numero, setNumero] = useState(false); //<<< PARA EL INICIO DE SESION
+    const [colonia, setColonia] = useState(false); //<<< PARA EL INICIO DE SESION
+    const [fechaNac, setNacimiento] = useState(false); //<<< PARA EL INICIO DE SESION
+    const [imagen, setImagen] = useState(false); //<<< PARA EL INICIO DE SESION
+    const [clave, setClave] = useState(false); //<<< PARA EL INICIO DE SESION
+    const [dia, setDia] = useState(false); //<<< PARA EL INICIO DE SESION
+    const [mes, setMes] = useState(false); //<<< PARA EL INICIO DE SESION
+    const [año, setAño] = useState(false); //<<< PARA EL INICIO DE SESION
+
+    async function recibido() {
+        const respuesta = await fetch('/api/logueado', {
+            method: "GET",
+            headers: {
+                "Content-Type": "application/json",
+            }
+        })
+
+        if (!respuesta.ok) {
+            setNombre(null);
+            setCorreo(null);
+            setPaterno(null);
+            setMaterno(null);
+            setTelefono(null);
+            setPostal(null);
+            setNumero(null);
+            setCalle(null);
+            setColonia(null);
+            setNacimiento(null);
+            setImagen(null);
+        }
+
+        let respuestaJson = await respuesta.json();
+
+        if (respuestaJson.logueado == true) {
+            setClave(respuestaJson.clave);
+            setNombre(respuestaJson.nombre);
+            setCorreo(respuestaJson.email);
+            setPaterno(respuestaJson.apellidoP);
+            setMaterno(respuestaJson.apellidoM);
+            setTelefono(respuestaJson.telefono);
+            setPostal(respuestaJson.codigoP);
+            setNumero(respuestaJson.numero);
+            setCalle(respuestaJson.calle);
+            setColonia(respuestaJson.colonia);
+            setNacimiento(respuestaJson.fechaNac);
+            setImagen(respuestaJson.imagen);
+
+            let fecha = new Date(respuestaJson.fechaNac);
+            setDia(fecha.getDay());
+            setMes(fecha.getMonth());
+            setAño(fecha.getFullYear());
+        }
+        else {
+            setNombre(null);
+            setCorreo(null);
+            setPaterno(null);
+            setMaterno(null);
+            setTelefono(null);
+            setPostal(null);
+            setNumero(null);
+            setCalle(null);
+            setColonia(null);
+            setNacimiento(null);
+            setImagen(null);
+        }
+    }
+
+    useEffect(() => {
+        recibido()
+    }, []);
+
     return (
         <LayoutPrincipal>
             <main className="w-[80%] m-auto  flex justify-between mt-20 mb-12">
@@ -34,25 +115,25 @@ const EditarPerfil = ({ usuario }) => {
                         <div>
                             <label htmlFor="">Nombre:</label>
                             <input
-                                id="lastname1"
+                                id="nombre"
                                 type="text"
-                                placeholder="Adolfo"
+                                placeholder={`${nombre}`}
                                 className="w-48 px-6 py-2 mb-1 mr-2 rounded-full bg-slate-200 focus:outline-none focus:ring-1 focus:ring-rose-400 focus:border-transparent"
                             />
                         </div>
                         <input
-                            id="lastname1"
+                            id="clave"
                             type="text"
-                            placeholder="#12345"
+                            placeholder={`${clave}`}
                             className="w-48 px-6 py-2 mb-1 mr-24 rounded-full bg-slate-200 focus:outline-none focus:ring-1 focus:ring-rose-400 focus:border-transparent"
                         />
                     </div>
                     <div>
                         <label htmlFor="">Apellido Paterno:</label>
                         <input
-                            id="lastname1"
+                            id="paterno"
                             type="text"
-                            placeholder="Adolfo"
+                            placeholder={`${apellidoP}`}
                             className="w-48 px-6 py-2 mb-1 mr-2 rounded-full bg-slate-200 focus:outline-none focus:ring-1 focus:ring-rose-400 focus:border-transparent"
                         />
                     </div>
@@ -60,18 +141,18 @@ const EditarPerfil = ({ usuario }) => {
                         <div>
                             <label htmlFor="">Apellido Materno:</label>
                             <input
-                                id="lastname1"
+                                id="materno"
                                 type="text"
-                                placeholder="Adolfo"
+                                placeholder={`${apellidoM}`}
                                 className="w-48 px-6 py-2 mb-1 mr-2 rounded-full bg-slate-200 focus:outline-none focus:ring-1 focus:ring-rose-400 focus:border-transparent"
                             />
                         </div>
                         <div>
                             <label htmlFor="">Telefono:</label>
                             <input
-                                id="lastname1"
+                                id="telefono"
                                 type="tel"
-                                placeholder="#12345"
+                                placeholder={`${telefono}`}
                                 className="w-48 px-6 py-2 mb-1 mr-24 rounded-full bg-slate-200 focus:outline-none focus:ring-1 focus:ring-rose-400 focus:border-transparent"
                             />
                         </div>
@@ -80,36 +161,36 @@ const EditarPerfil = ({ usuario }) => {
                     <div className="flex justify-start">
                         <div><label htmlFor="">Dia</label>
                             <input
-                                id="lastname1"
+                                id="dia"
                                 type="number"
                                 min={1}
                                 max={31}
-                                placeholder="12"
+                                placeholder={`${dia}`}
                                 className="w-24 px-6 py-2 mb-1 rounded-full bg-slate-200 focus:outline-none focus:ring-1 focus:ring-rose-400 focus:border-transparent"
                             />
                         </div>
                         <div><label htmlFor="">Mes</label>
                             <input
-                                id="lastname1"
-                                type="month"
-                                placeholder="12"
+                                id="mes"
+                                type="number"
+                                placeholder={`${mes}`}
                                 className="w-24 px-6 py-2 mb-1 rounded-full bg-slate-200 focus:outline-none focus:ring-1 focus:ring-rose-400 focus:border-transparent"
                             />
                         </div>
                         <div><label htmlFor="">Año</label>
                             <input
-                                id="lastname1"
+                                id="año"
                                 type="number"
-                                placeholder="2024"
+                                placeholder={`${año}`}
                                 className="w-24 px-6 py-2 mb-1 rounded-full bg-slate-200 focus:outline-none focus:ring-1 focus:ring-rose-400 focus:border-transparent"
                             />
                         </div>
                     </div>
                     <h2>E-MAIL</h2>
                     <input
-                        id="lastname1"
+                        id="correo"
                         type="email"
-                        placeholder="correo@armony.com"
+                        placeholder={`${correo}`}
                         className="px-6 py-2 mb-1 rounded-full w-60 bg-slate-200 focus:outline-none focus:ring-1 focus:ring-rose-400 focus:border-transparent"
                     />
                     <h2>DOMICILIO</h2>
@@ -117,27 +198,34 @@ const EditarPerfil = ({ usuario }) => {
                         <div>
                             <label htmlFor="">Calle:</label>
                             <input
-                                id="lastname1"
+                                id="calle"
                                 type="text"
-                                placeholder="Eulogio sanchez"
+                                placeholder={`${calle}`}
                                 className="w-48 px-6 py-2 mb-1 rounded-full bg-slate-200 focus:outline-none focus:ring-1 focus:ring-rose-400 focus:border-transparent"
                             />
                         </div>
                         <div>
                             <label htmlFor="">Colonia:</label>
                             <input
-                                id="lastname1"
+                                id="colonia"
                                 type="tel"
-                                placeholder="Valle de puebla"
+                                placeholder={`${colonia}`}
                                 className="w-48 px-6 py-2 mb-1 mr-24 rounded-full bg-slate-200 focus:outline-none focus:ring-1 focus:ring-rose-400 focus:border-transparent"
                             />
                         </div>
                     </div>
                     <label htmlFor="">Codigo Postal:</label>
                     <input
-                        id="lastname1"
+                        id="codigoP"
                         type="text"
-                        placeholder="12345"
+                        placeholder={`${codigoP}`}
+                        className="w-48 px-6 py-2 mb-1 mr-2 rounded-full bg-slate-200 focus:outline-none focus:ring-1 focus:ring-rose-400 focus:border-transparent"
+                    />
+                    <label htmlFor="">Numero:</label>
+                    <input
+                        id="numero"
+                        type="text"
+                        placeholder={`${numero}`}
                         className="w-48 px-6 py-2 mb-1 mr-2 rounded-full bg-slate-200 focus:outline-none focus:ring-1 focus:ring-rose-400 focus:border-transparent"
                     />
                     <div className="grid grid-cols-2 my-6">
@@ -149,12 +237,18 @@ const EditarPerfil = ({ usuario }) => {
                                 Cancelar
                             </button>
                         </div>
+                        <HelmetProvider>
+                            <Helmet>
+                                <script src="../../../scripts/editarPerfil.js"></script>
+                            </Helmet>
+                        </HelmetProvider>
                         <div className="grid place-content-end">
                             <button
+                                id="guardar"
                                 aria-label="Continuar"
                                 className="px-4 py-2 mx-auto text-xl text-white rounded-full bg-rose-400 hover:bg-red-200"
                             >
-                                Continuar
+                                Guardar
                             </button>
                         </div>
                     </div>

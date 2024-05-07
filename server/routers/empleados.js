@@ -1,12 +1,12 @@
 import express from "express";
-import { conexion } from "../db/connection.js";
+import { conexion } from "../DB/connection.js";
 import {
   createEmpleado,
   readEmpleadoById,
   readEmpleadoByNombre,
   updateEmpleado,
   deleteEmpleadoById,
-} from "../db/query/queryEmpleado.js";
+} from "../DB/query/queryEmpleado.js";
 
 // Router
 export const routerEmpleado = express.Router();
@@ -54,7 +54,10 @@ routerEmpleado.get("/read", async (req, res) => {
     }); // Parametros enviados por body
     res
       .status(302) // Status found
-      .json({ message: "Empleada encontrada con exito", data: resultado }); // Enviamos informacion en formato JSON
+      .json({
+        message: "Empleada encontrada con exito",
+        data: resultado,
+      }); // Enviamos informacion en formato JSON
   } catch (err) {
     // Capturamos errores
     console.error(messageError, err); // Mostramos errores por consola

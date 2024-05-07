@@ -1,4 +1,5 @@
 import user1 from "../../../../../../public/pictures/userCl.png";
+import InputContrasena from "../../../InputContrasena.jsx";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   fa1,
@@ -121,24 +122,32 @@ const NuevaContr = () => {
               *
             </label>
           </div>
-          <input
-            id="email"
-            type="text"
-            placeholder="Ingresa tu nueva contraseña"
-            className="bg-slate-200 rounded-full w-96 mb-5 mt-2 mx-3 py-2 focus:outline-none focus:ring-1 focus:ring-rose-400 focus:border-transparent px-6"
-          />
+          <div className="relative">
+            <InputContrasena
+              props={{
+                texto: "Ingresa tu nueva contraseña",
+                class:
+                  "bg-slate-200 rounded-full w-96 mb-5 mt-2 mx-3 py-2 focus:outline-none focus:ring-1 focus:ring-rose-400 focus:border-transparent px-6",
+                classEye: "absolute justify-end left-[22.75rem] top-[1rem]",
+              }}
+            />
+          </div>
           <div className="my-auto">
             <label htmlFor="">Confirmar contraseña</label>
             <label htmlFor="" className="text-red-800">
               *
             </label>
           </div>
-          <input
-            id="email"
-            type="text"
-            placeholder="Vuelve a ingresar tu nueva contraseña"
-            className="bg-slate-200 rounded-full w-96 mb-5 mt-2 mx-3 py-2 focus:outline-none focus:ring-1 focus:ring-rose-400 focus:border-transparent px-6"
-          />
+          <div className="relative">
+            <InputContrasena
+              props={{
+                texto: "Vuelve a ingresar tu nueva contraseña",
+                class:
+                  "bg-slate-200 rounded-full w-96 mb-5 mt-2 mx-3 py-2 focus:outline-none focus:ring-1 focus:ring-rose-400 focus:border-transparent px-6",
+                classEye: "absolute justify-end left-[22.75rem] top-[1rem]",
+              }}
+            />
+          </div>
         </form>
         <div className="grid grid-cols-2 my-auto">
           <div className="grid place-content-start ml-8">

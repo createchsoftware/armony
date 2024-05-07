@@ -12,7 +12,7 @@ const ServiciosEstetica = () => {
         <p className=" text-4xl md:text-6xl text-center mb-8 font-[iloveglitter] text-[#036C65]">
           Servicios de la estética
         </p>
-        <p className="w-3/4 md:w-full text-center mx-auto mt-8">
+        <p className="w-3/4 mx-auto mt-8 text-center md:w-full">
           El ambiente de un centro de estética está diseñado para ser
           profesional y enfocado en la belleza y el cuidado de la piel y el
           cabello.
@@ -48,11 +48,11 @@ const ServiciosEstetica = () => {
         <p className="text-4xl md:text-6xl w-3/4 md:w-full my-10 mx-auto text-center font-[ILoveGlitter] text-[#036C65]">
           ¿No están los servicios que usas?
         </p>
-        <p className="text-center w-3/4 md:w-full my-10 mx-auto">
+        <p className="w-3/4 mx-auto my-10 text-center md:w-full">
           Tal vez los encuentres en los servicios de nuestro spa.
         </p>
         <a
-          href="/spa/serviciosSpa"
+          href="/spa/servicios/spa"
           className="inline-block bg-[#EB5765] text-white text-xl rounded-full px-4 py-4 mx-auto hover:bg-red-200"
           aria-label="Ir a estética"
         >
