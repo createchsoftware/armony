@@ -24,7 +24,7 @@ getidUser()
 
 
  const obteneridCookie=(namecookie)=>{ //en este metodo lo que hacemos es destructurar la cokie para 
-    //obtener el user y luego el id
+    obtener el user y luego el id
 const cookies=document.cookie.split(';');
 for(let cokie of cookies){
 const [key,value]=cokie.split('=')

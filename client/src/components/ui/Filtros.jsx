@@ -94,6 +94,8 @@ export default function Filtros() {
     const [category, setCategory] = useState()
     const [search, setSearch] = useState('');
     //    const [filter, setFilter] = useState();
+
+    
     
 
     useEffect(() => {
