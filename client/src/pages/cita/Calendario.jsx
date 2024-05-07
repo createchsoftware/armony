@@ -15,6 +15,8 @@ import { DateCalendar } from '@mui/x-date-pickers/DateCalendar';
 import { DayCalendarSkeleton } from '@mui/x-date-pickers/DayCalendarSkeleton';
 import { ChevronRight } from 'lucide-react';
 import Especialista from '../../components/ui/Especialista';
+import es from 'dayjs/locale/es';
+import HorasDisponibles from '../../components/ui/HorasDisponibles';
 
 
 function getRandomNumber(min, max) {
@@ -64,6 +66,7 @@ function ServerDay(props) {
 }
 
 function Calendario() {
+    const [especialistaActivo, setEspecialistaActivo] = useState(false);
     const requestAbortController = React.useRef(null);
     const [isLoading, setIsLoading] = React.useState(false);
     const [highlightedDays, setHighlightedDays] = React.useState([1, 2, 15]);
@@ -138,6 +141,14 @@ function Calendario() {
         recibido()
     }, []);
 
+    const horasDisponibles = [
+        '8:00 am',
+        '9:00 am',
+        '10:00 am',
+        '11:00 am',
+        '12:00 pm',
+        '1:00 pm',
+    ];
 
     const especialistas = [
         {
@@ -210,6 +221,16 @@ function Calendario() {
                     />
                 </LocalizationProvider>
 
+                <div>
+                    <h1 className='text-xl text-[#036C65] mb-4'>Horas Disponibles:</h1>
+                    <div className='flex text-[#EB5765] gap-2'>
+                        {horasDisponibles.map((hora, index) => (
+                            <button key={index} className='border-2 hover:bg-[#EB5765] hover:text-white border-[#EB5765] py-2 px-4'>{hora}</button>
+                        ))}
+                    </div>
+
+                </div>
+
             </section>
             <section className='w-1/3 '>
                 <h1 className='text-xl  text-[#036C65] text-center'>Selecciona tu especialista</h1>
@@ -274,6 +295,7 @@ function Calendario() {
                     sliderclassName=""
                     slidesToSlide={1}
                     swipeable
+                    disabled="true"
                 >
                     {especialistas.map((especialista) => (
                         <Especialista key={especialista.id} especialista={especialista} />

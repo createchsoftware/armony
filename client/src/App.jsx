@@ -5,7 +5,7 @@ import {
 } from "react-router-dom";
 import Home from "./pages";
 import Spa from "./pages/spa";
-import Tienda from "./pages/Tienda";
+import Productos from "./pages/Productos";
 import Perfil from "./pages/Perfil";
 import InformacionPersonal from "./pages/perfil/InformacionPersonal";
 import Seguridad from "./pages/perfil/Seguridad";
@@ -40,7 +40,7 @@ function App() {
                 <Routes>
                     <Route exact path="/" element={<Home />} />
                     <Route path="/spa" element={<Spa />} />
-                    <Route path="/spa/tienda" element={<Tienda />} />
+                    <Route path="/spa/productos" element={<Productos />} />
                     <Route path="/spa/resetPassword" element={<PasswordReset />} />
                     <Route path="/spa/signUp" element={<SignUp />} />
                     <Route path="/spa/signUp/Patologia" element={<SignUpPatologia />} />

@@ -6,7 +6,6 @@ function Agenda() {
     const [citasItems, setCitasItems] = useState([
         { id: 1, name: 'Facial Hidratante', price: 800.00, quantity: 1, image: "../../../pictures/crema2.png", desc: "Crema olor a coco humectante.", duracion: "60 min", dia: "07/06/2024", hora: "8:00", especialista: "Antonio Esparza" },
         { id: 2, name: 'Maquillaje', price: 1100.00, quantity: 1, image: "../../../pictures/crema1.png", desc: "Shampoo con aceite de coco.", duracion: "90 min", dia: "31/03/2024", hora: "14:20", especialista: "Antonio Esparza" },
-        { id: 3, name: 'Depilación', price: 550.00, quantity: 1, image: "../../../pictures/crema1.png", desc: "Shampoo con aceite de coco.", duracion: "30 min", dia: "29/02/2024", hora: "10:40", especialista: "Antonio Esparza" }
     ]);
     //  ^^^ ES SOLO TEST PARA PROBAR LA FUNCIONALIDAD DEL RESUMEN DE CITAS
 
