@@ -74,7 +74,7 @@ function Navbar() {
                         </button>
                         <ul className="menu">
                             <li className="nav-menu-item">
-                                <a href="#" className="menu-link">
+                                <a href="/spa" className="menu-link">
                                     Inicio
                                 </a>
                             </li>
@@ -100,7 +100,7 @@ function Navbar() {
                                         </a>
                                     </li>
                                     <li className="nav-menu-item">
-                                        <a href="/spa/tienda" className="menu-link">
+                                        <a href="/spa/productos" className="menu-link">
                                             Productos
                                         </a>
                                     </li><li className="nav-menu-item">
@@ -134,7 +134,7 @@ function Navbar() {
                                     </a>
                                 </li>
                             )}
-                            {location.pathname == "/spa/tienda" && (
+                            {location.pathname == "/spa/productos" && (
                                 <li className="nav-menu-item">
                                     <button className="nav-cart" aria-label="Abrir Carrito" onClick={toggleCart}>
                                         <FontAwesomeIcon icon={faCartShopping} />

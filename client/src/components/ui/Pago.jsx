@@ -30,7 +30,7 @@ function Pago() {
                     <div className='px-6 pt-6 overflow-y-auto'>
                         <ul>
                             <li className="flex items-center justify-between gap-4 px-4 mb-4 border-2 shadow-md rounded-3xl border-gray">
-                                <svg className="w-28" viewBox="0 0 141.732 141.732" xmlns="http://www.w3.org/2000/svg" fill="#000000">
+                                <svg className="w-48" viewBox="0 0 141.732 141.732" xmlns="http://www.w3.org/2000/svg" fill="#000000">
                                     <g id="SVGRepo_bgCarrier" strokeWidth="0"></g>
                                     <g id="SVGRepo_tracerCarrier" strokeLinecap="round" strokeLinejoin="round"></g>
                                     <g id="SVGRepo_iconCarrier"> <g fill="#2566af">

@@ -85,7 +85,7 @@ export default function Cita() {
         <Calendario key={2} />,
         <Pago key={3} />,
         <Agenda key={4} />,
-        <div key={5}>En proceso</div>,
+        <div className='p-72' key={5}>En proceso</div>,
         <div key={6}>QR</div>,
     ];
 
@@ -93,7 +93,32 @@ export default function Cita() {
         <LayoutPrincipal>
             <div className='p-24'>
                 <Box sx={{ width: '100%' }}>
-                    <Stepper nonLinear activeStep={activeStep}>
+                    <Stepper nonLinear activeStep={activeStep}
+                        sx={{
+                            '& .MuiStepLabel-root .Mui-completed': {
+                                color: '#036C65',                                // circle color (COMPLETED)
+                            },
+                            '& .MuiStepLabel-label.Mui-completed.MuiStepLabel-alternativeLabel':
+                            {
+                                color: 'white', // Just text label (COMPLETED)
+                            },
+                            '& .MuiStepLabel-root .Mui-active': {
+                                color: '#036C65', // circle color (ACTIVE)
+                            },
+                            '& .MuiStepLabel-label.Mui-active.MuiStepLabel-alternativeLabel':
+                            {
+                                color: 'white', // Just text label (ACTIVE)
+                            },
+                            '& .MuiStepLabel-root .Mui-active .MuiStepIcon-text': {
+                                fill: 'white', // circle's number (ACTIVE)
+                            },
+                            // custom circle width
+                            '& .MuiStepIcon-root': {
+                                width: '2rem',
+                                height: '2rem',
+                            },
+
+                        }}>
                         {steps.map((label, index) => (
 
                             <Step key={label} completed={completed[index]}>
@@ -133,7 +158,7 @@ export default function Cita() {
                                     <button
                                         disabled={activeStep === 0}
                                         onClick={handleBack}
-                                        className="px-4 py-2 mx-auto text-xl bg-white rounded-full text-rose-400 hover:bg-red-50 ring-rose-400"
+                                        className="px-4 py-2 mx-auto text-xl bg-white rounded-full ring-1 text-rose-400 hover:bg-red-50 ring-rose-400"
                                         sx={{ mr: 1 }}
                                     >
                                         Regresar
@@ -152,7 +177,7 @@ export default function Cita() {
                                     >
                                         Siguiente
                                     </button>
-                                    {activeStep !== steps.length &&
+                                    {/* {activeStep !== steps.length &&
                                         (completed[activeStep] ? (
                                             <Typography variant="caption" sx={{ display: 'inline-block' }}>
                                                 Paso {activeStep + 1} ya completado
@@ -163,7 +188,7 @@ export default function Cita() {
                                                     ? 'Finalizar'
                                                     : 'Completar paso'}
                                             </button>
-                                        ))}
+                                        ))} */}
                                 </div>
                             </React.Fragment>
                         )}

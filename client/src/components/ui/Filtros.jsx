@@ -3,6 +3,7 @@ import { Dialog, Disclosure, Menu, Transition } from '@headlessui/react'
 import { XMarkIcon } from '@heroicons/react/24/outline'
 import { ChevronDownIcon, FunnelIcon, MinusIcon, PlusIcon, Squares2X2Icon } from '@heroicons/react/20/solid'
 import ContenedorProductos from './ContenedorProductos'
+import { Slider, Box } from '@mui/material';
 //import { products } from '../../data/productos.json'
 import Rating from '@mui/material/Rating';
 
@@ -79,7 +80,7 @@ function classNames(...clases) {
     return clases.filter(Boolean).join(' ')
 }
 
-const sortOptions = [
+const ordenamiento = [
     { name: 'Más Relevante', current: true },
     { name: 'Más Reciente', current: false },
     { name: 'Top Ventas', current: false },
@@ -171,12 +172,13 @@ const filters = [
 
 export default function Filtros() {
     const [mobileFiltersOpen, setMobileFiltersOpen] = useState(false)
-    const [sortOption, setSortOption] = useState(sortOptions[0])
+    const [sortOption, setSortOption] = useState(ordenamiento[0])
     const [filteredProducts, setFilteredProducts] = useState(products)
     const [category, setCategory] = useState('')
-    const [search, setSearch] = useState('');
+    const [busqueda, setSearch] = useState('');
     const [marca, setMarca] = useState('');
     const [rating, setRating] = useState(0);
+    const [precio, setPrecio] = useState(0);
 
 
     //    const [filter, setFilter] = useState();
@@ -189,6 +191,15 @@ export default function Filtros() {
     //         .catch(err => console.log(err))
     // }, [])
 
+    // Función para manejar cambios en el rating
+    const handleChange = (event, newValue) => {
+        setRating(newValue);
+    };
+
+    // Función para manejar cambios en el slider de precio
+    const handlePriceChange = (event, newValue) => {
+        setPrecio(newValue);
+    };
 
     useEffect(() => {
         fetch("/api/admin/productos/getProducts")
@@ -210,9 +221,9 @@ export default function Filtros() {
         let updatedProducts = products;
 
         // Filtrar por búsqueda
-        if (search) {
+        if (busqueda) {
             updatedProducts = updatedProducts.filter(product =>
-                product.nombre.toLowerCase().includes(search.toLowerCase())
+                product.nombre.toLowerCase().includes(busqueda.toLowerCase())
             );
         }
 
@@ -232,9 +243,16 @@ export default function Filtros() {
         }
 
         // Filtro por valoración
-        if (rating > 0) {
+        if (rating) {
             updatedProducts = updatedProducts.filter(product =>
-                product.valoracion >= rating
+                product.valoracion == rating
+            );
+        }
+
+        // Filtro por precio
+        if (precio) {
+            updatedProducts = updatedProducts.filter(product =>
+                product.precio <= precio
             );
         }
 
@@ -258,8 +276,16 @@ export default function Filtros() {
                 break;
         }
 
+        //multifiltro de checkboxes
+        filters.forEach(filter => {
+            const selectedOptions = filter.options.filter(option => option.checked).map(option => option.label);
+            if (selectedOptions.length) {
+                updatedProducts = updatedProducts.filter(product => selectedOptions.includes(product[filter.id]));
+            }
+        });
+
         setFilteredProducts(updatedProducts);
-    }, [search, category, sortOption, products, marca, rating]);
+    }, [busqueda, category, sortOption, products, marca, rating, precio]);
 
     return (
         <div className="bg-[#F4F1ED]">
@@ -394,7 +420,7 @@ export default function Filtros() {
                                 >
                                     <Menu.Items className="absolute right-0 z-10 w-40 mt-2 origin-top-right bg-white rounded-md shadow-2xl ring-1 ring-black ring-opacity-5 focus:outline-none">
                                         <div className="py-1">
-                                            {sortOptions.map((option) => (
+                                            {ordenamiento.map((option) => (
                                                 <Menu.Item key={option.name}>
                                                     {({ active }) => (
                                                         <a
@@ -525,9 +551,19 @@ export default function Filtros() {
                                             </h3>
                                             <Disclosure.Panel className="pt-6">
                                                 <div className="space-y-4">
-
-
-                                                    <input id="default-range" type="range" value="50" class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer dark:bg-gray-700" />
+                                                    <Box sx={{ mt: 4 }}>
+                                                        <Slider
+                                                            value={precio}
+                                                            onChange={handlePriceChange}
+                                                            aria-labelledby="input-slider"
+                                                            valueLabelDisplay="auto"
+                                                            min={0}
+                                                            max={1000}
+                                                            className='text-red-600 '
+                                                            sx={{ color: '#ec5766' }}
+                                                        />
+                                                        <Box sx={{ textAlign: 'center' }}>${precio}</Box>
+                                                    </Box>
 
                                                 </div>
                                             </Disclosure.Panel>
@@ -553,7 +589,7 @@ export default function Filtros() {
                                             <Disclosure.Panel className="pt-6">
                                                 <div className="space-y-4">
 
-                                                    <Rating className='m-auto' onClick={setRating(rating)} value={rating} unratedColor="red" ratedColor="blue" />
+                                                    <Rating onChange={handleChange} className='m-auto' value={rating} unratedColor="red" ratedColor="blue" />
 
                                                 </div>
                                             </Disclosure.Panel>

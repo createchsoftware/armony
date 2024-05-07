@@ -44,7 +44,7 @@ const ofertas = [
 ]
 
 
-const Tienda = () => {
+const Productos = () => {
     return (
         <>
             <HelmetProvider>
@@ -236,4 +236,4 @@ const Tienda = () => {
     )
 }
 
-export default Tienda
+export default Productos
