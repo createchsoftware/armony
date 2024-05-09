@@ -1,4 +1,5 @@
 import user1 from "../../../../../../public/pictures/userCl.png";
+import Pasos from "../../../PasosDeProcesos.jsx";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   fa1,
@@ -19,91 +20,14 @@ const Recuperacion = () => {
         <h1 className="mx-auto p-7 text-rose-400 text-4xl">
           Restablecer contraseña
         </h1>
-        <div className="grid grid-cols-[50px_auto_20px_50px_auto_20px_50px_auto_20px_50px_auto] place-items-center px-5 mx-auto">
-          <span className="">
-            <FontAwesomeIcon
-              style={{ fontSize: "16px", color: "#FFFFFF" }}
-              icon={fa1}
-              className="relative left-6 bottom-2"
-            />
-            <FontAwesomeIcon
-              style={{ fontSize: "36px" }}
-              icon={faCircle}
-            ></FontAwesomeIcon>
-          </span>
-          <a
-            href=""
-            style={{
-              fontFamily: "ABeeZee",
-            }}
-            className="text-base mx-2"
-          >
-            Recuperación
-          </a>
-          <div className="flex-grow border-t border-gray-400 pl-4 mx-0"></div>
-          <span className="">
-            <FontAwesomeIcon
-              style={{ fontSize: "16px", color: "#FFFFFF" }}
-              icon={fa2}
-              className="relative left-6 bottom-2"
-            />
-            <FontAwesomeIcon
-              style={{ fontSize: "36px" }}
-              icon={faCircle}
-            ></FontAwesomeIcon>
-          </span>
-          <a
-            href=""
-            style={{
-              fontFamily: "ABeeZee",
-            }}
-            className="text-base mx-1"
-          >
-            Verificación
-          </a>
-          <div className="flex-grow border-t border-gray-400 pl-4 mx-0"></div>
-          <span className="">
-            <FontAwesomeIcon
-              style={{ fontSize: "16px", color: "#FFFFFF" }}
-              icon={fa3}
-              className="relative left-6 bottom-2"
-            />
-            <FontAwesomeIcon
-              style={{ fontSize: "36px" }}
-              icon={faCircle}
-            ></FontAwesomeIcon>
-          </span>
-          <a
-            href=""
-            style={{
-              fontFamily: "ABeeZee",
-            }}
-            className="text-base mx-1"
-          >
-            Nueva Contraseña
-          </a>
-          <div className="flex-grow border-t border-gray-400 pl-4 mx-0"></div>
-          <span className="">
-            <FontAwesomeIcon
-              style={{ fontSize: "16px", color: "#FFFFFF" }}
-              icon={fa4}
-              className="relative left-6 bottom-2"
-            />
-            <FontAwesomeIcon
-              style={{ fontSize: "36px" }}
-              icon={faCircle}
-            ></FontAwesomeIcon>
-          </span>
-          <a
-            href=""
-            style={{
-              fontFamily: "ABeeZee",
-            }}
-            className="text-base mx-1"
-          >
-            Confirmación
-          </a>
-        </div>
+        <Pasos
+          props={{
+            paso1: "Recuperación",
+            paso2: "Verificación",
+            paso3: "Nueva Contraseña",
+            paso4: "Confirmación",
+          }}
+        />
         <div className="absolute mt-5">
           <a className="ml-3">
             <FontAwesomeIcon style={{ fontSize: "22px" }} icon={faAngleLeft} />{" "}
@@ -135,20 +59,20 @@ const Recuperacion = () => {
         </a>
         <div className="grid grid-cols-2 my-auto">
           <div className="grid place-content-start ml-8">
-            <button
+          <a href="/"><button
               aria-label="Cancelar"
               className="bg-white text-rose-400 text-xl rounded-full px-4 py-2 mx-auto hover:bg-red-50 ring-2 ring-rose-400"
             >
               Cancelar
-            </button>
+            </button></a>
           </div>
           <div className="grid place-content-end mr-8">
-            <button
+          <a href="/spa/resetPassword/Verificacion"><button
               aria-label="Continuar"
               className="bg-rose-400 text-white text-xl rounded-full px-4 py-2 mx-auto hover:bg-red-200"
             >
               Continuar
-            </button>
+            </button></a>
           </div>
         </div>
       </div>

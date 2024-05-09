@@ -13,7 +13,7 @@ import {
 const InformacionBasica = () => {
   return (
     <div className="flex flex-col h-screen justify-center items-center">
-      <div className="h-[560px] max-w-[765px] flex flex-col rounded-xl ring-1 ring-slate-200 bg-white bg-clip-border text-gray-700 shadow-md mx-auto">
+      <div className="h-[1200px] max-w-[765px] flex flex-col rounded-xl ring-1 ring-slate-200 bg-white bg-clip-border text-gray-700 shadow-md mx-auto">
         <div className="relative max-w-[110px] min-w-[110px] mx-auto -mt-20 grid h-28 place-items-center overflow-hidden rounded-full bg-white bg-clip-border shadow-lg">
           <img src={user1} alt="" className="logo1 absolute h-full" />
         </div>
@@ -112,6 +112,9 @@ const InformacionBasica = () => {
           </a>
         </div>
         <div className="grid grid-cols-[55%_auto] ml-10">
+
+
+
           <form action="" className="mx-auto">
             <div className="grid grid-cols-1">
               <div>
@@ -238,15 +241,76 @@ const InformacionBasica = () => {
                   className="bg-slate-200 rounded-full w-auto mb-1 mr-2 py-2 focus:outline-none focus:ring-1 focus:ring-rose-400 focus:border-transparent px-6"
                 />
               </div>
+              <div>
+                <label htmlFor="" className="text-sm">
+                  Calle
+                </label>
+                <label htmlFor="" className="text-red-800">
+                  *
+                </label>
+              </div>
+              <input
+                id="calle"
+                type="text"
+                placeholder="tu calle"
+                className="bg-slate-200 rounded-full w-[392px] mb-1 mx-0 py-2 focus:outline-none focus:ring-1 focus:ring-rose-400 focus:border-transparent px-6"
+              />
+              <div>
+                <label htmlFor="" className="text-sm">
+                  Colonia
+                </label>
+                <label htmlFor="" className="text-red-800">
+                  *
+                </label>
+              </div>
+              <input
+                id="colonia"
+                type="text"
+                placeholder="colonia"
+                className="bg-slate-200 rounded-full w-[392px] mb-1 mx-0 py-2 focus:outline-none focus:ring-1 focus:ring-rose-400 focus:border-transparent px-6"
+              />
+              <div>
+                <label htmlFor="" className="text-sm">
+                  Numero
+                </label>
+                <label htmlFor="" className="text-red-800">
+                  *
+                </label>
+              </div>
+              <input
+                id="numero"
+                type="text"
+                placeholder="numero de casa"
+                className="bg-slate-200 rounded-full w-[392px] mb-1 mx-0 py-2 focus:outline-none focus:ring-1 focus:ring-rose-400 focus:border-transparent px-6"
+              />
+              <div>
+                <label htmlFor="" className="text-sm">
+                  Codigo_postal
+                </label>
+                <label htmlFor="" className="text-red-800">
+                  *
+                </label>
+              </div>
+              <input
+                id="codigo_postal"
+                type="text"
+                placeholder="codigo postal"
+                className="bg-slate-200 rounded-full w-[392px] mb-1 mx-0 py-2 focus:outline-none focus:ring-1 focus:ring-rose-400 focus:border-transparent px-6"
+              />
             </div>
           </form>
+
+
+
           <div className="relative max-w-[180px] min-w-[180px] min-h-[180px] max-h-[180px] left-[15%] top-[45%] -mt-20 grid place-items-center rounded-full bg-white bg-clip-border ring-2 ring-gray-400">
             <img src={user1} alt="" className="logo2 absolute h-full" />
             <div className="absolute max-w-[50px] max-h-[50px] bg-white rounded-full place-self-end ring-2 ring-gray-500">
-              <img src={camara} alt="" />
+              <img id='photo' src={camara} alt="" />
             </div>
           </div>
+
         </div>
+
         <div className="grid grid-cols-2 my-auto">
           <div className="grid place-content-start ml-8">
             <button
@@ -258,6 +322,7 @@ const InformacionBasica = () => {
           </div>
           <div className="grid place-content-end mr-8">
             <button
+              id='step-one'
               aria-label="Continuar"
               className="bg-rose-400 text-white text-xl rounded-full px-4 py-2 mx-auto hover:bg-red-200"
             >

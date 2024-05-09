@@ -1,4 +1,5 @@
 import user1 from "../../../../../../public/pictures/userCl.png";
+import InputContrasena from "../../../InputContrasena.jsx";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   fa1,
@@ -61,7 +62,7 @@ const NuevaContr = () => {
           >
             Verificación
           </a>
-          <div className="flex-grow border-t border-gray-400 pl-4 mx-0"></div>
+          <div className="flex-grow border-t border-[#036C65] pl-4 mx-0"></div>
           <span className="">
             <FontAwesomeIcon
               style={{ fontSize: "16px", color: "#FFFFFF" }}
@@ -69,7 +70,7 @@ const NuevaContr = () => {
               className="relative left-6 bottom-2"
             />
             <FontAwesomeIcon
-              style={{ fontSize: "36px" }}
+              style={{ fontSize: "36px", color: "#036C65" }}
               icon={faCircle}
             ></FontAwesomeIcon>
           </span>
@@ -77,6 +78,7 @@ const NuevaContr = () => {
             href=""
             style={{
               fontFamily: "ABeeZee",
+              color: "#036C65",
             }}
             className="text-base mx-1"
           >
@@ -120,41 +122,49 @@ const NuevaContr = () => {
               *
             </label>
           </div>
-          <input
-            id="email"
-            type="text"
-            placeholder="Ingresa tu nueva contraseña"
-            className="bg-slate-200 rounded-full w-96 mb-5 mt-2 mx-3 py-2 focus:outline-none focus:ring-1 focus:ring-rose-400 focus:border-transparent px-6"
-          />
+          <div className="relative">
+            <InputContrasena
+              props={{
+                texto: "Ingresa tu nueva contraseña",
+                class:
+                  "bg-slate-200 rounded-full w-96 mb-5 mt-2 mx-3 py-2 focus:outline-none focus:ring-1 focus:ring-rose-400 focus:border-transparent px-6",
+                classEye: "absolute justify-end left-[22.75rem] top-[1rem]",
+              }}
+            />
+          </div>
           <div className="my-auto">
             <label htmlFor="">Confirmar contraseña</label>
             <label htmlFor="" className="text-red-800">
               *
             </label>
           </div>
-          <input
-            id="email"
-            type="text"
-            placeholder="Vuelve a ingresar tu nueva contraseña"
-            className="bg-slate-200 rounded-full w-96 mb-5 mt-2 mx-3 py-2 focus:outline-none focus:ring-1 focus:ring-rose-400 focus:border-transparent px-6"
-          />
+          <div className="relative">
+            <InputContrasena
+              props={{
+                texto: "Vuelve a ingresar tu nueva contraseña",
+                class:
+                  "bg-slate-200 rounded-full w-96 mb-5 mt-2 mx-3 py-2 focus:outline-none focus:ring-1 focus:ring-rose-400 focus:border-transparent px-6",
+                classEye: "absolute justify-end left-[22.75rem] top-[1rem]",
+              }}
+            />
+          </div>
         </form>
         <div className="grid grid-cols-2 my-auto">
           <div className="grid place-content-start ml-8">
-            <button
+          <a href="/"><button
               aria-label="Cancelar"
               className="bg-white text-rose-400 text-xl rounded-full px-4 py-2 mx-auto hover:bg-red-50 ring-2 ring-rose-400"
             >
               Cancelar
-            </button>
+            </button></a>
           </div>
           <div className="grid place-content-end mr-8">
-            <button
+          <a href="/spa/resetPassword/Confirmacion"><button
               aria-label="Continuar"
               className="bg-rose-400 text-white text-xl rounded-full px-4 py-2 mx-auto hover:bg-red-200"
             >
               Continuar
-            </button>
+            </button></a>
           </div>
         </div>
       </div>

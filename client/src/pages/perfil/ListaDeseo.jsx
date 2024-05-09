@@ -1,8 +1,6 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBasketShopping, faHandHoldingHeart, faBars, faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';
 import ContenedorProductos from '../../components/ui/ContenedorProductos';
-// ^^^ ICONOS PREPARADOS PARA EMPEZAR PAGINA DE "LISTA DE DESEOS"
-
 import Navbar from '../../components/ui/Navbar';
 
 function ListaDeseo() {

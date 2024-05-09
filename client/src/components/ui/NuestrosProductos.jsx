@@ -67,7 +67,6 @@ function Productos() {
                             sliderclassName=""
                             slidesToSlide={1}
                             swipeable
-                            //className=''
                         >
 
                             <div className='m-4 font-[abeatbyKai] '>
@@ -138,7 +137,6 @@ function Productos() {
                             sliderclassName=""
                             slidesToSlide={1}
                             swipeable
-                            //className=''
                         >
 
                             <div className='m-4 font-[abeatbyKai] '>
@@ -210,7 +208,6 @@ function Productos() {
                             sliderclassName=""
                             slidesToSlide={1}
                             swipeable
-                            //className=''
                         >
 
                             <div className='m-4 font-[abeatbyKai]'>

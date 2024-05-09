@@ -1,7 +1,6 @@
-import membresias from '../../../public/pictures/membresias2.png'
-import membresia1 from '../../../public/pictures/membresia1.png'
-import membresia2 from '../../../public/pictures/membresia2.png'
-import membresia3 from '../../../public/pictures/membresia3.png'
+import oro from '../../../public/pictures/rangoOro.png'
+import platino from '../../../public/pictures/rangoPlatino.png'
+import vip from '../../../public/pictures/rangoVIP.png'
 import greenRight from '../../../public/pictures/greenRight.png'
 import greenLeft from '../../../public/pictures/greenLeft.png'
 
@@ -10,69 +9,69 @@ function Tarjetas() {
         <>
             <img src={greenLeft} alt="" className='absolute w-[12%] left-0 translate-y-[-6rem]' />
             <img src={greenRight} alt="" className='absolute w-[12%] right-0 translate-y-[60rem] ' />
-            <div className="selection:text-white selection:bg-[#EB5765] m-auto w-[70%] grid place-content-center ">
+            <div className="selection:text-white selection:bg-[#EB5765] m-auto mt-10 w-[70%] grid place-content-center ">
+                <h1 className="justify-self-center text-4xl md:text-6xl font-[iloveglitter] text-[#036C65]">¡Hazte socio!</h1>
                 <div className="items-center gap-0 text-center md:grid md:grid-cols-2 place-content-center">
-                    <img src={membresias} alt="" />
-                    <div className='p-8 bg-gradient-[#F6EECF] mt-0  bg-gradient-to-b from-[#F6EECF] to-[#DDF3FA] rounded-xl'>
-                        <h1 className="text-4xl md:text-6xl font-[iloveglitter] text-[#036C65]">Conoce nuestras membresías</h1>
-                        <p className='font-[abeatbyKai] mt-6 text-[#036C65]'>Si te gusta nuestro servicio, tal vez te interese una membresia que te de mucho mas.
-                            ¡Tu bienestar merece ser prioridad!</p>
+                    <div>
+                        <img src={"../../../public/pictures/rangos.png"} alt="" className='w-5/6' />
+                    </div>
+                    <div className='p-8 mt-0 bg-gradient-to-b from-[#F6CFEE] via-[#FFF1DD] to-[#DDF3FA] rounded-xl'>
+                        <h1 className="text-4xl md:text-6xl font-[iloveglitter] font-bold text-[#036C65]">Conoce el potencial de las suscripciones</h1>
+                        <p className='font-[abeatbyKai] text-l mt-6 text-[#036C65]'>Si te gusta nuestro servicio, tal vez te interese un rango que te de mucho más.</p>
+                        <p className='font-[abeatbyKai] text-xl font-bold mt-6 text-[#EB5765]'>¡Tu bienestar merece ser prioridad!</p>
                     </div>
                 </div>
                 <div className="p-8 mt-12 md:mt-0">
                     <h1 className="text-center text-[#036C65] font-[iloveglitter] text-4xl md:text-6xl">Esto es lo que tenemos para tí.</h1>
                 </div>
                 <div className=" font-[abeatbyKai] grid  justify-center grid-cols-1  gap-6 md:gap-8 place-content-around md:grid-cols-3  ">
-                    <div className='border-4 border-[#BCA0AE]  rounded-[30px]'>
-                        <div className="grid justify-center h-auto grid-cols-2 gap-4 p-8 border-[1rem]  border-[#CDC0C4] rounded-3xl place-content-center md:grid-cols-1 md:gap-8  md:h-[40vw] md:place-content-start ">
-                            <h1 className="col-span-2 font-bold text-center drop-shadow-[1px_1px_var(--tw-shadow-color)] shadow-[black]   ">Membresia VIP</h1>
-                            <div className="w-full m-auto md:col-span-2">
-                                <img className=' aspect-video rounded-2xl' src={membresia1} alt="" />
+                    <div className='border-4 border-[#B49947]  rounded-[30px]'>
+                        <div className="grid justify-center h-auto grid-cols-2 gap-4 p-4 border-[1rem]  border-[#F1DA88] rounded-3xl place-content-center md:grid-cols-1 md:gap-8  md:h-[40vw] md:place-content-start ">
+                            <h1 className="col-span-2 font-bold text-xl text-center text-[#F1DA88] drop-shadow-[1px_1px_var(--tw-shadow-color)] shadow-[black] ">Rango oro</h1>
+                            <div className="grid w-full m-auto md:col-span-2">
+                                <img className='rounded-2xl w-2/3 justify-self-center' src={oro} alt="" />
                             </div>
                             <div className="grid gap-1 text-center divide-black divide- md:gap-4 md:col-span-2">
-                                <p>Precio</p>
+                                <p className='bg-[#616C8926] py-2 text-xl rounded-xl'>1,000 puntos</p>
                                 <hr className="border-2" />
-                                <p>Beneficio</p>
+                                <p>Envío prioritario</p>
                                 <hr className="border-2" />
-                                <p>Beneficio</p>
-                                <hr className="border-2" />
-                                <p>Beneficio</p>
+                                <p>Promociones exclusivas</p>
                             </div>
                         </div>
                     </div>
 
-                    <div className='border-4 border-[#B49947] rounded-[30px]'>
-                        <div className="grid h-full justify-center grid-cols-2 gap-4 p-8 border-[1rem] rounded-3xl  border-[#F1DA88] place-content-center md:grid-cols-1 md:gap-8 md:place-content-start">
-                            <h1 className="col-span-2 font-bold text-center text-[#F1DA88] drop-shadow-[2px_2px_var(--tw-shadow-color)] shadow-[black] ">Membresia Golden</h1>
-                            <div className="w-full m-auto md:col-span-2">
-                                <img className=' aspect-video rounded-2xl' src={membresia2} alt="" />
+                    <div className='border-4 border-[#4873C8] rounded-[30px]'>
+                        <div className="grid h-full justify-center grid-cols-2 gap-4 p-4 border-[1rem] rounded-3xl  border-[#99B3F6] place-content-center md:grid-cols-1 md:gap-8 md:place-content-start">
+                            <h1 className="col-span-2 font-bold text-xl text-center text-[#99B3F6] drop-shadow-[2px_2px_var(--tw-shadow-color)] shadow-[black] ">Membresia Golden</h1>
+                            <div className="grid w-full m-auto md:col-span-2">
+                                <img className='rounded-2xl w-2/3 justify-self-center' src={platino} alt="" />
                             </div>
                             <div className="grid gap-1 text-center divide-black divide- md:gap-4 md:col-span-2">
-                                <p>Precio</p>
+                                <p className='bg-[#616C8926] py-2 text-xl rounded-xl'>2,000 puntos</p>
                                 <hr className="border-2" />
-                                <p>Beneficio</p>
+                                <p>Regalos exclusivos</p>
                                 <hr className="border-2" />
-                                <p>Beneficio</p>
+                                <p>Descuentos generosos</p>
                                 <hr className="border-2" />
-                                <p>Beneficio</p>
+                                <p>Acceso anticipado a ventas</p>
                             </div>
                         </div>
                     </div>
-                    <div className='border-4 border-[#848484] rounded-[30px] '>
-
-                        <div className="grid justify-center h-full grid-cols-2 gap-4 p-8 border-[1rem] rounded-3xl  border-[#C9CEDB] place-content-center md:grid-cols-1 md:gap-8 md:place-content-start">
-                            <h1 className="col-span-2 font-bold text-center text-[#C9CEDB] drop-shadow-[2px_2px_var(--tw-shadow-color)] shadow-[black]">Membresia Platino</h1>
-                            <div className="w-full m-auto md:col-span-2">
-                                <img className=' aspect-video rounded-2xl' src={membresia3} alt="" />
+                    <div className='border-4 border-[#A93F74] rounded-[30px] '>
+                        <div className="grid justify-center h-full grid-cols-2 gap-4 p-4 border-[1rem] rounded-3xl  border-[#F584A7] place-content-center md:grid-cols-1 md:gap-8 md:place-content-start">
+                            <h1 className="col-span-2 font-bold text-center text-[#F584A7] drop-shadow-[2px_2px_var(--tw-shadow-color)] shadow-[black]">Membresia Platino</h1>
+                            <div className="grid w-full m-auto md:col-span-2">
+                                <img className='rounded-2xl w-2/3 justify-self-center' src={vip} alt="" />
                             </div>
                             <div className="grid gap-1 text-center divide-black divide- md:gap-4 md:col-span-2">
-                                <p>Precio</p>
+                                <p className='bg-[#616C8926] py-2 text-xl rounded-xl'>5,000 puntos</p>
                                 <hr className="border-2" />
-                                <p>Beneficio</p>
+                                <p>Invitaciones a eventos VIP de élite.</p>
                                 <hr className="border-2" />
-                                <p>Beneficio</p>
+                                <p>Acceso anticipado a ventas.</p>
                                 <hr className="border-2" />
-                                <p>Beneficio</p>
+                                <p>Contenido premium ilimitado.</p>
                             </div>
                         </div>
                     </div>

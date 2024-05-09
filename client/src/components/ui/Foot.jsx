@@ -14,7 +14,7 @@ function Foot() {
                                 </g>
                             </svg>
 
-                            <div className="m-6 grid gap-6">
+                            <div className="grid gap-6 m-6">
                                 <p className=" text-xl text-[#B2B2B2]">Llamanos</p>
                                 <p className="w-[200px]">+52 (686) 123-4567 <br /> +52 (686) 456-78910</p>
                             </div>
@@ -58,7 +58,7 @@ function Foot() {
 
                 {/* Bottom */}
                 <div className="mx-auto max-w-screen-xl w-[80%]">
-                    <div className="grid grid-cols-2 gap-8 px-4 py-6 lg:py-8 md:grid-cols-4 justify-items-center mb-8 md:mb-24">
+                    <div className="grid grid-cols-2 gap-8 px-4 py-6 mb-8 lg:py-8 md:grid-cols-4 justify-items-center md:mb-24">
                         <div className="">
                             <h2 className="mb-6 text-sm font-semibold  uppercase text-[#B2B2B2]">Armony</h2>
                             <ul>
@@ -132,7 +132,7 @@ function Foot() {
                     <div className="px-4 py-6 md:p-0 md:flex md:items-center md:justify-between">
                         <span className="text-sm text-gray-500 dark:text-gray-300 sm:text-center"><a href="https://flowbite.com/"></a>Copyright © 2024 Armony. All Rights Reserved.
                         </span>
-                        <div className="flex mt-4 sm:justify-center md:mt-0 space-x-5 rtl:space-x-reverse">
+                        <div className="flex mt-4 space-x-5 sm:justify-center md:mt-0 rtl:space-x-reverse">
                             <a href="" className="h-6">
                                 <svg className="w-10" xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="100" height="100" viewBox="0 0 48 48">
                                     <path fill="#3F51B5" d="M42,37c0,2.762-2.238,5-5,5H11c-2.761,0-5-2.238-5-5V11c0-2.762,2.239-5,5-5h26c2.762,0,5,2.238,5,5V37z"></path><path fill="#FFF" d="M34.368,25H31v13h-5V25h-3v-4h3v-2.41c0.002-3.508,1.459-5.59,5.592-5.59H35v4h-2.287C31.104,17,31,17.6,31,18.723V21h4L34.368,25z"></path>

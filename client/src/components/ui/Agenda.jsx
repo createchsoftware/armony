@@ -2,11 +2,10 @@ import { useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrash } from '@fortawesome/free-solid-svg-icons';
 
-function Agenda(){
+function Agenda() {
     const [citasItems, setCitasItems] = useState([
-        { id: 1, name: 'Facial Hidratante', price: 800.00, quantity: 1 , image: "../../../pictures/crema2.png" , desc: "Crema olor a coco humectante.", duracion: "60 min", dia: "07/06/2024", hora: "8:00", especialista: "Antonio Esparza" },
-        { id: 2, name: 'Maquillaje', price: 1100.00, quantity: 1, image: "../../../pictures/crema1.png" , desc: "Shampoo con aceite de coco.", duracion: "90 min", dia: "31/03/2024", hora: "14:20", especialista: "Antonio Esparza" },
-        { id: 3, name: 'Depilación', price: 550.00, quantity: 1, image: "../../../pictures/crema1.png" , desc: "Shampoo con aceite de coco.", duracion: "30 min", dia: "29/02/2024", hora: "10:40", especialista: "Antonio Esparza"  }
+        { id: 1, name: 'Facial Hidratante', price: 800.00, quantity: 1, image: "../../../pictures/crema2.png", desc: "Crema olor a coco humectante.", duracion: "60 min", dia: "07/06/2024", hora: "8:00", especialista: "Antonio Esparza" },
+        { id: 2, name: 'Maquillaje', price: 1100.00, quantity: 1, image: "../../../pictures/crema1.png", desc: "Shampoo con aceite de coco.", duracion: "90 min", dia: "31/03/2024", hora: "14:20", especialista: "Antonio Esparza" },
     ]);
     //  ^^^ ES SOLO TEST PARA PROBAR LA FUNCIONALIDAD DEL RESUMEN DE CITAS
 
@@ -22,15 +21,15 @@ function Agenda(){
 
     const totalCitas = citasItems.reduce((total, item) => total + item.quantity, 0);
     const total = citasItems.reduce((acc, item) => acc + item.price * item.quantity, 0).toFixed(2);
-    const iva = (total*(.08)).toFixed(2);
-    const totalIva = (parseFloat(total)+parseFloat(iva)).toFixed(2);
+    const iva = (total * (.08)).toFixed(2);
+    const totalIva = (parseFloat(total) + parseFloat(iva)).toFixed(2);
 
     const citasList = citasItems.map(item => (
-        <li key={item.id} className="flex justify-between shadow-md rounded-3xl p-4 border-2 border-gray mb-4">
-            <img className='rounded-full w-32 h-32' src={item.image} alt={item.name} />
+        <li key={item.id} className="flex justify-between p-4 mb-4 border-2 shadow-md rounded-xl border-gray">
+            <img className='w-24 h-24 mr-6 rounded-full' src={item.image} alt={item.name} />
             <div className='grid justify-center'>
                 <div className='flex justify-self-center'>
-                    <span className='text-l mr-5 font-bold'>{item.name}</span>
+                    <span className='mr-5 font-bold text-l'>{item.name}</span>
                 </div>
                 <div className='flex justify-between'>
                     <span className='text-m'>Duracion: {item.duracion}</span>
@@ -49,25 +48,25 @@ function Agenda(){
         </li>
     ));
 
-    return(
+    return (
         <>
-            <div className='grid my-6'>
-                <h1 className='justify-self-center text-2xl px-8 py-2 border-b-2 border-b-[#ec5766] font-bold mb-10'>
+            <div className='grid'>
+                <h1 className='justify-self-center text-2xl px-8  border-b-2 border-b-[#ec5766] font-bold mb-10'>
                     Resumen de tus citas
                 </h1>
                 <div className='flex justify-between mx-16'>
                     {/* Bloque de servicios */}
                     <div className="rounded-xl shadow-md w-[45%] border-2 border-gray">
                         <div className='grid bg-[rgb(3,109,99)] rounded-t-xl'>
-                            <p className='justify-self-center text-white text-2xl py-2'>Servicios</p>
+                            <p className='py-2 text-lg text-white justify-self-center'>Servicios</p>
                         </div>
                         {/* Contenido de los servicios agendados */}
                         <div className='px-6 pt-6 overflow-y-auto'>
                             {citasItems.length === 0 ? (
                                 <div className='grid'>
-                                    <h4 className="justify-self-center text-xl font-bold mb-10 mt-4">No hay servicios agendados.</h4>
+                                    <h4 className="mt-4 mb-10 text-xl font-bold justify-self-center">No hay servicios agendados.</h4>
                                 </div>
-                            ):(
+                            ) : (
                                 <>
                                     <ul id="">{citasList}</ul>
                                 </>
@@ -79,7 +78,7 @@ function Agenda(){
                                 <div className='flex justify-center'>
                                     <button className='bg-[#ec5766] text-white px-10 py-2 rounded-full'>Agregar</button>
                                 </div>
-                            ):(
+                            ) : (
                                 <div className='flex justify-around mb-4'>
                                     <button className='bg-[#ec5766] text-white px-10 py-2 rounded-full duration-200 hover:bg-[#ffb5a7]'>Modificar</button>
                                     <button className='bg-[#ec5766] text-white px-10 py-2 rounded-full duration-200 hover:bg-[#ffb5a7]'>Agregar</button>
@@ -90,10 +89,10 @@ function Agenda(){
                     {/* Bloque de pago */}
                     <div className="rounded-xl shadow-md w-[45%] border-2 border-gray">
                         <div className='grid bg-[rgb(3,109,99)] rounded-t-xl'>
-                            <p className='justify-self-center text-white text-2xl py-2'>Pago</p>
+                            <p className='py-2 text-lg text-white justify-self-center'>Pago</p>
                         </div>
                         <div className='px-6 pt-6'>
-                            <div className='grid rounded-xl shadow-md border-2 border-gray p-6 mb-4'>
+                            <div className='grid p-6 mb-4 border-2 shadow-md rounded-xl border-gray'>
                                 <div className='flex justify-between mb-2'>
                                     <span>{totalCitas} Servicio(s)</span>
                                     <h1 className='font-bold'>${total}</h1>
@@ -108,21 +107,21 @@ function Agenda(){
                                 </div>
                             </div>
                             {/* Código de descuento */}
-                            <div className='grid justify-center rounded-xl shadow-md border-2 border-gray p-6 mb-4'>
-                                <h3 className='font-bold text-xl justify-self-center mb-4'>Código de descuento</h3>
-                                <form action="" className='border-2 rounded-full border-gray shadow-md'>
+                            <div className='grid justify-center p-6 mb-4 border-2 shadow-md rounded-xl border-gray'>
+                                <h3 className='mb-4 text-xl font-bold justify-self-center'>Código de descuento</h3>
+                                <form action="" className='border-2 rounded-full shadow-md border-gray'>
                                     <input
                                         type="text"
                                         value={descuento}
                                         onChange={handleChange}
                                         maxLength="15"
-                                        className='rounded-full py-2 px-6 text-center'
+                                        className='px-6 py-2 text-center rounded-full'
                                     />
                                     <button type="submit" className='rounded-full text-white bg-[rgb(3,109,99)] py-2 px-10 duration-200 hover:bg-[rgb(69,181,156)] hover:font-bold'>Aplicar</button>
                                 </form>
                             </div>
-                            <div className='flex justify-between rounded-xl shadow-md border-2 border-gray p-6 px-10 mb-4'>
-                                <h4 className='font-bold text-xl'>Total:</h4>
+                            <div className='flex justify-between p-6 px-10 mb-4 border-2 shadow-md rounded-xl border-gray'>
+                                <h4 className='text-xl font-bold'>Total:</h4>
                                 <span className='font-bold text-[rgb(3,109,99)] text-xl'>${totalIva}</span>
                             </div>
                         </div>

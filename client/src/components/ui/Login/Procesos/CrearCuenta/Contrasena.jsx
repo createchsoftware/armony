@@ -40,7 +40,7 @@ const Contrasena = () => {
           >
             Información Básica
           </a>
-          <div className="flex-grow border-t border-gray-400 pl-4 mx-0"></div>
+          <div class="flex-grow border-t border-gray-400 pl-4 mx-0"></div>
           <span className="">
             <FontAwesomeIcon
               style={{ fontSize: "16px", color: "#FFFFFF" }}
@@ -61,7 +61,7 @@ const Contrasena = () => {
           >
             Patologías
           </a>
-          <div className="flex-grow border-t border-gray-400 pl-4 mx-0"></div>
+          <div class="flex-grow border-t border-gray-400 pl-4 mx-0"></div>
           <span className="">
             <FontAwesomeIcon
               style={{ fontSize: "16px", color: "#FFFFFF" }}
@@ -82,7 +82,7 @@ const Contrasena = () => {
           >
             Contraseña
           </a>
-          <div className="flex-grow border-t border-gray-400 pl-4 mx-0"></div>
+          <div class="flex-grow border-t border-gray-400 pl-4 mx-0"></div>
           <span className="">
             <FontAwesomeIcon
               style={{ fontSize: "16px", color: "#FFFFFF" }}
@@ -135,7 +135,7 @@ const Contrasena = () => {
                 </label>
               </div>
               <input
-                id="email"
+                id="contraseña"
                 type="text"
                 placeholder="Ingresa tu nueva contraseña"
                 className="bg-slate-200 rounded-full w-[365px] mb-3 mt-2 py-2 focus:outline-none focus:ring-1 focus:ring-rose-400 focus:border-transparent px-6"
@@ -147,7 +147,7 @@ const Contrasena = () => {
                 </label>
               </div>
               <input
-                id="email"
+                id="nueva-contraseña"
                 type="text"
                 placeholder="Vuelve a ingresar tu nueva contraseña"
                 className="bg-slate-200 rounded-full w-[365px] mb-3 mt-2 py-2 focus:outline-none focus:ring-1 focus:ring-rose-400 focus:border-transparent px-6"
@@ -183,6 +183,7 @@ const Contrasena = () => {
           </div>
           <div className="grid place-content-end mr-8">
             <button
+              id="step3"
               aria-label="Continuar"
               className="bg-rose-400 text-white text-xl rounded-full px-4 py-2 mx-auto hover:bg-red-200"
             >

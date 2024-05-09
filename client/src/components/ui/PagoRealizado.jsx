@@ -1,17 +1,17 @@
 import { useState } from "react";
 
-function PagoRealizado({cerrarPago}){
+function PagoRealizado({ cerrarPago }) {
 
     const [cargando, setCargando] = useState(true);
     setTimeout(() => {
         setCargando(false);
     }, 5000)
 
-    return(
+    return (
         <>
-            <div className="bg-white rounded-xl shadow-md w-1/3">
+            <div className="w-1/3 bg-white shadow-md rounded-xl">
                 <div className="grid bg-[rgb(3,109,99)] rounded-t-xl">
-                    <h3 className="justify-self-center text-white text-2xl py-2 px-6 font-bold">Métodos de pago</h3>
+                    <h3 className="px-6 py-2 text-2xl font-bold text-white justify-self-center">Métodos de pago</h3>
                 </div>
                 <div className="p-8 px-10 duration-200">
                     {cargando ? (
@@ -46,15 +46,15 @@ function PagoRealizado({cerrarPago}){
                                     </g>
                                 </g>
                             </svg>
-                            <div className="grid rounded-xl shadow-md border-2 border-gray py-6">
+                            <div className="grid py-6 border-2 shadow-md rounded-xl border-gray">
                                 <h3 className="text-xl font-bold justify-self-center">Realizando pago</h3>
-                                <div className="loader justify-self-center mt-4" />
+                                <div className="mt-4 loader justify-self-center" />
                             </div>
                         </div>
-                    ):(
+                    ) : (
                         <div className="grid">
-                            <h4 className="text-xl font-bold justify-self-center mb-4">¡Pago exitoso!</h4>
-                            <div className="grid rounded-xl shadow-md border-2 border-gray">
+                            <h4 className="mb-4 text-xl font-bold justify-self-center">¡Pago exitoso!</h4>
+                            <div className="grid border-2 shadow-md rounded-xl border-gray">
                                 <svg className="w-36 justify-self-center" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink" viewBox="0 0 512 512" xmlSpace="preserve" fill="#000000">
                                     <g id="SVGRepo_bgCarrier" strokeWidth="0"></g>
                                     <g id="SVGRepo_tracerCarrier" strokeLinecap="round" strokeLinejoin="round"></g>
@@ -84,14 +84,14 @@ function PagoRealizado({cerrarPago}){
                                         </g>
                                     </g>
                                 </svg>
-                                <svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img" className="iconify iconify--emojione w-20 justify-self-center" preserveAspectRatio="xMidYMid meet" fill="#000000">
+                                <svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img" className="w-20 iconify iconify--emojione justify-self-center" preserveAspectRatio="xMidYMid meet" fill="#000000">
                                     <g id="SVGRepo_bgCarrier" strokeWidth="0"></g><g id="SVGRepo_tracerCarrier" strokeLinecap="round" strokeLinejoin="round"></g>
                                     <g id="SVGRepo_iconCarrier">
                                         <circle cx="32" cy="32" r="30" fill="#4bd37b"></circle>
                                         <path fill="#ffffff" d="M46 14L25 35.6l-7-7.2l-7 7.2L25 50l28-28.8z"></path>
                                     </g>
                                 </svg>
-                                <span className="text-xl font-bold justify-self-center my-6">Monto: $$$</span>
+                                <span className="my-6 text-xl font-bold justify-self-center">Monto: $$$</span>
                             </div>
                             <div className="grid">
                                 <button onClick={cerrarPago} className='bg-[#ec5766] justify-self-center mt-6 text-xl text-white px-10 py-2 rounded-full duration-200 hover:bg-[#ffb5a7]'>Aceptar</button>

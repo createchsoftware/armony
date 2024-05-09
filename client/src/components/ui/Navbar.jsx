@@ -8,12 +8,12 @@ import ModalLogin from './Login/PopupLogin.jsx';
 import MenuServicios from './SubMenuServicios.jsx'
 import MenuPerfil from './MenuPerfil.jsx'
 
-function Navbar( ) {
+function Navbar() {
     const [cart, setCart, showModal, setShowModal] = useState(false);
     const [servicios, setServicios] = useState(false);
     const [perfil, setPerfil] = useState(false);
-    const [log, setLog] = useState(false); //<<< PARA EL INICIO DE SESION
-    const [usuario, setUsuario] = useState(false); //<<< PARA EL INICIO DE SESION
+    const [log, setLog] = useState(false);
+    const [usuario, setUsuario] = useState(false);
     const [items, setItems,] = useState(0);
 
     const toggleCart = () => {
@@ -32,17 +32,17 @@ function Navbar( ) {
         setPerfil(!perfil)
     };
 
-    async function recibido(){
+    async function recibido() {
         const respuesta = await fetch('/api/logueado', {
             method: "GET",
             headers: {
-                "Content-Type":"application/json",
+                "Content-Type": "application/json",
             }
         })
 
         if (!respuesta.ok) {
-           setLog(false);
-           setUsuario(null);
+            setLog(false);
+            setUsuario(null);
         }
 
         let respuestaJson = await respuesta.json();
@@ -57,7 +57,7 @@ function Navbar( ) {
         }
     }
 
-    useEffect (() => {
+    useEffect(() => {
         recibido()
     }, []);
 
@@ -74,7 +74,7 @@ function Navbar( ) {
                         </button>
                         <ul className="menu">
                             <li className="nav-menu-item">
-                                <a href="#" className="menu-link">
+                                <a href="/spa" className="menu-link">
                                     Inicio
                                 </a>
                             </li>
@@ -94,32 +94,32 @@ function Navbar( ) {
                             )}
                             {location.pathname !== "/" && (
                                 <>
-                                    <li className="nav-menu-item cursor-pointer">
+                                    <li className="cursor-pointer nav-menu-item">
                                         <a className="menu-link" onClick={toggleServicio}>
                                             Servicios
                                         </a>
                                     </li>
                                     <li className="nav-menu-item">
-                                        <a href="/spa/tienda" className="menu-link">
+                                        <a href="/spa/productos" className="menu-link">
                                             Productos
                                         </a>
                                     </li><li className="nav-menu-item">
-                                        <a href="#" className="menu-link">
+                                        <a href="/spa/agendar" className="menu-link">
                                             Agendar
                                         </a>
                                     </li>
                                 </>
                             )}
-                            <li className="nav-menu-item cursor-pointer">
-                                { log ? (
-                                    <a className="menu-link flex items-center h-20" onClick={togglePerfil} >
-                                        <img src="../../../pictures/userCl.png" alt="" className='rounded-full w-10 h-10 mr-5'/>
+                            <li className="cursor-pointer nav-menu-item">
+                                {log ? (
+                                    <a className="flex items-center h-20 menu-link" onClick={togglePerfil} >
+                                        <img src="../../../pictures/userCl.png" alt="" className='w-10 h-10 mr-5 rounded-full' />
                                         {usuario}
-                                    </a>  
+                                    </a>
                                 ) : (
                                     <ModalLogin actionElement={
                                         <a href="#" className="menu-link menu-is">Inicia sesión</a>
-                                    }/>
+                                    } />
                                 )}
                             </li>
                             {location.pathname !== "/" && (
@@ -129,11 +129,11 @@ function Navbar( ) {
                                     </a>
                                 </li>
                             )}
-                            {location.pathname == "/spa/tienda" && (
+                            {location.pathname == "/spa/productos" && (
                                 <li className="nav-menu-item">
                                     <button className="nav-cart" aria-label="Abrir Carrito" onClick={toggleCart}>
                                         <FontAwesomeIcon icon={faCartShopping} />
-                                        <span className="badge badge-pill badge-warning text-xs">
+                                        <span className="text-xs badge badge-pill badge-warning">
                                             {items}
                                         </span>
                                     </button>
@@ -166,7 +166,7 @@ function Navbar( ) {
                     </div>
                 </div>
             )}
-            
+
         </>
     )
 }

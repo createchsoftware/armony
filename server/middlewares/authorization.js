@@ -1,5 +1,9 @@
 import jsonwebtoken from 'jsonwebtoken';
-import { jwt } from "../data/datos.js";
+import dotenv from 'dotenv';
+import mysql from "mysql2";
+
+
+dotenv.config();
 
 async function logeado(solicitud, respuesta, siguiente){
     let hizo_login = await revisar_cookie(solicitud);
@@ -15,10 +19,11 @@ async function logeado(solicitud, respuesta, siguiente){
 async function no_logeado(solicitud, respuesta, siguiente){
     let hizo_login = await revisar_cookie(solicitud);
     if(hizo_login == false) {
+        console.log("Feliz cumpleanos")
         return siguiente();
     }
     else{
-        return respuesta.redirect('/admin'); // si ya esta logueado que no lo deje entrar a register o login, que lo mande a admin
+        return respuesta.redirect('/'); // si ya esta logueado que no lo deje entrar a register o login, que lo mande a admin
     }
         
 }
@@ -35,51 +40,37 @@ async function no_logeado(solicitud, respuesta, siguiente){
 
 
 async function verificar_cookie(solicitud,respuesta){
-        if (solicitud.headers.cookie !== undefined && solicitud.headers.cookie.startsWith("Naruto_cookie=")) {
-            let galletas = solicitud.headers.cookie.split("; ");
-            let galleta = galletas.find(galleta => galleta.startsWith("Naruto_cookie=")).slice(14);
 
-            try{
-                let decodificada = await jsonwebtoken.verify(galleta, jwt.SECRET);
-                let consulta = "SELECT * FROM usuario WHERE pkIdUsuario = ? OR email = ?"
-                let parametros = [decodificada.user,decodificada.user]
-    
-    
-                // utilizamos una promesa para esperar que la funcion asincrona se termine
-                let resultadoConsulta = new Promise(async (resolve, reject) => {
-                    let [results] = await solicitud.database.query(consulta, parametros);
-                    if (results.length === 0) {
-                        reject();
-                        respuesta.send({logueado: false});
-                    } else {
-                        resolve(results);
-                    }
-                });
-    
-                let resultados = await resultadoConsulta;
-    
-                if (resultados.length <= 0){
-                    respuesta.send({logueado: false});
-                    
-                }
-                else {
-                    respuesta.send({logueado: true, usuario: resultados[0].nombre, nombre: resultados[0].nombre + " " + resultados[0].apellidoP + " " + resultados[0].apellidoM, email: resultados[0].email});
-                    
-                }
-            
-    
-    
+    if(solicitud.headers.cookie == undefined){
+        respuesta.send({logueado:false});
+        
+    }
+    else{
+        let galletas = solicitud.headers.cookie.split("; ");
+        let galleta = galletas.find(galleta => galleta.startsWith("Naruto_cookie="))
+        
+        if(galleta){
+                // la galleta si existe y debe hacer muchos mas pasos
+
+                galleta = galleta.slice(14);  // 14 es la longitud del nombre
+         
+                // El slice() es para cortar el nombre de la cookie, ya que no lo ocupamos para poder trabajar con ello
                 
+                    let decodificada = await jsonwebtoken.verify(galleta, process.env.JWT_SECRET);
                 
-            }
-            catch(error){
-                console.log(error)
-                console.log("Hubo un error");
-                respuesta.send({logueado:false});
-            }
-        } else {
-            respuesta.send({logueado:false});
+                    
+                    respuesta.send({logueado:true,nombre:decodificada.nombre,apellidoP:decodificada.paterno,apellidoM:decodificada.materno,email:decodificada.correo,telefono:decodificada.telefono,pass:decodificada.contraseña,imagen:decodificada.imagen,calle:decodificada.calle,clave:decodificada.user,colonia:decodificada.colonia,numero:decodificada.numero,codigoP:decodificada.postal,fechaNac:decodificada.nacimiento});
+                        
+                    
+                    
+                
         }
+        else{
+            console.log("la galleta naruto para iniciar sesion no existe");
+        }
+           
+        
+    }
 }
 
 
@@ -93,38 +84,34 @@ async function revisar_cookie(solicitud){
     }
     else{
         let galletas = solicitud.headers.cookie.split("; ");
-        let galleta = galletas.find(galleta => galleta.startsWith("Naruto_cookie=")).slice(14);
+        let galleta = galletas.find(galleta => galleta.startsWith("Naruto_cookie="));
          
-          // El slice() es para cortar el nombre de la cookie, ya que no lo ocupamos para poder trabajar con ello
-        
-        try{
-            let decodificada = await jsonwebtoken.verify(galleta, jwt.SECRET);
-            let consulta = "SELECT * FROM usuario WHERE pkIdUsuario = ? OR email = ?"
-            let parametros = [decodificada.user,decodificada.user]
+        if(galleta){
+
+            galleta = galleta.slice(14);  
+
+                let decodificada = await jsonwebtoken.verify(galleta, process.env.JWT_SECRET);
+                let consulta = "select * from usuario where pkIdUsuario = ?";
 
 
-            // utilizamos una promesa para esperar que la funcion asincrona se termine
-            let resultadoConsulta = new Promise(async (resolve, reject) => {
-                let [results] = await solicitud.database.query(consulta, parametros)
-                    if (results.length <= 0) {
-                        reject();
-                    } else {
-                        resolve(resultados);
-                    }
-                });
+                // utilizamos una promesa para esperar que la funcion asincrona se termine
+                let resultadoConsulta = new Promise(async (resolve, reject) => {
+                    let [fields] = await solicitud.database.query(mysql.format(consulta, decodificada.user))
+                        resolve(fields);
+                    });
 
-            let resultados = await resultadoConsulta;
+                let resultados = await resultadoConsulta;
 
-            if (resultados.length == 0)
-                return false;
-            else 
-                return true;
-        
+                if (resultados.length == 0)
+                    return false;
+                else 
+                    return true;
+
         }
-        catch(error){
-            console.log("Hubo un error");
+        else{
             return false;
         }
+          // El slice() es para cortar el nombre de la cookie, ya que no lo ocupamos para poder trabajar con ello
      
     }
 

@@ -1,117 +1,125 @@
+import { endConnection } from "../connection.js";
 import mysql from "mysql2";
+import { readEmpleadoById } from "./queryEmpleado.js";
 
-//se cambiara por un prodedure
-export const addCita=(conexion,Data,callback)=>{
-   
-    conexion.query('insert into cita(fkVenta,fkEmpleado,fkSucursal,fecha,horaIn'+
-        +'horaFin,Descripcion,estado) values(?,?,?,?,?,?,?,?)',
-            [Data.idVenta,
-            Data.IdEmpleado,
-            Data.idSucursal,
-            Data.fecha,
-            Data.horaIn,
-            Data.horaFin,
-            Data.descripcion,
-            Data.estado],(err,result)=>{
-            if(err){
-           callback(err,null)
-           return
-            }
-            callback(null,result)
-        })
-        }
-    
-    
-        export async function upCita(conexion,Data){
-            try{
-            const call='CALL updCita(?,?,?,?,?,?,?)'
-            const query = mysql.format(call,[
-                Data.idVenta,
-                Data.IdEmpleado,
-                Data.idSucursal,
-                Data.nuevaFecha,
-                Data.horaIn,
-                Data.descripcion,
-                Data.estado]);
-                
-            const [rows,fields]=await conexion.query(query);
-                    return rows;
-                    
-            }catch(err){
-            console.log("Ha ocurrido un error al ejecutar el query: ",err)
-            throw err;
-            }
-          
-        }
+const messageError = "Ha ocurrido un error al ejecutar el query: ";
 
-//query para buscar empleados de determinada especialidad 
-//se cambiara por un prodedure
-export async function searchEmpleadobyCita(conexion,Data){
-try{
-
-    const call=`SELECT * FROM  empleado where fkusuario in(select 
-        fkEmpleado from empEspecialidad where fkEspecialidad in
-        (select pkidEspecialidad from especialidades where nombre =?))`
-    const query = mysql.format(call,[
-        Data.espe])
-
-const [rows,fields]=await conexion.query(query)
-return rows;
-}catch(err){
-console.log("Ha ocurrido un error al ejecutar el query: ",err)
+// CREATE
+export async function createCitas(connection, data) {
+  try {
+    let insertCita = "CALL addCita(?, ?, ?, ?, ?, ?, ?, ?, ?)";
+    let query = mysql.format(insertCita, [
+      data.idVenta,
+      data.idEmp,
+      data.idPilar,
+      data.idServ,
+      data.fecha,
+      data.horaI,
+      data.horaF,
+      data.descr,
+      data.estado,
+    ]);
+    const [rows, fields] = await connection.query(query);
+    endConnection();
+    return rows;
+  } catch (err) {
+    // Capturamos errores de ejecucion de query
+    console.error(messageError, err); // Mostramos errores por consola
+  }
 }
-         }   
 
-//se cambiara por un prodedure
-export async function getAllCitaById (conexion,data,res){
-            try{
-                const call=`SELECT *FROM  cita where fkVenta in(
-                    select pkIdVenta from venta where fkCliente in (
-                    select fkUsuario from cliente where fkUsuario =?))`
+// VENTA CITAS
+export async function ventaCita(connection, data) {
+  try {
+    let insertVentaCita =
+      "CALL addVentaCitaOnline(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+    let query = mysql.format(insertVentaCita, [
+      data.pilar,
+      data.idCliente,
+      data.name,
+      data.phone,
+      data.tarjeta,
+      data.monedero,
+      data.estadoPago,
+      data.servicio,
+      data.idEmp,
+      data.fechaPago,
+      data.horaPago,
+      data.descr,
+      data.subTotal,
+      data.total,
+      data.impuesto,
+    ]);
+    const [rows, fields] = await connection.query(query);
+    endConnection();
+    return rows;
+  } catch (err) {
+    // Capturamos errores de ejecucion de query
+    console.error(messageError, err); // Mostramos errores por consola
+  }
+}
 
-                    const query = mysql.format(call,[data.ids])
-                const [rows,fields]=await conexion.query(query);
-                    return rows;
-            }catch(err){
-            console.log("Ha ocurrido un error al ejecutar el query: ",err)
-            throw err;
-            }
-               
-                }
+// READ
+export async function readCitas(connection, data) {
+  try {
+  } catch (err) {
+    // Capturamos errores de ejecucion de query
+    console.error(messageError, err); // Mostramos errores por consola
+  }
+}
 
-                //se cambiara por un prodedure
-                export async function getCitasPendById(conexion,data,res){
-                    try{
-                        const call=`SELECT *FROM  cita where fkVenta in(
-                            select pkIdVenta from venta where fkCliente in (
-                            select fkUsuario from cliente where fkUsuario =?))and estado=0 and fecha=?`
-        
-                            const query = mysql.format(call,[
-                                data.ids,data.fechas])
-                        const [rows,fields]=await conexion.query(query);
-                            return rows;
-                    }catch(err){
-                    console.log("Ha ocurrido un error al ejecutar el query: ",err)
-                    throw err;
-                    }
-                       
-                        }
+// UPDATE
+export async function updateCita(connection, data) {
+  try {
+  } catch (err) {
+    // Capturamos errores de ejecucion de query
+    console.error(messageError, err); // Mostramos errores por consola
+  }
+}
 
-                        
-//se cambiara por un procedure
-export function delCita(conexion,data,res){
-    try{
-const call='delete from cita where fkVenta =?'
-const query = mysql.format(call,[data.id])
- conexion.query(query)
-}catch(err){
-    console.log("Ha ocurrido un error al ejecutar el query: ",err)
-    throw err;
+// DELETE
+export async function deleteCita(connection, data) {
+  try {
+  } catch (err) {
+    // Capturamos errores de ejecucion de query
+    console.error(messageError, err); // Mostramos errores por consola
+  }
+}
+
+// OBTENER HORAS DISPONIBLES
+export async function horasDisponibles(connection, data) {
+  try {
+    horasNoDispo = await horasOcupadas(connection, data);
+
+    let horasDispoQuery = "CALL getHorasOcupadas(?, ?, ?)";
+    let query = mysql.format(horasDispoQuery, [
+      data.idServ,
+      data.idEmp,
+      data.fechaCita,
+    ]);
+    const [rows, fields] = await connection.query(query);
+    endConnection();
+    return rows[0];
+  } catch (err) {
+    // Capturamos errores de ejecucion de query
+    console.error(messageError, err); // Mostramos errores por consola
+  }
+}
+
+// HORAS DISPONIBLES => ARRAY
+export async function horasDipoArray(data) {
+  try {
+    let horasArr = [[], []]; // En el primer arreglo se guarda la hora y en el segundo la info de la cita
+    let horas = data; // Almacenamos las horas disponibles obtenidas de la funcion horasDisponibles
+    for (let i = 0; i < horas.length; i++) {
+      // Iteramos hasta el final del arreglo llenandolo en el arreglo de horas disponibles
+      horasArr[i] = horas[i];
+      horasArr[i][i] = null;
     }
-       
+    console.log(horasArr);
+    return horasArr;
+  } catch (err) {
+    // Capturamos errores de ejecucion de query
+    console.error(messageError, err); // Mostramos errores por consola
+  }
 }
-
-
-                
-    
-          

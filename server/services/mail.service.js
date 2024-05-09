@@ -4,6 +4,7 @@ import dotenv from 'dotenv';
 dotenv.config();
 
 
+
 // transporter es la configuracion del correo emisor
 let transporter = nodemailer.createTransport({
     host: process.env.EMAIL_HOST,
@@ -16,6 +17,7 @@ let transporter = nodemailer.createTransport({
 
 });
 
+
 async function CrearCuentaEmail(direccion,token,full_name,userID){
     return await transporter.sendMail({
         from:process.env.EMAIL_USER,
@@ -26,8 +28,74 @@ async function CrearCuentaEmail(direccion,token,full_name,userID){
 }
 
 
+async function Cambio_de_correo(token,full_name,id,correo){
+    return await transporter.sendMail({
+        from:process.env.EMAIL_USER,
+        to:correo,
+        subject:'Armony te notifica que acabas de cambiar de correo',
+        html:cuerpoCorreoNuevo(token,full_name,id,correo)
+    })
+}
 
 
+
+
+
+
+
+
+function cuerpoCorreoNuevo(token,full_name,id,correo){
+    return `
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <style>
+            *{
+                padding: 0;
+                margin: 0;
+            }
+
+            .body-email li{
+                text-decoration:underline;
+                list-style: none;
+            }
+
+            .body-email{
+                background-color: #82E0AA;
+                padding: 8px;
+                display: flex;
+                flex-direction: column;
+            }
+
+            .body-email .header{
+                position: relative;
+                width: 100%;
+                background-color: aliceblue;
+                font-size: 25px;
+                padding: 2px;
+            }
+            
+        </style>
+    </head>
+    <body>
+        <div class="body-email">
+        <div class="header">
+            <span>Cambio de correo exitoso del usuario ${id}</span>
+        </div>
+        <div class="body">
+            <span>Tu nuevo correo ya fue registrado, la proxima vez que inicies sesion, hazlo con tu correo</span>
+            <ul>
+                <li><strong>nombre: </strong>${full_name}</li>
+                <li><strong>nuevo correo: </strong>${correo}</li>
+            </ul>
+        </div>
+            
+        </div>
+    </body>
+    </html>
+    `;
+}
 
 function cuerpoCorreo(token, full_name, userID){
 
@@ -84,4 +152,11 @@ function cuerpoCorreo(token, full_name, userID){
     `;
 };
 
-export default CrearCuentaEmail;
+
+
+
+
+export const methods = {
+    CrearCuentaEmail,
+    Cambio_de_correo
+}

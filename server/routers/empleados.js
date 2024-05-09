@@ -1,12 +1,12 @@
 import express from "express";
-import { enableConnect } from "../db/connection.js";
+import { conexion } from "../DB/connection.js";
 import {
   createEmpleado,
   readEmpleadoById,
   readEmpleadoByNombre,
   updateEmpleado,
   deleteEmpleadoById,
-} from "../db/query/queryEmpleado.js";
+} from "../DB/query/queryEmpleado.js";
 
 // Router
 export const routerEmpleado = express.Router();
@@ -14,28 +14,13 @@ export const routerEmpleado = express.Router();
 // Middleware
 routerEmpleado.use(express.json()); // Analiza las request entrantes con carga JSON basado en body-parse
 
-const connection = await enableConnect(); // Almacenamos conexion de base de datos
+// const conexion = await enableConnect(); // Almacenamos conexion de base de datos
 const messageError = "Ha ocurrido un error al procesar tu peticion: ";
 
 // CREATE FUNCIONAL
 routerEmpleado.post("/create", async (req, res) => {
   try {
-    const {
-      name,
-      ap,
-      am,
-      email,
-      phone,
-      pass,
-      tipo,
-      img,
-      checkIn,
-      checkOut,
-      calle,
-      colonia,
-      numero,
-    } = req.body;
-    const resultado = await createEmpleado(connection, {
+    const resultado = await createEmpleado(conexion, {
       name: req.body.name,
       ap: req.body.ap,
       am: req.body.am,
@@ -49,8 +34,8 @@ routerEmpleado.post("/create", async (req, res) => {
       calle: req.body.calle,
       colonia: req.body.colonia,
       numero: req.body.numero,
-    }); // Parametros
-
+      cp: req.body.cp,
+    }); // Parametros obtenidos por body
     res
       .status(201) // Status created
       .json({ message: "Empleada creada exitosamente", data: resultado }); // Enviamos informacion en formato JSON
@@ -64,13 +49,15 @@ routerEmpleado.post("/create", async (req, res) => {
 // READ BY ID FUNCIONAL
 routerEmpleado.get("/read", async (req, res) => {
   try {
-    const { idEmp } = req.body;
-    const resultado = await readEmpleadoById(connection, {
+    const resultado = await readEmpleadoById(conexion, {
       idEmp: req.body.idEmp,
     }); // Parametros enviados por body
     res
-      .status(202) // Status Accepted
-      .json({ message: "Empleada encontrada con exito", data: resultado }); // Enviamos informacion en formato JSON
+      .status(302) // Status found
+      .json({
+        message: "Empleada encontrada con exito",
+        data: resultado,
+      }); // Enviamos informacion en formato JSON
   } catch (err) {
     // Capturamos errores
     console.error(messageError, err); // Mostramos errores por consola
@@ -81,14 +68,13 @@ routerEmpleado.get("/read", async (req, res) => {
 // READ BY NAME FUNCIONAL
 routerEmpleado.get("/read/name", async (req, res) => {
   try {
-    const { name, ap, am } = req.body;
-    const resultado = await readEmpleadoByNombre(connection, {
+    const resultado = await readEmpleadoByNombre(conexion, {
       name: req.body.name,
       ap: req.body.ap,
       am: req.body.am,
     }); // Parametros y ejecutamos la peticion
     res
-      .status(202) // Status Accepted
+      .status(302) // Status found
       .json({ message: "Se encontro el usuario", data: resultado }); // Enviamos informacion en formato JSON
   } catch (err) {
     // Capturamos errores
@@ -100,8 +86,7 @@ routerEmpleado.get("/read/name", async (req, res) => {
 // UPDATE FUNCIONAL
 routerEmpleado.patch("/update", async (req, res) => {
   try {
-    const { idEmp, checkIn, checkOut, act, calle, colonia, numero } = req.body;
-    const resultado = await updateEmpleado(connection, {
+    const resultado = await updateEmpleado(conexion, {
       idEmp: req.body.idEmp,
       checkIn: req.body.checkIn,
       checkOut: req.body.checkOut,
@@ -121,12 +106,11 @@ routerEmpleado.patch("/update", async (req, res) => {
 // DELETE FUNCIONAL
 routerEmpleado.delete("/delete", async (req, res) => {
   try {
-    const { idEmp } = req.body;
-    const resultado = await deleteEmpleadoById(connection, {
+    const resultado = await deleteEmpleadoById(conexion, {
       idEmp: req.body.idEmp,
     }); // Parametro por body
     res
-      .status(202) // Status Accepted
+      .status(204) // Status NO-CONTENT
       .json({ message: "Empleada eliminada correctamente", data: resultado }); // Enviamos informacion en formato JSON
   } catch (err) {
     // Capturamos errores

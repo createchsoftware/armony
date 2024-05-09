@@ -1,15 +1,14 @@
 import Navbar from "../../components/ui/Navbar.jsx";
 import Recuperacion from "../../components/ui/Login/Procesos/Contraseña/Recuperacion.jsx";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faBars } from "@fortawesome/free-solid-svg-icons";
-
-const passwordReset = () => {
+import Footer from "../../components/ui/FooterSecundario.jsx";
+const passwordResetRecuperacion = () => {
   return (
     <>
       <Navbar />
       <Recuperacion />
+      <Footer />
     </>
   );
 };
 
-export default passwordReset;
+export default passwordResetRecuperacion;

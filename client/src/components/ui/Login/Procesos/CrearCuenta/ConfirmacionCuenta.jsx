@@ -39,7 +39,7 @@ const ConfirmacionCuenta = () => {
           >
             Información básica
           </a>
-          <div className="flex-grow border-t border-gray-400 pl-4 mx-0"></div>
+          <div class="flex-grow border-t border-gray-400 pl-4 mx-0"></div>
           <span className="">
             <FontAwesomeIcon
               style={{ fontSize: "16px", color: "#FFFFFF" }}
@@ -60,7 +60,7 @@ const ConfirmacionCuenta = () => {
           >
             Patologías
           </a>
-          <div className="flex-grow border-t border-gray-400 pl-4 mx-0"></div>
+          <div class="flex-grow border-t border-gray-400 pl-4 mx-0"></div>
           <span className="">
             <FontAwesomeIcon
               style={{ fontSize: "16px", color: "#FFFFFF" }}
@@ -81,7 +81,7 @@ const ConfirmacionCuenta = () => {
           >
             Contraseña
           </a>
-          <div className="flex-grow border-t border-gray-400 pl-4 mx-0"></div>
+          <div class="flex-grow border-t border-gray-400 pl-4 mx-0"></div>
           <span className="">
             <FontAwesomeIcon
               style={{ fontSize: "16px", color: "#FFFFFF" }}
@@ -119,12 +119,12 @@ const ConfirmacionCuenta = () => {
           </h2>
         </div>
         <div className="grid grid-cols-1 my-auto place-items-end">
-          <button
+          <a href="/"><button
             aria-label="Regresar al inicio"
             className="w-52 bg-rose-400 text-white text-xl rounded-full px-4 py-2 mr-8 hover:bg-red-200"
           >
             Regresar al inicio
-          </button>
+          </button></a>
         </div>
       </div>
     </div>

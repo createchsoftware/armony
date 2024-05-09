@@ -81,7 +81,7 @@ const NuevaContr = () => {
           >
             Nueva Contraseña
           </a>
-          <div className="flex-grow border-t border-gray-400 pl-4 mx-0"></div>
+          <div className="flex-grow border-t border-[#036C65] pl-4 mx-0"></div>
           <span className="">
             <FontAwesomeIcon
               style={{ fontSize: "16px", color: "#FFFFFF" }}
@@ -89,7 +89,7 @@ const NuevaContr = () => {
               className="relative left-6 bottom-2"
             />
             <FontAwesomeIcon
-              style={{ fontSize: "36px" }}
+              style={{ fontSize: "36px", color: "#036C65" }}
               icon={faCircle}
             ></FontAwesomeIcon>
           </span>
@@ -97,6 +97,7 @@ const NuevaContr = () => {
             href=""
             style={{
               fontFamily: "ABeeZee",
+              color: "#036C65",
             }}
             className="text-base mx-1"
           >
@@ -112,12 +113,12 @@ const NuevaContr = () => {
           </h2>
           <h2 className="text-gray-500">¡No olvides tu contraseña!</h2>
         </div>
-        <button
+        <a href="/"><button
           aria-label="Finalizar"
           className="w-36 bg-rose-400 text-white text-xl rounded-full px-4 py-2 mx-auto my-10 hover:bg-red-200"
         >
           Finalizar
-        </button>
+        </button></a>
       </div>
     </div>
   );

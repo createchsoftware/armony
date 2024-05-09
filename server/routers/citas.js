@@ -1,100 +1,90 @@
 import express from "express";
+import { conexion } from "../DB/connection.js";
+import {
+  horasDisponibles,
+  horasDipoArray,
+  createCitas,
+  ventaCita,
+} from "../DB/query/queryCitas.js";
+
+// Router
 export const routerCitas = express.Router();
-import { addCita,
-      upCita,
-      searchEmpleadobyCita,
-      getAllCitaById,
-      getCitasPendById,
-      delCita} from "../db/query/queryCitas.js";
-import { enableConnect } from "../db/connection.js";
 
+// Middleware
+routerCitas.use(express.json()); // Analiza las request entrantes con carga JSON basado en body-parse
 
-routerCitas.use(express.json()); 
+// const conexion = await enableConnect(); // Almacenamos conexion de base de datos
+const messageError = "Ha ocurrido un error al procesar tu peticion: ";
 
-
-//funcional
-//crear un cita
-routerCitas.post("/adCita", async (req, res) => {
-try{
-const data= req.body;
-   const connection = await enableConnect();
-     addCita(connection,data)
-   res.status(201).json({ message: 'Se creó con éxito la cita'});
-}catch(err){
-      console.error(err);
-     res.status(500).json({ error: 'Hubo un problema',err});
-}
-  });
-
-//funcional
-//actualizar una cita
-routerCitas.post("/upCita", async (req, res) => {
-      try{
-            const Data= req.body;
-         const connection = await enableConnect();
-      await upCita(connection,Data) /*el idventa no debe cambiar pero asi esta el procedura,si esto se cambiara no seria seguro*/
-res.status(201).send({message:'se actualizo con exito la cita'})
-      }catch(err){
-            res.status(500).json('ocurrio un problema',err)
-      }
-        });
-
-//funcional 
-//se cambiara para que regrese la  disponibilidad de horario
-routerCitas.get('/searchEmpleadoByEsp/especialidad/:esp', async (req,res)=>{
-      try{
-      const {esp}= req.params   
-      const connection = await enableConnect();
-      const resultado= await searchEmpleadobyCita(connection,{ espe:esp })
-      res.send(JSON.stringify(resultado));
-      }catch(err){
-            res.status(500).json('ocurrio un problema con la busqueda',err)
-
-      }
-      
-})
-
-//funcional
-//regresa todas las citas de cierta id
-routerCitas.get("/getCitaById/:id", async (req, res) => {
-      try {
-            const {id}=req.params
-        const connection = await enableConnect();
-        const resultado = await getAllCitaById(connection,{ids:id});
-        res.send(JSON.stringify(resultado));
-      } catch (err) {
-        console.error("Ha ocurrido un error: ", err);
-        res.status(500).send("Ha ocurrido un error al procesar tu solicitud");
-      }
+// CREATE FUNCIONAL
+routerCitas.post("/create", async (req, res) => {
+  try {
+    const resultado = await createCitas(conexion, {
+      idVenta: req.body.idVenta,
+      idEmp: req.body.idEmp,
+      idPilar: req.body.idPilar,
+      idServ: req.body.idServ,
+      fecha: req.body.fecha,
+      horaI: req.body.horaI,
+      horaF: req.body.horaF,
+      descr: req.body.descr,
+      estado: req.body.estado,
     });
+    res
+      .status(200)
+      .json({ message: "Cita creada correctamente", data: resultado });
+  } catch (err) {
+    // Capturamos errores
+    console.error(messageError, err); // Mostramos errores por consola
+    res.status(500).send(messageError); // Enviamos un error INTERNAL SERVER ERROR y el error al navegador
+  }
+});
 
-    //funcional
-    //regresa las citas pendientes por id
-    routerCitas.get("/CitasPendById/:id/:fecha", async (req, res) => {
-      try {
-            const {id,fecha}=req.params
-            const connection = await enableConnect();
-            const resultado = await getCitasPendById(connection,{ids:id,fechas:fecha});
-            res.send(JSON.stringify(resultado));   
-
-      } catch (err) {
-        console.error("Ha ocurrido un error: ", err);
-        res.status(500).send("Ha ocurrido un error al procesar tu solicitud");
-      }
+routerCitas.post("/venta", async (req, res) => {
+  try {
+    const resultado = await ventaCita(conexion, {
+      pilar: req.body.pilar,
+      idCliente: req.body.idCliente,
+      name: req.body.name,
+      phone: req.body.phone,
+      tarjeta: req.body.tarjeta,
+      monedero: req.body.monedero,
+      estadoPago: req.body.estadoPago,
+      servicio: req.body.servicio,
+      idEmp: req.body.idEmp,
+      fechaPago: req.body.fechaPago,
+      horaPago: req.body.horaPago,
+      descr: req.body.descr,
+      subTotal: req.body.subTotal,
+      total: req.body.total,
+      impuesto: req.body.impuesto,
     });
+    res
+      .status(200)
+      .json({
+        message: "La venta de cita fue hecha con exito",
+        data: resultado,
+      });
+  } catch (err) {
+    // Capturamos errores
+    console.error(messageError, err); // Mostramos errores por consola
+    res.status(500).send(messageError); // Enviamos un error INTERNAL SERVER ERROR y el error al navegador
+  }
+});
 
-
-//funcional
-    routerCitas.get("/delCitas/:id", async (req, res) => {
-      try {
-            const {id}=req.params
-   const connection = await enableConnect();
-          delCita(connection,{id});
-            res.status(201).send({message:'se elimino con exito la cita'})
-      } catch (err) {
-        console.error("Ha ocurrido un error: ", err);
-        res.status(500).send("Ha ocurrido un error al procesar tu solicitud");
-      }
+routerCitas.get("/disponibles", async (req, res) => {
+  try {
+    const resultado = await horasDisponibles(conexion, {
+      idServ: req.body.idServ,
+      idEmp: req.body.idEmp,
+      fechaCita: req.body.fecha,
     });
-    
-    
+    const horas = await horasDipoArray(resultado);
+    console.table(horas);
+    res.status(200).json({ message: "Horas disponibles: ", data: horas });
+  } catch (err) {
+    // Capturamos errores
+    console.error(messageError, err); // Mostramos errores por consola
+    res.status(500).send(messageError); // Enviamos un error INTERNAL SERVER ERROR y el error al navegador
+  }
+});

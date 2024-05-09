@@ -42,7 +42,7 @@ const Verificacion = () => {
           >
             Recuperación
           </a>
-          <div className="flex-grow border-t border-gray-400 pl-4 mx-0"></div>
+          <div className="flex-grow border-t border-[#036C65] pl-4 mx-0"></div>
           <span className="">
             <FontAwesomeIcon
               style={{ fontSize: "16px", color: "#FFFFFF" }}
@@ -50,7 +50,7 @@ const Verificacion = () => {
               className="relative left-6 bottom-2"
             />
             <FontAwesomeIcon
-              style={{ fontSize: "36px" }}
+              style={{ fontSize: "36px", color: "#036C65" }}
               icon={faCircle}
             ></FontAwesomeIcon>
           </span>
@@ -58,6 +58,7 @@ const Verificacion = () => {
             href=""
             style={{
               fontFamily: "ABeeZee",
+              color: "#036C65",
             }}
             className="text-base mx-1"
           >
@@ -161,20 +162,20 @@ const Verificacion = () => {
         </a>
         <div className="grid grid-cols-2 my-auto">
           <div className="grid place-content-start ml-8">
-            <button
+          <a href="/"><button
               aria-label="Cancelar"
               className="bg-white text-rose-400 text-xl rounded-full px-4 py-2 mx-auto hover:bg-red-50 ring-2 ring-rose-400"
             >
               Cancelar
-            </button>
+            </button></a>
           </div>
           <div className="grid place-content-end mr-8">
-            <button
+          <a href="/spa/resetPassword/NuevaContrasena"><button
               aria-label="Continuar"
               className="bg-rose-400 text-white text-xl rounded-full px-4 py-2 mx-auto hover:bg-red-200"
             >
               Continuar
-            </button>
+            </button></a>
           </div>
         </div>
       </div>
