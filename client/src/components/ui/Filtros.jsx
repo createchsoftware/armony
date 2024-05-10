@@ -118,58 +118,6 @@ const filters = [
         ],
     },]
 
-
-// const filters = [
-// {
-//     id: 'precio',
-//     name: 'Precio',
-//     options: [
-//         { value: 'white', label: 'Blanco', checked: false },
-//         { value: 'beige', label: 'Beige', checked: false },
-//         { value: 'blue', label: 'Azul', checked: true },
-//         { value: 'brown', label: 'Café', checked: false },
-//         { value: 'green', label: 'Verde', checked: false },
-//         { value: 'purple', label: 'Morado', checked: false },
-//     ],
-// },
-// {
-//     id: 'valoraciones',
-//     name: 'Valoraciones',
-//     options: [
-//         { value: 'new', label: 'Nuevos', checked: false },
-//         { value: 'sale', label: 'Ofertas', checked: false },
-//         { value: 'travel', label: 'Próximamente', checked: true },
-//         { value: 'organization', label: 'Organización', checked: false },
-//         { value: 'accessories', label: 'Accesorios', checked: false },
-//     ],
-// },
-// {
-//     id: 'Marca',
-//     name: 'Marca',
-//     options: [
-//         { value: 'ponds', label: 'POND’S', checked: false },
-//         { value: 'hidraSense', label: 'Hidra Sense', checked: false },
-//         { value: 'savasana', label: 'Savasana', checked: false },
-//         { value: 'ceraVe', label: 'CeraVe', checked: false },
-//         { value: 'cetaphil', label: 'Cetaphil', checked: false },
-//         { value: 'mizon', label: 'Mizon', checked: false },
-//         { value: 'gojo', label: 'Gojo', checked: false },
-//     ],
-// },
-// {
-//     id: 'masVendidos',
-//     name: 'Más Vendidos',
-//     options: [
-//         { value: '2l', label: '2L', checked: false },
-//         { value: '6l', label: '6L', checked: false },
-//         { value: '12l', label: '12L', checked: false },
-//         { value: '18l', label: '18L', checked: false },
-//         { value: '20l', label: '20L', checked: false },
-//         { value: '40l', label: '40L', checked: true },
-//     ],
-// },
-// ]
-
 export default function Filtros() {
     const [mobileFiltersOpen, setMobileFiltersOpen] = useState(false)
     const [sortOption, setSortOption] = useState(ordenamiento[0])
@@ -180,9 +128,6 @@ export default function Filtros() {
     const [rating, setRating] = useState(0);
     const [precio, setPrecio] = useState(0);
 
-
-    //    const [filter, setFilter] = useState();
-
     //useEffect from api call
     // useEffect(() => {
     //     fetch('/products')
@@ -191,6 +136,7 @@ export default function Filtros() {
     //         .catch(err => console.log(err))
     // }, [])
 
+    // Función para manejar cambios en las categorías
     const handleCategoryChange = (label, isChecked) => {
         setCategories(prev => {
             if (isChecked) {
@@ -201,6 +147,7 @@ export default function Filtros() {
         });
     };
 
+    // Función para manejar cambios en las marcas
     const handleMarcaChange = (label, isChecked) => {
         setMarcas(prev => {
             if (isChecked) {
@@ -221,22 +168,25 @@ export default function Filtros() {
         setPrecio(newValue);
     };
 
-    useEffect(() => {
-        fetch("/api/admin/productos/getProducts")
-            .then(response => response.json())
-            .then(data => {
-                setFilteredProducts(data);
+    // useEffect para obtener los productos
+    // useEffect(() => {
+    //     fetch("/api/admin/productos/getProducts")
+    //         .then(response => response.json())
+    //         .then(data => {
+    //             setFilteredProducts(data);
 
-            })
-            .catch(error => {
-                console.log('error', error);
-            });
-    }, []);
+    //         })
+    //         .catch(error => {
+    //             console.log('error', error);
+    //         });
+    // }, []);
 
+    // Función para manejar la búsqueda
     const handleSearch = (e) => {
         setSearch(e.target.value)
     }
 
+    // useEffect para filtrar los productos según los filtros aplicados
     useEffect(() => {
         let updatedProducts = products;
 
@@ -246,7 +196,6 @@ export default function Filtros() {
                 product.nombre.toLowerCase().includes(busqueda.toLowerCase())
             );
         }
-
 
         // Filtro por categorías múltiples
         if (categories.length > 0) {
@@ -304,6 +253,7 @@ export default function Filtros() {
         });
 
         setFilteredProducts(updatedProducts);
+
     }, [busqueda, categories, sortOption, products, marcas, rating, precio]);
 
     return (
