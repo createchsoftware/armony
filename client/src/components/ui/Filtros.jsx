@@ -551,7 +551,7 @@ export default function Filtros() {
                                             </h3>
                                             <Disclosure.Panel className="pt-6">
                                                 <div className="space-y-4">
-                                                    <Box sx={{ mt: 4 }}>
+                                                    <Box sx={{}}>
                                                         <Slider
                                                             value={precio}
                                                             onChange={handlePriceChange}

@@ -138,7 +138,7 @@ export default function Cita() {
                     <TransitionGroup
                         className='transition-shadow'
                     >
-                        <div className='flex justify-center p-8 '>
+                        <div className='p-8 '>
                             {stepComponents[activeStep]}
                         </div>
                     </TransitionGroup>
