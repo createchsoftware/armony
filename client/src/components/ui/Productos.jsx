@@ -44,7 +44,7 @@ function Productos({ productos }) {
                             />
                             <div>
                                 <p className='mt-2  text-[#0BC26A] text-lg'>{'$' + producto.precio + ' MXN'}</p>
-                                <Rating className='' value={producto.valoracion} readOnly unratedColor="amber" ratedColor="amber" />
+                                <Rating className='' value={producto.valoracion} readOnly unratedcolor="amber" ratedcolor="amber" />
                                 <h3 className='mt-0 text-lg'>{producto.nombre}</h3>
                                 <p className='mt-0 text-xs text-justify'>
                                     {producto.descripcion}

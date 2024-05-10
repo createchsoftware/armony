@@ -62,10 +62,10 @@ function Foot() {
                         <div className="">
                             <h2 className="mb-6 text-sm font-semibold  uppercase text-[#B2B2B2]">Armony</h2>
                             <ul>
-                                <li><a className='flex justify-center' href="#"
+                                <li><a href="#"
                                     className="relative inline  cursor-pointer  before:bg-white  before:absolute before:-bottom-1 before:block before:h-[1px] before:w-full before:origin-bottom-right before:scale-x-0 before:transition before:duration-300 before:ease-in-out hover:before:origin-bottom-left hover:before:scale-x-100">
                                     Nosotros</a></li>
-                                <li><a className='flex justify-center' href="#"
+                                <li><a href="#"
                                     className="relative inline  cursor-pointer  before:bg-white  before:absolute before:-bottom-1 before:block before:h-[1px] before:w-full before:origin-bottom-right before:scale-x-0 before:transition before:duration-300 before:ease-in-out hover:before:origin-bottom-left hover:before:scale-x-100">
                                     Contacto</a></li>
                             </ul>
@@ -73,22 +73,22 @@ function Foot() {
                         <div>
                             <h2 className="mb-6 text-sm font-semibold text-[#B2B2B2] uppercase">Servicios</h2>
                             <ul>
-                                <li><a className='flex justify-center' href="#"
+                                <li><a href="#"
                                     className="relative inline  cursor-pointer  before:bg-white  before:absolute before:-bottom-1 before:block before:h-[1px] before:w-full before:origin-bottom-right before:scale-x-0 before:transition before:duration-300 before:ease-in-out hover:before:origin-bottom-left hover:before:scale-x-100">
                                     Spa - Salon & Beaty</a></li>
-                                <li><a className='flex justify-center' href="#"
+                                <li><a href="#"
                                     className="relative inline  cursor-pointer  before:bg-white  before:absolute before:-bottom-1 before:block before:h-[1px] before:w-full before:origin-bottom-right before:scale-x-0 before:transition before:duration-300 before:ease-in-out hover:before:origin-bottom-left hover:before:scale-x-100">
                                     Wellness - Hábitos saludables </a></li>
-                                <li><a className='flex justify-center' href="#"
+                                <li><a href="#"
                                     className="relative inline  cursor-pointer  before:bg-white  before:absolute before:-bottom-1 before:block before:h-[1px] before:w-full before:origin-bottom-right before:scale-x-0 before:transition before:duration-300 before:ease-in-out hover:before:origin-bottom-left hover:before:scale-x-100">
                                     Colectivo - Regalos & More</a></li>
-                                <li><a className='flex justify-center' href="#"
+                                <li><a href="#"
                                     className="relative inline  cursor-pointer  before:bg-white  before:absolute before:-bottom-1 before:block before:h-[1px] before:w-full before:origin-bottom-right before:scale-x-0 before:transition before:duration-300 before:ease-in-out hover:before:origin-bottom-left hover:before:scale-x-100">
                                     Cafetería - Cultura & Art</a></li>
-                                <li><a className='flex justify-center' href="#"
+                                <li><a href="#"
                                     className="relative inline  cursor-pointer  before:bg-white  before:absolute before:-bottom-1 before:block before:h-[1px] before:w-full before:origin-bottom-right before:scale-x-0 before:transition before:duration-300 before:ease-in-out hover:before:origin-bottom-left hover:before:scale-x-100">
                                     Knowledge & Learning</a></li>
-                                <li><a className='flex justify-center' href="#"
+                                <li><a href="#"
                                     className="relative inline  cursor-pointer  before:bg-white  before:absolute before:-bottom-1 before:block before:h-[1px] before:w-full before:origin-bottom-right before:scale-x-0 before:transition before:duration-300 before:ease-in-out hover:before:origin-bottom-left hover:before:scale-x-100">
                                     Emprendimiento & Fly</a></li>
                             </ul>
@@ -96,16 +96,16 @@ function Foot() {
                         <div>
                             <h2 className="mb-6 text-sm font-semibold uppercase text-[#B2B2B2]">Productos</h2>
                             <ul>
-                                <li><a className='flex justify-center' href="#"
+                                <li><a href="#"
                                     className="relative inline  cursor-pointer  before:bg-white  before:absolute before:-bottom-1 before:block before:h-[1px] before:w-full before:origin-bottom-right before:scale-x-0 before:transition before:duration-300 before:ease-in-out hover:before:origin-bottom-left hover:before:scale-x-100">
                                     Clinica</a></li>
-                                <li><a className='flex justify-center' href="#"
+                                <li><a href="#"
                                     className="relative inline  cursor-pointer  before:bg-white  before:absolute before:-bottom-1 before:block before:h-[1px] before:w-full before:origin-bottom-right before:scale-x-0 before:transition before:duration-300 before:ease-in-out hover:before:origin-bottom-left hover:before:scale-x-100">
                                     Spa - Salon & Beaty</a></li>
-                                <li><a className='flex justify-center' href="#"
+                                <li><a href="#"
                                     className="relative inline  cursor-pointer  before:bg-white  before:absolute before:-bottom-1 before:block before:h-[1px] before:w-full before:origin-bottom-right before:scale-x-0 before:transition before:duration-300 before:ease-in-out hover:before:origin-bottom-left hover:before:scale-x-100">
                                     Colectivo - Regalos & More</a></li>
-                                <li><a className='flex justify-center' href="#"
+                                <li><a href="#"
                                     className="relative inline  cursor-pointer  before:bg-white  before:absolute before:-bottom-1 before:block before:h-[1px] before:w-full before:origin-bottom-right before:scale-x-0 before:transition before:duration-300 before:ease-in-out hover:before:origin-bottom-left hover:before:scale-x-100">
                                     Cafetería - Cultura & Art</a></li>
                             </ul>
@@ -113,16 +113,16 @@ function Foot() {
                         <div>
                             <h2 className="mb-6 text-sm font-semibold  uppercase text-[#B2B2B2]">Contactos</h2>
                             <ul>
-                                <li><a className='flex justify-center' href="#"
+                                <li><a href="#"
                                     className="relative inline  cursor-pointer  before:bg-white  before:absolute before:-bottom-1 before:block before:h-[1px] before:w-full before:origin-bottom-right before:scale-x-0 before:transition before:duration-300 before:ease-in-out hover:before:origin-bottom-left hover:before:scale-x-100">
                                     info@armony.com</a></li>
-                                <li><a className='flex justify-center' href="#"
+                                <li><a href="#"
                                     className="relative inline  cursor-pointer  before:bg-white  before:absolute before:-bottom-1 before:block before:h-[1px] before:w-full before:origin-bottom-right before:scale-x-0 before:transition before:duration-300 before:ease-in-out hover:before:origin-bottom-left hover:before:scale-x-100">
                                     support@armony.com</a></li>
-                                <li><a className='flex justify-center' href="#"
+                                <li><a href="#"
                                     className="relative inline  cursor-pointer  before:bg-white  before:absolute before:-bottom-1 before:block before:h-[1px] before:w-full before:origin-bottom-right before:scale-x-0 before:transition before:duration-300 before:ease-in-out hover:before:origin-bottom-left hover:before:scale-x-100">
                                     +52 (686) 123-3567</a></li>
-                                <li><a className='flex justify-center' href="#"
+                                <li><a href="#"
                                     className="relative inline  cursor-pointer  before:bg-white  before:absolute before:-bottom-1 before:block before:h-[1px] before:w-full before:origin-bottom-right before:scale-x-0 before:transition before:duration-300 before:ease-in-out hover:before:origin-bottom-left hover:before:scale-x-100">
                                     +52 (686) 456-7891</a></li>
                             </ul>

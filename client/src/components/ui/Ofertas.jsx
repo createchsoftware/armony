@@ -38,7 +38,7 @@ function Ofertas({ producto }) {
             <hr />
             <p className='text-[#0BC26A] pt-4 text-lg text-center'>{'$' + producto.precio + ' MXN'}</p>
             <div className='flex justify-center'>
-                <Rating className='' value={5} readOnly unratedColor="amber" ratedColor="amber" />
+                <Rating className='' value={5} readOnly unratedcolor="amber" ratedcolor="amber" />
             </div>
             <h6 className='pt-2 text-xl font-bold text-center'>{producto.nombre}</h6>
             <p className='text-center'>{producto.descripcion}</p>

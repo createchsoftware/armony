@@ -4,9 +4,9 @@ const navToggle = document.querySelector(".nav-toggle"),
     navMenu = document.querySelector(".menu"),
     navVideo = document.querySelectorAll(".videos"),
     navSlide = document.querySelector("#car-video"),
-    navActive = document.querySelectorAll(".selec"),
+    navActive = document.querySelectorAll(".selec");
+var header = document.querySelector("header"),
     navStop = document.querySelector(".show");
-var header = document.querySelector("header");
 var tiempo;
 
 const menuScroll = document.querySelectorAll('.menu a[href^="#"]')
@@ -148,9 +148,9 @@ function cambio(){
 
 //SLIDE 3D DE PILARES
 const pilares = document.querySelector("#pilares-visibles"),
-    pilar = document.querySelectorAll(".pilar"),
-    next = document.querySelector("#next1"),
-    prev = document.querySelector("#prev1");
+    pilar = document.querySelectorAll(".pilar");
+    // next = document.querySelector("#next1"),
+    // prev = document.querySelector("#prev1");
 let actual = 2;
 
 function showPilar(index){

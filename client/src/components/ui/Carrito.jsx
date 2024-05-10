@@ -1,9 +1,9 @@
-import React, { useState } from 'react';
+import React, { createContext, useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrash, faCircleXmark, faCircleMinus, faCirclePlus, faStar } from '@fortawesome/free-solid-svg-icons';
 
 // eslint-disable-next-line react/prop-types
-function Carrito({cerrar, enviarDato}) {
+function Carrito({cerrar}, {enviarDato}) {
     const [cartItems, setCartItems] = useState([
         { id: 1, name: 'Crema', price: 50.00, quantity: 1 , image: "../../../pictures/crema2.png" , desc: "Crema olor a coco humectante." },
         { id: 2, name: 'Shampoo', price: 75.00, quantity: 1, image: "../../../pictures/crema1.png" , desc: "Shampoo con aceite de coco." }
@@ -17,19 +17,14 @@ function Carrito({cerrar, enviarDato}) {
         setDatoLocal(dato);
         enviarDato(dato);
     }; 
-    function funcSend(){
-        sendItem();
-    }
 
     const removeItem = (itemId) => {
         setCartItems(cartItems.filter(item => item.id !== itemId));
-        funcSend();
     };
     const increaseQuantity = (itemId) => {
         setCartItems(cartItems.map(item => 
             item.id === itemId ? { ...item, quantity: item.quantity + 1 } : item
         ));
-        funcSend();
     };
     const decreaseQuantity = (itemId, itemQuan) => {
         if(itemQuan == 1){
@@ -39,10 +34,11 @@ function Carrito({cerrar, enviarDato}) {
                 item.id === itemId ? { ...item, quantity: Math.max(item.quantity - 1, 1) } : item
             ));
         }
-        funcSend();
     };
 
-    const total = cartItems.reduce((acc, item) => acc + item.price * item.quantity, 0).toFixed(2);
+    const subtotal = cartItems.reduce((acc, item) => acc + item.price * item.quantity, 0).toFixed(2);
+    const iva = (subtotal * (.08)).toFixed(2);
+    const total = (parseInt(subtotal) + parseInt(iva)).toFixed(2);
 
     const cartList = cartItems.map(item => (
         <li key={item.id} className="cart-item">
@@ -51,7 +47,7 @@ function Carrito({cerrar, enviarDato}) {
                 <div className='flex justify-between'>
                     <span className='text-xl mr-5 font-bold'>{item.name}</span>
                 </div>
-                <p className='text-yellow-400'>
+                <p className='text-yellow-300'>
                     <FontAwesomeIcon icon={faStar} />
                     <FontAwesomeIcon icon={faStar} />
                     <FontAwesomeIcon icon={faStar} />
@@ -87,7 +83,7 @@ function Carrito({cerrar, enviarDato}) {
                 </button>
             </div> 
             {cartItems.length === 0 ? (
-                <h4 className="cart-empty">No hay artículos en el carrito.</h4>
+                <h4 className="cart-empty mt-8">No hay artículos en el carrito.</h4>
             ):(
                 <>
                     <ul id="cart-items">{cartList}</ul>
@@ -97,15 +93,15 @@ function Carrito({cerrar, enviarDato}) {
                     </div>
                     <div className='flex justify-between'>
                         <p>IVA:</p>
-                        <span>$0.00</span>
+                        <span>${iva}</span>
                     </div>
                     <div className='cart-total flex justify-between py-2'>
                         <p>Total:</p>
                         <span className='font-bold'>${total}</span>
                     </div>
+                    <button id="cart-mas">Comprar</button>
                 </>
             )}
-            <button id="cart-mas">Comprar</button>
         </div>
     );
 }

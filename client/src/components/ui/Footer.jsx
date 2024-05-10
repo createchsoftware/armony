@@ -1,3 +1,6 @@
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faCircleArrowUp } from "@fortawesome/free-solid-svg-icons";
+
 function Foot() {
     return (
         <>
@@ -58,7 +61,7 @@ function Foot() {
 
                 {/* Bottom */}
                 <div className="mx-auto max-w-screen-xl w-[80%]">
-                    <div className="grid grid-cols-2 gap-8 px-4 py-6 lg:py-8 md:grid-cols-4 justify-items-center mb-8 md:mb-24">
+                    <div className="grid grid-cols-2 gap-8 px-4 py-6 lg:py-8 md:grid-cols-4 justify-items-center mb-8">
                         <div className="">
                             <h2 className="mb-6 text-sm font-semibold  uppercase text-[#B2B2B2]">Armony</h2>
                             <ul>
@@ -127,6 +130,11 @@ function Foot() {
                                     +52 (686) 456-7891</a></li>
                             </ul>
                         </div>
+                    </div>
+                    <div className="grid">
+                        <a href="#" className="justify-self-center rounded-full">
+                            <FontAwesomeIcon icon={faCircleArrowUp} className="text-gray-500/50 text-6xl justify-self-center pb-8 cursor-pointer duration-300 hover:text-gray-200/75" />
+                        </a>
                     </div>
                     <hr />
                     <div className="px-4 py-6 md:p-0 md:flex md:items-center md:justify-between">

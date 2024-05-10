@@ -2,7 +2,7 @@ import LayoutPrincipal from '../layouts/LayoutPrincipal.jsx'
 import { Helmet, HelmetProvider } from "react-helmet-async";
 import Carousel from 'react-multi-carousel';
 import 'react-multi-carousel/lib/styles.css';
-import { ChevronRight } from 'lucide-react';
+// import { ChevronRight } from 'lucide-react';
 // import pilar1 from '../../public/pictures/pilar1.png'
 // import pilar2 from '../../public/pictures/pilar2.png'
 // import pilar3 from '../../public/pictures/pilar3.png'
