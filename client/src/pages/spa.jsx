@@ -7,6 +7,7 @@ import Comentarios from '../components/ui/Comentarios.jsx'
 import NuestrosProductos from '../components/ui/NuestrosProductos.jsx'
 import Favoritos from '../components/ui/Favoritos.jsx'
 import { Helmet, HelmetProvider } from "react-helmet-async";
+import Promociones from '../components/ui/Promociones.jsx'
 
 const Spa = () => {
   return (
@@ -20,6 +21,7 @@ const Spa = () => {
       <Navbar />
       <Hero />
       <Presentacion />
+      <Promociones />
       <Favoritos />
       <NuestrosProductos />
       <Tarjetas />

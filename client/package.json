@@ -168,6 +168,7 @@
     "react-favicon": "^2.0.3",
     "react-helmet-async": "^2.0.4",
     "react-icons": "^5.1.0",
+    "react-material-ui-carousel": "^3.4.2",
     "react-multi-carousel": "^2.8.5",
     "react-responsive-carousel": "^3.2.23",
     "react-router-dom": "^6.22.3",
