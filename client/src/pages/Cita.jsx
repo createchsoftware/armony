@@ -28,6 +28,11 @@ export default function Cita() {
     const [activeStep, setActiveStep] = useState(0);
     const [completed, setCompleted] = useState({});
 
+    const restart = () => {
+        setActiveStep(0);
+        setCompleted({});
+    };
+
     const totalSteps = () => {
         return steps.length;
     };
@@ -84,7 +89,7 @@ export default function Cita() {
         <Paquetes key={1} />,
         <Calendario key={2} />,
         <Pago key={3} />,
-        <Agenda key={4} />,
+        <Agenda restart={restart} key={4} />,
         <div className='p-72' key={5}>En proceso</div>,
         <div key={6}>QR</div>,
     ];

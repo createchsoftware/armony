@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrash } from '@fortawesome/free-solid-svg-icons';
 
-function Agenda() {
+function Agenda({ restart }) {
     const [citasItems, setCitasItems] = useState([
         { id: 1, name: 'Facial Hidratante', price: 800.00, quantity: 1, image: "../../../pictures/crema2.png", desc: "Crema olor a coco humectante.", duracion: "60 min", dia: "07/06/2024", hora: "8:00", especialista: "Antonio Esparza" },
         { id: 2, name: 'Maquillaje', price: 1100.00, quantity: 1, image: "../../../pictures/crema1.png", desc: "Shampoo con aceite de coco.", duracion: "90 min", dia: "31/03/2024", hora: "14:20", especialista: "Antonio Esparza" },
@@ -17,6 +17,10 @@ function Agenda() {
     const [descuento, setDescuento] = useState('');
     const handleChange = (event) => {
         setDescuento(event.target.value);
+    }
+
+    const handleRestart = () => {
+        restart();
     }
 
     const totalCitas = citasItems.reduce((total, item) => total + item.quantity, 0);
@@ -76,12 +80,12 @@ function Agenda() {
                         <div>
                             {citasItems.length === 0 ? (
                                 <div className='flex justify-center'>
-                                    <button className='bg-[#ec5766] text-white px-10 py-2 rounded-full'>Agregar</button>
+                                    <button onClick={handleRestart} className='bg-[#ec5766] text-white px-10 py-2 rounded-full'>Agregar</button>
                                 </div>
                             ) : (
                                 <div className='flex justify-around mb-4'>
                                     <button className='bg-[#ec5766] text-white px-10 py-2 rounded-full duration-200 hover:bg-[#ffb5a7]'>Modificar</button>
-                                    <button className='bg-[#ec5766] text-white px-10 py-2 rounded-full duration-200 hover:bg-[#ffb5a7]'>Agregar</button>
+                                    <button onClick={handleRestart} className='bg-[#ec5766] text-white px-10 py-2 rounded-full duration-200 hover:bg-[#ffb5a7]'>Agregar</button>
                                 </div>
                             )}
                         </div>
