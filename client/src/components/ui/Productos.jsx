@@ -21,9 +21,9 @@ function Productos({ productos }) {
             <ul className='grid grid-cols-1 gap-2 md:grid-cols-4 md:ml-28'>
                 {
                     productos.map(producto => (
-                        <li key={productos.id} className='grid place-content-between justify-between border-4 bg-white border-[#E2B3B7] p-6 py-2 rounded-xl'>
+                        <li key={productos.id} className='border-4 bg-white border-[#E2B3B7] p-6 py-2 rounded-xl'>
                             <Box
-                                className="float-right "
+                                className="float-right"
                                 sx={{
                                     '& > legend': { mt: 2 },
                                 }}
@@ -38,7 +38,7 @@ function Productos({ productos }) {
                                     emptyIcon={<FavoriteBorderIcon fontSize="inherit" />}
                                 />
                             </Box>
-                            <img className='w-2/3 m-auto mb-4 rounded-lg aspect-square'
+                            <img className='w-2/3 m-auto mt-6 mb-4 rounded-lg aspect-square'
                                 src={'https://i.imgur.com/CCBFmSi.png'}
                                 alt={producto.nombre}
                             />
