@@ -131,8 +131,8 @@ function Foot() {
                             </ul>
                         </div>
                     </div>
-                    <div>
-                        <a href="#" className="grid">
+                    <div className="grid">
+                        <a href="#" className="justify-self-center rounded-full">
                             <FontAwesomeIcon icon={faCircleArrowUp} className="text-gray-500/50 text-6xl justify-self-center pb-8 cursor-pointer duration-300 hover:text-gray-200/75" />
                         </a>
                     </div>

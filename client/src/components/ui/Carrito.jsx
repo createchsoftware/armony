@@ -3,7 +3,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrash, faCircleXmark, faCircleMinus, faCirclePlus, faStar } from '@fortawesome/free-solid-svg-icons';
 
 // eslint-disable-next-line react/prop-types
-function Carrito({cerrar}) {
+function Carrito({cerrar}, {enviarDato}) {
     const [cartItems, setCartItems] = useState([
         { id: 1, name: 'Crema', price: 50.00, quantity: 1 , image: "../../../pictures/crema2.png" , desc: "Crema olor a coco humectante." },
         { id: 2, name: 'Shampoo', price: 75.00, quantity: 1, image: "../../../pictures/crema1.png" , desc: "Shampoo con aceite de coco." }

@@ -35,6 +35,7 @@ import SignUpPatologia from  "./pages/spa/signUpPatologia";
 import SignUpContrasena from "./pages/spa/signUpContrasena";
 import SignUpConfirmacion from "./pages/spa/signUpConfirmacion";
 import AgendarServicios from "./components/ui/servicios/agendar/AgendarServicios";
+import Rangos from "./pages/Rangos";
 
 function App() {
     return (
@@ -43,6 +44,7 @@ function App() {
             <Router>
                 <Routes>
                     <Route exact path="/" element={<Home />} />
+                    <Route path='/rangos' element={<Rangos />}/>
                     <Route path="/spa" element={<Spa />} />
                     <Route path="/spa/productos" element={<Productos />} />
                     <Route path="/spa/resetPassword/Recuperacion" element={<PasswordResetRecuperacion />} />
