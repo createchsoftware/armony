@@ -31,11 +31,12 @@ import Calendario from "./pages/cita/Calendario";
 import Cita from "./pages/Cita";
 import ServicioEstetica from "./pages/servicios/Estetica";
 import ServicioSpa from "./pages/servicios/Spa";
-import SignUpPatologia from  "./pages/spa/signUpPatologia";
+import SignUpPatologia from "./pages/spa/signUpPatologia";
 import SignUpContrasena from "./pages/spa/signUpContrasena";
 import SignUpConfirmacion from "./pages/spa/signUpConfirmacion";
 import AgendarServicios from "./components/ui/servicios/agendar/AgendarServicios";
 import Rangos from "./pages/Rangos";
+import Producto from "./pages/Producto";
 
 function App() {
     return (
@@ -44,7 +45,7 @@ function App() {
             <Router>
                 <Routes>
                     <Route exact path="/" element={<Home />} />
-                    <Route path='/rangos' element={<Rangos />}/>
+                    <Route path='/rangos' element={<Rangos />} />
                     <Route path="/spa" element={<Spa />} />
                     <Route path="/spa/productos" element={<Productos />} />
                     <Route path="/spa/resetPassword/Recuperacion" element={<PasswordResetRecuperacion />} />
@@ -73,6 +74,7 @@ function App() {
                     <Route path="/spa/servicios/estetica" element={<ServicioEstetica />} />
                     <Route path="/spa/servicios/spa" element={<ServicioSpa />} />
                     <Route path="/spa/servicios/agendar-servicios" element={<AgendarServicios />} />
+                    <Route path="/spa/producto/" element={<Producto />} />
                     <Route path="*" element={<Error />} />
                     {/* Tests */}
                     <Route path="/test" element={<Test />} />
