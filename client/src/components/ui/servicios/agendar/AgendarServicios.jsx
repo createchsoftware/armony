@@ -92,26 +92,26 @@ const favoritos = [
 
 const AgendarServicios = () => {
   const [toggleState, setToggleService] = useState(1);
-  const [color1, setColor1] = useState("#6FC4B3");
-  const [color2, setColor2] = useState("#FFE9EE");
-  const [color3, setColor3] = useState("#FFE9EE");
+  const [color1, setColor1] = useState("#80B5B0");
+  const [color2, setColor2] = useState("#FCEAEC");
+  const [color3, setColor3] = useState("#FCEAEC");
   let i = 0;
 
   const toggleService = (index) => {
     if (index === 1) {
-      setColor1("#6FC4B3");
-      setColor2("#FFE9EE");
-      setColor3("#FFE9EE");
+      setColor1("#80B5B0");
+      setColor2("#FCEAEC");
+      setColor3("#FCEAEC");
       setToggleService(index);
     } else if (index === 2) {
-      setColor2("#6FC4B3");
-      setColor1("#FFE9EE");
-      setColor3("#FFE9EE");
+      setColor2("#80B5B0");
+      setColor1("#FCEAEC");
+      setColor3("#FCEAEC");
       setToggleService(index);
     } else if (index === 3) {
-      setColor3("#6FC4B3");
-      setColor2("#FFE9EE");
-      setColor1("#FFE9EE");
+      setColor3("#80B5B0");
+      setColor2("#FCEAEC");
+      setColor1("#FCEAEC");
       setToggleService(index);
     }
     i++;
