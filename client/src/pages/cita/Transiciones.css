@@ -1,0 +1,20 @@
+/* Estilos para la animación de desvanecimiento */
+.fade-enter {
+  opacity: 0;
+}
+
+.fade-enter-active {
+  opacity: 1;
+  transition: opacity 700ms ease-in;
+}
+
+.fade-exit {
+  opacity: 1;
+  display: none;
+}
+
+.fade-exit-active {
+  display: none;
+  opacity: 0;
+  transition: opacity 300ms ease-out;
+}

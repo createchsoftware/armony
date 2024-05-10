@@ -44,7 +44,7 @@ function ContenedorPaquetes({ paquetes }) {
     const currentPaquetes = paquetes.slice(firstPostIndex, lastPostIndex);
 
     return (
-        <div className='grid w-full gap-2 '>
+        <div className='grid w-full gap-10 '>
             <Paquete paquetes={currentPaquetes} />
             <Paginacion
                 currentPage={currentPage}

@@ -20,6 +20,7 @@ import Calendario from './cita/Calendario';
 import Pago from '../components/ui/Pago';
 import Agenda from '../components/ui/Agenda';
 import Servicios from '../components/ui/servicios/agendar/AgendarServicios';
+import './cita/Transiciones.css';
 
 const steps = ['Servicios', 'Paquetes', 'Especialista', 'Agenda', 'Pago', 'Confirmación'];
 
@@ -27,6 +28,7 @@ export default function Cita() {
     const navigate = useNavigate();
     const [activeStep, setActiveStep] = useState(0);
     const [completed, setCompleted] = useState({});
+    const [scrollPosition, setScrollPosition] = useState(0);
 
     const restart = () => {
         setActiveStep(0);
@@ -49,7 +51,16 @@ export default function Cita() {
         return completedSteps() === totalSteps();
     };
 
+    const saveScrollPosition = () => {
+        setScrollPosition(window.scrollY);
+    };
+
+    useEffect(() => {
+        window.scrollTo(0, scrollPosition);
+    }, [activeStep]);
+
     const handleNext = () => {
+        saveScrollPosition();
         const newActiveStep =
             isLastStep() && !allStepsCompleted()
                 ? // It's the last step, but not all steps have been completed,
@@ -60,6 +71,7 @@ export default function Cita() {
     };
 
     const handleBack = () => {
+        saveScrollPosition();
         setActiveStep((prevActiveStep) => prevActiveStep - 1);
     };
 
@@ -69,6 +81,7 @@ export default function Cita() {
     };
 
     const handleStep = (step) => () => {
+        saveScrollPosition();
         setActiveStep(step);
     };
 
@@ -135,12 +148,16 @@ export default function Cita() {
                         ))}
                     </Stepper>
 
-                    <TransitionGroup
-                        className='transition-shadow'
-                    >
-                        <div className='p-8 '>
-                            {stepComponents[activeStep]}
-                        </div>
+                    <TransitionGroup>
+                        <CSSTransition
+                            key={activeStep}
+                            timeout={900}
+                            classNames="fade"
+                        >
+                            <div className='p-8'>
+                                {stepComponents[activeStep]}
+                            </div>
+                        </CSSTransition>
                     </TransitionGroup>
 
                     <div>
