@@ -7,6 +7,7 @@ import Carrito from "./Carrito.jsx";
 import PopupLogin from "./Login/PopupLogin.jsx";
 import MenuServicios from "./SubMenuServicios.jsx";
 import MenuPerfil from "./MenuPerfil.jsx";
+import { Helmet, HelmetProvider } from "react-helmet-async";
 
 function Navbar() {
     const [cart, setCart, showModal, setShowModal] = useState(false);
@@ -67,15 +68,21 @@ function Navbar() {
 
     return (
         <>
+
+            <HelmetProvider>
+                <Helmet>
+                    <script src="../../../public/scripts/index.js"></script>
+                </Helmet>
+            </HelmetProvider>
             <header className="header">
                 <div>
                     <nav className="nav">
                         <a href="/">
-                        <img
-                            src="../../../pictures/armonyLogo.png"
-                            alt=""
-                            className="logo"
-                        />
+                            <img
+                                src="../../../pictures/armonyLogo.png"
+                                alt=""
+                                className="logo"
+                            />
                         </a>
                         <button className="nav-toggle" aria-label="Abrir Menú">
                             <FontAwesomeIcon icon={faBars} />
@@ -83,19 +90,19 @@ function Navbar() {
                         <ul className="menu">
                             <li className="nav-menu-item">
                                 <a href="/spa" className="menu-link">
-                                Inicio
+                                    Inicio
                                 </a>
                             </li>
                             {location.pathname == "/" && (
                                 <>
                                     <li className="nav-menu-item">
                                         <a href="#nosotros" className="menu-link">
-                                        Nosotros
+                                            Nosotros
                                         </a>
                                     </li>
                                     <li className="nav-menu-item">
                                         <a href="#contacto" className="menu-link">
-                                        Contacto
+                                            Contacto
                                         </a>
                                     </li>
                                 </>
@@ -104,17 +111,17 @@ function Navbar() {
                                 <>
                                     <li className="cursor-pointer nav-menu-item">
                                         <a className="menu-link" onClick={toggleServicio}>
-                                        Servicios
+                                            Servicios
                                         </a>
                                     </li>
                                     <li className="nav-menu-item">
                                         <a href="/spa/productos" className="menu-link">
-                                        Productos
+                                            Productos
                                         </a>
                                     </li>
                                     <li className="nav-menu-item">
                                         <a href="/spa/agendar" className="menu-link">
-                                        Agendar
+                                            Agendar
                                         </a>
                                     </li>
                                 </>
@@ -126,13 +133,13 @@ function Navbar() {
                                         onClick={togglePerfil}
                                     >
                                         <img
-                                        src="../../../pictures/userCl.png"
-                                        alt=""
-                                        className="w-10 h-10 mr-5 rounded-full"
+                                            src="../../../pictures/userCl.png"
+                                            alt=""
+                                            className="w-10 h-10 mr-5 rounded-full"
                                         />
                                         {usuario}
                                     </a>
-                                    ) : (
+                                ) : (
                                     <a
                                         href="#"
                                         onClick={toggleLogin}
@@ -162,7 +169,7 @@ function Navbar() {
                                     >
                                         <FontAwesomeIcon icon={faCartShopping} />
                                         <span className="text-xs badge badge-pill badge-warning">
-                                        {items}
+                                            {items}
                                         </span>
                                     </button>
                                 </li>
@@ -190,7 +197,7 @@ function Navbar() {
 
             {perfil && (
                 <div className="usermenu-fondo">
-                <div className="usermenu-fx">
+                    <div className="usermenu-fx">
                         <MenuPerfil />
                     </div>
                 </div>
