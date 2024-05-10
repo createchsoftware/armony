@@ -95,11 +95,11 @@ const Productos = () => {
                         </a>
                     </section>
 
-                    <section className='my-20 w-[80%] m-auto'>
+                    <section className=' w-[80%] m-auto'>
                         <Filtros />
                     </section>
 
-                    <section className='my-20 grid grid-cols-2 w-[80%] m-auto rounded-xl overflow-hidden '>
+                    <section className=' grid grid-cols-2 w-[80%] m-auto rounded-xl overflow-hidden '>
                         <div>
                             <img src="../../pictures/ofertas.png" alt="" />
                         </div>

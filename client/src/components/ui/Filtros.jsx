@@ -174,9 +174,9 @@ export default function Filtros() {
     const [mobileFiltersOpen, setMobileFiltersOpen] = useState(false)
     const [sortOption, setSortOption] = useState(ordenamiento[0])
     const [filteredProducts, setFilteredProducts] = useState(products)
-    const [category, setCategory] = useState('')
+    const [categories, setCategories] = useState([]);
+    const [marcas, setMarcas] = useState([]);
     const [busqueda, setSearch] = useState('');
-    const [marca, setMarca] = useState('');
     const [rating, setRating] = useState(0);
     const [precio, setPrecio] = useState(0);
 
@@ -190,6 +190,26 @@ export default function Filtros() {
     //         .then(data => setProducts(data))
     //         .catch(err => console.log(err))
     // }, [])
+
+    const handleCategoryChange = (label, isChecked) => {
+        setCategories(prev => {
+            if (isChecked) {
+                return [...prev, label];
+            } else {
+                return prev.filter(item => item !== label);
+            }
+        });
+    };
+
+    const handleMarcaChange = (label, isChecked) => {
+        setMarcas(prev => {
+            if (isChecked) {
+                return [...prev, label];
+            } else {
+                return prev.filter(item => item !== label);
+            }
+        });
+    };
 
     // Función para manejar cambios en el rating
     const handleChange = (event, newValue) => {
@@ -228,20 +248,19 @@ export default function Filtros() {
         }
 
 
-        // Filtro por categoría
-        if (category) {
+        // Filtro por categorías múltiples
+        if (categories.length > 0) {
             updatedProducts = updatedProducts.filter(product =>
-                product.categoria === category
+                categories.includes(product.categoria)
             );
         }
 
-        // Filtro por marca
-        if (marca) {
+        // Filtro por múltiples marcas
+        if (marcas.length > 0) {
             updatedProducts = updatedProducts.filter(product =>
-                product.marca === marca
+                marcas.includes(product.marca)
             );
         }
-
         // Filtro por valoración
         if (rating) {
             updatedProducts = updatedProducts.filter(product =>
@@ -285,7 +304,7 @@ export default function Filtros() {
         });
 
         setFilteredProducts(updatedProducts);
-    }, [busqueda, category, sortOption, products, marca, rating, precio]);
+    }, [busqueda, categories, sortOption, products, marcas, rating, precio]);
 
     return (
         <div className="bg-[#F4F1ED]">
@@ -508,6 +527,7 @@ export default function Filtros() {
 
                                                             <div key={option.value} className="flex items-center">
                                                                 <input
+                                                                    onChange={e => handleCategoryChange(option.label, e.target.checked)}
                                                                     id={`filter-${section.id}-${optionIdx}`}
                                                                     name={`${section.id}[]`}
                                                                     defaultValue={option.value}
@@ -518,7 +538,6 @@ export default function Filtros() {
                                                                 <label
                                                                     htmlFor={`filter-${section.id}-${optionIdx}`}
                                                                     className="ml-3 text-sm text-gray-600"
-                                                                    onClick={() => { setCategory(option.label) }}
                                                                 >
                                                                     {option.label}
                                                                 </label>
@@ -623,13 +642,13 @@ export default function Filtros() {
                                                                     name={`${section.id}[]`}
                                                                     defaultValue={option.value}
                                                                     type="checkbox"
+                                                                    onChange={e => handleMarcaChange(option.label, e.target.checked)}
                                                                     defaultChecked={option.checked}
                                                                     className="w-4 h-4 border-gray-300 rounded text-rose-400 focus:ring-rose-400 "
                                                                 />
                                                                 <label
                                                                     htmlFor={`filter-${section.id}-${optionIdx}`}
                                                                     className="ml-3 text-sm text-gray-600"
-                                                                    onClick={() => { setMarca(option.label) }}
                                                                 >
                                                                     {option.label}
                                                                 </label>

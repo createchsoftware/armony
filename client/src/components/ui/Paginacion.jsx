@@ -20,7 +20,7 @@ function Paginacion({ currentPage, totalProducts, productsPerPage, setCurrentPag
     }
 
     return (
-        <nav className="m-auto my-12 ">
+        <nav className="m-auto mt-12">
             <ul className="flex">
                 <button
                     disabled={currentPage === 1}
