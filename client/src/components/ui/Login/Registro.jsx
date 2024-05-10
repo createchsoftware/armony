@@ -1,6 +1,5 @@
 import user1 from "../../../../public/pictures/userGuest.png";
 import gl from "../../../../public/pictures/googlelogo.png";
-import Login from "./PopupLogin";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faAngleLeft, faCircleXmark } from "@fortawesome/free-solid-svg-icons";
 

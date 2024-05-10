@@ -9,6 +9,10 @@ var estetica = [
     id: 1,
     nombre: "Servicio de peluquería",
     descripcion: "Espacio de transformación y renovación personal",
+    espDesc1:
+      "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Adipisci quasi repudiandae delectus recusandae accusantium deleniti, sit cupiditate quae culpa aut inventore numquam at excepturi ",
+    espDesc2:
+      "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Adipisci quasi repudiandae delectus recusandae accusantium deleniti, sit cupiditate quae culpa aut inventore",
     precio: "1,350.00",
     img: Peluqueria,
     rating: 5,
@@ -18,6 +22,10 @@ var estetica = [
     id: 2,
     nombre: "Uñas",
     descripcion: "Transformación de las manos elevando confianza",
+    espDesc1:
+      "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Adipisci quasi repudiandae delectus recusandae accusantium deleniti, sit cupiditate quae culpa aut inventore numquam at excepturi ",
+    espDesc2:
+      "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Adipisci quasi repudiandae delectus recusandae accusantium deleniti, sit cupiditate quae culpa aut inventore",
     precio: "1,200.00",
     img: Unas,
     rating: 5,
@@ -27,6 +35,10 @@ var estetica = [
     id: 3,
     nombre: "Pedicura",
     descripcion: "Tratamiento estético para los pies",
+    espDesc1:
+      "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Adipisci quasi repudiandae delectus recusandae accusantium deleniti, sit cupiditate quae culpa aut inventore numquam at excepturi ",
+    espDesc2:
+      "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Adipisci quasi repudiandae delectus recusandae accusantium deleniti, sit cupiditate quae culpa aut inventore",
     precio: "1,800.00",
     img: Pedicura,
     rating: 5,
@@ -53,6 +65,8 @@ const ServiciosEstetica = () => {
           <Servicio
             nombre={servicio.nombre}
             descripcion={servicio.descripcion}
+            espDesc1={servicio.espDesc1}
+            espDesc2={servicio.espDesc2}
             precio={servicio.precio}
             imagen={servicio.img}
             rating={servicio.rating}
