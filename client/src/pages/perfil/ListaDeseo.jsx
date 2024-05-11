@@ -13,7 +13,9 @@ function ListaDeseo() {
     const [contResumen, setContResumen] = useState([
         { id: 1, name: 'Hidra sense', precio: 500 },
         { id: 2, name: 'CeraVE', precio: 215 },
-        { id: 3, name: 'Gojo', precio: 99 }
+        { id: 3, name: 'Gojo', precio: 99 },
+        { id: 4, name: 'Hidra sense', precio: 500 },
+        { id: 5, name: 'CeraVE', precio: 215 },
     ])
 
     const presionar1 = () => {
@@ -37,7 +39,7 @@ function ListaDeseo() {
     ))
 
     const precioTotal = contResumen.reduce((acc, item) => acc + item.precio, 0).toFixed(2);
-    const cantProductos = contResumen.reduce((total) => total, 0);
+    const cantProductos = contResumen.length;
 
     return (
         <>
@@ -96,7 +98,7 @@ function ListaDeseo() {
                                 <h1 className='text-[#036d63] text-xl'>${precioTotal}</h1>
                             </div>
                             <div className='grid'>
-                                <button className='bg-[#ec5766] p-2 text-white mx-6 rounded-xl mt-2 duration-200 hover:bg-[#ffb5a7]'>Comprar</button>
+                                <button className='bg-[#ec5766] p-2 text-white mx-6 rounded-xl my-2 duration-200 hover:bg-[#ffb5a7]'>Comprar</button>
                             </div>
                         </div>
                     </div>

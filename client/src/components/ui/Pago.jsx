@@ -7,19 +7,19 @@ function Pago() {
     const [tarjeta, setTarjeta] = useState(false);
     const [pagoRealizado, setPagoRealizado] = useState(false);
     const [tarjetas, setTarjetas] = useState([
-        {id: 1, noTarjeta: "5096", tipo: "Débito", banco: "BANORTE", code: "****"},
-        {id: 2, noTarjeta: "2947", tipo: "Débito", banco: "NU", code: "****"}
+        {id: 1, noTarjeta: "509612341234", tipo: "Débito", banco: "BANORTE", code: "****"},
+        {id: 2, noTarjeta: "294712341234", tipo: "Débito", banco: "NU", code: "****"}
     ]);
 
     const toggleTarjeta = () => {
         setTarjeta(!tarjeta);
     }
-    const togglePopUps = () => {
-        setTarjeta(!tarjeta);
-        setPagoRealizado(!pagoRealizado);
-    }
     const togglePago = () => {
         setPagoRealizado(!pagoRealizado);
+    }
+    const datosRecibidos = (nuevaTarjeta) => {
+        setTarjetas([...tarjetas, {id: 3, noTarjeta: {nuevaTarjeta}, tipo: "Débito", banco: "BBVA", code: "****"}]);
+        console.log(tarjetas);
     }
 
     const total = (574).toFixed(2);
@@ -35,7 +35,7 @@ function Pago() {
             <h1 className="text-xl">{item.banco}</h1>
             <h1 className="text-xl">{item.tipo}</h1>
             <h1 className="text-xl">{item.code}</h1>
-            <h1 className="text-xl">{item.noTarjeta}</h1>
+            <h1 className="text-xl">{item.noTarjeta.slice(0,4)}</h1>
             <button onClick={togglePago} className='bg-[#ec5766] text-xl text-white px-10 py-2 rounded-full duration-200 hover:bg-[#ffb5a7]'>Continuar</button>
         </li>
     ))
@@ -152,7 +152,7 @@ function Pago() {
             {tarjeta && (
                 <div className='soon-fondo'>
                     <div className='soon-fx'>
-                        <InforTarjeta cerrarInfo={togglePopUps} />
+                        <InforTarjeta cerrarInfo={toggleTarjeta} sendDatos={datosRecibidos} />
                     </div>
                 </div>
             )}

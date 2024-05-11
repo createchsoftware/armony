@@ -1,9 +1,10 @@
 import { useEffect, useState } from "react";
 
 // eslint-disable-next-line react/prop-types
-function InforTarjeta({cerrarInfo}){
+function InforTarjeta({cerrarInfo}, {sendDatos}){
     const [deshabilitado, setDeshabilitado] = useState(true);
     const [error, setError] = useState('');
+    const [nuevaTarjeta, setNuevaTarjeta] = useState('');
 
     // Dato del titular
     const [titular, setTitular] = useState('');
@@ -62,6 +63,8 @@ function InforTarjeta({cerrarInfo}){
         event.preventDefault();
         if(validar()){
             setError('');
+            setNuevaTarjeta(noTarjeta)
+            sendDatos(nuevaTarjeta);
         }else{
             setError('¡Favor de llenar todos los campos.');
         }
