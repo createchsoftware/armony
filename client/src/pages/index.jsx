@@ -1,11 +1,10 @@
 import Membresias from '../components/ui/Membresias.jsx'
-import Navbar from '../components/ui/Navbar.jsx'
 import Popular from '../components/ui/Popular.jsx'
-import Foot from '../components/ui/Footer.jsx'
 import Opiniones from '../components/ui/Opiniones.jsx'
 import Start from '../components/ui/Start.jsx'
 import { Helmet, HelmetProvider } from "react-helmet-async"
 import LayoutPrincipal from '../layouts/LayoutPrincipal.jsx'
+import Tarjetas from '../components/ui/Tarjetas.jsx'
 
 const Home = () => {
   return (
@@ -23,6 +22,8 @@ const Home = () => {
         <Popular />
         {/* MEMBRESIAS */}
         <Membresias />
+        {/* RANGOS */}
+        <Tarjetas />
         {/* OPINIONES */}
         <Opiniones />
         {/* CONTACTANOS / Footer */}

@@ -1,7 +1,10 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 // eslint-disable-next-line react/prop-types
 function InforTarjeta({cerrarInfo}){
+    const [deshabilitado, setDeshabilitado] = useState(true);
+    const [error, setError] = useState('');
+
     // Dato del titular
     const [titular, setTitular] = useState('');
     const handleChange = (event) => {
@@ -51,13 +54,30 @@ function InforTarjeta({cerrarInfo}){
         setMainTarjeta(!mainTarjeta);
     }
 
+    const validar = () => {
+        return titular && noTarjeta && fechaMes && fechaYear && codigo
+    }
+
+    const submit = (event) => {
+        event.preventDefault();
+        if(validar()){
+            setError('');
+        }else{
+            setError('¡Favor de llenar todos los campos.');
+        }
+    }
+
+    useEffect(() => {
+        setDeshabilitado(!validar());
+    }, [titular, noTarjeta, fechaMes, fechaYear, codigo]);
+
     return(
         <>
             <div className="bg-white rounded-xl shadow-md w-1/3">
                 <div className="grid bg-[rgb(3,109,99)] rounded-t-xl">
                     <h3 className="justify-self-center text-white text-2xl py-2 px-6 font-bold">Información de tarjeta</h3>
                 </div>
-                <div className="p-8 px-10">
+                <form onSubmit={submit} className="p-8 px-10">
                     <div className="grid">
                         <h2 className="text-xl font-bold">Tipo de tarjeta:</h2>
                         <div className="flex">
@@ -196,9 +216,10 @@ function InforTarjeta({cerrarInfo}){
                     </div>
                     {/* Aceptar */}
                     <div className="grid">
-                        <button onClick={cerrarInfo} className='bg-[#ec5766] justify-self-center mt-4 text-xl text-white px-10 py-2 rounded-full duration-200 hover:bg-[#ffb5a7]'>Aceptar</button>
+                        <button disabled={deshabilitado} onClick={cerrarInfo} className='bg-[#ec5766] cursor-pointer justify-self-center mt-4 text-xl text-white px-10 py-2 rounded-full duration-200 hover:bg-[#ffb5a7]'>Aceptar</button>
                     </div>
-                </div>
+                    { error && <h1>{error}</h1>}
+                </form>
             </div>
         </>
     )
