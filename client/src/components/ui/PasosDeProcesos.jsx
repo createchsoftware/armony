@@ -26,7 +26,7 @@ const PasosDeProcesos = ({ props }) => {
         style={{
           fontFamily: "ABeeZee",
         }}
-        className="text-base mx-2"
+        className="md:text-xs lg:text-base mx-2"
       >
         {props.paso1}
       </a>
@@ -47,7 +47,7 @@ const PasosDeProcesos = ({ props }) => {
         style={{
           fontFamily: "ABeeZee",
         }}
-        className="text-base mx-1"
+        className="md:text-xs lg:text-base mx-1"
       >
         {props.paso2}
       </a>
@@ -68,7 +68,7 @@ const PasosDeProcesos = ({ props }) => {
         style={{
           fontFamily: "ABeeZee",
         }}
-        className="text-base mx-1"
+        className="md:text-xs lg:text-base mx-1"
       >
         {props.paso3}
       </a>
@@ -89,7 +89,7 @@ const PasosDeProcesos = ({ props }) => {
         style={{
           fontFamily: "ABeeZee",
         }}
-        className="text-base mx-1"
+        className="md:text-xs lg:text-base mx-1"
       >
         {props.paso4}
       </a>

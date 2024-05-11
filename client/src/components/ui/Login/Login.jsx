@@ -123,7 +123,7 @@ const Login = ({ cerrar }) => {
           </div>
           <div className="grid grid-cols-2 mb-5 text-sm md:text-base text-[#036C65]">
             <a
-              href="/spa/resetPassword"
+              href="/spa/resetPassword/Recuperacion"
               onClick={cerrar.close}
               className="ml-7 justify-self-start"
             >
