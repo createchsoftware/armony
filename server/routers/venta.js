@@ -1,6 +1,15 @@
 import { conexion } from "../DB/connection.js";
 import express from "express";
-import { createVenta, createVentaCita } from "../DB/query/queryVenta.js";
+import {
+  createVenta,
+  createVentaCita,
+  searchVentaCita,
+} from "../DB/query/queryVenta.js";
+import {
+  createCitas,
+  duracionTotal,
+  stringATiempo,
+} from "../DB/query/queryCitas.js";
 
 // Router
 export const routerVenta = express.Router();
@@ -34,8 +43,60 @@ routerVenta.post("/create", async (req, res) => {
 
 routerVenta.post("/cita", async (req, res) => {
   try {
-    let {} = req.body;
-    const resultado = await createVentaCita(conexion, {});
+    let fechaCita;
+    let horaFin;
+    const datosCita = {
+      idVenta: "",
+      idCliente: 30,
+      idEmp: 31,
+      idServ: 17,
+      idPilar: 2,
+      nombre: "Hector",
+      phone: "6867433967",
+      tarjeta: "875609894583",
+      fecha: "2024-05-07",
+      horaI: "19:00:00",
+      horaF: "",
+      descr: "Prueba de componente",
+      estado: "pendiente",
+      monedero: 0.0,
+      estadoPago: "pagada",
+      subTotal: 450,
+      total: 670,
+      impuesto: 0.08,
+    };
+
+    // Alta de venta
+    const resultado = await createVentaCita(conexion, {
+      idCliente: datosCita.idCliente,
+      nombre: datosCita.nombre,
+      phone: datosCita.phone,
+      tarjeta: datosCita.tarjeta,
+      monedero: datosCita.monedero,
+      estadoPago: datosCita.estadoPago,
+      subTotal: datosCita.subTotal,
+      total: datosCita.total,
+      impuesto: datosCita.impuesto,
+    });
+    // const minutos = stringATiempo(duracion[0].tiempo); // Convertimos los minutos a enteros
+
+    res
+      .status(200)
+      .json({ message: "Venta creada con exito.", data: resultado });
+    // if (resultado.length !== 0) {
+    //   const cita = await createCitas(conexion, {
+    //     idVenta: folioVenta[0].pkIdVenta,
+    //     idEmp: req.body.idEmp,
+    //     pilar: req.body.pilar,
+    //     servicio: req.body.servicio,
+    //     fechaCita: req.body.fechaCita,
+    //     horaI: req.body.horaI,
+    //     horaF: horaFin,
+    //     descr: req.body.descr,
+    //     estado: req.body.estado,
+    //   });
+
+    // }
   } catch (err) {
     // Capturamos errores
     console.error(messageError, err); // Mostramos errores por consola
@@ -44,9 +105,37 @@ routerVenta.post("/cita", async (req, res) => {
 });
 
 // READ PENDIENTE
-routerVenta.get("", async (req, res) => {
+routerVenta.get("/read", async (req, res) => {
   try {
-    const resultado = await {}; // Parametros para el procedimiento
+    const resultado = await searchVentaCita(conexion, {
+      idCliente: req.body.idCliente,
+      nombre: req.body.nombre,
+      fechaVenta: req.body.fechaVenta,
+      phone: req.body.phone,
+    }); // Parametros para el procedimiento
+
+    res
+      .status(200)
+      .json({ message: "Venta encontrada", data: resultado[0].pkIdVenta });
+  } catch (err) {
+    // Capturamos errores
+    console.error(messageError, err); // Mostramos errores por consola
+    res.status(500).send(messageError); // Enviamos un error INTERNAL SERVER ERROR y el error al navegador
+  }
+});
+
+routerVenta.get("/pruebas/:idServ", async (req, res) => {
+  try {
+    const resultado = await duracionTotal(conexion, {
+      idServ: req.params.idServ,
+    });
+    res
+      .status(200)
+      .json({ message: "La duracion total es: ", data: resultado });
+    console.log(typeof resultado);
+    console.log(resultado[0].tiempo);
+    const minutos = stringATiempo("13:45:00"); // Convertimos los minutos a enteros
+    console.log(minutos);
   } catch (err) {
     // Capturamos errores
     console.error(messageError, err); // Mostramos errores por consola

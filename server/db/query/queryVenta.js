@@ -28,37 +28,6 @@ export async function createVenta(connection, data) {
   }
 }
 
-// CREATE VENTA DE CITA
-export async function createVentaCita(connection, data) {
-  try {
-    let insertVentaCita =
-      "CALL addVentaCitaOnline(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
-    let query = mysql.format(insertVentaCita, [
-      data.pilar,
-      data.idCliente,
-      data.name,
-      data.phone,
-      data.tarjeta,
-      data.monedero,
-      data.estadoPago,
-      data.servicio,
-      data.idEmp,
-      data.fechaPago,
-      data.horaPago,
-      data.descr,
-      data.subTotal,
-      data.total,
-      data.impuesto,
-    ]);
-    const [rows, fields] = await connection.query(query);
-    endConnection();
-    return rows;
-  } catch (err) {
-    // Capturamos errores de ejecucion de query
-    console.error(messageError, err); // Mostramos errores por consola
-  }
-}
-
 // GET DETALLE DE VENTA PENDIENTE
 export async function detalleVenta(connection, data) {
   try {
@@ -74,8 +43,13 @@ export async function detalleVenta(connection, data) {
 }
 
 // READ VENTA
-export async function readVenta(connection, data) {
+export async function searchVentaCita(connection, data) {
   try {
+    let busquedaVenta = "CALL searchVentaCita(?, ?)";
+    let query = mysql.format(busquedaVenta, [data.idCliente, data.fechaVenta]);
+    const [rows, fields] = await connection.query(query);
+    endConnection();
+    return rows[0];
   } catch (err) {
     // Capturamos errores de ejecucion de query
     console.error(messageError, err); // Mostramos errores por consola
