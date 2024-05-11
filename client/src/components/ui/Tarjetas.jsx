@@ -10,7 +10,7 @@ function Tarjetas() {
             <img src={greenLeft} alt="" className='absolute w-[12%] left-0 translate-y-[-6rem]' />
             <img src={greenRight} alt="" className='absolute w-[12%] right-0 translate-y-[60rem] ' />
             <div className="selection:text-white selection:bg-[#EB5765] m-auto mt-10 w-[70%] grid place-content-center ">
-                <h1 className="justify-self-center text-4xl md:text-6xl font-[iloveglitter] text-[#036C65]">¡Hazte socio!</h1>
+                {/* <h1 className="justify-self-center text-4xl md:text-6xl font-[iloveglitter] text-[#036C65]">¡Hazte socio!</h1> */}
                 <div className="items-center gap-0 text-center md:grid md:grid-cols-2 place-content-center">
                     <div>
                         <img src={"../../../public/pictures/rangos.png"} alt="" className='w-5/6' />

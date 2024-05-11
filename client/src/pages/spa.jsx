@@ -8,6 +8,7 @@ import NuestrosProductos from '../components/ui/NuestrosProductos.jsx'
 import Favoritos from '../components/ui/Favoritos.jsx'
 import { Helmet, HelmetProvider } from "react-helmet-async";
 import Promociones from '../components/ui/Promociones.jsx'
+import Membresias from '../components/ui/Membresias.jsx'
 
 const Spa = () => {
   return (
@@ -24,6 +25,7 @@ const Spa = () => {
       <Promociones />
       <Favoritos />
       <NuestrosProductos />
+      <Membresias />
       <Tarjetas />
       <Comentarios />
       <Foot />

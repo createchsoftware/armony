@@ -1,30 +1,32 @@
-import React, { createContext, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrash, faCircleXmark, faCircleMinus, faCirclePlus, faStar } from '@fortawesome/free-solid-svg-icons';
 
 // eslint-disable-next-line react/prop-types
-function Carrito({cerrar}, {enviarDato}) {
+function Carrito({cerrar, totalProductos}) {
     const [cartItems, setCartItems] = useState([
         { id: 1, name: 'Crema', price: 50.00, quantity: 1 , image: "../../../pictures/crema2.png" , desc: "Crema olor a coco humectante." },
-        { id: 2, name: 'Shampoo', price: 75.00, quantity: 1, image: "../../../pictures/crema1.png" , desc: "Shampoo con aceite de coco." }
+        { id: 2, name: 'Shampoo', price: 75.00, quantity: 2, image: "../../../pictures/crema1.png" , desc: "Shampoo con aceite de coco." }
     ]);
     //  ^^^ ES SOLO TEST PARA PROBAR LA FUNCIONALIDAD DEL POP-UP EMERGENTE DEL CARRITO.
+    const enviarTotal = () => {
+        const total = cartItems.reduce((total, item) => total + item.quantity, 0);
+        totalProductos(total);
+    };
 
-    const [datoLocal, setDatoLocal] = useState(0);
-
-    const sendItem = () => {
-        const dato = cartItems.reduce((total, item) => total + item.quantity, 0);
-        setDatoLocal(dato);
-        enviarDato(dato);
-    }; 
+    useEffect(() => {
+        enviarTotal();
+    }, [])
 
     const removeItem = (itemId) => {
         setCartItems(cartItems.filter(item => item.id !== itemId));
+        enviarTotal();
     };
     const increaseQuantity = (itemId) => {
         setCartItems(cartItems.map(item => 
             item.id === itemId ? { ...item, quantity: item.quantity + 1 } : item
         ));
+        enviarTotal();
     };
     const decreaseQuantity = (itemId, itemQuan) => {
         if(itemQuan == 1){
@@ -34,6 +36,7 @@ function Carrito({cerrar}, {enviarDato}) {
                 item.id === itemId ? { ...item, quantity: Math.max(item.quantity - 1, 1) } : item
             ));
         }
+        enviarTotal();
     };
 
     const subtotal = cartItems.reduce((acc, item) => acc + item.price * item.quantity, 0).toFixed(2);

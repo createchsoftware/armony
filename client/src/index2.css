@@ -630,7 +630,7 @@ body {
   color: rgb(236, 87, 102);
 }
 .nav-fav:hover{
-  color: rgb(255, 181, 167);
+  color: #ffb5a7;
   transition: 0.25s;
 }
 
@@ -786,7 +786,7 @@ body {
 }
 
 #cart-mas {
-  background-color: rgb(69, 181, 156);
+  background-color: #45b59c;
   border-radius: 12px;
   color: white;
   padding: 4px 16px;
@@ -949,6 +949,46 @@ body {
   width: 50px;
   height: 50px;
   animation: spin 2s linear infinite; /* Duración, tipo de animación y repetición infinita */
+}
+
+.lista-boton{
+  display: flex;
+  padding: 8px;
+  transition: .3s ease;
+  margin-bottom: 4px;
+  cursor: pointer;
+}
+.lista-boton:hover{
+  background-color: #fdc2c7;
+}
+.lista-boton-on{
+  display: flex;
+  padding: 8px;
+  transition: .3s ease;
+  margin-bottom: 4px;
+  color: white;
+  background-color: #ec5766;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.lista-resumen-on{
+  width: 64%;
+  margin-top: 80px;
+  background-color: #e0e0e0;
+  overflow-y: auto;
+  transition: 0.3s;
+  height: calc(100vh - 80px);
+  z-index: 2;
+}
+.lista-resumen-off{
+  width: 25%;
+  margin-top: 80px;
+  background-color: #e0e0e0;
+  overflow-y: auto;
+  transition: 0.3s;
+  height: calc(100vh - 80px);
+  z-index: 2;
 }
 
 /* ======================= RESPONSIVE */
