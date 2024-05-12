@@ -168,18 +168,17 @@ export default function Filtros() {
         setPrecio(newValue);
     };
 
-    // useEffect para obtener los productos
-    // useEffect(() => {
-    //     fetch("/api/admin/productos/getProducts")
-    //         .then(response => response.json())
-    //         .then(data => {
-    //             setFilteredProducts(data);
-
-    //         })
-    //         .catch(error => {
-    //             console.log('error', error);
-    //         });
-    // }, []);
+    //useEffect para obtener los productos
+    useEffect(() => {
+        fetch("/api/admin/productos/getProducts")
+            .then(response => response.json())
+            .then(data => {
+                setFilteredProducts(data);
+            })
+            .catch(error => {
+                console.log('error', error);
+            });
+    }, []);
 
     // Función para manejar la búsqueda
     const handleSearch = (e) => {

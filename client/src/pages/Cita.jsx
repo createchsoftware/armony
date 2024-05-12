@@ -90,13 +90,29 @@ export default function Cita() {
         newCompleted[activeStep] = true;
         setCompleted(newCompleted);
         handleNext();
+
+        
     };
+
+    const handleClick = () => {
+        handleComplete();
+        LocalBase();
+      };
 
     const handleReset = () => {
         setActiveStep(0);
         setCompleted({});
     };
 
+
+    const LocalBase=()=>{
+        console.log(localStorage.getItem('servicio')+' '
+        +localStorage.getItem('paquete')+' '
+        +localStorage.getItem('sesiones')+' '
+        +localStorage.getItem('Especialista')+' '+
+        localStorage.getItem('hora')+' '+
+        localStorage.getItem('Fecha seleccionada'))
+        }
     const stepComponents = [
         <Servicios key={0} />,
         <Paquetes key={1} />,
@@ -193,7 +209,7 @@ export default function Cita() {
                                         Cancelar
                                     </button>
                                     <button
-                                        onClick={handleComplete}
+                                        onClick={handleClick}
                                         disabled={activeStep === steps.length - 1}
                                         className="px-4 py-2 mx-auto text-xl text-white rounded-full bg-rose-400 hover:bg-red-200"
                                     >
