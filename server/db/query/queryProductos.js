@@ -155,10 +155,10 @@ export async function deleteProdCat(connection, data) {
 
 export async function getProducts (pool,data,res){
   try{
-      const pages=data.pages||1;/*por defecto sera pagina 1 */
-      const limit =data.limit||5;/*capacidad por defecto de 5, esto cambiara dependiendo el front */
-      const offset=(pages-1)*limit;
-      const query=`SELECT *FROM  prodServ where tipoProducto is not null LIMIT ${limit} OFFSET ${offset}`
+      // const pages=data.pages||1;/*por defecto sera pagina 1 */
+      // const limit =data.limit||5;/*capacidad por defecto de 5, esto cambiara dependiendo el front */
+      // const offset=(pages-1)*limit;
+      const query=`SELECT *FROM  prodServ where tipoProducto is not null `
       const [rows,fields]=await pool.query(query);
           return rows;
   }catch(err){
