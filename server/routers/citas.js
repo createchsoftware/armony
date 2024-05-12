@@ -1,5 +1,5 @@
 import express from "express";
-import { conexion } from "../DB/connection.js";
+import { conexion } from "../db/connection.js";
 import {
   horasDisponibles,
   horasDipoArray,
@@ -8,7 +8,7 @@ import {
   duracionTotal,
   stringATiempo,
   horaFinal,
-} from "../DB/query/queryCitas.js";
+} from "../db/query/queryCitas.js";
 import { createVentaCita, searchVentaCita } from "../DB/query/queryVenta.js";
 
 // Router
