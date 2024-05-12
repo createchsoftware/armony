@@ -6,20 +6,21 @@ const paquetes = [
         id: 1,
         nombre: "Paquete 1",
         descripcion: "Facial Hidratante",
-        precio: 500
+        precios: [500, 2000, 4000]
     },
     {
         id: 2,
         nombre: "Paquete 2",
-        descripcion: "Facial Limpiador",
-        precio: 500
+        descripcion: "Facial Antiarrugas",
+        precios: [600, 2500, 5000]
     },
     {
         id: 3,
         nombre: "Paquete 3",
-        descripcion: "Facial suavizante",
-        precio: 500
-    },]
+        descripcion: "Facial Antimanchas",
+        precios: [700, 3000, 6000]
+    }
+];
 
 
 function Paquetes() {
@@ -37,7 +38,7 @@ function Paquetes() {
                             Lorem ipsum dolor sit amet consectetur, adipisicing elit. Aliquam distinctio hic doloremque facere officiis dignissimos!</div>
                     </div>
                     <div className='md:w-[60%] text-sm md:text-md py-6 '>
-                        <div className='flex w-2/3 gap-4 mb-6 ml-40 text-xs md:justify-around md:ml-auto md:w-1/3 md:mr-12'>
+                        <div className='flex gap-4 mb-6 ml-40 text-xs md:justify-between md:ml-auto md:w-2/5'>
                             <div>1 Sesion</div>
                             <div>5 Sesiones</div>
                             <div>10 Sesiones</div>

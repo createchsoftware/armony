@@ -11,6 +11,9 @@ import 'react-multi-carousel/lib/styles.css';
 import Filtros from '../components/ui/Filtros.jsx'
 import Ofertas from '../components/ui/Ofertas.jsx'
 import Reseña from "../components/ui/Reseña.jsx";
+import { faTrash, faCircleXmark, faCircleMinus, faCirclePlus, faStar } from '@fortawesome/free-solid-svg-icons';
+import { useState, useEffect } from 'react';
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 const StyledRating = styled(Rating)({
     '& .MuiRating-iconFilled': {
@@ -83,6 +86,27 @@ const ofertas = [
 ]
 
 function Producto() {
+    const [cantidad, setCantidad] = useState(1);
+    const [selectedRatingIndex, setSelectedRatingIndex] = useState(5);
+    const [generalRating, setGeneralRating] = useState(5);
+
+    console.log("🚀 ~ Producto ~ selectedRating:", selectedRatingIndex)
+
+    const increaseQuantity = () => {
+        setCantidad(cantidad + 1);
+    }
+
+    const decreaseQuantity = () => {
+        if (cantidad > 1) {
+            setCantidad(cantidad - 1);
+        }
+    }
+
+    const handleSelectedRating = (index) => () => {
+        setSelectedRatingIndex(index);
+    }
+
+
     return (
         <LayoutPrincipal>
             <main className="flex flex-col gap-12 my-24">
@@ -130,9 +154,15 @@ function Producto() {
                             <p className="text-[#056761] text-xl">Detalles</p>
                             <p className="text-xl">Lorem ipsum dolor sit amet consectetur. Sed quam tincidunt sit malesuada vitae tempus lacus scelerisque. In odio massa purus consequat purus diam mollis. Tellus vitae ultricies euismod sit egestas.</p>
                         </div>
-                        <div className="grid grid-cols-2 gap-4">
-                            <button className="bg-[#D9D9D9] ring-1 w-full rounded-full">
-                                - 1 +
+                        <div className="grid grid-cols-2 gap-4 ">
+                            <button className="flex gap-4 bg-[#D9D9D9]  w-full rounded-full items-center justify-center">
+                                <button className="">
+                                    <FontAwesomeIcon icon={faCircleMinus} onClick={decreaseQuantity} />
+                                </button>
+                                <span>{cantidad}</span>
+                                <button className="">
+                                    <FontAwesomeIcon icon={faCirclePlus} onClick={increaseQuantity} />
+                                </button>
                             </button>
                             <button className="text-[#EB5765] w-full bg-opacity-30 bg-[#EB5765] hover:bg-opacity-90 hover:text-white rounded-full">
                                 Agregar al carrito
@@ -222,41 +252,31 @@ function Producto() {
                     <div className="grid w-full gap-6 px-12">
                         <h1 className="text-3xl">Reseñas de Clientes</h1>
                         <div className="flex items-center justify-between">
-                            <div>
-                                <div>
-                                    <div className="flex items-center mb-2">
-                                        {[...Array(4)].map((_, i) => (
-                                            <svg key={i} className="w-4 h-4 text-yellow-300 me-1" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 22 20">
-                                                <path d="M20.924 7.625a1.523 1.523 0 0 0-1.238-1.044l-5.051-.734-2.259-4.577a1.534 1.534 0 0 0-2.752 0L7.365 5.847l-5.051.734A1.535 1.535 0 0 0 1.463 9.2l3.656 3.563-.863 5.031a1.532 1.532 0 0 0 2.226 1.616L11 17.033l4.518 2.375a1.534 1.534 0 0 0 2.226-1.617l-.863-5.03L20.537 9.2a1.523 1.523 0 0 0 .387-1.575Z" />
-                                            </svg>
-                                        ))}
-                                        <svg className="w-4 h-4 text-gray-300 me-1 dark:text-gray-500" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 22 20">
-                                            <path d="M20.924 7.625a1.523 1.523 0 0 0-1.238-1.044l-5.051-.734-2.259-4.577a1.534 1.534 0 0 0-2.752 0L7.365 5.847l-5.051.734A1.535 1.535 0 0 0 1.463 9.2l3.656 3.563-.863 5.031a1.532 1.532 0 0 0 2.226 1.616L11 17.033l4.518 2.375a1.534 1.534 0 0 0 2.226-1.617l-.863-5.03L20.537 9.2a1.523 1.523 0 0 0 .387-1.575Z" />
-                                        </svg>
-                                        <p className="text-sm font-medium text-gray-500 ms-1 dark:text-gray-400">4.95</p>
-                                        <p className="text-sm font-medium text-gray-500 ms-1 dark:text-gray-400">out of</p>
-                                        <p className="text-sm font-medium text-gray-500 ms-1 dark:text-gray-400">5</p>
-                                    </div>
-                                    <p className="text-sm font-medium text-gray-500 dark:text-gray-400">1,745 global ratings</p>
-                                    <div>
-
-                                        {['5', '4', '3', '2', '1'].map((label, index) => (
-                                            <div className="flex items-center mt-1" key={index}>
-                                                <a href="#" className="text-sm font-medium hover:underline">{label}</a>
-                                                <div className="w-2/4 h-4 mx-4 bg-gray-200 rounded-full dark:bg-gray-700 hover:cursor-pointer">
-                                                    <div className="h-4 bg-[#EB5765] rounded-full" style={{ width: `${(5 - index) * 20 - 10}%` }}></div>
-                                                </div>
-                                                <span className="text-sm font-medium text-gray-500 dark:text-gray-400">{`${(5 - index) * 20 - 10}%`}</span>
+                            <div className="flex items-center justify-center gap-12">
+                                <div className="text-center">
+                                    <p className="text-3xl font-medium text-gray-500 ms-1 dark:text-gray-400">4.95</p>
+                                    <Rating className='' value={selectedRatingIndex} readOnly unratedColor="amber" ratedColor="amber" />
+                                    <p className="text-sm font-medium text-gray-500 dark:text-gray-400">{4} Reseñas</p>
+                                </div>
+                                <div className="w-56">
+                                    {['5', '4', '3', '2', '1'].map((label, index) => (
+                                        <div className="flex items-center mt-1" key={index} onClick={handleSelectedRating(parseInt(label))}>
+                                            <a href="#" className="text-sm font-medium hover:underline">{label}</a>
+                                            <div className="w-2/4 h-4 mx-4 bg-gray-200 rounded-full dark:bg-gray-700 hover:cursor-pointer">
+                                                <div className="h-4 bg-[#EB5765] rounded-full" style={{ width: `${(5 - index) * 20 - 10}%` }}></div>
                                             </div>
-                                        ))}
-                                    </div>
+                                            <span className="text-sm font-medium text-gray-500 dark:text-gray-400">{`${(5 - index) * 20 - 10}%`}</span>
+                                        </div>
+                                    ))}
                                 </div>
                             </div>
                             <button className="text-[#EB5765] bg-opacity-30 bg-[#EB5765] hover:bg-opacity-90 hover:text-white rounded-3xl py-2 px-6 mr-12">Escribir una reseña</button>
                         </div>
-                        {reseñas.map(reseña => (
-                            <Reseña key={reseña.id} reseña={reseña} />
-                        ))}
+                        <div>
+                            {reseñas.map(reseña => (
+                                <Reseña key={reseña.id} reseña={reseña} />
+                            ))}
+                        </div>
                     </div>
                 </section>
             </main>

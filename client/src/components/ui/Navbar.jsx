@@ -22,8 +22,8 @@ function Navbar() {
         setCart(!cart);
     };
 
-    const recibirDato = (datoRecibido) => {
-        setItems(datoRecibido);
+    const cantProductos = (dato) => {
+        setItems(dato);
     };
 
     const toggleLogin = () => {
@@ -190,7 +190,7 @@ function Navbar() {
             {cart && (
                 <div className="cart-fondo">
                     <div className="cart-fx">
-                        <Carrito cerrar={toggleCart} enviarDato={recibirDato} />
+                        <Carrito cerrar={toggleCart} totalProductos={cantProductos} />
                     </div>
                 </div>
             )}

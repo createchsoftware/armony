@@ -37,6 +37,7 @@ import SignUpConfirmacion from "./pages/spa/signUpConfirmacion";
 import AgendarServicios from "./components/ui/servicios/agendar/AgendarServicios";
 import Rangos from "./pages/Rangos";
 import Producto from "./pages/Producto";
+import Suscripcion from "./pages/Suscripcion";
 
 function App() {
     return (
@@ -46,6 +47,7 @@ function App() {
                 <Routes>
                     <Route exact path="/" element={<Home />} />
                     <Route path='/rangos' element={<Rangos />} />
+                    <Route path='/suscripcion' element={<Suscripcion />} />
                     <Route path="/spa" element={<Spa />} />
                     <Route path="/spa/productos" element={<Productos />} />
                     <Route path="/spa/resetPassword/Recuperacion" element={<PasswordResetRecuperacion />} />
