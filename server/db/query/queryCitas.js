@@ -144,11 +144,11 @@ export async function deleteCita(connection, data) {
 // OBTENER HORAS DISPONIBLES
 export async function horasDisponibles(connection, data) {
   try {
-    let horasDispoQuery = "CALL getHorasDisponibles(?, ?, ?)"; // Procedimiento almacenado
+    let horasDispoQuery = "CALL getHorasDisponiblesV2(?, ?, ?)"; // Procedimiento almacenado
     let query = mysql.format(horasDispoQuery, [
-      data.idServ,
-      data.idEmp,
       data.fechaCita,
+      data.idEmp,
+      data.idServ,
     ]); // Parametros para el procedimiento
     const [rows, fields] = await connection.query(query); // Ejecutamos query y almacenamos valores
     endConnection(); // Cerramos la conexion

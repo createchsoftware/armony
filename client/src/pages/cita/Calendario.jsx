@@ -162,9 +162,9 @@ function Calendario() {
 
     const dayStyle = {
         // Estilo por defecto de los días
-        '& .MuiPickersDay-root': {
-            color: 'black', // Color de días no seleccionados
-        },
+        // '& .MuiPickersDay-root': {
+        //     color: 'black', // Color de días no seleccionados
+        // },
         // Estilo para el día actual
         '& .MuiPickersDay-today': {
             color: 'black', // Color para el día actual
@@ -173,22 +173,17 @@ function Calendario() {
             //border red
             border: '3px solid #ec5766',
         },
-        // '&.MuiPickersDay-root.Mui-selected': {
-        //     backgroundColor: "#ec5766",
-        //     color: "white",
-        // },
-        // // Estilo para los días seleccionados
+        // // Estilo para los días seleccionados background
         // '& .MuiPickersDay-daySelected': {
-        //     backgroundColor: '#ec5766', // Color de fondo de días seleccionados
-        //     color: 'white', // Color de texto de días seleccionados
+        //     backgroundColor: '#ec5766',
+        //     color: 'white',
+        //     borderRadius: '50%',
+        //     '&:hover': {
+        //         backgroundColor: '#ec5766',
+        //         color: 'white',
+        //         borderRadius: '50%',
+        //     },
         // },
-        // // Estilo para los días seleccionados con rango
-        // '& .MuiPickersDay-dayRange': {
-        //     backgroundColor: '#ec5766', // Color de fondo de días seleccionados con rango
-        //     color: 'white', // Color de texto de días seleccionados con rango
-        // },
-        // // selected days mui badge
-
 
 
         '& .MuiBadge-badge': {
