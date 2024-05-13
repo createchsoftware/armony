@@ -120,18 +120,22 @@ routerCitas.post("/venta", async (req, res) => {
   }
 });
 
-routerCitas.get("/disponibles", async (req, res) => {
+routerCitas.get("/disponibles/:idServ/:idEmp/:fecha", async (req, res) => {
   try {
     const resultado = await horasDisponibles(conexion, {
-      fecha: req.body.fecha,
-      idEmp: req.body.idEmp,
-      idServ: req.body.idServ,
+      fecha: req.params.fecha,
+      idEmp: req.params.idEmp,
+      idServ: req.params.idServ,
     });
-    // const horas = await horasDipoArray(resultado);
-    console.table(resultado);
+    
+    const horario=[];
+    var i
+    for (i = 0; i < resultado.length; i++) {
+      horario[i] = resultado[i].hora_disponible
+  }
     res.status(200).json({
       message: "Horas disponibles: ",
-      data: resultado[0].hora_disponible,
+      data: horario,
     });
   } catch (err) {
     // Capturamos errores
