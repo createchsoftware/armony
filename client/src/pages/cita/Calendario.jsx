@@ -166,36 +166,16 @@ function Calendario() {
         // '& .MuiPickersDay-root': {
         //     color: 'black', // Color de días no seleccionados
         // },
-        // // Estilo para los días seleccionados
-        '& .MuiPickersDay-daySelected': {
-            backgroundColor: 'white !important',
-            color: 'white !important',
-        },
+
         // Estilo para el día actual
         '& .MuiPickersDay-today': {
             color: 'black !important', // Color para el día actual
             fontWeight: 'bold !important',
             backgroundColor: 'white !important',
             //border red
-            border: '3px solid #ec5766',
+            border: '3px solid #ec5766 !important',
         },
-        // estilo para el dia actual sin seleccionar
-        '& .MuiPickersDay-current': {
-            color: 'white !important',
-            fontWeight: 'bold !important',
-            backgroundColor: 'white !important',
-            //border red
-            border: '3px solid #ec5766',
-        },
-        // estilo para el dia actual y seleccionado
-        '& .MuiPickersDay-current.Mui-selected': {
-            color: 'white !important',
-            fontWeight: 'bold !important',
-            backgroundColor: 'white !important',
-            //border red
-            border: '3px solid #ec5766',
 
-        },
 
         // // Estilo para los días seleccionados background
         // '& .MuiPickersDay-daySelected': {
@@ -235,45 +215,45 @@ function Calendario() {
     const [horasDisponibles, setHorasDisponibles] = useState([]);
     //metodo para obtener horas disponibles de un empleado
     //este metodo se llamara cada vez que el estado de id empleado o el estado de fecha cambie
-    // async function horasDisp() {
-    //     await fetch(`/api/admin/citas/disponibles/${1}/${34}/${localStorage.getItem('Fecha seleccionada').toString()}`, {
-    //         method: 'GET',
-    //         headers: {
-    //             'Content-Type': 'application/json'
-    //         }
-    //     })
-    //         .then(response => {
-    //             if (!response.ok) {
-    //                 throw new Error('Error en la solicitud');
-    //             }
-    //             return response.json();
-    //         })
-    //         .then(data => {
-    //             setHorasDisponibles(data.data); // Actualiza el estado con los datos recibidos
-    //         })
-    //         .catch(error => {
-    //             console.error('Error de red o servidor:', error.message);
-    //         });
-    // }
+    async function horasDisp() {
+        await fetch(`/api/admin/citas/disponibles/${1}/${34}/${localStorage.getItem('Fecha seleccionada').toString()}`, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Error en la solicitud');
+                }
+                return response.json();
+            })
+            .then(data => {
+                setHorasDisponibles(data.data); // Actualiza el estado con los datos recibidos
+            })
+            .catch(error => {
+                console.error('Error de red o servidor:', error.message);
+            });
+    }
 
     // example array of 13 hours available
-    const horasDisp = () => {
-        setHorasDisponibles([
-            '8:00 am',
-            '9:00 am',
-            '10:00 am',
-            '11:00 am',
-            '12:00 pm',
-            '1:00 pm',
-            '2:00 pm',
-            '3:00 pm',
-            '4:00 pm',
-            '5:00 pm',
-            '6:00 pm',
-            '7:00 pm',
-            '8:00 pm',
-        ])
-    }
+    // const horasDisp = () => {
+    //     setHorasDisponibles([
+    //         '8:00 am',
+    //         '9:00 am',
+    //         '10:00 am',
+    //         '11:00 am',
+    //         '12:00 pm',
+    //         '1:00 pm',
+    //         '2:00 pm',
+    //         '3:00 pm',
+    //         '4:00 pm',
+    //         '5:00 pm',
+    //         '6:00 pm',
+    //         '7:00 pm',
+    //         '8:00 pm',
+    //     ])
+    // }
 
     const especialistas = [
         {
