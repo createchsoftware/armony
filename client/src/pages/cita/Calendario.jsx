@@ -309,7 +309,7 @@ function Calendario() {
                 Agenda tu cita
             </h1>
             <main className='flex  gap-0  w-[90%]'>
-                <section className='grid w-2/3 p-6 place-content-between '>
+                <section className='grid w-2/3 p-6 '>
                     {/* <Calendar onChange={onChange} value={value} /> */}
 
                     <div className=''>
@@ -320,8 +320,14 @@ function Calendario() {
                                         svg: { fill: '#ec5766 !important' },
                                         input: { fill: '#ec5766 !important' },
                                         label: { fill: '#ec5766 !important' },
-                                    },
-                                    {
+                                        "& .MuiPickersCalendarHeader-switchHeader": {
+                                            color: "#036C65 !important",
+                                        },
+                                        // month color 
+                                        "& .MuiPickersCalendarHeader-transitionContainer": {
+                                            color: "#036C65 !important",
+
+                                        },
                                         "& .MuiPickersDay-root": {
                                             "&.Mui-selected": {
                                                 backgroundColor: "#036C65 !important",
