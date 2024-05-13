@@ -43,7 +43,7 @@ function MenuPerfil() {
                     </a>
                 </li>
                 <li className="menu-item-perfil">
-                    <a href="/perfil/historial" className="menu-link-perfil">
+                    <a href="/perfil/movimientos" className="menu-link-perfil">
                         <FontAwesomeIcon icon={faClockRotateLeft} className='text-black' />
                         <p className='ml-5'>Historial</p>
                     </a>
