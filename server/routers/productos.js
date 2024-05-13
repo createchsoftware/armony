@@ -7,6 +7,7 @@ import {
   readProdServAZ,
   updateProdServ,
   deleteProdServ,
+  ventaProducto,
 } from "../db/query/queryProductos.js";
 import { errorUpdate } from "../auth/validaciones.js";
 
@@ -149,6 +150,26 @@ routerProductos.delete("/delete", async (req, res) => {
       message: "Se elimino correctamente el producto",
       data: resultado,
     }); // Enviamos informacion en formato JSON
+  } catch (err) {
+    // Capturamos errores
+    console.error(messageError, err); // Mostramos errores por consola
+    res.status(500).send(messageError, err); // Enviamos un error INTERNAL SERVER ERROR y el error al navegador
+  }
+});
+
+routerProductos.post("/ventaOnline", async (req, res) => {
+  try {
+    const resultado = await ventaProducto(conexion, {
+      idCliente: req.body.idCliente,
+      nombre: req.body.nombre,
+      tarjeta: req.body.tarjeta,
+      monedero: req.body.monedero,
+      subtotal: req.body.subtotal,
+      total: req.body.total,
+      impuesto: req.body.impuesto,
+    });
+    if (resultado[0].affectedRows === 1)
+      res.status(200).json({ message: "Venta exitosa" });
   } catch (err) {
     // Capturamos errores
     console.error(messageError, err); // Mostramos errores por consola
