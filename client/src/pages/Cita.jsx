@@ -91,13 +91,13 @@ export default function Cita() {
         setCompleted(newCompleted);
         handleNext();
 
-        
+
     };
 
     const handleClick = () => {
         handleComplete();
         LocalBase();
-      };
+    };
 
     const handleReset = () => {
         setActiveStep(0);
@@ -105,14 +105,14 @@ export default function Cita() {
     };
 
 
-    const LocalBase=()=>{
-        console.log(localStorage.getItem('servicio')+' '
-        +localStorage.getItem('paquete')+' '
-        +localStorage.getItem('sesiones')+' '
-        +localStorage.getItem('Especialista')+' '+
-        localStorage.getItem('hora')+' '+
-        localStorage.getItem('Fecha seleccionada'))
-        }
+    const LocalBase = () => {
+        console.log(localStorage.getItem('servicio') + ' '
+            + localStorage.getItem('paquete') + ' '
+            + localStorage.getItem('sesiones') + ' '
+            + localStorage.getItem('Especialista') + ' ' +
+            localStorage.getItem('hora') + ' ' +
+            localStorage.getItem('Fecha seleccionada'))
+    }
     const stepComponents = [
         <Servicios key={0} />,
         <Paquetes key={1} />,
@@ -156,7 +156,7 @@ export default function Cita() {
                         {steps.map((label, index) => (
 
                             <Step key={label} completed={completed[index]}>
-                                <StepButton color={{ backgroundColor: "red" }}
+                                <StepButton disabled={!completed[index] && index > activeStep} color={{ backgroundColor: "red" }}
                                     onClick={handleStep(index)}>
                                     {label}
                                 </StepButton>
@@ -196,7 +196,7 @@ export default function Cita() {
                                     <button
                                         disabled={activeStep === 0}
                                         onClick={handleBack}
-                                        className="px-4 py-2 mx-auto text-xl bg-white rounded-full ring-1 text-rose-400 hover:bg-red-50 ring-rose-400"
+                                        className={`${activeStep === 0 ? "hover:bg-transparent opacity-30 hover:text-rose-400" : "hover:bg-red-50"} px-4 py-2 mx-auto text-xl bg-white rounded-full ring-1 text-rose-400 ring-rose-400`}
                                         sx={{ mr: 1 }}
                                     >
                                         Regresar
@@ -233,7 +233,7 @@ export default function Cita() {
                     </div>
                 </Box >
 
-            </div>
-        </LayoutPrincipal>
+            </div >
+        </LayoutPrincipal >
     );
 }

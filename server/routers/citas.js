@@ -7,8 +7,8 @@ import {
   duracionTotal,
   stringATiempo,
   horaFinal,
-} from "../db/query/queryCitas.js";
-import { searchVentaCita } from "../db/query/queryVenta.js";
+} from "../DB/query/queryCitas.js";
+import { searchVentaCita } from "../DB/query/queryVenta.js";
 
 // Router
 export const routerCitas = express.Router();
@@ -125,13 +125,14 @@ routerCitas.get("/disponibles", async (req, res) => {
     const resultado = await horasDisponibles(conexion, {
       fecha: req.body.fecha,
       idEmp: req.body.idEmp,
-      idServ: req.body.idServ
+      idServ: req.body.idServ,
     });
     // const horas = await horasDipoArray(resultado);
     console.table(resultado);
-    res
-      .status(200)
-      .json({ message: "Horas disponibles: ", data: resultado});
+    res.status(200).json({
+      message: "Horas disponibles: ",
+      data: resultado[0].hora_disponible,
+    });
   } catch (err) {
     // Capturamos errores
     console.error(messageError, err); // Mostramos errores por consola
