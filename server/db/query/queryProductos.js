@@ -152,29 +152,6 @@ export async function deleteProdCat(connection, data) {
   }
 }
 
-<<<<<<< HEAD
-export async function ventaProducto(connection, data) {
-  try {
-    let ventaOnlineProducto = "CALL addVentaProdOnline(?, ?, ?, ?, ?, ?, ? ,?)"; // Procedimiento de la base de datos
-    let query = mysql.format(ventaOnlineProducto, [
-      data.idCliente,
-      data.nombreCompleto,
-      data.phone,
-      data.tarjeta,
-      data.monedero,
-      data.subtotal,
-      data.total,
-      data.impuesto,
-    ]); // Parametros necesarios para el procedimiento
-    const [rows, fields] = await connection.query(query); // Ejecutamos el query y almacenamos los valores retornados
-    endConnection(); // Cerramos la conexion con la base de datos
-    return rows[0]; // Retornamos los valores (Se retorna un objeto)
-  } catch (err) {
-    // Capturamos errores de ejecucion de query
-    console.error(messageError, err); // Mostramos los errores por consola
-  }
-}
-=======
 
 export async function getProducts (pool,data,res){
   try{
@@ -191,4 +168,3 @@ export async function getProducts (pool,data,res){
      
       }
   
->>>>>>> 01e91963a882ddf1e67d2e1da740ab17e8d5a530
