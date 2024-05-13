@@ -39,12 +39,6 @@ function Servicio({
             backgroundcolor: "rgba(0, 0, 0, 0.6)",
           }}
         >
-          <h1 className="font-extrabold text-white">{nombre}</h1>
-          <p className="mt-6 font-light text-justify text-white">
-            {descripcion.length > 60
-              ? descripcion.substring(0, 40) + "..."
-              : descripcion}
-          </p>
           <Box
             className="relative right"
             sx={{
@@ -80,6 +74,12 @@ function Servicio({
               </div>
             </div>
           </Box>
+          <h1 className="font-extrabold text-white mt-3">{nombre}</h1>
+          <p className="mt-6 font-light text-justify text-white">
+            {descripcion.length > 60
+              ? descripcion.substring(0, 40) + "..."
+              : descripcion}
+          </p>
         </div>
         <div className="grid gap-2">
           <div className="flex gap-4 m-auto">
