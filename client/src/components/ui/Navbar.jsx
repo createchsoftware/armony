@@ -5,15 +5,13 @@ import { faBars, faCartShopping } from "@fortawesome/free-solid-svg-icons";
 import { faHeart } from "@fortawesome/free-regular-svg-icons";
 import Carrito from "./Carrito.jsx";
 import PopupLogin from "./Login/PopupLogin.jsx";
-import MenuServicios from "./SubMenuServicios.jsx";
+import SubMenuServicios from "./SubMenuServicios.jsx"
 import MenuPerfil from "./MenuPerfil.jsx";
 import { Helmet, HelmetProvider } from "react-helmet-async";
 
 function Navbar() {
     const [cart, setCart, showModal, setShowModal] = useState(false);
     const [login, setLogin] = useState(false);
-    const [servicios, setServicios] = useState(false);
-    const [perfil, setPerfil] = useState(false);
     const [log, setLog] = useState(false); //<<< PARA EL INICIO DE SESION
     const [usuario, setUsuario] = useState(false); //<<< PARA EL INICIO DE SESION
     const [items, setItems] = useState(0);
@@ -28,14 +26,6 @@ function Navbar() {
 
     const toggleLogin = () => {
         setLogin(!login);
-    };
-
-    const toggleServicio = () => {
-        setServicios(!servicios);
-    };
-
-    const togglePerfil = () => {
-        setPerfil(!perfil);
     };
 
     async function recibido() {
@@ -68,7 +58,6 @@ function Navbar() {
 
     return (
         <>
-
             <HelmetProvider>
                 <Helmet>
                     <script src="../../../public/scripts/index.js"></script>
@@ -110,9 +99,10 @@ function Navbar() {
                             {location.pathname !== "/" && (
                                 <>
                                     <li className="cursor-pointer nav-menu-item">
-                                        <a className="menu-link" onClick={toggleServicio}>
+                                        <a className="menu-link">
                                             Servicios
                                         </a>
+                                        <SubMenuServicios />
                                     </li>
                                     <li className="nav-menu-item">
                                         <a href="/spa/productos" className="menu-link">
@@ -128,17 +118,19 @@ function Navbar() {
                             )}
                             <li className="cursor-pointer nav-menu-item">
                                 {log ? (
-                                    <a
-                                        className="flex items-center h-20 menu-link"
-                                        onClick={togglePerfil}
-                                    >
-                                        <img
-                                            src="../../../pictures/userCl.png"
-                                            alt=""
-                                            className="w-10 h-10 mr-5 rounded-full"
-                                        />
-                                        {usuario}
-                                    </a>
+                                    <>
+                                        <a
+                                            className="flex items-center h-20 menu-link"
+                                        >
+                                            <img
+                                                src="../../../pictures/userCl.png"
+                                                alt=""
+                                                className="w-10 h-10 mr-5 rounded-full"
+                                            />
+                                            {usuario}
+                                        </a>
+                                        <MenuPerfil />
+                                    </>
                                 ) : (
                                     <a
                                         href="#"
@@ -179,13 +171,6 @@ function Navbar() {
                 </div>
             </header>
             {login && <PopupLogin cerrar={toggleLogin} />}
-            {servicios && (
-                <div className="submenu-fondo">
-                    <div className="submenu-fx">
-                        <MenuServicios />
-                    </div>
-                </div>
-            )}
 
             {cart && (
                 <div className="cart-fondo">
@@ -195,13 +180,13 @@ function Navbar() {
                 </div>
             )}
 
-            {perfil && (
+            {/* {perfil && (
                 <div className="usermenu-fondo">
                     <div className="usermenu-fx">
                         <MenuPerfil />
                     </div>
                 </div>
-            )}
+            )} */}
         </>
     );
 }
