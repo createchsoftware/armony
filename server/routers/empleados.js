@@ -1,5 +1,5 @@
 import express from "express";
-import { conexion } from "../DB/connection.js";
+import { conexion } from "../db/connection.js";
 import {
   createEmpleado,
   readEmpleadoById,

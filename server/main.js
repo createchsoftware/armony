@@ -43,8 +43,16 @@ import { routerSucursal } from "./routers/sucursal.js";
 app.use("/api/admin/sucursal", routerSucursal);
 import { routerCategoria } from "./routers/categoria.js";
 app.use("/api/admin/categoria", routerCategoria);
-import { routerEspecialidad } from "./routers/especialidad.js"; // NOTA: NO SE A PROBADO AUN, NO FUNCIONAL
+import { routerEspecialidad } from "./routers/especialidad.js";
 app.use("/api/admin/especialidad", routerEspecialidad);
+import { routerLogIn } from "./auth/login.js";
+app.use("/api/admin/login", routerLogIn);
+import { routerVenta } from "./routers/venta.js";
+app.use("/api/admin/venta", routerVenta);
+import { routerPatologias } from "./routers/patologias.js";
+app.use("/api/admin/patologia", routerPatologias);
+import { routerCitas } from "./routers/citas.js";
+app.use("/api/admin/citas", routerCitas);
 
 // Middleware
 app.use(express.json()); // Analiza las request entrantes con carga JSON basado en body-parse

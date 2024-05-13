@@ -2,14 +2,13 @@ import express from "express";
 import { conexion } from "../db/connection.js";
 import {
   horasDisponibles,
-  horasDipoArray,
   createCitas,
   ventaCita,
   duracionTotal,
   stringATiempo,
   horaFinal,
-} from "../db/query/queryCitas.js";
-import { createVentaCita, searchVentaCita } from "../DB/query/queryVenta.js";
+} from "../DB/query/queryCitas.js";
+import { searchVentaCita } from "../DB/query/queryVenta.js";
 
 // Router
 export const routerCitas = express.Router();
@@ -130,9 +129,10 @@ routerCitas.get("/disponibles", async (req, res) => {
     });
     // const horas = await horasDipoArray(resultado);
     console.table(resultado);
-    res
-      .status(200)
-      .json({ message: "Horas disponibles: ", data: resultado[2].horaInicioS });
+    res.status(200).json({
+      message: "Horas disponibles: ",
+      data: resultado[0].hora_disponible,
+    });
   } catch (err) {
     // Capturamos errores
     console.error(messageError, err); // Mostramos errores por consola
