@@ -91,13 +91,13 @@ export default function Cita() {
         setCompleted(newCompleted);
         handleNext();
 
-        
+
     };
 
     const handleClick = () => {
         handleComplete();
         LocalBase();
-      };
+    };
 
     const handleReset = () => {
         setActiveStep(0);
@@ -105,14 +105,14 @@ export default function Cita() {
     };
 
 
-    const LocalBase=()=>{
-        console.log(localStorage.getItem('servicio')+' '
-        +localStorage.getItem('paquete')+' '
-        +localStorage.getItem('sesiones')+' '
-        +localStorage.getItem('Especialista')+' '+
-        localStorage.getItem('hora')+' '+
-        localStorage.getItem('Fecha seleccionada'))
-        }
+    const LocalBase = () => {
+        console.log(localStorage.getItem('servicio') + ' '
+            + localStorage.getItem('paquete') + ' '
+            + localStorage.getItem('sesiones') + ' '
+            + localStorage.getItem('Especialista') + ' ' +
+            localStorage.getItem('hora') + ' ' +
+            localStorage.getItem('Fecha seleccionada'))
+    }
     const stepComponents = [
         <Servicios key={0} />,
         <Paquetes key={1} />,
@@ -156,7 +156,7 @@ export default function Cita() {
                         {steps.map((label, index) => (
 
                             <Step key={label} completed={completed[index]}>
-                                <StepButton color={{ backgroundColor: "red" }}
+                                <StepButton disabled={!completed[index] && index > activeStep} color={{ backgroundColor: "red" }}
                                     onClick={handleStep(index)}>
                                     {label}
                                 </StepButton>
