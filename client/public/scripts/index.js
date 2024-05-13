@@ -147,8 +147,7 @@ function cambio(){
 }
 
 //SLIDE 3D DE PILARES
-const pilares = document.querySelector("#pilares-visibles"),
-    pilar = document.querySelectorAll(".pilar");
+const pilar = document.querySelectorAll(".pilar");
     // next = document.querySelector("#next1"),
     // prev = document.querySelector("#prev1");
 let actual = 2;

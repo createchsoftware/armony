@@ -1,13 +1,18 @@
 import ServiciosEstetica from "../../components/ui/servicios/ServiciosEstetica";
-import Navbar from '../../components/ui/Navbar.jsx'
-import Foot from '../../components/ui/Footer.jsx'
+import LayoutPrincipal from "../../layouts/LayoutPrincipal";
+import { Helmet, HelmetProvider } from "react-helmet-async";
 
 const ServicioEstetica = () => {
   return (
     <>
-      <Navbar />
-      <ServiciosEstetica />
-      <Foot />
+      <HelmetProvider>
+        <Helmet>
+          <script src="../../../public/scripts/index.js"></script>
+        </Helmet>
+      </HelmetProvider>
+      <LayoutPrincipal>
+        <ServiciosEstetica />
+      </LayoutPrincipal>
     </>
   );
 }
