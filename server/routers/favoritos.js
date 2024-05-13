@@ -1,6 +1,6 @@
 import express from "express";
 export const routerFavoritos = express.Router();
-import { addfavorito,delFavorito,FavoritosbyId } from "../db/query/queryfavoritos.js";
+import { addfavorito,delFavorito,ProductFavoritosbyId,ServiceFavoritosbyId } from "../db/query/queryFavoritos.js";
 import { enableConnect } from "../db/connection.js";
 
 
@@ -36,15 +36,16 @@ routerFavoritos.post('/delFavorito',async(req,res)=>{
 })
 
 
-routerFavoritos.get('/FavoritosbyId/:id',async(req,res)=>{
+routerFavoritos.get('/ProductFavoritosbyId/:id',async(req,res)=>{
     try{
     const {id} =req.params
     const conexion=await enableConnect()
-    const resultado=await FavoritosbyId(conexion,{ids:id})
+   const resultado=await ProductFavoritosbyId(conexion,{ids:id})
     res.send(JSON.stringify(resultado));
     
     }catch(err){
         res.status(500).send({error: 'Hubo un problema',err})
     }
 })
+
 

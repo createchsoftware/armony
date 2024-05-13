@@ -146,7 +146,7 @@ export async function horasDisponibles(connection, data) {
   try {
     let horasDispoQuery = "CALL getHorasDisponiblesV2(?, ?, ?)"; // Procedimiento almacenado
     let query = mysql.format(horasDispoQuery, [
-      data.fechaCita,
+      data.fecha,
       data.idEmp,
       data.idServ,
     ]); // Parametros para el procedimiento

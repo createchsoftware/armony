@@ -19,6 +19,16 @@ const StyledRating = styled(Rating)({
 
 const TarjetaDeServicio = ({ servicio }) => {
   const [vista, setVista] = useState(false);
+  
+  const [seleccionado, setSeleccionado] = useState(false);
+const agregarServ=(id)=>{
+  if(!seleccionado){
+  setSeleccionado(true); 
+localStorage.setItem('servicio', id);
+}else{
+alert('ya escogiste un servicio')
+}
+}
 
   const toogleVista = () => {
     setVista(!vista);
@@ -87,7 +97,7 @@ const TarjetaDeServicio = ({ servicio }) => {
             ratedColor="amber"
           />
         </div>
-        <button className="bg-red-50 font-bold px-10 py-1 mx-10 rounded-xl ring-1 ring-rose-50 hover:ring-black">
+        <button onClick={()=>agregarServ(servicio.id)} className="bg-red-50 font-bold px-10 py-1 mx-10 rounded-xl ring-1 ring-rose-50 hover:ring-black">
           Elegir
         </button>
       </div>

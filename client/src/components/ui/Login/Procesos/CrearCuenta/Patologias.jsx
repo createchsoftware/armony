@@ -1,6 +1,6 @@
 import user1 from "../../../../../../public/pictures/userGuest.png";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import React, { Fragment, useEffect, useState } from 'react'
+import React, { Fragment, useEffect, useState } from "react";
 import {
   fa1,
   fa2,
@@ -11,31 +11,27 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 
 const Patologias = () => {
-
   const [array, setArray] = useState([]);
 
-   useEffect(()=>{
-      fetch("/api/step1.5")
-         .then(response=> response.json())
-         .then(data => {
-            //console.log(typeof data);
-            setArray(data);
-         })
-         .catch(error=>{
-             console.log(error);
-         });
-   },[])
+  useEffect(() => {
+    fetch("/api/step1.5")
+      .then((response) => response.json())
+      .then((data) => {
+        //console.log(typeof data);
+        setArray(data);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }, []);
 
-   console.log(array);
-   
-
-
+  console.log(array);
 
   return (
     <div className="flex flex-col h-screen justify-center items-center">
       <div className="min-h-[740px] max-w-[1170px] min-w-[1170px] flex flex-col rounded-xl ring-1 ring-slate-200 bg-white bg-clip-border text-gray-700 shadow-md mx-auto">
         <div className="relative max-w-[110px] min-w-[110px] mx-auto -mt-20 grid h-28 place-items-center overflow-hidden rounded-full bg-white bg-clip-border shadow-lg">
-          <img src={user1} alt="" className="logo1 absolute h-full" />
+          <img src={user1} className="logo1 absolute h-full" />
         </div>
         <h1 className="mx-auto p-5 text-rose-400 text-3xl">
           Crear cuenta nueva
@@ -136,11 +132,10 @@ const Patologias = () => {
           action=""
           className="grid grid-cols-[32%_32%_32%] place-content-center mt-5"
         >
-          
-          {array.map(question=>{
+          {array.map((question) => {
             return (
               <>
-              <div className="my-1">
+                <div className="my-1">
                   <div className="mr-2">
                     <label htmlFor="" className="text-xs">
                       {question[0]}
@@ -152,13 +147,23 @@ const Patologias = () => {
                   <div className="grid grid-cols-[10%_80%]">
                     <div>
                       <div>
-                        <input type="radio" id={`no-${question[1]}`} name={`estado${question[1]}`} className="mr-2" />
+                        <input
+                          type="radio"
+                          id={`no-${question[1]}`}
+                          name={`estado${question[1]}`}
+                          className="mr-2"
+                        />
                         <label htmlFor="" className="text-xs">
                           No
                         </label>
                       </div>
                       <div>
-                        <input type="radio" id={`si-${question[1]}`} name={`estado${question[1]}`} className="mr-2" />
+                        <input
+                          type="radio"
+                          id={`si-${question[1]}`}
+                          name={`estado${question[1]}`}
+                          className="mr-2"
+                        />
                         <label htmlFor="" className="text-xs">
                           Sí
                         </label>
@@ -174,7 +179,6 @@ const Patologias = () => {
               </>
             );
           })}
-          
         </form>
         <div className="grid grid-cols-2 my-auto">
           <div className="grid place-content-start ml-8">
@@ -187,7 +191,7 @@ const Patologias = () => {
           </div>
           <div className="grid place-content-end mr-8">
             <button
-              id='step2'
+              id="step2"
               aria-label="Continuar"
               className="bg-rose-400 text-white text-xl rounded-full px-4 py-2 mx-auto hover:bg-red-200"
             >
