@@ -2,14 +2,7 @@ import { useState } from "react";
 import user1 from "../../../../../../public/pictures/userCl.png";
 import Pasos from "../../../PasosDeProcesos.jsx";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  fa1,
-  fa2,
-  fa3,
-  fa4,
-  faCircle,
-  faAngleLeft,
-} from "@fortawesome/free-solid-svg-icons";
+import { faAngleLeft } from "@fortawesome/free-solid-svg-icons";
 
 const Recuperacion = () => {
   const [state, setState] = useState(true);
@@ -45,7 +38,7 @@ const Recuperacion = () => {
           <div className="relative w-[6rem] h-[6rem] lg:w-[7rem] lg:h-[7rem] mx-auto -mt-20 grid place-items-center overflow-hidden rounded-full bg-white bg-clip-border shadow-lg">
             <img src={user1} alt="" className="logo1 absolute h-full" />
           </div>
-          <h1 className="mx-auto p-8 md:p-5 lg:p-7 text-rose-400 text-2xl md:text-3xl lg:text-4xl">
+          <h1 className="mx-auto pt-8 pb-4 md:p-5 lg:p-7 text-rose-400 text-2xl md:text-3xl lg:text-4xl">
             Restablecer contraseña
           </h1>
           <Pasos
@@ -65,7 +58,7 @@ const Recuperacion = () => {
               Regresar
             </a>
           </div>
-          <h2 className="grid place-items-center mx-4 md:my-4 lg:my-6 md:text-sm lg:text-base">
+          <h2 className="grid place-items-center mx-4 my-2 md:my-4 lg:my-6 md:text-sm lg:text-base">
             {m1}
           </h2>
           <form action="" className="mx-auto md:text-sm lg:text-base">

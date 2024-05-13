@@ -7,7 +7,7 @@ import {
   readProdServAZ,
   updateProdServ,
   deleteProdServ,
-  ventaProducto,
+  getProducts,
 } from "../db/query/queryProductos.js";
 import { errorUpdate } from "../auth/validaciones.js";
 
@@ -157,22 +157,12 @@ routerProductos.delete("/delete", async (req, res) => {
   }
 });
 
-routerProductos.post("/ventaOnline", async (req, res) => {
+routerProductos.get("/getProducts", async (req, res) => {
   try {
-    const resultado = await ventaProducto(conexion, {
-      idCliente: req.body.idCliente,
-      nombre: req.body.nombre,
-      tarjeta: req.body.tarjeta,
-      monedero: req.body.monedero,
-      subtotal: req.body.subtotal,
-      total: req.body.total,
-      impuesto: req.body.impuesto,
-    });
-    if (resultado[0].affectedRows === 1)
-      res.status(200).json({ message: "Venta exitosa" });
+    const resultado = await getProducts(conexion);
+    res.json(resultado);
   } catch (err) {
-    // Capturamos errores
-    console.error(messageError, err); // Mostramos errores por consola
-    res.status(500).send(messageError, err); // Enviamos un error INTERNAL SERVER ERROR y el error al navegador
+    console.error("Ha ocurrido un error: ", err);
+    res.status(500).send("Ha ocurrido un error al procesar tu solicitud");
   }
 });

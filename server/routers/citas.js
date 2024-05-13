@@ -123,9 +123,9 @@ routerCitas.post("/venta", async (req, res) => {
 routerCitas.get("/disponibles", async (req, res) => {
   try {
     const resultado = await horasDisponibles(conexion, {
-      idServ: req.body.idServ,
+      fecha: req.body.fecha,
       idEmp: req.body.idEmp,
-      fechaCita: req.body.fecha,
+      idServ: req.body.idServ,
     });
     // const horas = await horasDipoArray(resultado);
     console.table(resultado);
