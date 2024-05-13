@@ -14,6 +14,9 @@ import Direcciones from "./pages/perfil/Direcciones";
 import Agenda from "./pages/perfil/Agenda";
 import Suscripciones from "./pages/perfil/Suscripciones";
 import Tarjetas from "./pages/perfil/Tarjetas";
+import TarjetaNueva from "./pages/perfil/TarjetaNueva";
+import Pedidos from "./pages/perfil/Pedidos";
+import Movimientos from "./pages/perfil/Movimientos";
 import Error from "./pages/Error";
 import PasswordResetRecuperacion from "./pages/spa/passwordResetRecuperacion";
 import PasswordResetVerificacion from "./pages/spa/passwordResetVerificacion";
@@ -65,10 +68,13 @@ function App() {
                     <Route path="/perfil/direcciones" element={<Direcciones />} />
                     <Route path="/perfil/suscripciones" element={<Suscripciones />} />
                     <Route path="/perfil/tarjetas" element={<Tarjetas />} />
+                    <Route path="/perfil/tarjetas/registroTarjeta" element={<TarjetaNueva />} />
                     <Route path="/perfil/agenda" element={<Agenda />} />
                     <Route path="/favoritos" element={<Favoritos />} />
                     <Route path="/perfil/editar-perfil" element={<EditarPerfil />} />
                     <Route path="/perfil/historial" element={<Historial />} />
+                    <Route path="/perfil/pedidos" element={<Pedidos />} />
+                    <Route path="/perfil/movimientos" element={<Movimientos />} />
                     <Route path="/perfil/compras" element={<Compras />} />
                     <Route path="/spa/agendar/paquetes" element={<Paquetes />} />
                     <Route path="/spa/agendar/calendario" element={<Calendario />} />

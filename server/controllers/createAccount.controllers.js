@@ -12,8 +12,11 @@ const regex_apellidos = /[a-zA-Zá-úñ]{3,}/;
 
 
 
+// INFORMACION BASICA
 async function paso1(solicitud,respuesta){
 
+  // INICIO 1 RECIBIR LOS DATOS QUE EL USUARIO LLENO EN EL FORMULARIO DESDE EL CLIENT
+  
     let nombre = solicitud.body.nombre;
     let paterno = solicitud.body.paterno;
     let materno = solicitud.body.materno;
@@ -28,11 +31,18 @@ async function paso1(solicitud,respuesta){
     let colonia = solicitud.body.colonia;
     let numero = solicitud.body.numero;
     let codigo_postal = solicitud.body.codigo_postal;
+    let apodo = solicitud.body.apodo;
 
+  // FIN 1
+  
+  
+    // INICIO 2  CREAR UN ARREGLO QUE ALMACENARA CAMPOS SIN CONTESTAR
     let campos_faltantes = [];
 
     if(!nombre[0])
       campos_faltantes.push(nombre[1]);
+    if(!apodo[0])
+      campos_faltantes.push(apodo[1]);
     if(!paterno[0])
       campos_faltantes.push(paterno[1]);
     if(!materno[0])
@@ -58,14 +68,20 @@ async function paso1(solicitud,respuesta){
     if(!codigo_postal[0])
       campos_faltantes.push(codigo_postal[1]);
 
+    // FIN - 2
+
       
+
+    // si el arreglo tiene una longitud mayor a 0, significa que si hubo campos sin contestar
     if(campos_faltantes.length > 0){
-        // el usuario no lleno todos los campos
         respuesta.send({faltantes:campos_faltantes});
     }
     else{
-        // toda verificar que los datos sean correctos
+        // si llegamos hasta este ELSE, signifca que la longitud es 0, y por lo tanto, el usuario lleno todos los datos
 
+
+
+      // INICIO 3 QUE EL USUARIO HAYA LLENADO TODOS LOS DATOS, NO SIGNIFCA QUE LOS HAYA LLENADO CORRECTAMENTE, AHORA TOCA VERIFICAR QUE LOS DATOS SEAN VALIDOS  
 
         let correo_valido = regex_email.test(correo[0]);
         let lada_valida = regex_lada.test(lada[0]);
@@ -73,6 +89,7 @@ async function paso1(solicitud,respuesta){
         let paterno_valido = regex_apellidos.test(paterno[0]);
         let materno_valido = regex_apellidos.test(materno[0]);
 
+        // CREAR OTRO ARREGLO QUE ALMACENARA LOS CAMPOS INVALIDOS
         let campos_invalidos = [];
 
 
@@ -94,11 +111,14 @@ async function paso1(solicitud,respuesta){
         if(lada_valida == false)
            campos_invalidos.push(lada[1]);
 
-        if(numero[0].length > 4)
-          campos_invalidos.push(numero[1]);
-        
-        if(codigo_postal[0].length > 5)
+        if(numero[0].length > 4){
+           campos_invalidos.push(numero[1]);
+        } 
+
+        if(codigo_postal[0].length > 5){
           campos_invalidos.push(codigo_postal[1]);
+        }
+          
 
         try{
           var fecha = new Date(`${mes[0]}/${dia[0]}/${año[0]}`);
@@ -114,15 +134,17 @@ async function paso1(solicitud,respuesta){
           campos_invalidos.push(año[1]);
         }
 
+        //FIN 3
+
         
+        // si el arreglo es mayor de 0, signifca que hubo datos incorrectos
         if(campos_invalidos.length > 0){
-            // significa que hubo campos incorrectos
             respuesta.send({invalidos:campos_invalidos});
         }
         else{
-            // ya que lo datos fueron ingresados correctamente, ahora toca
+            // Si llegamos hasta este ELSE, significa que el usuario contesto correctamente todos los campos
 
-            //verificar que el email no exista
+            // INICIO 4 AHORA TOCA VERIFICAR QUE EL CORREO NO ESTE REPETIDO, YA QUE NO PUEDE HABER CORREOS REPETIDOS ENTRE USUARIOS
 
             let consulta = "select pkIdUsuario from usuario where email = ?"
 
@@ -130,14 +152,23 @@ async function paso1(solicitud,respuesta){
 
             console.log(fields);
 
+            // FIN 4
+             
+                // Lo mismo que antes, si en la consulta, obtuvimos un length mayor a 0, significa que hay por lo menos 1 o mas usuarios con el correo, por lo que nuetro usuario que esta por crear una cuenta, no puede seguir adelante
                 if(fields.length > 0 ){
                   respuesta.send({correo_ya_existente:true});
                 }
                 else{
+                  // Si llegamos a este ELSE, significa que no hay usuarios con el mismo correo en la base de datos, lo cual es correcto
+
+                  //ya una vez aqui almacenamos los datos del usuario en una cookie, para ya mas despues hacer la insercion en la base de datos
+
+
                   // este token va a estar dentro de la cookie
                   let token = JsonWebToken.sign(
                     {
                         nombre:nombre[0],
+                        apodo:apodo[0],
                         paterno:paterno[0],
                         materno:materno[0],
                         correo:correo[0],
@@ -176,7 +207,7 @@ async function paso1(solicitud,respuesta){
 }
 
 
-
+// PATOLOGIAS
 async function paso2(solicitud,respuesta){
 
 
@@ -304,7 +335,7 @@ async function paso2(solicitud,respuesta){
 
 }
 
-
+// LLENADO DE CONTRASENA
 async function paso3(solicitud,respuesta){
 
     if(solicitud.headers.cookie == undefined){
@@ -387,13 +418,6 @@ async function paso3(solicitud,respuesta){
               
                     // genero la cookie
                     respuesta.cookie("Rem_cookie",token,galleta_register);
-              
-                    
-              
-              respuesta.clearCookie('Megumin_cookie', { path: '/' });
-              respuesta.clearCookie('Nakano_Itsuki', { path: '/' });
-
-
                     // el usuario podra continuar con el apartado patologias
                     respuesta.send({redirect:"/spa/signUp/Confirmacion",logueado:true}); 
 
