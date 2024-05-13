@@ -54,7 +54,7 @@ const Productos = () => {
             </HelmetProvider>
             <LayoutPrincipal>
 
-                <main className='bg-[#F4F1ED]  '>
+                <main className='bg-[#F4F1ED] pb-20'>
                     <img className="w-48 translate-y-24 float-start" src="../../pictures/left.png" alt="" />
                     <img className="translate-y-12 w-80 float-end" src="../../pictures/right.png" alt="" />
                     <section className='w-full p-16 my-20 bg-white'>

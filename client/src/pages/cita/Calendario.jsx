@@ -330,6 +330,7 @@ function Calendario() {
                                         },
                                         "& .MuiPickersDay-root": {
                                             "&.Mui-selected": {
+                                                fontWeight: 'bold !important',
                                                 backgroundColor: "#036C65 !important",
                                                 color: "white !important",
                                             },
