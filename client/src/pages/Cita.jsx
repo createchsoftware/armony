@@ -28,6 +28,7 @@ const steps = [
   "Agenda",
   "Pago",
   "Confirmación",
+  "Ticket"
 ];
 
 export default function Cita() {
@@ -70,8 +71,8 @@ export default function Cita() {
     const newActiveStep =
       isLastStep() && !allStepsCompleted()
         ? // It's the last step, but not all steps have been completed,
-          // find the first step that has been completed
-          steps.findIndex((step, i) => !(i in completed))
+        // find the first step that has been completed
+        steps.findIndex((step, i) => !(i in completed))
         : activeStep + 1;
     setActiveStep(newActiveStep);
   };
@@ -111,16 +112,16 @@ export default function Cita() {
   const LocalBase = () => {
     console.log(
       localStorage.getItem("servicio") +
-        " " +
-        localStorage.getItem("paquete") +
-        " " +
-        localStorage.getItem("sesiones") +
-        " " +
-        localStorage.getItem("Especialista") +
-        " " +
-        localStorage.getItem("hora") +
-        " " +
-        localStorage.getItem("Fecha seleccionada")
+      " " +
+      localStorage.getItem("paquete") +
+      " " +
+      localStorage.getItem("sesiones") +
+      " " +
+      localStorage.getItem("Especialista") +
+      " " +
+      localStorage.getItem("hora") +
+      " " +
+      localStorage.getItem("Fecha seleccionada")
     );
   };
   const stepComponents = [
@@ -145,16 +146,16 @@ export default function Cita() {
                 color: "#036C65", // circle color (COMPLETED)
               },
               "& .MuiStepLabel-label.Mui-completed.MuiStepLabel-alternativeLabel":
-                {
-                  color: "white", // Just text label (COMPLETED)
-                },
+              {
+                color: "white", // Just text label (COMPLETED)
+              },
               "& .MuiStepLabel-root .Mui-active": {
                 color: "#036C65", // circle color (ACTIVE)
               },
               "& .MuiStepLabel-label.Mui-active.MuiStepLabel-alternativeLabel":
-                {
-                  color: "white", // Just text label (ACTIVE)
-                },
+              {
+                color: "white", // Just text label (ACTIVE)
+              },
               "& .MuiStepLabel-root .Mui-active .MuiStepIcon-text": {
                 fill: "white", // circle's number (ACTIVE)
               },
@@ -202,11 +203,10 @@ export default function Cita() {
                   <button
                     disabled={activeStep === 0}
                     onClick={handleBack}
-                    className={`${
-                      activeStep === 0
-                        ? "hover:bg-transparent opacity-30 hover:text-rose-400"
-                        : "hover:bg-red-50"
-                    } px-4 py-2 mx-auto text-xl bg-white rounded-full ring-1 text-rose-400 ring-rose-400`}
+                    className={`${activeStep === 0
+                      ? "hover:bg-transparent opacity-30 hover:text-rose-400"
+                      : "hover:bg-red-50"
+                      } px-4 py-2 mx-auto text-xl bg-white rounded-full ring-1 text-rose-400 ring-rose-400`}
                     sx={{ mr: 1 }}
                   >
                     Regresar

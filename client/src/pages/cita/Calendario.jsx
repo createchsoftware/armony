@@ -271,8 +271,8 @@ function Calendario() {
             aspectRatio: '1 !important',
             height: 'auto !important'
         },
-        width: '70%',
-        maxHeight: '100%'
+        width: '120%',
+        height: '100%'
     };
 
     // const horasDisponibles = [
@@ -283,43 +283,43 @@ function Calendario() {
     //     '12:00 pm',
     //     '1:00 pm',
     // ];
-    const handleClick=(hora,index)=>{
-    horaDis(hora)
-    handleHourClick(index)
-}
-const [seleccionado, setSeleccionado] = useState(false);
-    const horaDis=(hora)=>{
-      if(!seleccionado){
-      setSeleccionado(true); 
-    localStorage.setItem('hora', hora);
-    }else{
-    alert('ya escogiste una hora')
+    const handleClick = (hora, index) => {
+        horaDis(hora)
+        handleHourClick(index)
     }
+    const [seleccionado, setSeleccionado] = useState(false);
+    const horaDis = (hora) => {
+        if (!seleccionado) {
+            setSeleccionado(true);
+            localStorage.setItem('hora', hora);
+        } else {
+            alert('ya escogiste una hora')
+        }
     }
-const [selectedDate, setSelectedDate] = useState(initialValue);
-const [horasDisponibles, setHorasDisponibles] = useState([]);
-//metodo para obtener horas disponibles de un empleado
-//este metodo se llamara cada vez que el estado de id empleado o el estado de fecha cambie
-async function horasDisp() {
-    await fetch(`/api/admin/citas/disponibles/${1}/${34}/${localStorage.getItem('Fecha seleccionada').toString()}`, {
-        method: 'GET',
-        headers: {
-            'Content-Type': 'application/json'
-        }
-    })
-    .then(response => {
-        if (!response.ok) {
-            throw new Error('Error en la solicitud');
-        }
-        return response.json();
-    })
-    .then(data => {
-        setHorasDisponibles(data.data); // Actualiza el estado con los datos recibidos
-    })
-    .catch(error => {
-        console.error('Error de red o servidor:', error.message); 
-    });
-}
+    const [selectedDate, setSelectedDate] = useState(initialValue);
+    const [horasDisponibles, setHorasDisponibles] = useState([]);
+    //metodo para obtener horas disponibles de un empleado
+    //este metodo se llamara cada vez que el estado de id empleado o el estado de fecha cambie
+    async function horasDisp() {
+        await fetch(`/api/admin/citas/disponibles/${1}/${34}/${localStorage.getItem('Fecha seleccionada').toString()}`, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Error en la solicitud');
+                }
+                return response.json();
+            })
+            .then(data => {
+                setHorasDisponibles(data.data); // Actualiza el estado con los datos recibidos
+            })
+            .catch(error => {
+                console.error('Error de red o servidor:', error.message);
+            });
+    }
     const especialistas = [
         {
             id: 1,
@@ -358,16 +358,15 @@ async function horasDisp() {
             calificacion: 4
         }]
 
-        useEffect(() => {
-            horasDisp();
-        }, [selectedDate]); // Dependencia: se ejecutará el efecto cada vez que selectedDate cambie
-    
+    useEffect(() => {
+        horasDisp();
+    }, [selectedDate]); // Dependencia: se ejecutará el efecto cada vez que selectedDate cambie
 
-        const handleDateChange = (newDate) => {
-            setSelectedDate(newDate);
-            localStorage.setItem('Fecha seleccionada', newDate.format("YYYY-MM-DD"));
-        };
 
+    const handleDateChange = (newDate) => {
+        setSelectedDate(newDate);
+        localStorage.setItem('Fecha seleccionada', newDate.format("YYYY-MM-DD"));
+    };
 
     return (
         <>
@@ -375,38 +374,39 @@ async function horasDisp() {
                 Agenda tu cita
             </h1>
             <main className='flex  gap-0  w-[90%]'>
-                <section className='grid w-2/3 p-6 place-content-between justify-items-center'>
+                <section className='grid w-2/3 p-6 place-content-between '>
                     {/* <Calendar onChange={onChange} value={value} /> */}
 
-
-                    <LocalizationProvider dateAdapter={AdapterDayjs}>
-                        <DateCalendar
-                            sx={[dayStyle,
-                                {
-                                    svg: { fill: '#ec5766' },
-                                    input: { fill: '#ec5766' },
-                                    label: { fill: '#ec5766' },
-                                }]}
-                            minDate={dayjs().add(0, 'day')}
-                            maxDate={dayjs().add(1, 'year')}
-                            disablePast
-                            className=''
-                            defaultValue={initialValue}
-                            value={selectedDate}
-                            onChange={handleDateChange}
-                            loading={isLoading}
-                            onMonthChange={handleMonthChange}
-                            renderLoading={() => <DayCalendarSkeleton />}
-                            slots={{
-                                day: ServerDay,
-                            }}
-                            slotProps={{
-                                day: {
-                                    highlightedDays,
-                                },
-                            }}
-                        />
-                    </LocalizationProvider>
+                    <div className='ml-32 '>
+                        <LocalizationProvider dateAdapter={AdapterDayjs}>
+                            <DateCalendar
+                                sx={[dayStyle,
+                                    {
+                                        svg: { fill: '#ec5766' },
+                                        input: { fill: '#ec5766' },
+                                        label: { fill: '#ec5766' },
+                                    }]}
+                                minDate={dayjs().add(0, 'day')}
+                                maxDate={dayjs().add(1, 'year')}
+                                disablePast
+                                className=''
+                                defaultValue={initialValue}
+                                value={selectedDate}
+                                onChange={handleDateChange}
+                                loading={isLoading}
+                                onMonthChange={handleMonthChange}
+                                renderLoading={() => <DayCalendarSkeleton />}
+                                slots={{
+                                    day: ServerDay,
+                                }}
+                                slotProps={{
+                                    day: {
+                                        highlightedDays,
+                                    },
+                                }}
+                            />
+                        </LocalizationProvider>
+                    </div>
 
                     {/* <Calendar /> */}
 
@@ -415,7 +415,7 @@ async function horasDisp() {
                         <h1 className='text-xl text-[#036C65] mb-4'>Horas Disponibles:</h1>
                         <div className='flex text-[#EB5765] gap-2'>
                             {horasDisponibles.map((hora, index) => (
-                                <button key={index} onClick={() => handleClick(hora,index)} className={getButtonClass(index)}>{hora}</button>
+                                <button key={index} onClick={() => handleClick(hora, index)} className={getButtonClass(index)}>{hora}</button>
                             ))}
                         </div>
 

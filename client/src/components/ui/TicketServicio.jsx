@@ -1,16 +1,16 @@
-import { QrCode } from "react-qr-code";
+import QrCode from "react-qr-code";
 
 const TicketServicio = () => {
   var numTicket = 123456;
   var value = "lo que sea";
   return (
     <>
-      <div className="grid">
+      <div className="grid items-center content-center m-auto place-items-center">
         <h1 className="justify-self-center text-2xl px-8  border-b-2 border-b-[#ec5766] font-bold mb-10">
           Ticket
         </h1>
-        <div className="flex justify-between mx-16">
-          <div className="rounded-xl shadow-md w-[45%] border-2 border-gray">
+        <div className="flex justify-center mx-16">
+          <div className="border-2 shadow-md rounded-xl border-gray">
             <div className="grid bg-[rgb(3,109,99)] rounded-t-xl">
               <p className="py-2 text-lg text-white justify-self-center">
                 Ticket #{numTicket}
