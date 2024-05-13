@@ -20,7 +20,7 @@ function Promociones() {
                     </div>
                 </div>
             </Carousel> */}
-            <Carousel IndicatorIcon={<CircleIcon className='z-50 -translate-y-20' />} className='mb-48 overflow-hidden'>
+            <Carousel IndicatorIcon={<CircleIcon className='z-50 -translate-y-20' />} className='overflow-hidden '>
                 <div className="grid gap-4 bg-[image:var(--image-url)] bg-cover aspect-auto text-center" style={{ '--image-url': `url(${'../../../public/pictures/promocion1.png'})`, height: '700px' }}>
                     <div className="bg-[#1B8E87] border-2 border-[#EB5765] w-1/3 m-16 rounded-xl p-16 h-[80%]" >
                         <h1 className="text-6xl text-white font-[iloveglitter]">¡Super Promoción!</h1>

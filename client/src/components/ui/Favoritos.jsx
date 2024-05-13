@@ -7,10 +7,10 @@ import greenLeft from '../../../public/pictures/greenLeft.png';
 function Favoritos() {
     return (
         <>
-            <img src={greenLeft} alt="" className='absolute w-[12%] left-0 translate-y-[-12rem] ' />
+            <img src={greenLeft} alt="" className='absolute w-[12%] left-0 translate-y-[-0rem] ' />
 
-            <div className='m-auto w-[80%] pt-18  selection:bg-[#EB5765] selection:text-white grid place-content-center'>
-                <h1 className='text-5xl md:text-6xl mx-14 font  text-[#036C65] my-12 text-center items-center mt-12 font-[iloveglitter] '>Los favoritos de nuestros clientes</h1>
+            <div className='m-auto w-[80%]  selection:bg-[#EB5765] selection:text-white grid place-content-center'>
+                <h1 className='text-5xl md:text-6xl mx-14 font  text-[#036C65] my-12 text-center items-center mt-12 font-[iloveglitter] '>Los servicios favoritos de nuestros clientes</h1>
                 <div className="grid gap-8 md:grid-cols-3">
                     <div className="">
                         <img className=' m-auto aspect-square w-[60%] ' src={favorito1} alt="" />
