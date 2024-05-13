@@ -196,7 +196,7 @@ export default function Cita() {
                                     <button
                                         disabled={activeStep === 0}
                                         onClick={handleBack}
-                                        className="px-4 py-2 mx-auto text-xl bg-white rounded-full ring-1 text-rose-400 hover:bg-red-50 ring-rose-400"
+                                        className={`${activeStep === 0 ? "hover:bg-transparent opacity-30 hover:text-rose-400" : "hover:bg-red-50"} px-4 py-2 mx-auto text-xl bg-white rounded-full ring-1 text-rose-400 ring-rose-400`}
                                         sx={{ mr: 1 }}
                                     >
                                         Regresar
@@ -233,7 +233,7 @@ export default function Cita() {
                     </div>
                 </Box >
 
-            </div>
-        </LayoutPrincipal>
+            </div >
+        </LayoutPrincipal >
     );
 }
