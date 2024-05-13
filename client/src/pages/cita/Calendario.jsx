@@ -275,15 +275,51 @@ function Calendario() {
         maxHeight: '100%'
     };
 
-    const horasDisponibles = [
-        '8:00 am',
-        '9:00 am',
-        '10:00 am',
-        '11:00 am',
-        '12:00 pm',
-        '1:00 pm',
-    ];
-
+    // const horasDisponibles = [
+    //     '8:00 am',
+    //     '9:00 am',
+    //     '10:00 am',
+    //     '11:00 am',
+    //     '12:00 pm',
+    //     '1:00 pm',
+    // ];
+    const handleClick=(hora,index)=>{
+    horaDis(hora)
+    handleHourClick(index)
+}
+const [seleccionado, setSeleccionado] = useState(false);
+    const horaDis=(hora)=>{
+      if(!seleccionado){
+      setSeleccionado(true); 
+    localStorage.setItem('hora', hora);
+    }else{
+    alert('ya escogiste una hora')
+    }
+    }
+const [selectedDate, setSelectedDate] = useState(initialValue);
+const [horasDisponibles, setHorasDisponibles] = useState([]);
+//metodo para obtener horas disponibles de un empleado
+//este metodo se llamara cada vez que el estado de id empleado o el estado de fecha cambie
+async function horasDisp() {
+    await fetch(`/api/admin/citas/disponibles/${1}/${34}/${localStorage.getItem('Fecha seleccionada').toString()}`, {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('Error en la solicitud');
+        }
+        return response.json();
+    })
+    .then(data => {
+        setHorasDisponibles(data.data); // Actualiza el estado con los datos recibidos
+    })
+    .catch(error => {
+        console.error('Error de red o servidor:', error.message); 
+    });
+}
     const especialistas = [
         {
             id: 1,
@@ -322,6 +358,17 @@ function Calendario() {
             calificacion: 4
         }]
 
+        useEffect(() => {
+            horasDisp();
+        }, [selectedDate]); // Dependencia: se ejecutará el efecto cada vez que selectedDate cambie
+    
+
+        const handleDateChange = (newDate) => {
+            setSelectedDate(newDate);
+            localStorage.setItem('Fecha seleccionada', newDate.format("YYYY-MM-DD"));
+        };
+
+
     return (
         <>
             <h1 className='flex justify-center justify-self-center text-2xl px-8 w-1/4  m-auto border-b-2 border-b-[#ec5766] font-bold'>
@@ -345,6 +392,8 @@ function Calendario() {
                             disablePast
                             className=''
                             defaultValue={initialValue}
+                            value={selectedDate}
+                            onChange={handleDateChange}
                             loading={isLoading}
                             onMonthChange={handleMonthChange}
                             renderLoading={() => <DayCalendarSkeleton />}
@@ -366,7 +415,7 @@ function Calendario() {
                         <h1 className='text-xl text-[#036C65] mb-4'>Horas Disponibles:</h1>
                         <div className='flex text-[#EB5765] gap-2'>
                             {horasDisponibles.map((hora, index) => (
-                                <button key={index} onClick={() => handleHourClick(index)} className={getButtonClass(index)}>{hora}</button>
+                                <button key={index} onClick={() => handleClick(hora,index)} className={getButtonClass(index)}>{hora}</button>
                             ))}
                         </div>
 
@@ -455,3 +504,4 @@ function Calendario() {
 }
 
 export default Calendario;
+

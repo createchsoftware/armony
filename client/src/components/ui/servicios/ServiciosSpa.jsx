@@ -192,7 +192,7 @@ const ServiciosSpa = () => {
           Tal vez los encuentres en los servicios de nuestra estética.
         </p>
         <a
-          href="/spa/serviciosEstetica"
+          href="/spa/servicios/estetica"
           className="inline-block bg-[#EB5765] text-white text-xl rounded-full px-4 py-4 mx-auto hover:bg-red-200"
           aria-label="Ir a estética"
         >

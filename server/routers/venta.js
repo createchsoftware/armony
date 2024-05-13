@@ -1,15 +1,15 @@
-import { conexion } from "../DB/connection.js";
+import { conexion } from "../db/connection.js";
 import express from "express";
 import {
   createVenta,
   createVentaCita,
   searchVentaCita,
-} from "../DB/query/queryVenta.js";
+} from "../db/query/queryVenta.js";
 import {
   createCitas,
   duracionTotal,
   stringATiempo,
-} from "../DB/query/queryCitas.js";
+} from "../db/query/queryCitas.js";
 
 // Router
 export const routerVenta = express.Router();

@@ -151,3 +151,20 @@ export async function deleteProdCat(connection, data) {
     console.error(messageError, err); // Mostramos los errores por consola
   }
 }
+
+
+export async function getProducts (pool,data,res){
+  try{
+      // const pages=data.pages||1;/*por defecto sera pagina 1 */
+      // const limit =data.limit||5;/*capacidad por defecto de 5, esto cambiara dependiendo el front */
+      // const offset=(pages-1)*limit;
+      const query=`SELECT *FROM  prodServ where tipoProducto is not null `
+      const [rows,fields]=await pool.query(query);
+          return rows;
+  }catch(err){
+  console.log("Ha ocurrido un error al ejecutar el query: ",err)
+  throw err;
+  }
+     
+      }
+  
