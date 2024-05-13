@@ -12,6 +12,9 @@ const regex_usuarioID = /\d{1,5}/;
 
 async function login(solicitud,respuesta){
 
+    console.log("login en proceso");
+
+
    let parametros = [];
    let usuarioID_o_correo = solicitud.body.user_or_email;
    let contraseña = solicitud.body.password;
@@ -58,6 +61,7 @@ async function login(solicitud,respuesta){
                     let contraseña_correcta = await bcryptjs.compare(contraseña,contraseña_no_bytes);
 
                     if(contraseña_correcta == false){
+                        console.log("ups, la contrasena es incorrecta")
                         respuesta.send({contraseña_incorrecta:true});
                     }else{
 

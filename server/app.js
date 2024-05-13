@@ -14,6 +14,7 @@ import {methods as authentication} from './controllers/authentication.controller
 import {methods as authorization} from './middlewares/authorization.js';
 import {methods as createAccount} from "./controllers/createAccount.controllers.js";
 import {methods as editarPerfil} from "./controllers/editarPerfil.controllers.js";
+import {methods as perfil} from "./controllers/perfil-data.controllers.js";
 import InsertUser from "./middlewares/register.js";
 
 
@@ -86,8 +87,19 @@ app.post('/api/step2', createAccount.paso2);
 
 app.post('/api/step3', createAccount.paso3);
 
+app.post('/api/deleteCard', perfil.deleteTarjeta);
 
 app.post('/api/editarPerfil', editarPerfil.change_data);
+
+app.post('/api/tarjeta-nueva', perfil.InsertarTarjeta);
+
+app.get('/api/pedidos', perfil.getPedidos);
+
+app.get('/api/tarjetas/1.5', perfil.getTarjetas);
+
+app.get('/api/transacciones', perfil.getTransacciones);
+
+app.get('/spa/signUp/Confirmacion', InsertUser);
 
 
 app.get('/api/step1.5',async (solicitud,respuesta)=>{

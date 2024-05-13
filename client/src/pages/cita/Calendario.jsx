@@ -271,8 +271,8 @@ function Calendario() {
             aspectRatio: '1 !important',
             height: 'auto !important'
         },
-        width: '120%',
-        height: '100%'
+        width: '80%',
+        height: '80%'
     };
 
     // const horasDisponibles = [

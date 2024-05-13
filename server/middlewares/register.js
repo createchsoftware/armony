@@ -42,7 +42,7 @@ async function InsertUser(solicitud,respuesta,siguiente){
                     let decodificada2 = await jsonwebtoken.verify(galleta2, process.env.JWT_SECRET); // decodificar galleta 2
                     let decodificada3 = await jsonwebtoken.verify(galleta3, process.env.JWT_SECRET); // decodificar galleta 3
     
-                    let consulta = "insert into usuario values (null,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+                    let consulta = "call addCliente(?,?,?,?,?,?,?,?,?,?,?,?,?)";
     
                     let telefono_completo = decodificada1.lada + decodificada1.telefono;
                     let nacimiento = `${decodificada1.año}-${decodificada1.mes}-${decodificada1.dia}`;
@@ -53,35 +53,39 @@ async function InsertUser(solicitud,respuesta,siguiente){
     
                     
     
-                    let parametros = [decodificada1.nombre,decodificada1.paterno,decodificada1.materno,decodificada1.correo,telefono_completo,hashPassword,1,decodificada1.imagen,decodificada1.calle,decodificada1.colonia,decodificada1.numero,decodificada1.codigo_postal,nacimiento]
-    
-    
-                    console.log(decodificada1);
+                    let parametros = [decodificada1.nombre,decodificada1.paterno,decodificada1.materno,decodificada1.correo,telefono_completo,hashPassword,decodificada1.imagen,decodificada1.calle,decodificada1.colonia,decodificada1.numero,decodificada1.codigo_postal,decodificada1.apodo,nacimiento];
                     
                     // utilizamos una promesa para esperar que la funcion asincrona se termine
-                try{
+                
     
-                    let insercion_exitosa = new Promise(async (resolve, reject) => {
-                        let [fields] = await solicitud.database.query(consulta, parametros)
-                            
-                            resolve(fields.insertId);
-                            
-                    });
-    
-                    const id_usuario = await insercion_exitosa;
+                    let [fields] = await solicitud.database.query(mysql.format(consulta,parametros));
+                           
+                    // ahora buscaremos el id que corresponde al correo
+                    let busca = 'select pkIdUsuario from usuario where email = ?';
+                    let [busqueda] = await solicitud.database.query(mysql.format(busca,[decodificada1.correo]));
+
+
+                    // toca insertar las patologias con el cliente
+                    let patologia_consulta = 'call addClientePato(?,?,?)';
+                    
+                    for(let i=1; i<=decodificada2.cantidad;i++){
+                        // inicamos en uno para brincarnos el key cantidad
+                        let id_pato = decodificada2[`patologia${i}`][0];
+                        let desc_pato = decodificada2[`patologia${i}`][1];
+                        await solicitud.database.query(mysql.format(patologia_consulta,[busqueda[0].pkIdUsuario,id_pato,desc_pato]));
                         
-    
-    
+                    }
+
                         let token = jsonwebtoken.sign(
                             {
-                                user:id_usuario,
+                                user:busqueda[0].pkIdUsuario,
                                 nombre:decodificada1.nombre,
+                                apodo:decodificada1.apodo,
                                 paterno:decodificada1.paterno,
                                 materno:decodificada1.materno,
                                 correo:decodificada1.correo,
                                 telefono:telefono_completo,
                                 contraseña:hashPassword,  // contrasena encriptada detro de la cookie
-                                tipo:1,
                                 imagen:decodificada1.imagen,
                                 calle:decodificada1.calle,
                                 colonia:decodificada1.colonia,
@@ -106,7 +110,7 @@ async function InsertUser(solicitud,respuesta,siguiente){
     
                         let full_name = `${decodificada1.nombre} ${decodificada1.paterno} ${decodificada1.materno}`;
     
-                        let sending = await servicios.CrearCuentaEmail(decodificada1.correo,"token",full_name,id_usuario);
+                        let sending = await servicios.CrearCuentaEmail(decodificada1.correo,"token",full_name,busqueda[0].pkIdUsuario);
     
                         console.log(sending); // nos deberia imprimir la informacion acerca del envio
 
@@ -116,11 +120,7 @@ async function InsertUser(solicitud,respuesta,siguiente){
     
                         return siguiente();
                     
-                }
-                catch(error){
-                    throw error;
-                    return respuesta.redirect('/');
-                }
+                
             }
             else{
                 console.log("alguna de las 3 galletas no exite, por lo que no se puede hacer la insercion");
