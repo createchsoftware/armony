@@ -7,7 +7,7 @@ import {
   readProdServAZ,
   updateProdServ,
   deleteProdServ,
-  getProducts
+  getProducts,
 } from "../db/query/queryProductos.js";
 import { errorUpdate } from "../auth/validaciones.js";
 
@@ -160,7 +160,7 @@ routerProductos.delete("/delete", async (req, res) => {
 routerProductos.get("/getProducts", async (req, res) => {
   try {
     const resultado = await getProducts(conexion);
-    res.json(resultado); 
+    res.json(resultado);
   } catch (err) {
     console.error("Ha ocurrido un error: ", err);
     res.status(500).send("Ha ocurrido un error al procesar tu solicitud");
