@@ -41,6 +41,7 @@ import AgendarServicios from "./components/ui/servicios/agendar/AgendarServicios
 import Rangos from "./pages/Rangos";
 import Producto from "./pages/Producto";
 import Suscripcion from "./pages/Suscripcion";
+import Rango from "./pages/perfil/Rango";
 
 function App() {
     return (
@@ -84,6 +85,8 @@ function App() {
                     <Route path="/spa/servicios/agendar-servicios" element={<AgendarServicios />} />
                     <Route path="/spa/producto/" element={<Producto />} />
                     <Route path="*" element={<Error />} />
+                    <Route path="/perfil/rango" element={<Rango />} />
+
                     {/* Tests */}
                     <Route path="/test" element={<Test />} />
                 </Routes>
