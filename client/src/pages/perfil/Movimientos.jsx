@@ -243,7 +243,7 @@ function Movimientos() {
 
                         </Menu>
                     </div>
-                    <p className='place-content-center'>{arrayF.length} Transacciones</p>
+                    <p className='place-content-center'>{arrayPresent.length} Transacciones</p>
                 </div>
                 <div className='rounded-xl flex justify-start place-content-center place-items-center px-12 py-4 gap-96  shadow-[0_3px_10px_rgb(0,0,0,0.2)]'>
                     <a href="#" className="">
