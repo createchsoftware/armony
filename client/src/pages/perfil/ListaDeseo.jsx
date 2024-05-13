@@ -1,7 +1,6 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { IconoAgregarAlCarrito } from '../../components/ui/Iconos'
 import { faBasketShopping, faHandHoldingHeart, faBars, faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';
-import ContenedorProductos from '../../components/ui/ContenedorProductos';
 import Navbar from '../../components/ui/Navbar';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
@@ -119,7 +118,7 @@ function ListaDeseo() {
     const contenido = contResumen.map(producto => (
         <li key={producto.id} className='grid border-4 bg-white border-[#E2B3B7] p-6 py-2 rounded-xl mx-6 mb-6'>
             <Box
-                className="float-right"
+                className="grid justify-end"
                 sx={{
                     '& > legend': { mt: 2 },
                 }}
@@ -189,19 +188,19 @@ function ListaDeseo() {
                                 <FontAwesomeIcon icon={faMagnifyingGlass} className='mx-4 text-[rgb(255,181,167)] text-xl' />
                             </form>
                         </div>
-                        <div className='grid p-12 overflow-y-scroll'>
+                        <div className='grid p-12 h-full overflow-y-scroll'>
                             {/* Contenido */}
                             { contResumen.length === 0 ? (
                                 <p className='m-auto'>No se encontraron productos</p>
                             ):(
-                                <ul className='grid grid-cols-1 gap-2 md:grid-cols-3'>{contenido}</ul>
+                                <ul className='grid h-fit grid-cols-1 gap-2 md:grid-cols-3'>{contenido}</ul>
                             )}
                         </div>
                     </div>
                     <div className={resumen}>
                         <div className={width}>
                             { contResumen.length === 0 ? (
-                                <h1 className='text-center text-xl py-6'>No hay artículos</h1>
+                                <h1 className='text-center text-xl py-6'>No hay productos</h1>
                             ):(
                                 <>
                                     <h1 className='text-center text-xl py-6'>Total artículos ({cantProductos})</h1>
