@@ -112,3 +112,16 @@ export async function deleteEmpleadoById(connection, data) {
     console.error(messageError, err); // Mostramos errores de query por consola
   }
 }
+
+export async function getEmpServicio(connection, data) {
+  try {
+    let getEmps = "CALL getEmpDeServicio(?)"; // Procedimiento almacenado de la DB
+    let query = mysql.format(getEmps, [data.idEmp]); // Parametros para el procedimiento
+    const [rows, fields] = await connection.query(query); // Ejecucion de query y almacenamiento de datos
+    endConnection(); // Cierre de conexion
+    return rows[0]; // Retorno de valores
+  } catch (err) {
+    // Capturamos errores de ejecucion de query
+    console.error(messageError, err); // Mostramos errores de query por consola
+  }
+}

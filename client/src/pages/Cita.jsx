@@ -100,6 +100,7 @@ export default function Cita() {
   };
 
   const handleClick = () => {
+    localStorage.clear()
     handleComplete();
     LocalBase();
   };
