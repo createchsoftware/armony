@@ -88,8 +88,9 @@ function Tarjetas() {
                             {
                                 array.map((objeto) => (
 
-                                    <TarjetasPago tarjetas={objeto} eliminarTarjeta={EliminarTarjeta}
+                                    <TarjetasPago tarjetas={objeto} funcion={EliminarTarjeta} texto_btn={'Eliminar Tarjeta'}
                                     />))
+
                             }
 
                         </div>

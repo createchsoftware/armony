@@ -576,6 +576,103 @@ async function getTransacciones(solicitud,respuesta){
 
 
 
+async function getMonedero(solicitud,respuesta){
+    if(solicitud.headers.cookie == undefined){
+        respuesta.send({logueado:false});
+    }
+    else{
+        //verificar que existe la cookie naruto
+        let galletas = solicitud.headers.cookie.split('; ');
+        let galleta = galletas.find(galleta=> galleta.startsWith('Naruto_cookie='));
+
+        if(galleta){
+            galleta = galleta.slice(14);
+
+            let decodificada = jsonwebtoken.verify(galleta, process.env.JWT_SECRET);
+
+            let consulta = 'call getMonedero(?)';
+
+            let [fields] = await solicitud.database.query(mysql.format(consulta,[decodificada.user]));
+
+            let datos = fields[0];
+
+            respuesta.send({data:datos});
+
+        }
+        else{
+            //el usuario no esta logueado
+            respuesta.send({logueado:false});
+        }
+    }
+}
+
+
+
+async function Insert_to_Monedero(solicitud,respuesta){
+
+    if(solicitud.headers.cookie == undefined){
+        respuesta.send({logueado:false});
+    }
+    else{
+        let galletas = solicitud.headers.cookie.split('; ');
+        let galleta = galletas.find(galleta=> galleta.startsWith('Naruto_cookie='));
+
+        if(galleta){
+            galleta = galleta.slice(14);
+
+            let decodificada = await jsonwebtoken.verify(galleta, process.env.JWT_SECRET);
+
+            let numeroTarjeta = solicitud.body.numero_tarjeta;
+
+            let monto = solicitud.body.monto;
+
+            let numero_valido = /^\d*\.?\d+$/;
+
+            if(numero_valido.test(monto)){
+                //como el monto es un numero valido, ahora podemos hacer esto
+
+                console.log('si el numero es valido');
+                console.log(monto);
+
+                monto = parseInt(monto);
+
+
+                // simulando proceso de recarga
+
+                // se esta generando el cobro
+
+                // ............
+
+                // tu cobro ha sido exitoso por parte del banco HURRA!!!
+
+
+                // Si el pago fue exitoso, ahora toca hacer las respetivas inserciones
+
+                let consulta = 'call addVentaRecargarSaldo(?,?,?)';
+
+                let parametros = [decodificada.user,numeroTarjeta,monto];
+
+                let [fields] = await solicitud.database.query(mysql.format(consulta,parametros))
+
+
+                console.log(fields); //para ver que es lo que nos dio
+
+                respuesta.send({exito:true})
+
+            }
+            else{
+                // el monto no es un numero valido
+                respuesta.send({mensaje:'debes de poner un monto valido'});
+            }
+
+        }
+        else{
+            respuesta.send({logueado:false});
+        }
+    }
+}
+
+
 
 
 
@@ -659,5 +756,7 @@ export const methods = {
     getTarjetas,
     deleteTarjeta,
     InsertarTarjeta,
-    getTransacciones
+    getTransacciones,
+    getMonedero,
+    Insert_to_Monedero
 }

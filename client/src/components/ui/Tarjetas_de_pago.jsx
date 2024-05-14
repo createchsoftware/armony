@@ -1,4 +1,4 @@
-function TarjetasPago({ tarjetas , eliminarTarjeta}) {
+function TarjetasPago({ tarjetas , funcion, texto_btn}) {
 
     return (
         
@@ -15,7 +15,14 @@ function TarjetasPago({ tarjetas , eliminarTarjeta}) {
                     </div>
                 </div>
                 <div className='grid gap-2 p-2 '>
-                    <button onClick={()=> eliminarTarjeta(tarjetas)} className='px-10 py-1 text-white rounded-full bg-[#EB5765]'>Eliminar Tarjeta</button>
+                    {funcion? (
+                        <button onClick={()=> funcion(tarjetas)} className='px-10 py-1 text-white rounded-full bg-[#EB5765]'>{texto_btn}</button>
+                    ):(
+                        <span>Seleccionado</span>
+                    )
+
+                    }
+                    
                 </div>
 
 
