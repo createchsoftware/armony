@@ -44,7 +44,7 @@ function Especialista({ especialista }) {
                     icon={<FavoriteIcon fontSize="inherit" />}
                     emptyIcon={<FavoriteBorderIcon fontSize="inherit" />}
                 />
-            </Box>
+            </Box> 2
             <img className='w-1/2 m-auto rounded-full aspect-square' src={especialista.img} alt="" />
             <p className='pt-4 text-lg font-bold text-center'>{especialista.nombre}</p>
             <p className='pt-4 text-lg font-bold text-center'>Experiencia: {especialista.experiencia}</p>

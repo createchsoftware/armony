@@ -56,7 +56,7 @@ function Perfil() {
                                 <div className='rounded-full place-content-center md:bg-[#D9D9D9]'><img className='w-12' src="../../pictures/personal.png" alt="" /></div>
                                 <div>
                                     <h2>Informacion Personal</h2>
-                                    <p className='text-gray-500'>Informacion de tu identificacion personal</p>
+                                    <p className='text-gray-500'>Información de tu identificación oficial</p>
                                 </div>
                             </div>
                             <div className='flex items-center justify-end'>
@@ -69,18 +69,6 @@ function Perfil() {
                                 <div>
                                     <h2>Seguridad</h2>
                                     <p className='text-gray-500'>Protege tu cuenta de peligros inminentes</p>
-                                </div>
-                            </div>
-                            <div className='flex items-center justify-end'>
-                                <MdNavigateNext />
-                            </div>
-                        </a>
-                        <a href='/perfil/direcciones' className='flex justify-between p-5 hover:underline rounded-xl hover:bg-slate-100'>
-                            <div className='flex gap-6'>
-                                <div className='rounded-full place-content-center md:bg-[#D9D9D9]'><img className='w-12' src="../../pictures/direccion.png" alt="" /></div>
-                                <div>
-                                    <h2>Direcciones</h2>
-                                    <p className='text-gray-500'>Direcciones guardadas en tu cuenta</p>
                                 </div>
                             </div>
                             <div className='flex items-center justify-end'>
@@ -111,18 +99,67 @@ function Perfil() {
                                 <MdNavigateNext />
                             </div>
                         </a>
-                        <a href='/perfil/monedero' className='flex justify-between p-5 hover:underline rounded-xl hover:bg-slate-100'>
+                        <a href='/perfil/rango' className='flex justify-between p-5 hover:underline rounded-xl hover:bg-slate-100'>
                             <div className='flex gap-6'>
-                                <div className='rounded-full place-content-center md:bg-[#D9D9D9]'><img className='w-12' src="../../pictures/monedero.png" alt="" /></div>
+                                <div className='rounded-full place-content-center md:bg-[#D9D9D9]'><img className='w-10 md:w-12' src="../../pictures/rango.png" alt="" /></div>
                                 <div>
-                                    <h2>Monedero</h2>
-                                    <p className='text-gray-500'>Tu dinero, monedero digital</p>
+                                    <h2>Rango</h2>
+                                    <p className='text-gray-500'>Mi nivel de raango</p>
                                 </div>
                             </div>
                             <div className='flex items-center justify-end'>
                                 <MdNavigateNext />
                             </div>
                         </a>
+                        <a href='/perfil/monedero' className='flex justify-between p-5 hover:underline rounded-xl hover:bg-slate-100'>
+                            <div className='flex gap-6'>
+                                <div className='rounded-full place-content-center md:bg-[#D9D9D9]'><img className='w-12' src="../../pictures/monedero.png" alt="" /></div>
+                                <div>
+                                    <h2>Mi monedero</h2>
+                                    <p className='text-gray-500'>Dinero obtenido en la cuenta</p>
+                                </div>
+                            </div>
+                            <div className='flex items-center justify-end'>
+                                <MdNavigateNext />
+                            </div>
+                        </a>
+                        <a href='/perfil/pedidos' className='flex justify-between p-5 hover:underline rounded-xl hover:bg-slate-100'>
+                            <div className='flex gap-6'>
+                                <div className='rounded-full place-content-center md:bg-[#D9D9D9]'><img className='w-12' src="../../pictures/pedidos.png" alt="" /></div>
+                                <div>
+                                    <h2>Mis pedidos</h2>
+                                    <p className='text-gray-500'>Estado de los pedidos en proceso de entrega y ya entregados </p>
+                                </div>
+                            </div>
+                            <div className='flex items-center justify-end'>
+                                <MdNavigateNext />
+                            </div>
+                        </a>
+                        <a href='/perfil/agenda' className='flex justify-between p-5 hover:underline rounded-xl hover:bg-slate-100'>
+                            <div className='flex gap-6'>
+                                <div className='rounded-full place-content-center md:bg-[#D9D9D9]'><img className='w-12' src="../../pictures/agenda.png" alt="" /></div>
+                                <div>
+                                    <h2>Agenda</h2>
+                                    <p className='text-gray-500'>Calendario de citas pendientes</p>
+                                </div>
+                            </div>
+                            <div className='flex items-center justify-end'>
+                                <MdNavigateNext />
+                            </div>
+                        </a>
+                        <a href='/perfil/historial' className='flex justify-between p-5 hover:underline rounded-xl hover:bg-slate-100'>
+                            <div className='flex gap-6'>
+                                <div className='rounded-full place-content-center md:bg-[#D9D9D9]'><img className='w-12' src="../../pictures/historial.png" alt="" /></div>
+                                <div>
+                                    <h2>Historial de movimientos</h2>
+                                    <p className='text-gray-500'>Actividades registradas de tus productos y servicios</p>
+                                </div>
+                            </div>
+                            <div className='flex items-center justify-end'>
+                                <MdNavigateNext />
+                            </div>
+                        </a>
+
 
                     </section>
                 </main>

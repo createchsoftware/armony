@@ -47,7 +47,7 @@ function Productos({ productos }) {
                                 <Rating className='' value={producto.valoracion} readOnly unratedcolor="amber" ratedcolor="amber" />
                                 <h3 className='mt-0 text-lg'>{producto.nombre}</h3>
                                 <p className='mt-0 text-xs text-justify'>
-                                    {producto.descripcion}
+                                    {producto.descripcion.substring(0, 60) + '...'}
                                 </p>
                             </div>
                             <div className='mt-2'>

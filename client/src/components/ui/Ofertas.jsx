@@ -36,7 +36,7 @@ function Ofertas({ producto }) {
             </Box>
             <a href="/spa"><img className='w-60 h-60' src={producto.imagen} alt="" /></a>
             <hr />
-            <p className='text-[#0BC26A] pt-4 text-lg text-center'>{'$' + producto.precio + ' MXN'}</p>
+            <p className='text-[#0BC26A] pt-4 text-lg text-center'>{'$' + producto.precio + ' MXN'} <span className='text-[#000000] line-through'>{'$' + (producto.precio + 130)}</span></p>
             <div className='flex justify-center'>
                 <Rating className='' value={5} readOnly unratedcolor="amber" ratedcolor="amber" />
             </div>
