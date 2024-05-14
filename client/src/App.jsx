@@ -10,6 +10,7 @@ import Perfil from "./pages/Perfil";
 import InformacionPersonal from "./pages/perfil/InformacionPersonal";
 import Seguridad from "./pages/perfil/Seguridad";
 import Monedero from "./pages/perfil/Monedero";
+import AgregarSaldo from "./pages/perfil/Agregarsaldo";
 import Direcciones from "./pages/perfil/Direcciones";
 import Agenda from "./pages/perfil/Agenda";
 import Suscripciones from "./pages/perfil/Suscripciones";
@@ -65,6 +66,7 @@ function App() {
                     <Route path="/perfil/informacion" element={<InformacionPersonal />} />
                     <Route path="/perfil/seguridad" element={<Seguridad />} />
                     <Route path="/perfil/monedero" element={<Monedero />} />
+                    <Route path="/perfil/monedero/agregarSaldo" element={<AgregarSaldo />} />
                     <Route path="/perfil/direcciones" element={<Direcciones />} />
                     <Route path="/perfil/suscripciones" element={<Suscripciones />} />
                     <Route path="/perfil/tarjetas" element={<Tarjetas />} />
