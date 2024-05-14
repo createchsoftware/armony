@@ -31,30 +31,30 @@ const sortOptions = [
 
 function Pedidos() {
 
-    function handleSortOptionClick(option){
-        
+    function handleSortOptionClick(option) {
 
-        if(option.name=='Todas'){
+
+        if (option.name == 'Todas') {
             setArrayF(array);
             setArrayF2(array2);
-        }else{
+        } else {
             let fecha_hoy = Date.now();
             let fechaLimite = new Date(fecha_hoy - (1000 * 60 * 60 * 24 * option.value));
-    
-    
-            setArrayF(array.filter((producto)=>{
+
+
+            setArrayF(array.filter((producto) => {
                 return new Date(producto.date).getTime() > fechaLimite.getTime()
             }))
-    
-            setArrayF2(array2.filter((producto)=>{ 
+
+            setArrayF2(array2.filter((producto) => {
                 return new Date(producto.date).getTime() > fechaLimite.getTime()
             }))
         }
 
         setLabel(option.name)
-        
+
     }
-    
+
 
     const [array, setArray] = useState([]);
     const [array2, setArray2] = useState([]);
@@ -66,40 +66,52 @@ function Pedidos() {
 
     const [label, setLabel] = useState("Todas");
 
-   useEffect(()=>{
-      fetch("/api/pedidos")
-         .then(response=> response.json())
-         .then(data => {
-            if(data.arreglo1){
-                setArray(data.arreglo1);
-                setArrayF(data.arreglo1);
-            }
-            if(data.arreglo2){
-                setArray2(data.arreglo2);
-                setArrayF2(data.arreglo2);
-            }
-         })
-         .catch(error=>{
-             console.log(error);
-         });
-   },[])
+    useEffect(() => {
+        fetch("/api/pedidos")
+            .then(response => response.json())
+            .then(data => {
+                if (data.arreglo1) {
+                    setArray(data.arreglo1);
+                    setArrayF(data.arreglo1);
+                }
+                if (data.arreglo2) {
+                    setArray2(data.arreglo2);
+                    setArrayF2(data.arreglo2);
+                }
+            })
+            .catch(error => {
+                console.log(error);
+            });
+    }, [])
 
-   function ret1(){
-    if(arrayF.length > 0){return (<h2>En camino</h2>);}
-   }
+    function ret1() {
+        if (arrayF.length > 0) { return (<h2>En camino</h2>); }
+    }
 
-   function ret(){
-    if(arrayF2.length > 0 && arrayF.length >0){return (<hr/>);}
-   }
+    function ret() {
+        if (arrayF2.length > 0 && arrayF.length > 0) { return (<hr />); }
+    }
 
-   function ret2(){
-    if(arrayF2.length > 0){return ( <h2>Entregados</h2>);}
-   }
+    function ret2() {
+        if (arrayF2.length > 0) { return (<h2>Entregados</h2>); }
+    }
 
 
     return (
         <LayoutPrincipal>
-            <main className='grid gap-6 mb-12 mt-24 w-[60%] m-auto'>
+            <main className='grid gap-6 mb-12 mt-36 w-[60%] m-auto'>
+
+                <section className='rounded-2xl p-9 shadow-[0_3px_10px_rgb(0,0,0,0.2)]'>
+                    <a className='flex items-baseline content-center text-sm gap-x-4' href="/spa"> <IoIosArrowBack className='' />
+                        Volver</a>
+                    <img className='w-32 m-auto my-12 rounded-full -mt-28 aspect-square' src="../../pictures/agendaFondo.png" alt="" />
+                    <img className='m-auto mb-8 -mt-44 w-28 aspect-square' src="../../pictures/pedidos.png" alt="" />
+                    <div className='m-auto text-center '>
+                        <h1 className='text-[#036C65] font-semibold text-2xl mb-2'>Pedidos</h1>
+                        <h2 className='text-xl'>Calendario de citas pendientes</h2>
+                    </div>
+                </section>
+
                 <div className='flex justify-between gap-4 '>
                     <div className='max-w-md border-gray-400 border-1'>
                         <div className="relative flex items-center w-full h-12 overflow-hidden bg-white border-b-2 rounded-lg focus-within:shadow-lg border-gray">
@@ -122,7 +134,7 @@ function Pedidos() {
                         <Menu as="div" className="relative inline-block text-left">
                             <div>
                                 <Menu.Button className="inline-flex justify-center text-sm font-medium text-gray-700 group hover:text-gray-900">
-                                    Ordenar por 
+                                    Ordenar por
                                     <ChevronDownIcon
                                         className="flex-shrink-0 w-5 h-5 ml-1 -mr-1 text-gray-400 group-hover:text-gray-500"
                                         aria-hidden="true"
@@ -179,17 +191,17 @@ function Pedidos() {
                 <div className='grid gap-6'>
                     {ret1()}
                     {
-                    arrayF.map((objeto) => (
-                        <Compras key={objeto.id} compras={objeto} />))
+                        arrayF.map((objeto) => (
+                            <Compras key={objeto.id} compras={objeto} />))
                     }
                     {ret()}
                     {ret2()}
-                    { 
-                    arrayF2.map((objeto) => (
-                        <Compras key={objeto.id} compras={objeto} />))
+                    {
+                        arrayF2.map((objeto) => (
+                            <Compras key={objeto.id} compras={objeto} />))
                     }
-                    
-                    
+
+
                 </div>
 
             </main>
