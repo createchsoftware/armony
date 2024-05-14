@@ -20,59 +20,62 @@ import TarjetasPago from '../../components/ui/Tarjetas_de_pago';
 function Tarjetas() {
 
 
-    async function EliminarTarjeta(Arreglo_de_datos){
+    async function EliminarTarjeta(Arreglo_de_datos) {
         console.log("Hiciste click");
 
-        const respuesta = await fetch('/api/deleteCard',{
-            method:'POST',
-            headers:{
-                "Content-Type":"application/json",
+        const respuesta = await fetch('/api/deleteCard', {
+            method: 'POST',
+            headers: {
+                "Content-Type": "application/json",
             },
-            body:JSON.stringify(Arreglo_de_datos)
+            body: JSON.stringify(Arreglo_de_datos)
         });
 
-        if(!respuesta.ok){
+        if (!respuesta.ok) {
             console.log("UPPS!!, el servidor no respondio");
             return; // salir de la funcion lo antes posible
         }
-            
+
 
         const respuestaJson = await respuesta.json();
 
-        if(respuestaJson.exito){
+        if (respuestaJson.exito) {
             console.log("tu tarjeta fue eliminada exitosamente");
             window.location.reload();
             //hay que actualizar el arreglo
         }
 
-        if(respuestaJson.fallo){
+        if (respuestaJson.fallo) {
             console.log("Hubo un error a la hora de eliminar tu tarjeta");
         }
-    
+
     }
 
     const [array, setArray] = useState([]);
 
 
-    useEffect(()=>{
+    useEffect(() => {
         fetch("/api/tarjetas/1.5")
-           .then(response=> response.json())
-           .then(data => {
+            .then(response => response.json())
+            .then(data => {
                 setArray(data.array);
-           })
-           .catch(error=>{
-               console.log(error);
-           });
-     },[])
+            })
+            .catch(error => {
+                console.log(error);
+            });
+    }, [])
 
-     console.log(array);   //  <---------- los datos del backend aqui estan, los pueden ver en el navegador
+    console.log(array);   //  <---------- los datos del backend aqui estan, los pueden ver en el navegador
 
 
     return (
         <>
+            <div>
+                Tarjetas
+            </div>
             <div className='grid gap-6'>
-                    
-                    {
+
+                {
                     array.map((objeto) => (
 
                         <TarjetasPago tarjetas={objeto} funcion={EliminarTarjeta} texto_btn={'Eliminar Tarjeta'}
@@ -80,9 +83,9 @@ function Tarjetas() {
                         
                     }
 
-                </div>
+            </div>
         </>
-        
+
     );
 }
 

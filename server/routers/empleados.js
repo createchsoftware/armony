@@ -6,7 +6,8 @@ import {
   readEmpleadoByNombre,
   updateEmpleado,
   deleteEmpleadoById,
-} from "../DB/query/queryEmpleado.js";
+  getEmpServicio
+} from "../db/query/queryEmpleado.js";
 
 // Router
 export const routerEmpleado = express.Router();
@@ -112,6 +113,21 @@ routerEmpleado.delete("/delete", async (req, res) => {
     res
       .status(204) // Status NO-CONTENT
       .json({ message: "Empleada eliminada correctamente", data: resultado }); // Enviamos informacion en formato JSON
+  } catch (err) {
+    // Capturamos errores
+    console.error(messageError, err); // Mostramos errores por consola
+    res.status(500).send(messageError); // Enviamos un error INTERNAL SERVER ERROR y el error al navegador
+  }
+});
+
+routerEmpleado.get("/getEmpServicio/:idEmp", async (req, res) => {
+  try {
+    const resultado = await getEmpServicio(conexion, {
+      idEmp: req.params.idEmp
+    }); // Parametro por body
+    res
+      .status(202) // Status NO-CONTENT
+      .json({ message: "Empleados", data: resultado }); // Enviamos informacion en formato JSON
   } catch (err) {
     // Capturamos errores
     console.error(messageError, err); // Mostramos errores por consola
