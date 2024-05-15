@@ -99,7 +99,7 @@ export async function updateCita(connection, data) {
   try {
     let updateCitaQuery = "CALL updCita(?, ?, ?, ?, ?)"; // Procedimiento almacenado de la DB
     let query = mysql.format(updateCitaQuery, [
-      data.idVenta,
+      data.idCita,
       data.idEmp,
       data.nuevaFecha,
       data.horaI,
@@ -117,7 +117,7 @@ export async function updateCita(connection, data) {
 export async function updateCitaStaus(connection, data) {
   try {
     let updateStatus = "CALL updCitaEstado(?, ?)"; // Procedimiento almacenado de la base de datos
-    let query = mysql.format(updateStatus, [data.idVenta, data.status]); // Agregamos los parametros necesarios al procedimiento
+    let query = mysql.format(updateStatus, [data.idCita, data.status]); // Agregamos los parametros necesarios al procedimiento
     const [rows, fields] = await connection.query(query); // Ejecutamos query y almacenamos valores
     endConnection(); // Cerramos la conexion
     return rows; // Retornamos valores
