@@ -125,9 +125,12 @@ routerEmpleado.get("/getEmpServicio/:idEmp", async (req, res) => {
     const resultado = await getEmpServicio(conexion, {
       idEmp: req.params.idEmp
     }); // Parametro por body
-    res
-      .status(202) // Status NO-CONTENT
-      .json({ message: "Empleados", data: resultado }); // Enviamos informacion en formato JSON
+    const emps=[];
+    var i
+    for (i = 0; i <resultado.length; i++) {
+      emps[i] = resultado[i];
+    }
+    res.json(emps); // Enviamos informacion en formato JSON
   } catch (err) {
     // Capturamos errores
     console.error(messageError, err); // Mostramos errores por consola

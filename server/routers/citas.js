@@ -3,11 +3,11 @@ import { conexion } from "../db/connection.js";
 import {
   horasDisponibles,
   createCitas,
-  ventaCita,
   duracionTotal,
   stringATiempo,
   horaFinal,
-} from "../DB/query/queryCitas.js";
+  ventaCita,
+} from "../db/query/queryCitas.js";
 import { searchVentaCita } from "../DB/query/queryVenta.js";
 
 // Router
@@ -20,19 +20,19 @@ routerCitas.use(express.json()); // Analiza las request entrantes con carga JSON
 const messageError = "Ha ocurrido un error al procesar tu peticion: ";
 
 // CREATE POR PROBAR
-routerCitas.post("/create", async (req, res) => {
+routerCitas.post("/create/:id", async (req, res) => {
   try {
     const datosCita = {
       idVenta: "",
-      idCliente: 21,
-      idEmp: 31,
-      idServ: 17,
+      idCliente: req.params.id,
+      idEmp: 37,
+      idServ: 2,
       idPilar: 2,
-      nombre: "Ale Barajas Lopez",
-      phone: "6864567890",
-      tarjeta: "8756098945832956",
-      fecha: "2024-05-07",
-      horaI: "19:00:00",
+      nombre: "Julian David Sandoval Godinez",
+      phone: "6864503452",
+      tarjeta: "5696324506590956",
+      fecha: "2024-12-17",
+      horaI: "14:00:00",
       horaF: "",
       descr: "Prueba de componente",
       estado: "pendiente",
@@ -47,7 +47,7 @@ routerCitas.post("/create", async (req, res) => {
     }); // Obtenemos el tiempo de duracion del servicio en String
     datosCita.horaF = horaFinal(datosCita.horaI, duracion[0].tiempo); // Obtenemos la hora en la que finaliza la cita y la almacenamos
 
-    const ventaCita = await createVentaCita(conexion, {
+    const ventaCitaOnline = await ventaCita(conexion, {
       idCliente: datosCita.idCliente,
       nombre: datosCita.nombre,
       phone: datosCita.phone,
@@ -62,13 +62,15 @@ routerCitas.post("/create", async (req, res) => {
     // Buscamos el id de la venta que se acaba de realizar
     const venta = await searchVentaCita(conexion, {
       idCliente: datosCita.idCliente,
-      fechaVenta: datosCita.fecha,
+      tVenta: "cita",
+      phone: datosCita.phone,
     });
-
+    console.log("Contenido de venta: ", venta);
+    let resultado;
     // Verificamos que la venta se haya hecho correctamente
-    if (venta[0].pkIdVenta !== 0) {
+    if (venta[0].pkIdVenta !== 0 && venta[0].pkIdVenta !== null) {
       // Se hizo la venta correctamente
-      const resultado = await createCitas(conexion, {
+      resultado = await createCitas(conexion, {
         idVenta: venta[0].pkIdVenta,
         idEmp: datosCita.idEmp,
         idPilar: datosCita.idPilar,
@@ -82,7 +84,8 @@ routerCitas.post("/create", async (req, res) => {
       res
         .status(200)
         .json({ message: "Cita creada correctamente", data: resultado }); // Enviamos resultado al navegador
-    } else [res.status(400).send("Ha ocurrido un error con el pago")]; // No se realizo el pago correctamente y lo enviamos al navegador
+    } else
+      [res.status(400).send("Ha ocurrido un error con el pago, " + resultado)]; // No se realizo el pago correctamente y lo enviamos al navegador
   } catch (err) {
     // Capturamos errores
     console.error(messageError, err); // Mostramos errores por consola
@@ -127,12 +130,12 @@ routerCitas.get("/disponibles/:idServ/:idEmp/:fecha", async (req, res) => {
       idEmp: req.params.idEmp,
       idServ: req.params.idServ,
     });
-    
-    const horario=[];
-    var i
+
+    const horario = [];
+    var i;
     for (i = 0; i < resultado.length; i++) {
-      horario[i] = resultado[i].hora_disponible
-  }
+      horario[i] = resultado[i].hora_disponible;
+    }
     res.status(200).json({
       message: "Horas disponibles: ",
       data: horario,
