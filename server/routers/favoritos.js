@@ -48,4 +48,16 @@ routerFavoritos.get('/ProductFavoritosbyId/:id',async(req,res)=>{
     }
 })
 
+routerFavoritos.get('/ServiceFavoritosbyId/:id',async(req,res)=>{
+    try{
+    const {id} =req.params
+    const conexion=await enableConnect()
+   const resultado=await ServiceFavoritosbyId(conexion,{ids:id})
+    res.send(JSON.stringify(resultado));
+    
+    }catch(err){
+        res.status(500).send({error: 'Hubo un problema',err})
+    }
+})
+
 

@@ -115,37 +115,22 @@ body {
 }
 
 /* =========== SUBMENU SERVICIOS */
-.submenu-fondo, .submenu-fx{
-  width: 100vw;
-  height: 100vh;
-  top: 55px;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  position: fixed;
-  z-index: 11;
-}
-.submenu-fx{
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
 .menu-serv {
+  top: 55px;
   position: absolute;
-  top: 0;
+  display: none;
   padding: 5px 5px;
   width: 140px;
-  display: grid;
   list-style: none;
   background-color: white;
   border-radius: 5px;
   justify-content: left;
-  left: 45%;
   box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
 }
 .menu-item-serv {
+  line-height: normal;
   font-size: 20px;
-  margin: 0 10px;
+  margin: 8px 10px;
   width: max-content;
 }
 .menu-link-serv {
@@ -162,37 +147,25 @@ body {
 .menu-link-serv:hover{
   color: #ffb5a7;
 }
+.menu .nav-menu-item:hover .menu-serv{
+  display: block;
+}
 
 
 /* ======= MENU DESPLEGABLE PERFIL */
-.usermenu-fondo, .usermenu-fx{
-  width: 100vw;
-  height: 100vh;
-  top: 65px;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  position: fixed;
-  z-index: 11;
-}
-.usermenu-fx{
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
 .menu-perfil {
   position: absolute;
-  top: 0;
+  top: 70px;
   padding: 5px 5px;
   width: 180px;
-  display: grid;
+  display: none;
   list-style: none;
   background-color: white;
   border-radius: 5px;
-  right: 18%;
   box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
 }
 .menu-item-perfil {
+  line-height: normal;
   font-size: 20px;
   margin: 0 10px;
   width: max-content;
@@ -210,6 +183,9 @@ body {
 }
 .menu-link-perfil:hover{
   color: rgb(255, 181, 167);
+}
+.menu .nav-menu-item:hover .menu-perfil{
+  display: block;
 }
 
 /* ============= CARRUSEL DE VIDEOS */
@@ -795,7 +771,7 @@ body {
   transition: ease 0.25s;
 }
 #cart-mas:hover {
-  background-color: rgb(3, 109, 99);
+  background-color: #036d63;
   font-weight: bold;
 }
 

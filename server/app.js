@@ -14,6 +14,7 @@ import {methods as authentication} from './controllers/authentication.controller
 import {methods as authorization} from './middlewares/authorization.js';
 import {methods as createAccount} from "./controllers/createAccount.controllers.js";
 import {methods as editarPerfil} from "./controllers/editarPerfil.controllers.js";
+import {methods as perfil} from "./controllers/perfil-data.controllers.js";
 import InsertUser from "./middlewares/register.js";
 
 
@@ -52,7 +53,7 @@ app.use("/api/admin/proveedor", routerProveedor);
 import { routerSucursal } from "./routers/sucursal.js";
 app.use("/api/admin/sucursal", routerSucursal);
 import { routerCategoria } from "./routers/categoria.js";
-app.use("api/admin/categoria", routerCategoria);
+app.use("/api/admin/categoria", routerCategoria);
 import { routerEspecialidad } from "./routers/especialidad.js"; // NOTA: NO SE A PROBADO AUN, NO FUNCIONAL
 app.use("api/admin/especialidad", routerEspecialidad);
 
@@ -86,8 +87,23 @@ app.post('/api/step2', createAccount.paso2);
 
 app.post('/api/step3', createAccount.paso3);
 
+app.post('/api/deleteCard', perfil.deleteTarjeta);
 
 app.post('/api/editarPerfil', editarPerfil.change_data);
+
+app.post('/api/tarjeta-nueva', perfil.InsertarTarjeta);
+
+app.get('/api/pedidos', perfil.getPedidos);
+
+app.get('/api/tarjetas/1.5', perfil.getTarjetas);
+
+app.get('/api/transacciones', perfil.getTransacciones);
+
+app.get('/api/monedero', perfil.getMonedero);
+
+app.post('/api/recargaSaldo', perfil.Insert_to_Monedero);
+
+app.get('/spa/signUp/Confirmacion', InsertUser);
 
 
 app.get('/api/step1.5',async (solicitud,respuesta)=>{

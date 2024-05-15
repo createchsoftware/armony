@@ -10,10 +10,14 @@ import Perfil from "./pages/Perfil";
 import InformacionPersonal from "./pages/perfil/InformacionPersonal";
 import Seguridad from "./pages/perfil/Seguridad";
 import Monedero from "./pages/perfil/Monedero";
+import AgregarSaldo from "./pages/perfil/Agregarsaldo";
 import Direcciones from "./pages/perfil/Direcciones";
 import Agenda from "./pages/perfil/Agenda";
 import Suscripciones from "./pages/perfil/Suscripciones";
 import Tarjetas from "./pages/perfil/Tarjetas";
+import TarjetaNueva from "./pages/perfil/TarjetaNueva";
+import Pedidos from "./pages/perfil/Pedidos";
+import Movimientos from "./pages/perfil/Movimientos";
 import Error from "./pages/Error";
 import PasswordResetRecuperacion from "./pages/spa/passwordResetRecuperacion";
 import PasswordResetVerificacion from "./pages/spa/passwordResetVerificacion";
@@ -38,6 +42,8 @@ import AgendarServicios from "./components/ui/servicios/agendar/AgendarServicios
 import Rangos from "./pages/Rangos";
 import Producto from "./pages/Producto";
 import Suscripcion from "./pages/Suscripcion";
+import Rango from "./pages/perfil/Rango";
+import PagoProducto from "./pages/PagoProducto"
 
 function App() {
     return (
@@ -62,13 +68,17 @@ function App() {
                     <Route path="/perfil/informacion" element={<InformacionPersonal />} />
                     <Route path="/perfil/seguridad" element={<Seguridad />} />
                     <Route path="/perfil/monedero" element={<Monedero />} />
+                    <Route path="/perfil/monedero/agregarSaldo" element={<AgregarSaldo />} />
                     <Route path="/perfil/direcciones" element={<Direcciones />} />
                     <Route path="/perfil/suscripciones" element={<Suscripciones />} />
                     <Route path="/perfil/tarjetas" element={<Tarjetas />} />
+                    <Route path="/perfil/tarjetas/registroTarjeta" element={<TarjetaNueva />} />
                     <Route path="/perfil/agenda" element={<Agenda />} />
                     <Route path="/favoritos" element={<Favoritos />} />
                     <Route path="/perfil/editar-perfil" element={<EditarPerfil />} />
                     <Route path="/perfil/historial" element={<Historial />} />
+                    <Route path="/perfil/pedidos" element={<Pedidos />} />
+                    <Route path="/perfil/movimientos" element={<Movimientos />} />
                     <Route path="/perfil/compras" element={<Compras />} />
                     <Route path="/spa/agendar/paquetes" element={<Paquetes />} />
                     <Route path="/spa/agendar/calendario" element={<Calendario />} />
@@ -77,7 +87,10 @@ function App() {
                     <Route path="/spa/servicios/spa" element={<ServicioSpa />} />
                     <Route path="/spa/servicios/agendar-servicios" element={<AgendarServicios />} />
                     <Route path="/spa/producto/" element={<Producto />} />
+                    <Route path="/spa/comprar" element={<PagoProducto />} />
                     <Route path="*" element={<Error />} />
+                    <Route path="/perfil/rango" element={<Rango />} />
+
                     {/* Tests */}
                     <Route path="/test" element={<Test />} />
                 </Routes>

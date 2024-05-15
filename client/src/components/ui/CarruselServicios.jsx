@@ -1,5 +1,6 @@
 import Carousel from "react-multi-carousel";
 import Tarjeta from "./TarjetaDeServicio.jsx";
+import { useState } from "react";
 
 const CarruselServicios = ({ servicios }) => {
   return (

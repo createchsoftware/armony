@@ -87,7 +87,7 @@ alert('ya escogiste un servicio')
         </Box>
         <p className="text-lg font-bold pl-5 w-[80%]">{servicio.nombre}</p>
         <p className="text-base pl-5">Costo: ${servicio.precio}</p>
-        <p className="text-base pl-5">Duracion: {servicio.duracion} min</p>
+        <p className="text-base pl-5">Duracion: {servicio.tiempo} min</p>
         <div className="grid place-items-center">
           <Rating
             className=""
@@ -97,7 +97,7 @@ alert('ya escogiste un servicio')
             ratedColor="amber"
           />
         </div>
-        <button onClick={()=>agregarServ(servicio.id)} className="bg-red-50 font-bold px-10 py-1 mx-10 rounded-xl ring-1 ring-rose-50 hover:ring-black">
+        <button onClick={()=>agregarServ(servicio.pkIdPS)} className="bg-red-50 font-bold px-10 py-1 mx-10 rounded-xl ring-1 ring-rose-50 hover:ring-black">
           Elegir
         </button>
       </div>
