@@ -23,6 +23,7 @@ function Especialista({ especialista }) {
       if(!seleccionado){
       setSeleccionado(true); 
     localStorage.setItem('Especialista',id);
+    console.log(localStorage.getItem('Especialista'))
     }else{
     alert('ya escogiste un especialista')
     }
