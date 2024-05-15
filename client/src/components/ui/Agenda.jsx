@@ -113,7 +113,7 @@ function Agenda({ restart }) {
                             {/* Código de descuento */}
                             <div className='grid justify-center p-6 mb-4 border-2 shadow-md rounded-xl border-gray'>
                                 <h3 className='mb-4 text-xl font-bold justify-self-center'>Código de descuento</h3>
-                                <form action="" className='border-2 rounded-full shadow-md border-gray'>
+                                <form action="" className='flex border-2 rounded-full shadow-md border-gray'>
                                     <input
                                         type="text"
                                         value={descuento}
@@ -121,7 +121,7 @@ function Agenda({ restart }) {
                                         maxLength="15"
                                         className='px-6 py-2 text-center rounded-full'
                                     />
-                                    <button type="submit" className='rounded-full text-white bg-[rgb(3,109,99)] py-2 px-10 duration-200 hover:bg-[rgb(69,181,156)] hover:font-bold'>Aplicar</button>
+                                    <button type="submit" className='rounded-full text-white bg-[rgb(3,109,99)] py-2 px-8 duration-200 hover:bg-[rgb(69,181,156)] hover:font-bold'>Aplicar</button>
                                 </form>
                             </div>
                             <div className='flex justify-between p-6 px-10 mb-4 border-2 shadow-md rounded-xl border-gray'>

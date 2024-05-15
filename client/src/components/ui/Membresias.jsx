@@ -11,7 +11,7 @@ function Membresias() {
                     <h1 className='text-6xl font-[iloveglitter] text-[#036C65]'>Conoce nuestra suscripción</h1>
                     <p className='mt-10'>
                         ¡Únete a nuestra familia de bienestar! Conviértete en socio de nuestro spa y disfruta de acceso exclusivo a tratamientos personalizados, descuentos especiales y promociones únicas. ¡Tu bienestar merece ser prioridad!                </p>
-                    <button className="mt-10 transition-all duration-300 w-48 m-auto hover:bg-[#036C65] hover:ring-2 hover:[#036C65] hover:ring-offset-1 group relative inline-flex h-10 items-center justify-center overflow-hidden rounded-lg border-2 bg-[#EB5765] px-6 font-[abeatbykai] text-neutral-200">
+                    <a href='/suscripcion' className="mt-10 transition-all duration-300 w-48 m-auto hover:bg-[#036C65] hover:ring-2 hover:[#036C65] hover:ring-offset-1 group relative inline-flex h-10 items-center justify-center overflow-hidden rounded-lg border-2 bg-[#EB5765] px-6 font-[abeatbykai] text-neutral-200">
                         <span>Ver más</span>
                         <div className="w-0 translate-x-[100%] pl-0 opacity-0 transition-all duration-200 group-hover:w-5 group-hover:translate-x-0 group-hover:pl-1 group-hover:opacity-100">
                             <svg width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg" className="h-5 w-5">
@@ -19,7 +19,7 @@ function Membresias() {
                                 </path>
                             </svg>
                         </div>
-                    </button>
+                    </a>
                 </div>
             </div>
         </>

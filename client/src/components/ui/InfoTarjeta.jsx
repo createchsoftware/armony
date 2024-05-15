@@ -163,23 +163,23 @@ function InforTarjeta({cerrarInfo}, {sendDatos}){
                         <div className="grid">
                             <h2 className="text-xl font-bold text-center mr-4">Fecha de vencimiento</h2>
                             <div className="flex justify-center items-center">
-                                <form action="" className="w-10 rounded border-2 border-gray shadow-md">
+                                <form action="" className="w-20 rounded border-2 border-gray shadow-md">
                                     <input
                                         type="text"
                                         value={fechaMes}
                                         onChange={handleChange2}
                                         maxLength="2"
-                                        className='w-10 text-center'
+                                        className='w-20 text-center'
                                     />
                                 </form>
                                 <h2 className="text-xl font-bold text-center mx-4">/</h2>
-                                <form action="" className="w-10 rounded border-2 border-gray shadow-md">
+                                <form action="" className="w-20 rounded border-2 border-gray shadow-md">
                                     <input
                                         type="text"
                                         value={fechaYear}
                                         onChange={handleChange3}
                                         maxLength="2"
-                                        className='w-10 text-center'
+                                        className='w-20 text-center'
                                     />
                                 </form>
                             </div>

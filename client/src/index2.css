@@ -771,7 +771,7 @@ body {
   transition: ease 0.25s;
 }
 #cart-mas:hover {
-  background-color: rgb(3, 109, 99);
+  background-color: #036d63;
   font-weight: bold;
 }
 
