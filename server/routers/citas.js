@@ -3,6 +3,8 @@ import { conexion } from "../db/connection.js";
 import {
   horasDisponibles,
   createCitas,
+  updateCita,
+  updateCitaStaus,
   duracionTotal,
   stringATiempo,
   horaFinal,
@@ -65,7 +67,6 @@ routerCitas.post("/create/:id", async (req, res) => {
       tVenta: "cita",
       phone: datosCita.phone,
     });
-    console.log("Contenido de venta: ", venta);
     let resultado;
     // Verificamos que la venta se haya hecho correctamente
     if (venta[0].pkIdVenta !== 0 && venta[0].pkIdVenta !== null) {
@@ -140,6 +141,64 @@ routerCitas.get("/disponibles/:idServ/:idEmp/:fecha", async (req, res) => {
       message: "Horas disponibles: ",
       data: horario,
     });
+  } catch (err) {
+    // Capturamos errores
+    console.error(messageError, err); // Mostramos errores por consola
+    res.status(500).send(messageError); // Enviamos un error INTERNAL SERVER ERROR y el error al navegador
+  }
+});
+
+// Modificacion de las citas
+routerCitas.patch("/modify", async (req, res) => {
+  try {
+    const newDatosCita = {
+      idCita: 20,
+      idEmp: 34,
+      nuevaFecha: "2024-12-30",
+      horaIn: "14:45:00",
+      descr: "Prueba de update de cita",
+    };
+    const resultado = await updateCita(conexion, {
+      idCita: newDatosCita.idCita,
+      idEmp: newDatosCita.idEmp,
+      nuevaFecha: newDatosCita.nuevaFecha,
+      horaI: newDatosCita.horaIn,
+      descr: newDatosCita.descr,
+    });
+    if (resultado.affectedRows === 1)
+      res
+        .status(200)
+        .json({ message: "Cita actualizada correctamente", resultado });
+    else
+      res
+        .status(400)
+        .json({ message: "Ocurrio un error al actualizar la cita" });
+  } catch (err) {
+    // Capturamos errores
+    console.error(messageError, err); // Mostramos errores por consola
+    res.status(500).send(messageError); // Enviamos un error INTERNAL SERVER ERROR y el error al navegador
+  }
+});
+
+//Cancelacion de citas
+routerCitas.patch("/status", async (req, res) => {
+  try {
+    const statusCita = {
+      idCita: 16,
+      status: "hecha",
+    };
+    const resultado = await updateCitaStaus(conexion, {
+      idCita: statusCita.idCita,
+      status: statusCita.status,
+    });
+    if (resultado.affectedRows === 1)
+      res
+        .status(200)
+        .json({ message: "Cita actualizada correctamente", resultado });
+    else
+      res
+        .status(400)
+        .json({ message: "Ocurrio un error al actualizar la cita" });
   } catch (err) {
     // Capturamos errores
     console.error(messageError, err); // Mostramos errores por consola
