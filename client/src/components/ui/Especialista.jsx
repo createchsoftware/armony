@@ -45,8 +45,8 @@ function Especialista({ especialista }) {
                     emptyIcon={<FavoriteBorderIcon fontSize="inherit" />}
                 />
             </Box> 2
-            <img className='w-1/2 m-auto rounded-full aspect-square' src={especialista.img} alt="" />
-            <p className='pt-4 text-lg font-bold text-center'>{especialista.nombre}</p>
+            <img className='w-1/2 m-auto rounded-full aspect-square' src={especialista.imagen} alt="" />
+            <p className='pt-4 text-lg font-bold text-center'>{especialista.Nombre}</p>
             <p className='pt-4 text-lg font-bold text-center'>Experiencia: {especialista.experiencia}</p>
             <div className='flex justify-center w-1/2 pt-4 m-auto'>
                 <Rating className='' value={5} unratedColor="amber" readOnly ratedColor="amber" />

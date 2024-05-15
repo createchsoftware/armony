@@ -211,30 +211,37 @@ function Calendario() {
             alert('ya escogiste una hora')
         }
     }
-    const [selectedDate, setSelectedDate] = useState(initialValue);
+    //const [selectedDate, setSelectedDate] = useState(initialValue);
     const [horasDisponibles, setHorasDisponibles] = useState([]);
+    
     //metodo para obtener horas disponibles de un empleado
     //este metodo se llamara cada vez que el estado de id empleado o el estado de fecha cambie
-    async function horasDisp() {
-        await fetch(`/api/admin/citas/disponibles/${1}/${34}/${localStorage.getItem('Fecha seleccionada').toString()}`, {
-            method: 'GET',
-            headers: {
-                'Content-Type': 'application/json'
-            }
-        })
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error('Error en la solicitud');
-                }
-                return response.json();
-            })
-            .then(data => {
-                setHorasDisponibles(data.data); // Actualiza el estado con los datos recibidos
-            })
-            .catch(error => {
-                console.error('Error de red o servidor:', error.message);
-            });
-    }
+
+
+
+    // async function horasDisp() {
+    //     await fetch(`/api/admin/citas/disponibles/${1}/${34}/${localStorage.getItem('Fecha seleccionada').toString()}`, {
+    //         method: 'GET',
+    //         headers: {
+    //             'Content-Type': 'application/json'
+    //         }
+    //     })
+    //         .then(response => {
+    //             if (!response.ok) {
+    //                 throw new Error('Error en la solicitud');
+    //             }
+    //             return response.json();
+    //         })
+    //         .then(data => {
+    //             setHorasDisponibles(data.data); // Actualiza el estado con los datos recibidos
+    //         })
+    //         .catch(error => {
+    //             console.error('Error de red o servidor:', error.message);
+    //         });
+    // }
+
+
+
 
     // example array of 13 hours available
     // const horasDisp = () => {
@@ -254,54 +261,78 @@ function Calendario() {
     //         '8:00 pm',
     //     ])
     // }
-
-    const especialistas = [
-        {
-            id: 1,
-            nombre: 'Dra. Ana Martínez',
-            especialidad: 'Dermatólogo',
-            imagen: '/pictures/empleadaFoto1.png',
-            experiencia: '10 años',
-            areas: ['Dermatología', 'Cirugía', 'Estética'],
-            calificacion: 5
-        },
-        {
-            id: 2,
-            nombre: 'Dra. María López',
-            especialidad: 'Nutricionista',
-            imagen: '/pictures/empleadaFoto2.png',
-            experiencia: '5 años',
-            areas: ['Nutrición', 'Dietas', 'Salud'],
-            calificacion: 4
-        },
-        {
-            id: 3,
-            nombre: 'Dra. Claudia Pérez',
-            especialidad: 'Pediatra',
-            imagen: '/pictures/empleadaFoto3.png',
-            experiencia: '15 años',
-            areas: ['Pediatría', 'Cuidados', 'Salud'],
-            calificacion: 5
-        },
-        {
-            id: 4,
-            nombre: 'Dra. Liliana Ponce',
-            especialidad: 'Ginecóloga',
-            imagen: '/pictures/empleadaFoto4.png',
-            experiencia: '8 años',
-            areas: ['Ginecología', 'Salud', 'Cuidados'],
-            calificacion: 4
-        }]
+    const [especialistas, setEspecialistas] = useState();
 
     useEffect(() => {
-        horasDisp();
-    }, [selectedDate]); // Dependencia: se ejecutará el efecto cada vez que selectedDate cambie
+        const fetchData = async () => {
+            
+                const response = await fetch("/api/admin/productos/get")
+            
+                const data = await response.json();
+               // setEspecialistas(data)
+        };
+        fetchData();
+    }, []);
+
+    // useEffect(() => {
+    //     fetch("/api/admin/productos/getProducts")
+    //         .then(response => response.json())
+    //         .then(data => {
+    //             setFilteredProducts(data);
+    //         })
+    //         .catch(error => {
+    //             console.log('error', error);
+    //         });
+    // }, []);
+    console.log(especialistas);
+    
+    // const especialistas = [
+    //     {
+    //         id: 1,
+    //         nombre: 'Dra. Ana Martínez',
+    //         especialidad: 'Dermatólogo',
+    //         imagen: '/pictures/empleadaFoto1.png',
+    //         experiencia: '10 años',
+    //         areas: ['Dermatología', 'Cirugía', 'Estética'],
+    //         calificacion: 5
+    //     },
+    //     {
+    //         id: 2,
+    //         nombre: 'Dra. María López',
+    //         especialidad: 'Nutricionista',
+    //         imagen: '/pictures/empleadaFoto2.png',
+    //         experiencia: '5 años',
+    //         areas: ['Nutrición', 'Dietas', 'Salud'],
+    //         calificacion: 4
+    //     },
+    //     {
+    //         id: 3,
+    //         nombre: 'Dra. Claudia Pérez',
+    //         especialidad: 'Pediatra',
+    //         imagen: '/pictures/empleadaFoto3.png',
+    //         experiencia: '15 años',
+    //         areas: ['Pediatría', 'Cuidados', 'Salud'],
+    //         calificacion: 5
+    //     },
+    //     {
+    //         id: 4,
+    //         nombre: 'Dra. Liliana Ponce',
+    //         especialidad: 'Ginecóloga',
+    //         imagen: '/pictures/empleadaFoto4.png',
+    //         experiencia: '8 años',
+    //         areas: ['Ginecología', 'Salud', 'Cuidados'],
+    //         calificacion: 4
+    //     }]
+
+    // useEffect(() => {
+    //     horasDisp();
+    // }, [selectedDate]); 
 
 
-    const handleDateChange = (newDate) => {
-        setSelectedDate(newDate);
-        localStorage.setItem('Fecha seleccionada', newDate.format("YYYY-MM-DD"));
-    };
+    // const handleDateChange = (newDate) => {
+    //     setSelectedDate(newDate);
+    //     localStorage.setItem('Fecha seleccionada', newDate.format("YYYY-MM-DD"));
+    // };
 
     return (
         <>
@@ -343,8 +374,8 @@ function Calendario() {
                                 disablePast
                                 className=''
                                 defaultValue={initialValue}
-                                value={selectedDate}
-                                onChange={handleDateChange}
+                                //value={selectedDate}
+                                //onChange={handleDateChange}
                                 loading={isLoading}
                                 onMonthChange={handleMonthChange}
                                 renderLoading={() => <DayCalendarSkeleton />}
@@ -361,17 +392,17 @@ function Calendario() {
                     </div>
 
                     {/* <Calendar /> */}
-
+{/* 
 
                     <div className='overflow-x-auto'>
                         <h1 className='text-xl text-[#036C65] mb-4'>Horas Disponibles:</h1>
                         <div className='flex text-[#EB5765] gap-2'>
-                            {horasDisponibles.map((hora, index) => (
+                            {horasDisponibles && horasDisponibles.map((hora, index) => (
                                 <button key={index} onClick={() => handleClick(hora, index)} className={getButtonClass(index)}>{hora}</button>
                             ))}
                         </div>
 
-                    </div>
+                    </div> */}
 
                 </section>
                 <section className='w-1/3 '>
@@ -439,9 +470,11 @@ function Calendario() {
                         slidesToSlide={1}
                         swipeable
                     >
-                        {especialistas.map((especialista) => (
-                            <Especialista key={especialista.id} especialista={especialista} />
-                        ))}
+                        {especialistas?(especialistas.map((especialista) => (
+    <Especialista key={especialista.id} especialista={especialista} />
+)) ) : (
+    <h1>Loading...</h1>
+  )}
                     </Carousel>
                     <div class="mt-2 flex gap-2 justify-center">
                         <div class="flex items-center">
