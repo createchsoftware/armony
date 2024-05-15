@@ -21,9 +21,6 @@ import InsertUser from "./middlewares/register.js";
 import { conexion } from "./db/connection.js";
 
 
-
-
-
 // Objeto de express
 const app = express();
 
