@@ -20,11 +20,11 @@ routerCitas.use(express.json()); // Analiza las request entrantes con carga JSON
 const messageError = "Ha ocurrido un error al procesar tu peticion: ";
 
 // CREATE POR PROBAR
-routerCitas.post("/create", async (req, res) => {
+routerCitas.post("/create/:id", async (req, res) => {
   try {
     const datosCita = {
       idVenta: "",
-      idCliente: 35,
+      idCliente: req.params.id,
       idEmp: 37,
       idServ: 2,
       idPilar: 2,
@@ -130,12 +130,12 @@ routerCitas.get("/disponibles/:idServ/:idEmp/:fecha", async (req, res) => {
       idEmp: req.params.idEmp,
       idServ: req.params.idServ,
     });
-    
-    const horario=[];
-    var i
+
+    const horario = [];
+    var i;
     for (i = 0; i < resultado.length; i++) {
-      horario[i] = resultado[i].hora_disponible
-  }
+      horario[i] = resultado[i].hora_disponible;
+    }
     res.status(200).json({
       message: "Horas disponibles: ",
       data: horario,
