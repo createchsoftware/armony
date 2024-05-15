@@ -99,6 +99,10 @@ app.get('/api/tarjetas/1.5', perfil.getTarjetas);
 
 app.get('/api/transacciones', perfil.getTransacciones);
 
+app.get('/api/monedero', perfil.getMonedero);
+
+app.post('/api/recargaSaldo', perfil.Insert_to_Monedero);
+
 app.get('/spa/signUp/Confirmacion', InsertUser);
 
 
