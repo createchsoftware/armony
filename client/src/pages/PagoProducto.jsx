@@ -6,26 +6,17 @@ import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import React, { useState, useEffect } from "react";
 import LayoutPrincipal from "../layouts/LayoutPrincipal";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { fa1, faCircle } from "@fortawesome/free-solid-svg-icons";
 import { Navigate, useNavigate } from "react-router-dom";
 import { CSSTransition, TransitionGroup } from "react-transition-group";
-import { Link } from "react-router-dom";
 
-import Paquetes from "./cita/Paquetes";
-import Calendario from "./cita/Calendario";
 import Pago from "../components/ui/Pago";
-import Agenda from "../components/ui/Agenda";
-import Servicios from "../components/ui/servicios/agendar/AgendarServicios";
+import RevisionProductos from "../components/ui/RevisionProductos";
 import FinalizacionPago from "../components/ui/FinalizacionPagoServ";
 import Ticket from "../components/ui/TicketServicio";
 import "./cita/Transiciones.css";
 
 const steps = [
-  "Servicios",
-  "Paquetes",
-  "Especialista",
-  "Agenda",
+  "Productos",
   "Pago",
   "Confirmación",
   "Ticket"
@@ -126,10 +117,7 @@ export default function Cita() {
     );
   };
   const stepComponents = [
-    <Servicios key={0} />,
-    <Paquetes key={1} />,
-    <Calendario key={2} />,
-    <Agenda restart={restart} key={3} />,
+    <RevisionProductos restart={restart} key={3} />,
     <Pago key={4} />,
     <FinalizacionPago key={5} />,
     <Ticket key={6} />,
