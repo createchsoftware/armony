@@ -34,7 +34,7 @@ export async function ventaCita(connection, data) {
     let insertVentaCita = "CALL addVentaCitaOnline(?, ?, ?, ?, ?, ?, ?, ?, ?)";
     let query = mysql.format(insertVentaCita, [
       data.idCliente,
-      data.name,
+      data.nombre,
       data.phone,
       data.tarjeta,
       data.monedero,
