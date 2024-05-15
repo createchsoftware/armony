@@ -1,20 +1,17 @@
 var servicios = [
   { id: 1, nombre: "Facial", sesiones: 3, total: 1700 },
   { id: 2, nombre: "Maquillaje", sesiones: 6, total: 2400 },
-  { id: 3, nombre: "Depilación", sesiones: 3, total: 1500 },
+  { id: 3, nombre: "Depilación", sesiones: 1, total: 1500 },
 ];
 
-const lista = servicios.map((servicio) => {
-  <div>
-    <div className="grid grid-cols-3 my-5 place-items-center">
-      <p>{servicio.nombre}</p>
-      <p>{servicio.sesiones} sesiones</p>
-      <p>{servicio.precio}</p>
-    </div>
-    <div className="flex-grow border-b-2 border-[#ec5766] mx-5" />
-  </div>;
-});
 const FinalizacionPagoServ = () => {
+  let total;
+  const setTotal = () => {
+    total = 0;
+    for (let i = 0; i < servicios.length; i++) {
+      total += servicios[i].total;
+    }
+  };
   let sm = "sesiones";
   return (
     <>
@@ -40,35 +37,29 @@ const FinalizacionPagoServ = () => {
 
             <div className="rounded-xl shadow-md w-[40rem] mx-auto my-5 h-auto border-2 border-gray">
               {servicios.map((servicio) => {
-                <div>
-                  <div className="grid grid-cols-3 my-5 place-items-center">
-                    <p>{servicio.nombre}</p>
-                    <p>{servicio.sesiones} sesiones</p>
-                    <p>{servicio.precio}</p>
+                if (servicio.sesiones === 1) {
+                  sm = "sesión";
+                } else {
+                  sm = "sesiones";
+                }
+                setTotal();
+                return (
+                  <div>
+                    <div className="grid grid-cols-3 my-5 place-items-center">
+                      <p>{servicio.nombre}</p>
+                      <p>
+                        {servicio.sesiones} {sm}
+                      </p>
+                      <p>${servicio.total}</p>
+                    </div>
+                    <div className="flex-grow border-b-2 border-[#ec5766] mx-5" />
                   </div>
-                  <div className="flex-grow border-b-2 border-[#ec5766] mx-5" />
-                </div>;
+                );
               })}
-              <div>
-                <div className="grid grid-cols-3 my-5 place-items-center">
-                  <p>Maquillaje</p>
-                  <p>6 sesiones</p>
-                  <p>2400</p>
-                </div>
-                <div className="flex-grow border-b-2 border-[#ec5766] mx-5" />
-              </div>
-              <div>
-                <div className="grid grid-cols-3 my-5 place-items-center">
-                  <p>Depilación</p>
-                  <p>6 sesiones</p>
-                  <p>1500</p>
-                </div>
-                <div className="flex-grow border-b-2 border-[#ec5766] mx-5" />
-              </div>
               <div className="shadow-md w-[15rem] my-5 ml-[22rem] h-auto border-2 border-gray">
                 <div className=" grid grid-cols-2 place-items-center">
                   <p>Total</p>
-                  <p className="text-[rgb(3,109,99)] font-bold">$4300</p>
+                  <p className="text-[rgb(3,109,99)] font-bold">${total}</p>
                 </div>
               </div>
             </div>
