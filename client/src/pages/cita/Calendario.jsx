@@ -213,7 +213,7 @@ function Calendario() {
             alert('ya escogiste una hora')
         }
     }
-    //const [selectedDate, setSelectedDate] = useState(initialValue);
+    const [selectedDate, setSelectedDate] = useState(initialValue);
     const [horasDisponibles, setHorasDisponibles] = useState([]);
     
     //metodo para obtener horas disponibles de un empleado
@@ -221,26 +221,29 @@ function Calendario() {
 
 
 
-    // async function horasDisp() {
-    //     await fetch(`/api/admin/citas/disponibles/${1}/${34}/${localStorage.getItem('Fecha seleccionada').toString()}`, {
-    //         method: 'GET',
-    //         headers: {
-    //             'Content-Type': 'application/json'
-    //         }
-    //     })
-    //         .then(response => {
-    //             if (!response.ok) {
-    //                 throw new Error('Error en la solicitud');
-    //             }
-    //             return response.json();
-    //         })
-    //         .then(data => {
-    //             setHorasDisponibles(data.data); // Actualiza el estado con los datos recibidos
-    //         })
-    //         .catch(error => {
-    //             console.error('Error de red o servidor:', error.message);
-    //         });
-    // }
+    async function horasDisp() {
+        const NEspecialista = localStorage.getItem('Especialista');
+        const fecha = localStorage.getItem('Fecha seleccionada').toString();
+        const Nservicio = 1;
+        await fetch(`/api/admin/citas/disponibles/${Nservicio}/${NEspecialista}/${fecha}`,{
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Error en la solicitud');
+                }
+                return response.json();
+            })
+            .then(data => {
+                setHorasDisponibles(data.data); // Actualiza el estado con los datos recibidos
+            })
+            .catch(error => {
+                console.error('Error de red o servidor:', error.message);
+            });
+    }
 
 
 
@@ -331,15 +334,28 @@ function Calendario() {
     //         calificacion: 4
     //     }]
 
-    // useEffect(() => {
-    //     horasDisp();
-    // }, [selectedDate]); 
+    useEffect(() => {
+        const handleLocalStorageChange = (event) => {
+            if (event.key === 'Especialista') {
+                //getEmpServicio()
+            }
+        };
+        window.addEventListener('storage', handleLocalStorageChange);
+        return () => {
+            window.removeEventListener('storage', handleLocalStorageChange);
+        };
+    }, []); 
 
 
-    // const handleDateChange = (newDate) => {
-    //     setSelectedDate(newDate);
-    //     localStorage.setItem('Fecha seleccionada', newDate.format("YYYY-MM-DD"));
-    // };
+    useEffect(() => {
+        horasDisp();
+    }, [selectedDate]); 
+
+
+    const handleDateChange = (newDate) => {
+        setSelectedDate(newDate);
+        localStorage.setItem('Fecha seleccionada', newDate.format("YYYY-MM-DD"));
+    };
 
     return (
         <>
@@ -381,8 +397,8 @@ function Calendario() {
                                 disablePast
                                 className=''
                                 defaultValue={initialValue}
-                                //value={selectedDate}
-                                //onChange={handleDateChange}
+                                value={selectedDate}
+                                onChange={handleDateChange}
                                 loading={isLoading}
                                 onMonthChange={handleMonthChange}
                                 renderLoading={() => <DayCalendarSkeleton />}

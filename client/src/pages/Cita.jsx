@@ -32,6 +32,7 @@ const steps = [
 ];
 
 export default function Cita() {
+  //localStorage.clear()
   const navigate = useNavigate();
   const [activeStep, setActiveStep] = useState(0);
   const [completed, setCompleted] = useState({});
@@ -100,7 +101,6 @@ export default function Cita() {
   };
 
   const handleClick = () => {
-    localStorage.clear()
     handleComplete();
     LocalBase();
   };

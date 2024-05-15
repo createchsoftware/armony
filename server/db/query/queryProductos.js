@@ -179,7 +179,7 @@ export async function getProducts(pool, data, res) {
     // const pages=data.pages||1;/*por defecto sera pagina 1 */
     // const limit =data.limit||5;/*capacidad por defecto de 5, esto cambiara dependiendo el front */
     // const offset=(pages-1)*limit;
-    const query = `SELECT *FROM  prodServ where tipoProducto is not null `;
+    const query = `SELECT *FROM  prodServ where tipoProducto='venta'`;
     const [rows, fields] = await pool.query(query);
     endConnection();
     return rows;
@@ -204,18 +204,4 @@ export async function ventaProdOnline(connection, data) {
   const [rows, fields] = await connection.query(query); // Ejecutamos el query y almacenamos los datos
   endConnection(); // Cerramos la conexion con la base de datos
   return rows; // Retornamos los valores
-}
-
-export async function getProducts(pool, data, res) {
-  try {
-    // const pages=data.pages||1;/*por defecto sera pagina 1 */
-    // const limit =data.limit||5;/*capacidad por defecto de 5, esto cambiara dependiendo el front */
-    // const offset=(pages-1)*limit;
-    const query = `SELECT *FROM  prodServ where tipoProducto='venta'`;
-    const [rows, fields] = await pool.query(query);
-    return rows;
-  } catch (err) {
-    console.log("Ha ocurrido un error al ejecutar el query: ", err);
-    throw err;
-  }
 }
