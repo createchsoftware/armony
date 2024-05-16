@@ -63,6 +63,7 @@ const Login = ({ cerrar }) => {
               </label>
               <InputContrasena
                 props={{
+                  id:'pass',
                   texto: "Ingresa tu Contraseña",
                   class:
                     "bg-slate-200 rounded-full mb-3 mt-2 py-3 w-[22rem] md:w-[25rem] focus:outline-none focus:ring-1 focus:ring-[#EB5765] focus:border-transparent px-6",

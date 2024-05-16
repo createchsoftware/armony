@@ -147,6 +147,7 @@ const Contrasena = () => {
                 <div className="relative">
                   <InputContrasena
                     props={{
+                      id:'contraseña',
                       texto: "Ingresa tu Contraseña",
                       class:
                         "bg-slate-200 md:text-sm lg:text-base rounded-full w-[17rem] lg:w-[21rem] mb-3 mt-2 py-2 focus:outline-none focus:ring-1 focus:ring-rose-400 focus:border-transparent px-6",
@@ -166,6 +167,7 @@ const Contrasena = () => {
                 <div className="relative">
                   <InputContrasena
                     props={{
+                      id:'nueva-contraseña',
                       texto: "Ingresa tu Contraseña",
                       class:
                         "bg-slate-200 md:text-sm lg:text-base rounded-full w-[17rem] lg:w-[21rem] mb-3 mt-2 py-2 focus:outline-none focus:ring-1 focus:ring-rose-400 focus:border-transparent px-6",

@@ -53,8 +53,11 @@ async function login(solicitud,respuesta){
 
                     // ahora sigue validar la contrasena con la base de datos
 
+                    //vamos a obtener la contrasena
+                    let search = 'call getInfoUsuario(?)';
+                    let [fields_contraseña] = await solicitud.database.query(mysql.format(search,[fields[0].pkIdUsuario]));
                     
-                    let contraseña_bytes = fields[0].pass; // contrasena en bytes desde la base de datos
+                    let contraseña_bytes = fields_contraseña[0][0].password; // contrasena en bytes desde la base de datos
                     let contraseña_no_bytes = contraseña_bytes.toString('utf-8'); //contrasena en string, pero sigue estando encriptada
 
                     //bcryptjs.compare() es una funcion asincrona, por lo que debemos usar el await
