@@ -8,7 +8,6 @@ import {
     faAngleLeft,
 } from "@fortawesome/free-solid-svg-icons";
 import { Fragment, useEffect, useState } from 'react';
-import { Fragment, useEffect, useState } from 'react'
 import LayoutPrincipal from "../../layouts/LayoutPrincipal";
 import { IoIosArrowBack } from "react-icons/io";
 import { MdNavigateNext } from "react-icons/md";
