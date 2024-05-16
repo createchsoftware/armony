@@ -236,7 +236,7 @@ export default function ServicioEstetica() {
   return (
     <>
       <Presentacion />
-      <div className="w-full mx-auto my-16">
+      <div className="w-full mx-auto mt-16">
         <p className=" text-4xl md:text-6xl text-center mb-8 font-[iloveglitter] text-[#036C65]">
           Servicios de la estética
         </p>
@@ -624,19 +624,21 @@ export default function ServicioEstetica() {
                   </Disclosure>
                 </form>
 
-                <div className='flex rounded-lg ring-4 ring-[#E2B3B7]'>
-                  {filteredProducts.map((servicio) => (
-                    <Servicio
-                      nombre={servicio.nombre}
-                      descripcion={servicio.descripcion}
-                      espDesc1={servicio.espDesc1}
-                      espDesc2={servicio.espDesc2}
-                      precio={servicio.precio}
-                      imagen={servicio.img}
-                      rating={servicio.rating}
-                      isFavorite={servicio.fav}
-                    />
-                  ))}
+                <div className='flex rounded-lg ring-4 ring-[#E2B3B7] w-full'>
+                  {filteredProducts.length === 0 ? <p>No hay servicios disponibles</p> : (
+                    filteredProducts.map((servicio) => (
+                      <Servicio
+                        nombre={servicio.nombre}
+                        descripcion={servicio.descripcion}
+                        espDesc1={servicio.espDesc1}
+                        espDesc2={servicio.espDesc2}
+                        precio={servicio.precio}
+                        imagen={servicio.img}
+                        rating={servicio.rating}
+                        isFavorite={servicio.fav}
+                      />
+                    ))
+                  )}
                 </div>
 
               </div>
