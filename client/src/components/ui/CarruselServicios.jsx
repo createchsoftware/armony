@@ -57,7 +57,7 @@ const CarruselServicios = ({ servicios }) => {
       sliderclassName=""
       slidesToSlide={1}
       swipeable
-    // className=''
+      // className=''
     >
       {servicios.map((servicio) => (
         <Tarjeta servicio={servicio} />

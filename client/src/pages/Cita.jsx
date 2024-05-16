@@ -126,7 +126,12 @@ export default function Cita() {
       " " +
       localStorage.getItem("hora") +
       " " +
-      localStorage.getItem("Fecha seleccionada")
+      localStorage.getItem("Fecha seleccionada")+ ' '+
+      localStorage.getItem('NombreEspecialista')+ ' '+
+
+      localStorage.getItem('nombre')+ ' '+
+localStorage.getItem('precio')+ ' '+
+localStorage.getItem('tiempo')
     );
   };
   const stepComponents = [
