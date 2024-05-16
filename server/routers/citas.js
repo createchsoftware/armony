@@ -126,21 +126,19 @@ routerCitas.post("/venta", async (req, res) => {
 
 routerCitas.get("/disponibles/:idServ/:idEmp/:fecha", async (req, res) => {
   try {
+
+    console.log('estas en horarios disponibles')
     const resultado = await horasDisponibles(conexion, {
       fecha: req.params.fecha,
       idEmp: req.params.idEmp,
       idServ: req.params.idServ,
     });
-
     const horario = [];
     var i;
     for (i = 0; i < resultado.length; i++) {
       horario[i] = resultado[i].hora_disponible;
     }
-    res.status(200).json({
-      message: "Horas disponibles: ",
-      data: horario,
-    });
+    res.status(200).json(horario);
   } catch (err) {
     // Capturamos errores
     console.error(messageError, err); // Mostramos errores por consola

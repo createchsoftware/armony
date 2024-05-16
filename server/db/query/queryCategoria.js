@@ -85,8 +85,6 @@ export async function deleteCategoria(connection,data) {
 
 export async function getServicesSpa(connection) {
   try {
-
-    console.log('hola esta en spa')
     let searchCatId = "CALL getServiciosSpa()"; // Procedimiento de la DB
     let query = mysql.format(searchCatId); // Parametros para el procedimiento
     const [rows, fields] = await connection.query(query); // Ejecucion de query y almacenamiento de resultado
@@ -97,16 +95,12 @@ export async function getServicesSpa(connection) {
     console.error(messageError, err); // Mostramos errores por consola
   }
 }
-
-
 export async function getServicesEstetica(connection) {
   try {
   
     let searchCatId = "CALL getServiciosEstetica()";
-    console.log('hola esta en estetica  1')
     let query = mysql.format(searchCatId); // Parametros para el procedimiento
     const [rows, fields] = await connection.query(query); // Ejecucion de query y almacenamiento de resultado
-    console.log('hola esta en estetica  2')
     //endConnection(); // Cierre de conexion
     return rows[0]; // Retorno de valores
   } catch (err) {

@@ -221,29 +221,27 @@ function Calendario() {
 
 
 
-    async function horasDisp() {
-        const NEspecialista = localStorage.getItem('Especialista');
-        const fecha = localStorage.getItem('Fecha seleccionada').toString();
-        const Nservicio = 1;
-        await fetch(`/api/admin/citas/disponibles/${Nservicio}/${NEspecialista}/${fecha}`,{
-            method: 'GET',
-            headers: {
-                'Content-Type': 'application/json'
-            }
-        })
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error('Error en la solicitud');
-                }
-                return response.json();
-            })
-            .then(data => {
-                setHorasDisponibles(data.data); // Actualiza el estado con los datos recibidos
-            })
-            .catch(error => {
+    const horasDisp = async () => {
+        const especialista = localStorage.getItem('Especialista');
+        const fecha = localStorage.getItem('Fecha seleccionada');
+        if (especialista && fecha) {
+            try {
+                const response = await fetch(`/api/admin/citas/disponibles/1/${especialista}/${fecha}`, {
+                    method: 'GET',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                });
+                const data = await response.json();
+                setHorasDisponibles(data);
+                console.log(data)
+                setIsLoad(false);
+            } catch (error) {
                 console.error('Error de red o servidor:', error.message);
-            });
-    }
+            }
+        }
+    };
+
 
 
 
@@ -336,8 +334,8 @@ function Calendario() {
 
     useEffect(() => {
         const handleLocalStorageChange = (event) => {
-            if (event.key === 'Especialista') {
-                //getEmpServicio()
+            if (event.key === 'Especialista' || event.key === 'Fecha seleccionada') {
+                horasDisp();
             }
         };
         window.addEventListener('storage', handleLocalStorageChange);
@@ -351,6 +349,11 @@ function Calendario() {
         horasDisp();
     }, [selectedDate]); 
 
+    useEffect(() => {
+        if (localStorage.getItem('Especialista') && localStorage.getItem('Fecha seleccionada')) {
+            horasDisp();
+        }
+    }, [localStorage.getItem('Especialista')]);
 
     const handleDateChange = (newDate) => {
         setSelectedDate(newDate);
@@ -415,7 +418,7 @@ function Calendario() {
                     </div>
 
                     {/* <Calendar /> */}
-{/* 
+
 
                     <div className='overflow-x-auto'>
                         <h1 className='text-xl text-[#036C65] mb-4'>Horas Disponibles:</h1>
@@ -425,7 +428,7 @@ function Calendario() {
                             ))}
                         </div>
 
-                    </div> */}
+                    </div> 
 
                 </section>
                 <section className='w-1/3 '>
