@@ -99,36 +99,41 @@ const AgendarServicios = () => {
 
   useEffect(() => {
     fetch("/api/admin/categoria/getServicesSpa")
-      .then(response => {
-        if (!response.ok) {
-          throw new Error("Error al obtener los servicios de Spa");
-        }
-        return response.json();
-      })
-      .then(data => {
-        setSpa(data);
-      })
-      .catch(error => {
-        //setErrorSpa(error.message);
-      });
-  }, []);
+    .then(response => {
+      if (!response.ok) {
+        throw new Error("Error al obtener los servicios de Spa");
+      }
+      return response.json();
+    })
+    .then(data => {
+      setSpa(data);
+    })
+    .catch(error => {
+      //setErrorSpa(error.message);
+    });
+  },[])
 
-  // useEffect(() => {
-  //   fetch("/api/admin/categoria/getServicesEstetica")
-  //     .then(response => {
-  //       if (!response.ok) {
-  //         throw new Error("Error al obtener los servicios de Estética");
-  //       }
-  //       return response.json();
-  //     })
-  //     .then(data => {
-  //       setEstetica(data);
-  //     })
-  //     .catch(error => {
-  //      // setErrorEstetica(error.message);
-  //     });
-  // }, []);
-
+  useEffect(() => {
+    if (spa.length > 0) {
+      setTimeout(() => {
+        fetch("/api/admin/categoria/getServicesEstetica")
+        .then(response => {
+          if (!response.ok) {
+            throw new Error("Error al obtener los servicios de Estética");
+          }
+          return response.json();
+        })
+        .then(data => {
+          setEstetica(data);
+        })
+        .catch(error => {
+        // setErrorEstetica(error.message);
+        });
+        }, 3000)
+    }
+  }, [spa])
+  
+  
 
   const [toggleState, setToggleService] = useState(1);
   const [color1, setColor1] = useState("#80B5B0");
