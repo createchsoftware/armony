@@ -276,7 +276,7 @@ function ListaDeseo() {
                                         <h1 className='text-[#036d63] text-xl'>${precioTotal}</h1>
                                     </div>
                                     <div className='grid'>
-                                        <button className='bg-[#ec5766] p-2 text-white mx-6 rounded-xl my-2 duration-200 hover:bg-[#ffb5a7]'>Comprar</button>
+                                        <a href='/spa/comprar' className='bg-[#ec5766] p-2 text-white mx-6 rounded-xl my-2 duration-200 hover:bg-[#ffb5a7]'>Comprar</a>
                                     </div>
                                 </>
                             )}
