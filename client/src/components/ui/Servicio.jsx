@@ -6,6 +6,7 @@ import FavoriteIcon from "@mui/icons-material/Favorite";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import { AiOutlineShoppingCart } from "react-icons/ai";
 import PopupServicio from "./PopupServicio";
+import { pruebaImagen } from "../../../img/servicios/imagenesVar";
 
 const StyledRating = styled(Rating)({
   "& .MuiRating-iconFilled": {
@@ -26,13 +27,14 @@ function Servicio({
   rating,
   isFavorite,
 }) {
+  console.log(imagen);
   return (
     <>
       <div className="grid gap-4 text-center m-4 md:m-8">
         <div
-          className="p-6"
+          className="p-6 rounded-lg"
           style={{
-            backgroundImage: `url('${imagen}')`,
+            backgroundImage: `url(${imagen})`,
             backgroundRepeat: "no-repeat",
             backgroundSize: "cover",
             height: "20rem",
