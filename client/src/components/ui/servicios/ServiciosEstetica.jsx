@@ -625,7 +625,7 @@ export default function ServicioEstetica() {
                 </form>
 
                 <div className='flex rounded-lg ring-4 ring-[#E2B3B7] w-full'>
-                  {filteredProducts.length === 0 ? <p>No hay servicios disponibles</p> : (
+                  {filteredProducts.length === 0 ? <p className='m-auto'>No hay servicios disponibles</p> : (
                     filteredProducts.map((servicio) => (
                       <Servicio
                         nombre={servicio.nombre}
