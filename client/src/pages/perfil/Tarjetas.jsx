@@ -70,20 +70,33 @@ function Tarjetas() {
 
     return (
         <>
-            <div>
-                Tarjetas
-            </div>
-            <div className='grid gap-6'>
+            <LayoutPrincipal>
+                <main className='grid gap-12 my-24'>
+                    <section className='rounded-2xl mt-12 w-[60%] m-auto p-6 shadow-[0_3px_10px_rgb(0,0,0,0.2)]'>
+                        <a className='flex items-baseline content-center text-sm gap-x-4' href="/spa"> <IoIosArrowBack className='' />
+                            Volver</a>
+                        <img className='w-32 m-auto my-6 -mt-24 rounded-full aspect-square' src="../../pictures/suscripcionCirculo.png" alt="" />
+                        <div className='m-auto text-center '>
+                            <h1 className='text-[#036C65] font-semibold text-2xl mb-2'>Tarjetas</h1>
+                            <h2>Todas las tarjetas que hay registradas en tu cuenta</h2>
+                        </div>
+                    </section>
 
-                {
-                    array.map((objeto) => (
+                    <section className='w-[60%] m-auto'>
+                        <div className='grid gap-6'>
 
-                        <TarjetasPago tarjetas={objeto} funcion={EliminarTarjeta} texto_btn={'Eliminar Tarjeta'}
-                        />))
-                        
-                    }
+                            {
+                                array.map((objeto) => (
 
-            </div>
+                                    <TarjetasPago tarjetas={objeto} funcion={EliminarTarjeta} texto_btn={'Eliminar Tarjeta'}
+                                    />))
+
+                            }
+
+                        </div>
+                    </section>
+                </main>
+            </LayoutPrincipal >
         </>
 
     );

@@ -50,11 +50,23 @@ function Suscripciones() {
                     </div>
                 </section>
 
-                <section className='w-[60%] m-auto'>
+                {/* <section className='w-[60%] m-auto'>
                     <h2 className='text-[#036C65] text-2xl ml-12 mb-4'>Tu suscripción</h2>
                     <div className='rounded-2xl m-auto grid gap-4 p-12 shadow-[0_3px_10px_rgb(0,0,0,0.2)]'>
                         <p className='text-sm text-justify'>Esta es tu suscripción, será facturada en el mismo periodo de facturación.</p>
                         <button className='bg-gray-400 mt-6 py-3 w-1/2 m-auto shadow-[0_3px_10px_rgb(0,0,0,0.2)] rounded-lg'>No tienes una suscripción vigente</button>
+                    </div>
+                </section> */}
+
+                <section className='w-[60%] m-auto'>
+                    <h2 className='text-[#036C65] text-2xl ml-12 mb-4'>Tu suscripción</h2>
+                    <div className='rounded-2xl m-auto grid gap-4 p-12 shadow-[0_3px_10px_rgb(0,0,0,0.2)]'>
+                        <p className='text-sm text-justify'>Esta es tu suscripción, será facturada en el mismo periodo de facturación.</p>
+                        <div className='rounded-xl m-auto w-1/3 text-center bg-[#45B59C] mt-4 my-auto  p-3'>
+                            <div className='grid gap-2 px-2 py-6 bg-white rounded-lg'>
+                                <img className='w-48 m-auto mt-2' src="../../../pictures/membresia1.png" alt="" />
+                            </div>
+                        </div>
                     </div>
                 </section>
 
