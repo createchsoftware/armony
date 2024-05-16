@@ -69,13 +69,40 @@ export async function updateCategoria(connection, data) {
 }
 
 // DELETE FUNCIONAL
-export async function deleteCategoria(connection, data) {
+export async function deleteCategoria(connection,data) {
   try {
     let deleteCatQuery = "CALL delCategoria(?)"; // Procedimiento de la base de datos
     let query = mysql.format(deleteCatQuery, [data.idCat]); // Parametros para el procedimiento
     const [rows, fields] = await connection.query(query); // Ejecutamos y almacenamos valores
     endConnection(); // Cierre de conexion
     return rows; // Retornamos valores
+  } catch (err) {
+    // Capturamos errores de ejecucion de query
+    console.error(messageError, err); // Mostramos errores por consola
+  }
+}
+
+
+export async function getServicesSpa(connection) {
+  try {
+    let searchCatId = "CALL getServiciosSpa()"; // Procedimiento de la DB
+    let query = mysql.format(searchCatId); // Parametros para el procedimiento
+    const [rows, fields] = await connection.query(query); // Ejecucion de query y almacenamiento de resultado
+   // endConnection(); // Cierre de conexion
+    return rows[0]; // Retorno de valores
+  } catch (err) {
+    // Capturamos errores de ejecucion de query
+    console.error(messageError, err); // Mostramos errores por consola
+  }
+}
+export async function getServicesEstetica(connection) {
+  try {
+  
+    let searchCatId = "CALL getServiciosEstetica()";
+    let query = mysql.format(searchCatId); // Parametros para el procedimiento
+    const [rows, fields] = await connection.query(query); // Ejecucion de query y almacenamiento de resultado
+    //endConnection(); // Cierre de conexion
+    return rows[0]; // Retorno de valores
   } catch (err) {
     // Capturamos errores de ejecucion de query
     console.error(messageError, err); // Mostramos errores por consola

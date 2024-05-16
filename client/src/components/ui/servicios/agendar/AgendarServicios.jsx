@@ -1,71 +1,71 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Carrusel from "../../CarruselServicios";
 
-const spa = [
-  {
-    id: 1,
-    nombre: "Masaje corporal",
-    precio: 700,
-    duracion: 60,
-    descripcion:
-      "Técnicas personalizadas para aliviar la tensión muscular, liberar el estrés y renovar tu bienestar. Sumérgete en un oasis de calma y deja que nuestros expertos te lleven a un estado de completa tranquilidad.",
-    img: "../../../../../pictures/MasajeReductivoColombiano.png",
-    rating: 5,
-  },
-  {
-    id: 2,
-    nombre: "Facial",
-    precio: 500,
-    duracion: 90,
-    descripcion:
-      "Diseñados para mejorar la textura de la piel, reducir la apariencia de líneas finas y promover un brillo saludable.",
-    img: "../../../../../pictures/Hydrafacial.png",
-    rating: 5,
-  },
-  {
-    id: 3,
-    nombre: "Depilación",
-    precio: 500,
-    duracion: 90,
-    descripcion:
-      "Obtén una piel suave y sin vello con nuestra depilación profesional. Desde cejas perfectamente arqueadas hasta piernas sedosas, nuestros especialistas utilizan técnicas avanzadas y productos de alta calidad para ofrecerte resultados duraderos y cómodos.",
-    img: "../../../../../pictures/LiftingFacial.png",
-    rating: 5,
-  },
-  {
-    id: 4,
-    nombre: "Levantamiento de gluteos",
-    precio: 700,
-    duracion: 60,
-    descripcion:
-      " Técnicas personalizadas para aliviar la tensión muscular, liberar el estrés y renovar tu bienestar. Sumérgete en un oasis de calma y deja que nuestros expertos te lleven a un estado de completa tranquilidad.",
-    img: "../../../../../pictures/MasajeAntiCelulitisColombiano.png",
-    rating: 5,
-  },
-];
+// const spa = [
+//   {
+//     id: 1,
+//     nombre: "Masaje corporal",
+//     precio: 700,
+//     duracion: 60,
+//     descripcion:
+//       "Técnicas personalizadas para aliviar la tensión muscular, liberar el estrés y renovar tu bienestar. Sumérgete en un oasis de calma y deja que nuestros expertos te lleven a un estado de completa tranquilidad.",
+//     img: "../../../../../pictures/MasajeReductivoColombiano.png",
+//     rating: 5,
+//   },
+//   {
+//     id: 2,
+//     nombre: "Facial",
+//     precio: 500,
+//     duracion: 90,
+//     descripcion:
+//       "Diseñados para mejorar la textura de la piel, reducir la apariencia de líneas finas y promover un brillo saludable.",
+//     img: "../../../../../pictures/Hydrafacial.png",
+//     rating: 5,
+//   },
+//   {
+//     id: 3,
+//     nombre: "Depilación",
+//     precio: 500,
+//     duracion: 90,
+//     descripcion:
+//       "Obtén una piel suave y sin vello con nuestra depilación profesional. Desde cejas perfectamente arqueadas hasta piernas sedosas, nuestros especialistas utilizan técnicas avanzadas y productos de alta calidad para ofrecerte resultados duraderos y cómodos.",
+//     img: "../../../../../pictures/LiftingFacial.png",
+//     rating: 5,
+//   },
+//   {
+//     id: 4,
+//     nombre: "Levantamiento de gluteos",
+//     precio: 700,
+//     duracion: 60,
+//     descripcion:
+//       " Técnicas personalizadas para aliviar la tensión muscular, liberar el estrés y renovar tu bienestar. Sumérgete en un oasis de calma y deja que nuestros expertos te lleven a un estado de completa tranquilidad.",
+//     img: "../../../../../pictures/MasajeAntiCelulitisColombiano.png",
+//     rating: 5,
+//   },
+// ];
 
-const estetica = [
-  {
-    id: 1,
-    nombre: "Maquillaje",
-    precio: 700,
-    duracion: 60,
-    descripcion:
-      " Técnicas personalizadas para aliviar la tensión muscular, liberar el estrés y renovar tu bienestar. Sumérgete en un oasis de calma y deja que nuestros expertos te lleven a un estado de completa tranquilidad.",
-    img: "../../../../../pictures/pestañas.png",
-    rating: 5,
-  },
-  {
-    id: 2,
-    nombre: "Planchado de pelo",
-    precio: 500,
-    duracion: 90,
-    descripcion:
-      "Diseñados para mejorar la textura de la piel, reducir la apariencia de líneas finas y promover un brillo saludable.",
-    img: "../../../../../pictures/peluqueria.png",
-    rating: 5,
-  },
-];
+// const estetica = [
+//   {
+//     id: 1,
+//     nombre: "Maquillaje",
+//     precio: 700,
+//     duracion: 60,
+//     descripcion:
+//       " Técnicas personalizadas para aliviar la tensión muscular, liberar el estrés y renovar tu bienestar. Sumérgete en un oasis de calma y deja que nuestros expertos te lleven a un estado de completa tranquilidad.",
+//     img: "../../../../../pictures/pestañas.png",
+//     rating: 5,
+//   },
+//   {
+//     id: 2,
+//     nombre: "Planchado de pelo",
+//     precio: 500,
+//     duracion: 90,
+//     descripcion:
+//       "Diseñados para mejorar la textura de la piel, reducir la apariencia de líneas finas y promover un brillo saludable.",
+//     img: "../../../../../pictures/peluqueria.png",
+//     rating: 5,
+//   },
+// ];
 
 const favoritos = [
   {
@@ -91,6 +91,45 @@ const favoritos = [
 ];
 
 const AgendarServicios = () => {
+  const [spa, setSpa] = useState([]);
+  const [estetica, setEstetica] = useState([]);
+
+  useEffect(() => {
+    fetch("/api/admin/categoria/getServicesSpa")
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error("Error al obtener los servicios de Spa");
+        }
+        return response.json();
+      })
+      .then((data) => {
+        setSpa(data);
+      })
+      .catch((error) => {
+        //setErrorSpa(error.message);
+      });
+  }, []);
+
+  useEffect(() => {
+    if (spa.length > 0) {
+      setTimeout(() => {
+        fetch("/api/admin/categoria/getServicesEstetica")
+          .then((response) => {
+            if (!response.ok) {
+              throw new Error("Error al obtener los servicios de Estética");
+            }
+            return response.json();
+          })
+          .then((data) => {
+            setEstetica(data);
+          })
+          .catch((error) => {
+            // setErrorEstetica(error.message);
+          });
+      }, 3000);
+    }
+  }, [spa]);
+
   const [toggleState, setToggleService] = useState(1);
   const [color1, setColor1] = useState("#80B5B0");
   const [color2, setColor2] = useState("#FCEAEC");
@@ -122,7 +161,7 @@ const AgendarServicios = () => {
     console.log(index);
   };
   return (
-    <div className="w-[50rem] h-[33rem] mb-6 mx-auto">
+    <div className="w-[53rem] h-[38rem] mb-6 mx-auto">
       <div className="w-[16rem] mx-auto">
         <h1 className="mb-2 text-xl font-bold text-center">
           Selecciona tus servicios

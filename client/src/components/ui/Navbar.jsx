@@ -110,9 +110,15 @@ function Navbar() {
                                         </a>
                                     </li>
                                     <li className="nav-menu-item">
-                                        <a href="/spa/agendar" className="menu-link">
-                                            Agendar
-                                        </a>
+                                        { log ? (
+                                            <a href="/spa/agendar" className="menu-link">
+                                                Agendar
+                                            </a>
+                                        ):(
+                                            <a href="#" className="menu-link" onClick={toggleLogin}>
+                                                Agendar
+                                            </a>
+                                        )}
                                     </li>
                                 </>
                             )}
@@ -143,13 +149,24 @@ function Navbar() {
                             </li>
                             {location.pathname !== "/" && (
                                 <li className="nav-menu-item">
-                                    <a
-                                        href="/favoritos"
-                                        className="nav-fav"
-                                        aria-label="Ir a Favoritos"
-                                    >
-                                        <FontAwesomeIcon icon={faHeart} />
-                                    </a>
+                                    { log ? (
+                                        <a
+                                            href="/favoritos"
+                                            className="nav-fav"
+                                            aria-label="Ir a Favoritos"
+                                        >
+                                            <FontAwesomeIcon icon={faHeart} />
+                                        </a>
+                                    ):(
+                                        <a
+                                            href="#"
+                                            className="nav-fav"
+                                            aria-label="Ir a Favoritos"
+                                            onClick={toggleLogin}
+                                        >
+                                            <FontAwesomeIcon icon={faHeart} />
+                                        </a>
+                                    )}
                                 </li>
                             )}
                             {location.pathname == "/spa/productos" && (
@@ -175,7 +192,7 @@ function Navbar() {
             {cart && (
                 <div className="cart-fondo">
                     <div className="cart-fx">
-                        <Carrito cerrar={toggleCart} totalProductos={cantProductos} />
+                        <Carrito cerrar={toggleCart} totalProductos={cantProductos} logCart={log} loginCart={toggleLogin} />
                     </div>
                 </div>
             )}

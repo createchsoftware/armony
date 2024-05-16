@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import Carousel from 'react-multi-carousel';
+import CarruselServicios from '../../components/ui/CarruselServicios';
 import 'react-multi-carousel/lib/styles.css';
 import LayoutPrincipal from '../../layouts/LayoutPrincipal'
 import { IoIosArrowBack } from "react-icons/io";
@@ -68,6 +69,7 @@ function ServerDay(props) {
 }
 
 function Calendario() {
+    const [especialistas, setEspecialistas] = React.useState([]);
     const [selectedHourIndex, setSelectedHourIndex] = useState(null);
     const requestAbortController = React.useRef(null);
     const [checked, setChecked] = React.useState(false);
@@ -127,8 +129,8 @@ function Calendario() {
         setHighlightedDays([]);
         fetchHighlightedDays(date);
     };
-    const [value, onChange] = useState(new Date());
-
+    
+//const[value,onChange]=useState(new Date())
     const [nombre, setNombre] = useState(false); //<<< PARA EL INICIO DE SESION
     const [correo, setCorreo] = useState(false); //<<< PARA EL INICIO DE SESION
 
@@ -213,28 +215,35 @@ function Calendario() {
     }
     const [selectedDate, setSelectedDate] = useState(initialValue);
     const [horasDisponibles, setHorasDisponibles] = useState([]);
+    
     //metodo para obtener horas disponibles de un empleado
     //este metodo se llamara cada vez que el estado de id empleado o el estado de fecha cambie
-    async function horasDisp() {
-        await fetch(`/api/admin/citas/disponibles/${1}/${34}/${localStorage.getItem('Fecha seleccionada').toString()}`, {
-            method: 'GET',
-            headers: {
-                'Content-Type': 'application/json'
-            }
-        })
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error('Error en la solicitud');
-                }
-                return response.json();
-            })
-            .then(data => {
-                setHorasDisponibles(data.data); // Actualiza el estado con los datos recibidos
-            })
-            .catch(error => {
+
+
+
+    const horasDisp = async () => {
+        const especialista = localStorage.getItem('Especialista');
+        const fecha = localStorage.getItem('Fecha seleccionada');
+        if (especialista && fecha) {
+            try {
+                const response = await fetch(`/api/admin/citas/disponibles/1/${especialista}/${fecha}`, {
+                    method: 'GET',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                });
+                const data = await response.json();
+                setHorasDisponibles(data);
+                setIsLoad(false);
+            } catch (error) {
                 console.error('Error de red o servidor:', error.message);
-            });
-    }
+            }
+        }
+    };
+
+
+
+
 
     // example array of 13 hours available
     // const horasDisp = () => {
@@ -254,49 +263,96 @@ function Calendario() {
     //         '8:00 pm',
     //     ])
     // }
+   
+    const [isLoad, setIsLoad] = useState(true);
 
-    const especialistas = [
-        {
-            id: 1,
-            nombre: 'Dra. Ana Martínez',
-            especialidad: 'Dermatólogo',
-            imagen: '/pictures/empleadaFoto1.png',
-            experiencia: '10 años',
-            areas: ['Dermatología', 'Cirugía', 'Estética'],
-            calificacion: 5
-        },
-        {
-            id: 2,
-            nombre: 'Dra. María López',
-            especialidad: 'Nutricionista',
-            imagen: '/pictures/empleadaFoto2.png',
-            experiencia: '5 años',
-            areas: ['Nutrición', 'Dietas', 'Salud'],
-            calificacion: 4
-        },
-        {
-            id: 3,
-            nombre: 'Dra. Claudia Pérez',
-            especialidad: 'Pediatra',
-            imagen: '/pictures/empleadaFoto3.png',
-            experiencia: '15 años',
-            areas: ['Pediatría', 'Cuidados', 'Salud'],
-            calificacion: 5
-        },
-        {
-            id: 4,
-            nombre: 'Dra. Liliana Ponce',
-            especialidad: 'Ginecóloga',
-            imagen: '/pictures/empleadaFoto4.png',
-            experiencia: '8 años',
-            areas: ['Ginecología', 'Salud', 'Cuidados'],
-            calificacion: 4
-        }]
+    // useEffect(() => {
+    //     const fetchData = async () => {
+            
+    //             const response = await fetch("/api/admin/productos/get")
+            
+    //             const data = await response.json();
+    //            // setEspecialistas(data)
+    //     };
+    //     fetchData();
+    // }, []);
+
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const response = await fetch("/api/admin/empleado/getEmpServicio/1");
+                const data = await response.json();
+                setEspecialistas(data);
+                setIsLoad(false);
+            } catch (error) {
+                console.log('error', error);
+                setIsLoad(false);
+            }
+        };
+        fetchData();
+    }, []);
+    //console.log(especialistas);
+    
+    // const especialistas = [
+    //     {
+    //         id: 1,
+    //         nombre: 'Dra. Ana Martínez',
+    //         especialidad: 'Dermatólogo',
+    //         imagen: '/pictures/empleadaFoto1.png',
+    //         experiencia: '10 años',
+    //         areas: ['Dermatología', 'Cirugía', 'Estética'],
+    //         calificacion: 5
+    //     },
+    //     {
+    //         id: 2,
+    //         nombre: 'Dra. María López',
+    //         especialidad: 'Nutricionista',
+    //         imagen: '/pictures/empleadaFoto2.png',
+    //         experiencia: '5 años',
+    //         areas: ['Nutrición', 'Dietas', 'Salud'],
+    //         calificacion: 4
+    //     },
+    //     {
+    //         id: 3,
+    //         nombre: 'Dra. Claudia Pérez',
+    //         especialidad: 'Pediatra',
+    //         imagen: '/pictures/empleadaFoto3.png',
+    //         experiencia: '15 años',
+    //         areas: ['Pediatría', 'Cuidados', 'Salud'],
+    //         calificacion: 5
+    //     },
+    //     {
+    //         id: 4,
+    //         nombre: 'Dra. Liliana Ponce',
+    //         especialidad: 'Ginecóloga',
+    //         imagen: '/pictures/empleadaFoto4.png',
+    //         experiencia: '8 años',
+    //         areas: ['Ginecología', 'Salud', 'Cuidados'],
+    //         calificacion: 4
+    //     }]
+
+    useEffect(() => {
+        const handleLocalStorageChange = (event) => {
+            if (event.key === 'Especialista' || event.key === 'Fecha seleccionada') {
+                horasDisp();
+            }
+        };
+        window.addEventListener('storage', handleLocalStorageChange);
+        return () => {
+            window.removeEventListener('storage', handleLocalStorageChange);
+        };
+    }, []); 
+
 
     useEffect(() => {
         horasDisp();
-    }, [selectedDate]); // Dependencia: se ejecutará el efecto cada vez que selectedDate cambie
+    }, [selectedDate]); 
 
+    useEffect(() => {
+        if (localStorage.getItem('Especialista') && localStorage.getItem('Fecha seleccionada')) {
+            horasDisp();
+        }
+    }, [localStorage.getItem('Especialista')]);
 
     const handleDateChange = (newDate) => {
         setSelectedDate(newDate);
@@ -366,16 +422,20 @@ function Calendario() {
                     <div className='overflow-x-auto'>
                         <h1 className='text-xl text-[#036C65] mb-4'>Horas Disponibles:</h1>
                         <div className='flex text-[#EB5765] gap-2'>
-                            {horasDisponibles.map((hora, index) => (
+                            {horasDisponibles && horasDisponibles.map((hora, index) => (
                                 <button key={index} onClick={() => handleClick(hora, index)} className={getButtonClass(index)}>{hora}</button>
                             ))}
                         </div>
 
-                    </div>
+                    </div> 
 
                 </section>
                 <section className='w-1/3 '>
                     <h1 className='text-xl  text-[#036C65] text-center'>Selecciona tu especialista</h1>
+                    {isLoad ? (
+                        <h1>Loading...</h1>
+                    ) : (
+                        <>
                     <div className='flex justify-center gap-4 m-4'>
                         <button className='px-4 py-1 text-white rounded-xl bg-rose-400'>General</button>
                         <button className='flex items-center justify-center gap-2 px-4 text-white rounded-xl bg-rose-400'>Favoritos
@@ -384,6 +444,7 @@ function Calendario() {
                             </svg>
                         </button>
                     </div>
+                    
                     <Carousel
                         additionalTransfrom={0}
                         arrows
@@ -439,16 +500,20 @@ function Calendario() {
                         slidesToSlide={1}
                         swipeable
                     >
-                        {especialistas.map((especialista) => (
-                            <Especialista key={especialista.id} especialista={especialista} />
-                        ))}
+                            {especialistas.length>0?(especialistas.map((especialista) => (
+                                <Especialista key={especialista.id} especialista={especialista} />
+                            ))):(<div></div>)}
                     </Carousel>
-                    <div class="mt-2 flex gap-2 justify-center">
+                      {/* <CarruselServicios servicios={especialistas} itemsDesktop={1} itemsMobile={1} itemsTablet={1}/>
+                                         */}
+                                        <div class="mt-2 flex gap-2 justify-center">
                         <div class="flex items-center">
                             <input id="default-checkbox" type="checkbox" onChange={handleCheckBox} value="" class="w-5 h-5 text-rose-400 bg-gray-100 border-gray-300 rounded focus:ring-rose-400  focus:ring-2" />
                             <label for="default-checkbox" class="ms-2 text-lg font-medium text-gray-900 dark:text-gray-300">Indiferente</label>
                         </div>
                     </div>
+                    </>
+                    )}
                 </section>
             </main >
         </>

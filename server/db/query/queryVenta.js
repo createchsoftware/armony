@@ -1,6 +1,5 @@
 import { endConnection } from "../connection.js";
 import mysql from "mysql2";
-import { createCitas } from "./queryCitas.js";
 
 const messageError = "Ha ocurrido un error al ejecutar el query: ";
 
@@ -45,11 +44,15 @@ export async function detalleVenta(connection, data) {
 // READ VENTA
 export async function searchVentaCita(connection, data) {
   try {
-    let busquedaVenta = "CALL searchVentaCita(?, ?)";
-    let query = mysql.format(busquedaVenta, [data.idCliente, data.fechaVenta]);
-    const [rows, fields] = await connection.query(query);
-    endConnection();
-    return rows[0];
+    let busquedaVenta = "CALL searchVentaCita(?, ?, ?)"; // Procedimiento almacenado de la base de datos
+    let query = mysql.format(busquedaVenta, [
+      data.idCliente,
+      data.tVenta,
+      data.phone,
+    ]); // Parametros necesarios para el procedimiento
+    const [rows, fields] = await connection.query(query); // Ejecutamos query y almacenamos valores
+    endConnection(); // Cerramos conexion con la base de datos
+    return rows[0]; // retornamos valores
   } catch (err) {
     // Capturamos errores de ejecucion de query
     console.error(messageError, err); // Mostramos errores por consola

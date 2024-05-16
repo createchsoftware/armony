@@ -19,7 +19,7 @@ function PresentacionEstetica() {
             Servicios de Estética
           </h1>
           <div className="grid grid-cols-2 mt-10 place-items-center">
-            <div className="w-[14rem] md:w-[30rem] bg-white bg-opacity-20 rounded-xl text-center">
+            <div className="w-[14rem] md:w-[30rem] bg-white bg-opacity-50 rounded-xl text-center">
               <p className="text-[#036C65] text-3xl md:text-5xl my-5 mx-8 text-left">
                 Deja que tu cuerpo hable por tí
               </p>
@@ -35,7 +35,7 @@ function PresentacionEstetica() {
               </a>
             </div>
             <div className="w-full my-auto text-center">
-              <div className="flex flex-col w-[14rem] md:w-[30rem] bg-white bg-opacity-20 rounded-xl mx-auto">
+              <div className="flex flex-col w-[14rem] md:w-[30rem] bg-white bg-opacity-50 rounded-xl mx-auto">
                 <p className="text-[#036C65] text-2xl md:text-4xl my-3 md:my-5 mx-8 text-left">
                   ¡Hey! También tenemos servicios de spa
                 </p>

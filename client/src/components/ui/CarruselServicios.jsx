@@ -1,5 +1,6 @@
 import Carousel from "react-multi-carousel";
 import Tarjeta from "./TarjetaDeServicio.jsx";
+import { useState } from "react";
 
 const CarruselServicios = ({ servicios }) => {
   return (
@@ -56,7 +57,7 @@ const CarruselServicios = ({ servicios }) => {
       sliderclassName=""
       slidesToSlide={1}
       swipeable
-    // className=''
+      // className=''
     >
       {servicios.map((servicio) => (
         <Tarjeta servicio={servicio} />

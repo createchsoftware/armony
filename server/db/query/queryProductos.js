@@ -152,19 +152,56 @@ export async function deleteProdCat(connection, data) {
   }
 }
 
-
-export async function getProducts (pool,data,res){
-  try{
-      // const pages=data.pages||1;/*por defecto sera pagina 1 */
-      // const limit =data.limit||5;/*capacidad por defecto de 5, esto cambiara dependiendo el front */
-      // const offset=(pages-1)*limit;
-      const query=`SELECT *FROM  prodServ where tipoProducto='venta'`
-      const [rows,fields]=await pool.query(query);
-          return rows;
-  }catch(err){
-  console.log("Ha ocurrido un error al ejecutar el query: ",err)
-  throw err;
+export async function ventaProducto(connection, data) {
+  try {
+    let ventaOnlineProducto = "CALL addVentaProdOnline(?, ?, ?, ?, ?, ?, ? ,?)"; // Procedimiento de la base de datos
+    let query = mysql.format(ventaOnlineProducto, [
+      data.idCliente,
+      data.nombreCompleto,
+      data.phone,
+      data.tarjeta,
+      data.monedero,
+      data.subtotal,
+      data.total,
+      data.impuesto,
+    ]); // Parametros necesarios para el procedimiento
+    const [rows, fields] = await connection.query(query); // Ejecutamos el query y almacenamos los valores retornados
+    endConnection(); // Cerramos la conexion con la base de datos
+    return rows[0]; // Retornamos los valores (Se retorna un objeto)
+  } catch (err) {
+    // Capturamos errores de ejecucion de query
+    console.error(messageError, err); // Mostramos los errores por consola
   }
-     
-      }
-  
+}
+
+export async function getProducts(pool, data, res) {
+  try {
+    // const pages=data.pages||1;/*por defecto sera pagina 1 */
+    // const limit =data.limit||5;/*capacidad por defecto de 5, esto cambiara dependiendo el front */
+    // const offset=(pages-1)*limit;
+    const query = `SELECT *FROM  prodServ where tipoProducto='venta'`;
+    const [rows, fields] = await pool.query(query);
+    endConnection();
+    return rows;
+  } catch (err) {
+    console.log("Ha ocurrido un error al ejecutar el query: ", err);
+    throw err;
+  }
+}
+
+export async function ventaProdOnline(connection, data) {
+  let ventaOnlineProd = "CALL addVentaProdOnline(?, ?, ?, ?, ?, ?, ?, ?)"; // Procedimiento almacenado de la base de datos
+  let query = mysql.format(ventaOnlineProd, [
+    data.idCliente,
+    data.idProd,
+    data.cantidad,
+    data.tarjeta,
+    data.monedero,
+    data.subtotal,
+    data.total,
+    data.impuesto,
+  ]); // Parametros requeridos para el procedimiento almacenado
+  const [rows, fields] = await connection.query(query); // Ejecutamos el query y almacenamos los datos
+  endConnection(); // Cerramos la conexion con la base de datos
+  return rows; // Retornamos los valores
+}

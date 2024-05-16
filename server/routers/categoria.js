@@ -6,6 +6,8 @@ import {
   readCategoriaById,
   readCategoriaByName,
   updateCategoria,
+  getServicesSpa,
+  getServicesEstetica
 } from "../db/query/queryCategoria.js";
 
 export const routerCategoria = express.Router(); // Creamos router
@@ -102,3 +104,24 @@ routerCategoria.delete("/delete", async (req, res) => {
     res.status(500).send(messageError); // Enviamos el mensaje al navegador
   }
 });
+
+routerCategoria.get("/getServicesSpa", async (req, res) => {
+  try {
+    const resultado = await getServicesSpa(conexion);
+    res.status(202).json(resultado);
+  } catch (err) {
+    console.error(messageError, err); // Mostramos errores
+    res.status(500).send(messageError); // Enviamos un error INTERNAL SERVER ERROR y el error al navegador
+  }
+});
+
+routerCategoria.get("/getServicesEstetica", async (req, res) => {
+  try {
+    const resultado = await getServicesEstetica(conexion);
+    res.status(202).json( resultado);
+  } catch (err) {
+    console.error(messageError, err); // Mostramos errores
+    res.status(500).send(messageError); // Enviamos un error INTERNAL SERVER ERROR y el error al navegador
+  }
+});
+
