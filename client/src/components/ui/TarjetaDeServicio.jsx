@@ -21,10 +21,13 @@ const TarjetaDeServicio = ({ servicio }) => {
   const [vista, setVista] = useState(false);
   
   const [seleccionado, setSeleccionado] = useState(false);
-const agregarServ=(id)=>{
+const agregarServ=(id,nombre,precio,tiempo)=>{
   if(!seleccionado){
   setSeleccionado(true); 
 localStorage.setItem('servicio', id);
+localStorage.setItem('nombre', nombre);
+localStorage.setItem('precio', precio);
+localStorage.setItem('tiempo', tiempo);
 }else{
 alert('ya escogiste un servicio')
 }
@@ -97,7 +100,7 @@ alert('ya escogiste un servicio')
             ratedColor="amber"
           />
         </div>
-        <button onClick={()=>agregarServ(servicio.pkIdPS)} className="bg-red-50 font-bold px-10 py-1 mx-10 rounded-xl ring-1 ring-rose-50 hover:ring-black">
+        <button onClick={()=>agregarServ(servicio.pkIdPS,servicio.nombre,servicio.precio,servicio.tiempo)} className="bg-red-50 font-bold px-10 py-1 mx-10 rounded-xl ring-1 ring-rose-50 hover:ring-black">
           Elegir
         </button>
       </div>

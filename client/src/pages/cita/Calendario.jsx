@@ -234,7 +234,6 @@ function Calendario() {
                 });
                 const data = await response.json();
                 setHorasDisponibles(data);
-                console.log(data)
                 setIsLoad(false);
             } catch (error) {
                 console.error('Error de red o servidor:', error.message);
