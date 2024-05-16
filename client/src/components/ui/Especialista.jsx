@@ -19,11 +19,11 @@ const StyledRating = styled(Rating)({
 function Especialista({ especialista }) {
 
     const [seleccionado, setSeleccionado] = useState(false);
-    const agregarEspe=(id)=>{
+    const agregarEspe=(id,nombre)=>{
       if(!seleccionado){
       setSeleccionado(true); 
     localStorage.setItem('Especialista',id);
-    console.log(localStorage.getItem('Especialista'))
+    localStorage.setItem('NombreEspecialista',nombre);
     }else{
     alert('ya escogiste un especialista')
     }
@@ -61,7 +61,7 @@ function Especialista({ especialista }) {
             </div> */}
 
             <div div className='flex justify-center mt-2'>
-                <button onClick={()=>agregarEspe(especialista.ID)}className="mt-2 transition-all duration-300  m-auto hover:bg-[#036C65] hover:ring-2 hover:[#036C65] hover:ring-offset-1 group relative inline-flex h-10 items-center justify-center overflow-hidden rounded-lg border-2 bg-[#EB5765] px-6 font-[abeatbykai] text-neutral-200"><span>Elegir</span></button>
+                <button onClick={()=>agregarEspe(especialista.ID,especialista.Nombre)}className="mt-2 transition-all duration-300  m-auto hover:bg-[#036C65] hover:ring-2 hover:[#036C65] hover:ring-offset-1 group relative inline-flex h-10 items-center justify-center overflow-hidden rounded-lg border-2 bg-[#EB5765] px-6 font-[abeatbykai] text-neutral-200"><span>Elegir</span></button>
             </div>
         </div >
     )
