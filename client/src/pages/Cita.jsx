@@ -32,10 +32,15 @@ const steps = [
 ];
 
 export default function Cita() {
+  
   const navigate = useNavigate();
   const [activeStep, setActiveStep] = useState(0);
   const [completed, setCompleted] = useState({});
   const [scrollPosition, setScrollPosition] = useState(0);
+
+  useEffect(() => {
+    localStorage.clear();
+  }, []); // Se ejecutará una vez al montar el component
 
   const restart = () => {
     setActiveStep(0);
@@ -100,7 +105,6 @@ export default function Cita() {
   };
 
   const handleClick = () => {
-    localStorage.clear()
     handleComplete();
     LocalBase();
   };
@@ -122,7 +126,12 @@ export default function Cita() {
       " " +
       localStorage.getItem("hora") +
       " " +
-      localStorage.getItem("Fecha seleccionada")
+      localStorage.getItem("Fecha seleccionada")+ ' '+
+      localStorage.getItem('NombreEspecialista')+ ' '+
+
+      localStorage.getItem('nombre')+ ' '+
+localStorage.getItem('precio')+ ' '+
+localStorage.getItem('tiempo')
     );
   };
   const stepComponents = [

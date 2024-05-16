@@ -7,13 +7,13 @@ const Registro = ({ cerrar }) => {
   return (
     <>
       <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50 overflow-hidden">
-        <div className="relative w-[25rem] md:w-[30rem] flex flex-col rounded-3xl bg-white bg-clip-border text-gray-700 shadow-md">
+        <div className="relative w-[25rem] md:w-[27rem] lg:w-[30rem] flex flex-col rounded-3xl bg-white bg-clip-border text-gray-700 shadow-md md:-bottom-5">
           <div className="relative w-[7rem] h-[7rem] mx-auto -mt-20 grid place-items-center rounded-full bg-white bg-clip-border shadow-lg">
             <img src={user1} alt="" className="logo1 absolute h-full" />
           </div>
           <div className="grid grid-cols-2">
             <a
-              className="ml-5 justify-self-start"
+              className="text-sm lg:text-base ml-5 justify-self-start"
               aria-label="Regresar"
               onClick={cerrar.change}
             >
@@ -32,10 +32,10 @@ const Registro = ({ cerrar }) => {
               />
             </a>
           </div>
-          <h1 className="mx-auto p-5 text-[#EB5765] text-3xl">
+          <h1 className="mx-auto p-3 lg:p-4 text-[#EB5765] text-2xl lg:text-3xl">
             Crear cuenta nueva
           </h1>
-          <div className="grid place-items-center mx-7 md:mx-16">
+          <div className="grid place-items-center mx-7 lg:mx-16">
             <a
               href="/spa/signUp"
               onClick={cerrar.close}
@@ -52,7 +52,7 @@ const Registro = ({ cerrar }) => {
           </div>
           <img
             src={gl}
-            className="absolute size-6 bottom-[2.75rem] left-[6.5rem] md:left-[9rem]"
+            className="absolute size-6 bottom-[2.75rem] left-[6.5rem] md:left-[7.5rem] lg:left-[9rem]"
           />
           <button
             className="mb-8 bg-blue-400 text-white text-sm pl-10 pr-4 py-3 mx-auto hover:bg-blue-300"

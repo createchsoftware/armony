@@ -17,7 +17,7 @@ const StyledRating = styled(Rating)({
 
 function Ofertas({ producto }) {
     return (
-        <div className='m-2 font-[abeatbyKai]'>
+        <div className='m-2 font-[abeatbyKai] grid  content-between h-[97%]'>
             <Box
                 className="float-right"
                 sx={{
