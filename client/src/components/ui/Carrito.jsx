@@ -1,14 +1,17 @@
 import React, { useEffect, useState } from 'react';
+import { Rating } from '@mui/material';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faTrash, faCircleXmark, faCircleMinus, faCirclePlus, faStar } from '@fortawesome/free-solid-svg-icons';
+import { faTrash, faCircleXmark, faCircleMinus, faCirclePlus } from '@fortawesome/free-solid-svg-icons';
 
 // eslint-disable-next-line react/prop-types
-function Carrito({cerrar, totalProductos}) {
+function Carrito({cerrar, totalProductos, logCart , loginCart}) {
     const [cartItems, setCartItems] = useState([
-        { id: 1, name: 'Crema', price: 50.00, quantity: 1 , image: "../../../pictures/crema2.png" , desc: "Crema olor a coco humectante." },
-        { id: 2, name: 'Shampoo', price: 75.00, quantity: 2, image: "../../../pictures/crema1.png" , desc: "Shampoo con aceite de coco." }
+        { id: 1, name: 'Esponjabon', price: 10.00, quantity: 1 , image: "../../../public/pictures/producto1.png" , desc: "Esponjabon floor para baño, formul...", valoracion: 4 },
+        { id: 2, name: 'Tónito facial', price: 15.00, quantity: 2, image: "../../../public/pictures/oferta3.png" , desc: "Tónito facial dermatológico...", valoracion: 5 }
     ]);
     //  ^^^ ES SOLO TEST PARA PROBAR LA FUNCIONALIDAD DEL POP-UP EMERGENTE DEL CARRITO.
+    const log = logCart;
+
     const enviarTotal = () => {
         const total = cartItems.reduce((total, item) => total + item.quantity, 0);
         totalProductos(total);
@@ -46,39 +49,37 @@ function Carrito({cerrar, totalProductos}) {
     const cartList = cartItems.map(item => (
         <li key={item.id} className="cart-item">
             <img className='cart-photo' src={item.image} alt={item.name} />
-            <div className='cart-data mx-3'>
+            <div className='grid w-3/4 mx-4 content-between'>
                 <div className='flex justify-between'>
-                    <span className='text-xl mr-5 font-bold'>{item.name}</span>
+                    <div className='grid'>
+                        <span className='text-xl mr-5 font-bold'>{item.name}</span>
+                        <Rating className='' value={item.valoracion} readOnly unratedcolor="amber" ratedcolor="amber" />
+                    </div>
+                    <button className='cart-remove' onClick={() => removeItem(item.id)}>
+                        <FontAwesomeIcon icon={faTrash} />
+                    </button>
                 </div>
-                <p className='text-yellow-300'>
-                    <FontAwesomeIcon icon={faStar} />
-                    <FontAwesomeIcon icon={faStar} />
-                    <FontAwesomeIcon icon={faStar} />
-                    <FontAwesomeIcon icon={faStar} />
-                    <FontAwesomeIcon icon={faStar} />
-                </p>
                 <div>
                     <span className='text-xs'>{item.desc}</span>
                 </div>
-                <div className="flex justify-around">
-                    <button className='cart-quan' onClick={() => decreaseQuantity(item.id, item.quantity)}>
-                        <FontAwesomeIcon icon={faCircleMinus} />
-                    </button>
-                    <span>{item.quantity}</span>
-                    <button className='cart-quan' onClick={() => increaseQuantity(item.id, item.quantity)}>
-                        <FontAwesomeIcon icon={faCirclePlus} />
-                    </button>
+                <div className="flex justify-between">
+                    <div>
+                        <button className='cart-quan ml-2' onClick={() => decreaseQuantity(item.id, item.quantity)}>
+                            <FontAwesomeIcon icon={faCircleMinus} />
+                        </button>
+                        <span className='ml-2'>{item.quantity}</span>
+                        <button className='cart-quan ml-2' onClick={() => increaseQuantity(item.id, item.quantity)}>
+                            <FontAwesomeIcon icon={faCirclePlus} />
+                        </button>
+                    </div>
                     <span className='ml-5 font-bold'> ${item.price.toFixed(2)}</span>
                 </div>
             </div>
-            <button className='cart-remove' onClick={() => removeItem(item.id)}>
-                <FontAwesomeIcon icon={faTrash} />
-            </button>
         </li>
     ));
 
     return (
-        <div className="cart">
+        <div className="cart shadow-md">
             <div className="cart-header">
                 <h2 className='cart-title'>Mi Carrito</h2>
                 <button className='cart-exit' onClick={cerrar} >
@@ -102,7 +103,16 @@ function Carrito({cerrar, totalProductos}) {
                         <p>Total:</p>
                         <span className='font-bold'>${total}</span>
                     </div>
-                    <button id="cart-mas">Comprar</button>
+                    { log ? (
+                        <div className='flex'>
+                            <a href='/spa/comprar' className="cart-mas">Comprar</a>
+                        </div>
+                    ):(
+                        <div className='flex'>
+                            <a href='#' className="cart-mas" onClick={loginCart}>Comprar</a>
+                        </div>
+                    )}
+                    
                 </>
             )}
         </div>
