@@ -17,7 +17,7 @@ import Peluqueria from "../../../../public/pictures/peluqueria.png";
 import Unas from "../../../../public/pictures/unas.png";
 import Pedicura from "../../../../public/pictures/pedicura.png";
 
-var estetica = [
+/*var estetica = [
   {
     id: 1,
     nombre: "Servicio de peluquería",
@@ -57,7 +57,7 @@ var estetica = [
     rating: 5,
     fav: true,
   },
-];
+];*/
 
 function classNames(...clases) {
   return clases.filter(Boolean).join(" ");
@@ -105,7 +105,7 @@ const filters = [
 export default function ServicioEstetica() {
   const [mobileFiltersOpen, setMobileFiltersOpen] = useState(false);
   const [sortOption, setSortOption] = useState(ordenamiento[0]);
-  const [filteredProducts, setFilteredProducts] = useState(estetica);
+  const [filteredProducts, setFilteredProducts] = useState([]);
   const [categories, setCategories] = useState([]);
   const [marcas, setMarcas] = useState([]);
   const [busqueda, setSearch] = useState("");
@@ -154,10 +154,10 @@ export default function ServicioEstetica() {
 
   //useEffect para obtener los productos
   useEffect(() => {
-    fetch("/api/admin/productos/getProducts")
+    fetch("/api/admin/categoria/getServicesEstetica")
       .then((response) => response.json())
       .then((data) => {
-        //setFilteredProducts(data);
+        setFilteredProducts(data);
       })
       .catch((error) => {
         console.log("error", error);
