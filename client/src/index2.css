@@ -761,7 +761,7 @@ body {
   border-top: 2px solid lightgray;
 }
 
-#cart-mas {
+.cart-mas {
   background-color: #45b59c;
   border-radius: 12px;
   color: white;
@@ -770,7 +770,7 @@ body {
   text-align: center;
   transition: ease 0.25s;
 }
-#cart-mas:hover {
+.cart-mas:hover {
   background-color: #036d63;
   font-weight: bold;
 }
