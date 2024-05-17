@@ -933,6 +933,8 @@ body {
   transition: .3s ease;
   margin-bottom: 4px;
   cursor: pointer;
+  height: 50px;
+  align-items: center;
 }
 .lista-boton:hover{
   background-color: #fdc2c7;
@@ -946,10 +948,12 @@ body {
   background-color: #ec5766;
   font-weight: bold;
   cursor: pointer;
+  height: 50px;
+  align-items: center;
 }
 
 .lista-resumen-on{
-  width: 64%;
+  width: 50%;
   margin-top: 80px;
   background-color: #e0e0e0;
   overflow-y: auto;
@@ -958,13 +962,21 @@ body {
   z-index: 2;
 }
 .lista-resumen-off{
-  width: 25%;
+  width: 20%;
   margin-top: 80px;
   background-color: #e0e0e0;
   overflow-y: auto;
   transition: 0.3s;
   height: calc(100vh - 80px);
   z-index: 2;
+}
+.sideBar-On{
+  width: 20rem;
+  transition: 0.3s ease-in;
+}
+.sideBar-Off{
+  width: 8rem;
+  transition: 0.3s ease-in;
 }
 
 /* ======================= RESPONSIVE */

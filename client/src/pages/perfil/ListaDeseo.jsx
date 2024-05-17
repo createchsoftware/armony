@@ -26,6 +26,8 @@ function ListaDeseo() {
     const [tipo, setTipo] = useState('all');
     const [showProduct, setShowProduct] = useState(false);
     const [searchTerm, setSearchTerm] = useState('');
+    const [sideBar, setSiderBar] = useState(false);
+    const [barSize , setBarSize] = useState('sideBar-Off')
 
     const filtrar = (type) => {
         setTipo(type);
@@ -193,7 +195,7 @@ function ListaDeseo() {
                     onClick={() => removeProducto(producto.id)}
                 />
             </Box>
-            <img className='w-2/3 justify-self-center m-auto mb-4 rounded-lg aspect-square'
+            <img className='w-4/5 justify-self-center m-auto mb-4 rounded-lg aspect-square'
                 src={producto.imagen}
                 alt={producto.nombre}
             />
@@ -224,55 +226,77 @@ function ListaDeseo() {
     const handleSearch = (event) => {
       setSearchTerm(event.target.value);
     };
+
+    const toggleBar = () => {
+        setSiderBar(!sideBar)
+        sideBar ? (
+            setBarSize('sideBar-Off')
+        ):(
+            setBarSize('sideBar-On')
+            
+        )
+    }
     return (
         <>
             <Navbar />
             <div className='w-full overflow-hidden'>
                 <div className='flex w-[120%]'>
-                    <div className='menu-deseo bg-[#fb9ea6] w-[32%]'>
-                        <div className='flex items-center mx-8 py-8'>
-                            <FontAwesomeIcon className='text-2xl' icon={faBars} />
-                            <p className='text-xl ml-8'>Mi lista de deseos</p>
+                    <div className='flex w-[100%]'>
+                        <div className={barSize} >
+                            <aside className='menu-deseo bg-[#fb9ea6] w-full' >
+                                <nav className='h-full flex flex-col'>
+                                    <div className='flex items-center mx-8 py-8 cursor-pointer overflow-y-hidden' onClick={toggleBar}>
+                                        <FontAwesomeIcon className='text-2xl' icon={faBars} />
+                                        { sideBar && 
+                                            <p className='text-xl ml-8 truncate'>Mi lista de deseos</p>
+                                        }
+                                    </div>
+                                    <ul className='text-xl flex-1'>
+                                        <li className={boton1} onClick={presionar1}>
+                                            <FontAwesomeIcon className='ml-6' icon={faBasketShopping} />
+                                            { sideBar && 
+                                                <p className='ml-3'>Productos</p>
+                                            }
+                                        </li>
+                                        <li className={boton2} onClick={presionar2}>
+                                            <FontAwesomeIcon className='ml-6' icon={faHandHoldingHeart} />
+                                            { sideBar && 
+                                                <p className='ml-3'>Servicios</p>
+                                            }
+                                        </li>
+                                    </ul>
+                                </nav>
+                            </aside>
                         </div>
-                        <ul className='text-xl'>
-                            <li className={boton1} onClick={presionar1}>
-                                <FontAwesomeIcon className='ml-6' icon={faBasketShopping} />
-                                <p className='ml-3'>Productos</p>
-                            </li>
-                            <li className={boton2} onClick={presionar2}>
-                                <FontAwesomeIcon className='ml-6' icon={faHandHoldingHeart} />
-                                <p className='ml-3'>Servicios</p>
-                            </li>
-                        </ul>
-                    </div>
-                    <div className='menu-deseo w-full'>
-                        <img src="../../../pictures/decoArmony1.png" alt="" className='absolute -right-7 -rotate-90 w-60 h-180 top-60 z-0' />
-                        <div className='flex justify-center mt-5'>
-                            <form action="" className='flex items-center w-4/5 justify-center border-2 border-[rgb(255,181,167)] rounded-lg'>
-                                <input
-                                    className='w-full rounded-lg px-5 py-2'
-                                    type="buscar"
-                                    placeholder="Buscar..."
-                                    onChange={handleSearch}
-                                />
-                                <FontAwesomeIcon icon={faMagnifyingGlass} className='mx-4 text-[rgb(255,181,167)] text-xl' />
-                            </form>
-                        </div>
-                        <div className='grid p-12 h-full overflow-y-scroll'>
-                            {/* Contenido */}
-                            { contResumen.length === 0 ? (
-                                <p className='m-auto'>No se encontraron artículos</p>
-                            ):(
-                                <ul className='grid h-fit grid-cols-1 gap-2 md:grid-cols-3'>
-                                  {contenido}
-                                </ul>
-                            )}
-                            { showProduct && contResumen.filter(producto => producto.tipo === '1').length === 0 ? (
-                                <p className='m-auto'>No se encontraron productos.</p>
-                            ):(
-                                <>
-                                </>
-                            )}
+                        <div className='menu-deseo w-auto'>
+                            <img src="../../../pictures/decoArmony1.png" alt="" className='absolute -right-7 -rotate-90 w-60 h-180 top-60 z-0' />
+                            <div className='flex justify-center mt-5'>
+                                <form action="" className='flex items-center w-4/5 justify-center border-2 border-[rgb(255,181,167)] rounded-lg'>
+                                    <input
+                                        className='w-full rounded-lg px-5 py-2'
+                                        type="buscar"
+                                        placeholder="Buscar..."
+                                        onChange={handleSearch}
+                                    />
+                                    <FontAwesomeIcon icon={faMagnifyingGlass} className='mx-4 text-[rgb(255,181,167)] text-xl' />
+                                </form>
+                            </div>
+                            <div className='grid p-12 h-full overflow-y-scroll'>
+                                {/* Contenido */}
+                                { contResumen.length === 0 ? (
+                                    <p className='m-auto'>No se encontraron artículos</p>
+                                ):(
+                                    <ul className='grid h-fit grid-cols-1 gap-2 md:grid-cols-3'>
+                                    {contenido}
+                                    </ul>
+                                )}
+                                { showProduct && contResumen.filter(producto => producto.tipo === '1').length === 0 ? (
+                                    <p className='m-auto'>No se encontraron productos.</p>
+                                ):(
+                                    <>
+                                    </>
+                                )}
+                            </div>
                         </div>
                     </div>
                     <div className={resumen}>
