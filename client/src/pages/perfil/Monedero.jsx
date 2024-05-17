@@ -8,7 +8,6 @@ import {
     faAngleLeft,
 } from "@fortawesome/free-solid-svg-icons";
 import { Fragment, useEffect, useState } from 'react';
-import { Fragment, useEffect, useState } from 'react'
 import LayoutPrincipal from "../../layouts/LayoutPrincipal";
 import { IoIosArrowBack } from "react-icons/io";
 import { MdNavigateNext } from "react-icons/md";
@@ -54,7 +53,7 @@ function Monedero() {
         <LayoutPrincipal>
             <main className='grid gap-12 my-24'>
                 <section className='rounded-2xl mt-12 w-[60%] m-auto p-6 shadow-[0_3px_10px_rgb(0,0,0,0.2)]'>
-                    <a className='flex items-baseline content-center text-sm gap-x-4' href="/spa"> <IoIosArrowBack className='' />
+                    <a className='flex items-baseline content-center text-sm gap-x-4' href="/perfil"> <IoIosArrowBack className='' />
                         Volver</a>
                     <img className='w-32 m-auto my-6 -mt-24 rounded-full aspect-square' src="../../../public/pictures/monedero.png" alt="" />
                     <div className='m-auto text-center '>
@@ -68,14 +67,14 @@ function Monedero() {
                         <img className="w-12 m-auto mb-4" src="../../../public/pictures/logoArmony.png" alt="" />
                         <div className="text-2xl text-center">
                             <h2>Monedero</h2>
-                            <p>$0.00</p>
+                            <p>{monedero}</p>
                         </div>
                         <div className="bg-gradient-to-r from-[#EB5765] h-10 my-6  border-y-2  border-gray-600 to-[#D6ADB1]">
 
                         </div>
                     </div>
 
-                    <h2>NOMBRE DE USUARIO</h2>
+                    <h2>{nombre}</h2>
 
                     <section className='rounded-2xl text-center grid-cols-2  m-auto w-[80%] grid gap-4 p-12 shadow-[0_3px_10px_rgb(0,0,0,0.2)]'>
                         <a href="/perfil/tarjetas" className="rounded-xl hover:bg-opacity-80 flex gap-4 items-center px-4 py-4 text-white bg-[#EB5765]">
@@ -86,7 +85,7 @@ function Monedero() {
                             <img className="w-8" src="../../../public/pictures/movimientos.png" alt="" />
                             <p>Movimientos</p>
                         </a>
-                        <a href="#" className="w-1/2 m-auto py-1 hover:bg-opacity-80 px-2 col-span-2 rounded-full text-white bg-[#EB5765]">
+                        <a href="/perfil/monedero/agregarSaldo" className="w-1/2 m-auto py-1 hover:bg-opacity-80 px-2 col-span-2 rounded-full text-white bg-[#EB5765]">
                             <p>+ Agregar saldo</p>
                         </a>
                     </section>

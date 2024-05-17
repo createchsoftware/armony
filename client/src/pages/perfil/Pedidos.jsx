@@ -56,6 +56,43 @@ function Pedidos() {
     }
 
 
+    function handleSearch(e){
+        let input = e.target.value.toLowerCase();
+
+        let ark;
+        let ark2;
+
+        if(label == 'Todas'){
+            ark = array.filter(producto=> producto.nombre.toLowerCase().includes(input));
+            ark2 = array2.filter(producto=> producto.nombre.toLowerCase().includes(input));
+        }
+        else{
+
+            let option = sortOptions.find(opcion=> opcion.name == label);
+
+            let fecha_hoy = Date.now();
+            let fechaLimite = new Date(fecha_hoy - (1000 * 60 * 60 * 24 * option.value));
+            ark = array.filter(producto=> producto.nombre.toLowerCase().includes(input) && new Date(producto.date).getTime() > fechaLimite.getTime());
+            ark2 = array2.filter(producto=> producto.nombre.toLowerCase().includes(input) && new Date(producto.date).getTime() > fechaLimite.getTime());
+        }
+
+        
+
+        if(ark.length>0 || input ==''){
+            setArrayF(ark);
+        }
+        else{
+            setArrayF([]);
+        }
+        if(ark2.length>0 || input == ''){
+            setArrayF2(ark2);
+        }
+        else{
+            setArrayF2([]);
+        }
+    }
+
+
     const [array, setArray] = useState([]);
     const [array2, setArray2] = useState([]);
     const [arrayF, setArrayF] = useState([]);
@@ -102,7 +139,7 @@ function Pedidos() {
             <main className='grid gap-6 mb-12 mt-36 w-[60%] m-auto'>
 
                 <section className='rounded-2xl p-9 shadow-[0_3px_10px_rgb(0,0,0,0.2)]'>
-                    <a className='flex items-baseline content-center text-sm gap-x-4' href="/spa"> <IoIosArrowBack className='' />
+                    <a className='flex items-baseline content-center text-sm gap-x-4' href="/perfil"> <IoIosArrowBack className='' />
                         Volver</a>
                     <img className='w-32 m-auto my-12 rounded-full -mt-28 aspect-square' src="../../pictures/agendaFondo.png" alt="" />
                     <img className='m-auto mb-8 -mt-44 w-28 aspect-square' src="../../pictures/pedidos.png" alt="" />
@@ -178,10 +215,6 @@ function Pedidos() {
                     <p className='place-content-center'>{arrayF.length + arrayF2.length} Compras</p>
                 </div>
                 <div className='rounded-xl flex justify-start place-content-center place-items-center px-12 py-4 gap-96  shadow-[0_3px_10px_rgb(0,0,0,0.2)]'>
-                    <a href="#" className="">
-                        <FontAwesomeIcon style={{ fontSize: "" }} icon={faAngleLeft} />{" "}
-                        Volver
-                    </a>
                     <h1 className="text-2xl text-rose-400">
                         {label}
                     </h1>

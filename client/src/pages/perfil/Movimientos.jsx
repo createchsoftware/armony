@@ -47,6 +47,38 @@ const sortOptions2 = [
 
 function Movimientos() {
 
+   
+
+    function handleSearch(e){
+        let input = e.target.value;
+
+        let longitud = input.length;
+
+        let arr = sortOptions2.filter(option=> option.name.slice(0,longitud).toLowerCase() == input.toLowerCase())
+
+        let msg ='';
+
+        if(arr.length > 0 && arr[0].name =='General'){
+            setArrayM(array);  // el establecido por default
+            msg=`${arr[0].name}`;
+        }else{
+            setArrayM(array.filter((producto)=>{
+
+                if(arr.some(option=> producto.type.toLowerCase() == option.name.toLowerCase())){
+                    return producto
+                }
+
+            }));
+            
+            msg = arr.map(option=> option.name).join(' ');
+        }
+
+        setLabel2(msg);
+
+        obtenerPresent()
+
+    }
+
 
 
     function handleSortOptionClick(option){
@@ -246,10 +278,7 @@ function Movimientos() {
                     <p className='place-content-center'>{arrayPresent.length} Transacciones</p>
                 </div>
                 <div className='rounded-xl flex justify-start place-content-center place-items-center px-12 py-4 gap-96  shadow-[0_3px_10px_rgb(0,0,0,0.2)]'>
-                    <a href="#" className="">
-                        <FontAwesomeIcon style={{ fontSize: "" }} icon={faAngleLeft} />{" "}
-                        Volver
-                    </a>
+                    
                     <h1 className="text-2xl text-rose-400">
                         {label}
                         {label2}

@@ -10,14 +10,9 @@ import {
     faAngleLeft,
 } from "@fortawesome/free-solid-svg-icons";
 
-import {loadStripe} from '@stripe/stripe-js';
-import {Elements, useStripe} from '@stripe/react-stripe-js'
 
 
-const stripePromise = loadStripe('pk_test_51PEcWQRoGJ7uCBvZCsDZUCfTpVTLVBe3FlpjtjkVHjA2n31bLaiJ4Yce009pQLMkGnhnivE1H0BRDcV3BMnnZv2Q00hwzXsCBb');
-
-
-function AddSaldo(){
+function AgregarSaldo(){
     const [sTarjeta, setsTarjeta] = useState({});
     const [array, setArray] = useState([]);
     const [array_toShow, setArray_toShow] = useState([]);
@@ -70,7 +65,7 @@ function AddSaldo(){
      },[])
 
      useEffect(()=>{
-        if(Object.keys(sTarjeta).length != 0){
+        if(sTarjeta && Object.keys(sTarjeta).length != 0){
             ModificarArray(sTarjeta.numero_tarjeta);
         }
      },[sTarjeta]);
@@ -88,11 +83,6 @@ function AddSaldo(){
      function obtenerValorEnTiempoReal(e){
         setMonto(e.target.value);
      }
-
-
-
-
-    const stripe = useStripe();
 
     const handleSubmit = async(e)=>{
         
@@ -113,11 +103,16 @@ function AddSaldo(){
             console.log('hubo un problema en la conexion servidor-cliente')
         }
 
-        const respuestaJson = respuesta.json();
+        const respuestaJson = await respuesta.json();
 
 
         if(respuestaJson.mensaje){
             console.log(respuestaJson.mensaje);
+        }
+
+        if(respuestaJson.redirect){
+            console.log('hola');
+            window.location.href = respuestaJson.redirect;
         }
 
     }
@@ -157,13 +152,13 @@ function AddSaldo(){
 
 
 
-function AgregarSaldo() {
-    return(
-        <Elements stripe={stripePromise}>
-            <AddSaldo/>
-        </Elements>
-    );
+// function AgregarSaldo() {
+//     return(
+//         <Elements stripe={stripePromise}>
+//             <AddSaldo/>
+//         </Elements>
+//     );
     
-}
+// }
 
 export default AgregarSaldo;
