@@ -38,7 +38,7 @@ function TarjetaNueva() {
             </div>
             <HelmetProvider>
               <Helmet>
-                <script src="../../../public/scripts/addCard.js"></script>
+                <script src="../../../scripts/addCard.js"></script>
               </Helmet>
             </HelmetProvider>
             
@@ -55,6 +55,8 @@ function TarjetaNueva() {
                 </div>
                 <label for="cvv">codigo de seguridad</label>
                 <input type="text" id='cvv' name='cvv'/>
+                <label for='tipo'>Tipo</label>
+                <input type="text" id='tipo' name='tipo' placeholder="debito/credito"/>
                 <div>
                     <input type="checkbox" id='recordar' name='recordar'/>
                     <label for="recordar">Recordar tarjeta</label>

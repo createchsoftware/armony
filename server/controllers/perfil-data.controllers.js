@@ -217,6 +217,8 @@ async function InsertarTarjeta(solicitud,respuesta){
             //el usuario esta logueado
             galleta = galleta.slice(14);
 
+            console.log('hola');
+
 
             let decodificada = await jsonwebtoken.verify(galleta,process.env.JWT_SECRET);
 
@@ -372,6 +374,7 @@ async function InsertarTarjeta(solicitud,respuesta){
 
                 if(invalidos.length > 0){
                     // hubos algunos campos incorrectos
+                    console.log('por AQUIII')
                     respuesta.send({incorrectos:invalidos});
                 }
                 else{
