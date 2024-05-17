@@ -204,254 +204,24 @@ async function deleteTarjeta(solicitud,respuesta){
 
 
 
-// async function InsertarTarjeta(solicitud,respuesta){
-
-//     if(solicitud.headers.cookie == undefined){
-//         respuesta.send({logueado:false});
-//     }
-//     else{
-//         let galletas = solicitud.headers.cookie.split('; ');
-//         let galleta = galletas.find(galleta => galleta.startsWith('Naruto_cookie='));
-
-//         if(galleta){
-//             //el usuario esta logueado
-//             galleta = galleta.slice(14);
-
-
-//             let decodificada = await jsonwebtoken.verify(galleta,process.env.JWT_SECRET);
-
-//             let titular = solicitud.body.titular;
-//             let numero = solicitud.body.numero;
-//             let mes = solicitud.body.mes;
-//             let año = solicitud.body.año;
-//             let principal = solicitud.body.principal; // true or false
-//             let cvv = solicitud.body.cvv;
-//             let tipo = solicitud.body.tipo;
-
-
-
-//             let faltantes = [];
-
-//             if(!titular[0]){
-//                 faltantes.push(titular[1]);
-//             }
-//             if(!numero[0]){
-//                 faltantes.push(numero[1]);
-//             }
-//             if(!mes[0]){
-//                 faltantes.push(mes[1]);
-//             }
-//             if(!año[0]){
-//                 faltantes.push(año[1]);
-//             }
-//             if(!cvv[0]){
-//                 faltantes.push(cvv[1]);
-//             }
-//             if(!tipo[0]){
-//                 faltantes.push(tipo[1]);
-//             }
-
-
-
-//             if(faltantes.length > 0){
-//                 console.log(`El valor es:${principal[0]} okay`);
-//                 // el usuario no lleno todos los campos
-//                 respuesta.send({campos_faltantes:faltantes});
-//             }
-//             else{
-//                 // todos los campos fueron llenados
-//                 let invalidos = [];
-
-
-//                 let regex_cvv = /^\d{3}$/;
-//                 let only_numbers = /^\d+$/;  // verificar que sean puros numeros
-//                 let regex_titular = /^([a-zA-Zá-úÁ-ÚñÑ]{3,12}(?: [a-zA-Zá-úÁ-ÚñÑ]{3,12})?)$/;  // verificar que sea un nombre valido
-
-
-//                 //cvv sea valido
-//                 if(regex_cvv.test(cvv[0]) == false){
-//                     invalidos.push(cvv[1]);
-//                 }
-
-//                 //titular sea valido
-//                 if(regex_titular.test(titular[0]) == false){
-//                     invalidos.push(titular[1]);
-//                 }
-
-                
-//                 //validar que el numero de la tarjeta sea valido
-//                 if(only_numbers.test(numero[0]) == false){
-//                     invalidos.push(numero[1])
-//                 }
-//                 else{
-//                     // que haya pasado la primera prueba no significa que el numero sea valido
-//                     if(numero[0].startsWith('4') || numero[0].startsWith('5')){
-//                         // la tarjeta es mastercard o visa, asi que debe de tener 16 de longitud
-//                         if(numero[0].length != 16){
-//                             invalidos.push(numero[1])
-//                         }
-//                         else{
-//                             // tiene la longitud perfecta, pero aun no sabemos si es un numero valido
-//                             let Tarjeta_valida = validarTarjeta(numero[0]);
-
-//                             if(Tarjeta_valida == false){
-//                                 //la tarjeta no es valida
-//                                 invalidos.push(numero[1]);
-//                             }
-//                         }
-//                     }
-//                     else{
-//                         if(numero[0].startsWith('34') || numero[0].startsWith('37')){
-//                             // la tarjeta es American Express, debe de tener 15 de longitud
-//                             if(numero[0].length != 15){
-//                                 invalidos.push(numero[1])
-//                             }
-//                         }
-//                     }
-//                 }
-
-
-//                 //validar que el año y el mes que hayan ingresado sea correcto
-//                 if(only_numbers.test(año[0]) && only_numbers.test(mes[0])){
-
-
-//                     if(mes[0] > 12){
-//                         console.log("el mes es mas grande de 12")
-//                         invalidos.push(mes[1]);
-//                         invalidos.push(año[1]);
-//                     }
-//                     else{
-//                         if(año[0].length == 2 || año[0].length == 4){
-
-//                                 // el año tiene puros numeros
-//                                 let current_date = new Date()
-//                                 let future_date = new Date(current_date.getTime() + 1000 * 60 * 60 * 24 * 365 * 7);
-//                                 let  año_actual = current_date.getFullYear();
-//                                 año_actual = año_actual.toString();
-//                                 año_actual = año_actual.slice(0,-2);   // si el año es 2310 en numero, ahora con esto sera un string que contendra solo '23'
-//                                 año_actual = parseInt(año_actual) * 100; // ahora de ser un string '23' sera un entero 2300
-
-
-//                                 if(año[0].length == 4){
-//                                     año[0] = parseInt(año[0]); // si año era un string '2027', solo lo parseamos, sin necesidad de sumar nada
-//                                 }  
-//                                 else{
-//                                     if(año[0].length == 2){
-//                                         año[0] = año_actual + parseInt(año[0]);  // por ejemplo, si año era un string '27' ahora sera un entero 2327
-//                                     }
-//                                 }
-
-
-//                                 let fecha_un_dia_mas = new Date(año[0], mes[0]);
-
-//                                 let fecha_a_vencer = new Date(fecha_un_dia_mas.getTime() - 1000 * 60 * 60 * 24 * 1);
-
-//                                 if(fecha_a_vencer.getTime() <= current_date.getTime() || fecha_a_vencer.getTime() >= future_date.getTime()){
-//                                     console.log("la fecha que ingresate no esta en el rango")
-//                                     // la fecha es o muy mayor a la actual, o igual o menor a la actual
-//                                     invalidos.push(año[1]);
-//                                     invalidos.push(mes[1]);
-//                                 }
-//                         }
-//                         else{
-//                             console.log("el año no tiene el formato que deberia")
-//                             invalidos.push(mes[1]);
-//                             invalidos.push(año[1]);
-//                         }
-//                     }    
-                
-//                 }
-//                 else{
-//                     console.log("debes ingresar puros numeros")
-//                     invalidos.push(año[1]);
-//                     invalidos.push(mes[1]);
-//                 }
-
-
-
-
-//                 if(invalidos.length > 0){
-//                     // hubos algunos campos incorrectos
-//                     respuesta.send({incorrectos:invalidos});
-//                 }
-//                 else{
-//                     // todos los campos fueron llenados y de forma correcta
-
-//                     let fecha_un_dia_mas = new Date(año[0], mes[0]);
-//                     let fecha_a_vencer = new Date(fecha_un_dia_mas.getTime() - 1000 * 60 * 60 * 24 * 1);
-                   
-//                     // let salt =  await bcryptjs.genSalt(5);  //clave cryptografica de la contraseña del usuario
-//                     // let hashCVV =  await bcryptjs.hash(cvv[0],salt);  // contraseña cryptografica
-
-
-//                     let meses;
-
-//                     if((fecha_a_vencer.getMonth()+1) < 10){
-//                         meses = `0${fecha_a_vencer.getMonth()+1}`
-//                     }
-//                     else{
-//                         meses = `${fecha_a_vencer.getMonth()+1}`
-//                     }
-
-
-//                     let fecha_a_introducir = `${fecha_a_vencer.getFullYear()}-${meses}-${fecha_a_vencer.getDate()}`;
-
-//                     console.log(fecha_a_introducir);
-                    
-
-//                     let predeterminada = 0;
-
-//                     if(principal[0] == true){
-//                         predeterminada = 1;
-//                     }
-
-//                     let parametros = [numero[0],decodificada.user,tipo[0],titular[0],fecha_a_introducir,cvv[0],predeterminada];
-
-//                     console.log(parametros.length);
-
-//                     let consulta = 'call addTarjeta(?,?,?,?,?,?,?)';
-
-                    
-
-//                     try{
-//                         await solicitud.database.query(mysql.format(consulta,parametros));
-//                         console.log('La Insercion fue exitosa');
-//                         respuesta.send({redirect:'/perfil/tarjetas'})
-//                     }catch(error){
-//                         console.log(error)
-//                         respuesta.send({fallo:true})
-//                     }
-
-//                 }
-                
-                
-
-
-
-//             }
-//         }
-//         else{
-//             // el usuario no esta logueado
-//             respuesta.send({logueado:false});
-//         }
-//     }
-// }
-
-
 async function InsertarTarjeta(solicitud,respuesta){
+
     if(solicitud.headers.cookie == undefined){
         respuesta.send({logueado:false});
     }
     else{
         let galletas = solicitud.headers.cookie.split('; ');
         let galleta = galletas.find(galleta => galleta.startsWith('Naruto_cookie='));
-        
+
         if(galleta){
             //el usuario esta logueado
             galleta = galleta.slice(14);
+
+            console.log('hola');
+
+
             let decodificada = await jsonwebtoken.verify(galleta,process.env.JWT_SECRET);
 
-            //si llegamos hasta aqui, solo nos queda validar que titular y tipo sean correctos
             let titular = solicitud.body.titular;
             let numero = solicitud.body.numero;
             let mes = solicitud.body.mes;
@@ -459,124 +229,357 @@ async function InsertarTarjeta(solicitud,respuesta){
             let principal = solicitud.body.principal; // true or false
             let cvv = solicitud.body.cvv;
             let tipo = solicitud.body.tipo;
-            let id_s = solicitud.body.id;
+
 
 
             let faltantes = [];
 
-            if(!titular){
-                faltantes.push('titular');
+            if(!titular[0]){
+                faltantes.push(titular[1]);
             }
-            if(!tipo){
-                faltantes.push('tipo');
+            if(!numero[0]){
+                faltantes.push(numero[1]);
+            }
+            if(!mes[0]){
+                faltantes.push(mes[1]);
+            }
+            if(!año[0]){
+                faltantes.push(año[1]);
+            }
+            if(!cvv[0]){
+                faltantes.push(cvv[1]);
+            }
+            if(!tipo[0]){
+                faltantes.push(tipo[1]);
             }
 
-            if(faltantes.length >0){
-                // el usuario no lleno estos campos
-                respuesta.send({faltantes:faltantes})
+
+
+            if(faltantes.length > 0){
+                console.log(`El valor es:${principal[0]} okay`);
+                // el usuario no lleno todos los campos
+                respuesta.send({campos_faltantes:faltantes});
             }
             else{
-                //verificar que los respectivos campos hayan sido llenado correctamente
-                let regex_titular = /^([a-zA-Zá-úÁ-ÚñÑ]{3,12}(?: [a-zA-Zá-úÁ-ÚñÑ]{3,12})?)$/;  // verificar que sea un nombre valido
-                let regex_tipo = /(debito|Debito|Credito|credito|DEBITO|CREDITO)/;
+                // todos los campos fueron llenados
+                let invalidos = [];
 
-                let invalidos =[];
+
+                let regex_cvv = /^\d{3}$/;
+                let only_numbers = /^\d+$/;  // verificar que sean puros numeros
+                let regex_titular = /^([a-zA-Zá-úÁ-ÚñÑ]{3,12}(?: [a-zA-Zá-úÁ-ÚñÑ]{3,12})?)$/;  // verificar que sea un nombre valido
+
+
+                //cvv sea valido
+                if(regex_cvv.test(cvv[0]) == false){
+                    invalidos.push(cvv[1]);
+                }
 
                 //titular sea valido
-                if(regex_titular.test(titular) == false){
-                    invalidos.push('titular');
-                }
-                if(regex_tipo.test(tipo) == false){
-                    invalidos.push('tipo');
+                if(regex_titular.test(titular[0]) == false){
+                    invalidos.push(titular[1]);
                 }
 
-                if(invalidos.length > 0){
-                    respuesta.send({invalidos:invalidos});
+                
+                //validar que el numero de la tarjeta sea valido
+                if(only_numbers.test(numero[0]) == false){
+                    invalidos.push(numero[1])
                 }
                 else{
-                    // el usuario si lleno todos los datos y de forma correcta
-
-                    const stripe = Stripe(process.env.STRIPE_SECRET);
-
-                    //buscar al customer con el correo especifico
-                    const customer = await stripe.customers.list({ email: decodificada.correo });   // usamos list ya que en strip no existe find u algunos otros
-
-
-                    if(customer.data.length > 0){
-
-                        // atar el metodo de pago con el cliente
-                        await stripe.paymentMethods.attach(id_s,{
-                            customer: customer.data[0].id
-                        })
-
-
-                        // ya encontramos al usuario, ahora sigue obtener los datos del payment
-                        const paymentMethod = await stripe.paymentMethods.retrieve(id_s);
-
-                        console.log(paymentMethod);
-
-                        let predeterminada = 0;
-
-                        if(principal == true){
-                            //hacemos que la predeterminada anterior ya no sea predeterminada
-                            let consulta = 'call setPredeterminada(?)';
-                            await solicitud.database.query(mysql.format(consulta,[decodificada.user]));
-                            predeterminada = 1;
-
-                        }
-
-                        // insertamos la nueva tarjeta
-                        let fecha_un_dia_mas = new Date(año, mes);
-                        let fecha_a_vencer = new Date(fecha_un_dia_mas.getTime() - 1000 * 60 * 60 * 24 * 1);
-                    
-                        let meses;
-
-                        if((fecha_a_vencer.getMonth()+1) < 10){
-                            meses = `0${fecha_a_vencer.getMonth()+1}`
+                    // que haya pasado la primera prueba no significa que el numero sea valido
+                    if(numero[0].startsWith('4') || numero[0].startsWith('5')){
+                        // la tarjeta es mastercard o visa, asi que debe de tener 16 de longitud
+                        if(numero[0].length != 16){
+                            invalidos.push(numero[1])
                         }
                         else{
-                            meses = `${fecha_a_vencer.getMonth()+1}`
-                        }
+                            // tiene la longitud perfecta, pero aun no sabemos si es un numero valido
+                            let Tarjeta_valida = validarTarjeta(numero[0]);
 
-
-                        let fecha_a_introducir = `${fecha_a_vencer.getFullYear()}-${meses}-${fecha_a_vencer.getDate()}`;
-
-                        console.log(fecha_a_introducir);
-                            
-                        let parametros = [numero,decodificada.user,tipo,titular,fecha_a_introducir,cvv,predeterminada,id_s];
-
-                        let consulta2 = 'call addTarjeta(?,?,?,?,?,?,?,?)';
-
-                    
-                        try{
-                            await solicitud.database.query(mysql.format(consulta2,parametros));
-                            console.log('La Insercion fue exitosa');
-                            respuesta.send({redirect:'/perfil/tarjetas'})
-                        }catch(error){
-                            console.log(error);
-                            respuesta.send({fallo:true});
+                            if(Tarjeta_valida == false){
+                                //la tarjeta no es valida
+                                invalidos.push(numero[1]);
+                            }
                         }
                     }
                     else{
-                        console.log('no se pudo encontrar al usuario en stripe');
-                        respuesta.send({fallo:true});
+                        if(numero[0].startsWith('34') || numero[0].startsWith('37')){
+                            // la tarjeta es American Express, debe de tener 15 de longitud
+                            if(numero[0].length != 15){
+                                invalidos.push(numero[1])
+                            }
+                        }
+                    }
+                }
+
+
+                //validar que el año y el mes que hayan ingresado sea correcto
+                if(only_numbers.test(año[0]) && only_numbers.test(mes[0])){
+
+
+                    if(mes[0] > 12){
+                        console.log("el mes es mas grande de 12")
+                        invalidos.push(mes[1]);
+                        invalidos.push(año[1]);
+                    }
+                    else{
+                        if(año[0].length == 2 || año[0].length == 4){
+
+                                // el año tiene puros numeros
+                                let current_date = new Date()
+                                let future_date = new Date(current_date.getTime() + 1000 * 60 * 60 * 24 * 365 * 7);
+                                let  año_actual = current_date.getFullYear();
+                                año_actual = año_actual.toString();
+                                año_actual = año_actual.slice(0,-2);   // si el año es 2310 en numero, ahora con esto sera un string que contendra solo '23'
+                                año_actual = parseInt(año_actual) * 100; // ahora de ser un string '23' sera un entero 2300
+
+
+                                if(año[0].length == 4){
+                                    año[0] = parseInt(año[0]); // si año era un string '2027', solo lo parseamos, sin necesidad de sumar nada
+                                }  
+                                else{
+                                    if(año[0].length == 2){
+                                        año[0] = año_actual + parseInt(año[0]);  // por ejemplo, si año era un string '27' ahora sera un entero 2327
+                                    }
+                                }
+
+
+                                let fecha_un_dia_mas = new Date(año[0], mes[0]);
+
+                                let fecha_a_vencer = new Date(fecha_un_dia_mas.getTime() - 1000 * 60 * 60 * 24 * 1);
+
+                                if(fecha_a_vencer.getTime() <= current_date.getTime() || fecha_a_vencer.getTime() >= future_date.getTime()){
+                                    console.log("la fecha que ingresate no esta en el rango")
+                                    // la fecha es o muy mayor a la actual, o igual o menor a la actual
+                                    invalidos.push(año[1]);
+                                    invalidos.push(mes[1]);
+                                }
+                        }
+                        else{
+                            console.log("el año no tiene el formato que deberia")
+                            invalidos.push(mes[1]);
+                            invalidos.push(año[1]);
+                        }
+                    }    
+                
+                }
+                else{
+                    console.log("debes ingresar puros numeros")
+                    invalidos.push(año[1]);
+                    invalidos.push(mes[1]);
+                }
+
+
+
+
+                if(invalidos.length > 0){
+                    // hubos algunos campos incorrectos
+                    console.log('por AQUIII')
+                    respuesta.send({incorrectos:invalidos});
+                }
+                else{
+                    // todos los campos fueron llenados y de forma correcta
+
+                    let fecha_un_dia_mas = new Date(año[0], mes[0]);
+                    let fecha_a_vencer = new Date(fecha_un_dia_mas.getTime() - 1000 * 60 * 60 * 24 * 1);
+                   
+                    // let salt =  await bcryptjs.genSalt(5);  //clave cryptografica de la contraseña del usuario
+                    // let hashCVV =  await bcryptjs.hash(cvv[0],salt);  // contraseña cryptografica
+
+
+                    let meses;
+
+                    if((fecha_a_vencer.getMonth()+1) < 10){
+                        meses = `0${fecha_a_vencer.getMonth()+1}`
+                    }
+                    else{
+                        meses = `${fecha_a_vencer.getMonth()+1}`
                     }
 
-                    
+
+                    let fecha_a_introducir = `${fecha_a_vencer.getFullYear()}-${meses}-${fecha_a_vencer.getDate()}`;
+
+                    console.log(fecha_a_introducir);
                     
 
+                    let predeterminada = 0;
+
+                    if(principal[0] == true){
+                        predeterminada = 1;
+                    }
+
+                    let parametros = [numero[0],decodificada.user,tipo[0],titular[0],fecha_a_introducir,cvv[0],predeterminada,'id-stripe'];
+
+                    console.log(parametros.length);
+
+                    let consulta = 'call addTarjeta(?,?,?,?,?,?,?,?)';
+
+                    
+
+                    try{
+                        await solicitud.database.query(mysql.format(consulta,parametros));
+                        console.log('La Insercion fue exitosa');
+                        respuesta.send({redirect:'/perfil/tarjetas'})
+                    }catch(error){
+                        console.log(error)
+                        respuesta.send({fallo:true})
+                    }
 
                 }
+                
+                
+
+
+
             }
-
-
-
         }
         else{
+            // el usuario no esta logueado
             respuesta.send({logueado:false});
-        }    
+        }
     }
 }
+
+
+// async function InsertarTarjeta(solicitud,respuesta){
+//     if(solicitud.headers.cookie == undefined){
+//         respuesta.send({logueado:false});
+//     }
+//     else{
+//         let galletas = solicitud.headers.cookie.split('; ');
+//         let galleta = galletas.find(galleta => galleta.startsWith('Naruto_cookie='));
+        
+//         if(galleta){
+//             //el usuario esta logueado
+//             galleta = galleta.slice(14);
+//             let decodificada = await jsonwebtoken.verify(galleta,process.env.JWT_SECRET);
+
+//             //si llegamos hasta aqui, solo nos queda validar que titular y tipo sean correctos
+//             let titular = solicitud.body.titular;
+//             let numero = solicitud.body.numero;
+//             let mes = solicitud.body.mes;
+//             let año = solicitud.body.año;
+//             let principal = solicitud.body.principal; // true or false
+//             let cvv = solicitud.body.cvv;
+//             let tipo = solicitud.body.tipo;
+//             let id_s = solicitud.body.id;
+
+
+//             let faltantes = [];
+
+//             if(!titular){
+//                 faltantes.push('titular');
+//             }
+//             if(!tipo){
+//                 faltantes.push('tipo');
+//             }
+
+//             if(faltantes.length >0){
+//                 // el usuario no lleno estos campos
+//                 respuesta.send({faltantes:faltantes})
+//             }
+//             else{
+//                 //verificar que los respectivos campos hayan sido llenado correctamente
+//                 let regex_titular = /^([a-zA-Zá-úÁ-ÚñÑ]{3,12}(?: [a-zA-Zá-úÁ-ÚñÑ]{3,12})?)$/;  // verificar que sea un nombre valido
+//                 let regex_tipo = /(debito|Debito|Credito|credito|DEBITO|CREDITO)/;
+
+//                 let invalidos =[];
+
+//                 //titular sea valido
+//                 if(regex_titular.test(titular) == false){
+//                     invalidos.push('titular');
+//                 }
+//                 if(regex_tipo.test(tipo) == false){
+//                     invalidos.push('tipo');
+//                 }
+
+//                 if(invalidos.length > 0){
+//                     respuesta.send({invalidos:invalidos});
+//                 }
+//                 else{
+//                     // el usuario si lleno todos los datos y de forma correcta
+
+//                     const stripe = Stripe(process.env.STRIPE_SECRET);
+
+//                     //buscar al customer con el correo especifico
+//                     const customer = await stripe.customers.list({ email: decodificada.correo });   // usamos list ya que en strip no existe find u algunos otros
+
+
+//                     if(customer.data.length > 0){
+
+//                         // atar el metodo de pago con el cliente
+//                         await stripe.paymentMethods.attach(id_s,{
+//                             customer: customer.data[0].id
+//                         })
+
+
+//                         // ya encontramos al usuario, ahora sigue obtener los datos del payment
+//                         const paymentMethod = await stripe.paymentMethods.retrieve(id_s);
+
+//                         console.log(paymentMethod);
+
+//                         let predeterminada = 0;
+
+//                         if(principal == true){
+//                             //hacemos que la predeterminada anterior ya no sea predeterminada
+//                             let consulta = 'call setPredeterminada(?)';
+//                             await solicitud.database.query(mysql.format(consulta,[decodificada.user]));
+//                             predeterminada = 1;
+
+//                         }
+
+//                         // insertamos la nueva tarjeta
+//                         let fecha_un_dia_mas = new Date(año, mes);
+//                         let fecha_a_vencer = new Date(fecha_un_dia_mas.getTime() - 1000 * 60 * 60 * 24 * 1);
+                    
+//                         let meses;
+
+//                         if((fecha_a_vencer.getMonth()+1) < 10){
+//                             meses = `0${fecha_a_vencer.getMonth()+1}`
+//                         }
+//                         else{
+//                             meses = `${fecha_a_vencer.getMonth()+1}`
+//                         }
+
+
+//                         let fecha_a_introducir = `${fecha_a_vencer.getFullYear()}-${meses}-${fecha_a_vencer.getDate()}`;
+
+//                         console.log(fecha_a_introducir);
+                            
+//                         let parametros = [numero,decodificada.user,tipo,titular,fecha_a_introducir,cvv,predeterminada,id_s];
+
+//                         let consulta2 = 'call addTarjeta(?,?,?,?,?,?,?,?)';
+
+                    
+//                         try{
+//                             await solicitud.database.query(mysql.format(consulta2,parametros));
+//                             console.log('La Insercion fue exitosa');
+//                             respuesta.send({redirect:'/perfil/tarjetas'})
+//                         }catch(error){
+//                             console.log(error);
+//                             respuesta.send({fallo:true});
+//                         }
+//                     }
+//                     else{
+//                         console.log('no se pudo encontrar al usuario en stripe');
+//                         respuesta.send({fallo:true});
+//                     }
+
+                    
+                    
+
+
+//                 }
+//             }
+
+
+
+//         }
+//         else{
+//             respuesta.send({logueado:false});
+//         }    
+//     }
+// }
 
 
 
@@ -779,6 +782,9 @@ async function Insert_to_Monedero(solicitud,respuesta){
 
             let monto = solicitud.body.monto;
 
+            console.log(`el numero es: ${numeroTarjeta}`);
+            console.log(`el monto es: ${monto}`);
+
             let numero_valido = /^\d*\.?\d+$/;
 
             if(numero_valido.test(monto)){
@@ -786,39 +792,22 @@ async function Insert_to_Monedero(solicitud,respuesta){
             
                 monto = parseFloat(monto);
 
-                // el monto deberia ser por ejemplo 50.85, para convertirlo en centavos lo multiplicamos 100
-
-                let monto_en_centavos = monto*100;
-                
-
                 try{
-
-                    const payment = await stripe.paymentIntents.create({
-                        amount: monto_en_centavos,
-                        currency: 'MXN',
-                        description:`Recarga de ${monto} a tu monedero`,
-                        payment_method:solicitud.body.id,
-                        confirm:true,
-                        return_url:'http://localhost:3000/perfil/monedero'
-                    })
-                
-                    console.log(payment);
-
                     let consulta = 'call addVentaRecargarSaldo(?,?,?)';
-
                     let parametros = [decodificada.user,numeroTarjeta,monto];
-
                     let [fields] = await solicitud.database.query(mysql.format(consulta,parametros))
 
-
                     console.log(fields); //para ver que es lo que nos dio
-                
-                    respuesta.send({redirect:payment.return_url});
-            
+                    respuesta.send({redirect:'/perfil/monedero'});
+
                 }catch(error){
                     console.log(error);
-                    respuesta.json({mensaje: error.raw.message})
+                    respuesta.send({mensaje:'hubo un error en la insercion'});
                 }
+
+                    
+            
+                
             }else{
                 // el monto no es un numero valido
                 respuesta.send({mensaje:'debes de poner un monto valido'});
