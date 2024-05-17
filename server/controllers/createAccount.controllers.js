@@ -31,7 +31,7 @@ async function paso1(solicitud,respuesta){
     let colonia = solicitud.body.colonia;
     let numero = solicitud.body.numero;
     let codigo_postal = solicitud.body.codigo_postal;
-    let apodo = solicitud.body.apodo;
+    let apodo = ['Itsuki','apodo'];
 
   // FIN 1
   
@@ -338,6 +338,8 @@ async function paso2(solicitud,respuesta){
 // LLENADO DE CONTRASENA
 async function paso3(solicitud,respuesta){
 
+    console.log('que tal bobo');
+
     if(solicitud.headers.cookie == undefined){
       // no tiene ninguna cookie, lo cual significa que no acompleto ni el paso1 ni el paso2
       respuesta.send({redirect:"/spa/signUp"}); 
@@ -350,6 +352,7 @@ async function paso3(solicitud,respuesta){
       if(galleta1){
         //galleta 1 existe
         if(galleta2){
+          console.log('minimo esto no??')
           //todo bien
           let contraseña = solicitud.body.pass;
           let confirmacion = solicitud.body.again_pass;
@@ -386,6 +389,7 @@ async function paso3(solicitud,respuesta){
           
             if(arreglo_regex.length>0){
               respuesta.send({invalidas:arreglo_regex});
+              console.log('por aqui');
             }
             else{
 
@@ -396,6 +400,7 @@ async function paso3(solicitud,respuesta){
                     respuesta.send({fuera_rango:"menos de 8 caracteres"})
                   }else{
 
+                    console.log('verdad que todo salio bien??');
                     // todo salio bien
 
                     let token = JsonWebToken.sign(

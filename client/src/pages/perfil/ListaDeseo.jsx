@@ -24,6 +24,8 @@ function ListaDeseo() {
     const [resumen, setResumen] = useState('lista-resumen-off');
     const [width, setWidth] = useState('w-full');
     const [tipo, setTipo] = useState('all');
+    const [showProduct, setShowProduct] = useState(false);
+    const [searchTerm, setSearchTerm] = useState('');
 
     const filtrar = (type) => {
         setTipo(type);
@@ -143,6 +145,7 @@ function ListaDeseo() {
         setResumen('lista-resumen-on')
         setWidth('w-1/2')
         filtrar('1')
+        setShowProduct(true)
     }
     const presionar2 = () => {
         setBoton2('lista-boton-on')
@@ -150,6 +153,7 @@ function ListaDeseo() {
         setResumen('lista-resumen-off')
         setWidth('w-full')
         filtrar('2')
+        setShowProduct(false)
     }
 
     const removeProducto = (itemId) => {
@@ -165,52 +169,61 @@ function ListaDeseo() {
         )
     ))
 
-    const contenido = contResumen.map(producto => (
-        ( tipo === 'all' || producto.tipo === tipo) && (
-            <li key={producto.id} className='grid border-4 bg-white border-[#E2B3B7] p-6 py-2 rounded-xl mx-6 mb-6'>
-                <Box
-                    className="grid justify-end"
-                    sx={{
-                        '& > legend': { mt: 2 },
-                    }}
-                >
-                    <StyledRating
-                        name="customized-color"
-                        defaultValue={1}
-                        max={1}
-                        getLabelText={(value) => `${value} Heart${value !== 1 ? 's' : ''}`}
-                        precision={1}
-                        icon={<FavoriteIcon fontSize="inherit" />}
-                        emptyIcon={<FavoriteBorderIcon fontSize="inherit" />}
-                        onClick={() => removeProducto(producto.id)}
-                    />
-                </Box>
-                <img className='w-2/3 justify-self-center m-auto mb-4 rounded-lg aspect-square'
-                    src={producto.imagen}
-                    alt={producto.nombre}
+    const filteredProducts = contResumen.filter(producto =>
+      (tipo === 'all' || producto.tipo === tipo) &&
+      producto.nombre.toLowerCase().includes(searchTerm.toLowerCase())
+    );
+
+    const contenido = filteredProducts.map(producto => (
+        <li key={producto.id} className='grid border-4 bg-white border-[#E2B3B7] p-6 py-2 rounded-xl mx-6 mb-6'>
+            <Box
+                className="grid justify-end"
+                sx={{
+                    '& > legend': { mt: 2 },
+                }}
+            >
+                <StyledRating
+                    name="customized-color"
+                    defaultValue={1}
+                    max={1}
+                    getLabelText={(value) => `${value} Heart${value !== 1 ? 's' : ''}`}
+                    precision={1}
+                    icon={<FavoriteIcon fontSize="inherit" />}
+                    emptyIcon={<FavoriteBorderIcon fontSize="inherit" />}
+                    onClick={() => removeProducto(producto.id)}
                 />
-                <div>
-                    <p className='mt-2  text-[#0BC26A] text-lg'>{'$' + producto.precio + ' MXN'}</p>
-                    <Rating className='' value={producto.valoracion} readOnly unratedcolor="amber" ratedcolor="amber" />
-                    <h3 className='mt-0 text-xl font-bold'>{producto.nombre}</h3>
-                    <p className='mt-0 text-xs text-justify'>
-                        {producto.descripcion}
-                    </p>
-                </div>
-                <div className='grid mt-2'>
-                    { producto.tipo === "1" ? (
-                        <button className=" text-xs gap-2  transition-all duration-300 px-8  hover:bg-[#036C65] hover:ring-1  hover:[#036C65] hover:ring-offset-1 group relative flex h-10 items-center justify-center overflow-hidden rounded-xl border-2 bg-[#EB5765] font-[abeatbykai] text-neutral-200"><span>Agregar</span> <IconoAgregarAlCarrito /> <div className="w-0 translate-x-[100%] pl-0 opacity-0 transition-all duration-200 group-hover:w-0 group-hover:translate-x-0 group-hover:pl-1 group-hover:opacity-100"></div></button>
-                    ):(
-                        <button className=" text-xs gap-2  transition-all duration-300 px-8  hover:bg-[#036C65] hover:ring-1  hover:[#036C65] hover:ring-offset-1 group relative flex h-10 items-center justify-center overflow-hidden rounded-xl border-2 bg-[#EB5765] font-[abeatbykai] text-neutral-200"><span>Agendar</span><div className="w-0 translate-x-[100%] pl-0 opacity-0 transition-all duration-200 group-hover:w-0 group-hover:translate-x-0 group-hover:pl-1 group-hover:opacity-100"></div></button>
-                    ) }
-                </div>
-            </li>
-        )
+            </Box>
+            <img className='w-2/3 justify-self-center m-auto mb-4 rounded-lg aspect-square'
+                src={producto.imagen}
+                alt={producto.nombre}
+            />
+            <div>
+                <p className='mt-2  text-[#0BC26A] text-lg'>{'$' + producto.precio + ' MXN'}</p>
+                <Rating className='' value={producto.valoracion} readOnly unratedcolor="amber" ratedcolor="amber" />
+                <h3 className='mt-0 text-xl font-bold'>{producto.nombre}</h3>
+                <p className='mt-0 text-xs text-justify'>
+                    {producto.descripcion}
+                </p>
+            </div>
+            <div className='grid mt-2'>
+                { producto.tipo === "1" ? (
+                    <button className=" text-xs gap-2  transition-all duration-300 px-8  hover:bg-[#036C65] hover:ring-1  hover:[#036C65] hover:ring-offset-1 group relative flex h-10 items-center justify-center overflow-hidden rounded-xl border-2 bg-[#EB5765] font-[abeatbykai] text-neutral-200"><span>Agregar</span> <IconoAgregarAlCarrito /> <div className="w-0 translate-x-[100%] pl-0 opacity-0 transition-all duration-200 group-hover:w-0 group-hover:translate-x-0 group-hover:pl-1 group-hover:opacity-100"></div></button>
+                ):(
+                    <button className=" text-xs gap-2  transition-all duration-300 px-8  hover:bg-[#036C65] hover:ring-1  hover:[#036C65] hover:ring-offset-1 group relative flex h-10 items-center justify-center overflow-hidden rounded-xl border-2 bg-[#EB5765] font-[abeatbykai] text-neutral-200"><span>Agendar</span><div className="w-0 translate-x-[100%] pl-0 opacity-0 transition-all duration-200 group-hover:w-0 group-hover:translate-x-0 group-hover:pl-1 group-hover:opacity-100"></div></button>
+                ) }
+            </div>
+        </li>
     ))
 
-    const precioTotal = contResumen.reduce((acc, item) => acc + item.precio, 0).toFixed(2);
+    const precioTotal = contResumen
+      .filter(producto => producto.tipo === '1')
+      .reduce((total, producto) => total + producto.precio, 0)
+      .toFixed(2);
     const cantProductos = contResumen.length;
 
+    const handleSearch = (event) => {
+      setSearchTerm(event.target.value);
+    };
     return (
         <>
             <Navbar />
@@ -240,6 +253,7 @@ function ListaDeseo() {
                                     className='w-full rounded-lg px-5 py-2'
                                     type="buscar"
                                     placeholder="Buscar..."
+                                    onChange={handleSearch}
                                 />
                                 <FontAwesomeIcon icon={faMagnifyingGlass} className='mx-4 text-[rgb(255,181,167)] text-xl' />
                             </form>
@@ -247,15 +261,23 @@ function ListaDeseo() {
                         <div className='grid p-12 h-full overflow-y-scroll'>
                             {/* Contenido */}
                             { contResumen.length === 0 ? (
-                                <p className='m-auto'>No se encontraron productos</p>
+                                <p className='m-auto'>No se encontraron artículos</p>
                             ):(
-                                <ul className='grid h-fit grid-cols-1 gap-2 md:grid-cols-3'>{contenido}</ul>
+                                <ul className='grid h-fit grid-cols-1 gap-2 md:grid-cols-3'>
+                                  {contenido}
+                                </ul>
+                            )}
+                            { showProduct && contResumen.filter(producto => producto.tipo === '1').length === 0 ? (
+                                <p className='m-auto'>No se encontraron productos.</p>
+                            ):(
+                                <>
+                                </>
                             )}
                         </div>
                     </div>
                     <div className={resumen}>
                         <div className={width}>
-                            { contResumen.length === 0 ? (
+                            { contResumen.filter(producto => producto.tipo === '1').length === 0 ? (
                                 <h1 className='text-center text-xl py-6'>No hay productos</h1>
                             ):(
                                 <>

@@ -10,55 +10,24 @@ import {
     faAngleLeft,
 } from "@fortawesome/free-solid-svg-icons";
 
+import {loadStripe} from '@stripe/stripe-js';
+import {Elements, useStripe} from '@stripe/react-stripe-js'
 
-function AgregarSaldo() {
 
-    const [numeroTarjeta, setNumTarjeta] = useState('');
+const stripePromise = loadStripe('pk_test_51PEcWQRoGJ7uCBvZCsDZUCfTpVTLVBe3FlpjtjkVHjA2n31bLaiJ4Yce009pQLMkGnhnivE1H0BRDcV3BMnnZv2Q00hwzXsCBb');
+
+
+function AddSaldo(){
+    const [sTarjeta, setsTarjeta] = useState({});
     const [array, setArray] = useState([]);
     const [array_toShow, setArray_toShow] = useState([]);
     const [monto_a_recargar, setMonto] = useState('0.0');
 
 
-    async function RecargarSaldo(){
-
-        console.log('iniciando proceso de recargar tu saldo');
-
-        const respuesta = await fetch('/api/recargaSaldo',{
-            method:'POST',
-            headers:{
-                "Content-Type":"application/json",
-            },
-            body:JSON.stringify({
-                numero_tarjeta:numeroTarjeta,
-                monto:monto_a_recargar
-            })
-        })
-
-
-        if(!respuesta.ok){
-            console.log("sucedio un error en la comunicacion back con front");
-            return; // obligarlo a salir de la funcion
-        }
-
-        const respuestaJson = await respuesta.json();
-
-        if(respuestaJson.exito){
-            console.log('El proceso se logro con exito');
-            window.location.reload();
-        }
-
-        if(respuestaJson.fallo){
-            console.log('Hubo un error en el cobro');
-        }
-    }
-
-
-
-
     async function seleccionarTarjeta(tarjeta){
 
-        setNumTarjeta(tarjeta.numero_tarjeta);
-        ModificarArray(numeroTarjeta);
+        setsTarjeta(tarjeta);
+        ModificarArray(sTarjeta.numero_tarjeta);
 
     }
 
@@ -92,7 +61,7 @@ function AgregarSaldo() {
                 setArray_toShow(data.array);
 
                 let tp = data.array.find(tarjeta=> tarjeta.predeterminada == 1);
-                setNumTarjeta(tp.numero_tarjeta);
+                setsTarjeta(tp);
               }
            })
            .catch(error=>{
@@ -101,10 +70,10 @@ function AgregarSaldo() {
      },[])
 
      useEffect(()=>{
-        if(numeroTarjeta != ''){
-            ModificarArray(numeroTarjeta);
+        if(Object.keys(sTarjeta).length != 0){
+            ModificarArray(sTarjeta.numero_tarjeta);
         }
-     },[numeroTarjeta]);
+     },[sTarjeta]);
 
 
 
@@ -121,7 +90,42 @@ function AgregarSaldo() {
      }
 
 
+
+
+    const stripe = useStripe();
+
+    const handleSubmit = async(e)=>{
+        
+        e.preventDefault();        
+
+        const respuesta = await fetch('/api/recargaSaldo',{
+            method:'POST',
+            headers:{
+                "Content-Type":"application/json",
+            },
+            body:JSON.stringify({
+                numero_tarjeta:sTarjeta.numero_tarjeta,
+                monto:monto_a_recargar
+            })
+        })
+
+        if(!respuesta.ok){
+            console.log('hubo un problema en la conexion servidor-cliente')
+        }
+
+        const respuestaJson = respuesta.json();
+
+
+        if(respuestaJson.mensaje){
+            console.log(respuestaJson.mensaje);
+        }
+
+    }
+
+
+
     return (
+        
         <>
         <div>
             Regarda del Monedero
@@ -142,11 +146,24 @@ function AgregarSaldo() {
                 }
             })
         }
-        <button onClick={RecargarSaldo}>
+        <button onClick={handleSubmit}>
             Confirmar
         </button>
         </>
     );
+}
+
+
+
+
+
+function AgregarSaldo() {
+    return(
+        <Elements stripe={stripePromise}>
+            <AddSaldo/>
+        </Elements>
+    );
+    
 }
 
 export default AgregarSaldo;
