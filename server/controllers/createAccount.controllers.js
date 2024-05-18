@@ -49,34 +49,62 @@ async function paso1(solicitud,respuesta){
         // INICIO 2  CREAR UN ARREGLO QUE ALMACENARA CAMPOS SIN CONTESTAR
         let campos_faltantes = [];
 
-        if(!nombre[0])
+        if(!nombre[0]){
           campos_faltantes.push(nombre[1]);
-        if(!apodo[0])
+        }
+          
+        if(!apodo[0]){
           campos_faltantes.push(apodo[1]);
-        if(!paterno[0])
+        }
+          
+        if(!paterno[0]){
           campos_faltantes.push(paterno[1]);
-        if(!materno[0])
+        }
+          
+        if(!materno[0]){
           campos_faltantes.push(materno[1]);
-        if(!correo[0])
+        }
+          
+        if(!correo[0]){
           campos_faltantes.push(correo[1]);
-        if(!lada[0])
+        }
+          
+        if(!lada[0]){
           campos_faltantes.push(lada[1]);
-        if(!telefono[0])
+        }
+          
+        if(!telefono[0]){
           campos_faltantes.push(telefono[1]);
-        if(!dia[0])
+        }
+          
+        if(!dia[0]){
           campos_faltantes.push(dia[1]);
-        if(!mes[0])
+        }
+          
+        if(!mes[0]){
           campos_faltantes.push(mes[1]);
-        if(!año[0])
+        }
+          
+        if(!año[0]){
           campos_faltantes.push(año[1]);
-        if(!calle[0])
+        }
+          
+        if(!calle[0]){
           campos_faltantes.push(calle[1]);
-        if(!colonia[0])
+        }
+          
+        if(!colonia[0]){
           campos_faltantes.push(colonia[1]);
-        if(!numero[0])
+        }
+          
+        if(!numero[0]){
           campos_faltantes.push(numero[1]);
-        if(!codigo_postal[0])
+        }
+          
+        if(!codigo_postal[0]){
           campos_faltantes.push(codigo_postal[1]);
+        }
+          
 
         // FIN - 2
 
@@ -133,11 +161,12 @@ async function paso1(solicitud,respuesta){
           try{
             var fecha = new Date(`${mes[0]}/${dia[0]}/${año[0]}`);
 
-          if(isNaN(fecha.getTime())){
-            campos_invalidos.push(dia[1]);
-            campos_invalidos.push(mes[1]);
-            campos_invalidos.push(año[1]);
-          }
+            if(isNaN(fecha.getTime())){
+              campos_invalidos.push(dia[1]);
+              campos_invalidos.push(mes[1]);
+              campos_invalidos.push(año[1]);
+            }
+            
           }catch(error){
             campos_invalidos.push(dia[1]);
             campos_invalidos.push(mes[1]);
@@ -217,9 +246,7 @@ async function paso1(solicitud,respuesta){
        
       }
       
-    
 
-  
 }
 
 

@@ -1,10 +1,16 @@
-import { Fragment, useEffect, useState } from 'react'
-import { Dialog, Disclosure, Menu, Transition } from '@headlessui/react'
-import { XMarkIcon } from '@heroicons/react/24/outline'
-import { ChevronDownIcon, FunnelIcon, MinusIcon, PlusIcon, Squares2X2Icon } from '@heroicons/react/20/solid'
-import { Slider, Box } from '@mui/material';
+import { Fragment, useEffect, useState } from "react";
+import { Dialog, Disclosure, Menu, Transition } from "@headlessui/react";
+import { XMarkIcon } from "@heroicons/react/24/outline";
+import {
+  ChevronDownIcon,
+  FunnelIcon,
+  MinusIcon,
+  PlusIcon,
+  Squares2X2Icon,
+} from "@heroicons/react/20/solid";
+import { Slider, Box } from "@mui/material";
 //import { products } from '../../data/productos.json'
-import Rating from '@mui/material/Rating';
+import Rating from "@mui/material/Rating";
 import Servicio from "../../../components/ui/Servicio.jsx";
 import Peluqueria from "../../../../public/pictures/peluqueria.png";
 import Unas from "../../../../public/pictures/unas.png";
@@ -149,18 +155,17 @@ var corporales = [
   },
 ];
 
-
 function classNames(...clases) {
-  return clases.filter(Boolean).join(' ')
+  return clases.filter(Boolean).join(" ");
 }
 
 const ordenamiento = [
-  { name: 'Más Relevante', current: true },
-  { name: 'Más Reciente', current: false },
-  { name: 'Top Ventas', current: false },
-  { name: 'Precio: Bajo a Alto', current: false },
-  { name: 'Precio: Alto a Bajo', current: false },
-]
+  { name: "Más Relevante", current: true },
+  { name: "Más Reciente", current: false },
+  { name: "Top Ventas", current: false },
+  { name: "Precio: Bajo a Alto", current: false },
+  { name: "Precio: Alto a Bajo", current: false },
+];
 
 const subCategories = [
   {
@@ -171,7 +176,7 @@ const subCategories = [
       { label: 'Descendente', checked: false },
     ],
   },
-]
+];
 
 const filters = [
   {
@@ -205,7 +210,7 @@ export default function ServicioEstetica() {
   const [filteredProducts, setFilteredProducts] = useState([])
   const [categories, setCategories] = useState([]);
   const [marcas, setMarcas] = useState([]);
-  const [busqueda, setSearch] = useState('');
+  const [busqueda, setSearch] = useState("");
   const [rating, setRating] = useState(0);
   const [precio, setPrecio] = useState(null);
 
@@ -223,22 +228,22 @@ export default function ServicioEstetica() {
 
   // Función para manejar cambios en las categorías
   const handleCategoryChange = (label, isChecked) => {
-    setCategories(prev => {
+    setCategories((prev) => {
       if (isChecked) {
         return [...prev, label];
       } else {
-        return prev.filter(item => item !== label);
+        return prev.filter((item) => item !== label);
       }
     });
   };
 
   // Función para manejar cambios en las marcas
   const handleMarcaChange = (label, isChecked) => {
-    setMarcas(prev => {
+    setMarcas((prev) => {
       if (isChecked) {
         return [...prev, label];
       } else {
-        return prev.filter(item => item !== label);
+        return prev.filter((item) => item !== label);
       }
     });
   };
@@ -260,15 +265,15 @@ export default function ServicioEstetica() {
       .then(data => {
         setAllProducts(data);
       })
-      .catch(error => {
-        console.log('error', error);
+      .catch((error) => {
+        console.log("error", error);
       });
   }, []);
 
   // Función para manejar la búsqueda
   const handleSearch = (e) => {
-    setSearch(e.target.value)
-  }
+    setSearch(e.target.value);
+  };
 
   // useEffect para filtrar los productos según los filtros aplicados
   useEffect(() => {
@@ -276,28 +281,28 @@ export default function ServicioEstetica() {
 
     // Filtrar por búsqueda
     if (busqueda) {
-      updatedProducts = updatedProducts.filter(product =>
+      updatedProducts = updatedProducts.filter((product) =>
         product.nombre.toLowerCase().includes(busqueda.toLowerCase())
       );
     }
 
     // Filtro por categorías múltiples
     if (categories.length > 0) {
-      updatedProducts = updatedProducts.filter(product =>
+      updatedProducts = updatedProducts.filter((product) =>
         categories.includes(product.categoria)
       );
     }
 
     // Filtro por múltiples marcas
     if (marcas.length > 0) {
-      updatedProducts = updatedProducts.filter(product =>
+      updatedProducts = updatedProducts.filter((product) =>
         marcas.includes(product.marca)
       );
     }
     // Filtro por valoración
     if (rating) {
-      updatedProducts = updatedProducts.filter(product =>
-        product.valoracion == rating
+      updatedProducts = updatedProducts.filter(
+        (product) => product.valoracion == rating
       );
     }
 
@@ -309,37 +314,49 @@ export default function ServicioEstetica() {
       updatedProducts = updatedProducts;
 
     if (precio) {
-      updatedProducts = updatedProducts.filter(product =>
-        product.precio <= precio
+      updatedProducts = updatedProducts.filter(
+        (product) => product.precio <= precio
       );
     }
 
 
     // Ordenar productos
     switch (sortOption.name) {
-      case 'Más Relevante':
+      case "Más Relevante":
         break;
-      case 'Más Reciente':
-        updatedProducts = [...updatedProducts].sort((a, b) => new Date(b.date) - new Date(a.date));
+      case "Más Reciente":
+        updatedProducts = [...updatedProducts].sort(
+          (a, b) => new Date(b.date) - new Date(a.date)
+        );
         break;
-      case 'Top Ventas':
-        updatedProducts = [...updatedProducts].sort((a, b) => b.masVendido - a.masVendido);
+      case "Top Ventas":
+        updatedProducts = [...updatedProducts].sort(
+          (a, b) => b.masVendido - a.masVendido
+        );
         break;
-      case 'Precio: Bajo a Alto':
-        updatedProducts = [...updatedProducts].sort((a, b) => a.precio - b.precio);
+      case "Precio: Bajo a Alto":
+        updatedProducts = [...updatedProducts].sort(
+          (a, b) => a.precio - b.precio
+        );
         break;
-      case 'Precio: Alto a Bajo':
-        updatedProducts = [...updatedProducts].sort((a, b) => b.precio - a.precio);
+      case "Precio: Alto a Bajo":
+        updatedProducts = [...updatedProducts].sort(
+          (a, b) => b.precio - a.precio
+        );
         break;
       default:
         break;
     }
 
     //multifiltro de checkboxes
-    filters.forEach(filter => {
-      const selectedOptions = filter.options.filter(option => option.checked).map(option => option.label);
+    filters.forEach((filter) => {
+      const selectedOptions = filter.options
+        .filter((option) => option.checked)
+        .map((option) => option.label);
       if (selectedOptions.length) {
-        updatedProducts = updatedProducts.filter(product => selectedOptions.includes(product[filter.id]));
+        updatedProducts = updatedProducts.filter((product) =>
+          selectedOptions.includes(product[filter.id])
+        );
       }
     });
 
@@ -362,7 +379,6 @@ export default function ServicioEstetica() {
   return (
     <>
       <Presentacion />
-
 
       <div className="w-full mx-auto mt-16 md:w-1/2">
         <p className=" text-4xl md:text-6xl text-center font-[ILoveGlitter] text-[#036C65]">
@@ -398,11 +414,14 @@ export default function ServicioEstetica() {
         </div>
       </div>
       <div className="">
-
         <div>
           {/* Mobile filter dialog */}
           <Transition.Root show={mobileFiltersOpen} as={Fragment}>
-            <Dialog as="div" className="relative z-40 lg:hidden" onClose={setMobileFiltersOpen}>
+            <Dialog
+              as="div"
+              className="relative z-40 lg:hidden"
+              onClose={setMobileFiltersOpen}
+            >
               <Transition.Child
                 as={Fragment}
                 enter="transition-opacity ease-linear duration-300"
@@ -427,7 +446,9 @@ export default function ServicioEstetica() {
                 >
                   <Dialog.Panel className="relative flex flex-col w-full h-full max-w-xs py-4 pb-12 ml-auto overflow-y-auto bg-white shadow-xl">
                     <div className="flex items-center justify-between px-4">
-                      <h2 className="text-lg font-medium text-gray-900">Filters</h2>
+                      <h2 className="text-lg font-medium text-gray-900">
+                        Filters
+                      </h2>
                       <button
                         type="button"
                         className="flex items-center justify-center w-10 h-10 p-2 -mr-2 text-gray-400 bg-white rounded-md"
@@ -440,31 +461,50 @@ export default function ServicioEstetica() {
 
                     {/* Filters */}
                     <form className="mt-4 border-t border-gray-200">
-                      <ul role="list" className="px-2 py-3 font-medium text-gray-90">
+                      <ul
+                        role="list"
+                        className="px-2 py-3 font-medium text-gray-90"
+                      >
                         {subCategories.map((category) => (
                           <li key={category.name}>
-                            <a href={category.href}
-                              onClick={() => { setCategory(category.label) }}
-                              className="block px-2 py-3 cursor-pointer">
+                            <a
+                              href={category.href}
+                              onClick={() => {
+                                setCategory(category.label);
+                              }}
+                              className="block px-2 py-3 cursor-pointer"
+                            >
                               {category.name}
                             </a>
                           </li>
                         ))}
                       </ul>
 
-
                       {filters.map((section) => (
-                        <Disclosure as="div" key={section.id} className="px-4 py-6 border-t border-gray-200">
+                        <Disclosure
+                          as="div"
+                          key={section.id}
+                          className="px-4 py-6 border-t border-gray-200"
+                        >
                           {({ open }) => (
                             <>
                               <h3 className="flow-root -mx-2 -my-3">
                                 <Disclosure.Button className="flex items-center justify-between w-full px-2 py-3 text-gray-400 bg-white hover:text-gray-500">
-                                  <span className="font-medium text-gray-900">{section.name}</span>
+                                  <span className="font-medium text-gray-900">
+                                    {section.name}
+                                  </span>
                                   <span className="flex items-center ml-6">
                                     {open ? (
-                                      <MinusIcon className="w-5 h-5" aria-hidden="true" />
+                                      <MinusIcon
+                                        className="w-5 h-5"
+                                        aria-hidden="true"
+                                      />
                                     ) : (
-                                      <PlusIcon classNa me="w-5 h-5" aria-hidden="true" />
+                                      <PlusIcon
+                                        classNa
+                                        me="w-5 h-5"
+                                        aria-hidden="true"
+                                      />
                                     )}
                                   </span>
                                 </Disclosure.Button>
@@ -472,7 +512,10 @@ export default function ServicioEstetica() {
                               <Disclosure.Panel className="pt-6">
                                 <div className="space-y-6">
                                   {section.options.map((option, optionIdx) => (
-                                    <div key={option.value} className="flex items-center">
+                                    <div
+                                      key={option.value}
+                                      className="flex items-center"
+                                    >
                                       <input
                                         id={`filter-mobile-${section.id}-${optionIdx}`}
                                         name={`${section.id}[]`}
@@ -503,10 +546,10 @@ export default function ServicioEstetica() {
           </Transition.Root>
 
           <main className="px-4 mx-auto max-w-7xl sm:px-6 lg:px-8">
-
             <div className="grid justify-around gap-8 pt-24 pb-6 border-b border-gray-200 md:grid-cols-3 grid-cols2 ">
-
-              <h1 className="text-xl font-bold tracking-tight text-gray-900 md:text-4xl">Filtrar por:</h1>
+              <h1 className="text-xl font-bold tracking-tight text-gray-900 md:text-4xl">
+                Filtrar por:
+              </h1>
               <div className="flex items-center">
                 <Menu as="div" className="relative inline-block text-left">
                   <div>
@@ -534,12 +577,18 @@ export default function ServicioEstetica() {
                           <Menu.Item key={option.name}>
                             {({ active }) => (
                               <a
-                                onClick={() => { setSortOption(option) }}
+                                onClick={() => {
+                                  setSortOption(option);
+                                }}
                                 href={option.href}
                                 className={classNames(
-                                  option.current ? 'font-medium text-gray-900 cursor-pointer' : 'text-gray-500',
-                                  active ? 'bg-gray-100 cursor-pointer' : 'cursor-pointer',
-                                  'block px-4 py-2 text-sm cursor-pointer'
+                                  option.current
+                                    ? "font-medium text-gray-900 cursor-pointer"
+                                    : "text-gray-500",
+                                  active
+                                    ? "bg-gray-100 cursor-pointer"
+                                    : "cursor-pointer",
+                                  "block px-4 py-2 text-sm cursor-pointer"
                                 )}
                               >
                                 {option.name}
@@ -552,9 +601,10 @@ export default function ServicioEstetica() {
                   </Transition>
                 </Menu>
 
-
-
-                <button type="button" className="p-2 ml-5 -m-2 text-gray-400 hover:text-gray-500 sm:ml-7">
+                <button
+                  type="button"
+                  className="p-2 ml-5 -m-2 text-gray-400 hover:text-gray-500 sm:ml-7"
+                >
                   <span className="sr-only">View grid</span>
                   <Squares2X2Icon className="w-5 h-5" aria-hidden="true" />
                 </button>
@@ -567,11 +617,22 @@ export default function ServicioEstetica() {
                   <FunnelIcon className="w-5 h-5" aria-hidden="true" />
                 </button>
               </div>
-              <div className='max-w-md mx-auto border-gray-400 border-1'>
+              <div className="max-w-md mx-auto border-gray-400 border-1">
                 <div className="relative flex items-center w-full h-12 overflow-hidden bg-white border-b-2 rounded-lg focus-within:shadow-lg border-gray">
                   <div className="grid w-12 h-full text-gray-300 place-items-center">
-                    <svg xmlns="http://www.w3.org/2000/svg" className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      className="w-6 h-6"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth="2"
+                        d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
+                      />
                     </svg>
                   </div>
 
@@ -580,13 +641,13 @@ export default function ServicioEstetica() {
                     type="text"
                     id="search"
                     placeholder="Buscar..."
-                    onChange={(e) => { handleSearch(e) }}
+                    onChange={(e) => {
+                      handleSearch(e);
+                    }}
                   />
                 </div>
               </div>
             </div>
-
-
 
             <section aria-labelledby="products-heading " className="pt-6 pb-24">
               <h2 id="products-heading" className="sr-only">
@@ -597,17 +658,29 @@ export default function ServicioEstetica() {
                 {/* Filters */}
                 <form className="hidden w-64 lg:block">
                   {subCategories.map((section) => (
-                    <Disclosure as="div" key={section.id} className="py-6 border-b border-gray-200">
+                    <Disclosure
+                      as="div"
+                      key={section.id}
+                      className="py-6 border-b border-gray-200"
+                    >
                       {({ open }) => (
                         <>
                           <h3 className="flow-root -my-3">
                             <Disclosure.Button className="flex items-center justify-between w-full py-3 text-sm text-gray-400 hover:text-gray-500">
-                              <span className="font-medium text-gray-900">{section.name}</span>
+                              <span className="font-medium text-gray-900">
+                                {section.name}
+                              </span>
                               <span className="flex items-center ml-6">
                                 {open ? (
-                                  <MinusIcon className="w-5 h-5" aria-hidden="true" />
+                                  <MinusIcon
+                                    className="w-5 h-5"
+                                    aria-hidden="true"
+                                  />
                                 ) : (
-                                  <PlusIcon className="w-5 h-5" aria-hidden="true" />
+                                  <PlusIcon
+                                    className="w-5 h-5"
+                                    aria-hidden="true"
+                                  />
                                 )}
                               </span>
                             </Disclosure.Button>
@@ -615,10 +688,17 @@ export default function ServicioEstetica() {
                           <Disclosure.Panel className="pt-6">
                             <div className="space-y-4">
                               {section.options.map((option, optionIdx) => (
-
-                                <div key={option.value} className="flex items-center">
+                                <div
+                                  key={option.value}
+                                  className="flex items-center"
+                                >
                                   <input
-                                    onChange={e => handleCategoryChange(option.label, e.target.checked)}
+                                    onChange={(e) =>
+                                      handleCategoryChange(
+                                        option.label,
+                                        e.target.checked
+                                      )
+                                    }
                                     id={`filter-${section.id}-${optionIdx}`}
                                     name={`${section.id}[]`}
                                     defaultValue={option.value}
@@ -636,25 +716,33 @@ export default function ServicioEstetica() {
                               ))}
                             </div>
                           </Disclosure.Panel>
-
-
                         </>
-
                       )}
                     </Disclosure>
                   ))}
 
-                  <Disclosure as="div" className="py-6 border-b border-gray-200">
+                  <Disclosure
+                    as="div"
+                    className="py-6 border-b border-gray-200"
+                  >
                     {({ open }) => (
                       <>
                         <h3 className="flow-root -my-3">
                           <Disclosure.Button className="flex items-center justify-between w-full py-3 text-sm text-gray-400 hover:text-gray-500">
-                            <span className="font-medium text-gray-900">Precio</span>
+                            <span className="font-medium text-gray-900">
+                              Precio
+                            </span>
                             <span className="flex items-center ml-6">
                               {open ? (
-                                <MinusIcon className="w-5 h-5" aria-hidden="true" />
+                                <MinusIcon
+                                  className="w-5 h-5"
+                                  aria-hidden="true"
+                                />
                               ) : (
-                                <PlusIcon className="w-5 h-5" aria-hidden="true" />
+                                <PlusIcon
+                                  className="w-5 h-5"
+                                  aria-hidden="true"
+                                />
                               )}
                             </span>
                           </Disclosure.Button>
@@ -669,38 +757,52 @@ export default function ServicioEstetica() {
                                 valueLabelDisplay="auto"
                                 min={0}
                                 max={1000}
-                                className='text-red-600 '
-                                sx={{ color: '#ec5766' }}
+                                className="text-red-600 "
+                                sx={{ color: "#ec5766" }}
                               />
-                              <Box sx={{ textAlign: 'center' }}>${precio}</Box>
+                              <Box sx={{ textAlign: "center" }}>${precio}</Box>
                             </Box>
-
                           </div>
                         </Disclosure.Panel>
                       </>
                     )}
                   </Disclosure>
 
-                  <Disclosure as="div" className="py-6 border-b border-gray-200">
+                  <Disclosure
+                    as="div"
+                    className="py-6 border-b border-gray-200"
+                  >
                     {({ open }) => (
                       <>
                         <h3 className="flow-root -my-3">
                           <Disclosure.Button className="flex items-center justify-between w-full py-3 text-sm text-gray-400 hover:text-gray-500">
-                            <span className="font-medium text-gray-900">Valoraciones</span>
+                            <span className="font-medium text-gray-900">
+                              Valoraciones
+                            </span>
                             <span className="flex items-center ml-6">
                               {open ? (
-                                <MinusIcon className="w-5 h-5" aria-hidden="true" />
+                                <MinusIcon
+                                  className="w-5 h-5"
+                                  aria-hidden="true"
+                                />
                               ) : (
-                                <PlusIcon className="w-5 h-5" aria-hidden="true" />
+                                <PlusIcon
+                                  className="w-5 h-5"
+                                  aria-hidden="true"
+                                />
                               )}
                             </span>
                           </Disclosure.Button>
                         </h3>
                         <Disclosure.Panel className="pt-6">
                           <div className="space-y-4">
-
-                            <Rating onChange={handleChange} className='m-auto' value={rating} unratedColor="red" ratedColor="blue" />
-
+                            <Rating
+                              onChange={handleChange}
+                              className="m-auto"
+                              value={rating}
+                              unratedColor="red"
+                              ratedColor="blue"
+                            />
                           </div>
                         </Disclosure.Panel>
                       </>
@@ -708,17 +810,29 @@ export default function ServicioEstetica() {
                   </Disclosure>
 
                   {filters.map((section) => (
-                    <Disclosure as="div" key={section.id} className="py-6 border-b border-gray-200">
+                    <Disclosure
+                      as="div"
+                      key={section.id}
+                      className="py-6 border-b border-gray-200"
+                    >
                       {({ open }) => (
                         <>
                           <h3 className="flow-root -my-3">
                             <Disclosure.Button className="flex items-center justify-between w-full py-3 text-sm text-gray-400 hover:text-gray-500">
-                              <span className="font-medium text-gray-900">{section.name}</span>
+                              <span className="font-medium text-gray-900">
+                                {section.name}
+                              </span>
                               <span className="flex items-center ml-6">
                                 {open ? (
-                                  <MinusIcon className="w-5 h-5" aria-hidden="true" />
+                                  <MinusIcon
+                                    className="w-5 h-5"
+                                    aria-hidden="true"
+                                  />
                                 ) : (
-                                  <PlusIcon className="w-5 h-5" aria-hidden="true" />
+                                  <PlusIcon
+                                    className="w-5 h-5"
+                                    aria-hidden="true"
+                                  />
                                 )}
                               </span>
                             </Disclosure.Button>
@@ -726,14 +840,21 @@ export default function ServicioEstetica() {
                           <Disclosure.Panel className="pt-6">
                             <div className="space-y-4">
                               {section.options.map((option, optionIdx) => (
-
-                                <div key={option.value} className="flex items-center">
+                                <div
+                                  key={option.value}
+                                  className="flex items-center"
+                                >
                                   <input
                                     id={`filter-${section.id}-${optionIdx}`}
                                     name={`${section.id}[]`}
                                     defaultValue={option.value}
                                     type="checkbox"
-                                    onChange={e => handleMarcaChange(option.label, e.target.checked)}
+                                    onChange={(e) =>
+                                      handleMarcaChange(
+                                        option.label,
+                                        e.target.checked
+                                      )
+                                    }
                                     defaultChecked={option.checked}
                                     className="w-4 h-4 border-gray-300 rounded text-rose-400 focus:ring-rose-400 "
                                   />
@@ -747,28 +868,26 @@ export default function ServicioEstetica() {
                               ))}
                             </div>
                           </Disclosure.Panel>
-
-
                         </>
-
                       )}
                     </Disclosure>
                   ))}
 
-                  <Disclosure as="div" className="py-6 border-b border-gray-200">
+                  <Disclosure
+                    as="div"
+                    className="py-6 border-b border-gray-200"
+                  >
                     {({ open }) => (
                       <>
                         <h3 className="flow-root -my-3">
                           <Disclosure.Button className="flex items-center justify-between w-full py-3 text-sm text-gray-400 hover:text-gray-500">
-                            <span className="font-medium text-gray-900">Más Vendidos</span>
-
+                            <span className="font-medium text-gray-900">
+                              Más Vendidos
+                            </span>
                           </Disclosure.Button>
                         </h3>
                         <Disclosure.Panel className="pt-6">
-                          <div className="space-y-4">
-
-
-                          </div>
+                          <div className="space-y-4"></div>
                         </Disclosure.Panel>
                       </>
                     )}
@@ -791,7 +910,9 @@ export default function ServicioEstetica() {
                 </div> */}
 
                 <div className="grid md:relative">
-                  <div className={toggleState === 1 ? "block h-auto" : "hidden"}>
+                  <div
+                    className={toggleState === 1 ? "block h-auto" : "hidden"}
+                  >
                     {/*<Filtro className="relative float-start" />*/}
                     <div className="grid grid-cols-2 md:grid-cols-3 w-[100%] rounded-lg ring-4 ring-[#E2B3B7] mx-auto mb-10">
                       {faciales.length > 0 ? (
@@ -835,31 +956,28 @@ export default function ServicioEstetica() {
                     </div>
                   </div>
                 </div>
-
-
               </div>
-
             </section>
             <div className="w-full mx-auto my-16 text-center">
               <p className="text-4xl md:text-6xl w-3/4 md:w-full my-10 mx-auto text-center font-[ILoveGlitter] text-[#036C65]">
                 ¿No están los servicios que usas?
               </p>
               <p className="w-3/4 mx-auto my-10 text-center md:w-full">
-                Tal vez los encuentres en los servicios de nuestro spa.
+                Tal vez los encuentres en los servicios de nuestra estética.
               </p>
               <a
-                href="/spa/servicios/spa"
+                href="/spa/servicios/estetica"
                 className="inline-block bg-[#EB5765] text-white text-xl rounded-full px-4 py-4 mx-auto hover:bg-red-200"
                 aria-label="Ir a estética"
               >
-                Ver servicios de spa
+                Ver servicios de estética
               </a>
             </div>
           </main>
-        </div >
-      </div >
+        </div>
+      </div>
     </>
-  )
+  );
 }
 
 // import Presentacion from "../../../components/ui/PresentacionEstetica.jsx";
@@ -958,7 +1076,6 @@ export default function ServicioEstetica() {
 // };
 
 // export default ServiciosEstetica;
-
 
 // import Servicio from "../../../components/ui/Servicio.jsx";
 // import { useState } from "react";

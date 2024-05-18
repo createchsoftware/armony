@@ -47,7 +47,7 @@ function Perfil() {
             <LayoutPrincipal>
                 <main className='mt-40'>
                     <section className='rounded-2xl w-[60%] m-auto p-6 shadow-[0_3px_10px_rgb(0,0,0,0.2)]'>
-                        <a className='flex items-baseline content-center text-sm gap-x-4' href="/spa"> <IoIosArrowBack className='' />
+                        <a className='flex items-baseline content-center text-sm gap-x-4' href={document.referrer}> <IoIosArrowBack className='' />
                             Volver</a>
                         <img className='w-40 m-auto my-6 -mt-32 rounded-full aspect-square' src={`../../pictures/${imagen}`} alt="" />
                         <div className='w-1/2 m-auto text-center'>
