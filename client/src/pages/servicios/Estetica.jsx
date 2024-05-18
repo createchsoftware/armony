@@ -7,7 +7,7 @@ const ServicioEstetica = () => {
     <>
       <HelmetProvider>
         <Helmet>
-          <script src="../../../public/scripts/index.js"></script>
+          <script src="../../../scripts/index.js"></script>
         </Helmet>
       </HelmetProvider>
       <LayoutPrincipal>

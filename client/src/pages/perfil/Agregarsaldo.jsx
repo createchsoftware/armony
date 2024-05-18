@@ -11,54 +11,18 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 
 
-function AgregarSaldo() {
 
-    const [numeroTarjeta, setNumTarjeta] = useState('');
+function AgregarSaldo(){
+    const [sTarjeta, setsTarjeta] = useState({});
     const [array, setArray] = useState([]);
     const [array_toShow, setArray_toShow] = useState([]);
     const [monto_a_recargar, setMonto] = useState('0.0');
 
 
-    async function RecargarSaldo(){
-
-        console.log('iniciando proceso de recargar tu saldo');
-
-        const respuesta = await fetch('/api/recargaSaldo',{
-            method:'POST',
-            headers:{
-                "Content-Type":"application/json",
-            },
-            body:JSON.stringify({
-                numero_tarjeta:numeroTarjeta,
-                monto:monto_a_recargar
-            })
-        })
-
-
-        if(!respuesta.ok){
-            console.log("sucedio un error en la comunicacion back con front");
-            return; // obligarlo a salir de la funcion
-        }
-
-        const respuestaJson = await respuesta.json();
-
-        if(respuestaJson.exito){
-            console.log('El proceso se logro con exito');
-            window.location.reload();
-        }
-
-        if(respuestaJson.fallo){
-            console.log('Hubo un error en el cobro');
-        }
-    }
-
-
-
-
     async function seleccionarTarjeta(tarjeta){
 
-        setNumTarjeta(tarjeta.numero_tarjeta);
-        ModificarArray(numeroTarjeta);
+        setsTarjeta(tarjeta);
+        ModificarArray(sTarjeta.numero_tarjeta);
 
     }
 
@@ -92,7 +56,7 @@ function AgregarSaldo() {
                 setArray_toShow(data.array);
 
                 let tp = data.array.find(tarjeta=> tarjeta.predeterminada == 1);
-                setNumTarjeta(tp.numero_tarjeta);
+                setsTarjeta(tp);
               }
            })
            .catch(error=>{
@@ -101,10 +65,10 @@ function AgregarSaldo() {
      },[])
 
      useEffect(()=>{
-        if(numeroTarjeta != ''){
-            ModificarArray(numeroTarjeta);
+        if(sTarjeta && Object.keys(sTarjeta).length != 0){
+            ModificarArray(sTarjeta.numero_tarjeta);
         }
-     },[numeroTarjeta]);
+     },[sTarjeta]);
 
 
 
@@ -120,8 +84,43 @@ function AgregarSaldo() {
         setMonto(e.target.value);
      }
 
+    const handleSubmit = async(e)=>{
+        
+        e.preventDefault();        
+
+        const respuesta = await fetch('/api/recargaSaldo',{
+            method:'POST',
+            headers:{
+                "Content-Type":"application/json",
+            },
+            body:JSON.stringify({
+                numero_tarjeta:sTarjeta.numero_tarjeta,
+                monto:monto_a_recargar
+            })
+        })
+
+        if(!respuesta.ok){
+            console.log('hubo un problema en la conexion servidor-cliente')
+        }
+
+        const respuestaJson = await respuesta.json();
+
+
+        if(respuestaJson.mensaje){
+            console.log(respuestaJson.mensaje);
+        }
+
+        if(respuestaJson.redirect){
+            console.log('hola');
+            window.location.href = respuestaJson.redirect;
+        }
+
+    }
+
+
 
     return (
+        
         <>
         <div>
             Regarda del Monedero
@@ -142,11 +141,24 @@ function AgregarSaldo() {
                 }
             })
         }
-        <button onClick={RecargarSaldo}>
+        <button onClick={handleSubmit}>
             Confirmar
         </button>
         </>
     );
 }
+
+
+
+
+
+// function AgregarSaldo() {
+//     return(
+//         <Elements stripe={stripePromise}>
+//             <AddSaldo/>
+//         </Elements>
+//     );
+    
+// }
 
 export default AgregarSaldo;

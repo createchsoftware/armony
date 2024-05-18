@@ -10,7 +10,7 @@ import {
   horaFinal,
   ventaCita,
 } from "../db/query/queryCitas.js";
-import { searchVentaCita } from "../DB/query/queryVenta.js";
+import { searchVentaCita } from "../db/query/queryVenta.js";
 
 // Router
 export const routerCitas = express.Router();

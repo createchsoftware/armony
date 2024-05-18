@@ -1,6 +1,13 @@
 import jsonwebtoken from "jsonwebtoken";
 import bcryptjs from 'bcryptjs';
+import dotenv from 'dotenv';
 import mysql from "mysql2";
+import Stripe from 'stripe';
+
+dotenv.config();
+
+
+const stripe = new Stripe(process.env.STRIPE_SECRET); // le estamos pasando a express mi cuenta y mi contrasena de STRIPE
 
 
 const arreglo_meses = ['enero','febrero','marzo','abril','mayo','junio','julio','agosto','septiembre','octubre','noviembre','diciembre'];
@@ -114,6 +121,11 @@ async function getTarjetas(solicitud,respuesta){
                 arreglo[i].fechaVencimiento = `${mes}/${year}`;
 
 
+                arreglo[i].cvv = arreglo[i].cvv.toString('utf-8');
+
+                arreglo[i].exp_month = fecha.getMonth() +1;
+                arreglo[i].exp_year = fecha.getFullYear();
+                arreglo[i].codigoPostal = decodificada.postal;
                 
                 if(arreglo[i].longitud == 16){
                     if(arreglo[i].primeros_digitos.startsWith('5')){
@@ -204,6 +216,8 @@ async function InsertarTarjeta(solicitud,respuesta){
         if(galleta){
             //el usuario esta logueado
             galleta = galleta.slice(14);
+
+            console.log('hola');
 
 
             let decodificada = await jsonwebtoken.verify(galleta,process.env.JWT_SECRET);
@@ -360,6 +374,7 @@ async function InsertarTarjeta(solicitud,respuesta){
 
                 if(invalidos.length > 0){
                     // hubos algunos campos incorrectos
+                    console.log('por AQUIII')
                     respuesta.send({incorrectos:invalidos});
                 }
                 else{
@@ -393,11 +408,11 @@ async function InsertarTarjeta(solicitud,respuesta){
                         predeterminada = 1;
                     }
 
-                    let parametros = [numero[0],decodificada.user,tipo[0],titular[0],fecha_a_introducir,cvv[0],predeterminada];
+                    let parametros = [numero[0],decodificada.user,tipo[0],titular[0],fecha_a_introducir,cvv[0],predeterminada,'id-stripe'];
 
                     console.log(parametros.length);
 
-                    let consulta = 'call addTarjeta(?,?,?,?,?,?,?)';
+                    let consulta = 'call addTarjeta(?,?,?,?,?,?,?,?)';
 
                     
 
@@ -424,6 +439,147 @@ async function InsertarTarjeta(solicitud,respuesta){
         }
     }
 }
+
+
+// async function InsertarTarjeta(solicitud,respuesta){
+//     if(solicitud.headers.cookie == undefined){
+//         respuesta.send({logueado:false});
+//     }
+//     else{
+//         let galletas = solicitud.headers.cookie.split('; ');
+//         let galleta = galletas.find(galleta => galleta.startsWith('Naruto_cookie='));
+        
+//         if(galleta){
+//             //el usuario esta logueado
+//             galleta = galleta.slice(14);
+//             let decodificada = await jsonwebtoken.verify(galleta,process.env.JWT_SECRET);
+
+//             //si llegamos hasta aqui, solo nos queda validar que titular y tipo sean correctos
+//             let titular = solicitud.body.titular;
+//             let numero = solicitud.body.numero;
+//             let mes = solicitud.body.mes;
+//             let año = solicitud.body.año;
+//             let principal = solicitud.body.principal; // true or false
+//             let cvv = solicitud.body.cvv;
+//             let tipo = solicitud.body.tipo;
+//             let id_s = solicitud.body.id;
+
+
+//             let faltantes = [];
+
+//             if(!titular){
+//                 faltantes.push('titular');
+//             }
+//             if(!tipo){
+//                 faltantes.push('tipo');
+//             }
+
+//             if(faltantes.length >0){
+//                 // el usuario no lleno estos campos
+//                 respuesta.send({faltantes:faltantes})
+//             }
+//             else{
+//                 //verificar que los respectivos campos hayan sido llenado correctamente
+//                 let regex_titular = /^([a-zA-Zá-úÁ-ÚñÑ]{3,12}(?: [a-zA-Zá-úÁ-ÚñÑ]{3,12})?)$/;  // verificar que sea un nombre valido
+//                 let regex_tipo = /(debito|Debito|Credito|credito|DEBITO|CREDITO)/;
+
+//                 let invalidos =[];
+
+//                 //titular sea valido
+//                 if(regex_titular.test(titular) == false){
+//                     invalidos.push('titular');
+//                 }
+//                 if(regex_tipo.test(tipo) == false){
+//                     invalidos.push('tipo');
+//                 }
+
+//                 if(invalidos.length > 0){
+//                     respuesta.send({invalidos:invalidos});
+//                 }
+//                 else{
+//                     // el usuario si lleno todos los datos y de forma correcta
+
+//                     const stripe = Stripe(process.env.STRIPE_SECRET);
+
+//                     //buscar al customer con el correo especifico
+//                     const customer = await stripe.customers.list({ email: decodificada.correo });   // usamos list ya que en strip no existe find u algunos otros
+
+
+//                     if(customer.data.length > 0){
+
+//                         // atar el metodo de pago con el cliente
+//                         await stripe.paymentMethods.attach(id_s,{
+//                             customer: customer.data[0].id
+//                         })
+
+
+//                         // ya encontramos al usuario, ahora sigue obtener los datos del payment
+//                         const paymentMethod = await stripe.paymentMethods.retrieve(id_s);
+
+//                         console.log(paymentMethod);
+
+//                         let predeterminada = 0;
+
+//                         if(principal == true){
+//                             //hacemos que la predeterminada anterior ya no sea predeterminada
+//                             let consulta = 'call setPredeterminada(?)';
+//                             await solicitud.database.query(mysql.format(consulta,[decodificada.user]));
+//                             predeterminada = 1;
+
+//                         }
+
+//                         // insertamos la nueva tarjeta
+//                         let fecha_un_dia_mas = new Date(año, mes);
+//                         let fecha_a_vencer = new Date(fecha_un_dia_mas.getTime() - 1000 * 60 * 60 * 24 * 1);
+                    
+//                         let meses;
+
+//                         if((fecha_a_vencer.getMonth()+1) < 10){
+//                             meses = `0${fecha_a_vencer.getMonth()+1}`
+//                         }
+//                         else{
+//                             meses = `${fecha_a_vencer.getMonth()+1}`
+//                         }
+
+
+//                         let fecha_a_introducir = `${fecha_a_vencer.getFullYear()}-${meses}-${fecha_a_vencer.getDate()}`;
+
+//                         console.log(fecha_a_introducir);
+                            
+//                         let parametros = [numero,decodificada.user,tipo,titular,fecha_a_introducir,cvv,predeterminada,id_s];
+
+//                         let consulta2 = 'call addTarjeta(?,?,?,?,?,?,?,?)';
+
+                    
+//                         try{
+//                             await solicitud.database.query(mysql.format(consulta2,parametros));
+//                             console.log('La Insercion fue exitosa');
+//                             respuesta.send({redirect:'/perfil/tarjetas'})
+//                         }catch(error){
+//                             console.log(error);
+//                             respuesta.send({fallo:true});
+//                         }
+//                     }
+//                     else{
+//                         console.log('no se pudo encontrar al usuario en stripe');
+//                         respuesta.send({fallo:true});
+//                     }
+
+                    
+                    
+
+
+//                 }
+//             }
+
+
+
+//         }
+//         else{
+//             respuesta.send({logueado:false});
+//         }    
+//     }
+// }
 
 
 
@@ -626,41 +782,33 @@ async function Insert_to_Monedero(solicitud,respuesta){
 
             let monto = solicitud.body.monto;
 
+            console.log(`el numero es: ${numeroTarjeta}`);
+            console.log(`el monto es: ${monto}`);
+
             let numero_valido = /^\d*\.?\d+$/;
 
             if(numero_valido.test(monto)){
                 //como el monto es un numero valido, ahora podemos hacer esto
+            
+                monto = parseFloat(monto);
 
-                console.log('si el numero es valido');
-                console.log(monto);
+                try{
+                    let consulta = 'call addVentaRecargarSaldo(?,?,?)';
+                    let parametros = [decodificada.user,numeroTarjeta,monto];
+                    let [fields] = await solicitud.database.query(mysql.format(consulta,parametros))
 
-                monto = parseInt(monto);
+                    console.log(fields); //para ver que es lo que nos dio
+                    respuesta.send({redirect:'/perfil/monedero'});
 
+                }catch(error){
+                    console.log(error);
+                    respuesta.send({mensaje:'hubo un error en la insercion'});
+                }
 
-                // simulando proceso de recarga
-
-                // se esta generando el cobro
-
-                // ............
-
-                // tu cobro ha sido exitoso por parte del banco HURRA!!!
-
-
-                // Si el pago fue exitoso, ahora toca hacer las respetivas inserciones
-
-                let consulta = 'call addVentaRecargarSaldo(?,?,?)';
-
-                let parametros = [decodificada.user,numeroTarjeta,monto];
-
-                let [fields] = await solicitud.database.query(mysql.format(consulta,parametros))
-
-
-                console.log(fields); //para ver que es lo que nos dio
-
-                respuesta.send({exito:true})
-
-            }
-            else{
+                    
+            
+                
+            }else{
                 // el monto no es un numero valido
                 respuesta.send({mensaje:'debes de poner un monto valido'});
             }
@@ -671,6 +819,7 @@ async function Insert_to_Monedero(solicitud,respuesta){
         }
     }
 }
+
 
 
 
