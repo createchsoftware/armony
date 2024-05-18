@@ -18,22 +18,24 @@ const StyledRating = styled(Rating)({
 function Ofertas({ producto }) {
     return (
         <div className='m-2 font-[abeatbyKai] grid  content-between h-[97%]'>
-            <Box
-                className="float-right"
-                sx={{
-                    '& > legend': { mt: 2 },
-                }}
-            >
-                <StyledRating
-                    name="customized-color"
-                    defaultValue={0}
-                    max={1}
-                    getLabelText={(value) => `${value} Heart${value !== 1 ? 's' : ''}`}
-                    precision={1}
-                    icon={<FavoriteIcon fontSize="inherit" />}
-                    emptyIcon={<FavoriteBorderIcon fontSize="inherit" />}
-                />
-            </Box>
+            <div className='flex justify-end'>
+                <Box
+                    className="absolute flex justify-end float-right"
+                    sx={{
+                        '& > legend': { mt: 2 },
+                    }}
+                >
+                    <StyledRating
+                        name="customized-color"
+                        defaultValue={0}
+                        max={1}
+                        getLabelText={(value) => `${value} Heart${value !== 1 ? 's' : ''}`}
+                        precision={1}
+                        icon={<FavoriteIcon fontSize="inherit" />}
+                        emptyIcon={<FavoriteBorderIcon fontSize="inherit" />}
+                    />
+                </Box>
+            </div>
             <a href="/spa"><img className='w-60 h-60' src={producto.imagen} alt="" /></a>
             <hr />
             <p className='text-[#0BC26A] pt-4 text-lg text-center'>{'$' + producto.precio + ' MXN'} <span className='text-[#000000] line-through'>{'$' + (producto.precio + 130)}</span></p>
