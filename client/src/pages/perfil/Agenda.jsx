@@ -427,10 +427,6 @@ function Agenda() {
                                             label: { fill: '#ec5766 !important' },
                                             svg: { fill: 'white !important' },
                                             fontFamily: 'IloveGlitter !important',
-                                            // header color
-                                            "& .MuiPickersCalendarHeader-switchHeader": {
-                                                color: "#036C65 !important",
-                                            },
                                             // month color 
                                             "& .MuiPickersCalendarHeader-transitionContainer": {
                                                 color: "#036C65 !important",

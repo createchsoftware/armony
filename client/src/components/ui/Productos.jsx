@@ -6,6 +6,8 @@ import Box from '@mui/material/Box';
 import { styled } from '@mui/material/styles';
 import { CarritoProvider } from '../ui/Carrito.jsx'
 import { useCarrito } from '../ui/Carrito.jsx'
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const StyledRating = styled(Rating)({
     '& .MuiRating-iconFilled': {
@@ -17,7 +19,15 @@ const StyledRating = styled(Rating)({
 });
 
 function Productos({ productos }) {
+    const notify = () => toast("Producto agregado al carrito");
+
+
     const { agregarAlCarrito } = useCarrito();
+
+    const handleClick = (producto) => {
+        notify();
+        handleAgregarAlCarrito(producto);
+    }
 
     const handleAgregarAlCarrito = (producto) => {
         const productoParaCarrito = {
@@ -70,12 +80,13 @@ function Productos({ productos }) {
                                 </p>
                             </div>
                             <div className='mt-2'>
-                                <button onClick={() => handleAgregarAlCarrito(producto)} className=" text-xs gap-2  transition-all duration-300 px-8  hover:bg-[#036C65] hover:ring-1  hover:[#036C65] hover:ring-offset-1 group relative flex h-10 items-center justify-center overflow-hidden rounded-xl border-2 bg-[#EB5765] font-[abeatbykai] text-neutral-200"><span>Agregar</span> <IconoAgregarAlCarrito /> <div className="w-0 translate-x-[100%] pl-0 opacity-0 transition-all duration-200 group-hover:w-0 group-hover:translate-x-0 group-hover:pl-1 group-hover:opacity-100"></div></button>
+                                <button onClick={() => handleClick(producto)} className=" text-xs gap-2  transition-all duration-300 px-8  hover:bg-[#036C65] hover:ring-1  hover:[#036C65] hover:ring-offset-1 group relative flex h-10 items-center justify-center overflow-hidden rounded-xl border-2 bg-[#EB5765] font-[abeatbykai] text-neutral-200"><span>Agregar</span> <IconoAgregarAlCarrito /> <div className="w-0 translate-x-[100%] pl-0 opacity-0 transition-all duration-200 group-hover:w-0 group-hover:translate-x-0 group-hover:pl-1 group-hover:opacity-100"></div></button>
                             </div>
                         </li>
                     ))
                 }
             </ul>
+            <ToastContainer position={'bottom-right'} theme={'light'} />
         </div>
     )
 }

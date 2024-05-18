@@ -177,6 +177,7 @@
     "react-qr-code": "^2.0.12",
     "react-responsive-carousel": "^3.2.23",
     "react-router-dom": "^6.22.3",
+    "react-toastify": "^10.0.5",
     "react-transition-group": "^4.4.5",
     "reactjs-popup": "^2.0.6",
     "reactstrap": "^9.2.2",
