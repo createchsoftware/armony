@@ -8,18 +8,29 @@ import PopupLogin from "./Login/PopupLogin.jsx";
 import SubMenuServicios from "./SubMenuServicios.jsx"
 import MenuPerfil from "./MenuPerfil.jsx";
 import { Helmet, HelmetProvider } from "react-helmet-async";
-import { useCarrito } from '../ui/Carrito.jsx';
+import { useCarrito } from '../ui/Carrito.jsx'
 import { useLocation } from "react-router-dom";
 
 function Navbar() {
     let location = useLocation();
-    console.log(location.pathname);
 
+    const { getCartItemsCount } = useCarrito();
     const [cart, setCart, showModal, setShowModal] = useState(false);
     const [login, setLogin] = useState(false);
     const [log, setLog] = useState(false); //<<< PARA EL INICIO DE SESION
     const [usuario, setUsuario] = useState(false); //<<< PARA EL INICIO DE SESION
     const [items, setItems] = useState(0);
+
+
+    //auto update cart items in navbar (items)
+    useEffect(() => {
+        const updateCartItems = () => {
+            setItems(getCartItemsCount());
+        };
+        updateCartItems();
+    }, [getCartItemsCount]);
+
+
 
     const toggleCart = () => {
         setCart(!cart);
@@ -195,8 +206,8 @@ function Navbar() {
             {login && <PopupLogin cerrar={toggleLogin} />}
 
             {cart && (
-                <div className="cart-fondo">
-                    <div className="cart-fx">
+                <div className="overflow-y-auto cart-fondo">
+                    <div className="overflow-y-auto cart-fx">
                         <Carrito cerrar={toggleCart} totalProductos={cantProductos} logCart={log} loginCart={toggleLogin} />
                     </div>
                 </div>

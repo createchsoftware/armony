@@ -6,7 +6,14 @@ import { faTrash, faCircleXmark, faCircleMinus, faCirclePlus } from '@fortawesom
 const CarritoContext = createContext();
 
 export const CarritoProvider = ({ children }) => {
-    const [cartItems, setCartItems] = useState([]);
+    const [cartItems, setCartItems] = useState(() => {
+        const savedCart = localStorage.getItem('cartItems');
+        return savedCart ? JSON.parse(savedCart) : [];
+    });
+
+    useEffect(() => {
+        localStorage.setItem('cartItems', JSON.stringify(cartItems));
+    }, [cartItems]);
 
     const agregarAlCarrito = (item) => {
         // if quantity exists, increase it by 1
@@ -44,8 +51,12 @@ export const CarritoProvider = ({ children }) => {
         }
     };
 
+    const getCartItemsCount = () => {
+        return cartItems.reduce((total, item) => total + item.cantidad, 0);
+    };
+
     return (
-        <CarritoContext.Provider value={{ cartItems, agregarAlCarrito, eliminarDelCarrito, increaseQuantity, decreaseQuantity }}>
+        <CarritoContext.Provider value={{ cartItems, agregarAlCarrito, eliminarDelCarrito, increaseQuantity, decreaseQuantity, getCartItemsCount }}>
             {children}
         </CarritoContext.Provider>
     );
@@ -71,7 +82,7 @@ const Carrito = ({ cerrar, totalProductos, logCart, loginCart }) => {
     };
 
     const cartList = cartItems.map(item => (
-        <li key={item.id} className=" cart-item">
+        <li key={item.id} className="overflow-y-auto cart-item">
             <img className='cart-photo' src={item.image} alt={item.nombre} />
             <div className='grid content-between w-3/4 mx-4'>
                 <div className='flex justify-between'>
@@ -109,7 +120,7 @@ const Carrito = ({ cerrar, totalProductos, logCart, loginCart }) => {
 
     return (
         <div className="overflow-y-auto shadow-md cart">
-            <div className="cart-header">
+            <div className="overflow-y-auto cart-header">
                 <h2 className='cart-title'>Mi Carrito</h2>
                 <button className='cart-exit' onClick={cerrar} >
                     <FontAwesomeIcon icon={faCircleXmark} />
@@ -119,7 +130,7 @@ const Carrito = ({ cerrar, totalProductos, logCart, loginCart }) => {
                 <h4 className="mt-8 cart-empty">No hay artículos en el carrito.</h4>
             ) : (
                 <>
-                    <ul id="cart-items" className='overflow-y-auto'>{cartList}</ul>
+                    <ul id="cart-items overflow-y-auto" className='overflow-y-auto'>{cartList}</ul>
                     <div className='flex justify-between'>
                         <p>Envio:</p>
                         <span>$0.00</span>
