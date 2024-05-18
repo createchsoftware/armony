@@ -2,8 +2,16 @@ import React from "react";
 import Carousel from "react-material-ui-carousel";
 import "../../index.css";
 import CircleIcon from "@mui/icons-material/Circle";
+import { useState } from "react";
+import Soon from "./Proximamente";
 
 function Promociones() {
+  const [soon, setSoon] = useState(false);
+
+  const toggleSoon = () => {
+    setSoon(!soon)
+  };
+
   return (
     <>
       <h1 className="text-5xl w-[80%] md:text-6xl mx-auto font  text-[#036C65] my-12 text-center items-center  font-[iloveglitter] mt-24">
@@ -45,7 +53,7 @@ function Promociones() {
             </p>
             <p className="mt-6 text-gray-600">*Aplican restricciones</p>
             <div className="flex justify-center m-auto">
-              <button className="mt-8 transition-all duration-300 m-auto hover:bg-[#036C65] hover:ring-2 hover:ring-neutral-800 hover:ring-offset-1 group relative inline-flex h-10 items-center justify-center overflow-hidden rounded-2xl border-0 bg-[#1c5765] px-6 font-[abeatbykai] text-neutral-200">
+              <button onClick={toggleSoon} className="mt-8 transition-all duration-300 m-auto hover:bg-[#036C65] hover:ring-2 hover:ring-neutral-800 hover:ring-offset-1 group relative inline-flex h-10 items-center justify-center overflow-hidden rounded-2xl border-0 bg-[#1c5765] px-6 font-[abeatbykai] text-neutral-200">
                 <span>Ver más...</span>
                 <div className="w-0 translate-x-[100%] pl-0 opacity-0 transition-all duration-200 group-hover:w-5 group-hover:translate-x-0 group-hover:pl-1 group-hover:opacity-100">
                   <svg
@@ -87,7 +95,7 @@ function Promociones() {
             </p>
             <p className="mt-6 text-gray-600">Válido hasta el 30 de Junio</p>
             <div className="flex justify-center m-auto">
-              <button className="mt-8 transition-all duration-300 m-auto hover:bg-[#036C65] hover:ring-2 hover:ring-neutral-800 hover:ring-offset-1 group relative inline-flex h-10 items-center justify-center overflow-hidden rounded-2xl border-0 bg-[#1c5765] px-6 font-[abeatbykai] text-neutral-200">
+              <button onClick={toggleSoon} className="mt-8 transition-all duration-300 m-auto hover:bg-[#036C65] hover:ring-2 hover:ring-neutral-800 hover:ring-offset-1 group relative inline-flex h-10 items-center justify-center overflow-hidden rounded-2xl border-0 bg-[#1c5765] px-6 font-[abeatbykai] text-neutral-200">
                 <span>Ver más...</span>
                 <div className="w-0 translate-x-[100%] pl-0 opacity-0 transition-all duration-200 group-hover:w-5 group-hover:translate-x-0 group-hover:pl-1 group-hover:opacity-100">
                   <svg
@@ -129,7 +137,7 @@ function Promociones() {
             </p>
             <p className="mt-6 text-gray-600">Oferta válida sólo esta semana</p>
             <div className="flex justify-center m-auto">
-              <button className="mt-8 transition-all duration-300 m-auto hover:bg-[#036C65] hover:ring-2 hover:ring-neutral-800 hover:ring-offset-1 group relative inline-flex h-10 items-center justify-center overflow-hidden rounded-2xl border-0 bg-[#1c5765] px-6 font-[abeatbykai] text-neutral-200">
+              <button onClick={toggleSoon} className="mt-8 transition-all duration-300 m-auto hover:bg-[#036C65] hover:ring-2 hover:ring-neutral-800 hover:ring-offset-1 group relative inline-flex h-10 items-center justify-center overflow-hidden rounded-2xl border-0 bg-[#1c5765] px-6 font-[abeatbykai] text-neutral-200">
                 <span>Ver más...</span>
                 <div className="w-0 translate-x-[100%] pl-0 opacity-0 transition-all duration-200 group-hover:w-5 group-hover:translate-x-0 group-hover:pl-1 group-hover:opacity-100">
                   <svg
@@ -153,7 +161,15 @@ function Promociones() {
           </div>
         </div>
       </Carousel>
+      {soon && (
+        <div className='soon-fondo'>
+          <div className='text-black soon-fx' onClick={toggleSoon}>
+            <Soon />
+          </div>
+        </div>
+      )}
     </>
+
   );
 }
 

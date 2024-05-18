@@ -2,15 +2,10 @@ import LayoutPrincipal from "../layouts/LayoutPrincipal.jsx";
 import { Helmet, HelmetProvider } from "react-helmet-async";
 import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
-// import { ChevronRight } from 'lucide-react';
-// import pilar1 from '../../public/pictures/pilar1.png'
-// import pilar2 from '../../public/pictures/pilar2.png'
-// import pilar3 from '../../public/pictures/pilar3.png'
-// import pilar4 from '../../public/pictures/pilar4.png'
-//import ContenedorProductos from '../components/ui/ContenedorProductos.jsx'
 import Filtros from "../components/ui/Filtros.jsx";
 import Ofertas from "../components/ui/Ofertas.jsx";
-//import footer from '../components/ui/Footer.jsx';
+import { useState } from "react";
+import Soon from "../components/ui/Proximamente.jsx";
 
 const ofertas = [
   {
@@ -44,6 +39,13 @@ const ofertas = [
 ];
 
 const Productos = () => {
+
+  const [soon, setSoon] = useState(false);
+
+  const toggleSoon = () => {
+    setSoon(!soon)
+  };
+
   return (
     <>
       <HelmetProvider>
@@ -91,11 +93,12 @@ const Productos = () => {
                 <p className="text-3xl">
                   CONOCE NUESTRAS OFERTAS ÚNICAS HASTA 50% OFF
                 </p>
-                <a href="">Ver más {">"} </a>
+                <a onClick={toggleSoon}>Ver más {">"} </a>
               </div>
               {/* <div className='-translate-y-36'>
                                 <img className='float-right w-28' src="../../pictures/decoDerecha.png" alt="" />
                             </div> */}
+
             </div>
           </section>
 
@@ -272,6 +275,16 @@ const Productos = () => {
           {/*<section className='w-[80%] m-auto mt-12'>
                         <ContenedorProductos />
                     </section>*/}
+
+          {
+            soon && (
+              <div className='soon-fondo'>
+                <div className='text-black soon-fx' onClick={toggleSoon}>
+                  <Soon />
+                </div>
+              </div>
+            )
+          }
         </main>
       </LayoutPrincipal>
     </>
