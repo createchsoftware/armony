@@ -304,7 +304,7 @@ const Productos = () => {
               <div className="grid bg-white ">
                 <img src="../../pictures/ofertas1.png" alt="" />
                 <div className="grid gap-2 p-6">
-                  <h3 className="font-bold">Para este dia de las madres</h3>
+                  <h3 className="font-bold">Para este día de las madres</h3>
                   <p className="text-xs text-gray-500">
                     Encuentra las mejores ofertas para la mejor madre del
                     planeta.
@@ -334,7 +334,7 @@ const Productos = () => {
               <div className="grid bg-white rounded-xl ">
                 <img src="../../pictures/ofertas2.png" alt="" />
                 <div className="grid gap-2 p-6">
-                  <h3 className="font-bold">Para este dia de las madres</h3>
+                  <h3 className="font-bold">Para este día de las madres</h3>
                   <p className="text-xs text-gray-500">
                     Encuentra las mejores ofertas para la mejor madre del
                     planeta.
@@ -364,7 +364,7 @@ const Productos = () => {
               <div className="grid bg-white rounded-xl ">
                 <img src="../../pictures/ofertas3.png" alt="" />
                 <div className="grid gap-2 p-6">
-                  <h3 className="font-bold">Para este dia de las madres</h3>
+                  <h3 className="font-bold">Para este día de las madres</h3>
                   <p className="text-xs text-gray-500">
                     Encuentra las mejores ofertas para la mejor madre del
                     planeta.
