@@ -9,9 +9,11 @@ import SubMenuServicios from "./SubMenuServicios.jsx"
 import MenuPerfil from "./MenuPerfil.jsx";
 import { Helmet, HelmetProvider } from "react-helmet-async";
 import { useCarrito } from '../ui/Carrito.jsx';
+import { useLocation } from "react-router-dom";
 
 function Navbar() {
-
+    let location = useLocation();
+    console.log(location.pathname);
 
     const [cart, setCart, showModal, setShowModal] = useState(false);
     const [login, setLogin] = useState(false);
@@ -81,7 +83,7 @@ function Navbar() {
                         </button>
                         <ul className="menu">
                             <li className="nav-menu-item">
-                                <a href="/spa" className="menu-link">
+                                <a href={location.pathname === '/' ? '/' : '/spa'} className="menu-link">
                                     Inicio
                                 </a>
                             </li>
