@@ -38,8 +38,10 @@ document.getElementById('step2').addEventListener('click', async ()=>{
     })
 
 
-    if(!respuesta.ok)
-        return
+    if(!respuesta.ok){
+        return;
+    }
+        
 
     const respuestaJson = await respuesta.json();    
 
@@ -51,6 +53,7 @@ document.getElementById('step2').addEventListener('click', async ()=>{
            temporal.style.backgroundColor = 'orange';
            // 
         }
+        return;
     } 
 
     if(respuestaJson.incorrectos){
@@ -61,6 +64,7 @@ document.getElementById('step2').addEventListener('click', async ()=>{
            temporal.style.backgroundColor = 'red';
            // 
         }
+        return;
     }
 
 
@@ -69,5 +73,24 @@ document.getElementById('step2').addEventListener('click', async ()=>{
         window.location.href = respuestaJson.redirect;
     }
 
+
+})
+
+
+document.getElementById('cancelar').addEventListener('click',()=>{
+
+    document.cookie = "Megumin_cookie=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;"; 
+    document.cookie = "Nakano_Itsuki=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+    document.cookie = "Rem_cookie=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;"; 
+
+    let longitud =10;
+
+    for(let iterador=1; iterador <=longitud; iterador++){
+        document.getElementById(`q${iterador}`).value = '';
+        document.getElementById(`no-${iterador}`).checked = false;
+        document.getElementById(`si-${iterador}`).checked = false;
+    }
+
+    window.location.href = '/';
 
 })

@@ -135,9 +135,17 @@ async function InsertUser(solicitud,respuesta,siguiente){
     
                         let full_name = `${decodificada1.nombre} ${decodificada1.paterno} ${decodificada1.materno}`;
     
-                        let sending = await servicios.CrearCuentaEmail(decodificada1.correo,"token",full_name,busqueda[0].pkIdUsuario);
-    
-                        console.log(sending); // nos deberia imprimir la informacion acerca del envio
+                        try{
+                            let sending = await servicios.CrearCuentaEmail(decodificada1.correo,"token",full_name,busqueda[0].pkIdUsuario);
+
+                            console.log('correo enviado');
+                            console.log(sending);
+                        }
+                        catch(error){
+                            console.log(error);
+                        }
+                        
+                        
 
                         respuesta.clearCookie('Megumin_cookie', { path: '/' });
                         respuesta.clearCookie('Nakano_Itsuki', { path: '/' });
