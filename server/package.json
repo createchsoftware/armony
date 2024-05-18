@@ -146,7 +146,7 @@
     "node-fetch": "^3.3.2",
     "nodemailer": "^6.9.13",
     "socket.io": "^4.7.5",
-    "stripe": "^15.6.0",
+    "stripe": "^15.7.0",
     "url": "^0.11.3"
   },
   "devDependencies": {

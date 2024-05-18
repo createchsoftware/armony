@@ -1,11 +1,20 @@
 import user1 from "../../../../public/pictures/userCl.png";
 import gl from "../../../../public/pictures/googlelogo.png";
+import Soon from "../Proximamente";
+import { useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Helmet, HelmetProvider } from "react-helmet-async";
 import InputContrasena from "../InputContrasena.jsx";
 import { faAngleLeft } from "@fortawesome/free-solid-svg-icons";
 
 const Login = ({ cerrar }) => {
+  const [soon, setSoon] = useState(false);
+
+  const toggleSoon = () => {
+    setSoon(!soon);
+  };
+  // ^^^ POP-UP EMERGENTE DE "PROXIMAMENTE"
+
   const changeAdmin = () => {
     {
       cerrar.change(true);
@@ -63,7 +72,7 @@ const Login = ({ cerrar }) => {
               </label>
               <InputContrasena
                 props={{
-                  id:'pass',
+                  id: "pass",
                   texto: "Ingresa tu Contraseña",
                   class:
                     "bg-slate-200 rounded-full text-sm lg:text-base mb-2 lg:mb-3 mt-1 lg:mt-2 py-2 lg:py-3 w-[22rem] lg:w-[25rem] focus:outline-none focus:ring-1 focus:ring-[#EB5765] focus:border-transparent px-6",
@@ -115,6 +124,7 @@ const Login = ({ cerrar }) => {
           <button
             className="mb-5 md:mb-3 lg:mb-5 bg-blue-400 text-white text-xs lg:text-sm pl-10 pr-4 py-3 mx-auto hover:bg-blue-300"
             aria-label="Continuar con Google"
+            onClick={setSoon}
           >
             Continuar con Google
           </button>
@@ -142,6 +152,13 @@ const Login = ({ cerrar }) => {
             </a>
           </div>
         </div>
+        {soon && (
+          <div className="soon-fondo">
+            <div className="soon-fx" onClick={toggleSoon}>
+              <Soon />
+            </div>
+          </div>
+        )}
       </div>
     </>
   );
