@@ -44,8 +44,10 @@ document.getElementById('step-one').addEventListener('click',async ()=>{
     })  // fin del fetch
 
 
-    if(!respuesta.ok)
-        return
+    if(!respuesta.ok){
+        return;
+    }
+        
 
 
     const respuestaJson = await respuesta.json();
@@ -59,6 +61,7 @@ document.getElementById('step-one').addEventListener('click',async ()=>{
            temporal.style.backgroundColor = 'orange';
            // 
         }
+        return;
     }
 
     if(respuestaJson.invalidos){
@@ -69,6 +72,7 @@ document.getElementById('step-one').addEventListener('click',async ()=>{
            temporal.style.backgroundColor = 'red';
            // 
         }
+        return;
     }
 
 
@@ -76,6 +80,7 @@ document.getElementById('step-one').addEventListener('click',async ()=>{
         console.log("el correo que ingresate ya existe, por favor ingrese otro");
         correo.value = '';
         correo.style.backgroundColor = 'yellow';
+        return;
     }
 
 

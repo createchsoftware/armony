@@ -38,8 +38,10 @@ document.getElementById('step2').addEventListener('click', async ()=>{
     })
 
 
-    if(!respuesta.ok)
-        return
+    if(!respuesta.ok){
+        return;
+    }
+        
 
     const respuestaJson = await respuesta.json();    
 
@@ -51,6 +53,7 @@ document.getElementById('step2').addEventListener('click', async ()=>{
            temporal.style.backgroundColor = 'orange';
            // 
         }
+        return;
     } 
 
     if(respuestaJson.incorrectos){
@@ -61,6 +64,7 @@ document.getElementById('step2').addEventListener('click', async ()=>{
            temporal.style.backgroundColor = 'red';
            // 
         }
+        return;
     }
 
 

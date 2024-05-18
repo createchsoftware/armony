@@ -28,8 +28,10 @@ document.getElementById('step3').addEventListener('click',async ()=>{
         })
     })
 
-    if(!respuesta.ok)
-      return
+    if(!respuesta.ok){
+        return;
+    }
+      
 
     const respuestaJson = await respuesta.json();
 
@@ -41,6 +43,7 @@ document.getElementById('step3').addEventListener('click',async ()=>{
         confirmacion.value='';
         confirmacion.placeholder = "las contraseñas no concuerdan";
         confirmacion.backgroundColor = 'yellow';
+        return;
     }
 
     if(respuestaJson.invalidas){
@@ -55,6 +58,7 @@ document.getElementById('step3').addEventListener('click',async ()=>{
         confirmacion.value='';
         contraseña.placeholder = texto;
         contraseña.backgroundColor = 'orange';
+        return;
     }
 
     if(respuestaJson.fuera_rango){
@@ -62,6 +66,7 @@ document.getElementById('step3').addEventListener('click',async ()=>{
         confirmacion.value='';
         contraseña.placeholder = `La contrasena que ingresaste tiene ${respuestaJson.fuera_rango}`;
         contraseña.backgroundColor = 'white';
+        return;
     }
 
     if(respuestaJson.redirect){
