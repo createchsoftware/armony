@@ -116,13 +116,13 @@ function Producto() {
                             <path strokeLinecap="round" strokeLinejoin="round" d="M9 15 3 9m0 0 6-6M3 9h12a6 6 0 0 1 0 12h-3" />
                         </svg> Volver
                         </a>
-                        <img src="../../public/pictures/producto1.png" alt="" />
+                        <img src="../../pictures/producto1.png" alt="" />
                         <div className="flex justify-center gap-4">
-                            <img className="w-14 aspect-square h-14" src="../../public/pictures/vistas.png" alt="" />
-                            <img className="w-14 aspect-square h-14" src="../../public/pictures/vistas.png" alt="" />
-                            <img className="w-14 aspect-square h-14" src="../../public/pictures/vistas.png" alt="" />
-                            <img className="w-14 aspect-square h-14" src="../../public/pictures/vistas.png" alt="" />
-                            <img className="w-14 aspect-square h-14" src="../../public/pictures/vistas.png" alt="" />
+                            <img className="w-14 aspect-square h-14" src="../../pictures/vistas.png" alt="" />
+                            <img className="w-14 aspect-square h-14" src="../../pictures/vistas.png" alt="" />
+                            <img className="w-14 aspect-square h-14" src="../../pictures/vistas.png" alt="" />
+                            <img className="w-14 aspect-square h-14" src="../../pictures/vistas.png" alt="" />
+                            <img className="w-14 aspect-square h-14" src="../../pictures/vistas.png" alt="" />
                         </div>
                     </div>
                     <div className="grid w-1/2 gap-0 p-12">

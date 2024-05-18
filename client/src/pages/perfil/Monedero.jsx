@@ -55,7 +55,7 @@ function Monedero() {
                 <section className='rounded-2xl mt-12 w-[60%] m-auto p-6 shadow-[0_3px_10px_rgb(0,0,0,0.2)]'>
                     <a className='flex items-baseline content-center text-sm gap-x-4' href="/perfil"> <IoIosArrowBack className='' />
                         Volver</a>
-                    <img className='w-32 m-auto my-6 -mt-24 rounded-full aspect-square' src="../../../public/pictures/monedero.png" alt="" />
+                    <img className='w-32 m-auto my-6 -mt-24 rounded-full aspect-square' src="../../../pictures/monedero.png" alt="" />
                     <div className='m-auto text-center '>
                         <h1 className='text-[#036C65] font-semibold text-2xl mb-2'>Monedero</h1>
                         <h2>Dinero obtenido en la cuenta</h2>
@@ -64,7 +64,7 @@ function Monedero() {
 
                 <section className='rounded-2xl text-center mt-24  m-auto w-[50%] grid gap-8 p-12 shadow-[0_3px_10px_rgb(0,0,0,0.2)]'>
                     <div className="bg-gradient-to-r py-4 w-[60%] -mt-36 m-auto from-[#FFB5A8] to-[#FFE4E1] border-2 rounded-2xl border-gray-600">
-                        <img className="w-12 m-auto mb-4" src="../../../public/pictures/logoArmony.png" alt="" />
+                        <img className="w-12 m-auto mb-4" src="../../../pictures/logoArmony.png" alt="" />
                         <div className="text-2xl text-center">
                             <h2>Monedero</h2>
                             <p>{monedero}</p>
@@ -78,11 +78,11 @@ function Monedero() {
 
                     <section className='rounded-2xl text-center grid-cols-2  m-auto w-[80%] grid gap-4 p-12 shadow-[0_3px_10px_rgb(0,0,0,0.2)]'>
                         <a href="/perfil/tarjetas" className="rounded-xl hover:bg-opacity-80 flex gap-4 items-center px-4 py-4 text-white bg-[#EB5765]">
-                            <img className="w-8" src="../../../public/pictures/tarjetas.png" alt="" />
+                            <img className="w-8" src="../../../pictures/tarjetas.png" alt="" />
                             <p>Mis tarjetas</p>
                         </a>
                         <a href="/perfil/historial" className="rounded-xl hover:bg-opacity-80 flex gap-4 items-center px-4 py-4 text-white bg-[#EB5765]">
-                            <img className="w-8" src="../../../public/pictures/movimientos.png" alt="" />
+                            <img className="w-8" src="../../../pictures/movimientos.png" alt="" />
                             <p>Movimientos</p>
                         </a>
                         <a href="/perfil/monedero/agregarSaldo" className="w-1/2 m-auto py-1 hover:bg-opacity-80 px-2 col-span-2 rounded-full text-white bg-[#EB5765]">
