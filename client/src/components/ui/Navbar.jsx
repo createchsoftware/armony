@@ -149,24 +149,13 @@ function Navbar() {
                             </li>
                             {location.pathname !== "/" && (
                                 <li className="nav-menu-item">
-                                    { log ? (
-                                        <a
-                                            href="/favoritos"
-                                            className="nav-fav"
-                                            aria-label="Ir a Favoritos"
-                                        >
-                                            <FontAwesomeIcon icon={faHeart} />
-                                        </a>
-                                    ):(
-                                        <a
-                                            href="#"
-                                            className="nav-fav"
-                                            aria-label="Ir a Favoritos"
-                                            onClick={toggleLogin}
-                                        >
-                                            <FontAwesomeIcon icon={faHeart} />
-                                        </a>
-                                    )}
+                                    <a
+                                        href="/favoritos"
+                                        className="nav-fav"
+                                        aria-label="Ir a Favoritos"
+                                    >
+                                        <FontAwesomeIcon icon={faHeart} />
+                                    </a>
                                 </li>
                             )}
                             {location.pathname == "/spa/productos" && (
