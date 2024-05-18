@@ -26,64 +26,63 @@ function Servicio({
   rating,
   isFavorite,
 }) {
-
   return (
     <>
       <div className="grid gap-4 m-4 text-center md:m-8">
         <div
-          className="p-6 rounded-lg aspect-square"
+          className="relative p-6 rounded-lg aspect-square"
           style={{
             backgroundImage: `url(${imagen})`,
             backgroundRepeat: "no-repeat",
             backgroundSize: "cover",
             backgroundPosition: "center",
-            //aspectRatio: "1/1",
             maxWidth: "25rem",
             maxHeight: "14rem",
-            backgroundcolor: "rgba(0, 0, 0, 0.6)",
           }}
         >
-          <Box
-            className="relative right"
-            sx={{
-              "& > legend": { mt: 2 },
-            }}
-          >
-            <div className="object-bottom">
-              <div className="grid grid-cols-[auto_70%_auto]">
-                <div>
-                  <AiOutlineShoppingCart
-                    style={{ fontSize: "28px", color: "#000000" }}
-                  />
-                </div>
-                <div></div>
-                <div className="">
-                  <StyledRating
-                    name="customized-color"
-                    defaultValue={isFavorite ? 1 : 0}
-                    max={1}
-                    getLabelText={(value) =>
-                      `${value} Heart${value !== 1 ? "s" : ""}`
-                    }
-                    precision={1}
-                    icon={<FavoriteIcon fontSize="inherit" />}
-                    emptyIcon={
-                      <FavoriteBorderIcon
-                        style={{ color: "black" }}
-                        fontSize="inherit"
-                      />
-                    }
-                  />
+          <div className="absolute inset-0 bg-black rounded-lg opacity-35"></div>
+          <div className="relative">
+            <Box
+              sx={{
+                "& > legend": { mt: 2 },
+              }}
+            >
+              <div className="object-bottom">
+                <div className="grid grid-cols-[auto_70%_auto]">
+                  <div>
+                    <AiOutlineShoppingCart
+                      style={{ fontSize: "28px", color: "#000000" }}
+                    />
+                  </div>
+                  <div></div>
+                  <div>
+                    <StyledRating
+                      name="customized-color"
+                      defaultValue={isFavorite ? 1 : 0}
+                      max={1}
+                      getLabelText={(value) =>
+                        `${value} Heart${value !== 1 ? "s" : ""}`
+                      }
+                      precision={1}
+                      icon={<FavoriteIcon fontSize="inherit" />}
+                      emptyIcon={
+                        <FavoriteBorderIcon
+                          style={{ color: "black" }}
+                          fontSize="inherit"
+                        />
+                      }
+                    />
+                  </div>
                 </div>
               </div>
-            </div>
-          </Box>
-          <h1 className="mt-3 font-extrabold text-white">{nombre}</h1>
-          <p className="mt-6 font-light text-justify text-white">
-            {descripcion.length > 60
-              ? descripcion.substring(0, 40) + "..."
-              : descripcion}
-          </p>
+            </Box>
+            <h1 className="mt-3 font-extrabold text-white">{nombre}</h1>
+            <p className="mt-6 font-light text-justify text-white">
+              {descripcion.length > 60
+                ? descripcion.substring(0, 40) + "..."
+                : descripcion}
+            </p>
+          </div>
         </div>
         <div className="grid gap-2">
           <div className="flex gap-4 m-auto">
@@ -107,7 +106,7 @@ function Servicio({
               rating: rating,
             }}
             actionElement={
-              <button className=" transition-all duration-300  m-auto hover:bg-[#036C65] hover:ring-2 hover:[#036C65] hover:ring-offset-1 group relative inline-flex h-10 items-center justify-center overflow-hidden rounded-lg border-2 bg-[#EB5765] px-6 font-[abeatbykai] text-neutral-200">
+              <button className="transition-all duration-300 m-auto hover:bg-[#036C65] hover:ring-2 hover:[#036C65] hover:ring-offset-1 group relative inline-flex h-10 items-center justify-center overflow-hidden rounded-lg border-2 bg-[#EB5765] px-6 font-[abeatbykai] text-neutral-200">
                 <span>Ver más</span>
                 <div className="w-0 translate-x-[100%] pl-0 opacity-0 transition-all duration-200 group-hover:w-5 group-hover:translate-x-0 group-hover:pl-1 group-hover:opacity-100">
                   <svg
