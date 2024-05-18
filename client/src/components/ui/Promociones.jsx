@@ -10,7 +10,7 @@ function Promociones() {
         Conoce nuestras promociones e información!
       </h1>
       {/* <Carousel >
-                <div className="grid gap-4 bg-[image:var(--image-url)] bg-cover aspect-auto text-center" style={{ '--image-url': `url(${'../../../public/pictures/promocion1.png'})` }}>
+                <div className="grid gap-4 bg-[image:var(--image-url)] bg-cover aspect-auto text-center" style={{ '--image-url': `url(${'../../../pictures/promocion1.png'})` }}>
                     <div className="bg-[#1B8E87] border-2 border-[#EB5765] w-1/3 m-16 rounded-xl p-16 " >
                         <h1 className="text-6xl text-white font-[iloveglitter]">¡Super Promoción!</h1>
                         <h2 className="mt-12 text-3xl text-white font-[quinger] font-bold">Masaje maderoterapia</h2>

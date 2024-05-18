@@ -1,7 +1,8 @@
 import LayoutPrincipal from '../../layouts/LayoutPrincipal'
-import { Fragment, useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 //import { products } from '../../data/productos.json'
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faCirclePlus } from '@fortawesome/free-solid-svg-icons';
 import {
     faAngleLeft,
 } from "@fortawesome/free-solid-svg-icons";
@@ -79,16 +80,23 @@ function Tarjetas() {
                     </section>
 
                     <section className='w-[60%] m-auto rounded-2xl p-6 shadow-[0_3px_10px_rgb(0,0,0,0.2)]'>
-                        <div className='grid gap-6'>
+                        <div className='grid'>
                             { array.length === 0 ? (
                                 <p className='m-auto mb-4'>No hay tarjetas registradas.</p>
                             ):(
                                 array.map((objeto) => (
-                                    <TarjetasPago tarjetas={objeto} funcion={EliminarTarjeta} texto_btn={'Eliminar Tarjeta'}
+                                    // eslint-disable-next-line react/jsx-key
+                                    <TarjetasPago tarjetas={objeto} funcion={EliminarTarjeta} texto_btn={'Eliminar'}
                                     />))
                             )}
                         </div>
-                        <hr />
+                        { array.length === 0 && <hr /> }
+                        <div className='grid justify-end'>
+                            <a href="/perfil/tarjetas/registroTarjeta" className='flex gap-2 items-center text-xl mr-12 w-max mt-8 relative before:bg-[#056761] before:absolute before:-bottom-1 before:block before:h-[1px] before:w-full before:origin-bottom-right before:scale-x-0 before:transition before:duration-300 before:ease-in-out hover:before:origin-bottom-left hover:before:scale-x-100 hover:font-bold'>
+                                <p className='text-[#056761]'>Agregar tarjeta</p>
+                                <FontAwesomeIcon icon={faCirclePlus} className='text-[#056761]' />
+                            </a>
+                        </div>
                     </section>
                 </main>
             </LayoutPrincipal >

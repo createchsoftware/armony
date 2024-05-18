@@ -60,7 +60,7 @@ function Navbar() {
         <>
             <HelmetProvider>
                 <Helmet>
-                    <script src="../../../public/scripts/index.js"></script>
+                    <script src="../../../scripts/index.js"></script>
                 </Helmet>
             </HelmetProvider>
             <header className="header">

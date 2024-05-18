@@ -16,7 +16,7 @@ const Suscripcion = () => {
                         <p className="text-4xl text-center text-white justify-self-center mt-4 drop-shadow-[1px_1px_var(--tw-shadow-color)] shadow-[gray]">Conoce los beneficios que nuestra suscripción tiene para ti</p>
                     </div>
                     <div className="grid w-2/5 items-center">
-                        <img className="justify-self-center drop-shadow-[5px_5px_var(--tw-shadow-color)] shadow-[gray] pr-6" src="../../public/pictures/tarjetaSuscripcion.png" alt="" />
+                        <img className="justify-self-center drop-shadow-[5px_5px_var(--tw-shadow-color)] shadow-[gray] pr-6" src="../../pictures/tarjetaSuscripcion.png" alt="" />
                     </div>
                     <div className="deg"></div>
                 </div>
@@ -25,7 +25,7 @@ const Suscripcion = () => {
                     <div className='border-4 border-[#A93F74] rounded-[30px]'>
                         <div className="grid justify-center h-auto grid-cols-2 gap-4 p-10 border-[1rem] border-[#F584A7] rounded-3xl place-content-center md:grid-cols-1 md:gap-8  md:h-[52vw] md:place-content-start ">
                             <div className="grid w-full m-auto md:col-span-2">
-                                <img className='rounded-2xl w-48 justify-self-center duration-200 hover:w-52' src="../../public/pictures/tarjetaSuscripcion.png" alt="" />
+                                <img className='rounded-2xl w-48 justify-self-center duration-200 hover:w-52' src="../../pictures/tarjetaSuscripcion.png" alt="" />
                             </div>
                             <h1 className="col-span-2 font-bold text-3xl text-center text-[#F584A7] drop-shadow-[1px_1px_var(--tw-shadow-color)] shadow-[#A93F74] ">Suscripción de socio</h1>
                             <div className="grid gap-1 text-center divide-black divide- md:gap-4 md:col-span-2">

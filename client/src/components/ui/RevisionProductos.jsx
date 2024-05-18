@@ -39,8 +39,8 @@ const ofertas = [
 
 function RevisionProductos({ restart }) {
     const [cartItems, setCartItems] = useState([
-        { id: 1, name: 'Esponjabon', price: 10.00, quantity: 1 , image: "../../../public/pictures/producto1.png" , desc: "Esponjabon floor para baño, formul...", valoracion: 4 },
-        { id: 2, name: 'Tónito facial', price: 15.00, quantity: 2, image: "../../../public/pictures/oferta3.png" , desc: "Tónito facial dermatológico...", valoracion: 5 }
+        { id: 1, name: 'Esponjabon', price: 10.00, quantity: 1 , image: "../../../pictures/producto1.png" , desc: "Esponjabon floor para baño, formul...", valoracion: 4 },
+        { id: 2, name: 'Tónito facial', price: 15.00, quantity: 2, image: "../../../pictures/oferta3.png" , desc: "Tónito facial dermatológico...", valoracion: 5 }
     ]);
     //  ^^^ ES SOLO TEST PARA PROBAR LA FUNCIONALIDAD DEL RESUMEN DE CITAS
 
