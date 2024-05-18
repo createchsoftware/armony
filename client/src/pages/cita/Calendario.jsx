@@ -419,9 +419,9 @@ function Calendario() {
                     {/* <Calendar /> */}
 
 
-                    <div className=''>
+                    <div className='overflow-x-auto'>
                         <h1 className='text-xl text-[#036C65] mb-4'>Horas Disponibles:</h1>
-                        <div className='flex overflow-x-auto text-[#EB5765] gap-2'>
+                        <div className='flex text-[#EB5765] gap-2'>
                             {horasDisponibles && horasDisponibles.map((hora, index) => (
                                 <button key={index} onClick={() => handleClick(hora, index)} className={getButtonClass(index)}>{hora}</button>
                             ))}
