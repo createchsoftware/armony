@@ -26,7 +26,7 @@ function Servicio({
   rating,
   isFavorite,
 }) {
-  console.log(imagen);
+
   return (
     <>
       <div className="grid gap-4 m-4 text-center md:m-8">
@@ -39,9 +39,7 @@ function Servicio({
             backgroundPosition: "center",
             //aspectRatio: "1/1",
             maxWidth: "25rem",
-            maxHeight: "25rem",
-            height: "full",
-            width: "full",
+            maxHeight: "14rem",
             backgroundcolor: "rgba(0, 0, 0, 0.6)",
           }}
         >

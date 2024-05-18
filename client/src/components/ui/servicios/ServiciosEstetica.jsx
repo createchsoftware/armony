@@ -516,7 +516,7 @@ export default function ServicioEstetica() {
                 Productos
               </h2>
 
-              <div className="grid md:gap-12 md:flex">
+              <div className="grid md:gap-12 md:justify-start md:flex">
                 {/* Filters */}
                 <form className="hidden w-64 lg:block">
                   {subCategories.map((section) => (
@@ -756,7 +756,7 @@ export default function ServicioEstetica() {
                   </Disclosure>
                 </form>
 
-                <div className="grid grid-cols-2 md:grid-cols-3 w-[90%] md:w-[100%] rounded-lg ring-4 ring-[#E2B3B7] mx-auto mb-10">
+                <div className="grid grid-cols-2 md:grid-cols-3 md:content-start w-[90%] md:w-[100%] rounded-lg ring-4 ring-[#E2B3B7] mx-auto mb-10">
                   {filteredProducts.length === 0 ? (
                     <p className="m-auto">No hay servicios de estetica disponibles</p>
                   ) : (

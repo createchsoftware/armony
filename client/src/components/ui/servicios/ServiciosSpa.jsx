@@ -139,20 +139,6 @@ var corporales = [
     rating: 5,
     fav: true,
   },
-  {
-    id: 3,
-    nombre: "Vacumterapia",
-    descripcion:
-      "Drena el tejido adiposo movilizando la grasa localizada hacia el sistema linfático",
-    espDesc1:
-      "La cavitación es una técnica no quirúrgica para eliminar la grasa localizada mediante el uso de ultrasonidos de baja frecuencia.",
-    espDesc2:
-      "Su principal ventaja es que ofrece la posibilidad de conseguir los mismos resultados que unaliposucción, pero sin la necesidad de una intervención quirúrgica, por eso cada vez más personas prefieren la cavitación como alternativa indolora, sin anestesia y muy efectiva, y sin dejar ningún tipo de señal o cicatriz en la piel.",
-    precio: "1,350.00",
-    img: Vac,
-    rating: 5,
-    fav: true,
-  },
 ];
 
 function classNames(...clases) {
@@ -654,7 +640,7 @@ export default function ServicioEstetica() {
                 Productos
               </h2>
 
-              <div className="grid md:gap-12 md:flex">
+              <div className="grid md:justify-start md:gap-12 md:flex">
                 {/* Filters */}
                 <form className="hidden w-64 lg:block">
                   {subCategories.map((section) => (
