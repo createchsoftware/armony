@@ -70,3 +70,12 @@ document.getElementById('step3').addEventListener('click',async ()=>{
     }
 
 })
+
+
+document.getElementById('cancelar').addEventListener('click', ()=>{
+    document.getElementById('contraseña').value = '';
+    document.getElementById('nueva-contraseña').value = '';
+    document.getElementById('state').checked = false;
+
+    window.location.href = '/';
+})

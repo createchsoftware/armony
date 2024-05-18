@@ -71,3 +71,18 @@ document.getElementById('step2').addEventListener('click', async ()=>{
 
 
 })
+
+
+document.getElementById('cancelar').addEventListener('click',()=>{
+
+    let longitud =10;
+
+    for(let iterador=1; iterador <=longitud; iterador++){
+        document.getElementById(`q${iterador}`).value = '';
+        document.getElementById(`no-${iterador}`).checked = false;
+        document.getElementById(`si-${iterador}`).checked = false;
+    }
+
+    window.location.href = '/';
+
+})

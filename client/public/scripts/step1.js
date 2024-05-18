@@ -87,3 +87,23 @@ document.getElementById('step-one').addEventListener('click',async ()=>{
 
 
 })
+
+
+document.getElementById('cancelar').addEventListener('click',()=>{
+    document.getElementById('name').value = '';
+    document.getElementById('lastname1').value = '';
+    document.getElementById('lastname2').value = '';
+    document.getElementById('email').value = '';
+    document.getElementById('lada').value = '';
+    document.getElementById('phone').value = '';
+    document.getElementById('day').value = '';
+    document.getElementById('month').value = '';
+    document.getElementById('year').value = '';
+    document.getElementById('calle').value = '';
+    document.getElementById('codigo_postal').value = '';
+    document.getElementById('numero').value = '';
+    document.getElementById('colonia').value = '';
+
+    window.location.href = '/';
+
+})
