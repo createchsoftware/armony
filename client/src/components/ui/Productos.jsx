@@ -21,23 +21,25 @@ function Productos({ productos }) {
             <ul className='grid grid-cols-1 gap-2 md:grid-cols-4 md:ml-28'>
                 {
                     productos.map(producto => (
-                        <li key={productos.id} className='border-4 bg-white border-[#E2B3B7] p-6 py-2 rounded-xl'>
-                            <Box
-                                className="float-right"
-                                sx={{
-                                    '& > legend': { mt: 2 },
-                                }}
-                            >
-                                <StyledRating
-                                    name="customized-color"
-                                    defaultValue={0}
-                                    max={1}
-                                    getLabelText={(value) => `${value} Heart${value !== 1 ? 's' : ''}`}
-                                    precision={1}
-                                    icon={<FavoriteIcon fontSize="inherit" />}
-                                    emptyIcon={<FavoriteBorderIcon fontSize="inherit" />}
-                                />
-                            </Box>
+                        <li key={productos.id} className='border-4 bg-white grid content-between border-[#E2B3B7] p-6 py-2 rounded-xl'>
+                            <div className='flex justify-end'>
+                                <Box
+                                    className="absolute flex justify-end float-right -mr-3"
+                                    sx={{
+                                        '& > legend': { mt: 2 },
+                                    }}
+                                >
+                                    <StyledRating
+                                        name="customized-color"
+                                        defaultValue={0}
+                                        max={1}
+                                        getLabelText={(value) => `${value} Heart${value !== 1 ? 's' : ''}`}
+                                        precision={1}
+                                        icon={<FavoriteIcon fontSize="inherit" />}
+                                        emptyIcon={<FavoriteBorderIcon fontSize="inherit" />}
+                                    />
+                                </Box>
+                            </div>
                             <img className='w-2/3 m-auto mt-6 mb-4 rounded-lg aspect-square'
                                 src={'https://i.imgur.com/CCBFmSi.png'}
                                 alt={producto.nombre}

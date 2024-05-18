@@ -4,7 +4,7 @@
   "version": "0.0.0",
   "description": "Proyecto escolar para la materia de Ingenieria de Software en el Instituto Tecnológico de Mexicali.",
   "private": true,
-  "main": "main.js",
+  "main": "app.js",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/createchsoftware/armony.git"

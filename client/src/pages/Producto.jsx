@@ -89,6 +89,7 @@ function Producto() {
     const [cantidad, setCantidad] = useState(1);
     const [selectedRatingIndex, setSelectedRatingIndex] = useState(5);
     const [generalRating, setGeneralRating] = useState(5);
+    const [filteredReviews, setFilteredReviews] = useState(reseñas);
 
     console.log("🚀 ~ Producto ~ selectedRating:", selectedRatingIndex)
 
@@ -106,6 +107,10 @@ function Producto() {
         setSelectedRatingIndex(index);
     }
 
+    useEffect(() => {
+        setFilteredReviews(reseñas.filter(reseña => reseña.calificacion === selectedRatingIndex));
+    }, [selectedRatingIndex]);
+
 
     return (
         <LayoutPrincipal>
@@ -116,13 +121,13 @@ function Producto() {
                             <path strokeLinecap="round" strokeLinejoin="round" d="M9 15 3 9m0 0 6-6M3 9h12a6 6 0 0 1 0 12h-3" />
                         </svg> Volver
                         </a>
-                        <img src="../../pictures/producto1.png" alt="" />
+                        <img src="../../public/pictures/producto1.png" alt="" />
                         <div className="flex justify-center gap-4">
-                            <img className="w-14 aspect-square h-14" src="../../pictures/vistas.png" alt="" />
-                            <img className="w-14 aspect-square h-14" src="../../pictures/vistas.png" alt="" />
-                            <img className="w-14 aspect-square h-14" src="../../pictures/vistas.png" alt="" />
-                            <img className="w-14 aspect-square h-14" src="../../pictures/vistas.png" alt="" />
-                            <img className="w-14 aspect-square h-14" src="../../pictures/vistas.png" alt="" />
+                            <img className="w-14 aspect-square h-14" src="../../public/pictures/vistas.png" alt="" />
+                            <img className="w-14 aspect-square h-14" src="../../public/pictures/vistas.png" alt="" />
+                            <img className="w-14 aspect-square h-14" src="../../public/pictures/vistas.png" alt="" />
+                            <img className="w-14 aspect-square h-14" src="../../public/pictures/vistas.png" alt="" />
+                            <img className="w-14 aspect-square h-14" src="../../public/pictures/vistas.png" alt="" />
                         </div>
                     </div>
                     <div className="grid w-1/2 gap-0 p-12">
@@ -256,7 +261,7 @@ function Producto() {
                                 <div className="text-center">
                                     <p className="text-3xl font-medium text-gray-500 ms-1 dark:text-gray-400">4.95</p>
                                     <Rating className='' value={selectedRatingIndex} readOnly unratedColor="amber" ratedColor="amber" />
-                                    <p className="text-sm font-medium text-gray-500 dark:text-gray-400">{4} Reseñas</p>
+                                    <p className="text-sm font-medium text-gray-500 dark:text-gray-400">{5} Reseñas</p>
                                 </div>
                                 <div className="w-56">
                                     {['5', '4', '3', '2', '1'].map((label, index) => (
@@ -273,7 +278,7 @@ function Producto() {
                             <button className="text-[#EB5765] bg-opacity-30 bg-[#EB5765] hover:bg-opacity-90 hover:text-white rounded-3xl py-2 px-6 mr-12">Escribir una reseña</button>
                         </div>
                         <div>
-                            {reseñas.map(reseña => (
+                            {filteredReviews.map(reseña => (
                                 <Reseña key={reseña.id} reseña={reseña} />
                             ))}
                         </div>
