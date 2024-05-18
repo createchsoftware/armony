@@ -58,7 +58,6 @@ async function verificar_cookie(solicitud,respuesta){
                 
                     let decodificada = await jsonwebtoken.verify(galleta, process.env.JWT_SECRET);
                 
-                    
                     respuesta.send({logueado:true,nombre:decodificada.nombre,apellidoP:decodificada.paterno,apellidoM:decodificada.materno,email:decodificada.correo,telefono:decodificada.telefono,pass:decodificada.contraseña,imagen:decodificada.imagen,calle:decodificada.calle,clave:decodificada.user,colonia:decodificada.colonia,numero:decodificada.numero,codigoP:decodificada.postal,fechaNac:decodificada.nacimiento});
                         
                     
