@@ -2,6 +2,7 @@ import express from "express";
 import { servidor } from "./data/datos.js";
 import cookieParser from 'cookie-parser';
 import https from "https";
+import * as fs from "fs";
 
 import path, { dirname } from 'path';
 import { fileURLToPath } from 'url';
@@ -16,8 +17,8 @@ import InsertUser from "./middlewares/register.js";
 
 import { conexion } from "./db/connection.js";
 
-const keyPath = path.join(__dirname, '/ssl/private.key');
-const certPath = path.join(__dirname, '/ssl/certificate.crt');
+const keyPath = path.join(_dirname, '/ssl/private.key');
+const certPath = path.join(_dirname, '/ssl/certificate.crt');
 
 // Objeto de express
 const app = express();
