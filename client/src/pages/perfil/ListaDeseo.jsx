@@ -28,6 +28,7 @@ function ListaDeseo() {
     const [searchTerm, setSearchTerm] = useState('');
     const [sideBar, setSiderBar] = useState(false);
     const [barSize , setBarSize] = useState('sideBar-Off')
+    const [cols, setCols] = useState('grid-cols-4')
 
     const filtrar = (type) => {
         setTipo(type);
@@ -148,6 +149,7 @@ function ListaDeseo() {
         setWidth('w-1/2')
         filtrar('1')
         setShowProduct(true)
+        setCols('grid-cols-3')
     }
     const presionar2 = () => {
         setBoton2('lista-boton-on')
@@ -156,6 +158,7 @@ function ListaDeseo() {
         setWidth('w-full')
         filtrar('2')
         setShowProduct(false)
+        setCols('grid-cols-4')
     }
 
     const removeProducto = (itemId) => {
@@ -218,10 +221,12 @@ function ListaDeseo() {
     ))
 
     const precioTotal = contResumen
-      .filter(producto => producto.tipo === '1')
-      .reduce((total, producto) => total + producto.precio, 0)
-      .toFixed(2);
-    const cantProductos = contResumen.length;
+        .filter(producto => producto.tipo === '1')
+        .reduce((total, producto) => total + producto.precio, 0)
+        .toFixed(2);
+    const cantProductos = contResumen
+        .filter(producto => producto.tipo === '1')
+        .length;
 
     const handleSearch = (event) => {
       setSearchTerm(event.target.value);
@@ -245,7 +250,7 @@ function ListaDeseo() {
                         <div className={barSize} >
                             <aside className='menu-deseo bg-[#fb9ea6] w-full' >
                                 <nav className='h-full flex flex-col'>
-                                    <div className='flex items-center mx-8 py-8 cursor-pointer overflow-y-hidden' onClick={toggleBar}>
+                                    <div className='flex items-center mx-8 py-8 cursor-pointer' onClick={toggleBar}>
                                         <FontAwesomeIcon className='text-2xl' icon={faBars} />
                                         { sideBar && 
                                             <p className='text-xl ml-8 truncate'>Mi lista de deseos</p>
@@ -255,20 +260,20 @@ function ListaDeseo() {
                                         <li className={boton1} onClick={presionar1}>
                                             <FontAwesomeIcon className='ml-6' icon={faBasketShopping} />
                                             { sideBar && 
-                                                <p className='ml-3'>Productos</p>
+                                                <p className='ml-3 truncate'>Productos</p>
                                             }
                                         </li>
                                         <li className={boton2} onClick={presionar2}>
                                             <FontAwesomeIcon className='ml-6' icon={faHandHoldingHeart} />
                                             { sideBar && 
-                                                <p className='ml-3'>Servicios</p>
+                                                <p className='ml-3 truncate'>Servicios</p>
                                             }
                                         </li>
                                     </ul>
                                 </nav>
                             </aside>
                         </div>
-                        <div className='menu-deseo w-auto'>
+                        <div className='menu-deseo w-full'>
                             <img src="../../../pictures/decoArmony1.png" alt="" className='absolute -right-7 -rotate-90 w-60 h-180 top-60 z-0' />
                             <div className='flex justify-center mt-5'>
                                 <form action="" className='flex items-center w-4/5 justify-center border-2 border-[rgb(255,181,167)] rounded-lg'>
@@ -284,18 +289,16 @@ function ListaDeseo() {
                             <div className='grid p-12 h-full overflow-y-scroll'>
                                 {/* Contenido */}
                                 { contResumen.length === 0 ? (
+                                    !showProduct &&
                                     <p className='m-auto'>No se encontraron artículos</p>
                                 ):(
-                                    <ul className='grid h-fit grid-cols-1 gap-2 md:grid-cols-3'>
-                                    {contenido}
+                                    <ul className={'grid h-fit gap-2 duration-200 ' + cols}>
+                                        {contenido}
                                     </ul>
                                 )}
-                                { showProduct && contResumen.filter(producto => producto.tipo === '1').length === 0 ? (
+                                { showProduct && contResumen.filter(producto => producto.tipo === '1').length === 0 && 
                                     <p className='m-auto'>No se encontraron productos.</p>
-                                ):(
-                                    <>
-                                    </>
-                                )}
+                                }
                             </div>
                         </div>
                     </div>
