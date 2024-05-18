@@ -2,10 +2,6 @@ import express from "express";
 import { servidor } from "./data/datos.js";
 import cookieParser from 'cookie-parser';
 import mysql from "mysql2";
-import bcryptjs from 'bcryptjs';
-
-let salt =  await bcryptjs.genSalt(5);  //clave cryptografica de la contraseña del usuario
-let hashPassword =  await bcryptjs.hash('MikuNakano23#',salt); 
 
 
 import path, { dirname } from 'path';
@@ -96,7 +92,6 @@ app.post('/api/tarjeta-nueva', perfil.InsertarTarjeta);
 
 app.get('/api/pedidos', perfil.getPedidos);
 
-
 app.get('/perfil/pedidos', authorization.logeado);
 
 app.get('/perfil',authorization.logeado );
@@ -115,6 +110,7 @@ app.get('/perfil/movimientos', authorization.logeado);
 
 app.get('/perfil/historial', authorization.logeado);
 
+app.get('/api/patologias', authorization.Patologias);
 
 app.get('/api/tarjetas/1.5', perfil.getTarjetas);
 

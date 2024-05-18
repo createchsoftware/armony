@@ -119,6 +119,52 @@ async function revisar_cookie(solicitud){
 
 
 
+async function Patologias(solicitud,respuesta){
+    if(solicitud.headers.cookie == undefined){
+        respuesta.send({logueado:false});
+    }
+    else{
+        // verificar que existe la cookie naruto
+        let galletas = solicitud.headers.cookie.split('; ');
+        let galleta = galletas.find(galleta=>galleta.startsWith('Naruto_cookie='));
+
+        if(galleta){
+            // el usuario si esta logueado
+            galleta = galleta.slice(14);
+
+            let decodificada = await jsonwebtoken.verify(galleta, process.env.JWT_SECRET);
+
+            let consulta = 'call getPatologiasCliente(?)';
+
+            let [fields] = await solicitud.database.query(mysql.format(consulta,[decodificada.user]));
+
+            let arr_patologias = fields[0];
+
+            let arr_toSend = [];
+
+            for(let i in arr_patologias){
+                let objeto = {};
+                objeto.nombre = `Patologia${parseInt(i)+1}`;
+                objeto.titulo = arr_patologias[i].Patologia;
+                objeto.descripcion = arr_patologias[i].Descripcion;
+                arr_toSend.push(objeto);
+            }
+
+            console.log(arr_toSend);
+
+            respuesta.send({patologias:arr_toSend});
+        }
+        else{
+            respuesta.send({logueado:false});
+        }
+    }
+}
+
+
+
+
+
+
 
 
 
@@ -128,5 +174,6 @@ async function revisar_cookie(solicitud){
 export const  methods = {
     verificar_cookie,
     logeado,
-    no_logeado
+    no_logeado,
+    Patologias
 }
