@@ -45,6 +45,7 @@ function TarjetaNueva() {
                             { array.length === 0 ? (
                                 <p className='m-auto mb-4'>No hay tarjetas registradas.</p>
                             ):(
+                                // eslint-disable-next-line react/jsx-key
                                 array.map((objeto, index) => (<TarjetasPagoEstatica tarjetas={objeto} isFirst={index === 0}/>))
                             )}
                             { array.length === 0 && <hr /> }
@@ -111,10 +112,11 @@ function TarjetaNueva() {
                                         </div>
                                         
                                     </div>
+                                    <div className="flex mt-4">
+                                        <label htmlFor='tipo' className="mr-4">Tipo</label>
+                                        <input type="text" id='tipo' name='tipo' placeholder="debito/credito"/>
+                                    </div>
                                     
-                                    <label htmlFor='tipo' className="mt-4">Tipo</label>
-                                    <input type="text" id='tipo' name='tipo' placeholder="debito/credito"/>
-
                                     <div className="grid mt-4">
                                         <div>
                                             <input type="checkbox" id='recordar' name='recordar'/>
