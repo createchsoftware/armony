@@ -157,7 +157,7 @@ export default function ServicioEstetica() {
     setPrecio(newValue);
   };
 
-  //useEffect para obtener los productos
+  //useEffect para obtener los servicios de la estética
   useEffect(() => {
     fetch("/api/admin/categoria/getServicesEstetica")
       .then((response) => response.json())

@@ -192,7 +192,7 @@ const filters = [
 export default function ServicioEstetica() {
   const [mobileFiltersOpen, setMobileFiltersOpen] = useState(false)
   const [sortOption, setSortOption] = useState(ordenamiento[0])
-  const [allProducts, setAllProducts] = useState(estetica)
+  const [allProducts, setAllProducts] = useState([])
   const [filteredProducts, setFilteredProducts] = useState([])
   const [categories, setCategories] = useState([]);
   const [marcas, setMarcas] = useState([]);
@@ -211,6 +211,18 @@ export default function ServicioEstetica() {
   //         .then(data => setProducts(data))
   //         .catch(err => console.log(err))
   // }, [])
+
+  //useEffect para obtener los servicios de la estética
+  useEffect(() => {
+    fetch("/api/admin/categoria/getServicesSpa")
+      .then((response) => response.json())
+      .then((data) => {
+        setAllProducts(data);
+      })
+      .catch((error) => {
+        console.log("error", error);
+      });
+  }, []);
 
   // Función para manejar cambios en las categorías
   const handleCategoryChange = (label, isChecked) => {
@@ -901,8 +913,8 @@ export default function ServicioEstetica() {
                   >
                     {/*<Filtro className="relative float-start" />*/}
                     <div className="grid grid-cols-2 md:grid-cols-3 w-[100%] rounded-lg ring-4 ring-[#E2B3B7] mx-auto mb-10">
-                      {faciales.length > 0 ? (
-                        faciales.map((servicio) => (
+                      {filteredProducts.length > 0 ? (
+                        filteredProducts.slice(0, 8).map((servicio) => (
                           <Servicio
                             key={servicio.nombre}
                             nombre={servicio.nombre}
@@ -922,8 +934,8 @@ export default function ServicioEstetica() {
                   </div>
                   <div className={toggleState === 2 ? "block" : "hidden"}>
                     <div className="grid grid-cols-2 md:grid-cols-3 w-[90%] md:w-[100%] rounded-lg ring-4 ring-[#E2B3B7] mx-auto mb-10">
-                      {corporales.length > 0 ? (
-                        corporales.map((servicio) => (
+                      {filteredProducts.length > 0 ? (
+                        filteredProducts.slice(0, 8).map((servicio) => (
                           <Servicio
                             key={servicio.nombre}
                             nombre={servicio.nombre}
