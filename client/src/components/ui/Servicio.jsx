@@ -6,7 +6,6 @@ import FavoriteIcon from "@mui/icons-material/Favorite";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import { AiOutlineShoppingCart } from "react-icons/ai";
 import PopupServicio from "./PopupServicio";
-import { pruebaImagen } from "../../../img/servicios/imagenesVar";
 
 const StyledRating = styled(Rating)({
   "& .MuiRating-iconFilled": {
