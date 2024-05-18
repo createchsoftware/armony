@@ -31,7 +31,7 @@ function Servicio({
     <>
       <div className="grid gap-4 m-4 text-center md:m-8">
         <div
-          className="p-6 rounded-lg"
+          className="p-6 rounded-lg aspect-square"
           style={{
             backgroundImage: `url(${imagen})`,
             backgroundRepeat: "no-repeat",
@@ -39,7 +39,7 @@ function Servicio({
             backgroundPosition: "center",
             //aspectRatio: "1/1",
             maxWidth: "25rem",
-            maxHeight: "18rem",
+            maxHeight: "25rem",
             height: "full",
             width: "full",
             backgroundcolor: "rgba(0, 0, 0, 0.6)",
@@ -97,7 +97,7 @@ function Servicio({
             value={rating}
             unratedColor="amber"
             ratedColor="amber"
-            readonly
+            readOnly
           />
           <PopupServicio
             datos={{

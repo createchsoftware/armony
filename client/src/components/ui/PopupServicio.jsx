@@ -27,7 +27,7 @@ const PopupServicio = ({ actionElement, datos }) => {
   return (
     <Popup trigger={actionElement} modal nested>
       {(close) => (
-        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50 overflow-hidden">
+        <div className="fixed inset-0 z-50 flex items-center justify-center overflow-hidden bg-black bg-opacity-50">
           <div className="relative w-[25rem] md:w-[50rem] flex flex-col rounded-3xl bg-white bg-clip-border text-gray-700 shadow-md">
             <div className="grid grid-cols-[70%_30%]">
               <div>
@@ -64,11 +64,11 @@ const PopupServicio = ({ actionElement, datos }) => {
                       value={datos.rating}
                       unratedColor="amber"
                       ratedColor="amber"
-                      readonly
+                      readOnly
                     />
                   </div>
                 </div>
-                <div className="grid place-items-center mb-6 mt-3">
+                <div className="grid mt-3 mb-6 place-items-center">
                   <button className=" transition-all duration-300  m-auto hover:bg-[#036C65] hover:ring-2 hover:[#036C65] hover:ring-offset-1 group relative inline-flex h-10 items-center justify-center overflow-hidden rounded-lg border-2 bg-[#EB5765] px-6 font-[abeatbykai] text-neutral-200">
                     <span>Registrar cita</span>
                     <div class="w-0 translate-x-[100%] pl-0 opacity-0 transition-all duration-200 group-hover:w-5 group-hover:translate-x-0 group-hover:pl-1 group-hover:opacity-100">
