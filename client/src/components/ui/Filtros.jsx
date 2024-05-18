@@ -7,73 +7,73 @@ import { Slider, Box } from '@mui/material';
 //import { products } from '../../data/productos.json'
 import Rating from '@mui/material/Rating';
 
-const products = [
-    {
-        id: 1,
-        nombre: 'Producto 1',
-        precio: 100,
-        categoria: 'Cosméticos',
-        marca: 'POND’S',
-        valoracion: 4,
-        masVendido: false,
-        imagen: 'https://tailwindui.com/img/ecommerce-images/category-page-04-image-card-01.jpg',
-        descripcion: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit',
-    },
-    {
-        id: 2,
-        nombre: 'Producto 2',
-        precio: 200,
-        categoria: 'Facial',
-        marca: 'Hidra Sense',
-        valoracion: 3,
-        masVendido: true,
-        imagen: 'https://tailwindui.com/img/ecommerce-images/category-page-04-image-card-02.jpg',
-        descripcion: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit',
-    },
-    {
-        id: 3,
-        nombre: 'Producto 3',
-        precio: 300,
-        categoria: 'Crema',
-        marca: 'Savasana',
-        valoracion: 2,
-        masVendido: false,
-        imagen: 'https://tailwindui.com/img/ecommerce-images/category-page-04-image-card-03.jpg',
-        descripcion: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit',
-    },
-    {
-        id: 4,
-        nombre: 'Producto 4',
-        precio: 400,
-        categoria: 'Spray',
-        marca: 'CeraVe',
-        valoracion: 1,
-        masVendido: true,
-        imagen: 'https://tailwindui.com/img/ecommerce-images/category-page-04-image-card-04.jpg',
-        descripcion: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit',
-    },
-    {
-        id: 5,
-        nombre: 'Producto 5',
-        precio: 500,
-        categoria: 'Serúm',
-        marca: 'Cetaphil',
-        valoracion: 5,
-        masVendido: false,
-        imagen: 'https://tailwindui.com/img/ecommerce-images/category-page-04-image-card-05.jpg',
-        descripcion: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit',
-    },
-    {
-        id: 6,
-        nombre: 'Producto 6',
-        precio: 600,
-        categoria: 'Depilación',
-        marca: 'Mizon',
-        valoracion: 4,
-        masVendido: true,
-        imagen: 'https://tailwindui.com/img/ecommerce-images/category-page-04-image-card-06.jpg',
-        descripcion: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit',
-    },]
+// const products = [
+//     {
+//         id: 1,
+//         nombre: 'Producto 1',
+//         precio: 100,
+//         categoria: 'Cosméticos',
+//         marca: 'POND’S',
+//         valoracion: 4,
+//         masVendido: false,
+//         imagen: 'https://tailwindui.com/img/ecommerce-images/category-page-04-image-card-01.jpg',
+//         descripcion: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit',
+//     },
+//     {
+//         id: 2,
+//         nombre: 'Producto 2',
+//         precio: 200,
+//         categoria: 'Facial',
+//         marca: 'Hidra Sense',
+//         valoracion: 3,
+//         masVendido: true,
+//         imagen: 'https://tailwindui.com/img/ecommerce-images/category-page-04-image-card-02.jpg',
+//         descripcion: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit',
+//     },
+//     {
+//         id: 3,
+//         nombre: 'Producto 3',
+//         precio: 300,
+//         categoria: 'Crema',
+//         marca: 'Savasana',
+//         valoracion: 2,
+//         masVendido: false,
+//         imagen: 'https://tailwindui.com/img/ecommerce-images/category-page-04-image-card-03.jpg',
+//         descripcion: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit',
+//     },
+//     {
+//         id: 4,
+//         nombre: 'Producto 4',
+//         precio: 400,
+//         categoria: 'Spray',
+//         marca: 'CeraVe',
+//         valoracion: 1,
+//         masVendido: true,
+//         imagen: 'https://tailwindui.com/img/ecommerce-images/category-page-04-image-card-04.jpg',
+//         descripcion: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit',
+//     },
+//     {
+//         id: 5,
+//         nombre: 'Producto 5',
+//         precio: 500,
+//         categoria: 'Serúm',
+//         marca: 'Cetaphil',
+//         valoracion: 5,
+//         masVendido: false,
+//         imagen: 'https://tailwindui.com/img/ecommerce-images/category-page-04-image-card-05.jpg',
+//         descripcion: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit',
+//     },
+//     {
+//         id: 6,
+//         nombre: 'Producto 6',
+//         precio: 600,
+//         categoria: 'Depilación',
+//         marca: 'Mizon',
+//         valoracion: 4,
+//         masVendido: true,
+//         imagen: 'https://tailwindui.com/img/ecommerce-images/category-page-04-image-card-06.jpg',
+//         descripcion: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit',
+//     },]
 
 
 function classNames(...clases) {
@@ -121,12 +121,13 @@ const filters = [
 export default function Filtros() {
     const [mobileFiltersOpen, setMobileFiltersOpen] = useState(false)
     const [sortOption, setSortOption] = useState(ordenamiento[0])
-    const [filteredProducts, setFilteredProducts] = useState(products)
+    const [allProducts, setAllProducts] = useState([])
+    const [filteredProducts, setFilteredProducts] = useState([])
     const [categories, setCategories] = useState([]);
     const [marcas, setMarcas] = useState([]);
     const [busqueda, setSearch] = useState('');
     const [rating, setRating] = useState(0);
-    const [precio, setPrecio] = useState(0);
+    const [precio, setPrecio] = useState(null);
 
     //useEffect from api call
     // useEffect(() => {
@@ -173,7 +174,7 @@ export default function Filtros() {
         fetch("/api/admin/productos/getProducts")
             .then(response => response.json())
             .then(data => {
-                setFilteredProducts(data);
+                setAllProducts(data);
             })
             .catch(error => {
                 console.log('error', error);
@@ -187,7 +188,7 @@ export default function Filtros() {
 
     // useEffect para filtrar los productos según los filtros aplicados
     useEffect(() => {
-        let updatedProducts = filteredProducts;
+        let updatedProducts = allProducts;
 
         // Filtrar por búsqueda
         if (busqueda) {
@@ -209,14 +210,21 @@ export default function Filtros() {
                 marcas.includes(product.marca)
             );
         }
+
         // Filtro por valoración
         if (rating) {
             updatedProducts = updatedProducts.filter(product =>
-                product.valoracion == rating
+                product.valoracion === rating
             );
         }
 
         // Filtro por precio
+        if (precio === null)
+            updatedProducts = updatedProducts;
+
+        if (precio === 0)
+            updatedProducts = null;
+
         if (precio) {
             updatedProducts = updatedProducts.filter(product =>
                 product.precio <= precio
@@ -243,7 +251,7 @@ export default function Filtros() {
                 break;
         }
 
-        //multifiltro de checkboxes
+        // Multifiltro de checkboxes
         filters.forEach(filter => {
             const selectedOptions = filter.options.filter(option => option.checked).map(option => option.label);
             if (selectedOptions.length) {
@@ -253,7 +261,7 @@ export default function Filtros() {
 
         setFilteredProducts(updatedProducts);
 
-    }, [busqueda, categories, sortOption, filteredProducts, marcas, rating, precio]);
+    }, [busqueda, categories, sortOption, allProducts, marcas, rating, precio]);
 
     return (
         <div className="bg-[#F4F1ED]">
