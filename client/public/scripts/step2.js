@@ -79,6 +79,10 @@ document.getElementById('step2').addEventListener('click', async ()=>{
 
 document.getElementById('cancelar').addEventListener('click',()=>{
 
+    document.cookie = "Megumin_cookie=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;"; 
+    document.cookie = "Nakano_Itsuki=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+    document.cookie = "Rem_cookie=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;"; 
+
     let longitud =10;
 
     for(let iterador=1; iterador <=longitud; iterador++){

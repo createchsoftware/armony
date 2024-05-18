@@ -326,7 +326,6 @@ const InformacionBasica = () => {
               </button>
             </div>
             <div className="grid place-content-end mr-8">
-              <a href="/spa/signUp/Patologia">
                 <button
                   id="step-one"
                   aria-label="Continuar"
@@ -334,7 +333,6 @@ const InformacionBasica = () => {
                 >
                   Continuar
                 </button>
-              </a>
             </div>
           </div>
         </div>

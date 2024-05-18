@@ -95,6 +95,12 @@ document.getElementById('step-one').addEventListener('click',async ()=>{
 
 
 document.getElementById('cancelar').addEventListener('click',()=>{
+
+    document.cookie = "Megumin_cookie=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;"; 
+    document.cookie = "Nakano_Itsuki=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+    document.cookie = "Rem_cookie=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;"; 
+
+
     document.getElementById('name').value = '';
     document.getElementById('lastname1').value = '';
     document.getElementById('lastname2').value = '';

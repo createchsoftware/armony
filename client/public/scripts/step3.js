@@ -78,6 +78,11 @@ document.getElementById('step3').addEventListener('click',async ()=>{
 
 
 document.getElementById('cancelar').addEventListener('click', ()=>{
+
+    document.cookie = "Megumin_cookie=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;"; 
+    document.cookie = "Nakano_Itsuki=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+    document.cookie = "Rem_cookie=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;"; 
+    
     document.getElementById('contraseña').value = '';
     document.getElementById('nueva-contraseña').value = '';
     document.getElementById('state').checked = false;
