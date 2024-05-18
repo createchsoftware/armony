@@ -36,6 +36,12 @@ export const CarritoProvider = ({ children }) => {
         setCartItems(cartItems.map(item =>
             item.id === itemId ? { ...item, cantidad: Math.max(item.cantidad - 1, 1) } : item
         ));
+
+        // Si la cantidad es 1, eliminar el producto del carrito
+        const item = cartItems.find(item => item.id === itemId);
+        if (item && item.cantidad === 1) {
+            eliminarDelCarrito(itemId);
+        }
     };
 
     return (

@@ -27,7 +27,7 @@ function Productos({ productos }) {
             cantidad: 1,
             descripcion: producto.descripcion,
             valoracion: 0,
-            image: ''
+            image: producto.img,
         };
         console.log(productoParaCarrito);
         agregarAlCarrito(productoParaCarrito);
@@ -57,7 +57,8 @@ function Productos({ productos }) {
                                 </Box>
                             </div>
                             <img className='w-2/3 m-auto mt-6 mb-4 rounded-lg aspect-square'
-                                src={'https://i.imgur.com/CCBFmSi.png'}
+                                src={producto.img ? producto.img : 'https://i.imgur.com/CCBFmSi.png'}
+                                // src={'https://i.imgur.com/CCBFmSi.png'}
                                 alt={producto.nombre}
                             />
                             <div>
