@@ -77,7 +77,7 @@ const Productos = () => {
                                 <a href="">Ver más {'>'} </a>
                             </div>
                             {/* <div className='-translate-y-36'>
-                                <img className='float-right w-28' src="../../public/pictures/decoDerecha.png" alt="" />
+                                <img className='float-right w-28' src="../../pictures/decoDerecha.png" alt="" />
                             </div> */}
                         </div>
                     </section>

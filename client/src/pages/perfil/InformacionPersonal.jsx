@@ -127,7 +127,7 @@ function InformacionPersonal() {
                             <a className='flex items-baseline text-md gap-x-4' href={document.referrer}><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-4 h-4">
                                 <path strokeLinecap="round" strokeLinejoin="round" d="M9 15 3 9m0 0 6-6M3 9h12a6 6 0 0 1 0 12h-3" />
                             </svg> Volver</a>
-                            <img className='w-24 m-auto mb-6' src="../../../public/pictures/marcoBlanco.png" alt="" />
+                            <img className='w-24 m-auto mb-6' src="../../../pictures/marcoBlanco.png" alt="" />
 
                             <h1 className=''>Información personal</h1>
                             <p>Observa y edita tu información de la cuenta</p>

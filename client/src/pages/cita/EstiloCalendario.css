@@ -1,6 +1,6 @@
 @font-face {
   font-family: "abeatbyKaiRegular";
-  src: url("../../../public/fuentes/abeatbyKaiRegular.otf") format("truetype");
+  src: url("../../../fuentes/abeatbyKaiRegular.otf") format("truetype");
 }
 
 .react-calendar {
