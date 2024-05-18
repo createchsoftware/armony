@@ -164,20 +164,24 @@ export default function Filtros() {
         setCategories(['Facial']);
     }
 
+    // Función para manejar cambios en las categorías
     const handleClickManicuraPedicura = (e) => {
         e.preventDefault();
         setCategories(['Manicura y pedicura']);
     }
 
+    // Función para manejar cambios en las categorías
     const handleClickCapilar = (e) => {
         e.preventDefault();
         setCategories(['Cuidado capilar']);
     }
 
+    // Función para manejar cambios en las categorías
     const handleClickAll = (e) => {
         e.preventDefault();
         setCategories([]);
     }
+
     // Función para manejar cambios en el rating
     const handleChange = (event, newValue) => {
         setRating(newValue);
@@ -242,7 +246,7 @@ export default function Filtros() {
             updatedProducts = updatedProducts;
 
         if (precio === 0)
-            updatedProducts = null;
+            updatedProducts = updatedProducts;
 
         if (precio) {
             updatedProducts = updatedProducts.filter(product =>

@@ -73,44 +73,49 @@ const ordenamiento = [
 
 const subCategories = [
   {
-    id: "categoria",
-    name: "Categorias",
+    id: 'categoria',
+    name: 'Favoritos',
     options: [
-      { label: "Cosméticos", checked: false },
-      { label: "Facial", checked: false },
-      { label: "Crema", checked: false },
-      { label: "Spray", checked: false },
-      { label: "Serúm", checked: false },
-      { label: "Depilación", checked: false },
+      { label: 'Ascendente', checked: false },
+      { label: 'Descendente', checked: false },
     ],
   },
-];
+]
 
 const filters = [
   {
-    id: "Marca",
-    name: "Marca",
+    id: 'Marca',
+    name: 'Tipo de servicio',
     options: [
-      { value: "ponds", label: "POND’S", checked: false },
-      { value: "hidraSense", label: "Hidra Sense", checked: false },
-      { value: "savasana", label: "Savasana", checked: false },
-      { value: "ceraVe", label: "CeraVe", checked: false },
-      { value: "cetaphil", label: "Cetaphil", checked: false },
-      { value: "mizon", label: "Mizon", checked: false },
-      { value: "gojo", label: "Gojo", checked: false },
+      { value: 'ponds', label: 'Masajes', checked: false },
+      { value: 'hidraSense', label: 'Faciales', checked: false },
+      { value: 'savasana', label: 'Maquillaje', checked: false },
+      { value: 'ceraVe', label: 'Servicio tradicional', checked: false },
+      { value: 'cetaphil', label: 'Servicio con tecnología', checked: false },
+      { value: 'mizon', label: 'Rejuvenecimiento', checked: false },
     ],
   },
-];
+  {
+    id: 'Ofertas',
+    name: 'Ofertas',
+    options: [
+      { value: 'ponds', label: 'Ofertas de tiempo limitado', checked: false },
+      { value: 'hidraSense', label: 'Descuentos', checked: false },
+      { value: 'savasana', label: 'Producto nuevo', checked: false },
+      { value: 'ceraVe', label: 'Rebajas', checked: false },
+    ],
+  }]
 
 export default function ServicioEstetica() {
   const [mobileFiltersOpen, setMobileFiltersOpen] = useState(false);
   const [sortOption, setSortOption] = useState(ordenamiento[0]);
+  const [allProducts, setAllProducts] = useState([])
   const [filteredProducts, setFilteredProducts] = useState([]);
   const [categories, setCategories] = useState([]);
   const [marcas, setMarcas] = useState([]);
   const [busqueda, setSearch] = useState("");
   const [rating, setRating] = useState(0);
-  const [precio, setPrecio] = useState(0);
+  const [precio, setPrecio] = useState(null);
 
   //useEffect from api call
   // useEffect(() => {
@@ -157,7 +162,7 @@ export default function ServicioEstetica() {
     fetch("/api/admin/categoria/getServicesEstetica")
       .then((response) => response.json())
       .then((data) => {
-        setFilteredProducts(data);
+        setAllProducts(data);
       })
       .catch((error) => {
         console.log("error", error);
@@ -171,7 +176,7 @@ export default function ServicioEstetica() {
 
   // useEffect para filtrar los productos según los filtros aplicados
   useEffect(() => {
-    let updatedProducts = filteredProducts;
+    let updatedProducts = allProducts;
 
     // Filtrar por búsqueda
     if (busqueda) {
@@ -200,10 +205,17 @@ export default function ServicioEstetica() {
       );
     }
 
+
     // Filtro por precio
+    if (precio === null)
+      updatedProducts = updatedProducts;
+
+    if (precio === 0)
+      updatedProducts = updatedProducts;
+
     if (precio) {
-      updatedProducts = updatedProducts.filter(
-        (product) => product.precio <= precio
+      updatedProducts = updatedProducts.filter(product =>
+        product.precio <= precio
       );
     }
 
@@ -248,15 +260,7 @@ export default function ServicioEstetica() {
     });
 
     setFilteredProducts(updatedProducts);
-  }, [
-    busqueda,
-    categories,
-    sortOption,
-    filteredProducts,
-    marcas,
-    rating,
-    precio,
-  ]);
+  }, [busqueda, categories, sortOption, allProducts, marcas, rating, precio,]);
 
   return (
     <>
@@ -514,7 +518,7 @@ export default function ServicioEstetica() {
 
               <div className="grid md:gap-12 md:flex">
                 {/* Filters */}
-                <form className="hidden lg:block">
+                <form className="hidden w-64 lg:block">
                   {subCategories.map((section) => (
                     <Disclosure
                       as="div"
@@ -754,7 +758,7 @@ export default function ServicioEstetica() {
 
                 <div className="grid grid-cols-2 md:grid-cols-3 w-[90%] md:w-[100%] rounded-lg ring-4 ring-[#E2B3B7] mx-auto mb-10">
                   {filteredProducts.length === 0 ? (
-                    <p className="m-auto">No hay servicios disponibles</p>
+                    <p className="m-auto">No hay servicios de estetica disponibles</p>
                   ) : (
                     filteredProducts.map((servicio) => (
                       <Servicio

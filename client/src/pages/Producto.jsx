@@ -87,9 +87,26 @@ const ofertas = [
 
 function Producto() {
     const [cantidad, setCantidad] = useState(1);
-    const [selectedRatingIndex, setSelectedRatingIndex] = useState(5);
-    const [generalRating, setGeneralRating] = useState(5);
+    const [selectedRatingIndex, setSelectedRatingIndex] = useState(null);
+    const [generalRating, setGeneralRating] = useState(null);
     const [filteredReviews, setFilteredReviews] = useState(reseñas);
+    const [newReviewClicked, setNewReviewClicked] = useState(false);
+    const [reviewButtonMessage, setReviewButtonMessage] = useState('Escribir una reseña');
+    const [reviewRating, setReviewRating] = useState(0);
+
+    // Función para manejar cambios en el nuevo rating de la reseña
+    const handleReviewRating = (event) => {
+        setReviewRating(event.target.value);
+    }
+
+    const handleNewReview = () => {
+        setNewReviewClicked(!newReviewClicked);
+        if (newReviewClicked) {
+            setReviewButtonMessage('Escribir una reseña');
+        } else {
+            setReviewButtonMessage('Cancelar reseña nueva');
+        }
+    }
 
     console.log("🚀 ~ Producto ~ selectedRating:", selectedRatingIndex)
 
@@ -108,6 +125,10 @@ function Producto() {
     }
 
     useEffect(() => {
+        if (selectedRatingIndex === null) {
+            setFilteredReviews(reseñas);
+            return;
+        }
         setFilteredReviews(reseñas.filter(reseña => reseña.calificacion === selectedRatingIndex));
     }, [selectedRatingIndex]);
 
@@ -121,13 +142,13 @@ function Producto() {
                             <path strokeLinecap="round" strokeLinejoin="round" d="M9 15 3 9m0 0 6-6M3 9h12a6 6 0 0 1 0 12h-3" />
                         </svg> Volver
                         </a>
-                        <img src="../../public/pictures/producto1.png" alt="" />
+                        <img src="../../pictures/producto1.png" alt="" />
                         <div className="flex justify-center gap-4">
-                            <img className="w-14 aspect-square h-14" src="../../public/pictures/vistas.png" alt="" />
-                            <img className="w-14 aspect-square h-14" src="../../public/pictures/vistas.png" alt="" />
-                            <img className="w-14 aspect-square h-14" src="../../public/pictures/vistas.png" alt="" />
-                            <img className="w-14 aspect-square h-14" src="../../public/pictures/vistas.png" alt="" />
-                            <img className="w-14 aspect-square h-14" src="../../public/pictures/vistas.png" alt="" />
+                            <img className="w-14 aspect-square h-14" src="../../pictures/vistas.png" alt="" />
+                            <img className="w-14 aspect-square h-14" src="../../pictures/vistas.png" alt="" />
+                            <img className="w-14 aspect-square h-14" src="../../pictures/vistas.png" alt="" />
+                            <img className="w-14 aspect-square h-14" src="../../pictures/vistas.png" alt="" />
+                            <img className="w-14 aspect-square h-14" src="../../pictures/vistas.png" alt="" />
                         </div>
                     </div>
                     <div className="grid w-1/2 gap-0 p-12">
@@ -252,7 +273,6 @@ function Producto() {
 
                 <hr className="my-4 text-black bg-black border-2 rounded-full border-gray w-[80%] m-auto" />
 
-
                 <section className=' flex justify-around rounded-2xl w-[80%] m-auto p-6 shadow-[0_3px_10px_rgb(0,0,0,0.2)]'>
                     <div className="grid w-full gap-6 px-12">
                         <h1 className="text-3xl">Reseñas de Clientes</h1>
@@ -275,17 +295,39 @@ function Producto() {
                                     ))}
                                 </div>
                             </div>
-                            <button className="text-[#EB5765] bg-opacity-30 bg-[#EB5765] hover:bg-opacity-90 hover:text-white rounded-3xl py-2 px-6 mr-12">Escribir una reseña</button>
+                            <button onClick={handleNewReview} className="text-[#EB5765] bg-opacity-30 bg-[#EB5765] hover:bg-opacity-90 hover:text-white rounded-3xl py-2 px-6 mr-12">{reviewButtonMessage}</button>
                         </div>
                         <div>
+                            {newReviewClicked ? (
+                                <>
+                                    <main className='grid gap-4'>
+                                        <div className="flex items-center gap-4">
+                                            <form className="grid gap-1">
+                                                <p>Selecciona una valoración:</p>
+                                                <Rating className='' onChange={handleReviewRating} value={reviewRating} unratedColor="amber" ratedColor="amber" />
+                                                <div className="flex gap-8 mt-4">
+                                                    <div className="flex items-start gap-4">
+                                                        <label className="pt-2">Titulo:</label>
+                                                        <input className="rounded-md resize-none" type="text" maxLength={20} placeholder="" />
+                                                    </div>
+                                                    <div className="flex items-start gap-4">
+                                                        <label className="pt-2">Comentario:</label>
+                                                        <textarea rows={4} cols={60} name="" maxLength={255} className="rounded-md resize-none " placeholder=""></textarea>
+                                                    </div>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </main>
+                                </>) : null}
                             {filteredReviews.map(reseña => (
                                 <Reseña key={reseña.id} reseña={reseña} />
                             ))}
+
                         </div>
                     </div>
                 </section>
             </main>
-        </LayoutPrincipal>
+        </LayoutPrincipal >
     );
 }
 

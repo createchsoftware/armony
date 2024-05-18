@@ -36,7 +36,12 @@ function Servicio({
             backgroundImage: `url(${imagen})`,
             backgroundRepeat: "no-repeat",
             backgroundSize: "cover",
-            height: "20rem",
+            backgroundPosition: "center",
+            //aspectRatio: "1/1",
+            maxWidth: "25rem",
+            maxHeight: "18rem",
+            height: "full",
+            width: "full",
             backgroundcolor: "rgba(0, 0, 0, 0.6)",
           }}
         >
