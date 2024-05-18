@@ -8,8 +8,11 @@ import PopupLogin from "./Login/PopupLogin.jsx";
 import SubMenuServicios from "./SubMenuServicios.jsx"
 import MenuPerfil from "./MenuPerfil.jsx";
 import { Helmet, HelmetProvider } from "react-helmet-async";
+import { useCarrito } from '../ui/Carrito.jsx';
 
 function Navbar() {
+
+
     const [cart, setCart, showModal, setShowModal] = useState(false);
     const [login, setLogin] = useState(false);
     const [log, setLog] = useState(false); //<<< PARA EL INICIO DE SESION
@@ -60,7 +63,7 @@ function Navbar() {
         <>
             <HelmetProvider>
                 <Helmet>
-                    <script src="../../../scripts/index.js"></script>
+                    <script src="../../../public/scripts/index.js"></script>
                 </Helmet>
             </HelmetProvider>
             <header className="header">
@@ -110,11 +113,11 @@ function Navbar() {
                                         </a>
                                     </li>
                                     <li className="nav-menu-item">
-                                        { log ? (
+                                        {log ? (
                                             <a href="/spa/agendar" className="menu-link">
                                                 Agendar
                                             </a>
-                                        ):(
+                                        ) : (
                                             <a href="#" className="menu-link" onClick={toggleLogin}>
                                                 Agendar
                                             </a>
@@ -149,13 +152,24 @@ function Navbar() {
                             </li>
                             {location.pathname !== "/" && (
                                 <li className="nav-menu-item">
-                                    <a
-                                        href="/favoritos"
-                                        className="nav-fav"
-                                        aria-label="Ir a Favoritos"
-                                    >
-                                        <FontAwesomeIcon icon={faHeart} />
-                                    </a>
+                                    {log ? (
+                                        <a
+                                            href="/favoritos"
+                                            className="nav-fav"
+                                            aria-label="Ir a Favoritos"
+                                        >
+                                            <FontAwesomeIcon icon={faHeart} />
+                                        </a>
+                                    ) : (
+                                        <a
+                                            href="#"
+                                            className="nav-fav"
+                                            aria-label="Ir a Favoritos"
+                                            onClick={toggleLogin}
+                                        >
+                                            <FontAwesomeIcon icon={faHeart} />
+                                        </a>
+                                    )}
                                 </li>
                             )}
                             {location.pathname == "/spa/productos" && (

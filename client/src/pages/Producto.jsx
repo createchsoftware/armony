@@ -14,6 +14,7 @@ import Reseña from "../components/ui/Reseña.jsx";
 import { faTrash, faCircleXmark, faCircleMinus, faCirclePlus, faStar } from '@fortawesome/free-solid-svg-icons';
 import { useState, useEffect } from 'react';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { useCarrito } from '../components/ui/Carrito.jsx';
 
 const StyledRating = styled(Rating)({
     '& .MuiRating-iconFilled': {
@@ -93,6 +94,12 @@ function Producto() {
     const [newReviewClicked, setNewReviewClicked] = useState(false);
     const [reviewButtonMessage, setReviewButtonMessage] = useState('Escribir una reseña');
     const [reviewRating, setReviewRating] = useState(0);
+
+    const handleAgregarAlCarrito = (producto) => {
+        producto.cantidad = 1;
+        agregarAlCarrito(producto);
+    };
+
 
     // Función para manejar cambios en el nuevo rating de la reseña
     const handleReviewRating = (event) => {

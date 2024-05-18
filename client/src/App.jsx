@@ -42,6 +42,7 @@ import Producto from "./pages/Producto";
 import Suscripcion from "./pages/Suscripcion";
 import Rango from "./pages/perfil/Rango";
 import PagoProducto from "./pages/PagoProducto";
+import { CarritoProvider } from "../src/components/ui/Carrito";
 
 function App() {
   return (
