@@ -99,7 +99,7 @@ const Carrito = ({ cerrar, totalProductos, logCart, loginCart }) => {
 
     const cartList = cartItems.map(item => (
         <li key={item.id} className="overflow-y-auto cart-item">
-            <img className='cart-photo' src={item.image} alt={item.nombre} />
+            <img className='cart-photo' src={item.imagen} alt={item.nombre} />
             <div className='grid content-between w-3/4 mx-4'>
                 <div className='flex justify-between'>
                     <div className='grid'>

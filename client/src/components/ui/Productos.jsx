@@ -51,7 +51,7 @@ function Productos({ productos }) {
             cantidad: 1,
             descripcion: producto.descripcion,
             valoracion: producto.valoracion || 5,
-            image: producto.img,
+            imagen: producto.img,
         };
         agregarAlCarrito(productoParaCarrito);
     };
