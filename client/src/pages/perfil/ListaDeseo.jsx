@@ -175,8 +175,8 @@ function ListaDeseo() {
     ))
 
     const filteredProducts = contResumen.filter(producto =>
-      (tipo === 'all' || producto.tipo === tipo) &&
-      producto.nombre.toLowerCase().includes(searchTerm.toLowerCase())
+        (tipo === 'all' || producto.tipo === tipo) &&
+        producto.nombre.toLowerCase().includes(searchTerm.toLowerCase())
     );
 
     const contenido = filteredProducts.map(producto => (
