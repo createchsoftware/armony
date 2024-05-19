@@ -47,8 +47,8 @@ const PopupServicio = ({ cerrar, check, datos }) => {
               {datos.nombre}
             </h1>
             <div className="mx-[4rem] text-justify">
-              <p className="my-5">{datos.espDesc1}</p>
-              <p className="my-5">{datos.espDesc2}</p>
+              <p className="my-5">{datos.descripcion}</p>
+              {/*<p className="my-5">{datos.espDesc2}</p>*/}
               <div className="flex">
                 <p className="mr-2">Precio:</p>
                 <p className="text-[#036C65]">{datos.precio} MXN</p>

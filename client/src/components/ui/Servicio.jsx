@@ -23,8 +23,6 @@ const StyledRating = styled(Rating)({
 function Servicio({
   nombre,
   descripcion,
-  espDesc1,
-  espDesc2,
   precio,
   imagen,
   rating,
@@ -149,8 +147,7 @@ function Servicio({
         <PopupServicio
           datos={{
             nombre: nombre,
-            espDesc1: espDesc1,
-            espDesc2: espDesc2,
+            descripcion: descripcion,
             precio: precio,
             img: imagen,
             rating: rating,
