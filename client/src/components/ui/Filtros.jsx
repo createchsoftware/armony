@@ -7,75 +7,6 @@ import { Slider, Box } from '@mui/material';
 //import { products } from '../../data/productos.json'
 import Rating from '@mui/material/Rating';
 
-// const products = [
-//     {
-//         id: 1,
-//         nombre: 'Producto 1',
-//         precio: 100,
-//         categoria: 'Cosméticos',
-//         marca: 'POND’S',
-//         valoracion: 4,
-//         masVendido: false,
-//         imagen: 'https://tailwindui.com/img/ecommerce-images/category-page-04-image-card-01.jpg',
-//         descripcion: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit',
-//     },
-//     {
-//         id: 2,
-//         nombre: 'Producto 2',
-//         precio: 200,
-//         categoria: 'Facial',
-//         marca: 'Hidra Sense',
-//         valoracion: 3,
-//         masVendido: true,
-//         imagen: 'https://tailwindui.com/img/ecommerce-images/category-page-04-image-card-02.jpg',
-//         descripcion: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit',
-//     },
-//     {
-//         id: 3,
-//         nombre: 'Producto 3',
-//         precio: 300,
-//         categoria: 'Crema',
-//         marca: 'Savasana',
-//         valoracion: 2,
-//         masVendido: false,
-//         imagen: 'https://tailwindui.com/img/ecommerce-images/category-page-04-image-card-03.jpg',
-//         descripcion: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit',
-//     },
-//     {
-//         id: 4,
-//         nombre: 'Producto 4',
-//         precio: 400,
-//         categoria: 'Spray',
-//         marca: 'CeraVe',
-//         valoracion: 1,
-//         masVendido: true,
-//         imagen: 'https://tailwindui.com/img/ecommerce-images/category-page-04-image-card-04.jpg',
-//         descripcion: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit',
-//     },
-//     {
-//         id: 5,
-//         nombre: 'Producto 5',
-//         precio: 500,
-//         categoria: 'Serúm',
-//         marca: 'Cetaphil',
-//         valoracion: 5,
-//         masVendido: false,
-//         imagen: 'https://tailwindui.com/img/ecommerce-images/category-page-04-image-card-05.jpg',
-//         descripcion: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit',
-//     },
-//     {
-//         id: 6,
-//         nombre: 'Producto 6',
-//         precio: 600,
-//         categoria: 'Depilación',
-//         marca: 'Mizon',
-//         valoracion: 4,
-//         masVendido: true,
-//         imagen: 'https://tailwindui.com/img/ecommerce-images/category-page-04-image-card-06.jpg',
-//         descripcion: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit',
-//     },]
-
-
 function classNames(...clases) {
     return clases.filter(Boolean).join(' ')
 }
@@ -128,14 +59,6 @@ export default function Filtros() {
     const [busqueda, setSearch] = useState('');
     const [rating, setRating] = useState(0);
     const [precio, setPrecio] = useState(null);
-
-    //useEffect from api call
-    // useEffect(() => {
-    //     fetch('/products')
-    //         .then(res => res.json())
-    //         .then(data => setProducts(data))
-    //         .catch(err => console.log(err))
-    // }, [])
 
     // Función para manejar cambios en las categorías
     const handleCategoryChange = (label, isChecked) => {

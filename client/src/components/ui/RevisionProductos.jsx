@@ -37,6 +37,20 @@ const ofertas = [
     },
 ]
 
+
+//useEffect para obtener las ofertas
+// useEffect(() => {
+//     fetch("/api/admin/productos/getProducts")
+//         .then(response => response.json())
+//         .then(data => {
+//             setAllProducts(data);
+//         })
+//         .catch(error => {
+//             console.log('error', error);
+//         });
+// }, []);
+
+
 function RevisionProductos({ restart, producto }) {
     const [cartItems, setCartItems] = useState(() => {
         if (producto) {
@@ -81,7 +95,7 @@ function RevisionProductos({ restart, producto }) {
 
     const cartList = cartItems.map(item => (
         <li key={item.id} className="flex p-4 mb-4 border-2 shadow-md rounded-xl border-gray">
-            <img className='w-1/4 mx-4 shadow-md' src={item.image} alt={item.nombre} />
+            <img className='w-1/4 mx-4 shadow-md' src={item.imagen} alt={item.nombre} />
             <div className='grid content-between w-3/4 mx-4'>
                 <div className='flex justify-between'>
                     <div className='grid'>

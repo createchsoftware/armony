@@ -197,7 +197,7 @@ function Navbar() {
                                     </button>
                                 </li>
                             )}
-                            {location.pathname == "/spa/producto" && (
+                            {location.pathname.includes("/producto/") && (
                                 <li className="nav-menu-item">
                                     <button
                                         className="nav-cart"

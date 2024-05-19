@@ -20,6 +20,8 @@ import 'react-toastify/dist/ReactToastify.css';
 import { useParams } from 'react-router-dom';
 import { Navigate, useNavigate } from "react-router-dom";
 import PagoProducto from './PagoProducto';
+import { useLocation } from 'react-router-dom';
+import ScrollToTop from '../components/ui/ScrollToTop';
 
 const StyledRating = styled(Rating)({
     '& .MuiRating-iconFilled': {
@@ -102,10 +104,16 @@ const initialProduct = {
 }
 
 function Producto() {
+    const { id } = useParams();
+    const location = useLocation();
+    const product = location.state.product || {};
+
+    console.log(product);
+
     const navigate = useNavigate();
     const notify = () => toast("Producto agregado al carrito");
 
-    const [product, setProduct] = useState(initialProduct);
+    // const [product, setProduct] = useState(initialProduct);
     const [cantidad, setCantidad] = useState(1);
     const [selectedRatingIndex, setSelectedRatingIndex] = useState(null);
     const [generalRating, setGeneralRating] = useState(null);
@@ -116,13 +124,31 @@ function Producto() {
 
     const { agregarAlCarrito } = useCarrito();
 
+
+    useEffect(() => {
+        window.scrollTo(0, 0)
+    }, [])
+
+    // Si los datos no vienen en el estado de navegación, puedes hacer una
+    // llamada a la API para obtener los datos del producto basado en el id.
+    // Ejemplo:
+    // useEffect(() => {
+    //   if (!product) {
+    //     fetchProductById(id).then(setProduct);
+    //   }
+    // }, [id, product]);
+
+    if (!product) {
+        return <div>Cargando ...</div>; // O manejar de alguna otra forma
+    }
+
     // Función para manejar el evento de agregar al carrito
     const handleAddCart = () => {
         notify();
         const producto = {
             id: product.id,
             nombre: product.nombre,
-            precio: product.precio,
+            precio: parseFloat(product.precio),
             cantidad: cantidad,
             descripcion: product.descripcion,
             valoracion: product.valoracion,
@@ -137,7 +163,7 @@ function Producto() {
         const producto = {
             id: product.id,
             nombre: product.nombre,
-            precio: product.precio,
+            precio: parseFloat(product.precio),
             cantidad: cantidad,
             descripcion: product.descripcion,
             valoracion: product.valoracion,
@@ -191,13 +217,13 @@ function Producto() {
                             <path strokeLinecap="round" strokeLinejoin="round" d="M9 15 3 9m0 0 6-6M3 9h12a6 6 0 0 1 0 12h-3" />
                         </svg> Volver
                         </a>
-                        <img src="../../pictures/producto1.png" alt="" />
+                        <img className="w-[100%] aspect-square" src={product.imagen} alt="" />
                         <div className="flex justify-center gap-4">
-                            <img className="w-14 aspect-square h-14" src="../../pictures/vistas.png" alt="" />
-                            <img className="w-14 aspect-square h-14" src="../../pictures/vistas.png" alt="" />
-                            <img className="w-14 aspect-square h-14" src="../../pictures/vistas.png" alt="" />
-                            <img className="w-14 aspect-square h-14" src="../../pictures/vistas.png" alt="" />
-                            <img className="w-14 aspect-square h-14" src="../../pictures/vistas.png" alt="" />
+                            <img className="w-14 aspect-square h-14" src={product.imagen} alt="" />
+                            <img className="w-14 aspect-square h-14" src={product.imagen} alt="" />
+                            <img className="w-14 aspect-square h-14" src={product.imagen} alt="" />
+                            <img className="w-14 aspect-square h-14" src={product.imagen} alt="" />
+                            <img className="w-14 aspect-square h-14" src={product.imagen} alt="" />
                         </div>
                     </div>
                     <div className="grid w-1/2 gap-0 p-12">
@@ -218,16 +244,16 @@ function Producto() {
                                     emptyIcon={<FavoriteBorderIcon fontSize="inherit" />}
                                 />
                             </Box>
-                            <h1 className="text-[#056761] text-3xl font-bold">Titulo</h1>
+                            <h1 className="text-[#056761] text-3xl font-bold">{product.nombre}</h1>
                             <hr className="my-4 text-black bg-black border-2 rounded-full border-gray" />
                             <div className="flex mb-4 justify-items-center">
-                                <Rating className='' value={5} readOnly unratedColor="amber" ratedColor="amber" />
+                                <Rating className='' value={product.valoracion} readOnly unratedColor="amber" ratedColor="amber" />
                                 <p>Valoraciones</p>
                             </div>
-                            <p className="text-[#056761] my-6 text-2xl font-bold">$00.00</p>
+                            <p className="text-[#056761] my-6 text-2xl font-bold">{product.precio}</p>
 
                             <p className="text-[#056761] text-xl">Detalles</p>
-                            <p className="text-xl">Lorem ipsum dolor sit amet consectetur. Sed quam tincidunt sit malesuada vitae tempus lacus scelerisque. In odio massa purus consequat purus diam mollis. Tellus vitae ultricies euismod sit egestas.</p>
+                            <p className="text-xl">{product.descripcion}</p>
                         </div>
                         <div className="grid grid-cols-2 gap-4 ">
                             <button className="flex gap-4 bg-[#D9D9D9]  w-full rounded-full items-center justify-center">

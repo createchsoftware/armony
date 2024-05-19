@@ -8,6 +8,7 @@ import { CarritoProvider } from '../ui/Carrito.jsx'
 import { useCarrito } from '../ui/Carrito.jsx'
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { Navigate, useNavigate } from "react-router-dom";
 
 const StyledRating = styled(Rating)({
     '& .MuiRating-iconFilled': {
@@ -19,12 +20,27 @@ const StyledRating = styled(Rating)({
 });
 
 function Productos({ productos }) {
+    const navigate = useNavigate();
+
     const notify = () => toast("Producto agregado al carrito");
     const { agregarAlCarrito } = useCarrito();
 
     const handleClick = (producto) => {
         notify();
         handleAgregarAlCarrito(producto);
+    }
+
+    const handleViewMore = (producto) => {
+        // navigate to the product page with the product current id
+        const product = {
+            id: producto.pkIdPS,
+            nombre: producto.nombre,
+            precio: parseFloat(producto.precio),
+            descripcion: producto.descripcion,
+            valoracion: producto.valoracion || 5,
+            imagen: producto.img,
+        };
+        navigate(`/spa/producto/${product.id}`, { state: { product } });
     }
 
     const handleAgregarAlCarrito = (producto) => {
@@ -34,7 +50,7 @@ function Productos({ productos }) {
             precio: parseFloat(producto.precio),
             cantidad: 1,
             descripcion: producto.descripcion,
-            valoracion: 0,
+            valoracion: producto.valoracion || 5,
             image: producto.img,
         };
         agregarAlCarrito(productoParaCarrito);
@@ -63,7 +79,7 @@ function Productos({ productos }) {
                                     />
                                 </Box>
                             </div>
-                            <img className='w-2/3 m-auto mt-6 mb-4 rounded-lg aspect-square'
+                            <img onClick={() => handleViewMore(producto)} className='w-2/3 m-auto mt-6 mb-4 rounded-lg hover:cursor-pointer hover:opacity-60 aspect-square'
                                 src={producto.img ? producto.img : 'https://i.imgur.com/CCBFmSi.png'}
                                 // src={'https://i.imgur.com/CCBFmSi.png'}
                                 alt={producto.nombre}
