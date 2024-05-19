@@ -35,112 +35,114 @@ function ListaDeseo() {
         setTipo(type);
     }
 
-    const [contResumen, setContResumen] = useState([{
-        id: 1,
-        tipo: '1',
-        nombre: 'Producto 1',
-        precio: 100,
-        categoria: 'Cosméticos',
-        marca: 'POND’S',
-        valoracion: 4,
-        imagen: 'https://tailwindui.com/img/ecommerce-images/category-page-04-image-card-01.jpg',
-        descripcion: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit',
-    },
-    {
-        id: 2,
-        tipo: '1',
-        nombre: 'Producto 2',
-        precio: 200,
-        categoria: 'Facial',
-        marca: 'Hidra Sense',
-        valoracion: 3,
-        imagen: 'https://tailwindui.com/img/ecommerce-images/category-page-04-image-card-02.jpg',
-        descripcion: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit',
-    },
-    {
-        id: 3,
-        tipo: '1',
-        nombre: 'Producto 3',
-        precio: 300,
-        categoria: 'Crema',
-        marca: 'Savasana',
-        valoracion: 2,
-        imagen: 'https://tailwindui.com/img/ecommerce-images/category-page-04-image-card-03.jpg',
-        descripcion: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit',
-    },
-    {
-        id: 4,
-        tipo: '1',
-        nombre: 'Producto 4',
-        precio: 400,
-        categoria: 'Spray',
-        marca: 'CeraVe',
-        valoracion: 1,
-        imagen: 'https://tailwindui.com/img/ecommerce-images/category-page-04-image-card-04.jpg',
-        descripcion: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit',
-    },
-    {
-        id: 5,
-        tipo: '1',
-        nombre: 'Producto 5',
-        precio: 500,
-        categoria: 'Serúm',
-        marca: 'Cetaphil',
-        valoracion: 5,
-        imagen: 'https://tailwindui.com/img/ecommerce-images/category-page-04-image-card-05.jpg',
-        descripcion: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit',
-    },
-    {
-        id: 6,
-        tipo: '1',
-        nombre: 'Producto 6',
-        precio: 600,
-        categoria: 'Depilación',
-        marca: 'Mizon',
-        valoracion: 4,
-        imagen: 'https://tailwindui.com/img/ecommerce-images/category-page-04-image-card-06.jpg',
-        descripcion: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit',
-    },
-    {
-        id: 7,
-        tipo: '2',
-        nombre: "HydroFacial",
-        descripcion: "Estimula la restauración natural de la piel",
-        precio: 1800,
-        imagen: "../../../public/pictures/Hydrafacial.png",
-        valoracion: 5,
-        fav: true,
-    },
-    {
-        id: 8,
-        tipo: '2',
-        nombre: "Mesoterapia virtual",
-        descripcion: "Aumenta la permeabilidad de la piel",
-        precio: 1800,
-        imagen: "../../../public/pictures/MesoterapiaVirtual.png",
-        valoracion: 5,
-        fav: true,
-    },
-    {
-        id: 9,
-        tipo: '2',
-        nombre: "Uñas",
-        descripcion: "Transformación de las manos elevando confianza",
-        precio: 1200,
-        imagen: "../../../public/pictures/unas.png",
-        valoracion: 5,
-        fav: true,
-    },
-    {
-        id: 10,
-        tipo: '2',
-        nombre: "Pedicura",
-        descripcion: "Tratamiento estético para los pies",
-        precio: 1800,
-        imagen: "../../../public/pictures/pedicura.png",
-        valoracion: 5,
-        fav: true,
-    }
+    const [contResumen, setContResumen] = useState([
+    // CONTENIDO COMENTADO. ¡¡¡USAR SOLAMENTE PARA PRUEBAS ES CASO DE NO HABER AUN CONEXION FRONT-BACK!!!
+    // {
+    //     id: 1,
+    //     tipo: '1',
+    //     nombre: 'Producto 1',
+    //     precio: 100,
+    //     categoria: 'Cosméticos',
+    //     marca: 'POND’S',
+    //     valoracion: 4,
+    //     imagen: 'https://tailwindui.com/img/ecommerce-images/category-page-04-image-card-01.jpg',
+    //     descripcion: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit',
+    // },
+    // {
+    //     id: 2,
+    //     tipo: '1',
+    //     nombre: 'Producto 2',
+    //     precio: 200,
+    //     categoria: 'Facial',
+    //     marca: 'Hidra Sense',
+    //     valoracion: 3,
+    //     imagen: 'https://tailwindui.com/img/ecommerce-images/category-page-04-image-card-02.jpg',
+    //     descripcion: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit',
+    // },
+    // {
+    //     id: 3,
+    //     tipo: '1',
+    //     nombre: 'Producto 3',
+    //     precio: 300,
+    //     categoria: 'Crema',
+    //     marca: 'Savasana',
+    //     valoracion: 2,
+    //     imagen: 'https://tailwindui.com/img/ecommerce-images/category-page-04-image-card-03.jpg',
+    //     descripcion: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit',
+    // },
+    // {
+    //     id: 4,
+    //     tipo: '1',
+    //     nombre: 'Producto 4',
+    //     precio: 400,
+    //     categoria: 'Spray',
+    //     marca: 'CeraVe',
+    //     valoracion: 1,
+    //     imagen: 'https://tailwindui.com/img/ecommerce-images/category-page-04-image-card-04.jpg',
+    //     descripcion: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit',
+    // },
+    // {
+    //     id: 5,
+    //     tipo: '1',
+    //     nombre: 'Producto 5',
+    //     precio: 500,
+    //     categoria: 'Serúm',
+    //     marca: 'Cetaphil',
+    //     valoracion: 5,
+    //     imagen: 'https://tailwindui.com/img/ecommerce-images/category-page-04-image-card-05.jpg',
+    //     descripcion: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit',
+    // },
+    // {
+    //     id: 6,
+    //     tipo: '1',
+    //     nombre: 'Producto 6',
+    //     precio: 600,
+    //     categoria: 'Depilación',
+    //     marca: 'Mizon',
+    //     valoracion: 4,
+    //     imagen: 'https://tailwindui.com/img/ecommerce-images/category-page-04-image-card-06.jpg',
+    //     descripcion: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit',
+    // },
+    // {
+    //     id: 7,
+    //     tipo: '2',
+    //     nombre: "HydroFacial",
+    //     descripcion: "Estimula la restauración natural de la piel",
+    //     precio: 1800,
+    //     imagen: "../../../public/pictures/Hydrafacial.png",
+    //     valoracion: 5,
+    //     fav: true,
+    // },
+    // {
+    //     id: 8,
+    //     tipo: '2',
+    //     nombre: "Mesoterapia virtual",
+    //     descripcion: "Aumenta la permeabilidad de la piel",
+    //     precio: 1800,
+    //     imagen: "../../../public/pictures/MesoterapiaVirtual.png",
+    //     valoracion: 5,
+    //     fav: true,
+    // },
+    // {
+    //     id: 9,
+    //     tipo: '2',
+    //     nombre: "Uñas",
+    //     descripcion: "Transformación de las manos elevando confianza",
+    //     precio: 1200,
+    //     imagen: "../../../public/pictures/unas.png",
+    //     valoracion: 5,
+    //     fav: true,
+    // },
+    // {
+    //     id: 10,
+    //     tipo: '2',
+    //     nombre: "Pedicura",
+    //     descripcion: "Tratamiento estético para los pies",
+    //     precio: 1800,
+    //     imagen: "../../../public/pictures/pedicura.png",
+    //     valoracion: 5,
+    //     fav: true,
+    // }
 ])
 
     const presionar1 = () => {
@@ -292,6 +294,7 @@ function ListaDeseo() {
                                     <p>Ordenamiento por:</p>
                                     <FontAwesomeIcon icon={faAngleDown} />
                                 </button>
+                                {/* Aún no es funcional el filtro [WORK IN PROGRESS] */}
                                 { filtro && 
                                     <ul className='absolute px-6 w-max rounded-lg shadow-md border mt-6 bg-white z-10'>
                                         <li className='py-2'>
@@ -301,7 +304,12 @@ function ListaDeseo() {
                                         </li>
                                         <li className='py-2'>
                                             <button className='hover:font-bold hover:text-[#ec5766]'>
-                                                Precio
+                                                Precio: Mayor a menor
+                                            </button>
+                                        </li>
+                                        <li className='py-2'>
+                                            <button className='hover:font-bold hover:text-[#ec5766]'>
+                                                Precio: Meno a mayor
                                             </button>
                                         </li>
                                     </ul>
