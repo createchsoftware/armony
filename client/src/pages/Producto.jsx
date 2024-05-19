@@ -14,6 +14,10 @@ import Reseña from "../components/ui/Reseña.jsx";
 import { faTrash, faCircleXmark, faCircleMinus, faCirclePlus, faStar } from '@fortawesome/free-solid-svg-icons';
 import { useState, useEffect } from 'react';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { useCarrito } from '../components/ui/Carrito.jsx';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 
 const StyledRating = styled(Rating)({
     '& .MuiRating-iconFilled': {
@@ -85,27 +89,81 @@ const ofertas = [
     },
 ]
 
-function Producto() {
-    const [cantidad, setCantidad] = useState(1);
-    const [selectedRatingIndex, setSelectedRatingIndex] = useState(5);
-    const [generalRating, setGeneralRating] = useState(5);
+const initialProduct = {
+    id: 1,
+    nombre: 'Producto 1',
+    precio: 10,
+    descripcion: 'Descripción del producto',
+    valoracion: 5,
+    imagen: 'pictures/producto1.png',
+    cantidad: 1,
+}
 
-    console.log("🚀 ~ Producto ~ selectedRating:", selectedRatingIndex)
+function Producto() {
+    const notify = () => toast("Producto agregado al carrito");
+
+    const [product, setProduct] = useState(initialProduct);
+    const [cantidad, setCantidad] = useState(1);
+    const [selectedRatingIndex, setSelectedRatingIndex] = useState(null);
+    const [generalRating, setGeneralRating] = useState(null);
+    const [filteredReviews, setFilteredReviews] = useState(reseñas);
+    const [newReviewClicked, setNewReviewClicked] = useState(false);
+    const [reviewButtonMessage, setReviewButtonMessage] = useState('Escribir una reseña');
+    const [reviewRating, setReviewRating] = useState(0);
+
+    const { agregarAlCarrito } = useCarrito();
+
+    console.log(cantidad);
+    // Función para manejar el evento de agregar al carrito
+    const handleAddCart = () => {
+        notify();
+        const producto = {
+            id: product.id,
+            nombre: product.nombre,
+            precio: product.precio,
+            cantidad: cantidad,
+            descripcion: product.descripcion,
+            valoracion: product.valoracion,
+            imagen: product.imagen,
+        };
+        agregarAlCarrito(producto);
+    };
+
+    // Función para manejar cambios en el nuevo rating de la reseña
+    const handleReviewRating = (event) => {
+        setReviewRating(event.target.value);
+    };
+
+    const handleNewReview = () => {
+        setNewReviewClicked(!newReviewClicked);
+        if (newReviewClicked) {
+            setReviewButtonMessage('Escribir una reseña');
+        } else {
+            setReviewButtonMessage('Cancelar reseña nueva');
+        }
+    };
 
     const increaseQuantity = () => {
         setCantidad(cantidad + 1);
-    }
+    };
 
     const decreaseQuantity = () => {
         if (cantidad > 1) {
             setCantidad(cantidad - 1);
         }
-    }
+    };
 
     const handleSelectedRating = (index) => () => {
         setSelectedRatingIndex(index);
-    }
+    };
 
+    useEffect(() => {
+        if (selectedRatingIndex === null) {
+            setFilteredReviews(reseñas);
+            return;
+        }
+        setFilteredReviews(reseñas.filter(reseña => reseña.calificacion === selectedRatingIndex));
+    }, [selectedRatingIndex]);
 
     return (
         <LayoutPrincipal>
@@ -156,15 +214,15 @@ function Producto() {
                         </div>
                         <div className="grid grid-cols-2 gap-4 ">
                             <button className="flex gap-4 bg-[#D9D9D9]  w-full rounded-full items-center justify-center">
-                                <button className="">
+                                <button onClick={decreaseQuantity} className="">
                                     <FontAwesomeIcon icon={faCircleMinus} onClick={decreaseQuantity} />
                                 </button>
                                 <span>{cantidad}</span>
-                                <button className="">
+                                <button onClick={increaseQuantity} className="">
                                     <FontAwesomeIcon icon={faCirclePlus} onClick={increaseQuantity} />
                                 </button>
                             </button>
-                            <button className="text-[#EB5765] w-full bg-opacity-30 bg-[#EB5765] hover:bg-opacity-90 hover:text-white rounded-full">
+                            <button onClick={handleAddCart} className="text-[#EB5765] w-full bg-opacity-30 bg-[#EB5765] hover:bg-opacity-90 hover:text-white rounded-full">
                                 Agregar al carrito
                             </button>
                             <button className="bg-[#EB5765] col-span-2 text-white rounded-full hover:bg-opacity-80 hover:text-white w-full">
@@ -247,7 +305,6 @@ function Producto() {
 
                 <hr className="my-4 text-black bg-black border-2 rounded-full border-gray w-[80%] m-auto" />
 
-
                 <section className=' flex justify-around rounded-2xl w-[80%] m-auto p-6 shadow-[0_3px_10px_rgb(0,0,0,0.2)]'>
                     <div className="grid w-full gap-6 px-12">
                         <h1 className="text-3xl">Reseñas de Clientes</h1>
@@ -256,7 +313,7 @@ function Producto() {
                                 <div className="text-center">
                                     <p className="text-3xl font-medium text-gray-500 ms-1 dark:text-gray-400">4.95</p>
                                     <Rating className='' value={selectedRatingIndex} readOnly unratedColor="amber" ratedColor="amber" />
-                                    <p className="text-sm font-medium text-gray-500 dark:text-gray-400">{4} Reseñas</p>
+                                    <p className="text-sm font-medium text-gray-500 dark:text-gray-400">{5} Reseñas</p>
                                 </div>
                                 <div className="w-56">
                                     {['5', '4', '3', '2', '1'].map((label, index) => (
@@ -270,17 +327,41 @@ function Producto() {
                                     ))}
                                 </div>
                             </div>
-                            <button className="text-[#EB5765] bg-opacity-30 bg-[#EB5765] hover:bg-opacity-90 hover:text-white rounded-3xl py-2 px-6 mr-12">Escribir una reseña</button>
+                            <button onClick={handleNewReview} className="text-[#EB5765] bg-opacity-30 bg-[#EB5765] hover:bg-opacity-90 hover:text-white rounded-3xl py-2 px-6 mr-12">{reviewButtonMessage}</button>
                         </div>
                         <div>
-                            {reseñas.map(reseña => (
+                            {newReviewClicked ? (
+                                <>
+                                    <main className='grid gap-4'>
+                                        <div className="flex items-center gap-4">
+                                            <form className="grid gap-1">
+                                                <p>Selecciona una valoración:</p>
+                                                <Rating className='' onChange={handleReviewRating} value={reviewRating} unratedColor="amber" ratedColor="amber" />
+                                                <div className="flex gap-8 mt-4">
+                                                    <div className="flex items-start gap-4">
+                                                        <label className="pt-2">Titulo:</label>
+                                                        <input className="rounded-md resize-none" type="text" maxLength={20} placeholder="" />
+                                                    </div>
+                                                    <div className="flex items-start gap-4">
+                                                        <label className="pt-2">Comentario:</label>
+                                                        <textarea rows={4} cols={60} name="" maxLength={255} className="rounded-md resize-none " placeholder=""></textarea>
+                                                    </div>
+                                                </div>
+                                                <button className="text-[#EB5765] w-1/4 mt-6  m-auto bg-opacity-30 bg-[#EB5765] hover:bg-opacity-90 hover:text-white rounded-3xl py-2 px-6">Enviar</button>
+                                            </form>
+                                        </div>
+                                    </main>
+                                </>) : null}
+                            {filteredReviews.map(reseña => (
                                 <Reseña key={reseña.id} reseña={reseña} />
                             ))}
+
                         </div>
                     </div>
                 </section>
             </main>
-        </LayoutPrincipal>
+            <ToastContainer position={'bottom-right'} theme={'light'} />
+        </LayoutPrincipal >
     );
 }
 

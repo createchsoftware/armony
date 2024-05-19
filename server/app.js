@@ -1,18 +1,12 @@
 import express from "express";
 import { servidor } from "./data/datos.js";
 import cookieParser from 'cookie-parser';
-import mysql from "mysql2";
-import bcryptjs from 'bcryptjs';
-
-let salt =  await bcryptjs.genSalt(5);  //clave cryptografica de la contraseña del usuario
-let hashPassword =  await bcryptjs.hash('MikuNakano23#',salt); 
-
+import https from "https";
+import * as fs from "fs";
 
 import path, { dirname } from 'path';
 import { fileURLToPath } from 'url';
 const _dirname = path.dirname(fileURLToPath(import.meta.url));
-
-
 
 import {methods as authentication} from './controllers/authentication.controllers.js';
 import {methods as authorization} from './middlewares/authorization.js';
@@ -21,9 +15,10 @@ import {methods as editarPerfil} from "./controllers/editarPerfil.controllers.js
 import {methods as perfil} from "./controllers/perfil-data.controllers.js";
 import InsertUser from "./middlewares/register.js";
 
-
 import { conexion } from "./db/connection.js";
 
+const keyPath = path.join(_dirname, '/ssl/private.key');
+const certPath = path.join(_dirname, '/ssl/certificate.crt');
 
 // Objeto de express
 const app = express();
@@ -96,7 +91,6 @@ app.post('/api/tarjeta-nueva', perfil.InsertarTarjeta);
 
 app.get('/api/pedidos', perfil.getPedidos);
 
-
 app.get('/perfil/pedidos', authorization.logeado);
 
 app.get('/perfil',authorization.logeado );
@@ -115,6 +109,7 @@ app.get('/perfil/movimientos', authorization.logeado);
 
 app.get('/perfil/historial', authorization.logeado);
 
+app.get('/api/patologias', authorization.Patologias);
 
 app.get('/api/tarjetas/1.5', perfil.getTarjetas);
 
@@ -148,14 +143,27 @@ app.get('/api/step1.5',async (solicitud,respuesta)=>{
     
 });
 
-
-
-app.listen(servidor.SERVER_PORT, () => {
-  console.log(`Servidor en puerto ${servidor.SERVER_PORT}`);
-});
-
-
-
 app.get('*', (solicitud,respuesta)=>{
   respuesta.sendFile(path.join(_dirname ,'../client/dist/index.html'));
 })
+
+
+if (servidor.PRODUCTION === "true") {
+  https.createServer({
+    key: fs.readFileSync(keyPath),
+    cert: fs.readFileSync(certPath)
+  }, app).listen(443, () => {
+    console.log(`Servidor en puerto 443: HTTPS`);
+  });
+
+  app.use((req, res) => {
+    res.redirect(`https://${req.headers.host}${req.url}`);
+  });
+}
+
+let puerto = servidor.PRODUCTION === "true" ? 80 : servidor.SERVER_PORT;
+
+app.listen(puerto,
+          (servidor.PRODUCTION === "true" ? servidor.PROD_SERVER_HOST : servidor.SERVER_HOST), () => {
+  console.log(`Servidor en puerto ${puerto}: HTTP`);
+});

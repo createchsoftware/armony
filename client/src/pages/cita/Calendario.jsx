@@ -129,8 +129,8 @@ function Calendario() {
         setHighlightedDays([]);
         fetchHighlightedDays(date);
     };
-    
-//const[value,onChange]=useState(new Date())
+
+    //const[value,onChange]=useState(new Date())
     const [nombre, setNombre] = useState(false); //<<< PARA EL INICIO DE SESION
     const [correo, setCorreo] = useState(false); //<<< PARA EL INICIO DE SESION
 
@@ -215,7 +215,7 @@ function Calendario() {
     }
     const [selectedDate, setSelectedDate] = useState(initialValue);
     const [horasDisponibles, setHorasDisponibles] = useState([]);
-    
+
     //metodo para obtener horas disponibles de un empleado
     //este metodo se llamara cada vez que el estado de id empleado o el estado de fecha cambie
 
@@ -263,14 +263,14 @@ function Calendario() {
     //         '8:00 pm',
     //     ])
     // }
-   
+
     const [isLoad, setIsLoad] = useState(true);
 
     // useEffect(() => {
     //     const fetchData = async () => {
-            
+
     //             const response = await fetch("/api/admin/productos/get")
-            
+
     //             const data = await response.json();
     //            // setEspecialistas(data)
     //     };
@@ -292,7 +292,7 @@ function Calendario() {
         fetchData();
     }, []);
     //console.log(especialistas);
-    
+
     // const especialistas = [
     //     {
     //         id: 1,
@@ -341,12 +341,12 @@ function Calendario() {
         return () => {
             window.removeEventListener('storage', handleLocalStorageChange);
         };
-    }, []); 
+    }, []);
 
 
     useEffect(() => {
         horasDisp();
-    }, [selectedDate]); 
+    }, [selectedDate]);
 
     useEffect(() => {
         if (localStorage.getItem('Especialista') && localStorage.getItem('Fecha seleccionada')) {
@@ -427,7 +427,7 @@ function Calendario() {
                             ))}
                         </div>
 
-                    </div> 
+                    </div>
 
                 </section>
                 <section className='w-1/3 '>
@@ -436,83 +436,83 @@ function Calendario() {
                         <h1>Loading...</h1>
                     ) : (
                         <>
-                    <div className='flex justify-center gap-4 m-4'>
-                        <button className='px-4 py-1 text-white rounded-xl bg-rose-400'>General</button>
-                        <button className='flex items-center justify-center gap-2 px-4 text-white rounded-xl bg-rose-400'>Favoritos
-                            <svg className="w-5 h-5 text-white dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="2" height="2" fill="currentColor" viewBox="0 0 24 24">
-                                <path d="m12.75 20.66 6.184-7.098c2.677-2.884 2.559-6.506.754-8.705-.898-1.095-2.206-1.816-3.72-1.855-1.293-.034-2.652.43-3.963 1.442-1.315-1.012-2.678-1.476-3.973-1.442-1.515.04-2.825.76-3.724 1.855-1.806 2.201-1.915 5.823.772 8.706l6.183 7.097c.19.216.46.34.743.34a.985.985 0 0 0 .743-.34Z" />
-                            </svg>
-                        </button>
-                    </div>
-                    
-                    <Carousel
-                        additionalTransfrom={0}
-                        arrows
-                        autoPlay
+                            <div className='flex justify-center gap-4 m-4'>
+                                <button className='px-4 py-1 text-white rounded-xl bg-rose-400'>General</button>
+                                <button className='flex items-center justify-center gap-2 px-4 text-white rounded-xl bg-rose-400'>Favoritos
+                                    <svg className="w-5 h-5 text-white dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="2" height="2" fill="currentColor" viewBox="0 0 24 24">
+                                        <path d="m12.75 20.66 6.184-7.098c2.677-2.884 2.559-6.506.754-8.705-.898-1.095-2.206-1.816-3.72-1.855-1.293-.034-2.652.43-3.963 1.442-1.315-1.012-2.678-1.476-3.973-1.442-1.515.04-2.825.76-3.724 1.855-1.806 2.201-1.915 5.823.772 8.706l6.183 7.097c.19.216.46.34.743.34a.985.985 0 0 0 .743-.34Z" />
+                                    </svg>
+                                </button>
+                            </div>
 
-                        className={(checked ? 'opacity-30' : '') + ' m-auto' + ' z-0'}
-                        autoPlaySpeed={3000}
-                        centerMode={false}
-                        containerclassName=" z-0"
-                        dotListclassName=""
-                        // draggable
-                        focusOnSelect={false}
-                        infinite
-                        itemclassName=""
-                        keyBoardControl
-                        minimumTouchDrag={80}
-                        pauseOnHover
-                        renderArrowsWhenDisabled={false}
-                        renderButtonGroupOutside={false}
-                        renderDotsOutside={false}
-                        responsive={{
-                            desktop: {
-                                breakpoint: {
-                                    max: 3000,
-                                    min: 1024
-                                },
-                                items: 1,
-                                partialVisibilityGutter: 40
-                            },
-                            mobile: {
-                                breakpoint: {
-                                    max: 464,
-                                    min: 0
-                                },
-                                items: 1,
-                                partialVisibilityGutter: 30
-                            },
-                            tablet: {
-                                breakpoint: {
-                                    max: 1024,
-                                    min: 464
-                                },
-                                items: 1,
-                                partialVisibilityGutter: 30
-                            }
-                        }}
-                        rewind={false}
-                        rewindWithAnimation={false}
-                        rtl={false}
-                        shouldResetAutoplay
-                        showDots={false}
-                        sliderclassName=""
-                        slidesToSlide={1}
-                        swipeable
-                    >
-                            {especialistas.length>0?(especialistas.map((especialista) => (
-                                <Especialista key={especialista.id} especialista={especialista} />
-                            ))):(<div></div>)}
-                    </Carousel>
-                      {/* <CarruselServicios servicios={especialistas} itemsDesktop={1} itemsMobile={1} itemsTablet={1}/>
+                            <Carousel
+                                additionalTransfrom={0}
+                                arrows
+                                autoPlay
+
+                                className={(checked ? 'opacity-30' : '') + ' m-auto' + ' z-0'}
+                                autoPlaySpeed={3000}
+                                centerMode={false}
+                                containerclassName=" z-0"
+                                dotListclassName=""
+                                // draggable
+                                focusOnSelect={false}
+                                infinite
+                                itemclassName=""
+                                keyBoardControl
+                                minimumTouchDrag={80}
+                                pauseOnHover
+                                renderArrowsWhenDisabled={false}
+                                renderButtonGroupOutside={false}
+                                renderDotsOutside={false}
+                                responsive={{
+                                    desktop: {
+                                        breakpoint: {
+                                            max: 3000,
+                                            min: 1024
+                                        },
+                                        items: 1,
+                                        partialVisibilityGutter: 40
+                                    },
+                                    mobile: {
+                                        breakpoint: {
+                                            max: 464,
+                                            min: 0
+                                        },
+                                        items: 1,
+                                        partialVisibilityGutter: 30
+                                    },
+                                    tablet: {
+                                        breakpoint: {
+                                            max: 1024,
+                                            min: 464
+                                        },
+                                        items: 1,
+                                        partialVisibilityGutter: 30
+                                    }
+                                }}
+                                rewind={false}
+                                rewindWithAnimation={false}
+                                rtl={false}
+                                shouldResetAutoplay
+                                showDots={false}
+                                sliderclassName=""
+                                slidesToSlide={1}
+                                swipeable
+                            >
+                                {especialistas.length > 0 ? (especialistas.map((especialista) => (
+                                    <Especialista key={especialista.id} especialista={especialista} />
+                                ))) : (<div></div>)}
+                            </Carousel>
+                            {/* <CarruselServicios servicios={especialistas} itemsDesktop={1} itemsMobile={1} itemsTablet={1}/>
                                          */}
-                                        <div class="mt-2 flex gap-2 justify-center">
-                        <div class="flex items-center">
-                            <input id="default-checkbox" type="checkbox" onChange={handleCheckBox} value="" class="w-5 h-5 text-rose-400 bg-gray-100 border-gray-300 rounded focus:ring-rose-400  focus:ring-2" />
-                            <label for="default-checkbox" class="ms-2 text-lg font-medium text-gray-900 dark:text-gray-300">Indiferente</label>
-                        </div>
-                    </div>
-                    </>
+                            <div class="mt-2 flex gap-2 justify-center">
+                                <div class="flex items-center">
+                                    <input id="default-checkbox" type="checkbox" onChange={handleCheckBox} value="" class="w-5 h-5 text-rose-400 bg-gray-100 border-gray-300 rounded focus:ring-rose-400  focus:ring-2" />
+                                    <label for="default-checkbox" class="ms-2 text-lg font-medium text-gray-900 dark:text-gray-300">Indiferente</label>
+                                </div>
+                            </div>
+                        </>
                     )}
                 </section>
             </main >

@@ -126,7 +126,7 @@ const Patologias = () => {
           </a>
           </div>*/}
           <div className="absolute mt-5">
-            <a className="ml-3">
+            <a className="ml-3" href='/spa/signUp'>
               <FontAwesomeIcon
                 style={{ fontSize: "22px" }}
                 icon={faAngleLeft}
@@ -190,6 +190,7 @@ const Patologias = () => {
           <div className="grid grid-cols-2 my-auto">
             <div className="grid place-content-start ml-8">
               <button
+                id="cancelar"
                 aria-label="Cancelar"
                 className="bg-white text-rose-400 text-xl rounded-full px-4 py-2 mx-auto hover:bg-red-50 ring-2 ring-rose-400"
               >

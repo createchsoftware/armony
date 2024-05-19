@@ -14,6 +14,8 @@ export const conexionDB = {
 
 // Configuracion del servidor
 export const servidor = {
+  PRODUCTION: process.env.PRODUCTION,
+  PROD_SERVER_HOST: process.env.PROD_SERVER_HOST,
   SERVER_HOST: process.env.SERVER_HOST,
   SERVER_PORT: process.env.SERVER_PORT,
 };

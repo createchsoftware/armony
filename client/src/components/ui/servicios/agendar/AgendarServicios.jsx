@@ -1,98 +1,10 @@
 import { useState, useEffect } from "react";
 import Carrusel from "../../CarruselServicios";
 
-// const spa = [
-//   {
-//     id: 1,
-//     nombre: "Masaje corporal",
-//     precio: 700,
-//     duracion: 60,
-//     descripcion:
-//       "Técnicas personalizadas para aliviar la tensión muscular, liberar el estrés y renovar tu bienestar. Sumérgete en un oasis de calma y deja que nuestros expertos te lleven a un estado de completa tranquilidad.",
-//     img: "../../../../../pictures/MasajeReductivoColombiano.png",
-//     rating: 5,
-//   },
-//   {
-//     id: 2,
-//     nombre: "Facial",
-//     precio: 500,
-//     duracion: 90,
-//     descripcion:
-//       "Diseñados para mejorar la textura de la piel, reducir la apariencia de líneas finas y promover un brillo saludable.",
-//     img: "../../../../../pictures/Hydrafacial.png",
-//     rating: 5,
-//   },
-//   {
-//     id: 3,
-//     nombre: "Depilación",
-//     precio: 500,
-//     duracion: 90,
-//     descripcion:
-//       "Obtén una piel suave y sin vello con nuestra depilación profesional. Desde cejas perfectamente arqueadas hasta piernas sedosas, nuestros especialistas utilizan técnicas avanzadas y productos de alta calidad para ofrecerte resultados duraderos y cómodos.",
-//     img: "../../../../../pictures/LiftingFacial.png",
-//     rating: 5,
-//   },
-//   {
-//     id: 4,
-//     nombre: "Levantamiento de gluteos",
-//     precio: 700,
-//     duracion: 60,
-//     descripcion:
-//       " Técnicas personalizadas para aliviar la tensión muscular, liberar el estrés y renovar tu bienestar. Sumérgete en un oasis de calma y deja que nuestros expertos te lleven a un estado de completa tranquilidad.",
-//     img: "../../../../../pictures/MasajeAntiCelulitisColombiano.png",
-//     rating: 5,
-//   },
-// ];
-
-// const estetica = [
-//   {
-//     id: 1,
-//     nombre: "Maquillaje",
-//     precio: 700,
-//     duracion: 60,
-//     descripcion:
-//       " Técnicas personalizadas para aliviar la tensión muscular, liberar el estrés y renovar tu bienestar. Sumérgete en un oasis de calma y deja que nuestros expertos te lleven a un estado de completa tranquilidad.",
-//     img: "../../../../../pictures/pestañas.png",
-//     rating: 5,
-//   },
-//   {
-//     id: 2,
-//     nombre: "Planchado de pelo",
-//     precio: 500,
-//     duracion: 90,
-//     descripcion:
-//       "Diseñados para mejorar la textura de la piel, reducir la apariencia de líneas finas y promover un brillo saludable.",
-//     img: "../../../../../pictures/peluqueria.png",
-//     rating: 5,
-//   },
-// ];
-
-const favoritos = [
-  {
-    id: 1,
-    nombre: "Manicure",
-    precio: 650,
-    duracion: 120,
-    descripcion:
-      "Técnicas personalizadas para aliviar la tensión muscular, liberar el estrés y renovar tu bienestar. Sumérgete en un oasis de calma y deja que nuestros expertos te lleven a un estado de completa tranquilidad.",
-    img: "../../../../../pictures/unas.png",
-    rating: 5,
-  },
-  {
-    id: 2,
-    nombre: "Tinte",
-    precio: 750,
-    duracion: 90,
-    descripcion:
-      "Diseñados para mejorar la textura de la piel, reducir la apariencia de líneas finas y promover un brillo saludable.",
-    img: "../../../../../pictures/tintes.png",
-    rating: 5,
-  },
-];
-
 const AgendarServicios = () => {
   const [spa, setSpa] = useState([]);
   const [estetica, setEstetica] = useState([]);
+  const [favoritos, setFavoritos] = useState([]);
 
   useEffect(() => {
     fetch("/api/admin/categoria/getServicesSpa")
@@ -129,6 +41,10 @@ const AgendarServicios = () => {
       }, 3000);
     }
   }, [spa]);
+
+  {
+    /* FALTA AGREGAR CONEXION CON FAVORITOS */
+  }
 
   const [toggleState, setToggleService] = useState(1);
   const [color1, setColor1] = useState("#80B5B0");

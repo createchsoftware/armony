@@ -8,13 +8,27 @@ import PopupLogin from "./Login/PopupLogin.jsx";
 import SubMenuServicios from "./SubMenuServicios.jsx"
 import MenuPerfil from "./MenuPerfil.jsx";
 import { Helmet, HelmetProvider } from "react-helmet-async";
+import { useCarrito } from '../ui/Carrito.jsx'
+import { useLocation } from "react-router-dom";
 
 function Navbar() {
+    let location = useLocation();
+
+    const { getCartItemsCount } = useCarrito();
     const [cart, setCart, showModal, setShowModal] = useState(false);
     const [login, setLogin] = useState(false);
     const [log, setLog] = useState(false); //<<< PARA EL INICIO DE SESION
     const [usuario, setUsuario] = useState(false); //<<< PARA EL INICIO DE SESION
     const [items, setItems] = useState(0);
+
+
+    //auto update cart items in navbar (items)
+    useEffect(() => {
+        const updateCartItems = () => {
+            setItems(getCartItemsCount());
+        };
+        updateCartItems();
+    }, [getCartItemsCount]);
 
     const toggleCart = () => {
         setCart(!cart);
@@ -60,7 +74,7 @@ function Navbar() {
         <>
             <HelmetProvider>
                 <Helmet>
-                    <script src="../../../scripts/index.js"></script>
+                    <script src="../../../public/scripts/index.js"></script>
                 </Helmet>
             </HelmetProvider>
             <header className="header">
@@ -78,7 +92,7 @@ function Navbar() {
                         </button>
                         <ul className="menu">
                             <li className="nav-menu-item">
-                                <a href="/spa" className="menu-link">
+                                <a href={location.pathname === '/' ? '/' : '/spa'} className="menu-link">
                                     Inicio
                                 </a>
                             </li>
@@ -110,11 +124,11 @@ function Navbar() {
                                         </a>
                                     </li>
                                     <li className="nav-menu-item">
-                                        { log ? (
+                                        {log ? (
                                             <a href="/spa/agendar" className="menu-link">
                                                 Agendar
                                             </a>
-                                        ):(
+                                        ) : (
                                             <a href="#" className="menu-link" onClick={toggleLogin}>
                                                 Agendar
                                             </a>
@@ -149,7 +163,7 @@ function Navbar() {
                             </li>
                             {location.pathname !== "/" && (
                                 <li className="nav-menu-item">
-                                    { log ? (
+                                    {log ? (
                                         <a
                                             href="/favoritos"
                                             className="nav-fav"
@@ -157,7 +171,7 @@ function Navbar() {
                                         >
                                             <FontAwesomeIcon icon={faHeart} />
                                         </a>
-                                    ):(
+                                    ) : (
                                         <a
                                             href="#"
                                             className="nav-fav"
@@ -183,6 +197,20 @@ function Navbar() {
                                     </button>
                                 </li>
                             )}
+                            {location.pathname == "/spa/producto" && (
+                                <li className="nav-menu-item">
+                                    <button
+                                        className="nav-cart"
+                                        aria-label="Abrir Carrito"
+                                        onClick={toggleCart}
+                                    >
+                                        <FontAwesomeIcon icon={faCartShopping} />
+                                        <span className="text-xs badge badge-pill badge-warning">
+                                            {items}
+                                        </span>
+                                    </button>
+                                </li>
+                            )}
                         </ul>
                     </nav>
                 </div>
@@ -190,8 +218,8 @@ function Navbar() {
             {login && <PopupLogin cerrar={toggleLogin} />}
 
             {cart && (
-                <div className="cart-fondo">
-                    <div className="cart-fx">
+                <div className="overflow-y-auto cart-fondo">
+                    <div className="overflow-y-auto cart-fx">
                         <Carrito cerrar={toggleCart} totalProductos={cantProductos} logCart={log} loginCart={toggleLogin} />
                     </div>
                 </div>

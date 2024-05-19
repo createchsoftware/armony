@@ -110,7 +110,7 @@ const InformacionBasica = () => {
           </a>
           </div>*/}
           <div className="absolute mt-5">
-            <a className="ml-3">
+            <a className="ml-3" href="/">
               <FontAwesomeIcon
                 style={{ fontSize: "22px" }}
                 icon={faAngleLeft}
@@ -318,6 +318,7 @@ const InformacionBasica = () => {
           <div className="grid grid-cols-2 mt-[8rem] mb-[2rem] md:my-auto">
             <div className="grid place-content-start ml-8">
               <button
+                id='cancelar'
                 aria-label="Cancelar"
                 className="bg-white text-rose-400 text-xl rounded-full px-4 py-2 mx-auto hover:bg-red-50 ring-2 ring-rose-400"
               >
@@ -325,7 +326,6 @@ const InformacionBasica = () => {
               </button>
             </div>
             <div className="grid place-content-end mr-8">
-              <a href="/spa/signUp/Patologia">
                 <button
                   id="step-one"
                   aria-label="Continuar"
@@ -333,7 +333,6 @@ const InformacionBasica = () => {
                 >
                   Continuar
                 </button>
-              </a>
             </div>
           </div>
         </div>

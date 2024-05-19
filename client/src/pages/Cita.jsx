@@ -32,11 +32,12 @@ const steps = [
 ];
 
 export default function Cita() {
-  
+
   const navigate = useNavigate();
   const [activeStep, setActiveStep] = useState(0);
   const [completed, setCompleted] = useState({});
   const [scrollPosition, setScrollPosition] = useState(0);
+  const nextButtonText = activeStep === steps.length - 1 ? "Ver agenda" : "Siguiente";
 
   useEffect(() => {
     localStorage.clear();
@@ -126,12 +127,12 @@ export default function Cita() {
       " " +
       localStorage.getItem("hora") +
       " " +
-      localStorage.getItem("Fecha seleccionada")+ ' '+
-      localStorage.getItem('NombreEspecialista')+ ' '+
+      localStorage.getItem("Fecha seleccionada") + ' ' +
+      localStorage.getItem('NombreEspecialista') + ' ' +
 
-      localStorage.getItem('nombre')+ ' '+
-localStorage.getItem('precio')+ ' '+
-localStorage.getItem('tiempo')
+      localStorage.getItem('nombre') + ' ' +
+      localStorage.getItem('precio') + ' ' +
+      localStorage.getItem('tiempo')
     );
   };
   const stepComponents = [
@@ -197,13 +198,14 @@ localStorage.getItem('tiempo')
 
           <div>
             {allStepsCompleted() ? (
-              <React.Fragment>
-                <Typography sx={{ mt: 2, mb: 1 }}>Pasos completados</Typography>
-                <Box sx={{ display: "flex", flexDirection: "row", pt: 2 }}>
-                  <Box sx={{ flex: "1 1 auto" }} />
-                  <Button onClick={handleReset}>Empezar de nuevo</Button>
-                </Box>
-              </React.Fragment>
+              navigate("/perfil/agenda")
+              // <React.Fragment>
+              //   <Typography sx={{ mt: 2, mb: 1 }}>Pasos completados</Typography>
+              //   <Box sx={{ display: "flex", flexDirection: "row", pt: 2 }}>
+              //     <Box sx={{ flex: "1 1 auto" }} />
+              //     <Button onClick={handleReset}>Empezar de nuevo</Button>
+              //   </Box>
+              // </React.Fragment>
             ) : (
               <React.Fragment>
                 {/* <Typography sx={{ mt: 2, mb: 1, py: 1 }}>
@@ -230,10 +232,10 @@ localStorage.getItem('tiempo')
                   </button>
                   <button
                     onClick={handleClick}
-                    disabled={activeStep === steps.length - 1}
+                    // disabled={activeStep === steps.length - 1}
                     className="px-4 py-2 mx-auto text-xl text-white rounded-full bg-rose-400 hover:bg-red-200"
                   >
-                    Siguiente
+                    {nextButtonText}
                   </button>
                   {/* {activeStep !== steps.length &&
                                         (completed[activeStep] ? (

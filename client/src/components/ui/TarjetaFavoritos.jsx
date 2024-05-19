@@ -62,14 +62,14 @@ const TarjetaFavoritos = ({ props }) => {
       <div className="mt-6 text-[#036C65] bg-[#E8C3C6] rounded-3xl text-md md:text-xl text-center p-2 w-2/3 m-auto flex justify-center items-center">
         {props.nombre}
       </div>
-      <p className="w-2/3 text-center mx-auto mt-2">{props.descr}</p>
-      <div className="grid place-items-center mt-2">
+      <p className="w-2/3 mx-auto mt-2 text-center">{props.descr}</p>
+      <div className="grid mt-2 place-items-center">
         <Rating
           className=""
           value={props.rating}
           unratedColor="amber"
           ratedColor="amber"
-          readonly
+          readOnly
         />
       </div>
       <div className="w-1/2 md:ml-[7.5vw] m-auto md:m-2 md:mt-6 text-center flex  mt-6 items-center">

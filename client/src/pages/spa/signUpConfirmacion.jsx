@@ -1,17 +1,13 @@
-import Navbar from "../../components/ui/Navbar.jsx";
+import LayoutSecundario from "../../layouts/LayoutSecundario.jsx";
 import ConfirmacionCuenta from "../../components/ui/Login/Procesos/CrearCuenta/ConfirmacionCuenta.jsx";
-import Footer from "../../components/ui/FooterSecundario.jsx";
-import React, { Fragment, useEffect, useState } from "react";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faBars } from "@fortawesome/free-solid-svg-icons";
 import { Helmet, HelmetProvider } from "react-helmet-async";
 
 const SignUpConfirmacion = () => {
   return (
     <>
-      <Navbar />
-      <ConfirmacionCuenta />
-      <Footer />
+      <LayoutSecundario>
+        <ConfirmacionCuenta />
+      </LayoutSecundario>
     </>
   );
 };

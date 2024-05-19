@@ -1,7 +1,17 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCircleArrowUp } from "@fortawesome/free-solid-svg-icons";
+import Soon from '../ui/Proximamente'
+import { useState } from "react";
+import '../../index.css';
 
 function Foot() {
+
+    const [soon, setSoon] = useState(false);
+
+    const toggleSoon = () => {
+        setSoon(!soon)
+    };
+
     return (
         <>
             <footer className="selection:bg-[#EB5765]  selection:text-white font-[abeatbyKai] text-white bg-gradient-to-b from-[#036C65] to-black" id="contacto">
@@ -79,19 +89,19 @@ function Foot() {
                                 <li><a href="/spa"
                                     className="relative inline  cursor-pointer  before:bg-white  before:absolute before:-bottom-1 before:block before:h-[1px] before:w-full before:origin-bottom-right before:scale-x-0 before:transition before:duration-300 before:ease-in-out hover:before:origin-bottom-left hover:before:scale-x-100">
                                     Spa - Salon & Beaty</a></li>
-                                <li><a href="#"
+                                <li><a onClick={toggleSoon}
                                     className="relative inline  cursor-pointer  before:bg-white  before:absolute before:-bottom-1 before:block before:h-[1px] before:w-full before:origin-bottom-right before:scale-x-0 before:transition before:duration-300 before:ease-in-out hover:before:origin-bottom-left hover:before:scale-x-100">
                                     Wellness - Hábitos saludables </a></li>
-                                <li><a href="#"
+                                <li><a onClick={toggleSoon}
                                     className="relative inline  cursor-pointer  before:bg-white  before:absolute before:-bottom-1 before:block before:h-[1px] before:w-full before:origin-bottom-right before:scale-x-0 before:transition before:duration-300 before:ease-in-out hover:before:origin-bottom-left hover:before:scale-x-100">
                                     Colectivo - Regalos & More</a></li>
-                                <li><a href="#"
+                                <li><a onClick={toggleSoon}
                                     className="relative inline  cursor-pointer  before:bg-white  before:absolute before:-bottom-1 before:block before:h-[1px] before:w-full before:origin-bottom-right before:scale-x-0 before:transition before:duration-300 before:ease-in-out hover:before:origin-bottom-left hover:before:scale-x-100">
                                     Cafetería - Cultura & Art</a></li>
-                                <li><a href="#"
+                                <li><a onClick={toggleSoon}
                                     className="relative inline  cursor-pointer  before:bg-white  before:absolute before:-bottom-1 before:block before:h-[1px] before:w-full before:origin-bottom-right before:scale-x-0 before:transition before:duration-300 before:ease-in-out hover:before:origin-bottom-left hover:before:scale-x-100">
                                     Knowledge & Learning</a></li>
-                                <li><a href="#"
+                                <li><a onClick={toggleSoon}
                                     className="relative inline  cursor-pointer  before:bg-white  before:absolute before:-bottom-1 before:block before:h-[1px] before:w-full before:origin-bottom-right before:scale-x-0 before:transition before:duration-300 before:ease-in-out hover:before:origin-bottom-left hover:before:scale-x-100">
                                     Emprendimiento & Fly</a></li>
                             </ul>
@@ -99,16 +109,16 @@ function Foot() {
                         <div>
                             <h2 className="mb-6 text-sm font-semibold uppercase text-[#B2B2B2]">Productos</h2>
                             <ul>
-                                <li><a href="#"
+                                <li><a onClick={toggleSoon}
                                     className="relative inline  cursor-pointer  before:bg-white  before:absolute before:-bottom-1 before:block before:h-[1px] before:w-full before:origin-bottom-right before:scale-x-0 before:transition before:duration-300 before:ease-in-out hover:before:origin-bottom-left hover:before:scale-x-100">
                                     Clinica</a></li>
                                 <li><a href="/spa"
                                     className="relative inline  cursor-pointer  before:bg-white  before:absolute before:-bottom-1 before:block before:h-[1px] before:w-full before:origin-bottom-right before:scale-x-0 before:transition before:duration-300 before:ease-in-out hover:before:origin-bottom-left hover:before:scale-x-100">
                                     Spa - Salon & Beaty</a></li>
-                                <li><a href="#"
+                                <li><a onClick={toggleSoon}
                                     className="relative inline  cursor-pointer  before:bg-white  before:absolute before:-bottom-1 before:block before:h-[1px] before:w-full before:origin-bottom-right before:scale-x-0 before:transition before:duration-300 before:ease-in-out hover:before:origin-bottom-left hover:before:scale-x-100">
                                     Colectivo - Regalos & More</a></li>
-                                <li><a href="#"
+                                <li><a onClick={toggleSoon}
                                     className="relative inline  cursor-pointer  before:bg-white  before:absolute before:-bottom-1 before:block before:h-[1px] before:w-full before:origin-bottom-right before:scale-x-0 before:transition before:duration-300 before:ease-in-out hover:before:origin-bottom-left hover:before:scale-x-100">
                                     Cafetería - Cultura & Art</a></li>
                             </ul>
@@ -164,6 +174,13 @@ function Foot() {
                         </div>
                     </div>
                 </div>
+                {soon && (
+                    <div className='soon-fondo'>
+                        <div className='text-black soon-fx' onClick={toggleSoon}>
+                            <Soon />
+                        </div>
+                    </div>
+                )}
             </footer>
         </>
     );
