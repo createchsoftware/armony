@@ -110,20 +110,20 @@ function TarjetaNueva() {
                                     </div>
                                     <div className="grid mt-4">
                                         <label htmlFor="">Número de la tarjeta</label>
-                                        <input type="text" id='numero' name='numero' className="grid mt-2 rounded shadow-md" />
+                                        <input type="text" id='numero' maxLength={16} name='numero' className="grid mt-2 rounded shadow-md" />
                                     </div>
                                     <div className="flex justify-around mt-4">
                                         <div className="grid">
                                             <label className="text-center">Fecha de vencimiento</label>
                                             <div className="flex items-center justify-center mt-2">
-                                                <input type="text" id='mes' name='mes' className='w-20 text-center rounded shadow-md' />
+                                                <input type="text" id='mes' name='mes' maxLength={2} className='w-20 text-center rounded shadow-md' />
                                                 <h2 className="mx-4 text-xl font-bold text-center">/</h2>
-                                                <input type="text" id='año' name='año' className='w-20 text-center rounded shadow-md' />
+                                                <input type="text" id='año' name='año' maxLength={2} className='w-20 text-center rounded shadow-md' />
                                             </div>
                                         </div>
                                         <div className="grid">
                                             <label htmlFor="cvv" className="text-center">Código de seguridad</label>
-                                            <input type="text" id='cvv' name='cvv' className='w-20 text-center rounded shadow-md justify-self-center' />
+                                            <input type="text" id='cvv' name='cvv' maxLength={3} className='w-20 text-center rounded shadow-md justify-self-center' />
                                         </div>
 
                                     </div>
