@@ -73,49 +73,73 @@ const ordenamiento = [
 
 const subCategories = [
   {
-    id: 'categoria',
-    name: 'Favoritos',
+    id: "categoria",
+    name: "Favoritos",
     options: [
-      { label: 'Ascendente', checked: false },
-      { label: 'Descendente', checked: false },
+      { label: "Ascendente", checked: false },
+      { label: "Descendente", checked: false },
     ],
   },
-]
+];
 
 const filters = [
   {
-    id: 'Marca',
-    name: 'Tipo de servicio',
+    id: "Marca",
+    name: "Tipo de servicio",
     options: [
-      { value: 'ponds', label: 'Masajes', checked: false },
-      { value: 'hidraSense', label: 'Faciales', checked: false },
-      { value: 'savasana', label: 'Maquillaje', checked: false },
-      { value: 'ceraVe', label: 'Servicio tradicional', checked: false },
-      { value: 'cetaphil', label: 'Servicio con tecnología', checked: false },
-      { value: 'mizon', label: 'Rejuvenecimiento', checked: false },
+      { value: "ponds", label: "Masajes", checked: false },
+      { value: "hidraSense", label: "Faciales", checked: false },
+      { value: "savasana", label: "Maquillaje", checked: false },
+      { value: "ceraVe", label: "Servicio tradicional", checked: false },
+      { value: "cetaphil", label: "Servicio con tecnología", checked: false },
+      { value: "mizon", label: "Rejuvenecimiento", checked: false },
     ],
   },
   {
-    id: 'Ofertas',
-    name: 'Ofertas',
+    id: "Ofertas",
+    name: "Ofertas",
     options: [
-      { value: 'ponds', label: 'Ofertas de tiempo limitado', checked: false },
-      { value: 'hidraSense', label: 'Descuentos', checked: false },
-      { value: 'savasana', label: 'Producto nuevo', checked: false },
-      { value: 'ceraVe', label: 'Rebajas', checked: false },
+      { value: "ponds", label: "Ofertas de tiempo limitado", checked: false },
+      { value: "hidraSense", label: "Descuentos", checked: false },
+      { value: "savasana", label: "Producto nuevo", checked: false },
+      { value: "ceraVe", label: "Rebajas", checked: false },
     ],
-  }]
+  },
+];
 
 export default function ServicioEstetica() {
   const [mobileFiltersOpen, setMobileFiltersOpen] = useState(false);
   const [sortOption, setSortOption] = useState(ordenamiento[0]);
-  const [allProducts, setAllProducts] = useState([])
+  const [allProducts, setAllProducts] = useState([]);
   const [filteredProducts, setFilteredProducts] = useState([]);
   const [categories, setCategories] = useState([]);
   const [marcas, setMarcas] = useState([]);
   const [busqueda, setSearch] = useState("");
   const [rating, setRating] = useState(0);
   const [precio, setPrecio] = useState(null);
+  const [log, setLog] = useState(false);
+
+  let respuestaJson = null;
+  async function checkLogin() {
+    try {
+      const respuesta = await fetch("/api/logueado", {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+
+      respuestaJson = await respuesta.json();
+
+      if (respuestaJson.logueado == true) {
+        setLog(true);
+      } else {
+        setLog(false);
+      }
+    } catch (error) {
+      setLog(false);
+    }
+  }
 
   //useEffect from api call
   // useEffect(() => {
@@ -156,6 +180,10 @@ export default function ServicioEstetica() {
   const handlePriceChange = (event, newValue) => {
     setPrecio(newValue);
   };
+
+  useEffect(() => {
+    checkLogin();
+  }, []);
 
   //useEffect para obtener los servicios de la estética
   useEffect(() => {
@@ -205,17 +233,14 @@ export default function ServicioEstetica() {
       );
     }
 
-
     // Filtro por precio
-    if (precio === null)
-      updatedProducts = updatedProducts;
+    if (precio === null) updatedProducts = updatedProducts;
 
-    if (precio === 0)
-      updatedProducts = updatedProducts;
+    if (precio === 0) updatedProducts = updatedProducts;
 
     if (precio) {
-      updatedProducts = updatedProducts.filter(product =>
-        product.precio <= precio
+      updatedProducts = updatedProducts.filter(
+        (product) => product.precio <= precio
       );
     }
 
@@ -260,7 +285,7 @@ export default function ServicioEstetica() {
     });
 
     setFilteredProducts(updatedProducts);
-  }, [busqueda, categories, sortOption, allProducts, marcas, rating, precio,]);
+  }, [busqueda, categories, sortOption, allProducts, marcas, rating, precio]);
 
   return (
     <>
@@ -758,7 +783,9 @@ export default function ServicioEstetica() {
 
                 <div className="grid grid-cols-2 md:grid-cols-3 md:content-start w-[90%] md:w-[100%] rounded-lg ring-4 ring-[#E2B3B7] mx-auto mb-10">
                   {filteredProducts.length === 0 ? (
-                    <p className="m-auto">No hay servicios de estetica disponibles</p>
+                    <p className="m-auto">
+                      No hay servicios de estetica disponibles
+                    </p>
                   ) : (
                     filteredProducts.map((servicio) => (
                       <Servicio
@@ -770,6 +797,7 @@ export default function ServicioEstetica() {
                         imagen={servicio.img}
                         rating={servicio.rating}
                         isFavorite={servicio.fav}
+                        log={log}
                       />
                     ))
                   )}
