@@ -1,4 +1,4 @@
-import React, { Fragment, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 //import { Dialog, Disclosure, Popover, Transition } from '@headlessui/react'
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBars, faCartShopping } from "@fortawesome/free-solid-svg-icons";
@@ -243,14 +243,6 @@ function Navbar() {
                     </div>
                 </div>
             )}
-
-            {/* {perfil && (
-                <div className="usermenu-fondo">
-                    <div className="usermenu-fx">
-                        <MenuPerfil />
-                    </div>
-                </div>
-            )} */}
         </>
     );
 }

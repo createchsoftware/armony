@@ -1,6 +1,6 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { IconoAgregarAlCarrito } from '../../components/ui/Iconos'
-import { faBasketShopping, faHandHoldingHeart, faBars, faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';
+import { faBasketShopping, faHandHoldingHeart, faBars, faMagnifyingGlass, faAngleDown } from '@fortawesome/free-solid-svg-icons';
 import Navbar from '../../components/ui/Navbar';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
@@ -29,6 +29,7 @@ function ListaDeseo() {
     const [sideBar, setSiderBar] = useState(false);
     const [barSize , setBarSize] = useState('sideBar-Off')
     const [cols, setCols] = useState('grid-cols-4')
+    const [filtro, setFiltro] = useState(false)
 
     const filtrar = (type) => {
         setTipo(type);
@@ -273,7 +274,7 @@ function ListaDeseo() {
                                 </nav>
                             </aside>
                         </div>
-                        <div className='menu-deseo w-full'>
+                        <div className='menu-deseo w-full h-full'>
                             <img src="../../../pictures/decoArmony1.png" alt="" className='absolute -right-7 -rotate-90 w-60 h-180 top-60 z-0' />
                             <div className='flex justify-center mt-5'>
                                 <form action="" className='flex items-center w-4/5 justify-center border-2 border-[rgb(255,181,167)] rounded-lg'>
@@ -286,13 +287,28 @@ function ListaDeseo() {
                                     <FontAwesomeIcon icon={faMagnifyingGlass} className='mx-4 text-[rgb(255,181,167)] text-xl' />
                                 </form>
                             </div>
-                            <div className='grid p-12 h-full overflow-y-scroll'>
+                            <div className='flex justify-end pr-24 py-4'>
+                                <button className='flex gap-2' onClick={() => setFiltro(!filtro)}>
+                                    <p>Ordenamiento por:</p>
+                                    <FontAwesomeIcon icon={faAngleDown} />
+                                </button>
+                                { filtro && 
+                                    <ul className='absolute p-1 w-max rounded-lg shadow-md border'>
+                                        <li>
+                                            <button>
+                                                Alfabéticamente
+                                            </button>
+                                        </li>
+                                    </ul>
+                                }
+                            </div>
+                            <div className='grid px-12 pb-14 h-full overflow-y-scroll'>
                                 {/* Contenido */}
                                 { contResumen.length === 0 ? (
                                     !showProduct &&
                                     <p className='m-auto'>No se encontraron artículos</p>
                                 ):(
-                                    <ul className={'grid h-fit gap-2 duration-200 ' + cols}>
+                                    <ul className={'grid h-max gap-2 duration-200 ' + cols}>
                                         {contenido}
                                     </ul>
                                 )}
