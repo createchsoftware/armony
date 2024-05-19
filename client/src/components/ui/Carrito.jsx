@@ -25,7 +25,6 @@ export const CarritoProvider = ({ children }) => {
             return;
         }
         // if quantity doesn't exist, add item to cart
-        item.cantidad = 1;
         setCartItems([...cartItems, item]);
     };
 
