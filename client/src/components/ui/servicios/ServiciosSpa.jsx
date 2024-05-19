@@ -817,8 +817,6 @@ export default function ServicioEstetica() {
                               key={servicio.nombre}
                               nombre={servicio.nombre}
                               descripcion={servicio.descripcion}
-                              espDesc1={servicio.espDesc1}
-                              espDesc2={servicio.espDesc2}
                               precio={servicio.precio}
                               imagen={servicio.img}
                               rating={servicio.rating}
@@ -843,8 +841,6 @@ export default function ServicioEstetica() {
                               key={servicio.nombre}
                               nombre={servicio.nombre}
                               descripcion={servicio.descripcion}
-                              espDesc1={servicio.espDesc1}
-                              espDesc2={servicio.espDesc2}
                               precio={servicio.precio}
                               imagen={servicio.img}
                               rating={servicio.rating}

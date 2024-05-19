@@ -746,8 +746,6 @@ export default function ServicioEstetica() {
                       <Servicio
                         nombre={servicio.nombre}
                         descripcion={servicio.descripcion}
-                        espDesc1={servicio.espDesc1}
-                        espDesc2={servicio.espDesc2}
                         precio={servicio.precio}
                         imagen={servicio.img}
                         rating={servicio.rating}
