@@ -274,7 +274,7 @@ export default function ServicioEstetica() {
     <>
       <Presentacion />
 
-      <div className="w-full mx-auto mt-16 md:w-1/2">
+      <div className="w-full mx-auto mt-16 md:w-1/2" id="serv">
         <p className=" text-4xl md:text-6xl text-center font-[ILoveGlitter] text-[#036C65]">
           Servicios del Spa
         </p>

@@ -245,7 +245,7 @@ export default function ServicioEstetica() {
   return (
     <>
       <Presentacion />
-      <div className="w-full mx-auto mt-16">
+      <div className="w-full mx-auto mt-16" id="serv">
         <p className=" text-4xl md:text-6xl text-center mb-8 font-[iloveglitter] text-[#036C65]">
           Servicios de la estética
         </p>
@@ -255,7 +255,7 @@ export default function ServicioEstetica() {
           cabello.
         </p>
       </div>
-      <div className="">
+      <div>
         <div>
           {/* Mobile filter dialog */}
           <Transition.Root show={mobileFiltersOpen} as={Fragment}>
