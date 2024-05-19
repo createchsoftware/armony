@@ -7,8 +7,8 @@ export default defineConfig(({ command, mode }) => {
   return {
     plugins: [react()],
     server: {
-      host: env.SERVER_HOST,
-      port: env.SERVER_PORT
+      host: (env.PRODUCTION === "true" ? env.PROD_SERVER_HOST : env.SERVER_HOST),
+      port: (env.PRODUCTION === "true" ? 80 : env.SERVER_PORT)
     }
   }
 })

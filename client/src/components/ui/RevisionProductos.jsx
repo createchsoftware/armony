@@ -37,11 +37,31 @@ const ofertas = [
     },
 ]
 
-function RevisionProductos({ restart }) {
-    const [cartItems, setCartItems] = useState([
-        { id: 1, name: 'Esponjabon', price: 10.00, quantity: 1 , image: "../../../public/pictures/producto1.png" , desc: "Esponjabon floor para baño, formul...", valoracion: 4 },
-        { id: 2, name: 'Tónito facial', price: 15.00, quantity: 2, image: "../../../public/pictures/oferta3.png" , desc: "Tónito facial dermatológico...", valoracion: 5 }
-    ]);
+
+//useEffect para obtener las ofertas
+// useEffect(() => {
+//     fetch("/api/admin/productos/getProducts")
+//         .then(response => response.json())
+//         .then(data => {
+//             setAllProducts(data);
+//         })
+//         .catch(error => {
+//             console.log('error', error);
+//         });
+// }, []);
+
+
+function RevisionProductos({ restart, producto }) {
+    const [cartItems, setCartItems] = useState(() => {
+        if (producto) {
+            // Si hay un producto en el prop, lo utilizamos
+            return producto;
+        } else {
+            // Si no hay un producto en el prop, intentamos obtenerlo del localStorage
+            const savedCart = localStorage.getItem('cartItems');
+            return savedCart ? JSON.parse(savedCart) : productosEjemplo;
+        }
+    });
     //  ^^^ ES SOLO TEST PARA PROBAR LA FUNCIONALIDAD DEL RESUMEN DE CITAS
 
     //Para remover por completo un servicio.
@@ -49,16 +69,16 @@ function RevisionProductos({ restart }) {
         setCartItems(cartItems.filter(item => item.id !== itemId));
     };
     const increaseQuantity = (itemId) => {
-        setCartItems(cartItems.map(item => 
-            item.id === itemId ? { ...item, quantity: item.quantity + 1 } : item
+        setCartItems(cartItems.map(item =>
+            item.id === itemId ? { ...item, cantidad: item.cantidad + 1 } : item
         ));
     };
     const decreaseQuantity = (itemId, itemQuan) => {
-        if(itemQuan == 1){
+        if (itemQuan == 1) {
             removeItem(itemId);
-        }else{
-            setCartItems(cartItems.map(item => 
-                item.id === itemId ? { ...item, quantity: Math.max(item.quantity - 1, 1) } : item
+        } else {
+            setCartItems(cartItems.map(item =>
+                item.id === itemId ? { ...item, cantidad: Math.max(item.cantidad - 1, 1) } : item
             ));
         }
     };
@@ -68,18 +88,18 @@ function RevisionProductos({ restart }) {
         setDescuento(event.target.value);
     }
 
-    const totalCitas = cartItems.reduce((total, item) => total + item.quantity, 0);
-    const total = cartItems.reduce((acc, item) => acc + item.price * item.quantity, 0).toFixed(2);
+    const totalCitas = cartItems.reduce((total, item) => total + item.cantidad, 0);
+    const total = cartItems.reduce((acc, item) => acc + item.precio * item.cantidad, 0).toFixed(2);
     //const iva = (total * (.08)).toFixed(2);
     //const totalIva = (parseFloat(total) + parseFloat(iva)).toFixed(2);
 
     const cartList = cartItems.map(item => (
         <li key={item.id} className="flex p-4 mb-4 border-2 shadow-md rounded-xl border-gray">
-            <img className='w-1/4 shadow-md mx-4' src={item.image} alt={item.name} />
-            <div className='grid w-3/4 mx-4 content-between'>
+            <img className='w-1/4 mx-4 shadow-md' src={item.imagen} alt={item.nombre} />
+            <div className='grid content-between w-3/4 mx-4'>
                 <div className='flex justify-between'>
                     <div className='grid'>
-                        <span className='text-xl mr-5 font-bold'>{item.name}</span>
+                        <span className='mr-5 text-xl font-bold'>{item.nombre}</span>
                         <Rating className='' value={item.valoracion} readOnly unratedcolor="amber" ratedcolor="amber" />
                     </div>
                     <button className='cart-remove' onClick={() => removeItem(item.id)}>
@@ -87,19 +107,19 @@ function RevisionProductos({ restart }) {
                     </button>
                 </div>
                 <div>
-                    <span className='text-xs'>{item.desc}</span>
+                    <span className='text-xs'>{item.descripcion}</span>
                 </div>
                 <div className="flex justify-between">
                     <div>
-                        <button className='cart-quan ml-2' onClick={() => decreaseQuantity(item.id, item.quantity)}>
+                        <button className='ml-2 cart-quan' onClick={() => decreaseQuantity(item.id, item.cantidad)}>
                             <FontAwesomeIcon icon={faCircleMinus} />
                         </button>
-                        <span className='ml-2'>{item.quantity}</span>
-                        <button className='cart-quan ml-2' onClick={() => increaseQuantity(item.id, item.quantity)}>
+                        <span className='ml-2'>{item.cantidad}</span>
+                        <button className='ml-2 cart-quan' onClick={() => increaseQuantity(item.id, item.cantidad)}>
                             <FontAwesomeIcon icon={faCirclePlus} />
                         </button>
                     </div>
-                    <span className='ml-5 font-bold text-[#036d63]'> ${item.price.toFixed(2)}</span>
+                    <span className='ml-5 font-bold text-[#036d63]'> ${item.precio.toFixed(2)}</span>
                 </div>
             </div>
         </li>
@@ -112,7 +132,7 @@ function RevisionProductos({ restart }) {
                     {/* Bloque de servicios */}
                     <div className="rounded-xl shadow-md w-[55%] border-2 border-gray">
                         <div className='flex bg-[rgb(3,109,99)] rounded-t-xl justify-between items-center'>
-                            <a href="/spa/productos" className='flex items-center ml-6 text-white relative inline cursor-pointer before:bg-white before:absolute before:-bottom-1 before:block before:h-[1px] before:w-full before:origin-bottom-right before:scale-x-0 before:transition before:duration-300 before:ease-in-out hover:before:origin-bottom-left hover:before:scale-x-100 hover:font-bold'>
+                            <a href="/spa/productos" className='flex items-center ml-6 text-white relative cursor-pointer before:bg-white before:absolute before:-bottom-1 before:block before:h-[1px] before:w-full before:origin-bottom-right before:scale-x-0 before:transition before:duration-300 before:ease-in-out hover:before:origin-bottom-left hover:before:scale-x-100 hover:font-bold'>
                                 <FontAwesomeIcon icon={faAngleLeft} />
                                 <p className='ml-2'>Volver</p>
                             </a>
@@ -154,7 +174,7 @@ function RevisionProductos({ restart }) {
                             {/* Código de descuento */}
                             <div className='grid justify-center p-6 mb-4 border-2 shadow-md rounded-xl border-gray'>
                                 <h3 className='mb-4 text-xl font-bold justify-self-center'>¿Tienes un cupón de descuento?</h3>
-                                <form action="" className='mx-4 flex border-2 rounded-full shadow-md border-gray'>
+                                <form action="" className='flex mx-4 border-2 rounded-full shadow-md border-gray'>
                                     <input
                                         type="text"
                                         value={descuento}
@@ -174,72 +194,7 @@ function RevisionProductos({ restart }) {
                     </div>
                 </div>
             </div>
-            <hr className='border-2 w-full border-gray mb-8' />
-            <div className='rounded-xl shadow-md border-2 border-gray p-8'>
-                <h1 className='text-3xl ml-[8%]'>Productos similares</h1>
-                <section className='my-4 w-[90%] bg-white m-auto p-6 rounded-xl border-8 border-[#E2B3B7]'>
-                    <hr />
-                    <div className='mx-auto p-6 md:p-0 selection:bg-[#EB5765] selection:text-white'>
-                        <Carousel
-                            additionalTransfrom={0}
-                            arrows
-                            autoPlay
-                            autoPlaySpeed={3000}
-                            centerMode={false}
-                            className="z-0"
-                            containerclassName="container-with-dots z-0"
-                            dotListclassName=""
-                            focusOnSelect={false}
-                            infinite
-                            itemclassName=""
-                            keyBoardControl
-                            minimumTouchDrag={80}
-                            pauseOnHover
-                            renderArrowsWhenDisabled={false}
-                            renderButtonGroupOutside={false}
-                            renderDotsOutside={false}
-                            responsive={{
-                                desktop: {
-                                    breakpoint: {
-                                        max: 3000,
-                                        min: 1024
-                                    },
-                                    items: 4,
-                                    partialVisibilityGutter: 40
-                                },
-                                mobile: {
-                                    breakpoint: {
-                                        max: 464,
-                                        min: 0
-                                    },
-                                    items: 1,
-                                    partialVisibilityGutter: 30
-                                },
-                                tablet: {
-                                    breakpoint: {
-                                        max: 1024,
-                                        min: 464
-                                    },
-                                    items: 2,
-                                    partialVisibilityGutter: 30
-                                }
-                            }}
-                            rewind={false}
-                            rewindWithAnimation={false}
-                            rtl={false}
-                            shouldResetAutoplay
-                            showDots={false}
-                            sliderclassName=""
-                            slidesToSlide={1}
-                            swipeable
-                        >
-                            {ofertas.map(oferta => (
-                                <Ofertas key={oferta.id} producto={oferta} />
-                            ))}
-                        </Carousel>
-                    </div>
-                </section>
-            </div>
+
         </>
     )
 }

@@ -25,7 +25,7 @@ const InputContrasena = ({props}) =>{
             <input
                 className={props.class}
                 type={type}
-                id="pass"
+                id={props.id}
                 name="pass"
                 placeholder={props.texto}
             />

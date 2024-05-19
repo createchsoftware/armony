@@ -1,6 +1,7 @@
 import { useState } from "react";
 import user1 from "../../../../../../public/pictures/userCl.png";
 import Pasos from "../../../PasosDeProcesos.jsx";
+import Soon from "../../../Proximamente";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faAngleLeft } from "@fortawesome/free-solid-svg-icons";
 
@@ -12,6 +13,14 @@ const Recuperacion = () => {
   const [m2, setM2] = useState("Correo");
   const [m3, setM3] = useState("Ej: cliente@armony.com");
   const [m4, setM4] = useState("Restablecer mediante teléfono");
+
+  const [soon, setSoon] = useState(false);
+
+  const toggleSoon = () => {
+    setSoon(!soon);
+  };
+  // ^^^ POP-UP EMERGENTE DE "PROXIMAMENTE"
+
   const toogleState = () => {
     setState(!state);
     if (state === true) {
@@ -81,14 +90,14 @@ const Recuperacion = () => {
             <div className="flex-grow border-t border-gray-400 pr-5 mx-0"></div>
           </div>
           <a
-            onClick={toogleState}
+            onClick={setSoon}
             className="text-teal-700 md:text-sm lg:text-base text-center"
           >
             {m4}
           </a>
           <div className="grid grid-cols-2 my-auto">
             <div className="grid place-content-start ml-8">
-              <a href="/">
+              <a href="/spa">
                 <button
                   aria-label="Cancelar"
                   className="bg-white text-rose-400 md:text-large lg:text-xl rounded-full px-4 py-2 mx-auto hover:bg-red-50 ring-2 ring-rose-400"
@@ -110,6 +119,13 @@ const Recuperacion = () => {
           </div>
         </div>
       </div>
+      {soon && (
+        <div className="soon-fondo">
+          <div className="soon-fx" onClick={toggleSoon}>
+            <Soon />
+          </div>
+        </div>
+      )}
     </div>
   );
 };

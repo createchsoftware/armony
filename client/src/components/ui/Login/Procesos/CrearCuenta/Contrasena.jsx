@@ -110,7 +110,7 @@ const Contrasena = () => {
           </a>
           </div>*/}
           <div className="absolute mt-5">
-            <a className="ml-3">
+            <a className="ml-3" href="/spa/signUp/Patologia">
               <FontAwesomeIcon
                 style={{ fontSize: "22px" }}
                 icon={faAngleLeft}
@@ -147,6 +147,7 @@ const Contrasena = () => {
                 <div className="relative">
                   <InputContrasena
                     props={{
+                      id:'contraseña',
                       texto: "Ingresa tu Contraseña",
                       class:
                         "bg-slate-200 md:text-sm lg:text-base rounded-full w-[17rem] lg:w-[21rem] mb-3 mt-2 py-2 focus:outline-none focus:ring-1 focus:ring-rose-400 focus:border-transparent px-6",
@@ -166,6 +167,7 @@ const Contrasena = () => {
                 <div className="relative">
                   <InputContrasena
                     props={{
+                      id:'nueva-contraseña',
                       texto: "Ingresa tu Contraseña",
                       class:
                         "bg-slate-200 md:text-sm lg:text-base rounded-full w-[17rem] lg:w-[21rem] mb-3 mt-2 py-2 focus:outline-none focus:ring-1 focus:ring-rose-400 focus:border-transparent px-6",
@@ -197,6 +199,7 @@ const Contrasena = () => {
           <div className="grid grid-cols-2 my-auto">
             <div className="grid place-content-start ml-8">
               <button
+                id="cancelar"
                 aria-label="Cancelar"
                 className="bg-white text-rose-400 text-xl rounded-full px-4 py-2 mx-auto hover:bg-red-50 ring-2 ring-rose-400"
               >

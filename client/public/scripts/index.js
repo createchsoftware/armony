@@ -1,5 +1,3 @@
-console.log("¿Qué buscas? Me gusta las papas con chorizo")
-
 const navToggle = document.querySelector(".nav-toggle"),
     navMenu = document.querySelector(".menu"),
     navVideo = document.querySelectorAll(".videos"),

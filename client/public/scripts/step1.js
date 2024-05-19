@@ -44,8 +44,10 @@ document.getElementById('step-one').addEventListener('click',async ()=>{
     })  // fin del fetch
 
 
-    if(!respuesta.ok)
-        return
+    if(!respuesta.ok){
+        return;
+    }
+        
 
 
     const respuestaJson = await respuesta.json();
@@ -59,6 +61,7 @@ document.getElementById('step-one').addEventListener('click',async ()=>{
            temporal.style.backgroundColor = 'orange';
            // 
         }
+        return;
     }
 
     if(respuestaJson.invalidos){
@@ -69,6 +72,7 @@ document.getElementById('step-one').addEventListener('click',async ()=>{
            temporal.style.backgroundColor = 'red';
            // 
         }
+        return;
     }
 
 
@@ -76,6 +80,7 @@ document.getElementById('step-one').addEventListener('click',async ()=>{
         console.log("el correo que ingresate ya existe, por favor ingrese otro");
         correo.value = '';
         correo.style.backgroundColor = 'yellow';
+        return;
     }
 
 
@@ -85,5 +90,31 @@ document.getElementById('step-one').addEventListener('click',async ()=>{
     }
 
 
+
+})
+
+
+document.getElementById('cancelar').addEventListener('click',()=>{
+
+    document.cookie = "Megumin_cookie=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;"; 
+    document.cookie = "Nakano_Itsuki=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+    document.cookie = "Rem_cookie=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;"; 
+
+
+    document.getElementById('name').value = '';
+    document.getElementById('lastname1').value = '';
+    document.getElementById('lastname2').value = '';
+    document.getElementById('email').value = '';
+    document.getElementById('lada').value = '';
+    document.getElementById('phone').value = '';
+    document.getElementById('day').value = '';
+    document.getElementById('month').value = '';
+    document.getElementById('year').value = '';
+    document.getElementById('calle').value = '';
+    document.getElementById('codigo_postal').value = '';
+    document.getElementById('numero').value = '';
+    document.getElementById('colonia').value = '';
+
+    window.location.href = '/';
 
 })

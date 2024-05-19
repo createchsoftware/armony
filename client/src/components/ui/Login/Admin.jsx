@@ -1,9 +1,17 @@
+import { useState } from "react";
 import user1 from "../../../../public/pictures/userAdmin.png";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import Soon from "../Proximamente";
 import InputContrasena from "../InputContrasena.jsx";
 import { faAngleLeft, faCircleXmark } from "@fortawesome/free-solid-svg-icons";
 
 const Admin = ({ cerrar }) => {
+  const [soon, setSoon] = useState(false);
+
+  const toggleSoon = () => {
+    setSoon(!soon);
+  };
+  // ^^^ POP-UP EMERGENTE DE "PROXIMAMENTE"
   return (
     <>
       <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50 overflow-hidden">
@@ -63,10 +71,18 @@ const Admin = ({ cerrar }) => {
           <button
             className="flex bg-[#EB5765] text-white text-lg lg:text-xl rounded-full px-4 py-2 mx-auto mb-8 hover:bg-red-200"
             aria-label="Iniciar Sesión"
+            onClick={setSoon}
           >
             Inicia Sesión
           </button>
         </div>
+        {soon && (
+          <div className="soon-fondo">
+            <div className="soon-fx" onClick={toggleSoon}>
+              <Soon />
+            </div>
+          </div>
+        )}
       </div>
     </>
   );

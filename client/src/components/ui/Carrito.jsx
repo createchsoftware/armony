@@ -1,19 +1,80 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, createContext, useContext } from 'react';
 import { Rating } from '@mui/material';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrash, faCircleXmark, faCircleMinus, faCirclePlus } from '@fortawesome/free-solid-svg-icons';
+import PagoProducto from '../../pages/PagoProducto';
+const CarritoContext = createContext();
+import { Navigate, useNavigate } from "react-router-dom";
 
-// eslint-disable-next-line react/prop-types
-function Carrito({cerrar, totalProductos, logCart , loginCart}) {
-    const [cartItems, setCartItems] = useState([
-        { id: 1, name: 'Esponjabon', price: 10.00, quantity: 1 , image: "../../../public/pictures/producto1.png" , desc: "Esponjabon floor para baño, formul...", valoracion: 4 },
-        { id: 2, name: 'Tónito facial', price: 15.00, quantity: 2, image: "../../../public/pictures/oferta3.png" , desc: "Tónito facial dermatológico...", valoracion: 5 }
-    ]);
-    //  ^^^ ES SOLO TEST PARA PROBAR LA FUNCIONALIDAD DEL POP-UP EMERGENTE DEL CARRITO.
-    const log = logCart;
+export const CarritoProvider = ({ children }) => {
+
+    const [cartItems, setCartItems] = useState(() => {
+        const savedCart = localStorage.getItem('cartItems');
+        return savedCart ? JSON.parse(savedCart) : [];
+    });
+    localStorage.clear();
+
+    useEffect(() => {
+        localStorage.setItem('cartItems', JSON.stringify(cartItems));
+    }, [cartItems]);
+
+    const agregarAlCarrito = (item) => {
+        // if quantity exists, increase it by 1
+        const existingItem = cartItems.find(i => i.id === item.id);
+        if (existingItem) {
+            setCartItems(cartItems.map(i =>
+                i.id === item.id ? { ...i, cantidad: i.cantidad + 1 } : i
+            ));
+            return;
+        }
+        // if quantity doesn't exist, add item to cart
+        setCartItems([...cartItems, item]);
+    };
+
+    const eliminarDelCarrito = (itemId) => {
+        setCartItems(cartItems.filter(item => item.id !== itemId));
+    };
+
+    const increaseQuantity = (itemId) => {
+        setCartItems(cartItems.map(item =>
+            item.id === itemId ? { ...item, cantidad: item.cantidad + 1 } : item
+        ));
+    };
+
+    const decreaseQuantity = (itemId) => {
+        setCartItems(cartItems.map(item =>
+            item.id === itemId ? { ...item, cantidad: Math.max(item.cantidad - 1, 1) } : item
+        ));
+
+        // Si la cantidad es 1, eliminar el producto del carrito
+        const item = cartItems.find(item => item.id === itemId);
+        if (item && item.cantidad === 1) {
+            eliminarDelCarrito(itemId);
+        }
+    };
+
+    const getCartItemsCount = () => {
+        return cartItems.reduce((total, item) => total + item.cantidad, 0);
+    };
+
+
+    return (
+        <CarritoContext.Provider value={{ cartItems, agregarAlCarrito, eliminarDelCarrito, increaseQuantity, decreaseQuantity, getCartItemsCount }}>
+            {children}
+        </CarritoContext.Provider>
+    );
+
+};
+
+export const useCarrito = () => useContext(CarritoContext);
+
+const Carrito = ({ cerrar, totalProductos, logCart, loginCart }) => {
+    const { cartItems, eliminarDelCarrito, increaseQuantity, decreaseQuantity } = useCarrito();
+
+    const navigate = useNavigate();
 
     const enviarTotal = () => {
-        const total = cartItems.reduce((total, item) => total + item.quantity, 0);
+        const total = cartItems.reduce((total, item) => total + item.cantidad, 0);
         totalProductos(total);
     };
 
@@ -21,38 +82,28 @@ function Carrito({cerrar, totalProductos, logCart , loginCart}) {
         enviarTotal();
     }, [])
 
-    const removeItem = (itemId) => {
-        setCartItems(cartItems.filter(item => item.id !== itemId));
-        enviarTotal();
-    };
-    const increaseQuantity = (itemId) => {
-        setCartItems(cartItems.map(item => 
-            item.id === itemId ? { ...item, quantity: item.quantity + 1 } : item
-        ));
-        enviarTotal();
-    };
-    const decreaseQuantity = (itemId, itemQuan) => {
-        if(itemQuan == 1){
-            removeItem(itemId);
-        }else{
-            setCartItems(cartItems.map(item => 
-                item.id === itemId ? { ...item, quantity: Math.max(item.quantity - 1, 1) } : item
-            ));
-        }
-        enviarTotal();
+    const handleComprar = () => {
+        navigate('/spa/comprar', { state: { producto: null } });
+        // if (loginCart) {
+        //     logCart();
+        //     navigate('/spa/pago-producto');
+        // } else {
+        //     navigate('/spa');
+        // }
     };
 
-    const subtotal = cartItems.reduce((acc, item) => acc + item.price * item.quantity, 0).toFixed(2);
-    const iva = (subtotal * (.08)).toFixed(2);
-    const total = (parseInt(subtotal) + parseInt(iva)).toFixed(2);
+    const removeItem = (itemId) => {
+        eliminarDelCarrito(itemId);
+        enviarTotal();
+    };
 
     const cartList = cartItems.map(item => (
-        <li key={item.id} className="cart-item">
-            <img className='cart-photo' src={item.image} alt={item.name} />
-            <div className='grid w-3/4 mx-4 content-between'>
+        <li key={item.id} className="overflow-y-auto cart-item">
+            <img className='cart-photo' src={item.imagen} alt={item.nombre} />
+            <div className='grid content-between w-3/4 mx-4'>
                 <div className='flex justify-between'>
                     <div className='grid'>
-                        <span className='text-xl mr-5 font-bold'>{item.name}</span>
+                        <span className='mr-5 text-xl font-bold'>{item.nombre}</span>
                         <Rating className='' value={item.valoracion} readOnly unratedcolor="amber" ratedcolor="amber" />
                     </div>
                     <button className='cart-remove' onClick={() => removeItem(item.id)}>
@@ -60,37 +111,42 @@ function Carrito({cerrar, totalProductos, logCart , loginCart}) {
                     </button>
                 </div>
                 <div>
-                    <span className='text-xs'>{item.desc}</span>
+                    {/* limit item.descripcion to 60 caracters */}
+                    <span className='text-xs'>{item.descripcion.length > 30 ? item.descripcion.substring(0, 60) + '...' : item.descripcion}</span>
                 </div>
                 <div className="flex justify-between">
                     <div>
-                        <button className='cart-quan ml-2' onClick={() => decreaseQuantity(item.id, item.quantity)}>
+                        <button className='ml-2 cart-quan' onClick={() => decreaseQuantity(item.id)}>
                             <FontAwesomeIcon icon={faCircleMinus} />
                         </button>
-                        <span className='ml-2'>{item.quantity}</span>
-                        <button className='cart-quan ml-2' onClick={() => increaseQuantity(item.id, item.quantity)}>
+                        <span className='ml-2'>{item.cantidad}</span>
+                        <button className='ml-2 cart-quan' onClick={() => increaseQuantity(item.id)}>
                             <FontAwesomeIcon icon={faCirclePlus} />
                         </button>
                     </div>
-                    <span className='ml-5 font-bold'> ${item.price.toFixed(2)}</span>
+                    <span className='ml-5 font-bold'> ${item.precio ? item.precio.toFixed(2) : '0.00'}</span>
                 </div>
             </div>
         </li>
     ));
 
+    const subtotal = cartItems.length > 0 ? cartItems.reduce((acc, item) => acc + item.precio * item.cantidad, 0).toFixed(2) : '0.00';
+    const iva = (parseFloat(subtotal) * 0.08).toFixed(2);
+    const total = (parseFloat(subtotal) + parseFloat(iva)).toFixed(2);
+
     return (
-        <div className="cart shadow-md">
-            <div className="cart-header">
+        <div className="overflow-y-auto shadow-md cart">
+            <div className="overflow-y-auto cart-header">
                 <h2 className='cart-title'>Mi Carrito</h2>
                 <button className='cart-exit' onClick={cerrar} >
                     <FontAwesomeIcon icon={faCircleXmark} />
                 </button>
-            </div> 
+            </div>
             {cartItems.length === 0 ? (
-                <h4 className="cart-empty mt-8">No hay artículos en el carrito.</h4>
-            ):(
+                <h4 className="mt-8 cart-empty">No hay artículos en el carrito.</h4>
+            ) : (
                 <>
-                    <ul id="cart-items">{cartList}</ul>
+                    <ul id="cart-items overflow-y-auto" className='overflow-y-auto'>{cartList}</ul>
                     <div className='flex justify-between'>
                         <p>Envio:</p>
                         <span>$0.00</span>
@@ -99,20 +155,16 @@ function Carrito({cerrar, totalProductos, logCart , loginCart}) {
                         <p>IVA:</p>
                         <span>${iva}</span>
                     </div>
-                    <div className='cart-total flex justify-between py-2'>
+                    <div className='flex justify-between py-2 cart-total'>
                         <p>Total:</p>
                         <span className='font-bold'>${total}</span>
                     </div>
-                    { log ? (
-                        <div className='flex'>
-                            <a href='/spa/comprar' className="cart-mas">Comprar</a>
-                        </div>
-                    ):(
-                        <div className='flex'>
-                            <a href='#' className="cart-mas" onClick={loginCart}>Comprar</a>
-                        </div>
-                    )}
-                    
+                    <button className='m-auto w-full hover:bg-opacity-90 rounded-xl py-2 px-6 text-white bg-[#45B59C]' onClick={handleComprar}>
+                        Comprar
+                        {/* {loginCart ? 'Proceder al Pago' : 'Iniciar Sesión'} */}
+                    </button>
+
+
                 </>
             )}
         </div>

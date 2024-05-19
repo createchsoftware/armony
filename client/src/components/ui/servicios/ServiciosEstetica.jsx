@@ -13,51 +13,6 @@ import { Slider, Box } from "@mui/material";
 import Rating from "@mui/material/Rating";
 import Presentacion from "../../../components/ui/PresentacionEstetica.jsx";
 import Servicio from "../../../components/ui/Servicio.jsx";
-import Peluqueria from "../../../../public/pictures/peluqueria.png";
-import Unas from "../../../../public/pictures/unas.png";
-import Pedicura from "../../../../public/pictures/pedicura.png";
-
-/*var estetica = [
-  {
-    id: 1,
-    nombre: "Servicio de peluquería",
-    descripcion: "Espacio de transformación y renovación personal",
-    espDesc1:
-      "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Adipisci quasi repudiandae delectus recusandae accusantium deleniti, sit cupiditate quae culpa aut inventore numquam at excepturi ",
-    espDesc2:
-      "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Adipisci quasi repudiandae delectus recusandae accusantium deleniti, sit cupiditate quae culpa aut inventore",
-    precio: "1,350.00",
-    img: Peluqueria,
-    rating: 5,
-    fav: true,
-  },
-  {
-    id: 2,
-    nombre: "Uñas",
-    descripcion: "Transformación de las manos elevando confianza",
-    espDesc1:
-      "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Adipisci quasi repudiandae delectus recusandae accusantium deleniti, sit cupiditate quae culpa aut inventore numquam at excepturi ",
-    espDesc2:
-      "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Adipisci quasi repudiandae delectus recusandae accusantium deleniti, sit cupiditate quae culpa aut inventore",
-    precio: "1,200.00",
-    img: Unas,
-    rating: 5,
-    fav: true,
-  },
-  {
-    id: 3,
-    nombre: "Pedicura",
-    descripcion: "Tratamiento estético para los pies",
-    espDesc1:
-      "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Adipisci quasi repudiandae delectus recusandae accusantium deleniti, sit cupiditate quae culpa aut inventore numquam at excepturi ",
-    espDesc2:
-      "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Adipisci quasi repudiandae delectus recusandae accusantium deleniti, sit cupiditate quae culpa aut inventore",
-    precio: "1,800.00",
-    img: Pedicura,
-    rating: 5,
-    fav: true,
-  },
-];*/
 
 function classNames(...clases) {
   return clases.filter(Boolean).join(" ");
@@ -74,14 +29,10 @@ const ordenamiento = [
 const subCategories = [
   {
     id: "categoria",
-    name: "Categorias",
+    name: "Favoritos",
     options: [
-      { label: "Cosméticos", checked: false },
-      { label: "Facial", checked: false },
-      { label: "Crema", checked: false },
-      { label: "Spray", checked: false },
-      { label: "Serúm", checked: false },
-      { label: "Depilación", checked: false },
+      { label: "Ascendente", checked: false },
+      { label: "Descendente", checked: false },
     ],
   },
 ];
@@ -89,15 +40,24 @@ const subCategories = [
 const filters = [
   {
     id: "Marca",
-    name: "Marca",
+    name: "Tipo de servicio",
     options: [
-      { value: "ponds", label: "POND’S", checked: false },
-      { value: "hidraSense", label: "Hidra Sense", checked: false },
-      { value: "savasana", label: "Savasana", checked: false },
-      { value: "ceraVe", label: "CeraVe", checked: false },
-      { value: "cetaphil", label: "Cetaphil", checked: false },
-      { value: "mizon", label: "Mizon", checked: false },
-      { value: "gojo", label: "Gojo", checked: false },
+      { value: "ponds", label: "Masajes", checked: false },
+      { value: "hidraSense", label: "Faciales", checked: false },
+      { value: "savasana", label: "Maquillaje", checked: false },
+      { value: "ceraVe", label: "Servicio tradicional", checked: false },
+      { value: "cetaphil", label: "Servicio con tecnología", checked: false },
+      { value: "mizon", label: "Rejuvenecimiento", checked: false },
+    ],
+  },
+  {
+    id: "Ofertas",
+    name: "Ofertas",
+    options: [
+      { value: "ponds", label: "Ofertas de tiempo limitado", checked: false },
+      { value: "hidraSense", label: "Descuentos", checked: false },
+      { value: "savasana", label: "Producto nuevo", checked: false },
+      { value: "ceraVe", label: "Rebajas", checked: false },
     ],
   },
 ];
@@ -105,12 +65,36 @@ const filters = [
 export default function ServicioEstetica() {
   const [mobileFiltersOpen, setMobileFiltersOpen] = useState(false);
   const [sortOption, setSortOption] = useState(ordenamiento[0]);
+  const [allProducts, setAllProducts] = useState([]);
   const [filteredProducts, setFilteredProducts] = useState([]);
   const [categories, setCategories] = useState([]);
   const [marcas, setMarcas] = useState([]);
   const [busqueda, setSearch] = useState("");
   const [rating, setRating] = useState(0);
-  const [precio, setPrecio] = useState(0);
+  const [precio, setPrecio] = useState(null);
+  const [log, setLog] = useState(false);
+
+  let respuestaJson = null;
+  async function checkLogin() {
+    try {
+      const respuesta = await fetch("/api/logueado", {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+
+      respuestaJson = await respuesta.json();
+
+      if (respuestaJson.logueado == true) {
+        setLog(true);
+      } else {
+        setLog(false);
+      }
+    } catch (error) {
+      setLog(false);
+    }
+  }
 
   //useEffect from api call
   // useEffect(() => {
@@ -152,12 +136,16 @@ export default function ServicioEstetica() {
     setPrecio(newValue);
   };
 
-  //useEffect para obtener los productos
+  useEffect(() => {
+    checkLogin();
+  }, []);
+
+  //useEffect para obtener los servicios de la estética
   useEffect(() => {
     fetch("/api/admin/categoria/getServicesEstetica")
       .then((response) => response.json())
       .then((data) => {
-        setFilteredProducts(data);
+        setAllProducts(data);
       })
       .catch((error) => {
         console.log("error", error);
@@ -171,7 +159,7 @@ export default function ServicioEstetica() {
 
   // useEffect para filtrar los productos según los filtros aplicados
   useEffect(() => {
-    let updatedProducts = filteredProducts;
+    let updatedProducts = allProducts;
 
     // Filtrar por búsqueda
     if (busqueda) {
@@ -201,6 +189,10 @@ export default function ServicioEstetica() {
     }
 
     // Filtro por precio
+    if (precio === null) updatedProducts = updatedProducts;
+
+    if (precio === 0) updatedProducts = updatedProducts;
+
     if (precio) {
       updatedProducts = updatedProducts.filter(
         (product) => product.precio <= precio
@@ -248,20 +240,12 @@ export default function ServicioEstetica() {
     });
 
     setFilteredProducts(updatedProducts);
-  }, [
-    busqueda,
-    categories,
-    sortOption,
-    filteredProducts,
-    marcas,
-    rating,
-    precio,
-  ]);
+  }, [busqueda, categories, sortOption, allProducts, marcas, rating, precio]);
 
   return (
     <>
       <Presentacion />
-      <div className="w-full mx-auto mt-16">
+      <div className="w-full mx-auto mt-16" id="serv">
         <p className=" text-4xl md:text-6xl text-center mb-8 font-[iloveglitter] text-[#036C65]">
           Servicios de la estética
         </p>
@@ -271,7 +255,7 @@ export default function ServicioEstetica() {
           cabello.
         </p>
       </div>
-      <div className="">
+      <div>
         <div>
           {/* Mobile filter dialog */}
           <Transition.Root show={mobileFiltersOpen} as={Fragment}>
@@ -512,9 +496,9 @@ export default function ServicioEstetica() {
                 Productos
               </h2>
 
-              <div className="grid md:gap-12 md:flex">
+              <div className="grid md:gap-12 md:justify-start md:flex">
                 {/* Filters */}
-                <form className="hidden lg:block">
+                <form className="hidden w-64 lg:block">
                   {subCategories.map((section) => (
                     <Disclosure
                       as="div"
@@ -752,20 +736,21 @@ export default function ServicioEstetica() {
                   </Disclosure>
                 </form>
 
-                <div className="grid grid-cols-2 md:grid-cols-3 w-[90%] md:w-[100%] rounded-lg ring-4 ring-[#E2B3B7] mx-auto mb-10">
+                <div className="grid grid-cols-2 md:grid-cols-3 md:content-start w-[90%] md:w-[100%] rounded-lg ring-4 ring-[#E2B3B7] mx-auto mb-10">
                   {filteredProducts.length === 0 ? (
-                    <p className="m-auto">No hay servicios disponibles</p>
+                    <p className="m-auto">
+                      No hay servicios de estetica disponibles
+                    </p>
                   ) : (
                     filteredProducts.map((servicio) => (
                       <Servicio
                         nombre={servicio.nombre}
                         descripcion={servicio.descripcion}
-                        espDesc1={servicio.espDesc1}
-                        espDesc2={servicio.espDesc2}
                         precio={servicio.precio}
                         imagen={servicio.img}
                         rating={servicio.rating}
                         isFavorite={servicio.fav}
+                        log={log}
                       />
                     ))
                   )}

@@ -15,6 +15,7 @@ function InformacionPersonal() {
     const [fechaNac, setNacimiento] = useState(false); //<<< PARA EL INICIO DE SESION
     const [imagen, setImagen] = useState(false); //<<< PARA EL INICIO DE SESION
     const [clave, setClave] = useState(false); //<<< PARA EL INICIO DE SESION
+    const [patologias, setPatologias] = useState([]);
 
     async function recibido() {
         const respuesta = await fetch('/api/logueado', {
@@ -70,8 +71,51 @@ function InformacionPersonal() {
         }
     }
 
+
+    async function Patologias(){
+        const respuesta2 = await fetch('/api/patologias', {
+            method: "GET",
+            headers: {
+                "Content-Type": "application/json",
+            }
+        })
+
+        if(!respuesta2.ok){
+            console.log('hubo un problema en la comunicacion back con front');
+        }
+
+        const respuesta2Json = await respuesta2.json();
+
+        if(respuesta2Json.patologias){
+            setPatologias(respuesta2Json.patologias);
+        }
+        
+    }
+
+
+    function retornar(){
+        if(patologias.length == 0){
+            return ( 
+                <div className='flex gap-x-4'>
+                   <p className='text-[#9D9999]'>No hay patologias</p>
+                </div>
+            );
+        }
+        else{
+            return patologias.map(objeto=>(
+                    <div className='flex gap-x-4'>
+                        <p className='text-[#9D9999]'>{objeto.nombre}</p>
+                        <p>{objeto.titulo}</p>
+                        <p>{objeto.descripcion}</p>
+                    </div>
+            ));
+            
+        }
+    }
+
     useEffect(() => {
-        recibido()
+        recibido();
+        Patologias();
     }, []);
 
     return (
@@ -80,10 +124,10 @@ function InformacionPersonal() {
                 <main className='grid p-12 m-12 md:flex'>
                     <div className='grid gap-6 md:w-[80%] m-auto'>
                         <section className='grid text-center rounded-2xl w-[100%] p-6 shadow-[0_3px_10px_rgb(0,0,0,0.2)]'>
-                            <a className='flex items-baseline text-md gap-x-4' href="#"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-4 h-4">
+                            <a className='flex items-baseline text-md gap-x-4' href={document.referrer}><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-4 h-4">
                                 <path strokeLinecap="round" strokeLinejoin="round" d="M9 15 3 9m0 0 6-6M3 9h12a6 6 0 0 1 0 12h-3" />
                             </svg> Volver</a>
-                            <img className='w-24 m-auto mb-6' src="../../../public/pictures/marcoBlanco.png" alt="" />
+                            <img className='w-24 m-auto mb-6' src="../../../pictures/marcoBlanco.png" alt="" />
 
                             <h1 className=''>Información personal</h1>
                             <p>Observa y edita tu información de la cuenta</p>
@@ -145,10 +189,10 @@ function InformacionPersonal() {
                                 </div>
                                 <aside className='w-[40%] my-8 '>
                                     <div className='grid gap-6 text-center '>
-                                        <img className='m-auto rounded-full md:w-1/3' src="../../../pictures/5school.png" alt="" />
+                                        <img className='m-auto rounded-full md:w-1/3' src={`../../../pictures/${imagen}`} alt="" />
                                         <h2 className='text-[#EB5765]'>Rango platino</h2>
                                         <img className='w-48 m-auto' src="../../../pictures/membresiaEjemplo.png" alt="" />
-                                        <a href="#_" className="m-auto px-12 py-2  font-medium text-white whitespace-no-wrap bg-[#EB5765] border border-gray-200 rounded-full shadow-sm hover:cursor-pointer hover:bg-[#eb7580] focus:outline-none focus:shadow-none">
+                                        <a href="/perfil/editar-perfil" className="m-auto px-12 py-2  font-medium text-white whitespace-no-wrap bg-[#EB5765] border border-gray-200 rounded-full shadow-sm hover:cursor-pointer hover:bg-[#eb7580] focus:outline-none focus:shadow-none">
                                             Editar
                                         </a>
                                     </div>
@@ -158,10 +202,9 @@ function InformacionPersonal() {
                         <section className=' grid gap-6 rounded-2xl w-[60%]  p-6 shadow-[0_3px_10px_rgb(0,0,0,0.2)]'>
                             <h2 className='text-[#EB5765] font-bold text-2xl'>Patologias:</h2>
                             <div>
-                                <div className='flex gap-x-4'>
-                                    <p className='text-[#9D9999]'>Patologia1:</p>
-                                    <p>Recien operado de una Ernia</p>
-                                </div>
+                                {
+                                   retornar()
+                                }
                             </div>
                         </section>
                     </div>

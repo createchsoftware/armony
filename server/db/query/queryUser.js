@@ -1,7 +1,10 @@
-import { endConnection } from "../connection.js";
+import { endConnection, conexion } from "../connection.js";
 import * as mysql from "mysql2";
+import { API_IMG } from "../../data/datos.js";
+import fetch from "node-fetch";
 
 const messageError = "Ha ocurrido un error al ejecutar el query: ";
+const BASE_URL = "https://api.imgbb.com/1/upload";
 
 // USUARIOS
 // CREATE FUNCIONAL
@@ -128,5 +131,33 @@ export async function updatePassUser(connection, data) {
   } catch (err) {
     // Capturamos errores de ejecucion de query
     console.error(messageError, err); // Mostramos los errores por consola
+  }
+}
+
+// PENDIENTE A PROBAR
+// Carga de imagenes
+async function postImage(connection, img, idUser) {
+  /* El parametro de img es la imagen cargada desde el front*/
+  // Armamos la url
+  let url = BASE_URL + `key ${API_IMG.KEY_API_IMG}&name=${img.name}`;
+  let resData;
+  const data = new FormData(); // Creamos un objeto para interactuar con la API externa
+  data.append("image", img); // Introducimos la imagen en el campo image
+
+  try {
+    const res = await fetch(url, {
+      method: "POST",
+      body: data,
+    }); // Insercion al host de imagenes mediante su url armada anteriormente y la informacion dentro de data
+    resData = await res.json(); // Convertimos la data en formato json
+  } catch (err) {
+    console.error("Ha ocurrido un error al cargar la imagen ", err);
+  }
+
+  try {
+    // Actualizamos la imagen del usuario en la base de datos
+    await updateImgUser(conexion, { idUser: idUser, newImg: resData.data.url }); // Se guarda la referencia del host en la base de datos
+  } catch (err) {
+    console.error("Ha ocurrido un error al actualizar la base de datos: ", err);
   }
 }

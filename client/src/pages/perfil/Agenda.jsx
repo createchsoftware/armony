@@ -153,6 +153,8 @@ function Agenda() {
 
     // Estilos Calendario
     const dayStyle = {
+        //
+
         // Estilo por defecto de los días
         // '& .MuiPickersDay-root': {
         //     color: 'black', // Color de días no seleccionados
@@ -160,13 +162,116 @@ function Agenda() {
 
         // Estilo para el día actual
         '& .MuiPickersDay-today': {
-            color: 'black !important', // Color para el día actual
+            color: 'white !important', // Color para el día actual
             fontWeight: 'bold !important',
-            backgroundColor: 'white !important',
+            backgroundColor: '#036C65 !important',
             //border red
-            border: '3px solid #ec5766 !important',
+
+            border: '3px solid #036C65 !important',
         },
 
+        // calendar background color to #5b9f9b
+        '& .MuiPickersCalendar-root': {
+
+            backgroundColor: '#5b9f9b !important',
+        },
+
+        // change header font type
+        '& .MuiPickersCalendarHeader-transitionContainer': {
+            fontFamily: 'iloveglitter !important',
+
+        },
+
+        '& .MuiBadge-badge': {
+            // Adjustment for recordMade badge 
+            fontSize: '0.7em',
+
+            paddingTop: '4px'
+        },
+        // '& .MuiPickersBasePicker-pickerView': {
+        //     fontWeight: 'bold !important',
+        // },
+
+        '& .MuiDayCalendar-header': {
+            // Needed for weekday (ie S M T W T F S )adjustments (and padding if wanted)
+            // Adjusts spacing between
+            justifyContent: 'center',
+            width: '100%',
+            margin: '0px',
+            overflow: 'hidden',
+
+            // paddingTop: '1em',
+            // paddingBottom: "1em",
+
+        },
+        '& .MuiDayCalendar-weekContainer': {
+            // Adjusts spacing between days (ie 1, 2, 3.. 27, 28)
+            justifyContent: 'center',
+            overflow: 'hidden',
+            width: '100%',
+            margin: -1
+        },
+        '& .MuiPickersDay-dayWithMargin': {
+            // Grows width/height of day buttons
+            width: 'calc(100% - 19px)',
+            height: 'calc(100% - 19px)',
+            aspectRatio: '1.0',
+            // height: 'auto',
+            fontWeight: 'bold !important',
+            fontFamily: 'abeatbyKai',
+            fontSize: '1em',
+        },
+        '& .MuiBadge-root': {
+            // Parent of button management
+            aspectRatio: 1,
+            width: '12%',
+            display: 'flex',
+            alignContent: 'center',
+            justifyContent: 'center'
+        },
+        '& .MuiDayCalendar-weekDayLabel': {
+            // Manages size of weekday labels
+            aspectRatio: 1,
+            width: 'calc(10% + 4px)', // deals with margin
+            fontSize: '1.0em'
+        },
+        '& .MuiPickersCalendarHeader-label': {
+            // Manages month/year size
+            fontSize: '4em',
+            fontFamily: 'iloveglitter',
+        },
+        '& .MuiDayCalendar-monthContainer': {
+            // Not sure if needed, currently works tho
+            width: '100%',
+        },
+        '& .MuiPickersFadeTransitionGroup-root-MuiDateCalendar-viewTransitionContainer': {
+            // Handles size of week row parent, 1.6 aspect is good for now
+            aspectRatio: '1.6',
+            overflow: 'hidden'
+        },
+        '& .MuiDayCalendar-slideTransition': {
+            // Handles size of week row parent, 1.6 aspect is good for now
+            aspectRatio: 1.6,
+            width: '100%',
+            overflow: 'hidden'
+        },
+        '& .MuiDayCalendar-loadingContainer': {
+            width: '100%',
+            aspectRatio: 1.6,
+        },
+        '& .MuiDayCalendarSkeleton-root': {
+            width: '100%'
+        },
+        '& .MuiDayCalendarSkeleton-week': {
+            width: '100%'
+        },
+        '& .MuiDayCalendarSkeleton-daySkeleton': {
+            width: 'calc(10% - 4px) !important', // Deals with the margin calcs
+            aspectRatio: '1 !important',
+            height: 'auto !important'
+        },
+        width: '80%',
+        height: '100%'
 
         // // Estilo para los días seleccionados background
         // '& .MuiPickersDay-daySelected': {
@@ -224,16 +329,32 @@ function Agenda() {
         },
     ]
 
-    //Citas
-    const [citas, setCitas] = useState([
-        { id: 1, nombre: 'Cita 1', estado: 'Pendiente', especialista: 'Especialista 1', fecha: '2022-12-12', hora: '10:00' },
-        { id: 2, nombre: 'Cita 2', estado: 'Pendiente', especialista: 'Especialista 2', fecha: '2022-12-12', hora: '10:00' },
-        { id: 3, nombre: 'Cita 3', estado: 'Pendiente', especialista: 'Especialista 3', fecha: '2022-12-12', hora: '10:00' },
-        { id: 4, nombre: 'Cita 4', estado: 'Pendiente', especialista: 'Especialista 4', fecha: '2022-12-12', hora: '10:00' },
-        { id: 5, nombre: 'Cita 5', estado: 'Pendiente', especialista: 'Especialista 5', fecha: '2022-12-12', hora: '10:00' },
-    ]);
+    //citas from local storage
+    const citasFromLocalStorage = JSON.parse(localStorage.getItem('citas'));
+    const [citas, setCitas] = useState(citasFromLocalStorage || citasPendientes);
+
+    // //Citas
+    // const [citas, setCitas] = useState([
+    //     { id: 1, nombre: 'Cita 1', estado: 'Pendiente', especialista: 'Especialista 1', fecha: '2022-12-12', hora: '10:00' },
+    //     { id: 2, nombre: 'Cita 2', estado: 'Pendiente', especialista: 'Especialista 2', fecha: '2022-12-12', hora: '10:00' },
+    //     { id: 3, nombre: 'Cita 3', estado: 'Pendiente', especialista: 'Especialista 3', fecha: '2022-12-12', hora: '10:00' },
+    //     { id: 4, nombre: 'Cita 4', estado: 'Pendiente', especialista: 'Especialista 4', fecha: '2022-12-12', hora: '10:00' },
+    //     { id: 5, nombre: 'Cita 5', estado: 'Pendiente', especialista: 'Especialista 5', fecha: '2022-12-12', hora: '10:00' },
+    // ]);
+
+    useEffect(() => {
+        const citasFromLocalStorage = JSON.parse(localStorage.getItem('citas'));
+        if (citasFromLocalStorage) {
+            setCitas(citasFromLocalStorage);
+        }
+    }, []);
+
+
+
     const removeItem = (id) => {
-        setCitas(citas.filter(cita => cita.id !== id));
+        const updatedCitas = citas.filter(cita => cita.id !== id);
+        setCitas(updatedCitas);
+        localStorage.setItem('citas', JSON.stringify(updatedCitas));
     };
 
     function firstLetterUppercase(string) {
@@ -246,6 +367,7 @@ function Agenda() {
         const ampm = hora <= 12 ? 'am' : 'pm';
         return `${hora12}:${minutos} ${ampm}`;
     }
+
     const citasMostrar = citas.map(cita => {
         const date = dayjs(cita.fecha);
         const año = date.format('YYYY');
@@ -297,32 +419,49 @@ function Agenda() {
                 </section>
 
 
-                <div className='flex justify-center gap-6 p-8 '>
-                    <section className='w-1/2 p-6 '>
+                <div className='flex items-start justify-center gap-4'>
+                    <section className='w-1/2 p-2'>
                         {/* <Calendar onChange={onChange} value={value} /> */}
-                        <div className=''>
+                        <div className='bg-[#5b9f9b] py-20 w-[90%] rounded-xl items-center flex h-[100%]'>
                             <LocalizationProvider dateAdapter={AdapterDayjs}>
                                 <DateCalendar
                                     sx={[dayStyle,
                                         {
-                                            svg: { fill: '#ec5766 !important' },
-                                            input: { fill: '#ec5766 !important' },
-                                            label: { fill: '#ec5766 !important' },
+                                            // color de los botones
+                                            // "& .MuiButtonBase-root": {
+                                            //     background: '#ec5766 !important',
+                                            // },
+                                            // color del calendario
                                             "& .MuiPickersCalendarHeader-switchHeader": {
-                                                color: "#036C65 !important",
+                                                color: '#036C65 !important',
                                             },
+                                            // bold
+                                            "& .MuiPickersDay-day": {
+                                                fontWeight: 'bold !important',
+                                            },
+
+                                            input: { fill: 'black !important' },
+                                            label: { fill: '#ec5766 !important' },
+                                            svg: { fill: 'white !important' },
+                                            fontFamily: 'IloveGlitter !important',
                                             // month color 
                                             "& .MuiPickersCalendarHeader-transitionContainer": {
                                                 color: "#036C65 !important",
 
                                             },
+                                            // day color
                                             "& .MuiPickersDay-root": {
                                                 "&.Mui-selected": {
                                                     fontWeight: 'bold !important',
                                                     backgroundColor: "#036C65 !important",
                                                     color: "white !important",
+                                                    border: '3px solid white !important',
+                                                },
+                                                // change header font type
+                                                '& .MuiPickersCalendarHeader-transitionContainer': {
                                                 },
                                             },
+
 
 
                                         }]}
@@ -347,8 +486,8 @@ function Agenda() {
                         </div>
 
                     </section>
-                    <section className='w-1/2 p-6'>
-                        <div className='flex justify-between gap-6 my-6'>
+                    <section className='w-1/2 p-2'>
+                        <div className='flex justify-between gap-6 mb-6'>
                             <h2 className='text-[#EB5765] text-2xl'>Citas Pendientes</h2>
                             <a href="/spa/agendar"><svg width="24" height="24" viewBox="0 0 41 41" fill="none" xmlns="http://www.w3.org/2000/svg">
                                 <circle cx="20.5" cy="20.5" r="19.5" fill="white" stroke="#EB5765" stroke-width="2" />

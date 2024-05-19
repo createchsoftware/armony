@@ -1,9 +1,40 @@
 import user1 from "../../../../../../public/pictures/userGuest.png";
 import Pasos from "../../../PasosDeProcesos";
-
-const id = 1234567890;
+import React, { useState, useEffect } from 'react'
 
 const ConfirmacionCuenta = () => {
+
+  const [clave, setClave] = useState(false); //<<< PARA EL INICIO DE SESION
+
+
+  async function recibido() {
+    const respuesta = await fetch('/api/logueado', {
+        method: "GET",
+        headers: {
+            "Content-Type": "application/json",
+        }
+    })
+
+    if (!respuesta.ok) {
+        setClave(null);
+    }
+
+    let respuestaJson = await respuesta.json();
+
+    if(respuestaJson.logueado == true) {
+        setClave(respuestaJson.clave);
+    }
+    else {
+        setClave(null);
+    }
+  }
+
+
+  useEffect(() => {
+    recibido();
+  }, []);
+
+
   return (
     <div>
       <div className="md:h-20 h-[3.75rem] bg-white" />
@@ -117,7 +148,7 @@ const ConfirmacionCuenta = () => {
               única:
             </h2>
             <div className="mb-3 bg-[#E8C3C6] rounded-full py-2 px-3">
-              <p className="text-[#EB5765] text-lg">#{id}</p>
+              <p className="text-[#EB5765] text-lg">#{clave}</p>
             </div>
             <h2 className="w-5/6 lg:w-2/3 text-center text-sm">
               Recuerda que al tener cuenta, no solo sirve para puedas saber de

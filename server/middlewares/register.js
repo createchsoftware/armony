@@ -1,4 +1,5 @@
 import dotenv from 'dotenv';
+import Stripe from 'stripe';
 import jsonwebtoken from 'jsonwebtoken';
 import bcryptjs from 'bcryptjs';
 import mysql from "mysql2";
@@ -37,6 +38,9 @@ async function InsertUser(solicitud,respuesta,siguiente){
                 galleta1 = galleta1.slice(15);
                 galleta2 = galleta2.slice(14);
                 galleta3 = galleta3.slice(11);
+
+
+                console.log('estoy harto');
     
                     let decodificada1 = await jsonwebtoken.verify(galleta1, process.env.JWT_SECRET); // decodificar galleta 1
                     let decodificada2 = await jsonwebtoken.verify(galleta2, process.env.JWT_SECRET); // decodificar galleta 2
@@ -59,6 +63,8 @@ async function InsertUser(solicitud,respuesta,siguiente){
                 
     
                     let [fields] = await solicitud.database.query(mysql.format(consulta,parametros));
+
+                    console.log(fields);
                            
                     // ahora buscaremos el id que corresponde al correo
                     let busca = 'select pkIdUsuario from usuario where email = ?';
@@ -75,6 +81,25 @@ async function InsertUser(solicitud,respuesta,siguiente){
                         await solicitud.database.query(mysql.format(patologia_consulta,[busqueda[0].pkIdUsuario,id_pato,desc_pato]));
                         
                     }
+
+
+                    // toca crear un nuevo usuario en stripe
+                    const stripe = new Stripe(process.env.STRIPE_SECRET);
+
+                    const cliente = await stripe.customers.create({
+                        email:decodificada1.correo,
+                        name:`${decodificada1.nombre} ${decodificada1.paterno} ${decodificada1.materno}`,
+                        address:{
+                            postal_code:decodificada1.codigo_postal,
+                        },
+                        phone:`+${telefono_completo}`,
+                        metadata:{
+                            usuario_id:busqueda[0].pkIdUsuario,
+                        }
+                    })
+
+
+
 
                         let token = jsonwebtoken.sign(
                             {
@@ -110,9 +135,17 @@ async function InsertUser(solicitud,respuesta,siguiente){
     
                         let full_name = `${decodificada1.nombre} ${decodificada1.paterno} ${decodificada1.materno}`;
     
-                        let sending = await servicios.CrearCuentaEmail(decodificada1.correo,"token",full_name,busqueda[0].pkIdUsuario);
-    
-                        console.log(sending); // nos deberia imprimir la informacion acerca del envio
+                        try{
+                            let sending = await servicios.CrearCuentaEmail(decodificada1.correo,"token",full_name,busqueda[0].pkIdUsuario);
+
+                            console.log('correo enviado');
+                            console.log(sending);
+                        }
+                        catch(error){
+                            console.log(error);
+                        }
+                        
+                        
 
                         respuesta.clearCookie('Megumin_cookie', { path: '/' });
                         respuesta.clearCookie('Nakano_Itsuki', { path: '/' });

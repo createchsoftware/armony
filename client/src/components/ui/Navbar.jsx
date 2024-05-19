@@ -1,4 +1,4 @@
-import React, { Fragment, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 //import { Dialog, Disclosure, Popover, Transition } from '@headlessui/react'
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBars, faCartShopping } from "@fortawesome/free-solid-svg-icons";
@@ -8,13 +8,33 @@ import PopupLogin from "./Login/PopupLogin.jsx";
 import SubMenuServicios from "./SubMenuServicios.jsx"
 import MenuPerfil from "./MenuPerfil.jsx";
 import { Helmet, HelmetProvider } from "react-helmet-async";
+import { useCarrito } from '../ui/Carrito.jsx'
+import { useLocation } from "react-router-dom";
 
 function Navbar() {
+    const location = useLocation();
+
+    const { getCartItemsCount } = useCarrito();
     const [cart, setCart, showModal, setShowModal] = useState(false);
     const [login, setLogin] = useState(false);
     const [log, setLog] = useState(false); //<<< PARA EL INICIO DE SESION
     const [usuario, setUsuario] = useState(false); //<<< PARA EL INICIO DE SESION
     const [items, setItems] = useState(0);
+
+    const spaRutas = location.pathname.startsWith('/spa') ||
+        location.pathname.startsWith('/favoritos')
+    const mainRutas = location.pathname.startsWith('/perfil') ||
+        location.pathname.startsWith('/rangos') ||
+        location.pathname.startsWith('/suscripcion')
+
+
+    //auto update cart items in navbar (items)
+    useEffect(() => {
+        const updateCartItems = () => {
+            setItems(getCartItemsCount());
+        };
+        updateCartItems();
+    }, [getCartItemsCount]);
 
     const toggleCart = () => {
         setCart(!cart);
@@ -77,13 +97,13 @@ function Navbar() {
                             <FontAwesomeIcon icon={faBars} />
                         </button>
                         <ul className="menu">
-                            <li className="nav-menu-item">
-                                <a href="/spa" className="menu-link">
-                                    Inicio
-                                </a>
-                            </li>
-                            {location.pathname == "/" && (
+                            { location.pathname === '/' && (
                                 <>
+                                    <li className="nav-menu-item">
+                                        <a href="#" className="menu-link">
+                                            Inicio
+                                        </a>
+                                    </li>
                                     <li className="nav-menu-item">
                                         <a href="#nosotros" className="menu-link">
                                             Nosotros
@@ -96,8 +116,32 @@ function Navbar() {
                                     </li>
                                 </>
                             )}
-                            {location.pathname !== "/" && (
+                            { mainRutas && (
                                 <>
+                                    <li className="nav-menu-item">
+                                        <a href="/" className="menu-link">
+                                            Inicio
+                                        </a>
+                                    </li>
+                                    <li className="nav-menu-item">
+                                        <a href="/#nosotros" className="menu-link">
+                                            Nosotros
+                                        </a>
+                                    </li>
+                                    <li className="nav-menu-item">
+                                        <a href="/#contacto" className="menu-link">
+                                            Contacto
+                                        </a>
+                                    </li>
+                                </>
+                            )}
+                            { spaRutas && (
+                                <>
+                                    <li className="nav-menu-item">
+                                        <a href="/spa" className="menu-link">
+                                            Inicio
+                                        </a>
+                                    </li>
                                     <li className="cursor-pointer nav-menu-item">
                                         <a className="menu-link">
                                             Servicios
@@ -110,11 +154,11 @@ function Navbar() {
                                         </a>
                                     </li>
                                     <li className="nav-menu-item">
-                                        { log ? (
+                                        {log ? (
                                             <a href="/spa/agendar" className="menu-link">
                                                 Agendar
                                             </a>
-                                        ):(
+                                        ) : (
                                             <a href="#" className="menu-link" onClick={toggleLogin}>
                                                 Agendar
                                             </a>
@@ -147,29 +191,32 @@ function Navbar() {
                                     </a>
                                 )}
                             </li>
-                            {location.pathname !== "/" && (
+                            { spaRutas && (
                                 <li className="nav-menu-item">
-                                    { log ? (
-                                        <a
-                                            href="/favoritos"
-                                            className="nav-fav"
-                                            aria-label="Ir a Favoritos"
-                                        >
-                                            <FontAwesomeIcon icon={faHeart} />
-                                        </a>
-                                    ):(
-                                        <a
-                                            href="#"
-                                            className="nav-fav"
-                                            aria-label="Ir a Favoritos"
-                                            onClick={toggleLogin}
-                                        >
-                                            <FontAwesomeIcon icon={faHeart} />
-                                        </a>
-                                    )}
+                                    <a
+                                        href="/favoritos"
+                                        className="nav-fav"
+                                        aria-label="Ir a Favoritos"
+                                    >
+                                        <FontAwesomeIcon icon={faHeart} />
+                                    </a>
                                 </li>
                             )}
                             {location.pathname == "/spa/productos" && (
+                                <li className="nav-menu-item">
+                                    <button
+                                        className="nav-cart"
+                                        aria-label="Abrir Carrito"
+                                        onClick={toggleCart}
+                                    >
+                                        <FontAwesomeIcon icon={faCartShopping} />
+                                        <span className="text-xs badge badge-pill badge-warning">
+                                            {items}
+                                        </span>
+                                    </button>
+                                </li>
+                            )}
+                            {location.pathname.includes("/producto/") && (
                                 <li className="nav-menu-item">
                                     <button
                                         className="nav-cart"
@@ -190,20 +237,12 @@ function Navbar() {
             {login && <PopupLogin cerrar={toggleLogin} />}
 
             {cart && (
-                <div className="cart-fondo">
-                    <div className="cart-fx">
+                <div className="overflow-y-auto cart-fondo">
+                    <div className="overflow-y-auto cart-fx">
                         <Carrito cerrar={toggleCart} totalProductos={cantProductos} logCart={log} loginCart={toggleLogin} />
                     </div>
                 </div>
             )}
-
-            {/* {perfil && (
-                <div className="usermenu-fondo">
-                    <div className="usermenu-fx">
-                        <MenuPerfil />
-                    </div>
-                </div>
-            )} */}
         </>
     );
 }

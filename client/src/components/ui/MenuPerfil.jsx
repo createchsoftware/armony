@@ -19,13 +19,13 @@ function MenuPerfil() {
                     </a>
                 </li>
                 <li className="menu-item-perfil">
-                    <a href="/perfil/informacion" className="menu-link-perfil">
+                    <a href="/perfil/editar-perfil" className="menu-link-perfil">
                         <FontAwesomeIcon icon={faUserPen} className='text-black' />
                         <p className='ml-4'>Editar perfil</p>
                     </a>
                 </li>
                 <li className="menu-item-perfil">
-                    <a href="#" className="menu-link-perfil">
+                    <a href="/perfil/pedidos" className="menu-link-perfil">
                         <FontAwesomeIcon icon={faBagShopping} className='text-black' />
                         <p className='ml-6'>Mis pedidos</p>
                     </a>
