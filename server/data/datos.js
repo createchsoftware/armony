@@ -9,7 +9,7 @@ export const conexionDB = {
   PORT: process.env.DB_PORT,
   DATABASE: process.env.DB_NAME,
   PASSWORD: process.env.DB_PASSWORD,
-  USER: process.env.DB_USER
+  USER: process.env.DB_USER,
 };
 
 // Configuracion del servidor
@@ -17,12 +17,17 @@ export const servidor = {
   PRODUCTION: process.env.PRODUCTION,
   PROD_SERVER_HOST: process.env.PROD_SERVER_HOST,
   SERVER_HOST: process.env.SERVER_HOST,
-  SERVER_PORT: process.env.SERVER_PORT
+  SERVER_PORT: process.env.SERVER_PORT,
 };
 
 // Configuracion de JWT
 export const jwt = {
   SECRET: process.env.JWT_SECRET,
   EXPIRATION: process.env.JWT_EXPIRATION,
-  COOKIE_EXPIRES: process.env.JWT_COOKIE_EXPIRES
+  COOKIE_EXPIRES: process.env.JWT_COOKIE_EXPIRES,
+};
+
+// API imagenes
+export const API_IMG = {
+  KEY_API_IMG: process.env.API_IMG,
 };

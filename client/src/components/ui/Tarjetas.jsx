@@ -26,7 +26,7 @@ function Tarjetas() {
                 </div>
                 <div className=" font-[abeatbyKai] grid  justify-center grid-cols-1  gap-6 md:gap-8 place-content-around md:grid-cols-3  ">
                     <div className='border-4 border-[#B49947]  rounded-[30px]'>
-                        <div className="grid justify-center h-auto grid-cols-2 gap-4 p-4 border-[1rem]  border-[#F1DA88] rounded-3xl place-content-center md:grid-cols-1 md:gap-8  md:h-[40vw] md:place-content-start ">
+                        <div className="grid justify-center h-full grid-cols-2 gap-4 p-4 border-[1rem]  border-[#F1DA88] rounded-3xl place-content-center md:grid-cols-1 md:gap-8 md:place-content-start ">
                             <h1 className="col-span-2 font-bold text-xl text-center text-[#F1DA88] drop-shadow-[1px_1px_var(--tw-shadow-color)] shadow-[black] ">Rango oro</h1>
                             <div className="grid w-full m-auto md:col-span-2">
                                 <img className='w-2/3 rounded-2xl justify-self-center' src={oro} alt="" />

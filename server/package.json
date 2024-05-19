@@ -156,7 +156,7 @@
     "pm2": "^5.3.1"
   },
   "scripts": {
-    "start": "node main.js",
+    "start": "node app.js",
     "dev": "nodemon --watch app.js"
   },
   "engines": {

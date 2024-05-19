@@ -2,14 +2,14 @@ import InputContrasena from "../InputContrasena";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faAngleLeft } from "@fortawesome/free-solid-svg-icons";
 
-const CambiarContrasena = () => {
+const CambiarContrasena = ({ volver, close, next }) => {
   return (
     <>
       <div className="md:h-20 h-[3.75rem] bg-white" />
       <div className="justify-center items-center mt-[6rem] mb-[6rem] md:mt-[5rem] md:mb-2 lg:mt-[8rem] lg:mb-4">
         <div className="h-[40rem] w-[25rem] md:h-[28rem] lg:h-[29rem] md:w-[37rem] lg:w-[45rem] flex flex-col rounded-xl ring-1 ring-slate-200 bg-white bg-clip-border text-gray-700 shadow-md mx-auto">
           <div className="absolute mt-5">
-            <a className="ml-3">
+            <a onClick={volver} className="ml-3">
               <FontAwesomeIcon
                 style={{ fontSize: "22px" }}
                 icon={faAngleLeft}
@@ -88,9 +88,10 @@ const CambiarContrasena = () => {
           </div>
           <div className="grid grid-cols-2 my-auto">
             <div className="grid place-content-start ml-8">
-              <a href="/">
+              <a>
                 <button
                   aria-label="Cancelar"
+                  onClick={close}
                   className="bg-[#D9D9D9] text-[#EB5765] md:text-large lg:text-xl rounded-full w-[7rem] py-2 mx-auto hover:bg-[#EEEEEE]"
                 >
                   Cancelar
@@ -98,9 +99,10 @@ const CambiarContrasena = () => {
               </a>
             </div>
             <div className="grid place-content-end mr-8">
-              <a href="/spa/resetPassword/Verificacion">
+              <a>
                 <button
                   aria-label="Continuar"
+                  onClick={next}
                   className="bg-[#EB5765] text-white md:text-large lg:text-xl rounded-full w-[7rem] py-2 mx-auto hover:bg-red-200"
                 >
                   Listo

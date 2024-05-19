@@ -13,51 +13,6 @@ import { Slider, Box } from "@mui/material";
 import Rating from "@mui/material/Rating";
 import Presentacion from "../../../components/ui/PresentacionEstetica.jsx";
 import Servicio from "../../../components/ui/Servicio.jsx";
-import Peluqueria from "../../../../public/pictures/peluqueria.png";
-import Unas from "../../../../public/pictures/unas.png";
-import Pedicura from "../../../../public/pictures/pedicura.png";
-
-/*var estetica = [
-  {
-    id: 1,
-    nombre: "Servicio de peluquería",
-    descripcion: "Espacio de transformación y renovación personal",
-    espDesc1:
-      "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Adipisci quasi repudiandae delectus recusandae accusantium deleniti, sit cupiditate quae culpa aut inventore numquam at excepturi ",
-    espDesc2:
-      "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Adipisci quasi repudiandae delectus recusandae accusantium deleniti, sit cupiditate quae culpa aut inventore",
-    precio: "1,350.00",
-    img: Peluqueria,
-    rating: 5,
-    fav: true,
-  },
-  {
-    id: 2,
-    nombre: "Uñas",
-    descripcion: "Transformación de las manos elevando confianza",
-    espDesc1:
-      "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Adipisci quasi repudiandae delectus recusandae accusantium deleniti, sit cupiditate quae culpa aut inventore numquam at excepturi ",
-    espDesc2:
-      "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Adipisci quasi repudiandae delectus recusandae accusantium deleniti, sit cupiditate quae culpa aut inventore",
-    precio: "1,200.00",
-    img: Unas,
-    rating: 5,
-    fav: true,
-  },
-  {
-    id: 3,
-    nombre: "Pedicura",
-    descripcion: "Tratamiento estético para los pies",
-    espDesc1:
-      "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Adipisci quasi repudiandae delectus recusandae accusantium deleniti, sit cupiditate quae culpa aut inventore numquam at excepturi ",
-    espDesc2:
-      "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Adipisci quasi repudiandae delectus recusandae accusantium deleniti, sit cupiditate quae culpa aut inventore",
-    precio: "1,800.00",
-    img: Pedicura,
-    rating: 5,
-    fav: true,
-  },
-];*/
 
 function classNames(...clases) {
   return clases.filter(Boolean).join(" ");
@@ -290,7 +245,7 @@ export default function ServicioEstetica() {
   return (
     <>
       <Presentacion />
-      <div className="w-full mx-auto mt-16">
+      <div className="w-full mx-auto mt-16" id="serv">
         <p className=" text-4xl md:text-6xl text-center mb-8 font-[iloveglitter] text-[#036C65]">
           Servicios de la estética
         </p>
@@ -300,7 +255,7 @@ export default function ServicioEstetica() {
           cabello.
         </p>
       </div>
-      <div className="">
+      <div>
         <div>
           {/* Mobile filter dialog */}
           <Transition.Root show={mobileFiltersOpen} as={Fragment}>
@@ -791,8 +746,6 @@ export default function ServicioEstetica() {
                       <Servicio
                         nombre={servicio.nombre}
                         descripcion={servicio.descripcion}
-                        espDesc1={servicio.espDesc1}
-                        espDesc2={servicio.espDesc2}
                         precio={servicio.precio}
                         imagen={servicio.img}
                         rating={servicio.rating}

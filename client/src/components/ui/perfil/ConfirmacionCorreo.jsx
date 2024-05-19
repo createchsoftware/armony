@@ -1,7 +1,7 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faAngleLeft } from "@fortawesome/free-solid-svg-icons";
 
-const ConfirmacionCorreo = () => {
+const ConfirmacionCorreo = ({ close }) => {
   return (
     <>
       <div className="md:h-20 h-[3.75rem] bg-white" />
@@ -22,9 +22,10 @@ const ConfirmacionCorreo = () => {
             que creaste.
           </h2>
           <div className="grid place-content-center mt-2 lg:mt-0">
-            <a href="/spa/resetPassword/Verificacion">
+            <a>
               <button
                 aria-label="Finalizar"
+                onClick={close}
                 className="bg-[#EB5765] text-white md:text-large lg:text-xl rounded-full w-[7rem] py-2 mx-auto hover:bg-red-200"
               >
                 Finalizar

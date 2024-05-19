@@ -27,7 +27,7 @@ function PresentacionSpa() {
                 Deja que tu silueta sea tu legado
               </p>
               <a
-                href=""
+                href="#serv"
                 className="inline-block bg-[#EB5765] text-white text-large rounded-full px-4 py-3 mx-auto my-5 hover:bg-red-200"
                 aria-label="Ver más"
               >

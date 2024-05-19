@@ -90,6 +90,15 @@ function Favoritos() {
       setToggleService(index);
     }
   };
+
+  const setNavigate = () => {
+    if (toggleState === 1) {
+      window.location.href = "/spa/servicios/spa";
+    } else {
+      window.location.href = "/spa/servicios/estetica";
+    }
+  };
+
   return (
     <>
       <img
@@ -157,7 +166,10 @@ function Favoritos() {
             </div>
           </div>
         </div>
-        <button className="mt-12 transition-all duration-300 m-auto hover:bg-[#036C65] hover:ring-2 hover:ring-neutral-800 hover:ring-offset-1 group relative inline-flex h-10 items-center justify-center overflow-hidden rounded-lg border-2 bg-[#EB5765] px-6 font-[abeatbykai] text-neutral-200">
+        <button
+          onClick={setNavigate}
+          className="mt-12 transition-all duration-300 m-auto hover:bg-[#036C65] hover:ring-2 hover:ring-neutral-800 hover:ring-offset-1 group relative inline-flex h-10 items-center justify-center overflow-hidden rounded-lg border-2 bg-[#EB5765] px-6 font-[abeatbykai] text-neutral-200"
+        >
           <span>Ver más</span>
           <div className="w-0 translate-x-[100%] pl-0 opacity-0 transition-all duration-200 group-hover:w-5 group-hover:translate-x-0 group-hover:pl-1 group-hover:opacity-100">
             <svg

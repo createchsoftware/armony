@@ -1,10 +1,11 @@
+// eslint-disable-next-line react/prop-types
 function TarjetasPago({ tarjetas , funcion, texto_btn}) {
     return (
         <>
             <div className='flex p-6 border-b border-gray-400 justify-between'>
                 <div className="flex gap-4">
                     <img src={`../../../pictures/${tarjetas.imagen}`}
-                                alt={tarjetas.empresa} className='w-auto h-24' />
+                        alt={tarjetas.empresa} className='w-auto h-24' />
                     <div className="grid place-content-center">
                         <h1 className="text-lg font-bold">Terminada en {tarjetas.vista_tarjeta}</h1>
                         <p className='text-sm text-gray-500'>{tarjetas.empresa}</p>
