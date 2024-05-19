@@ -38,10 +38,23 @@ export default function Cita() {
   const [completed, setCompleted] = useState({});
   const [scrollPosition, setScrollPosition] = useState(0);
   const nextButtonText = activeStep === steps.length - 1 ? "Ver agenda" : "Siguiente";
+  const citasAgregadas = [];
+  localStorage.setItem('citas', JSON.stringify(citasAgregadas));
+  // useEffect(() => {
+  //   localStorage.clear();
+  // }, []); // Se ejecutará una vez al montar el component
 
-  useEffect(() => {
-    localStorage.clear();
-  }, []); // Se ejecutará una vez al montar el component
+  useEffect(() => {//caundo el usuario llegue al paso 4  se ajecutara 
+    if (activeStep === 3) {
+      paso4();
+    }
+  }, [activeStep]);
+
+  const paso4 = () => {
+    agregadoCitas()// se guardara su servicio en un array
+    removeLSCitas()//despues se eliminaran del localstorage para posteriormente volverlos a declarar
+   // LocalBase()
+  };
 
   const restart = () => {
     setActiveStep(0);
@@ -107,34 +120,62 @@ export default function Cita() {
 
   const handleClick = () => {
     handleComplete();
-    LocalBase();
+    //LocalBase();
   };
 
   const handleReset = () => {
     setActiveStep(0);
     setCompleted({});
   };
+  const removeLSCitas =() => {
+  localStorage.removeItem("servicio")
+  localStorage.removeItem('nombre')
+  localStorage.removeItem('precio') 
+  localStorage.removeItem('tiempo')
+  localStorage.removeItem('imagen')
+  localStorage.removeItem("paquete") 
+  localStorage.removeItem("sesiones") 
+  localStorage.removeItem("Especialista")
+  localStorage.removeItem("hora")
+  localStorage.removeItem("Fecha seleccionada")
+  localStorage.removeItem('NombreEspecialista')
 
-  const LocalBase = () => {
-    console.log(
-      localStorage.getItem("servicio") +
-      " " +
-      localStorage.getItem("paquete") +
-      " " +
-      localStorage.getItem("sesiones") +
-      " " +
-      localStorage.getItem("Especialista") +
-      " " +
-      localStorage.getItem("hora") +
-      " " +
-      localStorage.getItem("Fecha seleccionada") + ' ' +
-      localStorage.getItem('NombreEspecialista') + ' ' +
-
-      localStorage.getItem('nombre') + ' ' +
-      localStorage.getItem('precio') + ' ' +
-      localStorage.getItem('tiempo')
-    );
+  }
+const agregadoCitas =() => {
+  const newProduct = { 
+"idServicio":localStorage.getItem("servicio"),
+"nombreServicio":  localStorage.getItem('nombre'),
+"precioServicio": localStorage.getItem('precio'),
+"tiempoServicio":  localStorage.getItem('tiempo'),
+"ImagenServicio": localStorage.getItem('imagen'),
+//"Servicio":localStorage.getItem("paquete"),
+   // localStorage.getItem("sesiones") ,
+"IdEspecialista":localStorage.getItem("Especialista"),
+"horaDisp":localStorage.getItem("hora"),
+"FechaServicio":localStorage.getItem("Fecha seleccionada"),
+"nombreEsp":localStorage.getItem('NombreEspecialista')
   };
+    let citas = JSON.parse(localStorage.getItem('citas')) || [];
+    citas.push(newProduct);
+    localStorage.setItem('citas', JSON.stringify(citas));
+  };
+
+
+  // const LocalBase = () => {
+  //   console.log(
+  //     localStorage.getItem("servicio") + ' '+
+  //     localStorage.getItem('nombre') + ' ' +
+  //     localStorage.getItem('precio') + ' ' +
+  //     localStorage.getItem('tiempo')+' '+
+  //     localStorage.getItem('imagen')+" " +
+  //     localStorage.getItem("paquete") +" " +
+  //     localStorage.getItem("sesiones") +" " +
+  //     localStorage.getItem("Especialista")+" " +
+  //     localStorage.getItem("hora")+" " +
+  //     localStorage.getItem("Fecha seleccionada") + ' ' +
+  //     localStorage.getItem('NombreEspecialista')
+  //   );
+  // };
   const stepComponents = [
     <Servicios key={0} />,
     <Paquetes key={1} />,
