@@ -1,7 +1,14 @@
 import { Helmet, HelmetProvider } from "react-helmet-async";
 import LayoutPrincipal from "../layouts/LayoutPrincipal";
+import Soon from "../components/ui/Proximamente";
+import { useState } from "react";
 
 const Suscripcion = () => {
+    const [soon, setSoon] = useState(false)
+    const toggleSoon = () => {
+        setSoon(!soon)
+    };
+
     return (
         <>
             <HelmetProvider>
@@ -46,9 +53,16 @@ const Suscripcion = () => {
                             </div>
                         </div>
                     </div>
-                    <button className='justify-self-center text-2xl bg-[#ec5766] p-2 px-8 text-white mx-6 rounded-xl mt-6 duration-200 hover:bg-[#ffb5a7]'>Comprar</button>
+                    <button onClick={toggleSoon} className='justify-self-center text-2xl bg-[#ec5766] p-2 px-8 text-white mx-6 rounded-xl mt-6 duration-200 hover:bg-[#ffb5a7]'>Comprar</button>
                 </div>
             </LayoutPrincipal>
+            {soon && (
+                <div className='soon-fondo'>
+                    <div className='soon-fx' onClick={toggleSoon}>
+                        <Soon />
+                    </div>
+                </div>
+            )}
         </>
     )
 }
