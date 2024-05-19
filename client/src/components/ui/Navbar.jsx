@@ -30,8 +30,6 @@ function Navbar() {
         updateCartItems();
     }, [getCartItemsCount]);
 
-
-
     const toggleCart = () => {
         setCart(!cart);
     };
@@ -175,6 +173,20 @@ function Navbar() {
                                 </li>
                             )}
                             {location.pathname == "/spa/productos" && (
+                                <li className="nav-menu-item">
+                                    <button
+                                        className="nav-cart"
+                                        aria-label="Abrir Carrito"
+                                        onClick={toggleCart}
+                                    >
+                                        <FontAwesomeIcon icon={faCartShopping} />
+                                        <span className="text-xs badge badge-pill badge-warning">
+                                            {items}
+                                        </span>
+                                    </button>
+                                </li>
+                            )}
+                            {location.pathname == "/spa/producto" && (
                                 <li className="nav-menu-item">
                                     <button
                                         className="nav-cart"

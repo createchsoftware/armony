@@ -155,45 +155,45 @@ const ordenamiento = [
 
 const subCategories = [
   {
-    id: 'categoria',
-    name: 'Favoritos',
+    id: "categoria",
+    name: "Favoritos",
     options: [
-      { label: 'Ascendente', checked: false },
-      { label: 'Descendente', checked: false },
+      { label: "Ascendente", checked: false },
+      { label: "Descendente", checked: false },
     ],
   },
 ];
 
 const filters = [
   {
-    id: 'Marca',
-    name: 'Tipo de servicio',
+    id: "Marca",
+    name: "Tipo de servicio",
     options: [
-      { value: 'ponds', label: 'Masajes', checked: false },
-      { value: 'hidraSense', label: 'Faciales', checked: false },
-      { value: 'savasana', label: 'Maquillaje', checked: false },
-      { value: 'ceraVe', label: 'Servicio tradicional', checked: false },
-      { value: 'cetaphil', label: 'Servicio con tecnología', checked: false },
-      { value: 'mizon', label: 'Rejuvenecimiento', checked: false },
+      { value: "ponds", label: "Masajes", checked: false },
+      { value: "hidraSense", label: "Faciales", checked: false },
+      { value: "savasana", label: "Maquillaje", checked: false },
+      { value: "ceraVe", label: "Servicio tradicional", checked: false },
+      { value: "cetaphil", label: "Servicio con tecnología", checked: false },
+      { value: "mizon", label: "Rejuvenecimiento", checked: false },
     ],
   },
   {
-    id: 'Ofertas',
-    name: 'Ofertas',
+    id: "Ofertas",
+    name: "Ofertas",
     options: [
-      { value: 'ponds', label: 'Ofertas de tiempo limitado', checked: false },
-      { value: 'hidraSense', label: 'Descuentos', checked: false },
-      { value: 'savasana', label: 'Producto nuevo', checked: false },
-      { value: 'ceraVe', label: 'Rebajas', checked: false },
+      { value: "ponds", label: "Ofertas de tiempo limitado", checked: false },
+      { value: "hidraSense", label: "Descuentos", checked: false },
+      { value: "savasana", label: "Producto nuevo", checked: false },
+      { value: "ceraVe", label: "Rebajas", checked: false },
     ],
-  }]
-
+  },
+];
 
 export default function ServicioEstetica() {
-  const [mobileFiltersOpen, setMobileFiltersOpen] = useState(false)
-  const [sortOption, setSortOption] = useState(ordenamiento[0])
-  const [allProducts, setAllProducts] = useState([])
-  const [filteredProducts, setFilteredProducts] = useState([])
+  const [mobileFiltersOpen, setMobileFiltersOpen] = useState(false);
+  const [sortOption, setSortOption] = useState(ordenamiento[0]);
+  const [allProducts, setAllProducts] = useState([]);
+  const [filteredProducts, setFilteredProducts] = useState([]);
   const [categories, setCategories] = useState([]);
   const [marcas, setMarcas] = useState([]);
   const [busqueda, setSearch] = useState("");
@@ -203,6 +203,33 @@ export default function ServicioEstetica() {
   const [toggleState, setToggleService] = useState(1);
   const [color1, setColor1] = useState("#EB5765");
   const [color2, setColor2] = useState("#F6B3B9");
+  const [log, setLog] = useState(false);
+
+  let respuestaJson = null;
+  async function checkLogin() {
+    try {
+      const respuesta = await fetch("/api/logueado", {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+
+      respuestaJson = await respuesta.json();
+
+      if (respuestaJson.logueado == true) {
+        setLog(true);
+      } else {
+        setLog(false);
+      }
+    } catch (error) {
+      setLog(false);
+    }
+  }
+
+  useEffect(() => {
+    checkLogin();
+  }, []);
 
   //useEffect from api call
   // useEffect(() => {
@@ -259,8 +286,8 @@ export default function ServicioEstetica() {
   //useEffect para obtener los productos
   useEffect(() => {
     fetch("/api/admin/productos/getProducts")
-      .then(response => response.json())
-      .then(data => {
+      .then((response) => response.json())
+      .then((data) => {
         setAllProducts(data);
       })
       .catch((error) => {
@@ -305,18 +332,15 @@ export default function ServicioEstetica() {
     }
 
     // Filtro por precio
-    if (precio === null)
-      updatedProducts = updatedProducts;
+    if (precio === null) updatedProducts = updatedProducts;
 
-    if (precio === 0)
-      updatedProducts = updatedProducts;
+    if (precio === 0) updatedProducts = updatedProducts;
 
     if (precio) {
       updatedProducts = updatedProducts.filter(
         (product) => product.precio <= precio
       );
     }
-
 
     // Ordenar productos
     switch (sortOption.name) {
@@ -359,7 +383,6 @@ export default function ServicioEstetica() {
     });
 
     setFilteredProducts(updatedProducts);
-
   }, [busqueda, categories, sortOption, allProducts, marcas, rating, precio]);
 
   const toggleService = (index) => {
@@ -914,42 +937,52 @@ export default function ServicioEstetica() {
                     {/*<Filtro className="relative float-start" />*/}
                     <div className="grid grid-cols-2 md:grid-cols-3 w-[100%] rounded-lg ring-4 ring-[#E2B3B7] mx-auto mb-10">
                       {filteredProducts.length > 0 ? (
-                        filteredProducts.slice(0, 8).map((servicio) => (
-                          <Servicio
-                            key={servicio.nombre}
-                            nombre={servicio.nombre}
-                            descripcion={servicio.descripcion}
-                            espDesc1={servicio.espDesc1}
-                            espDesc2={servicio.espDesc2}
-                            precio={servicio.precio}
-                            imagen={servicio.img}
-                            rating={servicio.rating}
-                            isFavorite={servicio.fav}
-                          />
-                        ))
+                        filteredProducts
+                          .slice(0, 8)
+                          .map((servicio) => (
+                            <Servicio
+                              key={servicio.nombre}
+                              nombre={servicio.nombre}
+                              descripcion={servicio.descripcion}
+                              espDesc1={servicio.espDesc1}
+                              espDesc2={servicio.espDesc2}
+                              precio={servicio.precio}
+                              imagen={servicio.img}
+                              rating={servicio.rating}
+                              isFavorite={servicio.fav}
+                              log={log}
+                            />
+                          ))
                       ) : (
-                        <p className='m-auto'>No hay servicios faciales disponibles</p>
+                        <p className="m-auto">
+                          No hay servicios faciales disponibles
+                        </p>
                       )}
                     </div>
                   </div>
                   <div className={toggleState === 2 ? "block" : "hidden"}>
                     <div className="grid grid-cols-2 md:grid-cols-3 w-[90%] md:w-[100%] rounded-lg ring-4 ring-[#E2B3B7] mx-auto mb-10">
                       {filteredProducts.length > 0 ? (
-                        filteredProducts.slice(0, 8).map((servicio) => (
-                          <Servicio
-                            key={servicio.nombre}
-                            nombre={servicio.nombre}
-                            descripcion={servicio.descripcion}
-                            espDesc1={servicio.espDesc1}
-                            espDesc2={servicio.espDesc2}
-                            precio={servicio.precio}
-                            imagen={servicio.img}
-                            rating={servicio.rating}
-                            isFavorite={servicio.fav}
-                          />
-                        ))
+                        filteredProducts
+                          .slice(0, 8)
+                          .map((servicio) => (
+                            <Servicio
+                              key={servicio.nombre}
+                              nombre={servicio.nombre}
+                              descripcion={servicio.descripcion}
+                              espDesc1={servicio.espDesc1}
+                              espDesc2={servicio.espDesc2}
+                              precio={servicio.precio}
+                              imagen={servicio.img}
+                              rating={servicio.rating}
+                              isFavorite={servicio.fav}
+                              log={log}
+                            />
+                          ))
                       ) : (
-                        <p className='m-auto'>No hay servicios corporales disponibles</p>
+                        <p className="m-auto">
+                          No hay servicios corporales disponibles
+                        </p>
                       )}
                     </div>
                   </div>

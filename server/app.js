@@ -148,7 +148,7 @@ app.get('*', (solicitud,respuesta)=>{
 })
 
 
-if (servidor.PRODUCTION) {
+if (servidor.PRODUCTION === "true") {
   https.createServer({
     key: fs.readFileSync(keyPath),
     cert: fs.readFileSync(certPath)
@@ -161,9 +161,9 @@ if (servidor.PRODUCTION) {
   });
 }
 
-let puerto = (servidor.PRODUCTION ? servidor.PROD_SERVER_HOST : servidor.SERVER_HOST);
+let puerto = servidor.PRODUCTION === "true" ? 80 : servidor.SERVER_PORT;
 
-app.listen(servidor.PRODUCTION ? 80 : servidor.SERVER_PORT,
-           puerto, () => {
+app.listen(puerto,
+          (servidor.PRODUCTION === "true" ? servidor.PROD_SERVER_HOST : servidor.SERVER_HOST), () => {
   console.log(`Servidor en puerto ${puerto}: HTTP`);
 });

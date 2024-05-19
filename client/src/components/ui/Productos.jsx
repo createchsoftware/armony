@@ -20,8 +20,6 @@ const StyledRating = styled(Rating)({
 
 function Productos({ productos }) {
     const notify = () => toast("Producto agregado al carrito");
-
-
     const { agregarAlCarrito } = useCarrito();
 
     const handleClick = (producto) => {
@@ -39,7 +37,6 @@ function Productos({ productos }) {
             valoracion: 0,
             image: producto.img,
         };
-        console.log(productoParaCarrito);
         agregarAlCarrito(productoParaCarrito);
     };
     return (

@@ -329,16 +329,32 @@ function Agenda() {
         },
     ]
 
-    //Citas
-    const [citas, setCitas] = useState([
-        { id: 1, nombre: 'Cita 1', estado: 'Pendiente', especialista: 'Especialista 1', fecha: '2022-12-12', hora: '10:00' },
-        { id: 2, nombre: 'Cita 2', estado: 'Pendiente', especialista: 'Especialista 2', fecha: '2022-12-12', hora: '10:00' },
-        { id: 3, nombre: 'Cita 3', estado: 'Pendiente', especialista: 'Especialista 3', fecha: '2022-12-12', hora: '10:00' },
-        { id: 4, nombre: 'Cita 4', estado: 'Pendiente', especialista: 'Especialista 4', fecha: '2022-12-12', hora: '10:00' },
-        { id: 5, nombre: 'Cita 5', estado: 'Pendiente', especialista: 'Especialista 5', fecha: '2022-12-12', hora: '10:00' },
-    ]);
+    //citas from local storage
+    const citasFromLocalStorage = JSON.parse(localStorage.getItem('citas'));
+    const [citas, setCitas] = useState(citasFromLocalStorage || citasPendientes);
+
+    // //Citas
+    // const [citas, setCitas] = useState([
+    //     { id: 1, nombre: 'Cita 1', estado: 'Pendiente', especialista: 'Especialista 1', fecha: '2022-12-12', hora: '10:00' },
+    //     { id: 2, nombre: 'Cita 2', estado: 'Pendiente', especialista: 'Especialista 2', fecha: '2022-12-12', hora: '10:00' },
+    //     { id: 3, nombre: 'Cita 3', estado: 'Pendiente', especialista: 'Especialista 3', fecha: '2022-12-12', hora: '10:00' },
+    //     { id: 4, nombre: 'Cita 4', estado: 'Pendiente', especialista: 'Especialista 4', fecha: '2022-12-12', hora: '10:00' },
+    //     { id: 5, nombre: 'Cita 5', estado: 'Pendiente', especialista: 'Especialista 5', fecha: '2022-12-12', hora: '10:00' },
+    // ]);
+
+    useEffect(() => {
+        const citasFromLocalStorage = JSON.parse(localStorage.getItem('citas'));
+        if (citasFromLocalStorage) {
+            setCitas(citasFromLocalStorage);
+        }
+    }, []);
+
+
+
     const removeItem = (id) => {
-        setCitas(citas.filter(cita => cita.id !== id));
+        const updatedCitas = citas.filter(cita => cita.id !== id);
+        setCitas(updatedCitas);
+        localStorage.setItem('citas', JSON.stringify(updatedCitas));
     };
 
     function firstLetterUppercase(string) {
@@ -351,6 +367,7 @@ function Agenda() {
         const ampm = hora <= 12 ? 'am' : 'pm';
         return `${hora12}:${minutos} ${ampm}`;
     }
+
     const citasMostrar = citas.map(cita => {
         const date = dayjs(cita.fecha);
         const año = date.format('YYYY');

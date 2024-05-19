@@ -93,7 +93,7 @@ const Productos = () => {
                 <p className="text-3xl">
                   CONOCE NUESTRAS OFERTAS ÚNICAS HASTA 50% OFF
                 </p>
-                <a onClick={toggleSoon}>Ver más {">"} </a>
+                <a className="hover:cursor-pointer" onClick={toggleSoon}>Ver más {">"} </a>
               </div>
               {/* <div className='-translate-y-36'>
                                 <img className='float-right w-28' src="../../pictures/decoDerecha.png" alt="" />
