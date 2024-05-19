@@ -3,13 +3,27 @@ import LayoutPrincipal from "../../layouts/LayoutPrincipal";
 import { useEffect, useState } from 'react'; // Solo necesitas esta línea de importación
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faAngleLeft, faCirclePlus } from "@fortawesome/free-solid-svg-icons";
+import EditarTarjeta from "../../components/ui/EditarTarjeta";
 
 import TarjetasPagoEstatica from '../../components/ui/Tarjeta_de_pago_estaticas';
 
 function TarjetaNueva() {
-    //const [isSelected, setIsSelected] = useState('')
+    const [isSelected, setIsSelected] = useState(false)
     const [array, setArray] = useState([])
     const [add, setAdd] = useState(false)
+    const [selectedCard, setSelectedCard] = useState(null)
+    const [editar, setEditar] = useState(false)
+
+    const editarTarjeta = (tarjeta) => {
+        setSelectedCard(tarjeta)
+        setIsSelected(!isSelected)
+    }
+    const clearSelection = () => {
+        setSelectedCard(null);
+    }
+    const editarPopUp = () => {
+        setEditar(!editar)
+    }
 
     useEffect(() => {
         fetch("/api/tarjetas/1.5")
@@ -33,12 +47,13 @@ function TarjetaNueva() {
             </HelmetProvider>
             <LayoutPrincipal>
                 <main className='grid gap-12 my-24'>
-                    <section className='rounded-2xl mt-12 w-[60%] m-auto p-6 shadow-[0_3px_10px_rgb(0,0,0,0.2)]'>
+                    <section className='flex rounded-2xl mt-12 w-[60%] m-auto p-6 shadow-[0_3px_10px_rgb(0,0,0,0.2)]'>
                         <a href="/perfil/tarjetas" className='flex w-max items-center ml-6 text-black relative cursor-pointer before:bg-black before:absolute before:-bottom-1 before:block before:h-[1px] before:w-full before:origin-bottom-right before:scale-x-0 before:transition before:duration-300 before:ease-in-out hover:before:origin-bottom-left hover:before:scale-x-100 hover:font-bold'>
                             <FontAwesomeIcon icon={faAngleLeft} />
                             <p className='ml-2'>Volver</p>
                         </a>
-                        <h1 className="m-autp">Tarjetas</h1>
+                        <div className="flex-glow"></div>
+                        <h1 className="text-[#056761] text-center font-semibold text-2xl absolute left-1/2 transform -translate-x-1/2">Tarjetas</h1>
                     </section>
                     <div className="flex justify-between mx-28">
                         <div className='grid w-[40%] rounded-2xl shadow-[0_3px_10px_rgb(0,0,0,0.2)] h-min'>
@@ -46,7 +61,7 @@ function TarjetaNueva() {
                                 <p className='m-auto mb-4'>No hay tarjetas registradas.</p>
                             ) : (
                                 // eslint-disable-next-line react/jsx-key
-                                array.map((objeto, index) => (<TarjetasPagoEstatica tarjetas={objeto} isFirst={index === 0} />))
+                                array.map((objeto, index) => (<TarjetasPagoEstatica tarjetas={objeto} isFirst={index === 0} show={editarTarjeta} clearSelection={clearSelection} />))
                             )}
                             {array.length === 0 && <hr />}
                             <div className='grid justify-center'>
@@ -56,7 +71,7 @@ function TarjetaNueva() {
                                 </button>
                             </div>
                         </div>
-                        {add ? (
+                        { add ? (
                             <form action="" className="grid gap-2 w-[55%] rounded-2xl p-4 shadow-[0_3px_10px_rgb(0,0,0,0.2)]">
                                 <button onClick={() => setAdd(false)} className='flex w-max items-center ml-6 text-black relative cursor-pointer before:bg-black before:absolute before:-bottom-1 before:block before:h-[1px] before:w-full before:origin-bottom-right before:scale-x-0 before:transition before:duration-300 before:ease-in-out hover:before:origin-bottom-left hover:before:scale-x-100 hover:font-bold'>
                                     <FontAwesomeIcon icon={faAngleLeft} />
@@ -133,13 +148,32 @@ function TarjetaNueva() {
                                     </div>
                                 </div>
                             </form>
-                        ) : (
-                            <div className="w-[55%]" />
-                        )
-                        }
+                        ) : ''}
+                        { isSelected && (
+                            <div className="flex w-[55%] h-max rounded-2xl p-6 shadow-[0_3px_10px_rgb(0,0,0,0.2)]">
+                                <img src="../../../pictures/showTarjeta.png" alt={selectedCard.empresa} className="w-[45%] h-min" />
+                                <div className="ml-4 w-full">
+                                    <div className="flex justify-between mt-1">
+                                        <h1 className="font-bold text-2xl">{selectedCard.empresa}</h1>
+                                        <p onClick={editarPopUp} className='py-1 text-[#EB5765] cursor-pointer'>Editar</p>
+                                    </div>
+                                    <h1 className="my-4 text-xl">Dirección de la tarjeta</h1>
+                                    <p>Ejido Puebla, calle 1ra</p>
+                                    <p>Mexicali, Baja California, 21620</p>
+                                    <p>México, 6862302208</p>
+                                </div>
+                            </div>
+                        )}
                     </div>
                 </main>
             </LayoutPrincipal>
+            { editar && (
+                <div className="overflow-y-auto soon-fondo">
+                    <div className="overflow-y-auto soon-fx">
+                        <EditarTarjeta cerrar={editarPopUp} />
+                    </div>
+                </div>
+            )}
         </>
     );
 }

@@ -1,10 +1,11 @@
 import { useState } from "react"
 
-function TarjetasPagoEstatica({ tarjetas, isFirst }) {
+function TarjetasPagoEstatica({ tarjetas, isFirst, show, clearSelection }) {
     const [select, setSelect] = useState('border-b border-gray-400')
     const [isSelect, setIsSelect] = useState(false)
 
     const selected = () => {
+        clearSelection()
         setIsSelect(!isSelect)
         isSelect ? (
             setSelect('border-b border-gray-400')
@@ -15,6 +16,7 @@ function TarjetasPagoEstatica({ tarjetas, isFirst }) {
                 setSelect('border-2 border-red-600')
             )  
         )
+        show(tarjetas)
     }
 
     return (
