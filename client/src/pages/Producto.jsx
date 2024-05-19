@@ -322,6 +322,7 @@ function Producto() {
                                                         <textarea rows={4} cols={60} name="" maxLength={255} className="rounded-md resize-none " placeholder=""></textarea>
                                                     </div>
                                                 </div>
+                                                <button className="text-[#EB5765] w-1/4 mt-6  m-auto bg-opacity-30 bg-[#EB5765] hover:bg-opacity-90 hover:text-white rounded-3xl py-2 px-6">Enviar</button>
                                             </form>
                                         </div>
                                     </main>
