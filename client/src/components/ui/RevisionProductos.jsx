@@ -37,11 +37,17 @@ const ofertas = [
     },
 ]
 
-function RevisionProductos({ restart }) {
-    const [cartItems, setCartItems] = useState([
-        { id: 1, name: 'Esponjabon', price: 10.00, quantity: 1, image: "../../../pictures/producto1.png", desc: "Esponjabon floor para baño, formul...", valoracion: 4 },
-        { id: 2, name: 'Tónito facial', price: 15.00, quantity: 2, image: "../../../pictures/oferta3.png", desc: "Tónito facial dermatológico...", valoracion: 5 }
-    ]);
+function RevisionProductos({ restart, producto }) {
+    const [cartItems, setCartItems] = useState(() => {
+        if (producto) {
+            // Si hay un producto en el prop, lo utilizamos
+            return producto;
+        } else {
+            // Si no hay un producto en el prop, intentamos obtenerlo del localStorage
+            const savedCart = localStorage.getItem('cartItems');
+            return savedCart ? JSON.parse(savedCart) : productosEjemplo;
+        }
+    });
     //  ^^^ ES SOLO TEST PARA PROBAR LA FUNCIONALIDAD DEL RESUMEN DE CITAS
 
     //Para remover por completo un servicio.
@@ -50,7 +56,7 @@ function RevisionProductos({ restart }) {
     };
     const increaseQuantity = (itemId) => {
         setCartItems(cartItems.map(item =>
-            item.id === itemId ? { ...item, quantity: item.quantity + 1 } : item
+            item.id === itemId ? { ...item, cantidad: item.cantidad + 1 } : item
         ));
     };
     const decreaseQuantity = (itemId, itemQuan) => {
@@ -58,7 +64,7 @@ function RevisionProductos({ restart }) {
             removeItem(itemId);
         } else {
             setCartItems(cartItems.map(item =>
-                item.id === itemId ? { ...item, quantity: Math.max(item.quantity - 1, 1) } : item
+                item.id === itemId ? { ...item, cantidad: Math.max(item.cantidad - 1, 1) } : item
             ));
         }
     };
@@ -68,18 +74,18 @@ function RevisionProductos({ restart }) {
         setDescuento(event.target.value);
     }
 
-    const totalCitas = cartItems.reduce((total, item) => total + item.quantity, 0);
-    const total = cartItems.reduce((acc, item) => acc + item.price * item.quantity, 0).toFixed(2);
+    const totalCitas = cartItems.reduce((total, item) => total + item.cantidad, 0);
+    const total = cartItems.reduce((acc, item) => acc + item.precio * item.cantidad, 0).toFixed(2);
     //const iva = (total * (.08)).toFixed(2);
     //const totalIva = (parseFloat(total) + parseFloat(iva)).toFixed(2);
 
     const cartList = cartItems.map(item => (
         <li key={item.id} className="flex p-4 mb-4 border-2 shadow-md rounded-xl border-gray">
-            <img className='w-1/4 mx-4 shadow-md' src={item.image} alt={item.name} />
+            <img className='w-1/4 mx-4 shadow-md' src={item.image} alt={item.nombre} />
             <div className='grid content-between w-3/4 mx-4'>
                 <div className='flex justify-between'>
                     <div className='grid'>
-                        <span className='mr-5 text-xl font-bold'>{item.name}</span>
+                        <span className='mr-5 text-xl font-bold'>{item.nombre}</span>
                         <Rating className='' value={item.valoracion} readOnly unratedcolor="amber" ratedcolor="amber" />
                     </div>
                     <button className='cart-remove' onClick={() => removeItem(item.id)}>
@@ -87,19 +93,19 @@ function RevisionProductos({ restart }) {
                     </button>
                 </div>
                 <div>
-                    <span className='text-xs'>{item.desc}</span>
+                    <span className='text-xs'>{item.descripcion}</span>
                 </div>
                 <div className="flex justify-between">
                     <div>
-                        <button className='ml-2 cart-quan' onClick={() => decreaseQuantity(item.id, item.quantity)}>
+                        <button className='ml-2 cart-quan' onClick={() => decreaseQuantity(item.id, item.cantidad)}>
                             <FontAwesomeIcon icon={faCircleMinus} />
                         </button>
-                        <span className='ml-2'>{item.quantity}</span>
-                        <button className='ml-2 cart-quan' onClick={() => increaseQuantity(item.id, item.quantity)}>
+                        <span className='ml-2'>{item.cantidad}</span>
+                        <button className='ml-2 cart-quan' onClick={() => increaseQuantity(item.id, item.cantidad)}>
                             <FontAwesomeIcon icon={faCirclePlus} />
                         </button>
                     </div>
-                    <span className='ml-5 font-bold text-[#036d63]'> ${item.price.toFixed(2)}</span>
+                    <span className='ml-5 font-bold text-[#036d63]'> ${item.precio.toFixed(2)}</span>
                 </div>
             </div>
         </li>

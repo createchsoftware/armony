@@ -20,6 +20,7 @@ import RevisionProductos from "../components/ui/RevisionProductos";
 import FinalizacionPago from "../components/ui/FinalizacionPagoServ";
 import Ticket from "../components/ui/TicketServicio";
 import "./cita/Transiciones.css";
+import { useLocation } from 'react-router-dom';
 
 const ofertas = [
   {
@@ -59,8 +60,9 @@ const steps = [
   "Ticket"
 ];
 
-export default function Cita() {
-  const navigate = useNavigate();
+export default function Cita({ producto }) {
+  const location = useLocation();
+
   const [activeStep, setActiveStep] = useState(0);
   const [completed, setCompleted] = useState({});
   const [scrollPosition, setScrollPosition] = useState(0);
@@ -223,22 +225,16 @@ export default function Cita() {
     </>
   );
 
-  const renderStepComponent = () => {
-    if (activeStep === 3) {
-      return (
-        <>
-          {stepComponents[activeStep]}
-          {revisionProductosContent}
-        </>
-      );
-    } else {
-      return stepComponents[activeStep];
-    }
-  };
+
+  //si el producto es null o undefined, hacer stepComponents[activeStep]
+  //si el producto no es null o undefined, hacer stepComponents[activeStep] con el producto
 
   const stepComponents = [
-    <RevisionProductos restart={restart} key={3} />,
-    <Pago key={4} />,
+    location.state.producto ? (
+      <RevisionProductos restart={restart} key={3} producto={location.state.producto} />
+    ) : (
+      <RevisionProductos restart={restart} key={3} />
+    ), <Pago key={4} />,
     <FinalizacionPago key={5} />,
     <Ticket key={6} />,
   ];

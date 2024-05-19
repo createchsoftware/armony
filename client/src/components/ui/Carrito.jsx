@@ -7,6 +7,7 @@ const CarritoContext = createContext();
 import { Navigate, useNavigate } from "react-router-dom";
 
 export const CarritoProvider = ({ children }) => {
+
     const [cartItems, setCartItems] = useState(() => {
         const savedCart = localStorage.getItem('cartItems');
         return savedCart ? JSON.parse(savedCart) : [];
@@ -81,7 +82,7 @@ const Carrito = ({ cerrar, totalProductos, logCart, loginCart }) => {
     }, [])
 
     const handleComprar = () => {
-        navigate('/spa/comprar');
+        navigate('/spa/comprar', { state: { producto: null } });
         // if (loginCart) {
         //     logCart();
         //     navigate('/spa/pago-producto');

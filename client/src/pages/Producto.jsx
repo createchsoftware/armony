@@ -17,7 +17,9 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useCarrito } from '../components/ui/Carrito.jsx';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-
+import { useParams } from 'react-router-dom';
+import { Navigate, useNavigate } from "react-router-dom";
+import PagoProducto from './PagoProducto';
 
 const StyledRating = styled(Rating)({
     '& .MuiRating-iconFilled': {
@@ -95,11 +97,12 @@ const initialProduct = {
     precio: 10,
     descripcion: 'Descripción del producto',
     valoracion: 5,
-    imagen: 'pictures/producto1.png',
+    imagen: './pictures/producto1.png',
     cantidad: 1,
 }
 
 function Producto() {
+    const navigate = useNavigate();
     const notify = () => toast("Producto agregado al carrito");
 
     const [product, setProduct] = useState(initialProduct);
@@ -113,7 +116,6 @@ function Producto() {
 
     const { agregarAlCarrito } = useCarrito();
 
-    console.log(cantidad);
     // Función para manejar el evento de agregar al carrito
     const handleAddCart = () => {
         notify();
@@ -127,6 +129,21 @@ function Producto() {
             imagen: product.imagen,
         };
         agregarAlCarrito(producto);
+    };
+
+    // Función para manejar el evento de comprar
+    const handleComprar = () => {
+        // navigate('/spa/comprar');
+        const producto = {
+            id: product.id,
+            nombre: product.nombre,
+            precio: product.precio,
+            cantidad: cantidad,
+            descripcion: product.descripcion,
+            valoracion: product.valoracion,
+            imagen: product.imagen,
+        };
+        navigate('/spa/comprar', { state: { producto: [producto] } });
     };
 
     // Función para manejar cambios en el nuevo rating de la reseña
@@ -225,7 +242,7 @@ function Producto() {
                             <button onClick={handleAddCart} className="text-[#EB5765] w-full bg-opacity-30 bg-[#EB5765] hover:bg-opacity-90 hover:text-white rounded-full">
                                 Agregar al carrito
                             </button>
-                            <button className="bg-[#EB5765] col-span-2 text-white rounded-full hover:bg-opacity-80 hover:text-white w-full">
+                            <button onClick={handleComprar} className="bg-[#EB5765] col-span-2 text-white rounded-full hover:bg-opacity-80 hover:text-white w-full">
                                 Comprar ahora
                             </button>
                         </div>
