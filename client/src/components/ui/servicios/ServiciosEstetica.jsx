@@ -13,51 +13,6 @@ import { Slider, Box } from "@mui/material";
 import Rating from "@mui/material/Rating";
 import Presentacion from "../../../components/ui/PresentacionEstetica.jsx";
 import Servicio from "../../../components/ui/Servicio.jsx";
-import Peluqueria from "../../../../public/pictures/peluqueria.png";
-import Unas from "../../../../public/pictures/unas.png";
-import Pedicura from "../../../../public/pictures/pedicura.png";
-
-/*var estetica = [
-  {
-    id: 1,
-    nombre: "Servicio de peluquería",
-    descripcion: "Espacio de transformación y renovación personal",
-    espDesc1:
-      "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Adipisci quasi repudiandae delectus recusandae accusantium deleniti, sit cupiditate quae culpa aut inventore numquam at excepturi ",
-    espDesc2:
-      "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Adipisci quasi repudiandae delectus recusandae accusantium deleniti, sit cupiditate quae culpa aut inventore",
-    precio: "1,350.00",
-    img: Peluqueria,
-    rating: 5,
-    fav: true,
-  },
-  {
-    id: 2,
-    nombre: "Uñas",
-    descripcion: "Transformación de las manos elevando confianza",
-    espDesc1:
-      "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Adipisci quasi repudiandae delectus recusandae accusantium deleniti, sit cupiditate quae culpa aut inventore numquam at excepturi ",
-    espDesc2:
-      "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Adipisci quasi repudiandae delectus recusandae accusantium deleniti, sit cupiditate quae culpa aut inventore",
-    precio: "1,200.00",
-    img: Unas,
-    rating: 5,
-    fav: true,
-  },
-  {
-    id: 3,
-    nombre: "Pedicura",
-    descripcion: "Tratamiento estético para los pies",
-    espDesc1:
-      "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Adipisci quasi repudiandae delectus recusandae accusantium deleniti, sit cupiditate quae culpa aut inventore numquam at excepturi ",
-    espDesc2:
-      "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Adipisci quasi repudiandae delectus recusandae accusantium deleniti, sit cupiditate quae culpa aut inventore",
-    precio: "1,800.00",
-    img: Pedicura,
-    rating: 5,
-    fav: true,
-  },
-];*/
 
 function classNames(...clases) {
   return clases.filter(Boolean).join(" ");
