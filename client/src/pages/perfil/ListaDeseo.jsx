@@ -178,12 +178,12 @@ function ListaDeseo() {
     const filteredProducts = contResumen.filter(producto =>
         (tipo === 'all' || producto.tipo === tipo) &&
         producto.nombre.toLowerCase().includes(searchTerm.toLowerCase())
-    );
+    ); 
 
     const contenido = filteredProducts.map(producto => (
         <li key={producto.id} className='grid border-4 bg-white border-[#E2B3B7] p-6 py-2 rounded-xl mx-6 mb-6'>
             <Box
-                className="grid justify-end"
+                className="grid justify-end z-0"
                 sx={{
                     '& > legend': { mt: 2 },
                 }}
@@ -275,7 +275,7 @@ function ListaDeseo() {
                             </aside>
                         </div>
                         <div className='menu-deseo w-full h-full'>
-                            <img src="../../../pictures/decoArmony1.png" alt="" className='absolute -right-7 -rotate-90 w-60 h-180 top-60 z-0' />
+                            <img src="../../../pictures/decoArmony1.png" alt="" className='absolute -right-7 -rotate-90 w-60 h-180 top-60' />
                             <div className='flex justify-center mt-5'>
                                 <form action="" className='flex items-center w-4/5 justify-center border-2 border-[rgb(255,181,167)] rounded-lg'>
                                     <input
@@ -288,15 +288,20 @@ function ListaDeseo() {
                                 </form>
                             </div>
                             <div className='flex justify-end pr-24 py-4'>
-                                <button className='flex gap-2' onClick={() => setFiltro(!filtro)}>
+                                <button className='flex w-max gap-2 relative cursor-pointer before:bg-black before:absolute before:-bottom-1 before:block before:h-[1px] before:w-full before:origin-bottom-right before:scale-x-0 before:transition before:duration-300 before:ease-in-out hover:before:origin-bottom-left hover:before:scale-x-100 hover:font-bold' onClick={() => setFiltro(!filtro)}>
                                     <p>Ordenamiento por:</p>
                                     <FontAwesomeIcon icon={faAngleDown} />
                                 </button>
                                 { filtro && 
-                                    <ul className='absolute p-1 w-max rounded-lg shadow-md border'>
-                                        <li>
-                                            <button>
+                                    <ul className='absolute px-6 w-max rounded-lg shadow-md border mt-6 bg-white z-10'>
+                                        <li className='py-2'>
+                                            <button className='hover:font-bold hover:text-[#ec5766]'>
                                                 Alfabéticamente
+                                            </button>
+                                        </li>
+                                        <li className='py-2'>
+                                            <button className='hover:font-bold hover:text-[#ec5766]'>
+                                                Precio
                                             </button>
                                         </li>
                                     </ul>
