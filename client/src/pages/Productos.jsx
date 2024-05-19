@@ -187,7 +187,7 @@ const Productos = () => {
                     Encuentra las mejores ofertas para la mejor madre del
                     planeta.
                   </p>
-                  <button className="m-auto transition-all mt-2 duration-300   hover:bg-[#036C65] hover:ring-2 hover:[#036C65] hover:ring-offset-1 group relative inline-flex h-10 items-center justify-center overflow-hidden rounded-xl border-2 bg-[#EB5765] p-4 font-[abeatbykai] text-neutral-200">
+                  <button onClick={toggleSoon} className="m-auto transition-all mt-2 duration-300   hover:bg-[#036C65] hover:ring-2 hover:[#036C65] hover:ring-offset-1 group relative inline-flex h-10 items-center justify-center overflow-hidden rounded-xl border-2 bg-[#EB5765] p-4 font-[abeatbykai] text-neutral-200">
                     <span>Ver productos</span>
                     <div className="w-0 translate-x-[100%] pl-0 opacity-0 transition-all duration-200 group-hover:w-5 group-hover:translate-x-0 group-hover:pl-1 group-hover:opacity-100">
                       <svg
@@ -217,7 +217,7 @@ const Productos = () => {
                     Encuentra las mejores ofertas para la mejor madre del
                     planeta.
                   </p>
-                  <button className="m-auto transition-all mt-2 duration-300   hover:bg-[#036C65] hover:ring-2 hover:[#036C65] hover:ring-offset-1 group relative inline-flex h-10 items-center justify-center overflow-hidden rounded-xl border-2 bg-[#EB5765] p-4 font-[abeatbykai] text-neutral-200">
+                  <button onClick={toggleSoon} className="m-auto transition-all mt-2 duration-300   hover:bg-[#036C65] hover:ring-2 hover:[#036C65] hover:ring-offset-1 group relative inline-flex h-10 items-center justify-center overflow-hidden rounded-xl border-2 bg-[#EB5765] p-4 font-[abeatbykai] text-neutral-200">
                     <span>Ver productos</span>
                     <div className="w-0 translate-x-[100%] pl-0 opacity-0 transition-all duration-200 group-hover:w-5 group-hover:translate-x-0 group-hover:pl-1 group-hover:opacity-100">
                       <svg
@@ -247,7 +247,7 @@ const Productos = () => {
                     Encuentra las mejores ofertas para la mejor madre del
                     planeta.
                   </p>
-                  <button className="m-auto transition-all mt-2 duration-300   hover:bg-[#036C65] hover:ring-2 hover:[#036C65] hover:ring-offset-1 group relative inline-flex h-10 items-center justify-center overflow-hidden rounded-xl border-2 bg-[#EB5765] p-4 font-[abeatbykai] text-neutral-200">
+                  <button onClick={toggleSoon} className="m-auto transition-all mt-2 duration-300   hover:bg-[#036C65] hover:ring-2 hover:[#036C65] hover:ring-offset-1 group relative inline-flex h-10 items-center justify-center overflow-hidden rounded-xl border-2 bg-[#EB5765] p-4 font-[abeatbykai] text-neutral-200">
                     <span>Ver productos</span>
                     <div className="w-0 translate-x-[100%] pl-0 opacity-0 transition-all duration-200 group-hover:w-5 group-hover:translate-x-0 group-hover:pl-1 group-hover:opacity-100">
                       <svg

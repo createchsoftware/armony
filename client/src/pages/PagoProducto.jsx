@@ -1,3 +1,9 @@
+import Carousel from 'react-multi-carousel';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faTrash } from '@fortawesome/free-solid-svg-icons';
+import { Rating } from '@mui/material';
+import { faCircleMinus, faCirclePlus, faAngleLeft } from '@fortawesome/free-solid-svg-icons';
+import Ofertas from '../components/ui/Ofertas';
 import Box from "@mui/material/Box";
 import Stepper from "@mui/material/Stepper";
 import Step from "@mui/material/Step";
@@ -14,6 +20,37 @@ import RevisionProductos from "../components/ui/RevisionProductos";
 import FinalizacionPago from "../components/ui/FinalizacionPagoServ";
 import Ticket from "../components/ui/TicketServicio";
 import "./cita/Transiciones.css";
+
+const ofertas = [
+  {
+    id: 1,
+    nombre: 'Esponjabon',
+    precio: 10,
+    descripcion: 'Esponjabon floor para baño, formul...',
+    imagen: '../../pictures/oferta1.png'
+  },
+  {
+    id: 2,
+    nombre: 'Body butter',
+    precio: 20,
+    descripcion: 'Crema corporal, artesanal, 239 ml.',
+    imagen: '../../pictures/oferta2.png'
+  },
+  {
+    id: 3,
+    nombre: 'Tónito facial',
+    precio: 15,
+    descripcion: 'Tónito facial dermatológico...',
+    imagen: '../../pictures/oferta3.png'
+  },
+  {
+    id: 4,
+    nombre: 'Mascarilla',
+    precio: 25,
+    descripcion: 'Combina el poder de la arcilla verde...',
+    imagen: '../../pictures/oferta4.png'
+  },
+];
 
 const steps = [
   "Productos",
@@ -116,6 +153,89 @@ export default function Cita() {
       localStorage.getItem("Fecha seleccionada")
     );
   };
+  const revisionProductosContent = (
+    <>
+      <div className='p-8 mt-12 border-2 shadow-md rounded-xl border-gray'>
+        <h1 className='text-3xl ml-[8%]'>Productos similares</h1>
+        <section className='my-4 w-[90%] bg-white m-auto p-6 rounded-xl border-8 border-[#E2B3B7]'>
+          <hr />
+          <div className='mx-auto p-6 md:p-0 selection:bg-[#EB5765] selection:text-white'>
+            <Carousel
+              additionalTransfrom={0}
+              arrows
+              autoPlay
+              autoPlaySpeed={3000}
+              centerMode={false}
+              className="z-0"
+              containerclassName="container-with-dots z-0"
+              dotListclassName=""
+              focusOnSelect={false}
+              infinite
+              itemclassName=""
+              keyBoardControl
+              minimumTouchDrag={80}
+              pauseOnHover
+              renderArrowsWhenDisabled={false}
+              renderButtonGroupOutside={false}
+              renderDotsOutside={false}
+              responsive={{
+                desktop: {
+                  breakpoint: {
+                    max: 3000,
+                    min: 1024
+                  },
+                  items: 4,
+                  partialVisibilityGutter: 40
+                },
+                mobile: {
+                  breakpoint: {
+                    max: 464,
+                    min: 0
+                  },
+                  items: 1,
+                  partialVisibilityGutter: 30
+                },
+                tablet: {
+                  breakpoint: {
+                    max: 1024,
+                    min: 464
+                  },
+                  items: 2,
+                  partialVisibilityGutter: 30
+                }
+              }}
+              rewind={false}
+              rewindWithAnimation={false}
+              rtl={false}
+              shouldResetAutoplay
+              showDots={false}
+              sliderclassName=""
+              slidesToSlide={1}
+              swipeable
+            >
+              {ofertas.map(oferta => (
+                <Ofertas key={oferta.id} producto={oferta} />
+              ))}
+            </Carousel>
+          </div>
+        </section>
+      </div>
+    </>
+  );
+
+  const renderStepComponent = () => {
+    if (activeStep === 3) {
+      return (
+        <>
+          {stepComponents[activeStep]}
+          {revisionProductosContent}
+        </>
+      );
+    } else {
+      return stepComponents[activeStep];
+    }
+  };
+
   const stepComponents = [
     <RevisionProductos restart={restart} key={3} />,
     <Pago key={4} />,
@@ -230,6 +350,7 @@ export default function Cita() {
               </React.Fragment>
             )}
           </div>
+          {activeStep === 0 && revisionProductosContent}
         </Box>
       </div>
     </LayoutPrincipal>

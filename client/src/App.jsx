@@ -124,6 +124,7 @@ function App() {
           <Route path="/spa/comprar" element={<PagoProducto />} />
           <Route path="*" element={<Error />} />
           <Route path="/perfil/rango" element={<Rango />} />
+          
 
           {/* Tests */}
           <Route path="/test" element={<Test />} />
