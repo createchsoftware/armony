@@ -61,8 +61,8 @@ function Servicio({
             maxHeight: "14rem",
           }}
         >
-          <div className="absolute inset-0 bg-black rounded-lg opacity-35"></div>
-          <div className="relative">
+          <div className="absolute inset-0 bg-black rounded-lg opacity-25"></div>
+          <div className="relative top-[9rem]">
             <Box
               sx={{
                 "& > legend": { mt: 2 },
@@ -72,7 +72,7 @@ function Servicio({
                 <div className="grid grid-cols-[auto_70%_auto]">
                   <div>
                     <AiOutlineShoppingCart
-                      style={{ fontSize: "28px", color: "#000000" }}
+                      style={{ fontSize: "28px", color: "#3F3F3F" }}
                     />
                   </div>
                   <div></div>
@@ -88,7 +88,7 @@ function Servicio({
                       icon={<FavoriteIcon fontSize="inherit" />}
                       emptyIcon={
                         <FavoriteBorderIcon
-                          style={{ color: "black" }}
+                          style={{ color: "#3F3F3F" }}
                           fontSize="inherit"
                         />
                       }
@@ -97,6 +97,8 @@ function Servicio({
                 </div>
               </div>
             </Box>
+          </div>
+          <div className="relative bottom-[2rem]">
             <h1 className="mt-3 font-extrabold text-white">{nombre}</h1>
             <p className="mt-6 font-light text-justify text-white">
               {descripcion.length > 60
