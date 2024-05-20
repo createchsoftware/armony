@@ -237,7 +237,12 @@ async function paso2_enviar(solicitud,respuesta){
 
             if(galleta_paso3){
                 //significa que el usuario ya habia llegado hasta confirmacion de contrasena
-                return respuesta.send({show:'123456'})
+
+                galleta_paso3 = galleta_paso3.slice(17);
+
+                let decodificada = JsonWebToken.verify(galleta_paso3,process.env.JWT_SECRET);
+
+                return respuesta.send({codigo:decodificada.codigo})
             }
             else{
                 // significa que el usuario no ha comprobado su codigo aun
