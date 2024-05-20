@@ -180,14 +180,14 @@ const Verificacion = () => {
               </a>
             </div>
             <div className="grid place-content-end mr-8">
-              <a href="/spa/resetPassword/NuevaContrasena">
+              
                 <button
                   aria-label="Continuar"
                   className="bg-rose-400 text-white md:text-large lg:text-xl rounded-full px-4 py-2 mx-auto hover:bg-red-200"
                 >
                   Continuar
                 </button>
-              </a>
+            
             </div>
           </div>
         </div>
