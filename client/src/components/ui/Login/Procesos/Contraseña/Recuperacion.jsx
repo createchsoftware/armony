@@ -220,14 +220,14 @@ const Recuperacion = () => {
           </a>
           <div className="grid grid-cols-2 my-auto">
             <div className="grid place-content-start ml-8">
-              <a href="/spa">
+              
                 <button
                   aria-label="Cancelar"
                   className="bg-white text-rose-400 md:text-large lg:text-xl rounded-full px-4 py-2 mx-auto hover:bg-red-50 ring-2 ring-rose-400"
                 >
                   Cancelar
                 </button>
-              </a>
+              
             </div>
             <div className="grid place-content-end mr-8">
                 <button
