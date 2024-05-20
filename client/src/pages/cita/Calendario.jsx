@@ -224,6 +224,7 @@ function Calendario() {
     const horasDisp = async () => {
         const especialista = localStorage.getItem('Especialista');
         const fecha = localStorage.getItem('Fecha seleccionada');
+        const idServicio = localStorage.getItem('servicio');
         if (especialista && fecha) {
             try {
                 const response = await fetch(`/api/admin/citas/disponibles/1/${especialista}/${fecha}`, {
@@ -331,28 +332,37 @@ function Calendario() {
     //         calificacion: 4
     //     }]
 
-    useEffect(() => {
-        const handleLocalStorageChange = (event) => {
-            if (event.key === 'Especialista' || event.key === 'Fecha seleccionada') {
-                horasDisp();
-            }
-        };
-        window.addEventListener('storage', handleLocalStorageChange);
-        return () => {
-            window.removeEventListener('storage', handleLocalStorageChange);
-        };
-    }, []);
+    // useEffect(() => {
+    //     const handleLocalStorageChange = (event) => {
+    //         if (event.key === 'Especialista' || event.key === 'Fecha seleccionada') {
+    //             horasDisp();
+    //         }
+    //     };
+    //     window.addEventListener('storage', handleLocalStorageChange);
+    //     return () => {
+    //         window.removeEventListener('storage', handleLocalStorageChange);
+    //     };
+    // }, []);
+
+
+    // useEffect(() => {
+    //     horasDisp();
+    // }, [selectedDate]);
+
+    // useEffect(() => {
+    //     if (localStorage.getItem('Especialista') && localStorage.getItem('Fecha seleccionada')) {
+    //         horasDisp();
+    //     }
+    // }, [localStorage.getItem('Especialista')]);
 
 
     useEffect(() => {
-        horasDisp();
-    }, [selectedDate]);
-
-    useEffect(() => {
-        if (localStorage.getItem('Especialista') && localStorage.getItem('Fecha seleccionada')) {
+        const especialista = localStorage.getItem('Especialista');
+        if (selectedDate && especialista) {
             horasDisp();
         }
-    }, [localStorage.getItem('Especialista')]);
+    }, [selectedDate, localStorage.getItem('Especialista')]);
+
 
     const handleDateChange = (newDate) => {
         setSelectedDate(newDate);
