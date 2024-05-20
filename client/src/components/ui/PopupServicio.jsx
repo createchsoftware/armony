@@ -118,10 +118,11 @@ const PopupServicio = ({ cerrar, check, datos }) => {
                 backgroundRepeat: "no-repeat",
                 objectFit: "none",
                 backgroundSize: "cover",
+                backgroundPosition: "center",
                 height: "100%",
                 backgroundcolor: "rgba(0, 0, 0, 0.6)",
               }}
-              className="w-full h-full rounded-2xl"
+              className="w-full h-full rounded-2xl bg-ce"
             ></div>
           </div>
         </div>

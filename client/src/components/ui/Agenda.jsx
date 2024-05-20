@@ -1,17 +1,37 @@
-import { useState } from 'react';
+import { useState,useEffect } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrash } from '@fortawesome/free-solid-svg-icons';
 
 function Agenda({ restart }) {
-    const [citasItems, setCitasItems] = useState([
-        { id: 1, name: 'Facial Hidratante', price: 800.00, quantity: 1, image: "../../../pictures/crema2.png", desc: "Crema olor a coco humectante.", duracion: "60 min", dia: "07/06/2024", hora: "8:00", especialista: "Antonio Esparza" },
-        { id: 2, name: 'Maquillaje', price: 1100.00, quantity: 1, image: "../../../pictures/crema1.png", desc: "Shampoo con aceite de coco.", duracion: "90 min", dia: "31/03/2024", hora: "14:20", especialista: "Antonio Esparza" },
-    ]);
-    //  ^^^ ES SOLO TEST PARA PROBAR LA FUNCIONALIDAD DEL RESUMEN DE CITAS
+    const [citasItems, setCitasItems] = useState([]);
+
+    // const [citasItems, setCitasItems] = useState([
+    //     { id: 1, name: 'Facial Hidratante', price: 800.00, quantity: 1, image: "../../../pictures/crema2.png", desc: "Crema olor a coco humectante.", duracion: "60 min", dia: "07/06/2024", hora: "8:00", especialista: "Antonio Esparza" },
+    //     { id: 2, name: 'Maquillaje', price: 1100.00, quantity: 1, image: "../../../pictures/crema1.png", desc: "Shampoo con aceite de coco.", duracion: "90 min", dia: "31/03/2024", hora: "14:20", especialista: "Antonio Esparza" },
+    // ]);
+
+      useEffect(() => {
+        setTimeout(() => {
+        iterateArray();
+    }, 1000);
+    }, []);
+
+    const iterateArray = () => {
+        let myArray = JSON.parse(localStorage.getItem('citas')) || [];
+        setCitasItems(myArray)
+        
+      };
+
+      const RLSCitas= (id) => {
+        let citas = JSON.parse(localStorage.getItem('citas')) || [];
+        citas = citas.filter(obj => obj.id !== id);
+        localStorage.setItem('citas', JSON.stringify(citas));
+      };
 
     //Para remover por completo un servicio.
     const removeItem = (itemId) => {
-        setCitasItems(citasItems.filter(item => item.id !== itemId));
+        setCitasItems(citasItems.filter(item => item.idServicio !== itemId));//este lo elimina de la vista carrito
+        RLSCitas(itemId)//este elimina el item de locaStorage
     };
 
     const [descuento, setDescuento] = useState('');
@@ -23,30 +43,31 @@ function Agenda({ restart }) {
         restart();
     }
 
-    const totalCitas = citasItems.reduce((total, item) => total + item.quantity, 0);
-    const total = citasItems.reduce((acc, item) => acc + item.price * item.quantity, 0).toFixed(2);
+    const totalCitas = citasItems.reduce((total, item) => total + 1, 0);
+    const total = citasItems.reduce((acc, item) => acc + item.precioServicio.replace(/[#\s]/g, '') * 1, 0).toFixed(2);
+    console.log(total)
     const iva = (total * (.08)).toFixed(2);
     const totalIva = (parseFloat(total) + parseFloat(iva)).toFixed(2);
 
     const citasList = citasItems.map(item => (
-        <li key={item.id} className="flex justify-between p-4 mb-4 border-2 shadow-md rounded-xl border-gray">
-            <img className='w-24 h-24 mr-6 rounded-full' src={item.image} alt={item.name} />
+        <li key={item.idServicio} className="flex justify-between p-4 mb-4 border-2 shadow-md rounded-xl border-gray">
+            <img className='w-24 h-24 mr-6 rounded-full' src={item.ImagenServicio} alt={item.nombreServicio} />
             <div className='grid justify-center'>
                 <div className='flex justify-self-center'>
-                    <span className='mr-5 font-bold text-l'>{item.name}</span>
+                    <span className='mr-5 font-bold text-l'>{item.nombreServicio}</span>
                 </div>
                 <div className='flex justify-between'>
-                    <span className='text-m'>Duracion: {item.duracion}</span>
-                    <span className='text-m'>Costo: ${item.price.toFixed(2)}</span>
+                    <span className='text-m'>Duracion: {item.tiempoServicio}</span>
+                    <span className='text-m'>Costo: ${item.precioServicio}</span>
                 </div>
                 <div className="flex justify-around">
-                    <span className='text-m'>Cita: {item.dia} - {item.hora}</span>
+                    <span className='text-m'>Cita: {item.FechaServicio} - {item.horaDisp}</span>
                 </div>
                 <div className="flex justify-center">
-                    <span className='text-m'>Especialista: {item.especialista}</span>
+                    <span className='text-m'>Especialista: {item.nombreEsp}</span>
                 </div>
             </div>
-            <button className='duration-200 hover:text-[#ec5766] text-2xl' onClick={() => removeItem(item.id)}>
+            <button className='duration-200 hover:text-[#ec5766] text-2xl' onClick={() => removeItem(item.idServicio)}>
                 <FontAwesomeIcon icon={faTrash} />
             </button>
         </li>
@@ -99,7 +120,7 @@ function Agenda({ restart }) {
                             <div className='grid p-6 mb-4 border-2 shadow-md rounded-xl border-gray'>
                                 <div className='flex justify-between mb-2'>
                                     <span>{totalCitas} Servicio(s)</span>
-                                    <h1 className='font-bold'>${total}</h1>
+                                     <h1 className='font-bold'>${total}</h1>
                                 </div>
                                 <div className='flex justify-between mb-2'>
                                     <h1>IVA</h1>

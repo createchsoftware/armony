@@ -1,9 +1,16 @@
+import { useState } from "react";
 import user1 from "../../../../../../public/pictures/userCl.png";
 import Pasos from "../../../PasosDeProcesos";
+import Soon from "../../../Proximamente";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faAngleLeft } from "@fortawesome/free-solid-svg-icons";
 
 const Verificacion = () => {
+  const [soon, setSoon] = useState(false);
+
+  const toggleSoon = () => {
+    setSoon(!soon);
+  };
   return (
     <div>
       <div className="md:h-20 h-[3.75rem] bg-white" />
@@ -22,93 +29,8 @@ const Verificacion = () => {
               paso3: "Nueva Contraseña",
               paso4: "Confirmación",
             }}
+            index={2}
           />
-          {/*<div className="grid grid-cols-[50px_auto_20px_50px_auto_20px_50px_auto_20px_50px_auto] place-items-center px-5 mx-auto">
-            <span className="">
-              <FontAwesomeIcon
-                style={{ fontSize: "16px", color: "#FFFFFF" }}
-                icon={fa1}
-                className="relative left-6 bottom-2"
-              />
-              <FontAwesomeIcon
-                style={{ fontSize: "36px" }}
-                icon={faCircle}
-              ></FontAwesomeIcon>
-            </span>
-            <a
-              href=""
-              style={{
-                fontFamily: "ABeeZee",
-              }}
-              className="text-base mx-2"
-            >
-              Recuperación
-            </a>
-            <div className="flex-grow border-t border-[#036C65] pl-4 mx-0"></div>
-            <span className="">
-              <FontAwesomeIcon
-                style={{ fontSize: "16px", color: "#FFFFFF" }}
-                icon={fa2}
-                className="relative left-6 bottom-2"
-              />
-              <FontAwesomeIcon
-                style={{ fontSize: "36px", color: "#036C65" }}
-                icon={faCircle}
-              ></FontAwesomeIcon>
-            </span>
-            <a
-              href=""
-              style={{
-                fontFamily: "ABeeZee",
-                color: "#036C65",
-              }}
-              className="text-base mx-1"
-            >
-              Verificación
-            </a>
-            <div className="flex-grow border-t border-gray-400 pl-4 mx-0"></div>
-            <span className="">
-              <FontAwesomeIcon
-                style={{ fontSize: "16px", color: "#FFFFFF" }}
-                icon={fa3}
-                className="relative left-6 bottom-2"
-              />
-              <FontAwesomeIcon
-                style={{ fontSize: "36px" }}
-                icon={faCircle}
-              ></FontAwesomeIcon>
-            </span>
-            <a
-              href=""
-              style={{
-                fontFamily: "ABeeZee",
-              }}
-              className="text-base mx-1"
-            >
-              Nueva Contraseña
-            </a>
-            <div className="flex-grow border-t border-gray-400 pl-4 mx-0"></div>
-            <span className="">
-              <FontAwesomeIcon
-                style={{ fontSize: "16px", color: "#FFFFFF" }}
-                icon={fa4}
-                className="relative left-6 bottom-2"
-              />
-              <FontAwesomeIcon
-                style={{ fontSize: "36px" }}
-                icon={faCircle}
-              ></FontAwesomeIcon>
-            </span>
-            <a
-              href=""
-              style={{
-                fontFamily: "ABeeZee",
-              }}
-              className="text-base mx-1"
-            >
-              Confirmación
-            </a>
-            </div>*/}
           <div className="absolute mt-5">
             <a className="ml-3">
               <FontAwesomeIcon
@@ -163,7 +85,7 @@ const Verificacion = () => {
             />
           </form>
           <a
-            href=""
+            onClick={toggleSoon}
             className="text-teal-700 md:text-sm lg:text-base text-center"
           >
             Reenviar código de verificación
@@ -192,6 +114,13 @@ const Verificacion = () => {
           </div>
         </div>
       </div>
+      {soon && (
+        <div className="soon-fondo">
+          <div className="soon-fx" onClick={toggleSoon}>
+            <Soon />
+          </div>
+        </div>
+      )}
     </div>
   );
 };

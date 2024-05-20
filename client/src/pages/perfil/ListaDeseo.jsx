@@ -1,6 +1,6 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { IconoAgregarAlCarrito } from '../../components/ui/Iconos'
-import { faBasketShopping, faHandHoldingHeart, faBars, faMagnifyingGlass, faAngleDown } from '@fortawesome/free-solid-svg-icons';
+import { faBasketShopping, faHandHoldingHeart, faBars, faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';
 import Navbar from '../../components/ui/Navbar';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
@@ -29,7 +29,7 @@ function ListaDeseo() {
     const [sideBar, setSiderBar] = useState(false);
     const [barSize , setBarSize] = useState('sideBar-Off')
     const [cols, setCols] = useState('grid-cols-4')
-    const [filtro, setFiltro] = useState(false)
+    const [sort, setSort] = useState('')
 
     const filtrar = (type) => {
         setTipo(type);
@@ -177,10 +177,26 @@ function ListaDeseo() {
         )
     ))
 
+    const handleSortChange = (event) => {
+        setSort(event.target.value)
+    }
+
     const filteredProducts = contResumen.filter(producto =>
         (tipo === 'all' || producto.tipo === tipo) &&
         producto.nombre.toLowerCase().includes(searchTerm.toLowerCase())
-    ); 
+    ).sort((a, b) => {
+        if (sort === 'nombre-asc') {
+            return a.nombre.localeCompare(b.nombre);
+        } else if (sort === 'nombre-desc') {
+            return b.nombre.localeCompare(a.nombre);
+        } else if (sort === 'precio-asc') {
+            return a.precio - b.precio;
+        } else if (sort === 'precio-desc') {
+            return b.precio - a.precio;
+        } else {
+            return 0;
+        }
+    }) 
 
     const contenido = filteredProducts.map(producto => (
         <li key={producto.id} className='grid border-4 bg-white border-[#E2B3B7] p-6 py-2 rounded-xl mx-6 mb-6'>
@@ -254,7 +270,7 @@ function ListaDeseo() {
                             <aside className='menu-deseo bg-[#fb9ea6] w-full' >
                                 <nav className='h-full flex flex-col'>
                                     <div className='flex items-center mx-8 py-8 cursor-pointer' onClick={toggleBar}>
-                                        <FontAwesomeIcon className='text-2xl' icon={faBars} />
+                                        <FontAwesomeIcon className='text-2xl hover:text-white' icon={faBars} />
                                         { sideBar && 
                                             <p className='text-xl ml-8 truncate'>Mi lista de deseos</p>
                                         }
@@ -289,31 +305,14 @@ function ListaDeseo() {
                                     <FontAwesomeIcon icon={faMagnifyingGlass} className='mx-4 text-[rgb(255,181,167)] text-xl' />
                                 </form>
                             </div>
-                            <div className='flex justify-end pr-24 py-4'>
-                                <button className='flex w-max gap-2 relative cursor-pointer before:bg-black before:absolute before:-bottom-1 before:block before:h-[1px] before:w-full before:origin-bottom-right before:scale-x-0 before:transition before:duration-300 before:ease-in-out hover:before:origin-bottom-left hover:before:scale-x-100 hover:font-bold' onClick={() => setFiltro(!filtro)}>
-                                    <p>Ordenamiento por:</p>
-                                    <FontAwesomeIcon icon={faAngleDown} />
-                                </button>
-                                {/* Aún no es funcional el filtro [WORK IN PROGRESS] */}
-                                { filtro && 
-                                    <ul className='absolute px-6 w-max rounded-lg shadow-md border mt-6 bg-white z-10'>
-                                        <li className='py-2'>
-                                            <button className='hover:font-bold hover:text-[#ec5766]'>
-                                                Alfabéticamente
-                                            </button>
-                                        </li>
-                                        <li className='py-2'>
-                                            <button className='hover:font-bold hover:text-[#ec5766]'>
-                                                Precio: Mayor a menor
-                                            </button>
-                                        </li>
-                                        <li className='py-2'>
-                                            <button className='hover:font-bold hover:text-[#ec5766]'>
-                                                Precio: Meno a mayor
-                                            </button>
-                                        </li>
-                                    </ul>
-                                }
+                            <div className='flex justify-end pr-24 py-2'>
+                                <select value={sort} onChange={handleSortChange} className='flex border-0 w-max gap-2 relative cursor-pointer before:bg-black before:absolute before:-bottom-1 before:block before:h-[1px] before:w-full before:origin-bottom-right before:scale-x-0 before:transition before:duration-300 before:ease-in-out hover:before:origin-bottom-left hover:before:scale-x-100 hover:font-bold'>
+                                    <option value="" className='hover:font-bold hover:text-[#ec5766]'> Ordenamiento por:</option>
+                                    <option value="nombre-asc" className='hover:font-bold hover:text-[#ec5766]'> Nombre (A-Z)</option>
+                                    <option value="nombre-desc" className='hover:font-bold hover:text-[#ec5766]'> Nombre (Z-A)</option>
+                                    <option value="precio-asc" className='hover:font-bold hover:text-[#ec5766]'> Precio: Mayor a menor</option>
+                                    <option value="precio-desc" className='hover:font-bold hover:text-[#ec5766]'> Precio: Menor a mayor</option>
+                                </select>
                             </div>
                             <div className='grid px-12 pb-14 h-full overflow-y-scroll'>
                                 {/* Contenido */}

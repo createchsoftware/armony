@@ -18,97 +18,13 @@ const Contrasena = () => {
           </h1>
           <Pasos
             props={{
-              paso1: "Recuperación",
-              paso2: "Verificación",
-              paso3: "Nueva Contraseña",
+              paso1: "Información",
+              paso2: "Patologías",
+              paso3: "Contraseña",
               paso4: "Confirmación",
             }}
+            index={3}
           />
-          {/*<div className="grid grid-cols-[50px_auto_20px_50px_auto_20px_50px_auto_20px_50px_auto] place-items-center px-5 mx-auto">
-          <span className="">
-            <FontAwesomeIcon
-              style={{ fontSize: "16px", color: "#FFFFFF" }}
-              icon={fa1}
-              className="relative left-6 bottom-2"
-            />
-            <FontAwesomeIcon
-              style={{ fontSize: "36px" }}
-              icon={faCircle}
-            ></FontAwesomeIcon>
-          </span>
-          <a
-            href=""
-            style={{
-              fontFamily: "ABeeZee",
-            }}
-            className="text-base mx-2"
-          >
-            Información Básica
-          </a>
-          <div class="flex-grow border-t border-gray-400 pl-4 mx-0"></div>
-          <span className="">
-            <FontAwesomeIcon
-              style={{ fontSize: "16px", color: "#FFFFFF" }}
-              icon={fa2}
-              className="relative left-6 bottom-2"
-            />
-            <FontAwesomeIcon
-              style={{ fontSize: "36px" }}
-              icon={faCircle}
-            ></FontAwesomeIcon>
-          </span>
-          <a
-            href=""
-            style={{
-              fontFamily: "ABeeZee",
-            }}
-            className="text-base mx-1"
-          >
-            Patologías
-          </a>
-          <div class="flex-grow border-t border-gray-400 pl-4 mx-0"></div>
-          <span className="">
-            <FontAwesomeIcon
-              style={{ fontSize: "16px", color: "#FFFFFF" }}
-              icon={fa3}
-              className="relative left-6 bottom-2"
-            />
-            <FontAwesomeIcon
-              style={{ fontSize: "36px" }}
-              icon={faCircle}
-            ></FontAwesomeIcon>
-          </span>
-          <a
-            href=""
-            style={{
-              fontFamily: "ABeeZee",
-            }}
-            className="text-base mx-1"
-          >
-            Contraseña
-          </a>
-          <div class="flex-grow border-t border-gray-400 pl-4 mx-0"></div>
-          <span className="">
-            <FontAwesomeIcon
-              style={{ fontSize: "16px", color: "#FFFFFF" }}
-              icon={fa4}
-              className="relative left-6 bottom-2"
-            />
-            <FontAwesomeIcon
-              style={{ fontSize: "36px" }}
-              icon={faCircle}
-            ></FontAwesomeIcon>
-          </span>
-          <a
-            href=""
-            style={{
-              fontFamily: "ABeeZee",
-            }}
-            className="text-base mx-1"
-          >
-            Confirmación
-          </a>
-          </div>*/}
           <div className="absolute mt-5">
             <a className="ml-3" href="/spa/signUp/Patologia">
               <FontAwesomeIcon
@@ -147,7 +63,7 @@ const Contrasena = () => {
                 <div className="relative">
                   <InputContrasena
                     props={{
-                      id:'contraseña',
+                      id: "contraseña",
                       texto: "Ingresa tu Contraseña",
                       class:
                         "bg-slate-200 md:text-sm lg:text-base rounded-full w-[17rem] lg:w-[21rem] mb-3 mt-2 py-2 focus:outline-none focus:ring-1 focus:ring-rose-400 focus:border-transparent px-6",
@@ -167,7 +83,7 @@ const Contrasena = () => {
                 <div className="relative">
                   <InputContrasena
                     props={{
-                      id:'nueva-contraseña',
+                      id: "nueva-contraseña",
                       texto: "Ingresa tu Contraseña",
                       class:
                         "bg-slate-200 md:text-sm lg:text-base rounded-full w-[17rem] lg:w-[21rem] mb-3 mt-2 py-2 focus:outline-none focus:ring-1 focus:ring-rose-400 focus:border-transparent px-6",

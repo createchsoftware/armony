@@ -33,7 +33,7 @@ app.use((req, res, next) => {
   next();
 });
 
-
+//app.use(express.static(path.join(__dirname, '../client/img')));
 
 // Routers
 import { routerCliente } from "./routers/clientes.js";
@@ -55,6 +55,11 @@ app.use("/api/admin/categoria", routerCategoria);
 import { routerEspecialidad } from "./routers/especialidad.js"; // NOTA: NO SE A PROBADO AUN, NO FUNCIONAL
 app.use("api/admin/especialidad", routerEspecialidad);
 
+import { routerImagenes } from "./routers/Imagen.js"; 
+app.use("/api/admin/imagen", routerImagenes);
+
+//import image from '../client/img'
+
 import { routerFavoritos } from "./routers/favoritos.js"; 
 app.use("/api/admin/favoritos", routerFavoritos);
 import { routerCitas } from "./routers/citas.js"; 
@@ -71,6 +76,8 @@ app.get("/api/admin", (req, res) => {
 // app.get('/estado-logueado', (solicitud, respuesta) => {
 //   respuesta.json({ logueado: true }); // Aquí puedes verificar el estado de logueado como lo haces en la ruta principal
 // });
+
+
 
 
 app.post('/api/login',authentication.login);  //verificar que el usuario hizo login

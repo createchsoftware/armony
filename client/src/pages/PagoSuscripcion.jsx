@@ -6,55 +6,24 @@ import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import React, { useState, useEffect } from "react";
 import LayoutPrincipal from "../layouts/LayoutPrincipal";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { fa1, faCircle } from "@fortawesome/free-solid-svg-icons";
-import { Navigate, useNavigate } from "react-router-dom";
 import { CSSTransition, TransitionGroup } from "react-transition-group";
-import { Link } from "react-router-dom";
-
-import Paquetes from "./cita/Paquetes";
-import Calendario from "./cita/Calendario";
 import Pago from "../components/ui/Pago";
-import Agenda from "../components/ui/Agenda";
-import Servicios from "../components/ui/servicios/agendar/AgendarServicios";
+import RevisionSuscripcion from "../components/ui/RevisionSuscripcion";
 import FinalizacionPago from "../components/ui/FinalizacionPagoServ";
 import Ticket from "../components/ui/TicketServicio";
 import "./cita/Transiciones.css";
 
 const steps = [
-  "Servicios",
-  "Paquetes",
-  "Especialista",
-  "Agenda",
+  "Revisión",
   "Pago",
   "Confirmación",
   "Ticket"
 ];
 
-export default function Cita() {
-
-  const navigate = useNavigate();
+export default function Cita({ producto }) {
   const [activeStep, setActiveStep] = useState(0);
   const [completed, setCompleted] = useState({});
   const [scrollPosition, setScrollPosition] = useState(0);
-  const nextButtonText = activeStep === steps.length - 1 ? "Ver agenda" : "Siguiente";
-  // const citasAgregadas = [];
-  // localStorage.setItem('citas', JSON.stringify(citasAgregadas));
-  // useEffect(() => {
-  //   localStorage.clear();
-  // }, []); // Se ejecutará una vez al montar el component
-
-  useEffect(() => {//cuando el usuario llegue al paso 4  se ajecutara 
-    if (activeStep === 3) {
-      paso4();
-    }
-  }, [activeStep]);
-
-  const paso4 = () => {
-    agregadoCitas()// se guardara su servicio en un array
-    removeLSCitas()//despues se eliminaran del localstorage para posteriormente volverlos a declarar
-   // LocalBase()
-  };
 
   const restart = () => {
     setActiveStep(0);
@@ -119,74 +88,34 @@ export default function Cita() {
   };
 
   const handleClick = () => {
+    localStorage.clear()
     handleComplete();
-  //     setTimeout(() => {
-  //     iterateArray();
-  // }, 1000);
+    LocalBase();
   };
 
-  // const iterateArray = () => {
-  //   let myArray = JSON.parse(localStorage.getItem('citas')) || [];
-  //   console.log(myArray)
-  // };
   const handleReset = () => {
     setActiveStep(0);
     setCompleted({});
   };
-  const removeLSCitas =() => {
-  localStorage.removeItem("servicio")
-  localStorage.removeItem('nombre')
-  localStorage.removeItem('precio') 
-  localStorage.removeItem('tiempo')
-  localStorage.removeItem('imagen')
-  localStorage.removeItem("paquete") 
-  localStorage.removeItem("sesiones") 
-  localStorage.removeItem("Especialista")
-  localStorage.removeItem("hora")
-  localStorage.removeItem("Fecha seleccionada")
-  localStorage.removeItem('NombreEspecialista')
-
-  }
-const agregadoCitas =() => {
-  const newProduct = { 
-"idServicio":localStorage.getItem("servicio"),
-"nombreServicio":  localStorage.getItem('nombre'),
-"precioServicio": localStorage.getItem('precio'),
-"tiempoServicio":  localStorage.getItem('tiempo'),
-"ImagenServicio": localStorage.getItem('imagen'),
-//"Servicio":localStorage.getItem("paquete"),
-   // localStorage.getItem("sesiones") ,
-"IdEspecialista":localStorage.getItem("Especialista"),
-"horaDisp":localStorage.getItem("hora"),
-"FechaServicio":localStorage.getItem("Fecha seleccionada"),
-"nombreEsp":localStorage.getItem('NombreEspecialista')
-  };
-    let citas = JSON.parse(localStorage.getItem('citas')) || [];
-    citas.push(newProduct);
-    localStorage.setItem('citas', JSON.stringify(citas));
-  };
-
 
   const LocalBase = () => {
     console.log(
-      localStorage.getItem("servicio") + ' '+
-      localStorage.getItem('nombre') + ' ' +
-      localStorage.getItem('precio') + ' ' +
-      localStorage.getItem('tiempo')+' '+
-      localStorage.getItem('imagen')+" " +
-      localStorage.getItem("paquete") +" " +
-      localStorage.getItem("sesiones") +" " +
-      localStorage.getItem("Especialista")+" " +
-      localStorage.getItem("hora")+" " +
-      localStorage.getItem("Fecha seleccionada") + ' ' +
-      localStorage.getItem('NombreEspecialista')
+      localStorage.getItem("servicio") +
+      " " +
+      localStorage.getItem("paquete") +
+      " " +
+      localStorage.getItem("sesiones") +
+      " " +
+      localStorage.getItem("Especialista") +
+      " " +
+      localStorage.getItem("hora") +
+      " " +
+      localStorage.getItem("Fecha seleccionada")
     );
   };
+
   const stepComponents = [
-    <Servicios key={0} />,
-    <Paquetes key={1} />,
-    <Calendario key={2} />,
-    <Agenda restart={restart} key={3} />,
+    <RevisionSuscripcion key={3} />,
     <Pago key={4} />,
     <FinalizacionPago key={5} />,
     <Ticket key={6} />,
@@ -245,14 +174,13 @@ const agregadoCitas =() => {
 
           <div>
             {allStepsCompleted() ? (
-              navigate("/perfil/agenda")
-              // <React.Fragment>
-              //   <Typography sx={{ mt: 2, mb: 1 }}>Pasos completados</Typography>
-              //   <Box sx={{ display: "flex", flexDirection: "row", pt: 2 }}>
-              //     <Box sx={{ flex: "1 1 auto" }} />
-              //     <Button onClick={handleReset}>Empezar de nuevo</Button>
-              //   </Box>
-              // </React.Fragment>
+              <React.Fragment>
+                <Typography sx={{ mt: 2, mb: 1 }}>Pasos completados</Typography>
+                <Box sx={{ display: "flex", flexDirection: "row", pt: 2 }}>
+                  <Box sx={{ flex: "1 1 auto" }} />
+                  <Button onClick={handleReset}>Empezar de nuevo</Button>
+                </Box>
+              </React.Fragment>
             ) : (
               <React.Fragment>
                 {/* <Typography sx={{ mt: 2, mb: 1, py: 1 }}>
@@ -277,25 +205,22 @@ const agregadoCitas =() => {
                   >
                     Cancelar
                   </button>
-                  <button
-                    onClick={handleClick}
-                    // disabled={activeStep === steps.length - 1}
-                    className="px-4 py-2 mx-auto text-xl text-white rounded-full bg-rose-400 hover:bg-red-200"
-                  >
-                    {nextButtonText}
-                  </button>
-                  {/* {activeStep !== steps.length &&
-                                        (completed[activeStep] ? (
-                                            <Typography variant="caption" sx={{ display: 'inline-block' }}>
-                                                Paso {activeStep + 1} ya completado
-                                            </Typography>
-                                        ) : (
-                                            <button onClick={handleComplete}>
-                                                {completedSteps() === totalSteps() - 1
-                                                    ? 'Finalizar'
-                                                    : 'Completar paso'}
-                                            </button>
-                                        ))} */}
+                  { isLastStep() ? (
+                    <a
+                        href="/suscripcion"
+                        className="px-4 py-2 mx-auto text-xl text-white rounded-full bg-rose-400 hover:bg-red-200"
+                    >
+                        Finalizar
+                    </a>
+                  ):(
+                    <button
+                        onClick={handleClick}
+                        disabled={activeStep === steps.length - 1}
+                        className="px-4 py-2 mx-auto text-xl text-white rounded-full bg-rose-400 hover:bg-red-200"
+                    >
+                        Siguiente
+                    </button>
+                  ) }
                 </div>
               </React.Fragment>
             )}

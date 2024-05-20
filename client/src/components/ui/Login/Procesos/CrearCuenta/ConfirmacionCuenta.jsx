@@ -1,39 +1,34 @@
 import user1 from "../../../../../../public/pictures/userGuest.png";
 import Pasos from "../../../PasosDeProcesos";
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect } from "react";
 
 const ConfirmacionCuenta = () => {
-
   const [clave, setClave] = useState(false); //<<< PARA EL INICIO DE SESION
 
-
   async function recibido() {
-    const respuesta = await fetch('/api/logueado', {
-        method: "GET",
-        headers: {
-            "Content-Type": "application/json",
-        }
-    })
+    const respuesta = await fetch("/api/logueado", {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
 
     if (!respuesta.ok) {
-        setClave(null);
+      setClave(null);
     }
 
     let respuestaJson = await respuesta.json();
 
-    if(respuestaJson.logueado == true) {
-        setClave(respuestaJson.clave);
-    }
-    else {
-        setClave(null);
+    if (respuestaJson.logueado == true) {
+      setClave(respuestaJson.clave);
+    } else {
+      setClave(null);
     }
   }
-
 
   useEffect(() => {
     recibido();
   }, []);
-
 
   return (
     <div>
@@ -48,97 +43,13 @@ const ConfirmacionCuenta = () => {
           </h1>
           <Pasos
             props={{
-              paso1: "Recuperación",
-              paso2: "Verificación",
-              paso3: "Nueva Contraseña",
+              paso1: "Información",
+              paso2: "Patologías",
+              paso3: "Contraseña",
               paso4: "Confirmación",
             }}
+            index={4}
           />
-          {/*<div className="grid grid-cols-[50px_auto_20px_50px_auto_20px_50px_auto_20px_50px_auto] place-items-center px-5 mx-auto">
-          <span className="">
-            <FontAwesomeIcon
-              style={{ fontSize: "16px", color: "#FFFFFF" }}
-              icon={fa1}
-              className="relative left-6 bottom-2"
-            />
-            <FontAwesomeIcon
-              style={{ fontSize: "36px" }}
-              icon={faCircle}
-            ></FontAwesomeIcon>
-          </span>
-          <a
-            href=""
-            style={{
-              fontFamily: "ABeeZee",
-            }}
-            className="text-base mx-2"
-          >
-            Información básica
-          </a>
-          <div class="flex-grow border-t border-gray-400 pl-4 mx-0"></div>
-          <span className="">
-            <FontAwesomeIcon
-              style={{ fontSize: "16px", color: "#FFFFFF" }}
-              icon={fa2}
-              className="relative left-6 bottom-2"
-            />
-            <FontAwesomeIcon
-              style={{ fontSize: "36px" }}
-              icon={faCircle}
-            ></FontAwesomeIcon>
-          </span>
-          <a
-            href=""
-            style={{
-              fontFamily: "ABeeZee",
-            }}
-            className="text-base mx-1"
-          >
-            Patologías
-          </a>
-          <div class="flex-grow border-t border-gray-400 pl-4 mx-0"></div>
-          <span className="">
-            <FontAwesomeIcon
-              style={{ fontSize: "16px", color: "#FFFFFF" }}
-              icon={fa3}
-              className="relative left-6 bottom-2"
-            />
-            <FontAwesomeIcon
-              style={{ fontSize: "36px" }}
-              icon={faCircle}
-            ></FontAwesomeIcon>
-          </span>
-          <a
-            href=""
-            style={{
-              fontFamily: "ABeeZee",
-            }}
-            className="text-base mx-1"
-          >
-            Contraseña
-          </a>
-          <div class="flex-grow border-t border-gray-400 pl-4 mx-0"></div>
-          <span className="">
-            <FontAwesomeIcon
-              style={{ fontSize: "16px", color: "#FFFFFF" }}
-              icon={fa4}
-              className="relative left-6 bottom-2"
-            />
-            <FontAwesomeIcon
-              style={{ fontSize: "36px" }}
-              icon={faCircle}
-            ></FontAwesomeIcon>
-          </span>
-          <a
-            href=""
-            style={{
-              fontFamily: "ABeeZee",
-            }}
-            className="text-base mx-1"
-          >
-            Confirmación
-          </a>
-          </div>*/}
           <div className="grid grid-cols-1 mx-auto my-auto place-items-center">
             <h2 className="w-5/6 md:w-2/3 text-center md:text-base lg:text-lg text-[#EB5765] my-3">
               ¡Tu contraseña ha sido creada de forma exitosa!
