@@ -53,7 +53,7 @@ export default function Cita() {
   const paso4 = () => {
     agregadoCitas()// se guardara su servicio en un array
     removeLSCitas()//despues se eliminaran del localstorage para posteriormente volverlos a declarar
-   // LocalBase()
+    // LocalBase()
   };
 
   const restart = () => {
@@ -102,8 +102,9 @@ export default function Cita() {
   };
 
   const handleCancel = () => {
-    setActiveStep(0);
-    setCompleted({});
+    // setActiveStep(0);
+    // setCompleted({});
+    navigate("/spa");
   };
 
   const handleStep = (step) => () => {
@@ -120,9 +121,9 @@ export default function Cita() {
 
   const handleClick = () => {
     handleComplete();
-  //     setTimeout(() => {
-  //     iterateArray();
-  // }, 1000);
+    //     setTimeout(() => {
+    //     iterateArray();
+    // }, 1000);
   };
 
   // const iterateArray = () => {
@@ -133,34 +134,34 @@ export default function Cita() {
     setActiveStep(0);
     setCompleted({});
   };
-  const removeLSCitas =() => {
-  localStorage.removeItem("servicio")
-  localStorage.removeItem('nombre')
-  localStorage.removeItem('precio') 
-  localStorage.removeItem('tiempo')
-  localStorage.removeItem('imagen')
-  localStorage.removeItem("paquete") 
-  localStorage.removeItem("sesiones") 
-  localStorage.removeItem("Especialista")
-  localStorage.removeItem("hora")
-  localStorage.removeItem("Fecha seleccionada")
-  localStorage.removeItem('NombreEspecialista')
+  const removeLSCitas = () => {
+    localStorage.removeItem("servicio")
+    localStorage.removeItem('nombre')
+    localStorage.removeItem('precio')
+    localStorage.removeItem('tiempo')
+    localStorage.removeItem('imagen')
+    localStorage.removeItem("paquete")
+    localStorage.removeItem("sesiones")
+    localStorage.removeItem("Especialista")
+    localStorage.removeItem("hora")
+    localStorage.removeItem("Fecha seleccionada")
+    localStorage.removeItem('NombreEspecialista')
 
   }
-const agregadoCitas =() => {
-  const newProduct = { 
-"idServicio":localStorage.getItem("servicio"),
-"nombreServicio":  localStorage.getItem('nombre'),
-"precioServicio": localStorage.getItem('precio'),
-"tiempoServicio":  localStorage.getItem('tiempo'),
-"ImagenServicio": localStorage.getItem('imagen'),
-//"Servicio":localStorage.getItem("paquete"),
-   // localStorage.getItem("sesiones") ,
-"IdEspecialista":localStorage.getItem("Especialista"),
-"horaDisp":localStorage.getItem("hora"),
-"FechaServicio":localStorage.getItem("Fecha seleccionada"),
-"nombreEsp":localStorage.getItem('NombreEspecialista')
-  };
+  const agregadoCitas = () => {
+    const newProduct = {
+      "idServicio": localStorage.getItem("servicio"),
+      "nombreServicio": localStorage.getItem('nombre'),
+      "precioServicio": localStorage.getItem('precio'),
+      "tiempoServicio": localStorage.getItem('tiempo'),
+      "ImagenServicio": localStorage.getItem('imagen'),
+      //"Servicio":localStorage.getItem("paquete"),
+      // localStorage.getItem("sesiones") ,
+      "IdEspecialista": localStorage.getItem("Especialista"),
+      "horaDisp": localStorage.getItem("hora"),
+      "FechaServicio": localStorage.getItem("Fecha seleccionada"),
+      "nombreEsp": localStorage.getItem('NombreEspecialista')
+    };
     let citas = JSON.parse(localStorage.getItem('citas')) || [];
     citas.push(newProduct);
     localStorage.setItem('citas', JSON.stringify(citas));
@@ -169,15 +170,15 @@ const agregadoCitas =() => {
 
   const LocalBase = () => {
     console.log(
-      localStorage.getItem("servicio") + ' '+
+      localStorage.getItem("servicio") + ' ' +
       localStorage.getItem('nombre') + ' ' +
       localStorage.getItem('precio') + ' ' +
-      localStorage.getItem('tiempo')+' '+
-      localStorage.getItem('imagen')+" " +
-      localStorage.getItem("paquete") +" " +
-      localStorage.getItem("sesiones") +" " +
-      localStorage.getItem("Especialista")+" " +
-      localStorage.getItem("hora")+" " +
+      localStorage.getItem('tiempo') + ' ' +
+      localStorage.getItem('imagen') + " " +
+      localStorage.getItem("paquete") + " " +
+      localStorage.getItem("sesiones") + " " +
+      localStorage.getItem("Especialista") + " " +
+      localStorage.getItem("hora") + " " +
       localStorage.getItem("Fecha seleccionada") + ' ' +
       localStorage.getItem('NombreEspecialista')
     );

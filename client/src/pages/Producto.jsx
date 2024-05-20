@@ -124,8 +124,6 @@ function Producto() {
 
     const { agregarAlCarrito } = useCarrito();
 
-    console.log(cantidad)
-
     useEffect(() => {
         window.scrollTo(0, 0)
     }, [])
