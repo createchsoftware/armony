@@ -1,8 +1,16 @@
+import { useState } from "react";
+import Soon from "./Proximamente";
 import QrCode from "react-qr-code";
 import { FaWhatsapp } from "react-icons/fa";
 import { CiSaveDown2 } from "react-icons/ci";
 
 const TicketServicio = () => {
+  const [soon, setSoon] = useState(false);
+
+  const toggleSoon = () => {
+    setSoon(!soon);
+  };
+
   var numTicket = 123456;
   var value = "lo que sea";
 
@@ -56,7 +64,10 @@ const TicketServicio = () => {
               />
             </div>
             <div className="grid grid-cols-2 m-8 place-items-center">
-              <button className="flex py-3 justify-center w-[10rem] h-[3rem] rounded-full shadow-[0_2px_10px_rgb(0,0,0,0.8)] text-sm font-[ABeeZee]">
+              <button
+                onClick={toggleSoon}
+                className="flex py-3 justify-center w-[10rem] h-[3rem] rounded-full shadow-[0_2px_10px_rgb(0,0,0,0.8)] text-sm font-[ABeeZee]"
+              >
                 Enviar por{" "}
                 <FaWhatsapp
                   style={{
@@ -84,6 +95,13 @@ const TicketServicio = () => {
           </div>
         </div>
       </div>
+      {soon && (
+        <div className="soon-fondo">
+          <div className="soon-fx" onClick={toggleSoon}>
+            <Soon />
+          </div>
+        </div>
+      )}
     </>
   );
 };
