@@ -360,6 +360,7 @@ function Calendario() {
         const especialista = localStorage.getItem('Especialista');
         if (selectedDate && especialista) {
             horasDisp();
+
         }
     }, [selectedDate, localStorage.getItem('Especialista')]);
 
@@ -381,6 +382,7 @@ function Calendario() {
                     <div className=''>
                         <LocalizationProvider dateAdapter={AdapterDayjs}>
                             <DateCalendar
+                                disabled={!!localStorage.getItem('Especialista')}
                                 sx={[dayStyle,
                                     {
                                         svg: { fill: '#ec5766 !important' },
@@ -430,7 +432,7 @@ function Calendario() {
 
 
                     <div className='overflow-x-auto'>
-                        <h1 className='text-xl text-[#036C65] mb-4'>Horas Disponibles:</h1>
+                        <h1 className='text-xl text-[#036C65] mb-4'>{localStorage.getItem('Especialista') ? 'Horas Disponibles:' : ''}</h1>
                         <div className='flex text-[#EB5765] gap-2'>
                             {horasDisponibles && horasDisponibles.map((hora, index) => (
                                 <button key={index} onClick={() => handleClick(hora, index)} className={getButtonClass(index)}>{hora}</button>
