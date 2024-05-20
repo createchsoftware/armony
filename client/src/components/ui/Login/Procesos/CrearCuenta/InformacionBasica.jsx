@@ -18,97 +18,13 @@ const InformacionBasica = () => {
           </h1>
           <Pasos
             props={{
-              paso1: "Recuperación",
-              paso2: "Verificación",
-              paso3: "Nueva Contraseña",
+              paso1: "Información",
+              paso2: "Patologías",
+              paso3: "Contraseña",
               paso4: "Confirmación",
             }}
+            index={1}
           />
-          {/*<div className="grid grid-cols-[50px_auto_20px_50px_auto_20px_50px_auto_20px_50px_auto] place-items-center px-5 mx-auto">
-          <span className="">
-            <FontAwesomeIcon
-              style={{ fontSize: "16px", color: "#FFFFFF" }}
-              icon={fa1}
-              className="relative left-6 bottom-2"
-            />
-            <FontAwesomeIcon
-              style={{ fontSize: "36px" }}
-              icon={faCircle}
-            ></FontAwesomeIcon>
-          </span>
-          <a
-            href=""
-            style={{
-              fontFamily: "ABeeZee",
-            }}
-            className="text-base mx-2"
-          >
-            Información Básica
-          </a>
-          <div className="flex-grow border-t border-gray-400 pl-4 mx-0"></div>
-          <span className="">
-            <FontAwesomeIcon
-              style={{ fontSize: "16px", color: "#FFFFFF" }}
-              icon={fa2}
-              className="relative left-6 bottom-2"
-            />
-            <FontAwesomeIcon
-              style={{ fontSize: "36px" }}
-              icon={faCircle}
-            ></FontAwesomeIcon>
-          </span>
-          <a
-            href=""
-            style={{
-              fontFamily: "ABeeZee",
-            }}
-            className="text-base mx-1"
-          >
-            Patologías
-          </a>
-          <div className="flex-grow border-t border-gray-400 pl-4 mx-0"></div>
-          <span className="">
-            <FontAwesomeIcon
-              style={{ fontSize: "16px", color: "#FFFFFF" }}
-              icon={fa3}
-              className="relative left-6 bottom-2"
-            />
-            <FontAwesomeIcon
-              style={{ fontSize: "36px" }}
-              icon={faCircle}
-            ></FontAwesomeIcon>
-          </span>
-          <a
-            href=""
-            style={{
-              fontFamily: "ABeeZee",
-            }}
-            className="text-base mx-1"
-          >
-            Contraseña
-          </a>
-          <div className="flex-grow border-t border-gray-400 pl-4 mx-0"></div>
-          <span className="">
-            <FontAwesomeIcon
-              style={{ fontSize: "16px", color: "#FFFFFF" }}
-              icon={fa4}
-              className="relative left-6 bottom-2"
-            />
-            <FontAwesomeIcon
-              style={{ fontSize: "36px" }}
-              icon={faCircle}
-            ></FontAwesomeIcon>
-          </span>
-          <a
-            href=""
-            style={{
-              fontFamily: "ABeeZee",
-            }}
-            className="text-base mx-1"
-          >
-            Confirmación
-          </a>
-          </div>*/}
           <div className="absolute mt-5">
             <a className="ml-3" href="/">
               <FontAwesomeIcon
@@ -318,7 +234,7 @@ const InformacionBasica = () => {
           <div className="grid grid-cols-2 mt-[8rem] mb-[2rem] md:my-auto">
             <div className="grid place-content-start ml-8">
               <button
-                id='cancelar'
+                id="cancelar"
                 aria-label="Cancelar"
                 className="bg-white text-rose-400 text-xl rounded-full px-4 py-2 mx-auto hover:bg-red-50 ring-2 ring-rose-400"
               >
@@ -326,13 +242,13 @@ const InformacionBasica = () => {
               </button>
             </div>
             <div className="grid place-content-end mr-8">
-                <button
-                  id="step-one"
-                  aria-label="Continuar"
-                  className="bg-rose-400 text-white text-xl rounded-full px-4 py-2 mx-auto hover:bg-red-200"
-                >
-                  Continuar
-                </button>
+              <button
+                id="step-one"
+                aria-label="Continuar"
+                className="bg-rose-400 text-white text-xl rounded-full px-4 py-2 mx-auto hover:bg-red-200"
+              >
+                Continuar
+              </button>
             </div>
           </div>
         </div>

@@ -57,6 +57,7 @@ const Recuperacion = () => {
               paso3: "Nueva Contraseña",
               paso4: "Confirmación",
             }}
+            index={1}
           />
           <div className="absolute mt-5">
             <a className="ml-3">

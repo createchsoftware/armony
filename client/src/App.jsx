@@ -42,6 +42,7 @@ import Producto from "./pages/Producto";
 import Suscripcion from "./pages/Suscripcion";
 import Rango from "./pages/perfil/Rango";
 import PagoProducto from "./pages/PagoProducto";
+import PagoSuscripcion from "./pages/PagoSuscripcion"
 import { CarritoProvider } from "../src/components/ui/Carrito";
 
 function App() {
@@ -53,6 +54,7 @@ function App() {
           <Route exact path="/" element={<Home />} />
           <Route path="/rangos" element={<Rangos />} />
           <Route path="/suscripcion" element={<Suscripcion />} />
+          <Route path='/suscripcion/compra' element={<PagoSuscripcion />} />
           <Route path="/spa" element={<Spa />} />
           <Route path="/spa/productos" element={<Productos />} />
           <Route
