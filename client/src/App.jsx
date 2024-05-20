@@ -46,7 +46,6 @@ import PagoSuscripcion from "./pages/PagoSuscripcion"
 import { CarritoProvider } from "../src/components/ui/Carrito";
 
 import Confirmacion from "./components/ui/Login/Procesos/Contraseña/Confirmacion";
-import ProcesoPassword1 from "./components/ui/Login/Procesos/Contraseña/CuadroDatosRecuperacion";
 import NuevaContr from "./components/ui/Login/Procesos/Contraseña/NuevaContr";
 import Recuperacion from "./components/ui/Login/Procesos/Contraseña/Recuperacion";
 import Verificacion from "./components/ui/Login/Procesos/Contraseña/Verificacion";
@@ -135,7 +134,6 @@ function App() {
           <Route path="/spa/producto/:id" element={<Producto />} />
 
           <Route path="/recuperacion/confirmacion" element={<Confirmacion />} />
-          <Route path="/recuperacion/paso1-telefono" element={<ProcesoPassword1 />} />
           <Route path="/recuperacion/paso3" element={<NuevaContr />} />
           <Route path="/recuperacion/paso1" element={<Recuperacion />} />
           <Route path="/recuperacion/paso2" element={<Verificacion />} />

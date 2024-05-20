@@ -12,6 +12,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 
 const NuevaContr = () => {
+
   return (
     <div>
       <div className="md:h-20 h-[3.75rem] bg-white" />
@@ -54,6 +55,7 @@ const NuevaContr = () => {
             <div className="relative">
               <InputContrasena
                 props={{
+                  id:'contraseña',
                   texto: "Ingresa tu nueva contraseña",
                   class:
                     "bg-slate-200 md:text-sm lg:text-base rounded-full w=[15rem] md:w-96 mb-3 mt-2 mx-3 py-2 focus:outline-none focus:ring-1 focus:ring-rose-400 focus:border-transparent px-6",
@@ -71,6 +73,7 @@ const NuevaContr = () => {
             <div className="relative">
               <InputContrasena
                 props={{
+                  id:'nueva-contraseña',
                   texto: "Vuelve a ingresar tu nueva contraseña",
                   class:
                     "bg-slate-200 md:text-sm lg:text-base rounded-full w=[15rem] md:w-96 mb-1 mt-2 mx-3 py-2 focus:outline-none focus:ring-1 focus:ring-rose-400 focus:border-transparent px-6",
