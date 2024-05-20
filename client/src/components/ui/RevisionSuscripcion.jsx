@@ -36,7 +36,7 @@ function RevisionProductos({ restart }) {
                                             <span className='text-xs'>Suscripción a todas las novedades y exclusividad en Armony.</span>
                                         </div>
                                         <div className='flex justify-end'>
-                                            <h1 className='text-[rgb(3,109,99)]'>${suscripcion}</h1>
+                                            <h1 className='text-[rgb(3,109,99)]'>${suscripcion.toFixed(2)}</h1>
                                         </div>
                                     </div>
                                 </li>
@@ -52,7 +52,7 @@ function RevisionProductos({ restart }) {
                             <div className='grid p-6 mb-4 border-2 shadow-md rounded-xl border-gray'>
                                 <div className='flex justify-between'>
                                     <span>1 Producto(s)</span>
-                                    <h1 className='font-bold'>${suscripcion}</h1>
+                                    <h1 className='font-bold'>${suscripcion.toFixed(2)}</h1>
                                 </div>
                                 <div className='flex justify-between'>
                                     <h1>Envío</h1>
@@ -80,7 +80,7 @@ function RevisionProductos({ restart }) {
                             </div>
                             <div className='flex justify-between p-6 px-10 mb-4 border-2 shadow-md rounded-xl border-gray'>
                                 <h4 className='text-xl font-bold'>Total:</h4>
-                                <span className='font-bold text-[rgb(3,109,99)] text-xl'>${suscripcion}</span>
+                                <span className='font-bold text-[rgb(3,109,99)] text-xl'>${suscripcion.toFixed(2)}</span>
                             </div>
                         </div>
                     </div>
