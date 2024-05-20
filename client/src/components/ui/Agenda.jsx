@@ -19,11 +19,19 @@ function Agenda({ restart }) {
     const iterateArray = () => {
         let myArray = JSON.parse(localStorage.getItem('citas')) || [];
         setCitasItems(myArray)
+        
+      };
+
+      const RLSCitas= (id) => {
+        let citas = JSON.parse(localStorage.getItem('citas')) || [];
+        citas = citas.filter(obj => obj.id !== id);
+        localStorage.setItem('citas', JSON.stringify(citas));
       };
 
     //Para remover por completo un servicio.
     const removeItem = (itemId) => {
-        setCitasItems(citasItems.filter(item => item.idServicio !== itemId));
+        setCitasItems(citasItems.filter(item => item.idServicio !== itemId));//este lo elimina de la vista carrito
+        RLSCitas(itemId)//este elimina el item de locaStorage
     };
 
     const [descuento, setDescuento] = useState('');
@@ -37,6 +45,7 @@ function Agenda({ restart }) {
 
     const totalCitas = citasItems.reduce((total, item) => total + 1, 0);
     const total = citasItems.reduce((acc, item) => acc + item.precioServicio.replace(/[#\s]/g, '') * 1, 0).toFixed(2);
+    console.log(total)
     const iva = (total * (.08)).toFixed(2);
     const totalIva = (parseFloat(total) + parseFloat(iva)).toFixed(2);
 
@@ -49,7 +58,7 @@ function Agenda({ restart }) {
                 </div>
                 <div className='flex justify-between'>
                     <span className='text-m'>Duracion: {item.tiempoServicio}</span>
-                    {/* <span className='text-m'>Costo: ${item.precio.toFixed(2)}</span> */}
+                    <span className='text-m'>Costo: ${item.precioServicio}</span>
                 </div>
                 <div className="flex justify-around">
                     <span className='text-m'>Cita: {item.FechaServicio} - {item.horaDisp}</span>

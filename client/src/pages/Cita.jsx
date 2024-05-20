@@ -38,13 +38,13 @@ export default function Cita() {
   const [completed, setCompleted] = useState({});
   const [scrollPosition, setScrollPosition] = useState(0);
   const nextButtonText = activeStep === steps.length - 1 ? "Ver agenda" : "Siguiente";
-  const citasAgregadas = [];
-  localStorage.setItem('citas', JSON.stringify(citasAgregadas));
+  // const citasAgregadas = [];
+  // localStorage.setItem('citas', JSON.stringify(citasAgregadas));
   // useEffect(() => {
   //   localStorage.clear();
   // }, []); // Se ejecutará una vez al montar el component
 
-  useEffect(() => {//caundo el usuario llegue al paso 4  se ajecutara 
+  useEffect(() => {//cuando el usuario llegue al paso 4  se ajecutara 
     if (activeStep === 3) {
       paso4();
     }
@@ -120,9 +120,15 @@ export default function Cita() {
 
   const handleClick = () => {
     handleComplete();
-    //LocalBase();
+  //     setTimeout(() => {
+  //     iterateArray();
+  // }, 1000);
   };
 
+  // const iterateArray = () => {
+  //   let myArray = JSON.parse(localStorage.getItem('citas')) || [];
+  //   console.log(myArray)
+  // };
   const handleReset = () => {
     setActiveStep(0);
     setCompleted({});
@@ -161,21 +167,21 @@ const agregadoCitas =() => {
   };
 
 
-  // const LocalBase = () => {
-  //   console.log(
-  //     localStorage.getItem("servicio") + ' '+
-  //     localStorage.getItem('nombre') + ' ' +
-  //     localStorage.getItem('precio') + ' ' +
-  //     localStorage.getItem('tiempo')+' '+
-  //     localStorage.getItem('imagen')+" " +
-  //     localStorage.getItem("paquete") +" " +
-  //     localStorage.getItem("sesiones") +" " +
-  //     localStorage.getItem("Especialista")+" " +
-  //     localStorage.getItem("hora")+" " +
-  //     localStorage.getItem("Fecha seleccionada") + ' ' +
-  //     localStorage.getItem('NombreEspecialista')
-  //   );
-  // };
+  const LocalBase = () => {
+    console.log(
+      localStorage.getItem("servicio") + ' '+
+      localStorage.getItem('nombre') + ' ' +
+      localStorage.getItem('precio') + ' ' +
+      localStorage.getItem('tiempo')+' '+
+      localStorage.getItem('imagen')+" " +
+      localStorage.getItem("paquete") +" " +
+      localStorage.getItem("sesiones") +" " +
+      localStorage.getItem("Especialista")+" " +
+      localStorage.getItem("hora")+" " +
+      localStorage.getItem("Fecha seleccionada") + ' ' +
+      localStorage.getItem('NombreEspecialista')
+    );
+  };
   const stepComponents = [
     <Servicios key={0} />,
     <Paquetes key={1} />,
