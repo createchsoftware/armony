@@ -1,7 +1,7 @@
 {
   "type": "module",
   "name": "armony-server",
-  "version": "0.0.0",
+  "version": "0.7.0",
   "description": "Proyecto escolar para la materia de Ingenieria de Software en el Instituto Tecnológico de Mexicali.",
   "private": true,
   "main": "app.js",
