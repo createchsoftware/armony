@@ -1,4 +1,6 @@
 import { useEffect, useState } from "react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faAngleLeft } from "@fortawesome/free-solid-svg-icons";
 
 // eslint-disable-next-line react/prop-types
 function InforTarjeta({cerrarInfo}, {sendDatos}){
@@ -76,11 +78,16 @@ function InforTarjeta({cerrarInfo}, {sendDatos}){
 
     return(
         <>
-            <div className="bg-white rounded-xl shadow-md w-1/3">
-                <div className="grid bg-[rgb(3,109,99)] rounded-t-xl">
-                    <h3 className="justify-self-center text-white text-2xl py-2 px-6 font-bold">Información de tarjeta</h3>
+            <div className="bg-white rounded-xl shadow-md w-[35%] h-max">
+                <div className="flex bg-[rgb(3,109,99)] rounded-t-xl items-center">
+                    <a onClick={cerrarInfo} className='flex w-max items-center my-4 ml-6 text-white relative cursor-pointer before:bg-white before:absolute before:-bottom-1 before:block before:h-[1px] before:w-full before:origin-bottom-right before:scale-x-0 before:transition before:duration-300 before:ease-in-out hover:before:origin-bottom-left hover:before:scale-x-100 hover:font-bold'>
+                        <FontAwesomeIcon icon={faAngleLeft} />
+                        <p className='ml-2'>Volver</p>
+                    </a>
+                    <div className="flex-glow"></div>
+                    <h3 className=" text-white text-2xl py-2 px-6 font-bold text-center absolute left-1/2 transform -translate-x-1/2">Información de tarjeta</h3>
                 </div>
-                <form onSubmit={submit} className="p-8 px-10">
+                <form onSubmit={submit} className="p-4 px-8">
                     <div className="grid">
                         <h2 className="text-xl font-bold">Tipo de tarjeta:</h2>
                         <div className="flex">
@@ -132,7 +139,7 @@ function InforTarjeta({cerrarInfo}, {sendDatos}){
                         </div>
                     </div>
                     {/* Bloque de texto para el nombre del titular */}
-                    <div className="grid mt-4">
+                    <div className="grid mt-2">
                         <h2 className="text-xl font-bold">Titular de la tarjeta:</h2>
                         <form action="" className="grid mt-2 rounded border-2 border-gray shadow-md">
                             <input
@@ -145,7 +152,7 @@ function InforTarjeta({cerrarInfo}, {sendDatos}){
                         </form>
                     </div>
                     {/* Bloque de texto del número de tarjeta */}
-                    <div className="grid mt-4">
+                    <div className="grid mt-2">
                         <h2 className="text-xl font-bold">Número de tarjeta:</h2>
                         <form action="" className="grid mt-2 rounded border-2 border-gray shadow-md">
                             <input
@@ -199,7 +206,7 @@ function InforTarjeta({cerrarInfo}, {sendDatos}){
                         </div>
                     </div>
                     {/* Check boxes */}
-                    <div className="grid mt-4">
+                    <div className="grid mt-2">
                         <div>
                             <input
                                 type="checkbox"
