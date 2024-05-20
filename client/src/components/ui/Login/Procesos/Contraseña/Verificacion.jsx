@@ -1,9 +1,16 @@
+import { useState } from "react";
 import user1 from "../../../../../../public/pictures/userCl.png";
 import Pasos from "../../../PasosDeProcesos";
+import Soon from "../../../Proximamente";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faAngleLeft } from "@fortawesome/free-solid-svg-icons";
 
 const Verificacion = () => {
+  const [soon, setSoon] = useState(false);
+
+  const toggleSoon = () => {
+    setSoon(!soon);
+  };
   return (
     <div>
       <div className="md:h-20 h-[3.75rem] bg-white" />
@@ -78,7 +85,7 @@ const Verificacion = () => {
             />
           </form>
           <a
-            href=""
+            onClick={toggleSoon}
             className="text-teal-700 md:text-sm lg:text-base text-center"
           >
             Reenviar código de verificación
@@ -107,6 +114,13 @@ const Verificacion = () => {
           </div>
         </div>
       </div>
+      {soon && (
+        <div className="soon-fondo">
+          <div className="soon-fx" onClick={toggleSoon}>
+            <Soon />
+          </div>
+        </div>
+      )}
     </div>
   );
 };
