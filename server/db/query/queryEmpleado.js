@@ -57,18 +57,18 @@ export async function readEmpleadoByNombre(connection, data) {
     ]); // Parametros para el procedimiento
     const [rows, fields] = await connection.query(query); // Ejecutamos query y guardamos resultados
     endConnection(); // Cerramos la conexion con la DB
-    return rows; // Regresamos las filas afectadas
+    return rows[0]; // Regresamos las filas afectadas
   } catch (err) {
     // Capturamos error de query en caso que exista
     console.error(messageError, err); // Mostramos el error por consola
   }
 }
 
-// READ EMPLEADOS ACTIVOS (PENDIENTE)
+// READ EMPLEADOS ACTIVOS (FUNCIONAL)
 export async function readEmpAct(connection, data) {
   try {
-    let searchEmpAct = "CALL"; // Procedimiento de la DB
-    let query = mysql.format(searchEmpAct, []); // Parametros para el procedimiento
+    let searchEmpAct = "CALL searchEmpAct(?)"; // Procedimiento de la DB
+    let query = mysql.format(searchEmpAct, [data.activo]); // Parametros para el procedimiento
     const [rows, fields] = await connection.query(query); // Ejecutamos y almacenamos valores
     return rows; // Retornamos valores
   } catch (err) {
