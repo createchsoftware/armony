@@ -125,10 +125,10 @@ function Foot() {
                         <div>
                             <h2 className="mb-6 text-sm font-semibold  uppercase text-[#B2B2B2]">Contactos</h2>
                             <ul>
-                                <li><a href="#"
+                                <li><a href="mailto:ayuda@grupoarmony.com"
                                     className="relative inline  cursor-pointer  before:bg-white  before:absolute before:-bottom-1 before:block before:h-[1px] before:w-full before:origin-bottom-right before:scale-x-0 before:transition before:duration-300 before:ease-in-out hover:before:origin-bottom-left hover:before:scale-x-100">
                                     ayuda@grupoarmony.com</a></li>
-                                <li><a href="#"
+                                <li><a href="tel:+526861234567"
                                     className="relative inline  cursor-pointer  before:bg-white  before:absolute before:-bottom-1 before:block before:h-[1px] before:w-full before:origin-bottom-right before:scale-x-0 before:transition before:duration-300 before:ease-in-out hover:before:origin-bottom-left hover:before:scale-x-100">
                                     +52 (686) 123-3567</a></li>
                             </ul>
