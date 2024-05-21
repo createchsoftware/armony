@@ -40,7 +40,7 @@ const NuevaContr = () => {
             index={3}
           />
           <div className="absolute mt-5">
-            <a className="ml-3">
+            <a className="ml-3" href="/recuperacion/paso2">
               <FontAwesomeIcon
                 style={{ fontSize: "22px" }}
                 icon={faAngleLeft}

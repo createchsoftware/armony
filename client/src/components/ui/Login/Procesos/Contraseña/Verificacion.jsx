@@ -267,7 +267,7 @@ const Verificacion = () => {
             </a>
             </div>*/}
           <div className="absolute mt-5">
-            <a className="ml-3">
+            <a className="ml-3" href="/recuperacion/paso1">
               <FontAwesomeIcon
                 style={{ fontSize: "22px" }}
                 icon={faAngleLeft}
