@@ -45,7 +45,7 @@ function Agenda({ restart }) {
 
     const totalCitas = citasItems.reduce((total, item) => total + 1, 0);
     const total = citasItems.reduce((acc, item) => acc + item.precioServicio.replace(/[#\s]/g, '') * 1, 0).toFixed(2);
-    console.log(total)
+    localStorage.setItem('total',total)
     const iva = (total * (.08)).toFixed(2);
     const totalIva = (parseFloat(total) + parseFloat(iva)).toFixed(2);
 

@@ -205,3 +205,15 @@ export async function ventaProdOnline(connection, data) {
   endConnection(); // Cerramos la conexion con la base de datos
   return rows; // Retornamos los valores
 }
+
+export async function productosPromo(pool, data, res) {
+  try {
+    const query = `SELECT *FROM  mostrarPromos`;
+    const [rows, fields] = await pool.query(query);
+    endConnection();
+    return rows;
+  } catch (err) {
+    console.log("Ha ocurrido un error al ejecutar el query: ", err);
+    throw err;
+  }
+}
