@@ -9,7 +9,7 @@ const client = new twilio(accountSid,authToken); //establecer la conexion con tw
 function SMS_VERIFICACION(codigo,telefono){
     client.messages.create({
         body:`Su codigo de verificacion para recuperar su contrasena es: ${codigo}`,
-        to:telefono,
+        to:`+${telefono}`,
         from:process.env.PHONE_NUMBER
     })
 }
@@ -17,7 +17,7 @@ function SMS_VERIFICACION(codigo,telefono){
 function SMS_CONGRALUATION(telefono){
     client.messages.create({
         body:`Felicidades, su contraseña ha sido cambiada exitosamente`,
-        to:telefono,
+        to:`+${telefono}`,
         from:process.env.PHONE_NUMBER
     })
 }

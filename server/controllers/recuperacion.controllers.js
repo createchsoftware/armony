@@ -31,7 +31,7 @@ async function paso1(solicitud, respuesta){
                     let lada = solicitud.body.lada;
                     let telefono = solicitud.body.telefono;
 
-                    lada = lada.replace(/+/g,'');
+                    lada = lada.replace(/\+/g,'');
                     telefono = telefono.replace(/-/g,'');
                     telefono = telefono.replace(/ /g,'');
 
@@ -116,7 +116,7 @@ async function paso1(solicitud, respuesta){
 
                 telefono = telefono.replace(/-/g,'');
                 telefono = telefono.replace(/ /g,'');
-                lada = lada.replace('+','');
+                lada = lada.replace('\+','');
 
                 console.log('mi numero de telefono es: '+telefono);
                 console.log('la lada de mi pais es: '+lada);
@@ -434,6 +434,46 @@ async function paso2_procesar(solicitud,respuesta){
 }
 
 
+// async function showData(solicitud,respuesta){
+//     if(solicitud.headers.cookie == undefined){
+//         // el usuario no ha completado ningun paso
+//         return respuesta.send({redirect:'/recuperacion/paso1'});
+//     }
+//     else{
+//         let galletas = solicitud.headers.cookie.split('; ');
+
+//         let galleta_correspondiente = galletas.find(galleta=>galleta.startsWith('Nezuko_Kamado='));
+
+//         if(galleta_correspondiente){
+//             //mostrar los datos que el usuario ya habia llenado
+//             galleta_correspondiente = galleta_correspondiente.slice(14);
+
+//             let decodificada = JsonWebToken.verify(galleta_correspondiente, process.env.JWT_SECRET);
+
+//             return respuesta.send({pass1:decodificada.password, pass2:decodificada.confirmation});
+//         }
+//         else{
+//             // no se pueden mostrar los datos
+//             let galleta3 = galletas.find(galleta=>galleta.startsWith('Shiragiku_cookie='));
+//             if(galleta3){
+//                 // lo podemos dejar entrar al citio correspondiente
+//                 return respuesta.send({mensaje:'puedes estar aqui'});
+//             }
+//             else{
+//                 let galleta1 = galletas.find(galleta=>galleta.startsWith('Akane_cookie='));
+
+//                 if(galleta1){
+//                     return respuesta.send({redirect:'/recuperacion/paso2'});
+//                 }
+//                 else{
+//                     return respuesta.send({redirect:'/recuperacion/paso1'});
+//                 }
+//             }
+//         }
+//     }
+// }
+
+
 async function paso3(solicitud,respuesta){
     if(solicitud.headers.cookie == undefined){
         return respuesta.send({redirect:'/recuperacion/paso1'});
@@ -513,7 +553,7 @@ async function paso3(solicitud,respuesta){
                     };
               
                     // genero la cookie
-                    respuesta.cookie("Nezuko_kamado",token,galleta_register);
+                    respuesta.cookie("Nezuko_Kamado",token,galleta_register);
                     // el usuario podra continuar con el apartado patologias
                     respuesta.send({redirect:"/recuperacion/confirmacion"}); 
 

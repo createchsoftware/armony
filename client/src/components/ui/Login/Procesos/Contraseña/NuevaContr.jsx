@@ -2,6 +2,7 @@ import user1 from "../../../../../../public/pictures/userCl.png";
 import Pasos from "../../../PasosDeProcesos.jsx";
 import InputContrasena from "../../../InputContrasena.jsx";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { Helmet, HelmetProvider } from "react-helmet-async";
 import {
   fa1,
   fa2,
@@ -15,6 +16,11 @@ const NuevaContr = () => {
 
   return (
     <div>
+      <HelmetProvider>
+          <Helmet>
+             <script src="../../../scripts/cancelar_recuperacion.js"></script>
+          </Helmet>
+      </HelmetProvider>
       <div className="md:h-20 h-[3.75rem] bg-white" />
       <div className="justify-center items-center mt-[6rem] mb-[6rem] md:mt-[5rem] md:mb-2 lg:mt-[8rem] lg:mb-4">
         <div className="h-[25rem] w-[25rem] md:h-[24rem] lg:h-[29rem] md:w-[37rem] lg:w-[45rem] flex flex-col rounded-xl ring-1 ring-slate-200 bg-white bg-clip-border text-gray-700 shadow-md mx-auto">
@@ -85,14 +91,15 @@ const NuevaContr = () => {
           </form>
           <div className="grid grid-cols-2 my-auto">
             <div className="grid place-content-start ml-8">
-              <a href="/spa">
+              
                 <button
+                  id="cancelar"
                   aria-label="Cancelar"
                   className="bg-white text-rose-400 md:text-large lg:text-xl rounded-full px-4 py-2 mx-auto hover:bg-red-50 ring-2 ring-rose-400"
                 >
                   Cancelar
                 </button>
-              </a>
+              
             </div>
             <div className="grid place-content-end mr-8">
               <a href="/spa/resetPassword/Confirmacion">

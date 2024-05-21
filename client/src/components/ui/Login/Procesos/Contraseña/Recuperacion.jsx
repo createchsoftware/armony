@@ -147,6 +147,8 @@ const Recuperacion = () => {
       faltantes.forEach((faltante)=>{
         console.log(`Te falto llenar el dato ${faltante}`);
       });
+
+      return;
     }
 
     if(respuestaJson.invalidos){
@@ -155,6 +157,11 @@ const Recuperacion = () => {
       invalidos.forEach((invalido)=>{
         console.log(`El campo ${invalido} no es valido`);
       });
+      return;
+    }
+
+    if(respuestaJson.redirect){
+      window.location.href = respuestaJson.redirect;
     }
 
 
@@ -167,7 +174,7 @@ const Recuperacion = () => {
     <div>
       <HelmetProvider>
           <Helmet>
-              <script src="../../../scripts/recuperacion1.js"></script>
+              <script src="../../../scripts/cancelar_recuperacion.js"></script>
           </Helmet>
       </HelmetProvider>
       <div className="md:h-20 h-[3.75rem] bg-white" />
@@ -222,6 +229,7 @@ const Recuperacion = () => {
             <div className="grid place-content-start ml-8">
               
                 <button
+                  id="cancelar"
                   aria-label="Cancelar"
                   className="bg-white text-rose-400 md:text-large lg:text-xl rounded-full px-4 py-2 mx-auto hover:bg-red-50 ring-2 ring-rose-400"
                 >
