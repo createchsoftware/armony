@@ -137,14 +137,14 @@ function App() {
           />
           <Route path="/spa/producto/" element={<Producto />} />
           <Route path="/spa/comprar" element={<PagoProducto />} />
-          <Route path="*" element={<Error />} />
           <Route path="/perfil/rango" element={<Rango />} />
           <Route path="/spa/producto/:id" element={<Producto />} />
 
           <Route path="/recuperacion/confirmacion" element={<Confirmacion />} />
           <Route path="/recuperacion/paso3" element={<NuevaContr />} />
           <Route path="/recuperacion/paso1" element={<Recuperacion />} />
-          <Route path="/recuperacion/paso2" element={<Verificacion />} />
+          <Route path="/recuperacion/paso2" element={<Verificacion />} />          
+          <Route path="*" element={<Error />} />
         </Routes>
       </Router>
     </>
