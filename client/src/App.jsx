@@ -115,6 +115,7 @@ function App() {
             path="/perfil/tarjetas/registroTarjeta"
             element={<TarjetaNueva />}
           />
+
           <Route path="/perfil/agenda" element={<Agenda />} />
           <Route path="/favoritos" element={<Favoritos />} />
           <Route path="/perfil/editar-perfil" element={<EditarPerfil />} />
