@@ -18,17 +18,18 @@ export const CarritoProvider = ({ children }) => {
         localStorage.setItem('cartItems', JSON.stringify(cartItems));
     }, [cartItems]);
 
+    // Función para agregar un ítem al carrito
     const agregarAlCarrito = (item) => {
-        // if quantity exists, increase it by 1
         const existingItem = cartItems.find(i => i.id === item.id);
         if (existingItem) {
+            // Incrementar la cantidad por item.cantidad
             setCartItems(cartItems.map(i =>
-                i.id === item.id ? { ...i, cantidad: i.cantidad + 1 } : i
+                i.id === item.id ? { ...i, cantidad: i.cantidad + item.cantidad } : i
             ));
-            return;
+        } else {
+            // Agregar el ítem al carrito
+            setCartItems([...cartItems, item]);
         }
-        // if quantity doesn't exist, add item to cart
-        setCartItems([...cartItems, item]);
     };
 
     const eliminarDelCarrito = (itemId) => {
