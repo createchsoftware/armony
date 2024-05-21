@@ -3,7 +3,7 @@ import mysql from "mysql2";
 export async function addfavorito(conexion, data) {
   try {
     const call = "CALL addFavorito(?,?,?)";
-    const query = mysql.format(call, [data.idCliente, data.IdProducto]);
+    const query = mysql.format(call, [data.idCliente, data.IdProducto,1]);
     await conexion.query(query);
   } catch (err) {
     console.log("Ha ocurrido un error al ejecutar el query: ", err);
