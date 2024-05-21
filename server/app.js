@@ -1,32 +1,32 @@
 import express from "express";
 import { servidor } from "./data/datos.js";
-import cookieParser from 'cookie-parser';
+import cookieParser from "cookie-parser";
 import https from "https";
 import * as fs from "fs";
 
-import path, { dirname } from 'path';
-import { fileURLToPath } from 'url';
+import path, { dirname } from "path";
+import { fileURLToPath } from "url";
 const _dirname = path.dirname(fileURLToPath(import.meta.url));
 
-import {methods as authentication} from './controllers/authentication.controllers.js';
-import {methods as authorization} from './middlewares/authorization.js';
-import {methods as createAccount} from "./controllers/createAccount.controllers.js";
-import {methods as editarPerfil} from "./controllers/editarPerfil.controllers.js";
-import {methods as perfil} from "./controllers/perfil-data.controllers.js";
-import {methods as recuperacion} from "./controllers/recuperacion.controllers.js";
+import { methods as authentication } from "./controllers/authentication.controllers.js";
+import { methods as authorization } from "./middlewares/authorization.js";
+import { methods as createAccount } from "./controllers/createAccount.controllers.js";
+import { methods as editarPerfil } from "./controllers/editarPerfil.controllers.js";
+import { methods as perfil } from "./controllers/perfil-data.controllers.js";
+import { methods as recuperacion } from "./controllers/recuperacion.controllers.js";
 import InsertUser from "./middlewares/register.js";
 import confirmacion from "./middlewares/password.js";
 
 import { conexion } from "./db/connection.js";
 
-const keyPath = path.join(_dirname, '/ssl/private.key');
-const certPath = path.join(_dirname, '/ssl/certificate.crt');
+const keyPath = path.join(_dirname, "/ssl/private.key");
+const certPath = path.join(_dirname, "/ssl/certificate.crt");
 
 // Objeto de express
 const app = express();
 
-app.use(express.static(path.join(_dirname, '../client/dist')));
-app.use(cookieParser())
+app.use(express.static(path.join(_dirname, "../client/dist")));
+app.use(cookieParser());
 
 app.use((req, res, next) => {
   req.database = conexion;
@@ -55,14 +55,14 @@ app.use("/api/admin/categoria", routerCategoria);
 import { routerEspecialidad } from "./routers/especialidad.js"; // NOTA: NO SE A PROBADO AUN, NO FUNCIONAL
 app.use("api/admin/especialidad", routerEspecialidad);
 
-import { routerImagenes } from "./routers/Imagen.js"; 
+import { routerImagenes } from "./routers/Imagen.js";
 app.use("/api/admin/imagen", routerImagenes);
 
 //import image from '../client/img'
 
-import { routerFavoritos } from "./routers/favoritos.js"; 
+import { routerFavoritos } from "./routers/favoritos.js";
 app.use("/api/admin/favoritos", routerFavoritos);
-import { routerCitas } from "./routers/citas.js"; 
+import { routerCitas } from "./routers/citas.js";
 app.use("/api/admin/citas", routerCitas);
 
 // Middleware
@@ -73,111 +73,109 @@ app.get("/api/admin", (req, res) => {
   res.send("Funcionando");
 });
 
+app.get("/cuenta", (req, res) => {
+  res.sendFile(path.join(_dirname, "/temporal/cuenta.html"));
+});
+
 // app.get('/estado-logueado', (solicitud, respuesta) => {
 //   respuesta.json({ logueado: true }); // Aquí puedes verificar el estado de logueado como lo haces en la ruta principal
 // });
 
+app.post("/api/login", authentication.login); //verificar que el usuario hizo login
 
+app.get("/api/logueado", authorization.verificar_cookie);
 
+app.get("/api/logout", authentication.logout);
 
-app.post('/api/login',authentication.login);  //verificar que el usuario hizo login
+app.post("/api/step1", createAccount.paso1);
 
-app.get('/api/logueado',authorization.verificar_cookie);
+app.post("/api/step2", createAccount.paso2);
 
-app.get('/api/logout',authentication.logout); 
+app.post("/api/step3", createAccount.paso3);
 
-app.post('/api/step1', createAccount.paso1);
+app.get("/api/recuperacion/paso0.5", recuperacion.carga_paso1);
 
-app.post('/api/step2', createAccount.paso2);
+app.post("/api/recuperacion/paso1", recuperacion.paso1);
 
-app.post('/api/step3', createAccount.paso3);
+app.get("/api/recuperacion/paso2_enviar", recuperacion.paso2_enviar);
 
-app.get('/api/recuperacion/paso0.5', recuperacion.carga_paso1);
+app.post("/api/recuperacion/paso2_procesar", recuperacion.paso2_procesar);
 
-app.post('/api/recuperacion/paso1', recuperacion.paso1);
+app.post("/api/recuperacion/paso3", recuperacion.paso3);
 
-app.get('/api/recuperacion/paso2_enviar', recuperacion.paso2_enviar);
+app.get("/recuperacion/confirmacion", confirmacion);
 
-app.post('/api/recuperacion/paso2_procesar', recuperacion.paso2_procesar);
+app.post("/api/deleteCard", perfil.deleteTarjeta);
 
-app.post('/api/recuperacion/paso3', recuperacion.paso3);
+app.post("/api/editarPerfil", editarPerfil.change_data);
 
-app.get('/recuperacion/confirmacion', confirmacion);
+app.post("/api/tarjeta-nueva", perfil.InsertarTarjeta);
 
+app.get("/api/pedidos", perfil.getPedidos);
 
+app.get("/perfil/pedidos", authorization.logeado);
 
-app.post('/api/deleteCard', perfil.deleteTarjeta);
+app.get("/perfil", authorization.logeado);
 
-app.post('/api/editarPerfil', editarPerfil.change_data);
+app.get("/perfil/monedero", authorization.logeado);
 
-app.post('/api/tarjeta-nueva', perfil.InsertarTarjeta);
+app.get("/perfil/monedero/agregarSaldo", authorization.logeado);
 
-app.get('/api/pedidos', perfil.getPedidos);
+app.get("/perfil/informacion", authorization.logeado);
 
-app.get('/perfil/pedidos', authorization.logeado);
+app.get("/perfil/tarjetas", authorization.logeado);
 
-app.get('/perfil',authorization.logeado );
+app.get("/perfil/tarjetas/registroTarjeta", authorization.logeado);
 
-app.get('/perfil/monedero', authorization.logeado);
+app.get("/perfil/movimientos", authorization.logeado);
 
-app.get('/perfil/monedero/agregarSaldo',authorization.logeado);
+app.get("/perfil/historial", authorization.logeado);
 
-app.get('/perfil/informacion',authorization.logeado);
+app.get("/api/patologias", authorization.Patologias);
 
-app.get('/perfil/tarjetas', authorization.logeado);
+app.get("/api/tarjetas/1.5", perfil.getTarjetas);
 
-app.get('/perfil/tarjetas/registroTarjeta', authorization.logeado);
+app.get("/api/transacciones", perfil.getTransacciones);
 
-app.get('/perfil/movimientos', authorization.logeado);
+app.get("/api/monedero", perfil.getMonedero);
 
-app.get('/perfil/historial', authorization.logeado);
+app.post("/api/recargaSaldo", perfil.Insert_to_Monedero);
 
-app.get('/api/patologias', authorization.Patologias);
+app.get("/spa/signUp/Confirmacion", InsertUser);
 
-app.get('/api/tarjetas/1.5', perfil.getTarjetas);
-
-app.get('/api/transacciones', perfil.getTransacciones);
-
-app.get('/api/monedero', perfil.getMonedero);
-
-app.post('/api/recargaSaldo', perfil.Insert_to_Monedero);
-
-app.get('/spa/signUp/Confirmacion', InsertUser);
-
-
-app.get('/api/step1.5',async (solicitud,respuesta)=>{
-
+app.get("/api/step1.5", async (solicitud, respuesta) => {
   let consulta = "select * from patologia";
-  
-  let [fields] = await solicitud.database.query(consulta)
-  if(fields.length == 0){
-        respuesta.send({busqueda_vacia:true});
-       
-    }else{
-        //contruir un arreglo mas limpio
-        let arreglo = [];
-        for(let indice in fields){
-          arreglo.push([fields[indice].pregunta,parseInt(indice)+1]);
-        }
-        
-        respuesta.json(arreglo);
-       
+
+  let [fields] = await solicitud.database.query(consulta);
+  if (fields.length == 0) {
+    respuesta.send({ busqueda_vacia: true });
+  } else {
+    //contruir un arreglo mas limpio
+    let arreglo = [];
+    for (let indice in fields) {
+      arreglo.push([fields[indice].pregunta, parseInt(indice) + 1]);
     }
-    
+
+    respuesta.json(arreglo);
+  }
 });
 
-app.get('*', (solicitud,respuesta)=>{
-  respuesta.sendFile(path.join(_dirname ,'../client/dist/index.html'));
-})
-
+app.get("*", (solicitud, respuesta) => {
+  respuesta.sendFile(path.join(_dirname, "../client/dist/index.html"));
+});
 
 if (servidor.PRODUCTION === "true") {
-  https.createServer({
-    key: fs.readFileSync(keyPath),
-    cert: fs.readFileSync(certPath)
-  }, app).listen(443, () => {
-    console.log(`Servidor en puerto 443: HTTPS`);
-  });
+  https
+    .createServer(
+      {
+        key: fs.readFileSync(keyPath),
+        cert: fs.readFileSync(certPath),
+      },
+      app
+    )
+    .listen(443, () => {
+      console.log(`Servidor en puerto 443: HTTPS`);
+    });
 
   app.use((req, res) => {
     res.redirect(`https://${req.headers.host}${req.url}`);
@@ -186,7 +184,12 @@ if (servidor.PRODUCTION === "true") {
 
 let puerto = servidor.PRODUCTION === "true" ? 80 : servidor.SERVER_PORT;
 
-app.listen(puerto,
-          (servidor.PRODUCTION === "true" ? servidor.PROD_SERVER_HOST : servidor.SERVER_HOST), () => {
-  console.log(`Servidor en puerto ${puerto}: HTTP`);
-});
+app.listen(
+  puerto,
+  servidor.PRODUCTION === "true"
+    ? servidor.PROD_SERVER_HOST
+    : servidor.SERVER_HOST,
+  () => {
+    console.log(`Servidor en puerto ${puerto}: HTTP`);
+  }
+);
