@@ -13,7 +13,9 @@ import {methods as authorization} from './middlewares/authorization.js';
 import {methods as createAccount} from "./controllers/createAccount.controllers.js";
 import {methods as editarPerfil} from "./controllers/editarPerfil.controllers.js";
 import {methods as perfil} from "./controllers/perfil-data.controllers.js";
+import {methods as recuperacion} from "./controllers/recuperacion.controllers.js";
 import InsertUser from "./middlewares/register.js";
+import confirmacion from "./middlewares/password.js";
 
 import { conexion } from "./db/connection.js";
 
@@ -89,6 +91,20 @@ app.post('/api/step1', createAccount.paso1);
 app.post('/api/step2', createAccount.paso2);
 
 app.post('/api/step3', createAccount.paso3);
+
+app.get('/api/recuperacion/paso0.5', recuperacion.carga_paso1);
+
+app.post('/api/recuperacion/paso1', recuperacion.paso1);
+
+app.get('/api/recuperacion/paso2_enviar', recuperacion.paso2_enviar);
+
+app.post('/api/recuperacion/paso2_procesar', recuperacion.paso2_procesar);
+
+app.post('/api/recuperacion/paso3', recuperacion.paso3);
+
+app.get('/recuperacion/confirmacion', confirmacion);
+
+
 
 app.post('/api/deleteCard', perfil.deleteTarjeta);
 

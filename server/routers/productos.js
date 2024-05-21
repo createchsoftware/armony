@@ -8,6 +8,7 @@ import {
   updateProdServ,
   deleteProdServ,
   getProducts,
+  productosPromo
 } from "../db/query/queryProductos.js";
 import { errorUpdate } from "../auth/validaciones.js";
 
@@ -160,6 +161,17 @@ routerProductos.delete("/delete", async (req, res) => {
 routerProductos.get("/getProducts", async (req, res) => {
   try {
     const resultado = await getProducts(conexion);
+    res.json(resultado);
+  } catch (err) {
+    console.error("Ha ocurrido un error: ", err);
+    res.status(500).send("Ha ocurrido un error al procesar tu solicitud");
+  }
+});
+
+
+routerProductos.get("/ProductsPromo", async (req, res) => {
+  try {
+    const resultado = await productosPromo(conexion);
     res.json(resultado);
   } catch (err) {
     console.error("Ha ocurrido un error: ", err);

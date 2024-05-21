@@ -10,6 +10,7 @@ function Pago() {
         {id: 1, noTarjeta: "509612341234", tipo: "Débito", banco: "BANORTE", code: "****"},
         {id: 2, noTarjeta: "294712341234", tipo: "Débito", banco: "NU", code: "****"}
     ]);
+    const total=localStorage.getItem('total')
 
     const toggleTarjeta = () => {
         setTarjeta(!tarjeta);
@@ -22,7 +23,7 @@ function Pago() {
         console.log(tarjetas);
     }
 
-    const total = (574).toFixed(2);
+    //const total = (574).toFixed(2);
 
     const cardList = tarjetas.map(item => (
         <li key={item.id} className="flex items-center justify-between gap-4 px-4 mb-4 border-2 shadow-md rounded-3xl border-gray">
@@ -96,7 +97,7 @@ function Pago() {
                             <div className='grid p-6 mb-4 border-2 shadow-md rounded-xl border-gray'>
                                 <div className='flex justify-between px-6'>
                                     <span className='font-bold'>1 Producto(s)</span>
-                                    <span className="text-[rgb(3,109,99)] font-bold text-xl">$574.00</span>
+                                    <span className="text-[rgb(3,109,99)] font-bold text-xl">{total}</span>
                                 </div>
                                 <div className='flex justify-between px-6 pt-6'>
                                     <h1 className='font-bold'>Envío</h1>

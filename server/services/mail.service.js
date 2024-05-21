@@ -37,6 +37,24 @@ async function Cambio_de_correo(token,full_name,id,correo){
     })
 }
 
+async function Codigo_de_Verificacion(token,correo,codigo){
+    return await transporter.sendMail({
+        from:process.env.EMAIL_USER,
+        to:correo,
+        subject:'codigo de verificacion de Armony',
+        html:cuerpoCodigoVerificacion(token,codigo)
+    })
+}
+
+async function Confirmacion_Contraseña(token,correo){
+    return await transporter.sendMail({
+        from:process.env.EMAIL_USER,
+        to:correo,
+        subject:'Tu nueva contrasena ha sido establecida exitosamente',
+        html:cuerpoConfirmacionContraseña(token)
+    })
+}
+
 
 
 
@@ -155,8 +173,97 @@ function cuerpoCorreo(token, full_name, userID){
 
 
 
+function cuerpoCodigoVerificacion(token,codigo){
+    return `<!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <style>
+            *{
+                padding: 0;
+                margin: 0;
+            }
+
+            .body-email{
+                background-color: #82E0AA;
+                padding: 8px;
+                display: flex;
+                flex-direction: column;
+            }
+
+            .body-email .header{
+                position: relative;
+                width: 100%;
+                background-color: aliceblue;
+                font-size: 25px;
+                padding: 2px;
+            }
+            
+        </style>
+    </head>
+    <body>
+        <div class="body-email">
+            <div class="header">
+                <span>Codigo de verificacion</span>
+            </div>
+            <div class="body">
+                <span>Se te envio este codigo de verificacion: ${codigo}</span>
+            </div>
+        </div>
+    </body>
+    </html>`;
+}
+
+
+
+function cuerpoConfirmacionContraseña(token){
+    return `<!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <style>
+            *{
+                padding: 0;
+                margin: 0;
+            }
+
+            .body-email{
+                background-color: #82E0AA;
+                padding: 8px;
+                display: flex;
+                flex-direction: column;
+            }
+
+            .body-email .header{
+                position: relative;
+                width: 100%;
+                background-color: aliceblue;
+                font-size: 25px;
+                padding: 2px;
+            }
+            
+        </style>
+    </head>
+    <body>
+        <div class="body-email">
+            <div class="header">
+                <span>Cambio de contraseña</span>
+            </div>
+            <div class="body">
+                <span>Es un placer informale que el cambio de contraseña ha sido exitoso</span>
+            </div>
+        </div>
+    </body>
+    </html>`;
+}
+
+
+
+
 
 export const methods = {
     CrearCuentaEmail,
-    Cambio_de_correo
+    Cambio_de_correo,
+    Codigo_de_Verificacion,
+    Confirmacion_Contraseña
 }
