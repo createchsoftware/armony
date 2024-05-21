@@ -5,6 +5,8 @@ import Productos from "./pages/Productos";
 import Perfil from "./pages/Perfil";
 import InformacionPersonal from "./pages/perfil/InformacionPersonal";
 import Seguridad from "./pages/perfil/Seguridad";
+import TuCorreo from "./pages/perfil/seguridad/TuCorreo";
+import TuContrasena from "./pages/perfil/seguridad/TuContrasena";
 import CambiarCorreo from "./pages/perfil/seguridad/CambiarCorreo";
 import CambiarContrasena from "./pages/perfil/seguridad/CambiarContrasena";
 import Monedero from "./pages/perfil/Monedero";
@@ -42,7 +44,7 @@ import Producto from "./pages/Producto";
 import Suscripcion from "./pages/Suscripcion";
 import Rango from "./pages/perfil/Rango";
 import PagoProducto from "./pages/PagoProducto";
-import PagoSuscripcion from "./pages/PagoSuscripcion"
+import PagoSuscripcion from "./pages/PagoSuscripcion";
 import { CarritoProvider } from "../src/components/ui/Carrito";
 
 import Confirmacion from "./components/ui/Login/Procesos/Contraseña/Confirmacion";
@@ -59,7 +61,7 @@ function App() {
           <Route exact path="/" element={<Home />} />
           <Route path="/rangos" element={<Rangos />} />
           <Route path="/suscripcion" element={<Suscripcion />} />
-          <Route path='/suscripcion/compra' element={<PagoSuscripcion />} />
+          <Route path="/suscripcion/compra" element={<PagoSuscripcion />} />
           <Route path="/spa" element={<Spa />} />
           <Route path="/spa/productos" element={<Productos />} />
           <Route
@@ -88,12 +90,17 @@ function App() {
           <Route path="/perfil" element={<Perfil />} />
           <Route path="/perfil/informacion" element={<InformacionPersonal />} />
           <Route path="/perfil/seguridad" element={<Seguridad />} />
+          <Route path="/perfil/seguridad/correo" element={<TuCorreo />} />
           <Route
-            path="/perfil/seguridad/cambiarCorreo"
+            path="/perfil/seguridad/contrasena"
+            element={<TuContrasena />}
+          />
+          <Route
+            path="/perfil/seguridad/correo/cambiarCorreo"
             element={<CambiarCorreo />}
           />
           <Route
-            path="/perfil/seguridad/cambiarContrasena"
+            path="/perfil/seguridad/contrasena/cambiarContrasena"
             element={<CambiarContrasena />}
           />
           <Route path="/perfil/monedero" element={<Monedero />} />
@@ -108,6 +115,7 @@ function App() {
             path="/perfil/tarjetas/registroTarjeta"
             element={<TarjetaNueva />}
           />
+
           <Route path="/perfil/agenda" element={<Agenda />} />
           <Route path="/favoritos" element={<Favoritos />} />
           <Route path="/perfil/editar-perfil" element={<EditarPerfil />} />
@@ -137,7 +145,6 @@ function App() {
           <Route path="/recuperacion/paso3" element={<NuevaContr />} />
           <Route path="/recuperacion/paso1" element={<Recuperacion />} />
           <Route path="/recuperacion/paso2" element={<Verificacion />} />
-
 
           {/* Tests */}
           <Route path="/test" element={<Test />} />

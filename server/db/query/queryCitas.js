@@ -226,3 +226,17 @@ export function horaFinal(horaI, duracion) {
   total = horaF.join(":"); // Juntamos el array de horaF con un : entre cada elemento dando asi el formato de horas
   return total; // Retornamos la hora final
 }
+
+
+export async function getCitasByEstado(connection, data) {
+  try {
+    let CitasQuery = "CALL getCitasClienteByEstado(?,?)"; // Procedimiento almacenado de la base de datos
+    let query = mysql.format(CitasQuery, [data.id,data.estado]); // Parametros necesarios para la base de datos
+    const [rows, fields] = await connection.query(query); // Ejecutamos query y almacenamos valores
+    endConnection(); // Cerramos conexion con la base de datos
+    return rows[0]; // Retornamos valores
+  } catch (err) {
+    // Capturamos errores de ejecucion de query
+    console.error(messageError, err); // Mostramos errores por consola
+  }
+}

@@ -124,6 +124,7 @@ export default function ServicioEstetica() {
       });
   }, []);
 
+
   // Función para manejar cambios en las categorías
   const handleCategoryChange = (label, isChecked) => {
     setCategories((prev) => {
@@ -156,17 +157,6 @@ export default function ServicioEstetica() {
     setPrecio(newValue);
   };
 
-  //useEffect para obtener los productos
-  useEffect(() => {
-    fetch("/api/admin/productos/getProducts")
-      .then((response) => response.json())
-      .then((data) => {
-        setAllProducts(data);
-      })
-      .catch((error) => {
-        console.log("error", error);
-      });
-  }, []);
 
   // Función para manejar la búsqueda
   const handleSearch = (e) => {

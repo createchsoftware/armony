@@ -22,13 +22,12 @@ export async function createProveedor(connection, data) {
   }
 }
 
-// PENDIENTE A PROBAR
-// HACE FALTA PROCEDIMIENTO
+// FUNCIONAL
 export async function readProveedorById(connection, data) {
   try {
-    let readProveedorByIdQuery = "CALL "; // Procedimiento almacenado de la DB
-
-    const [rows, fields] = await connection.query(); // Ejecutamos el query y guardamos los valores
+    let readProveedorByIdQuery = "CALL searchProveedorById(?)"; // Procedimiento almacenado de la DB
+    let query = mysql.format(readProveedorByIdQuery, [data.idProv]);
+    const [rows, fields] = await connection.query(query); // Ejecutamos el query y guardamos los valores
     endConnection(); // Cerramos la conexion
     return rows[0]; // Retornamos valores
   } catch (err) {
@@ -38,16 +37,20 @@ export async function readProveedorById(connection, data) {
 }
 
 // PENDIENTE A PROBAR
-// HACE FALTA PROCEDIMIENTO
 export async function readProveedorByName(connection, data) {
   try {
+    let searchByName = "CALL searchProveedorByNombre(?)"; // Procediento almacenado de la base de datos
+    let query = mysql.format(searchByName, [data.nameProv]); // Parametros necesarios para el procedimiento almacenado
+    const [rows, fields] = await connection.query(query); // Ejecutamos el query y almacenamos valores obtenidos
+    endConnection(); // Cerramos conexion con la base de datos
+    return rows[0]; // Retornamos valores obtenidos
   } catch (err) {
     // Capturamos errores de ejecucion de query
     console.error(messageError, err); // Mostramos errores por consola
   }
 }
 
-// FUNCIONAL
+// UPDATE FUNCIONAL
 export async function updateProveedor(connection, data) {
   try {
     let updateProveedorQuery = "CALL updProveedor(?, ?, ?, ?, ?)"; // Procedimiento almacenado de la DB

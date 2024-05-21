@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState,useEffect } from "react";
 import InforTarjeta from "./InfoTarjeta";
 import PagoRealizado from "./PagoRealizado";
 import { IconoMasterCard, IconoVisa } from "./Iconos";
@@ -6,10 +6,117 @@ import { IconoMasterCard, IconoVisa } from "./Iconos";
 function Pago() {
     const [tarjeta, setTarjeta] = useState(false);
     const [pagoRealizado, setPagoRealizado] = useState(false);
+    const [Uid,setUid]=useState(null)
+
     const [tarjetas, setTarjetas] = useState([
         {id: 1, noTarjeta: "509612341234", tipo: "Débito", banco: "BANORTE", code: "****"},
         {id: 2, noTarjeta: "294712341234", tipo: "Débito", banco: "NU", code: "****"}
     ]);
+
+
+
+
+
+    useEffect(()=>{
+        const getidUser=()=>{// aqui veificamos si hay una cookie con este nombre 
+        const cookie=  obteneridCookie('Naruto_cookie')
+        if(cookie){
+        
+            const decode=jwtDecode(cookie)//aqui decodificaremos la cokie
+        setUid(decode.user)
+        }}
+        getidUser()
+         },[])
+        
+        
+         const obteneridCookie=(namecookie)=>{ //en este metodo lo que hacemos es destructurar la cokie para 
+           // obtener el user y luego el id
+        const cookies=document.cookie.split(';');
+        for(let cokie of cookies){
+        const [key,value]=cokie.split('=')
+        if(key.trim()=== namecookie){
+            return value;//retornara el valor
+        }
+        }
+        return null;
+         }
+
+
+
+
+
+const horaActual=()=>{
+    let now = new Date();
+
+let hours = now.getHours();
+let minutes = now.getMinutes();
+let seconds = now.getSeconds();
+minutes = minutes < 10 ? '0' + minutes : minutes;
+seconds = seconds < 10 ? '0' + seconds : seconds;
+
+return `${hours}:${minutes}:${seconds}`;
+}
+
+
+    // useEffect(() => {
+    //     setTimeout(()=>{
+    //     fetch("/api/tarjetas/1.5")
+    //         .then(response => response.json())
+    //         .then(data => {
+    //             setTarjetas(data.array);
+    //         })
+    //         .catch(error => {
+    //             console.log(error);
+    //         });
+    //     },1500);
+    // }, [])
+    // const cliente={};
+    // useEffect(() => {
+    //     if(Uid){
+    //     fetch(`/api/admin/cliente/read/${Uid}`)
+    //         .then(response => response.json())
+    //         .then(data => {
+
+    //             cliente={
+    //             "idCliente": data.ID,
+    //             "nombre":data.Nombre,
+    //             "telefono":data.telefono,
+    //             "direccion":data.Dirección,
+    //             "email":data.email,
+    //             "monedero":data.monedero
+    //             }
+    //         })
+    //         .catch(error => {
+    //             console.log(error);
+    //         });}
+    // }, [Uid])
+
+    // useEffect(() => {
+     
+    //     fetch("/api/admin/citas/venta", {
+    //         method: "POST", 
+    //         body: JSON.stringify({
+    //   "pilar": 2,
+    //   "idCliente":cliente.idCliente,
+    //   "nombre": cliente.nombre,
+    //   "telefono": cliente.telefono,
+    //   tarjeta: req.body.tarjeta,
+    //   "monedero":cliente.monedero,
+    //   estadoPago:true,
+    //   servicio: req.body.servicio,
+    //   idEmp: req.body.idEmp,
+    //   fechaPago: new Date(),
+    //   "horaPago": horaActual(),
+    //   descr: req.body.descr,
+    //   subTotal: req.body.subTotal,
+    //   total: req.body.total,
+    //   "impuesto":18,
+    //         }), 
+    //         headers: {
+    //           "Content-Type": "application/json",
+    //         },
+    //       })
+    // }, [])
     const total=localStorage.getItem('total')
 
     const toggleTarjeta = () => {
@@ -25,7 +132,7 @@ function Pago() {
 
     //const total = (574).toFixed(2);
 
-    const cardList = tarjetas.map(item => (
+    const cardList = tarjetas.length > 0 ? (tarjetas.map(item => (
         <li key={item.id} className="flex items-center justify-between gap-4 px-4 mb-4 border-2 shadow-md rounded-3xl border-gray">
             {/* VVVVV Forma de "validar el bin" de una tarjeta */}
             {item.noTarjeta.charAt(0) === "5" ? (
@@ -39,8 +146,7 @@ function Pago() {
             <h1 className="text-xl">{item.noTarjeta.slice(0,4)}</h1>
             <button onClick={togglePago} className='bg-[#ec5766] text-xl text-white px-10 py-2 rounded-full duration-200 hover:bg-[#ffb5a7]'>Continuar</button>
         </li>
-    ))
-
+    ))) : (<div></div>)
     return (
         <>
             <div className='flex justify-between mx-16'>
