@@ -61,11 +61,15 @@ const steps = [
 ];
 
 export default function Cita({ producto }) {
+
+
   const location = useLocation();
+  const navigate = useNavigate();
 
   const [activeStep, setActiveStep] = useState(0);
   const [completed, setCompleted] = useState({});
   const [scrollPosition, setScrollPosition] = useState(0);
+
 
   const restart = () => {
     setActiveStep(0);
@@ -113,6 +117,7 @@ export default function Cita({ producto }) {
   };
 
   const handleCancel = () => {
+    navigate(-1);
     setActiveStep(0);
     setCompleted({});
   };
