@@ -1,5 +1,6 @@
 import JsonWebToken from 'jsonwebtoken';
 import dotenv from 'dotenv';
+import bcryptjs from 'bcryptjs';
 import {methods as servicios} from "../services/mail.service.js";
 import {methods as sms} from "../services/sms.service.js";
 import mysql from "mysql2";
@@ -7,6 +8,7 @@ import mysql from "mysql2";
 
 
 async function confirmacion(solicitud,respuesta,siguiente){
+    console.log('la funcion se ejecuta');
     if(solicitud.headers.cookie == undefined){
         //no hay ninguna cookie
         return respuesta.redirect('/recuperacion/paso1');
@@ -16,16 +18,17 @@ async function confirmacion(solicitud,respuesta,siguiente){
         let galletaNaruto = galletas.find(galleta=>galleta.startsWith('Naruto_cookie='));
 
         if(galletaNaruto){
-            respuesta.redirect(windows.history.back);
+            return respuesta.redirect(windows.history.back);
         }
         else{
             let galleta1 = galletas.find(galleta=>galleta.startsWith('Akane_cookie='));
-            let galleta2 = galletas.find(galleta=>galleta.startsWith('Himiko_toga='));
+            let galleta2 = galletas.find(galleta=>galleta.startsWith('Himiko_Toga='));
             let galleta3 =  galletas.find(galleta=>galleta.startsWith('Shiragiku_cookie='));
             let galleta4 =  galletas.find(galleta=>galleta.startsWith('Nezuko_Kamado='));
 
             if(galleta4){
                 // ahora toca actualizar la base de datos
+                console.log('hemos llegado a este paso final');
 
                 galleta1 = galleta1.slice(13);
                 galleta4 = galleta4.slice(14);
@@ -33,10 +36,14 @@ async function confirmacion(solicitud,respuesta,siguiente){
                 let decodificada1 = await JsonWebToken.verify(galleta1,process.env.JWT_SECRET);
                 let decodificada4 = await JsonWebToken.verify(galleta4,process.env.JWT_SECRET);
 
+                console.log(decodificada4.password);
+
                 let consulta = 'call UPD_PASS(?,?)';
 
                 let salt =  await bcryptjs.genSalt(5);  //clave cryptografica de la contraseña del usuario
                 let hashPassword =  await bcryptjs.hash(decodificada4.password,salt); 
+
+                console.log(hashPassword);
 
                 let parametros = [decodificada1.telefono_o_correo,hashPassword];
 

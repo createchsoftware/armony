@@ -1,4 +1,4 @@
-document.getElementById('step3').addEventListener('click',async ()=>{
+document.getElementById('continuar').addEventListener('click',async ()=>{
 
     console.log("me hicieron click");
     
@@ -69,13 +69,10 @@ document.getElementById('step3').addEventListener('click',async ()=>{
 
 document.getElementById('cancelar').addEventListener('click', ()=>{
 
-    document.cookie = "Megumin_cookie=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;"; 
-    document.cookie = "Nakano_Itsuki=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
-    document.cookie = "Rem_cookie=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;"; 
-    
-    document.getElementById('contraseña').value = '';
-    document.getElementById('nueva-contraseña').value = '';
-    document.getElementById('state').checked = false;
+    document.cookie = "Akane_cookie=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;"; 
+    document.cookie = "Himiko_Toga=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;"; 
+    document.cookie = "Shiragiku_cookie=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;"; 
+    document.cookie = "Nezuko_Kamado=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;"; 
 
     window.location.href = '/';
 })

@@ -18,7 +18,7 @@ const NuevaContr = () => {
     <div>
       <HelmetProvider>
           <Helmet>
-             <script src="../../../scripts/cancelar_recuperacion.js"></script>
+             <script src="../../../scripts/paso3_recuperacion.js"></script>
           </Helmet>
       </HelmetProvider>
       <div className="md:h-20 h-[3.75rem] bg-white" />
@@ -102,14 +102,13 @@ const NuevaContr = () => {
               
             </div>
             <div className="grid place-content-end mr-8">
-              <a href="/spa/resetPassword/Confirmacion">
                 <button
+                  id="continuar"
                   aria-label="Continuar"
                   className="bg-rose-400 text-white md:text-large lg:text-xl rounded-full px-4 py-2 mx-auto hover:bg-red-200"
                 >
                   Continuar
                 </button>
-              </a>
             </div>
           </div>
         </div>

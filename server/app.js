@@ -92,6 +92,8 @@ app.post('/api/step2', createAccount.paso2);
 
 app.post('/api/step3', createAccount.paso3);
 
+app.get('/api/recuperacion/paso0.5', recuperacion.carga_paso1);
+
 app.post('/api/recuperacion/paso1', recuperacion.paso1);
 
 app.get('/api/recuperacion/paso2_enviar', recuperacion.paso2_enviar);

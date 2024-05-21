@@ -5,6 +5,34 @@ import {methods as sms} from "../services/sms.service.js";
 import mysql from "mysql2";
 
 
+async function carga_paso1(solicitud, respuesta){
+    if(solicitud.headers.cookie != undefined){
+        
+        let galletas = solicitud.headers.cookie.split('; ');
+        let galleta_correspondiente = galletas.find(galleta=>galleta.startsWith('Akane_cookie='));
+
+        if(galleta_correspondiente){
+            galleta_correspondiente = galleta_correspondiente.slice(13);
+
+            let decodificada = await JsonWebToken.verify(galleta_correspondiente,process.env.JWT_SECRET);
+
+            if(decodificada.type == 'telefono'){
+                let input  = decodificada.telefono_o_correo
+
+                let lada = input.slice(0,-10);
+
+                let numero = input.slice(lada.length);
+                return respuesta.send({tipo:decodificada.type,lada:lada,numero:numero});
+            }
+            else{
+                return respuesta.send({tipo:decodificada.type,correo:decodificada.telefono_o_correo})
+            }
+            
+        }
+    }
+}
+
+
 
 async function paso1(solicitud, respuesta){
 
@@ -591,5 +619,6 @@ export const methods ={
     paso1,
     paso2_enviar,
     paso2_procesar,
-    paso3
+    paso3,
+    carga_paso1
 }

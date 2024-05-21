@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Helmet, HelmetProvider } from "react-helmet-async";
 import user1 from "../../../../../../public/pictures/userCl.png";
 import Pasos from "../../../PasosDeProcesos.jsx";
@@ -166,6 +166,24 @@ const Recuperacion = () => {
 
 
   }
+
+  useEffect(() => {
+    fetch("/api/recuperacion/paso0.5")
+        .then(response => response.json())
+        .then(data => {
+            if(data.tipo == 'telefono'){
+              toogleState();
+              setLada(data.lada);
+              setTelefono(data.numero);
+            }
+            else{
+              setCorreo(data.correo);
+            }
+        })
+        .catch(error => {
+            console.log(error);
+        });
+}, [])
 
   
 

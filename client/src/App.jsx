@@ -139,9 +139,6 @@ function App() {
           <Route path="/recuperacion/paso2" element={<Verificacion />} />
 
 
-
-
-
           {/* Tests */}
           <Route path="/test" element={<Test />} />
         </Routes>
