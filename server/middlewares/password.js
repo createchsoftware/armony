@@ -47,9 +47,9 @@ async function confirmacion(solicitud,respuesta,siguiente){
                 if(decodificada1.type == 'telefono'){
                     //enviar SMS
                     try{
-                        const sending_sms = await sms.SMS_CONGRALUATION(decodificada1.telefono_o_correo);
+                        await sms.SMS_CONGRALUATION(decodificada1.telefono_o_correo);
                         console.log('el SMS fue enviado exitosamente');
-                        console.log(sending_sms);
+                        
                     }catch(error){
                         console.log(error);
                     }

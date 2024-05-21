@@ -287,9 +287,8 @@ async function paso2_enviar(solicitud,respuesta){
                 // es de tipo telefono, toca mandar un sms
 
                 try{
-                    const sending_sms = await sms.SMS_VERIFICACION(codigo,decodificada.telefono_o_correo);
+                    await sms.SMS_VERIFICACION(codigo,decodificada.telefono_o_correo);
                     console.log('el SMS fue enviado exitosamente');
-                    console.log(sending_sms);
 
                     mensaje = 'El SMS fue enviado, reciba tu celular';
                     enviada = true;
