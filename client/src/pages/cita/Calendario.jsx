@@ -227,7 +227,7 @@ function Calendario() {
         const idServicio = localStorage.getItem('servicio');
         if (especialista && fecha) {
             try {
-                const response = await fetch(`/api/admin/citas/disponibles/1/${especialista}/${fecha}`, {
+                const response = await fetch(`/api/admin/citas/disponibles/${idServicio}/${especialista}/${fecha}`, {
                     method: 'GET',
                     headers: {
                         'Content-Type': 'application/json'
@@ -279,9 +279,10 @@ function Calendario() {
     // }, []);
 
     useEffect(() => {
+        const idServicio = localStorage.getItem('servicio');
         const fetchData = async () => {
             try {
-                const response = await fetch("/api/admin/empleado/getEmpServicio/1");
+                const response = await fetch(`/api/admin/empleado/getEmpServicio/${idServicio}`);
                 const data = await response.json();
                 setEspecialistas(data);
                 setIsLoad(false);
