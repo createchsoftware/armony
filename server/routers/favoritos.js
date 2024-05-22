@@ -26,7 +26,7 @@ routerFavoritos.post("/addfavorito", async (req, res) => {
 routerFavoritos.post("/delFavorito", async (req, res) => {
   try {
     const data = req.body;
-    delFavorito(conexion, data);
+    await delFavorito(conexion, data);
     res.status(201).send({ message: "Se elimino con exito" });
   } catch (err) {
     res.status(500).send({ error: "Hubo un problema", err });

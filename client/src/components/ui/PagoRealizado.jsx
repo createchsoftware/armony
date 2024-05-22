@@ -1,14 +1,43 @@
-import { useState } from "react";
+import { useState,useEffect } from "react";
 
-function PagoRealizado({ cerrarPago, cliente, total, next }) {
+function PagoRealizado({ cerrarPago, cliente,tarjeta, total, next }) {
     // const total = localStorage.getItem('total')
     const [cargando, setCargando] = useState(true);
-    setTimeout(() => {
-        setCargando(false);
+    useEffect(() => {
+        setTimeout(() => {
+            fetch("/api/admin/citas/venta", {
+                method: "POST", 
+                body: JSON.stringify({
+                    "pilar": 2,
+                    "idCliente": cliente.idCliente,
+                    "nombre": cliente.nombre,
+                    "telefono": cliente.telefono,
+                    "tarjeta": tarjeta,
+                    "monedero": cliente.monedero,
+                    "estadoPago": "pagada",
+                    "servicio": 1,
+                    "idEmp": 36,
+                    "fechaPago": new Date(),
+                    "horaPago": horaActual(),
+                    "descr": "venta de servicio",
+                    "subTotal": localStorage.getItem('totalIva'),
+                    "total": localStorage.getItem('total'),
+                    "impuesto": 18,
+                }), 
+                headers: {
+                    "Content-Type": "application/json",
+                },
+            }).then(() => {
+                setCargando(false);
+            }).catch((error) => {
+                console.error('Error en la venta:', error);
+                setCargando(false); // cambiar a false aunque haya error
+            });
+        }, 5000);
+    }, []);
 
-    }, 5000)
 
-    const horaActual = () => {
+    const horaActual=()=>{
         let now = new Date();
 
         let hours = now.getHours();
@@ -20,32 +49,32 @@ function PagoRealizado({ cerrarPago, cliente, total, next }) {
         return `${hours}:${minutes}:${seconds}`;
     }
 
-    // useEffect(() => {
-
-    //     fetch("/api/admin/citas/venta", {
-    //         method: "POST", 
-    //         body: JSON.stringify({
-    //   "pilar": 2,
-    //   "idCliente":cliente.idCliente,
-    //   "nombre": cliente.nombre,
-    //   "telefono": cliente.telefono,
-    //   tarjeta: req.body.tarjeta,
-    //   "monedero":cliente.monedero,
-    //   estadoPago:true,
-    //   servicio: req.body.servicio,
-    //   idEmp: req.body.idEmp,
-    //   fechaPago: new Date(),
-    //   "horaPago": horaActual(),
-    //   descr: req.body.descr,
-    //   subTotal: req.body.subTotal,
-    //   total: req.body.total,
-    //   "impuesto":18,
-    //         }), 
-    //         headers: {
-    //           "Content-Type": "application/json",
-    //         },
-    //       })
-    // }, [])
+//  useEffect(() => {
+     
+//         fetch("/api/admin/citas/venta", {
+//             method: "POST", 
+//             body: JSON.stringify({
+//       "pilar": 2,
+//       "idCliente":cliente.idCliente,
+//       "nombre": cliente.nombre,
+//       "telefono": cliente.telefono,
+//       "tarjeta":tarjeta,
+//       "monedero":cliente.monedero,
+//       "estadoPago":true,
+//       "servicio": 1,
+//       "idEmp": 36,
+//       fechaPago: new Date(),
+//       "horaPago": horaActual(),
+//       "descr": "venta de servicio",
+//       "subTotal":localStorage.getItem('totalIva'),
+//       "total":localStorage.getItem('total'),
+//       "impuesto":18,
+//             }), 
+//             headers: {
+//               "Content-Type": "application/json",
+//             },
+//           })
+//     }, [])
 
     return (
         <>
