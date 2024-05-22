@@ -490,7 +490,7 @@ function Agenda() {
                     <section className='w-1/2 p-2'>
                         <div className='flex justify-between gap-6 mb-6'>
                             <h2 className='text-[#EB5765] text-2xl'>Citas Pendientes</h2>
-                            <a href="/spa/perfil"><svg width="24" height="24" viewBox="0 0 41 41" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <a href="/perfil"><svg width="24" height="24" viewBox="0 0 41 41" fill="none" xmlns="http://www.w3.org/2000/svg">
                                 <circle cx="20.5" cy="20.5" r="19.5" fill="white" stroke="#EB5765" stroke-width="2" />
                                 <line x1="20.9082" y1="10.0313" x2="20.9082" y2="31.8068" stroke="#EB5765" stroke-width="5" stroke-linecap="round" />
                                 <line x1="9.19434" y1="20.0918" x2="30.9698" y2="20.0918" stroke="#EB5765" stroke-width="5" stroke-linecap="round" />

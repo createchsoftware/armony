@@ -139,7 +139,7 @@ function Pedidos() {
             <main className='grid gap-6 mb-12 mt-36 w-[60%] m-auto'>
 
                 <section className='rounded-2xl p-9 shadow-[0_3px_10px_rgb(0,0,0,0.2)]'>
-                    <a className='flex items-baseline content-center text-sm gap-x-4' href="/spa/perfil"> <IoIosArrowBack className='' />
+                    <a className='flex items-baseline content-center text-sm gap-x-4' href="/perfil"> <IoIosArrowBack className='' />
                         Volver</a>
                     <img className='w-32 m-auto my-12 rounded-full -mt-28 aspect-square' src="../../pictures/agendaFondo.png" alt="" />
                     <img className='m-auto mb-8 -mt-44 w-28 aspect-square' src="../../pictures/pedidos.png" alt="" />

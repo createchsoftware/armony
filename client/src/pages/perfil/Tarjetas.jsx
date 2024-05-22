@@ -64,7 +64,7 @@ function Tarjetas() {
             <LayoutPrincipal>
                 <main className='grid gap-12 my-24'>
                     <section className='rounded-2xl mt-12 w-[60%] m-auto p-6 shadow-[0_3px_10px_rgb(0,0,0,0.2)]'>
-                        <a href="/spa/perfil" className='flex w-max items-center ml-6 text-black relative cursor-pointer before:bg-black before:absolute before:-bottom-1 before:block before:h-[1px] before:w-full before:origin-bottom-right before:scale-x-0 before:transition before:duration-300 before:ease-in-out hover:before:origin-bottom-left hover:before:scale-x-100 hover:font-bold'>
+                        <a href="/perfil" className='flex w-max items-center ml-6 text-black relative cursor-pointer before:bg-black before:absolute before:-bottom-1 before:block before:h-[1px] before:w-full before:origin-bottom-right before:scale-x-0 before:transition before:duration-300 before:ease-in-out hover:before:origin-bottom-left hover:before:scale-x-100 hover:font-bold'>
                             <FontAwesomeIcon icon={faAngleLeft} />
                             <p className='ml-2'>Volver</p>
                         </a>
