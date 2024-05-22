@@ -1,27 +1,27 @@
 import { useState } from "react";
 
-function PagoRealizado({ cerrarPago,cliente }) {
-    const total=localStorage.getItem('total')
+function PagoRealizado({ cerrarPago, cliente, total, next }) {
+    // const total = localStorage.getItem('total')
     const [cargando, setCargando] = useState(true);
     setTimeout(() => {
         setCargando(false);
 
     }, 5000)
 
-    const horaActual=()=>{
+    const horaActual = () => {
         let now = new Date();
-    
-    let hours = now.getHours();
-    let minutes = now.getMinutes();
-    let seconds = now.getSeconds();
-    minutes = minutes < 10 ? '0' + minutes : minutes;
-    seconds = seconds < 10 ? '0' + seconds : seconds;
-    
-    return `${hours}:${minutes}:${seconds}`;
+
+        let hours = now.getHours();
+        let minutes = now.getMinutes();
+        let seconds = now.getSeconds();
+        minutes = minutes < 10 ? '0' + minutes : minutes;
+        seconds = seconds < 10 ? '0' + seconds : seconds;
+
+        return `${hours}:${minutes}:${seconds}`;
     }
 
- // useEffect(() => {
-     
+    // useEffect(() => {
+
     //     fetch("/api/admin/citas/venta", {
     //         method: "POST", 
     //         body: JSON.stringify({
@@ -134,7 +134,7 @@ function PagoRealizado({ cerrarPago,cliente }) {
                                 <span className="my-6 text-xl font-bold justify-self-center">Monto:${total}</span>
                             </div>
                             <div className="grid">
-                                <button onClick={cerrarPago} className='bg-[#ec5766] justify-self-center mt-6 text-xl text-white px-10 py-2 rounded-full duration-200 hover:bg-[#ffb5a7]'>Aceptar</button>
+                                <button onClick={next} className='bg-[#ec5766] justify-self-center mt-6 text-xl text-white px-10 py-2 rounded-full duration-200 hover:bg-[#ffb5a7]'>Aceptar</button>
                             </div>
                         </div>
                     )}

@@ -34,7 +34,7 @@ function Seguridad() {
           </h2>
           <div className="rounded-2xl m-auto grid  p-6 shadow-[0_3px_10px_rgb(0,0,0,0.2)]">
             <a
-              href="/perfil/seguridad/correo"
+              href="/spa/perfil"
               className="flex justify-between p-5 hover:underline rounded-xl hover:bg-slate-100"
             >
               <div className="flex gap-6">
