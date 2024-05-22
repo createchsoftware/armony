@@ -13,6 +13,7 @@ import { Slider, Box } from "@mui/material";
 import Rating from "@mui/material/Rating";
 import Servicio from "../../../components/ui/Servicio.jsx";
 import Presentacion from "../../../components/ui/PresentacionSpa.jsx";
+import Soon from "../Proximamente";
 
 function classNames(...clases) {
   return clases.filter(Boolean).join(" ");
@@ -78,6 +79,11 @@ export default function ServicioEstetica() {
   const [color2, setColor2] = useState("#F6B3B9");
   const [log, setLog] = useState(false);
 
+  const [soon, setSoon] = useState(false);
+  const toggleSoon = () => {
+    setSoon(!soon);
+  };
+
   let respuestaJson = null;
   async function checkLogin() {
     try {
@@ -124,7 +130,6 @@ export default function ServicioEstetica() {
       });
   }, []);
 
-
   // Función para manejar cambios en las categorías
   const handleCategoryChange = (label, isChecked) => {
     setCategories((prev) => {
@@ -156,7 +161,6 @@ export default function ServicioEstetica() {
   const handlePriceChange = (event, newValue) => {
     setPrecio(newValue);
   };
-
 
   // Función para manejar la búsqueda
   const handleSearch = (e) => {
@@ -271,14 +275,16 @@ export default function ServicioEstetica() {
         <div className="grid grid-cols-2 my-16">
           <a
             style={{ backgroundColor: color1 }}
-            onClick={() => toggleService(1)}
+            onClick={toggleSoon}
+            //onClick={() => toggleService(1)}
             className="px-10 py-4 mx-auto text-sm text-white rounded-full hover:cursor-pointer hover:bg-opacity-80 md:text-base"
           >
             Tratamientos faciales
           </a>
           <a
             style={{ backgroundColor: color2 }}
-            onClick={() => toggleService(2)}
+            onClick={toggleSoon}
+            //onClick={() => toggleService(2)}
             className="px-10 py-4 mx-auto text-xs text-white rounded-full hover:cursor-pointer hover:bg-opacity-80 md:text-base "
           >
             Tratamientos corporales
@@ -866,6 +872,13 @@ export default function ServicioEstetica() {
           </main>
         </div>
       </div>
+      {soon && (
+        <div className="soon-fondo">
+          <div className="soon-fx" onClick={toggleSoon}>
+            <Soon />
+          </div>
+        </div>
+      )}
     </>
   );
 }
