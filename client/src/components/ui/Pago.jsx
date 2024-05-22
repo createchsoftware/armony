@@ -10,6 +10,7 @@ function Pago({ producto }) {
     const [tarjeta, setTarjeta] = useState(false);
     const [pagoRealizado, setPagoRealizado] = useState(false);
     const [Uid, setUid] = useState(null)
+    const [descuento, setDescuento] = useState('');
 
     const [cartItems, setCartItems] = useState(() => {
         if (producto) {
@@ -31,7 +32,9 @@ function Pago({ producto }) {
 
     const totalProductos = cartItems.reduce((sum, producto) => sum + (producto.precio * producto.cantidad), 0);
     const cantidadProductos = cartItems.reduce((sum, producto) => sum + producto.cantidad, 0);
-
+    const subTotal = cartItems.reduce((acc, item) => acc + item.precio * item.cantidad, 0).toFixed(2);
+    const ivaTotal = (parseFloat(subTotal) * 0.08).toFixed(2);
+    const total = (parseFloat(subTotal) + parseFloat(ivaTotal)).toFixed(2);
 
     useEffect(() => {
         const getidUser = () => {// aqui veificamos si hay una cookie con este nombre 
@@ -183,13 +186,17 @@ function Pago({ producto }) {
                                     <span className="text-[rgb(3,109,99)] font-bold">$0.00</span>
                                 </div>
                                 <div className='flex justify-between px-6 pt-6'>
+                                    <h1 className='font-bold'>IVA</h1>
+                                    <span className="text-[rgb(3,109,99)] font-bold">{ivaTotal}</span>
+                                </div>
+                                <div className='flex justify-between px-6 pt-6'>
                                     <h1 className='font-bold'>Cupón</h1>
                                     <span className="text-[rgb(3,109,99)] font-bold">$0.00</span>
                                 </div>
                             </div>
                             <div className='flex justify-between p-6 px-10 mb-4 border-2 shadow-md rounded-xl border-gray'>
                                 <h4 className='text-xl font-bold'>Total:</h4>
-                                <span className='font-bold text-[rgb(3,109,99)] text-xl'>${totalProductos}</span>
+                                <span className='font-bold text-[rgb(3,109,99)] text-xl'>${total}</span>
                             </div>
                         </div>
                     </div>

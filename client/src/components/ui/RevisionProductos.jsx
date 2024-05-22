@@ -45,7 +45,10 @@ function RevisionProductos({ restart, producto }) {
     }
 
     const totalCitas = cartItems.reduce((total, item) => total + item.cantidad, 0);
-    const total = cartItems.reduce((acc, item) => acc + item.precio * item.cantidad, 0).toFixed(2);
+    const subTotal = cartItems.reduce((acc, item) => acc + item.precio * item.cantidad, 0).toFixed(2);
+    const ivaTotal = (parseFloat(subTotal) * 0.08).toFixed(2);
+    const total = (parseFloat(subTotal) + parseFloat(ivaTotal)).toFixed(2);
+
     //const iva = (total * (.08)).toFixed(2);
     //const totalIva = (parseFloat(total) + parseFloat(iva)).toFixed(2);
 
@@ -86,7 +89,7 @@ function RevisionProductos({ restart, producto }) {
             <div className='grid mb-8'>
                 <div className='flex justify-between mx-16'>
                     {/* Bloque de servicios */}
-                    <div className="rounded-xl shadow-md w-[55%] border-2 border-gray">
+                    <div className="rounded-xl shadow-md w-[55%] overflow-y-auto border-2 border-gray">
                         <div className='flex bg-[rgb(3,109,99)] rounded-t-xl justify-between items-center'>
                             <a href="/spa/productos" className='flex items-center ml-6 text-white relative cursor-pointer before:bg-white before:absolute before:-bottom-1 before:block before:h-[1px] before:w-full before:origin-bottom-right before:scale-x-0 before:transition before:duration-300 before:ease-in-out hover:before:origin-bottom-left hover:before:scale-x-100 hover:font-bold'>
                                 <FontAwesomeIcon icon={faAngleLeft} />
@@ -95,7 +98,7 @@ function RevisionProductos({ restart, producto }) {
                             <p className='py-2 text-lg text-white mr-[45%]'>Resumen</p>
                         </div>
                         {/* Contenido de los servicios agendados */}
-                        <div className='px-6 pt-6 h-[35rem] overflow-y-auto'>
+                        <div className='px-6 pt-6 h-[35rem] overflow-y-visible'>
                             {cartItems.length === 0 ? (
                                 <div className='grid'>
                                     <h4 className="mt-4 mb-10 text-xl font-bold justify-self-center">No hay productos en el carrito.</h4>
@@ -116,7 +119,11 @@ function RevisionProductos({ restart, producto }) {
                             <div className='grid p-6 mb-4 border-2 shadow-md rounded-xl border-gray'>
                                 <div className='flex justify-between'>
                                     <span>{totalCitas} Producto(s)</span>
-                                    <h1 className='font-bold'>${total}</h1>
+                                    <h1 className='font-bold'>${subTotal}</h1>
+                                </div>
+                                <div className='flex justify-between'>
+                                    <h1>IVA</h1>
+                                    <h1 className='font-bold'>{'$' + ivaTotal}</h1>
                                 </div>
                                 <div className='flex justify-between'>
                                     <h1>Envío</h1>

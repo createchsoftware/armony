@@ -31,7 +31,9 @@ const FinalizacionPagoProd = ({ producto }) => {
     });
 
 
-    const totalProductos = allProducts.reduce((sum, producto) => sum + (producto.precio * producto.cantidad), 0);
+    const subTotal = allProducts.reduce((acc, item) => acc + item.precio * item.cantidad, 0).toFixed(2);
+    const ivaTotal = (parseFloat(subTotal) * 0.08).toFixed(2);
+    const total = (parseFloat(subTotal) + parseFloat(ivaTotal)).toFixed(2);
 
     return (
         <>
@@ -55,7 +57,7 @@ const FinalizacionPagoProd = ({ producto }) => {
                         </div>
                         {/* Contenido de los servicios pagados */}
 
-                        <div className="rounded-xl shadow-md overflow-y-auto w-[40rem] mx-auto my-5 h-[30rem] border-2 border-gray">
+                        <div className="rounded-xl shadow-md overflow-y-auto w-[40rem] mx-auto my-5 h-[25rem] border-2 border-gray">
                             {allProducts.map((producto) => {
                                 return (
                                     <div>
@@ -70,11 +72,11 @@ const FinalizacionPagoProd = ({ producto }) => {
                                     </div>
                                 );
                             })}
-                            <div className="shadow-md w-[15rem] my-5 ml-[22rem] h-auto border-2 border-gray">
-                                <div className="grid grid-cols-2 place-items-center">
-                                    <p>Total</p>
-                                    <p className="text-[rgb(3,109,99)] font-bold">${totalProductos}</p>
-                                </div>
+                        </div>
+                        <div className="shadow-md w-[15rem] my-5 ml-[22rem] h-auto border-2 border-gray">
+                            <div className="grid grid-cols-2 place-items-center">
+                                <p>Total</p>
+                                <p className="text-[rgb(3,109,99)] font-bold">${total}</p>
                             </div>
                         </div>
                         {/* Botones */}
