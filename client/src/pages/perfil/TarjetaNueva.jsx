@@ -15,6 +15,7 @@ function TarjetaNueva() {
     const [editar, setEditar] = useState(false)
 
     const editarTarjeta = (tarjeta) => {
+        setAdd(false)
         setSelectedCard(tarjeta)
         setIsSelected(!isSelected)
     }
@@ -23,6 +24,11 @@ function TarjetaNueva() {
     }
     const editarPopUp = () => {
         setEditar(!editar)
+    }
+    const addCard = () => {
+        setAdd(true)
+        clearSelection()
+        setIsSelected(false)
     }
 
     useEffect(() => {
@@ -58,14 +64,14 @@ function TarjetaNueva() {
                     <div className="flex justify-between mx-28">
                         <div className='grid w-[40%] rounded-2xl shadow-[0_3px_10px_rgb(0,0,0,0.2)] h-min'>
                             {array.length === 0 ? (
-                                <p className='m-auto mb-4'>No hay tarjetas registradas.</p>
+                                <p className='m-auto my-4'>No hay tarjetas registradas.</p>
                             ) : (
                                 // eslint-disable-next-line react/jsx-key
                                 array.map((objeto, index) => (<TarjetasPagoEstatica tarjetas={objeto} isFirst={index === 0} show={editarTarjeta} clearSelection={clearSelection} />))
                             )}
                             {array.length === 0 && <hr />}
                             <div className='grid justify-center'>
-                                <button onClick={() => setAdd(true)} className='flex gap-2 items-center text-2xl w-max my-4 relative before:bg-[#056761] before:absolute before:-bottom-1 before:block before:h-[1px] before:w-full before:origin-bottom-right before:scale-x-0 before:transition before:duration-300 before:ease-in-out hover:before:origin-bottom-left hover:before:scale-x-100 hover:font-bold'>
+                                <button onClick={addCard} className='flex gap-2 items-center text-2xl w-max my-4 relative before:bg-[#056761] before:absolute before:-bottom-1 before:block before:h-[1px] before:w-full before:origin-bottom-right before:scale-x-0 before:transition before:duration-300 before:ease-in-out hover:before:origin-bottom-left hover:before:scale-x-100 hover:font-bold'>
                                     <p className='text-[#056761]'>Agregar tarjeta</p>
                                     <FontAwesomeIcon icon={faCirclePlus} className='text-[#056761]' />
                                 </button>

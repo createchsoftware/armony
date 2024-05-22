@@ -2,12 +2,17 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faAngleLeft } from '@fortawesome/free-solid-svg-icons';
 import { useState } from 'react';
 
+// eslint-disable-next-line react/prop-types
 function RevisionProductos({ restart }) {
     const suscripcion = 199
     const [descuento, setDescuento] = useState('')
     const handleChange = (event) => {
         setDescuento(event.target.value)
     }
+
+    const puntos = suscripcion/10;
+    //En caso de ser Socio VVV
+    //const puntos = (parseInt(totalIva))/5;
 
     return (
         <>
@@ -77,6 +82,10 @@ function RevisionProductos({ restart }) {
                                     <button type="submit" className='rounded-r-full text-white bg-[rgb(3,109,99)] py-2 px-8 duration-200 hover:bg-[rgb(69,181,156)] hover:font-bold'>Aplicar</button>
                                 </form>
                                 <p className='w-[80%] text-center justify-self-center text-xs mt-4'>Los <p className='text-[#D47300]'>Términos y Condiciones de los Cupones</p> de Armony aplican el uso de cupones.</p>
+                            </div>
+                            <div className='flex justify-between p-6 px-10 mb-4 border-2 shadow-md rounded-xl border-gray'>
+                                <h4 className='text-xl font-bold'>Puntos obtenidos:</h4>
+                                <span className='font-bold text-[rgb(3,109,99)] text-xl'>{parseInt(puntos)}</span>
                             </div>
                             <div className='flex justify-between p-6 px-10 mb-4 border-2 shadow-md rounded-xl border-gray'>
                                 <h4 className='text-xl font-bold'>Total:</h4>
