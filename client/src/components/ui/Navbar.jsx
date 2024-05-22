@@ -20,7 +20,7 @@ function Navbar() {
     const [log, setLog] = useState(false); //<<< PARA EL INICIO DE SESION
     const [usuario, setUsuario] = useState(false); //<<< PARA EL INICIO DE SESION
     const [items, setItems] = useState(0);
-    const [rango, setRango] = useState(3); //<<< MUESTRA EL RANGO DEL USUARIO
+    const [rango, setRango] = useState(0); //<<< MUESTRA EL RANGO DEL USUARIO
     const [sus, setSus] = useState(false); //<<< CARACTERISTICA GRAFICA DE QUE EL USUARIO ES SOCIO
 
     const spaRutas = location.pathname.startsWith('/spa') ||
