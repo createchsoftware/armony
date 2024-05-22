@@ -1,7 +1,6 @@
 import { useState,useEffect } from "react";
 import InforTarjeta from "./InfoTarjeta";
 import PagoRealizado from "./PagoRealizado";
-import { IconoMasterCard, IconoVisa } from "./Iconos";
 import { jwtDecode } from "jwt-decode";
 
 
@@ -95,17 +94,12 @@ function Pago() {
     //const total = (574).toFixed(2);
 
     const cardList = tarjetas.length > 0 ? (tarjetas.map(item => (
-        <li key={item.id} className="flex items-center justify-between gap-4 px-4 mb-4 border-2 shadow-md rounded-3xl border-gray">
-            {/* VVVVV Forma de "validar el bin" de una tarjeta */}
-            {item.numero_tarjeta.charAt(0) === "5" ? (
-                <IconoVisa />
-            ):(
-                <IconoMasterCard />
-            )}
-            <h1 className="text-xl">{item.banco}</h1>
+        <li key={item.id} className="flex items-center justify-between gap-4 px-4 mb-4 border-2 shadow-md rounded-3xl border-gray py-1">
+            <img src={"../../../pictures/" + item.imagen} className="w-1/5 h-auto"/>
+            <h1 className="text-xl truncate">{item.empresa}</h1>
             <h1 className="text-xl">{item.tipo}</h1>
-            <h1 className="text-xl">{item.code}</h1>
-            <h1 className="text-xl">{item.numero_tarjeta.slice(0,4)}</h1>
+            {/* <h1 className="text-xl">{item.code}</h1> */}
+            <h1 className="text-xl">****{item.numero_tarjeta.slice(0,4)}</h1>
             <button onClick={togglePago} className='bg-[#ec5766] text-xl text-white px-10 py-2 rounded-full duration-200 hover:bg-[#ffb5a7]'>Continuar</button>
         </li>
     ))) : (<div></div>)
@@ -183,7 +177,7 @@ function Pago() {
                         </div>
                     </div>
                     {/* Bloque "Aceptamos" */}
-                    <div className="border-2 shadow-md rounded-xl border-gray">
+                    <div className="border-2 shadow-md rounded-xl mt-4 border-gray">
                         <div className='grid bg-[rgb(3,109,99)] rounded-t-xl'>
                             <p className='py-2 ml-8 text-2xl text-white'>Aceptamos</p>
                         </div>
