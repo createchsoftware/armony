@@ -24,7 +24,7 @@ function TuContrasena() {
           />
           <div className="m-auto text-center ">
             <h1 className="text-[#036C65] font-semibold text-2xl mb-2">
-              Tu contrasena
+              Tu contraseña
             </h1>
           </div>
         </section>
