@@ -93,15 +93,6 @@ const ofertas = [
     },
 ]
 
-const initialProduct = {
-    id: 1,
-    nombre: 'Producto 1',
-    precio: 10,
-    descripcion: 'Descripción del producto',
-    valoracion: 5,
-    imagen: './pictures/producto1.png',
-    cantidad: 1,
-}
 
 function Producto() {
     const { id } = useParams();
@@ -123,7 +114,6 @@ function Producto() {
     const [reviewRating, setReviewRating] = useState(0);
 
     const { agregarAlCarrito } = useCarrito();
-
 
     useEffect(() => {
         window.scrollTo(0, 0)
@@ -226,7 +216,7 @@ function Producto() {
                             <img className="w-14 aspect-square h-14" src={product.imagen} alt="" />
                         </div>
                     </div>
-                    <div className="grid w-1/2 gap-0 p-12">
+                    <div className="grid content-between w-1/2 gap-0 p-12">
                         <div>
                             <Box
                                 className="float-right"
@@ -255,8 +245,8 @@ function Producto() {
                             <p className="text-[#056761] text-xl">Detalles</p>
                             <p className="text-xl">{product.descripcion}</p>
                         </div>
-                        <div className="grid grid-cols-2 gap-4 ">
-                            <button className="flex gap-4 bg-[#D9D9D9]  w-full rounded-full items-center justify-center">
+                        <div className="grid grid-cols-2 gap-4 pt-4">
+                            <button className="flex gap-4 bg-[#D9D9D9] py-2  w-full rounded-full items-center justify-center">
                                 <button onClick={decreaseQuantity} className="">
                                     <FontAwesomeIcon icon={faCircleMinus} onClick={decreaseQuantity} />
                                 </button>
@@ -265,10 +255,10 @@ function Producto() {
                                     <FontAwesomeIcon icon={faCirclePlus} onClick={increaseQuantity} />
                                 </button>
                             </button>
-                            <button onClick={handleAddCart} className="text-[#EB5765] w-full bg-opacity-30 bg-[#EB5765] hover:bg-opacity-90 hover:text-white rounded-full">
+                            <button onClick={handleAddCart} className="text-[#EB5765] py-2 w-full bg-opacity-30 bg-[#EB5765] hover:bg-opacity-90 hover:text-white rounded-full">
                                 Agregar al carrito
                             </button>
-                            <button onClick={handleComprar} className="bg-[#EB5765] col-span-2 text-white rounded-full hover:bg-opacity-80 hover:text-white w-full">
+                            <button onClick={handleComprar} className="bg-[#EB5765] py-2 col-span-2 text-white rounded-full hover:bg-opacity-80 hover:text-white w-full">
                                 Comprar ahora
                             </button>
                         </div>

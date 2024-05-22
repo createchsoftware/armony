@@ -227,7 +227,7 @@ function Calendario() {
         const idServicio = localStorage.getItem('servicio');
         if (especialista && fecha) {
             try {
-                const response = await fetch(`/api/admin/citas/disponibles/1/${especialista}/${fecha}`, {
+                const response = await fetch(`/api/admin/citas/disponibles/${idServicio}/${especialista}/${fecha}`, {
                     method: 'GET',
                     headers: {
                         'Content-Type': 'application/json'
@@ -279,9 +279,10 @@ function Calendario() {
     // }, []);
 
     useEffect(() => {
+        const idServicio = localStorage.getItem('servicio');
         const fetchData = async () => {
             try {
-                const response = await fetch("/api/admin/empleado/getEmpServicio/1");
+                const response = await fetch(`/api/admin/empleado/getEmpServicio/${idServicio}`);
                 const data = await response.json();
                 setEspecialistas(data);
                 setIsLoad(false);
@@ -360,6 +361,7 @@ function Calendario() {
         const especialista = localStorage.getItem('Especialista');
         if (selectedDate && especialista) {
             horasDisp();
+
         }
     }, [selectedDate, localStorage.getItem('Especialista')]);
 
@@ -381,6 +383,7 @@ function Calendario() {
                     <div className=''>
                         <LocalizationProvider dateAdapter={AdapterDayjs}>
                             <DateCalendar
+                                disabled={!!localStorage.getItem('Especialista')}
                                 sx={[dayStyle,
                                     {
                                         svg: { fill: '#ec5766 !important' },
@@ -430,7 +433,7 @@ function Calendario() {
 
 
                     <div className='overflow-x-auto'>
-                        <h1 className='text-xl text-[#036C65] mb-4'>Horas Disponibles:</h1>
+                        <h1 className='text-xl text-[#036C65] mb-4'>{localStorage.getItem('Especialista') ? 'Horas Disponibles:' : ''}</h1>
                         <div className='flex text-[#EB5765] gap-2'>
                             {horasDisponibles && horasDisponibles.map((hora, index) => (
                                 <button key={index} onClick={() => handleClick(hora, index)} className={getButtonClass(index)}>{hora}</button>

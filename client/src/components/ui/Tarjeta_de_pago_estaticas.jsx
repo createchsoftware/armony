@@ -22,10 +22,16 @@ function TarjetasPagoEstatica({ tarjetas, isFirst, show, clearSelection }) {
 
     return (
         <div className={'grid overflow-hidden ' + select}>
-            { tarjetas.predeterminada && (
-                <div className="grid w-[40%] justify-self-end rounded-tr-2xl rounded-bl-2xl bg-[#056761]">
-                    <p className="text-white justify-self-center">Predeterminado</p>
-                </div>
+            { tarjetas.predeterminada === 1 && (
+                isFirst ? (
+                    <div className="grid w-[40%] justify-self-end rounded-tr-2xl rounded-bl-2xl bg-[#056761]">
+                        <p className="text-white justify-self-center">Predeterminado</p>
+                    </div>
+                ):(
+                    <div className="grid w-[40%] justify-self-end rounded-bl-2xl bg-[#056761]">
+                        <p className="text-white justify-self-center">Predeterminado</p>
+                    </div>
+                )  
             )}
             <div className="flex py-6 px-8 justify-between">
                 <div className="grid justify-center">

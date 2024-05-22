@@ -1,15 +1,83 @@
-import { useState } from "react";
+import { useState,useEffect } from "react";
 import InforTarjeta from "./InfoTarjeta";
 import PagoRealizado from "./PagoRealizado";
-import { IconoMasterCard, IconoVisa } from "./Iconos";
+import { jwtDecode } from "jwt-decode";
 
-function Pago() {
+
+
+function Pago({ producto, next }) {
     const [tarjeta, setTarjeta] = useState(false);
     const [pagoRealizado, setPagoRealizado] = useState(false);
-    const [tarjetas, setTarjetas] = useState([
-        {id: 1, noTarjeta: "509612341234", tipo: "Débito", banco: "BANORTE", code: "****"},
-        {id: 2, noTarjeta: "294712341234", tipo: "Débito", banco: "NU", code: "****"}
-    ]);
+    const [Uid,setUid]=useState(null)
+
+    // const [tarjetas, setTarjetas] = useState([
+    //     {id: 1, noTarjeta: "509612341234", tipo: "Débito", banco: "BANORTE", code: "****"},
+    //     {id: 2, noTarjeta: "294712341234", tipo: "Débito", banco: "NU", code: "****"}
+    // ]);
+
+ const [tarjetas, setTarjetas] = useState([]);
+
+
+
+    useEffect(()=>{
+        const getidUser=()=>{// aqui veificamos si hay una cookie con este nombre 
+        const cookie=  obteneridCookie('Naruto_cookie')
+        if(cookie){
+        
+            const decode=jwtDecode(cookie)//aqui decodificaremos la cokie
+        setUid(decode.user)
+        }}
+        getidUser()
+         },[])
+        
+        
+         const obteneridCookie=(namecookie)=>{ //en este metodo lo que hacemos es destructurar la cokie para 
+           // obtener el user y luego el id
+        const cookies=document.cookie.split(';');
+        for(let cokie of cookies){
+        const [key,value]=cokie.split('=')
+        if(key.trim()=== namecookie){
+            return value;//retornara el valor
+        }
+        }
+        return null;
+         }
+
+
+
+    useEffect(() => {
+        setTimeout(()=>{
+        fetch("/api/tarjetas/1.5")
+            .then(response => response.json())
+            .then(data => {
+                setTarjetas(data.array);
+            })
+            .catch(error => {
+                console.log(error);
+            });
+        },500);
+    }, [])
+
+    const cliente = {};
+    useEffect(() => {
+        if (Uid) {
+            fetch(`/api/admin/cliente/read/${Uid}`)
+                .then(response => response.json())
+                .then(data => {
+                    cliente.idCliente = data.ID;
+                    cliente.nombre = data.Nombre;
+                    cliente.telefono = data.telefono;
+                    cliente.direccion = data.Dirección;
+                    cliente.email = data.email;
+                    cliente.monedero = data.monedero;
+                })
+                .catch(error => {
+                    console.log(error);
+                });
+        }
+    }, [Uid]);
+
+   
     const total=localStorage.getItem('total')
 
     const toggleTarjeta = () => {
@@ -18,29 +86,23 @@ function Pago() {
     const togglePago = () => {
         setPagoRealizado(!pagoRealizado);
     }
-    const datosRecibidos = (nuevaTarjeta) => {
-        setTarjetas([...tarjetas, {id: 3, noTarjeta: {nuevaTarjeta}, tipo: "Débito", banco: "BBVA", code: "****"}]);
-        console.log(tarjetas);
-    }
+    // const datosRecibidos = (nuevaTarjeta) => {
+    //     setTarjetas([...tarjetas, {id: 3, noTarjeta: {nuevaTarjeta}, tipo: "Débito", banco: "BBVA", code: "****"}]);
+    //     console.log(tarjetas);
+    // }
 
     //const total = (574).toFixed(2);
 
-    const cardList = tarjetas.map(item => (
-        <li key={item.id} className="flex items-center justify-between gap-4 px-4 mb-4 border-2 shadow-md rounded-3xl border-gray">
-            {/* VVVVV Forma de "validar el bin" de una tarjeta */}
-            {item.noTarjeta.charAt(0) === "5" ? (
-                <IconoVisa />
-            ):(
-                <IconoMasterCard />
-            )}
-            <h1 className="text-xl">{item.banco}</h1>
+    const cardList = tarjetas.length > 0 ? (tarjetas.map(item => (
+        <li key={item.id} className="flex items-center justify-between gap-4 px-4 mb-4 border-2 shadow-md rounded-3xl border-gray py-1">
+            <img src={"../../../pictures/" + item.imagen} className="w-1/5 h-auto"/>
+            <h1 className="text-xl truncate">{item.empresa}</h1>
             <h1 className="text-xl">{item.tipo}</h1>
-            <h1 className="text-xl">{item.code}</h1>
-            <h1 className="text-xl">{item.noTarjeta.slice(0,4)}</h1>
+            {/* <h1 className="text-xl">{item.code}</h1> */}
+            <h1 className="text-xl">****{item.numero_tarjeta.slice(0,4)}</h1>
             <button onClick={togglePago} className='bg-[#ec5766] text-xl text-white px-10 py-2 rounded-full duration-200 hover:bg-[#ffb5a7]'>Continuar</button>
         </li>
-    ))
-
+    ))) : (<div></div>)
     return (
         <>
             <div className='flex justify-between mx-16'>
@@ -115,7 +177,7 @@ function Pago() {
                         </div>
                     </div>
                     {/* Bloque "Aceptamos" */}
-                    <div className="border-2 shadow-md rounded-xl border-gray">
+                    <div className="border-2 shadow-md rounded-xl mt-4 border-gray">
                         <div className='grid bg-[rgb(3,109,99)] rounded-t-xl'>
                             <p className='py-2 ml-8 text-2xl text-white'>Aceptamos</p>
                         </div>
@@ -160,7 +222,7 @@ function Pago() {
             {pagoRealizado && (
                 <div className='soon-fondo'>
                     <div className='soon-fx'>
-                        <PagoRealizado cerrarPago={togglePago} />
+                        <PagoRealizado cerrarPago={togglePago} cliente={cliente} total={total} next={next} />
                     </div>
                 </div>
             )}

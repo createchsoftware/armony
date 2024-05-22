@@ -4,9 +4,10 @@ import {
   createEmpleado,
   readEmpleadoById,
   readEmpleadoByNombre,
+  readEmpAct,
   updateEmpleado,
   deleteEmpleadoById,
-  getEmpServicio
+  getEmpServicio,
 } from "../db/query/queryEmpleado.js";
 
 // Router
@@ -47,6 +48,7 @@ routerEmpleado.post("/create", async (req, res) => {
   }
 });
 
+// FUNCIONAL
 // READ BY ID FUNCIONAL
 routerEmpleado.get("/read", async (req, res) => {
   try {
@@ -66,6 +68,7 @@ routerEmpleado.get("/read", async (req, res) => {
   }
 });
 
+// FUNCIONAL
 // READ BY NAME FUNCIONAL
 routerEmpleado.get("/read/name", async (req, res) => {
   try {
@@ -77,6 +80,29 @@ routerEmpleado.get("/read/name", async (req, res) => {
     res
       .status(302) // Status found
       .json({ message: "Se encontro el usuario", data: resultado }); // Enviamos informacion en formato JSON
+  } catch (err) {
+    // Capturamos errores
+    console.error(messageError, err); // Mostramos errores por consola
+    res.status(500).send(messageError); // Enviamos un error INTERNAL SERVER ERROR y el error al navegador
+  }
+});
+
+// FUNCIONAL
+// READ EMPLEADOS ACTIVOS/NO-ACTIVOS
+routerEmpleado.get("/activo/:act", async (req, res) => {
+  try {
+    const resultado = await readEmpAct(conexion, {
+      activo: req.params.act,
+    });
+    req.params.act === 1
+      ? res.status(200).json({
+          message: "Se encontraron los siguientes empleados activos: ",
+          data: resultado,
+        })
+      : res.status(200).json({
+          message: "Se encontraron los siguiente empleados inactivos: ",
+          data: resultado,
+        });
   } catch (err) {
     // Capturamos errores
     console.error(messageError, err); // Mostramos errores por consola
@@ -123,11 +149,11 @@ routerEmpleado.delete("/delete", async (req, res) => {
 routerEmpleado.get("/getEmpServicio/:idEmp", async (req, res) => {
   try {
     const resultado = await getEmpServicio(conexion, {
-      idEmp: req.params.idEmp
+      idEmp: req.params.idEmp,
     }); // Parametro por body
-    const emps=[];
-    var i
-    for (i = 0; i <resultado.length; i++) {
+    const emps = [];
+    var i;
+    for (i = 0; i < resultado.length; i++) {
       emps[i] = resultado[i];
     }
     res.json(emps); // Enviamos informacion en formato JSON

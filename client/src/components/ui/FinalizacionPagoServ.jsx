@@ -57,7 +57,7 @@ const FinalizacionPagoServ = () => {
                 );
               })}
               <div className="shadow-md w-[15rem] my-5 ml-[22rem] h-auto border-2 border-gray">
-                <div className=" grid grid-cols-2 place-items-center">
+                <div className="grid grid-cols-2  place-items-center">
                   <p>Total</p>
                   <p className="text-[rgb(3,109,99)] font-bold">${total}</p>
                 </div>

@@ -36,15 +36,12 @@ routerProveedor.post("/create", async (req, res) => {
   }
 });
 
-// READ BY ID
-routerProveedor.get("/read/id", async (req, res) => {
+// READ BY ID FUNCIONAL
+routerProveedor.get("/read/:id", async (req, res) => {
   try {
     const resultado = await readProveedorById(conexion, {
-      idProv: req.body.idProv,
-    }); // // Atributos para el body (Parametros de procedimiento)
-    if (resultado.length === 0)
-      // no encontro un proveedor
-      res.status(500).send("No se encontro el proveedor."); // Enviamos un error INTERNAL SERVER ERRRO y el mensaje al navegador
+      idProv: req.params.id,
+    }); // Atributo obtenido por la url
     res
       .status(302)
       .json({ message: "Se encontro el proveedor", data: resultado }); // Status found, enviamos informacion en formato JSON
@@ -55,15 +52,15 @@ routerProveedor.get("/read/id", async (req, res) => {
   }
 });
 
-// READ BY NAME
-routerProveedor.get("/read/name", async (req, res) => {
+// READ BY NAME FUNCIONAL
+routerProveedor.get("/search/name", async (req, res) => {
   try {
     const resultado = await readProveedorByName(conexion, {
       nameProv: req.body.nameProv,
     }); // // Atributos para el body (Parametros de procedimiento)
-    if (resultado.length === 0)
-      // no encontro un proveedor
-      res.status(500).send("No se encontro el proveedor"); // Enviamos un error INTERNAL SERVER ERRRO y el mensaje al navegador
+    // if (resultado.length === 0)
+    //   // no encontro un proveedor
+    //   res.status(500).send("No se encontro el proveedor"); // Enviamos un error INTERNAL SERVER ERRRO y el mensaje al navegador
     res
       .status(302)
       .json({ message: "Se encontro el proveedor", data: resultado }); // Status found, enviamos informacion en formato JSON

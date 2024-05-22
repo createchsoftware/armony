@@ -1,11 +1,51 @@
 import { useState } from "react";
 
-function PagoRealizado({ cerrarPago }) {
-
+function PagoRealizado({ cerrarPago, cliente, total, next }) {
+    // const total = localStorage.getItem('total')
     const [cargando, setCargando] = useState(true);
     setTimeout(() => {
         setCargando(false);
+
     }, 5000)
+
+    const horaActual = () => {
+        let now = new Date();
+
+        let hours = now.getHours();
+        let minutes = now.getMinutes();
+        let seconds = now.getSeconds();
+        minutes = minutes < 10 ? '0' + minutes : minutes;
+        seconds = seconds < 10 ? '0' + seconds : seconds;
+
+        return `${hours}:${minutes}:${seconds}`;
+    }
+
+    // useEffect(() => {
+
+    //     fetch("/api/admin/citas/venta", {
+    //         method: "POST", 
+    //         body: JSON.stringify({
+    //   "pilar": 2,
+    //   "idCliente":cliente.idCliente,
+    //   "nombre": cliente.nombre,
+    //   "telefono": cliente.telefono,
+    //   tarjeta: req.body.tarjeta,
+    //   "monedero":cliente.monedero,
+    //   estadoPago:true,
+    //   servicio: req.body.servicio,
+    //   idEmp: req.body.idEmp,
+    //   fechaPago: new Date(),
+    //   "horaPago": horaActual(),
+    //   descr: req.body.descr,
+    //   subTotal: req.body.subTotal,
+    //   total: req.body.total,
+    //   "impuesto":18,
+    //         }), 
+    //         headers: {
+    //           "Content-Type": "application/json",
+    //         },
+    //       })
+    // }, [])
 
     return (
         <>
@@ -91,10 +131,10 @@ function PagoRealizado({ cerrarPago }) {
                                         <path fill="#ffffff" d="M46 14L25 35.6l-7-7.2l-7 7.2L25 50l28-28.8z"></path>
                                     </g>
                                 </svg>
-                                <span className="my-6 text-xl font-bold justify-self-center">Monto: $$$</span>
+                                <span className="my-6 text-xl font-bold justify-self-center">Monto:${total}</span>
                             </div>
                             <div className="grid">
-                                <button onClick={cerrarPago} className='bg-[#ec5766] justify-self-center mt-6 text-xl text-white px-10 py-2 rounded-full duration-200 hover:bg-[#ffb5a7]'>Aceptar</button>
+                                <button onClick={next} className='bg-[#ec5766] justify-self-center mt-6 text-xl text-white px-10 py-2 rounded-full duration-200 hover:bg-[#ffb5a7]'>Aceptar</button>
                             </div>
                         </div>
                     )}

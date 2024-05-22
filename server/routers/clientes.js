@@ -69,10 +69,10 @@ routerCliente.post("/create/cliente_patologia", async (req, res) => {
 
 // READ
 // FUNCIONA
-routerCliente.get("/read", async (req, res) => {
+routerCliente.get("/read/:id", async (req, res) => {
   try {
     const resultado = await readClientesById(conexion, {
-      idCliente: req.body.idCliente,
+      idCliente: req.params.id,
     }); // Parametros de ruta
     if (encontrado(resultado))
       res
@@ -80,7 +80,7 @@ routerCliente.get("/read", async (req, res) => {
         .send(`No se encontro un cliente con el id ${req.body.idCliente}`);
     res
       .status(302)
-      .json({ message: "Se encontro el usuario.", data: resultado }); // Status found, enviamos informacion en formato JSON
+      .json(resultado); // Status found, enviamos informacion en formato JSON
   } catch (err) {
     // Capturamos errores
     console.error(messageError, err); // Mostramos errores por consola

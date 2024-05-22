@@ -9,6 +9,7 @@ import {
   stringATiempo,
   horaFinal,
   ventaCita,
+  getCitasByEstado
 } from "../db/query/queryCitas.js";
 import { searchVentaCita } from "../db/query/queryVenta.js";
 
@@ -126,8 +127,6 @@ routerCitas.post("/venta", async (req, res) => {
 
 routerCitas.get("/disponibles/:idServ/:idEmp/:fecha", async (req, res) => {
   try {
-
-    console.log('estas en horarios disponibles')
     const resultado = await horasDisponibles(conexion, {
       fecha: req.params.fecha,
       idEmp: req.params.idEmp,
@@ -201,5 +200,18 @@ routerCitas.patch("/status", async (req, res) => {
     // Capturamos errores
     console.error(messageError, err); // Mostramos errores por consola
     res.status(500).send(messageError); // Enviamos un error INTERNAL SERVER ERROR y el error al navegador
+  }
+});
+
+routerCitas.get("/citasPendientes/:idCliente/:Estado", async (req, res) => {
+  try {
+    const citas = await getCitasByEstado(conexion, {
+      id: req.params.idCliente,
+      estado: req.params.Estado
+    });
+    res.status(200).json(citas);
+  } catch (err) {
+    console.error(messageError, err); 
+    res.status(500).send(messageError);
   }
 });
