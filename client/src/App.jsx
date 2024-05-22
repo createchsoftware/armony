@@ -51,11 +51,17 @@ import Confirmacion from "./components/ui/Login/Procesos/Contraseña/Confirmacio
 import NuevaContr from "./components/ui/Login/Procesos/Contraseña/NuevaContr";
 import Recuperacion from "./components/ui/Login/Procesos/Contraseña/Recuperacion";
 import Verificacion from "./components/ui/Login/Procesos/Contraseña/Verificacion";
+import { Helmet, HelmetProvider } from "react-helmet-async";
 
 function App() {
   return (
     <>
       <Favicon url="/favicon.ico" />
+      <HelmetProvider>
+          <Helmet>
+            <script src={"../../scripts/chatbot.js?token=" + import.meta.env.VITE_VOICEFLOW_ID}></script>
+          </Helmet>
+      </HelmetProvider>
       <Router>
         <Routes>
           <Route exact path="/" element={<Home />} />

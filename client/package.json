@@ -169,7 +169,6 @@
     "nodemailer": "^6.9.13",
     "react": "^18.2.0",
     "react-calendar": "^5.0.0",
-    "react-chatbotify": "^1.6.1",
     "react-dom": "^18.2.0",
     "react-favicon": "^2.0.3",
     "react-helmet-async": "^2.0.4",
