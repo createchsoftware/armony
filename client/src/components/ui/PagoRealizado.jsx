@@ -1,41 +1,43 @@
 import { useState,useEffect } from "react";
 
-function PagoRealizado({ cerrarPago, cliente,tarjeta, total, next }) {
+function PagoRealizado({ cerrarPago, cliente,total, next }) {
     // const total = localStorage.getItem('total')
     const [cargando, setCargando] = useState(true);
-    useEffect(() => {
-        setTimeout(() => {
-            fetch("/api/admin/citas/venta", {
-                method: "POST", 
-                body: JSON.stringify({
-                    "pilar": 2,
-                    "idCliente": cliente.idCliente,
-                    "nombre": cliente.nombre,
-                    "telefono": cliente.telefono,
-                    "tarjeta": tarjeta,
-                    "monedero": cliente.monedero,
-                    "estadoPago": "pagada",
-                    "servicio": 1,
-                    "idEmp": 36,
-                    "fechaPago": new Date(),
-                    "horaPago": horaActual(),
-                    "descr": "venta de servicio",
-                    "subTotal": localStorage.getItem('totalIva'),
-                    "total": localStorage.getItem('total'),
-                    "impuesto": 18,
-                }), 
-                headers: {
-                    "Content-Type": "application/json",
-                },
-            }).then(() => {
-                setCargando(false);
-            }).catch((error) => {
-                console.error('Error en la venta:', error);
-                setCargando(false); // cambiar a false aunque haya error
-            });
-        }, 5000);
-    }, []);
+    setTimeout(() => {
+        setCargando(false);
 
+    }, 5000)
+
+        // setTimeout(() => {
+        //     fetch("/api/admin/citas/venta", {
+        //         method: "POST", 
+        //         body: JSON.stringify({
+        //             "pilar": 2,
+        //             "idCliente": cliente.idCliente,
+        //             "nombre": cliente.nombre,
+        //             "telefono": cliente.telefono,
+        //             "tarjeta": tarjeta,
+        //             "monedero": cliente.monedero,
+        //             "estadoPago": "pagada",
+        //             "servicio": 1,
+        //             "idEmp": 36,
+        //             "fechaPago": new Date(),
+        //             "horaPago": horaActual(),
+        //             "descr": "venta de servicio",
+        //             "subTotal": localStorage.getItem('totalIva'),
+        //             "total": localStorage.getItem('total'),
+        //             "impuesto": 18,
+        //         }), 
+        //         headers: {
+        //             "Content-Type": "application/json",
+        //         },
+        //     }).then(() => {
+        //         setCargando(false);
+        //     }).catch((error) => {
+        //         console.error('Error en la venta:', error);
+        //         setCargando(false); // cambiar a false aunque haya error
+        //     });
+        // }, 5000);
 
     const horaActual=()=>{
         let now = new Date();

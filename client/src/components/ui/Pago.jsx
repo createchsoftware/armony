@@ -56,21 +56,22 @@ function Pago({ producto, next }) {
                 console.log(error);
             });
         },1000);
-    }, [])
+    }, [Uid])
     const [cliente, setCliente] = useState({});
     useEffect(() => {
         if (Uid) {
             fetch(`/api/admin/cliente/read/${Uid}`)
                 .then(response => response.json())
                 .then(data => {
-                          setCliente({
-                        idCliente: data.ID,
-                        nombre: data.Nombre,
-                        telefono: data.telefono,
-                        direccion: data.Dirección,
-                        email: data.email,
-                        monedero: data.monedero
-                    });
+                    //       setCliente({
+                    //     idCliente: data.ID,
+                    //     nombre: data.Nombre,
+                    //     telefono: data.telefono,
+                    //     direccion: data.Dirección,
+                    //     email: data.email,
+                    //     monedero: data.monedero
+                    // });
+                    console.log(data)
                 })
                 .catch(error => {
                     console.log(error);
@@ -80,7 +81,7 @@ function Pago({ producto, next }) {
 
    
     const total=localStorage.getItem('total')
-console.log(cliente)
+//console.log(cliente)
     const toggleTarjeta = () => {
         setTarjeta(!tarjeta);
     }
@@ -93,6 +94,10 @@ console.log(cliente)
     // }
 
     //const total = (574).toFixed(2);
+
+
+
+    
 
     const cardList = tarjetas.length > 0 ? (tarjetas.map(item => (
         <li key={item.id} className="flex items-center justify-between gap-4 px-4 mb-4 border-2 shadow-md rounded-3xl border-gray py-1">
