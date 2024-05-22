@@ -1,4 +1,4 @@
-import { useState,useEffect } from "react";
+import { useState, useEffect } from "react";
 import InforTarjeta from "./InfoTarjeta";
 import PagoRealizado from "./PagoRealizado";
 import { IconoMasterCard, IconoVisa } from "./Iconos";
@@ -6,57 +6,71 @@ import { jwtDecode } from "jwt-decode";
 
 
 
-function Pago() {
+function Pago({ producto }) {
     const [tarjeta, setTarjeta] = useState(false);
     const [pagoRealizado, setPagoRealizado] = useState(false);
-    const [Uid,setUid]=useState(null)
+    const [Uid, setUid] = useState(null)
+
+    const [cartItems, setCartItems] = useState(() => {
+        if (producto) {
+            // Si hay un producto en el prop, lo utilizamos
+            return producto;
+        } else {
+            // Si no hay un producto en el prop, intentamos obtenerlo del localStorage
+            const savedCart = localStorage.getItem('cartItems');
+            return savedCart ? JSON.parse(savedCart) : [];
+        }
+    });
 
     // const [tarjetas, setTarjetas] = useState([
     //     {id: 1, noTarjeta: "509612341234", tipo: "Débito", banco: "BANORTE", code: "****"},
     //     {id: 2, noTarjeta: "294712341234", tipo: "Débito", banco: "NU", code: "****"}
     // ]);
 
- const [tarjetas, setTarjetas] = useState([]);
+    const [tarjetas, setTarjetas] = useState([]);
+
+    const totalProductos = cartItems.reduce((sum, producto) => sum + (producto.precio * producto.cantidad), 0);
+    const cantidadProductos = cartItems.reduce((sum, producto) => sum + producto.cantidad, 0);
 
 
+    useEffect(() => {
+        const getidUser = () => {// aqui veificamos si hay una cookie con este nombre 
+            const cookie = obteneridCookie('Naruto_cookie')
+            if (cookie) {
 
-    useEffect(()=>{
-        const getidUser=()=>{// aqui veificamos si hay una cookie con este nombre 
-        const cookie=  obteneridCookie('Naruto_cookie')
-        if(cookie){
-        
-            const decode=jwtDecode(cookie)//aqui decodificaremos la cokie
-        setUid(decode.user)
-        }}
-        getidUser()
-         },[])
-        
-        
-         const obteneridCookie=(namecookie)=>{ //en este metodo lo que hacemos es destructurar la cokie para 
-           // obtener el user y luego el id
-        const cookies=document.cookie.split(';');
-        for(let cokie of cookies){
-        const [key,value]=cokie.split('=')
-        if(key.trim()=== namecookie){
-            return value;//retornara el valor
+                const decode = jwtDecode(cookie)//aqui decodificaremos la cokie
+                setUid(decode.user)
+            }
         }
+        getidUser()
+    }, [])
+
+
+    const obteneridCookie = (namecookie) => { //en este metodo lo que hacemos es destructurar la cokie para 
+        // obtener el user y luego el id
+        const cookies = document.cookie.split(';');
+        for (let cokie of cookies) {
+            const [key, value] = cokie.split('=')
+            if (key.trim() === namecookie) {
+                return value;//retornara el valor
+            }
         }
         return null;
-         }
+    }
 
 
 
     useEffect(() => {
-        setTimeout(()=>{
-        fetch("/api/tarjetas/1.5")
-            .then(response => response.json())
-            .then(data => {
-                setTarjetas(data.array);
-            })
-            .catch(error => {
-                console.log(error);
-            });
-        },500);
+        setTimeout(() => {
+            fetch("/api/tarjetas/1.5")
+                .then(response => response.json())
+                .then(data => {
+                    setTarjetas(data.array);
+                })
+                .catch(error => {
+                    console.log(error);
+                });
+        }, 500);
     }, [])
 
     const cliente = {};
@@ -78,9 +92,6 @@ function Pago() {
         }
     }, [Uid]);
 
-   
-    const total=localStorage.getItem('total')
-
     const toggleTarjeta = () => {
         setTarjeta(!tarjeta);
     }
@@ -99,13 +110,13 @@ function Pago() {
             {/* VVVVV Forma de "validar el bin" de una tarjeta */}
             {item.numero_tarjeta.charAt(0) === "5" ? (
                 <IconoVisa />
-            ):(
+            ) : (
                 <IconoMasterCard />
             )}
             <h1 className="text-xl">{item.banco}</h1>
             <h1 className="text-xl">{item.tipo}</h1>
             <h1 className="text-xl">{item.code}</h1>
-            <h1 className="text-xl">{item.numero_tarjeta.slice(0,4)}</h1>
+            <h1 className="text-xl">{item.numero_tarjeta.slice(0, 4)}</h1>
             <button onClick={togglePago} className='bg-[#ec5766] text-xl text-white px-10 py-2 rounded-full duration-200 hover:bg-[#ffb5a7]'>Continuar</button>
         </li>
     ))) : (<div></div>)
@@ -121,7 +132,7 @@ function Pago() {
                         {cardList.length === 0 ? (
                             <>
                             </>
-                        ):(
+                        ) : (
                             <ul>
                                 {cardList}
                             </ul>
@@ -164,8 +175,8 @@ function Pago() {
                         <div className='px-6 pt-6'>
                             <div className='grid p-6 mb-4 border-2 shadow-md rounded-xl border-gray'>
                                 <div className='flex justify-between px-6'>
-                                    <span className='font-bold'>1 Producto(s)</span>
-                                    <span className="text-[rgb(3,109,99)] font-bold text-xl">{total}</span>
+                                    <span className='font-bold'>{cantidadProductos} {cantidadProductos === 1 ? "producto" : "productos"}</span>
+                                    <span className="text-[rgb(3,109,99)] font-bold text-xl">{totalProductos}</span>
                                 </div>
                                 <div className='flex justify-between px-6 pt-6'>
                                     <h1 className='font-bold'>Envío</h1>
@@ -178,7 +189,7 @@ function Pago() {
                             </div>
                             <div className='flex justify-between p-6 px-10 mb-4 border-2 shadow-md rounded-xl border-gray'>
                                 <h4 className='text-xl font-bold'>Total:</h4>
-                                <span className='font-bold text-[rgb(3,109,99)] text-xl'>${total}</span>
+                                <span className='font-bold text-[rgb(3,109,99)] text-xl'>${totalProductos}</span>
                             </div>
                         </div>
                     </div>
@@ -228,7 +239,7 @@ function Pago() {
             {pagoRealizado && (
                 <div className='soon-fondo'>
                     <div className='soon-fx'>
-                        <PagoRealizado cerrarPago={togglePago} cliente={cliente}/>
+                        <PagoRealizado cerrarPago={togglePago} cliente={cliente} />
                     </div>
                 </div>
             )}
