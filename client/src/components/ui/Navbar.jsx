@@ -20,6 +20,8 @@ function Navbar() {
     const [log, setLog] = useState(false); //<<< PARA EL INICIO DE SESION
     const [usuario, setUsuario] = useState(false); //<<< PARA EL INICIO DE SESION
     const [items, setItems] = useState(0);
+    const [rango, setRango] = useState(3); //<<< MUESTRA EL RANGO DEL USUARIO
+    const [sus, setSus] = useState(false); //<<< CARACTERISTICA GRAFICA DE QUE EL USUARIO ES SOCIO
 
     const spaRutas = location.pathname.startsWith('/spa') ||
         location.pathname.startsWith('/favoritos')
@@ -172,12 +174,44 @@ function Navbar() {
                                         <a
                                             className="flex items-center h-20 menu-link"
                                         >
-                                            <img
-                                                src="../../../pictures/userCl.png"
-                                                alt=""
-                                                className="w-10 h-10 mr-5 rounded-full"
-                                            />
+                                            <div className="w-14 h-14 mr-5 relative">
+                                                { sus && (
+                                                    <img
+                                                        src="../../../pictures/marcoSuscripcion.png"
+                                                        alt=""
+                                                        className="absolute w-full h-full object-cover"
+                                                    />
+                                                )}
+                                                <img
+                                                    src="../../../pictures/userDefault.png"
+                                                    alt=""
+                                                    className="w-[95%] h-auto m-auto"
+                                                />
+                                            </div>
                                             {usuario}
+                                            { rango === 1 ? (
+                                                <img
+                                                    src="../../../pictures/rangoOro.png"
+                                                    alt=""
+                                                    className="w-4 h-auto m-auto"
+                                                />
+                                            ):(
+                                                rango === 2 ? (
+                                                    <img
+                                                        src="../../../pictures/rangoPlatino.png"
+                                                        alt=""
+                                                        className="w-4 h-auto m-auto"
+                                                    />
+                                                ):(
+                                                    rango === 3 ? (
+                                                        <img
+                                                            src="../../../pictures/rangoVIP.png"
+                                                            alt=""
+                                                            className="w-4 h-auto m-auto"
+                                                        />
+                                                    ):''
+                                                )
+                                            )}
                                         </a>
                                         <MenuPerfil />
                                     </>

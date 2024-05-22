@@ -286,61 +286,64 @@ function Agenda() {
         // },
     };
 
-    const citasPendientes = [
-        {
-            id: 1,
-            nombre: 'Cita 1',
-            estado: 'Pendiente',
-            especialista: 'Especialista 1',
-            fecha: '2022-12-12',
-            hora: '10:00',
-        },
-        {
-            id: 2,
-            nombre: 'Cita 2',
-            estado: 'Pendiente',
-            especialista: 'Especialista 2',
-            fecha: '2022-12-12',
-            hora: '10:00',
-        },
-        {
-            id: 3,
-            nombre: 'Cita 3',
-            estado: 'Pendiente',
-            especialista: 'Especialista 3',
-            fecha: '2022-12-12',
-            hora: '10:00',
-        },
-        {
-            id: 4,
-            nombre: 'Cita 4',
-            estado: 'Pendiente',
-            especialista: 'Especialista 4',
-            fecha: '2022-12-12',
-            hora: '10:00',
-        },
-        {
-            id: 5,
-            nombre: 'Cita 5',
-            estado: 'Pendiente',
-            especialista: 'Especialista 5',
-            fecha: '2022-12-12',
-            hora: '10:00',
-        },
-    ]
+    const [citasPendientes, setCitasPendientes] = useState([]);
+    const [citasFiltradas, setCitasFiltradas] = useState([]);
+
+    const [id, setId] = useState(false); //<<< PARA EL INICIO DE SESION
+
+    async function recibido() {
+        const respuesta = await fetch('/api/logueado', {
+            method: "GET",
+            headers: {
+                "Content-Type": "application/json",
+            }
+        })
+
+        if (!respuesta.ok) {
+            setId(null);
+        }
+
+        let respuestaJson = await respuesta.json();
+
+        if (respuestaJson.logueado == true) {
+            setId(respuestaJson.pkIdUsuario);
+        }
+        else {
+            setId(null);
+        }
+    }
+
+    //useEffect para obtener las citas pendientes
+    useEffect(() => {
+        fetch(`/api/admin/citas/pendientes/${id}`)
+            .then((response) => response.json())
+            .then((data) => {
+                setCitasPendientes(data);
+            })
+            .catch((error) => {
+                console.log("error", error);
+            });
+    }, []);
+
+    useEffect(() => {
+        let updatedCitas = citasPendientes;
+
+        if (selectedDate) {
+            updatedCitas = citasPendientes.filter(cita => {
+                const date = dayjs(cita.fecha);
+                return date.isSame(selectedDate, 'day');
+            }
+            );
+        }
+
+        setCitasFiltradas(updatedCitas);
+
+    }, [selectedDate]);
+
 
     //citas from local storage
     const citasFromLocalStorage = JSON.parse(localStorage.getItem('citas'));
     const [citas, setCitas] = useState(citasFromLocalStorage || citasPendientes);
-
-    // //Citas
-    // const [citas, setCitas] = useState([
-    //     { id: 1, nombre: 'Cita 1', estado: 'Pendiente', especialista: 'Especialista 1', fecha: '2022-12-12', hora: '10:00' },
-    //     { id: 2, nombre: 'Cita 2', estado: 'Pendiente', especialista: 'Especialista 2', fecha: '2022-12-12', hora: '10:00' },
-    //     { id: 3, nombre: 'Cita 3', estado: 'Pendiente', especialista: 'Especialista 3', fecha: '2022-12-12', hora: '10:00' },
-    //     { id: 4, nombre: 'Cita 4', estado: 'Pendiente', especialista: 'Especialista 4', fecha: '2022-12-12', hora: '10:00' },
-    //     { id: 5, nombre: 'Cita 5', estado: 'Pendiente', especialista: 'Especialista 5', fecha: '2022-12-12', hora: '10:00' },
-    // ]);
 
     useEffect(() => {
         const citasFromLocalStorage = JSON.parse(localStorage.getItem('citas'));
@@ -348,8 +351,6 @@ function Agenda() {
             setCitas(citasFromLocalStorage);
         }
     }, []);
-
-
 
     const removeItem = (id) => {
         const updatedCitas = citas.filter(cita => cita.id !== id);

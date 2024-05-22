@@ -261,6 +261,7 @@ export default function Cita() {
                                 </Typography> */}
                 <div className="grid grid-cols-3">
                   <button
+                    hidden={activeStep === 5}
                     disabled={activeStep === 0}
                     onClick={handleBack}
                     className={`${activeStep === 0
@@ -272,6 +273,7 @@ export default function Cita() {
                     Regresar
                   </button>
                   <button
+                    hidden={activeStep === 5}
                     onClick={handleCancel}
                     disabled={activeStep === steps.length - 1}
                     className="px-4 py-2 mx-auto text-xl text-white rounded-full bg-[#036C65] hover:bg-opacity-70"
@@ -279,6 +281,7 @@ export default function Cita() {
                     Cancelar
                   </button>
                   <button
+                    hidden={activeStep === 5}
                     onClick={handleClick}
                     // disabled={activeStep === steps.length - 1}
                     className="px-4 py-2 mx-auto text-xl text-white rounded-full bg-rose-400 hover:bg-red-200"
