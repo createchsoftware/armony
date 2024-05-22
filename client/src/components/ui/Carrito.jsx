@@ -12,6 +12,7 @@ export const CarritoProvider = ({ children }) => {
         const savedCart = localStorage.getItem('cartItems');
         return savedCart ? JSON.parse(savedCart) : [];
     });
+    localStorage.clear();
 
     useEffect(() => {
         localStorage.setItem('cartItems', JSON.stringify(cartItems));

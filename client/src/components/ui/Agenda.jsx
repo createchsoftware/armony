@@ -1,4 +1,4 @@
-import { useState,useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrash } from '@fortawesome/free-solid-svg-icons';
 
@@ -10,23 +10,23 @@ function Agenda({ restart }) {
     //     { id: 2, name: 'Maquillaje', price: 1100.00, quantity: 1, image: "../../../pictures/crema1.png", desc: "Shampoo con aceite de coco.", duracion: "90 min", dia: "31/03/2024", hora: "14:20", especialista: "Antonio Esparza" },
     // ]);
 
-      useEffect(() => {
+    useEffect(() => {
         setTimeout(() => {
-        iterateArray();
-    }, 1000);
+            iterateArray();
+        }, 1000);
     }, []);
 
     const iterateArray = () => {
         let myArray = JSON.parse(localStorage.getItem('citas')) || [];
         setCitasItems(myArray)
-        
-      };
 
-      const RLSCitas= (id) => {
+    };
+
+    const RLSCitas = (id) => {
         let citas = JSON.parse(localStorage.getItem('citas')) || [];
         citas = citas.filter(obj => obj.id !== id);
         localStorage.setItem('citas', JSON.stringify(citas));
-      };
+    };
 
     //Para remover por completo un servicio.
     const removeItem = (itemId) => {
@@ -45,15 +45,15 @@ function Agenda({ restart }) {
 
     const totalCitas = citasItems.reduce((total, item) => total + 1, 0);
     const total = citasItems.reduce((acc, item) => acc + item.precioServicio.replace(/[#\s]/g, '') * 1, 0).toFixed(2);
-   
+
     const iva = (total * (.08)).toFixed(2);
     const totalIva = (parseFloat(total) + parseFloat(iva)).toFixed(2);
 
-    const puntos = (parseFloat(totalIva))/10;
+    const puntos = (parseFloat(totalIva)) / 10;
     //En caso de ser Socio VVV
     //const puntos = (parseInt(totalIva))/5;
 
-    localStorage.setItem('total',totalIva)
+    localStorage.setItem('total', totalIva)
     const citasList = citasItems.map(item => (
         <li key={item.idServicio} className="flex justify-between p-4 mb-4 border-2 shadow-md rounded-xl border-gray">
             <img className='w-24 h-24 mr-6 rounded-full' src={item.ImagenServicio} alt={item.nombreServicio} />
