@@ -59,7 +59,7 @@ function RevisionProductos({ restart, producto }) {
         } else {
             // Si no hay un producto en el prop, intentamos obtenerlo del localStorage
             const savedCart = localStorage.getItem('cartItems');
-            return savedCart ? JSON.parse(savedCart) : productosEjemplo;
+            return savedCart ? JSON.parse(savedCart) : [];
         }
     });
     //  ^^^ ES SOLO TEST PARA PROBAR LA FUNCIONALIDAD DEL RESUMEN DE CITAS
@@ -93,7 +93,7 @@ function RevisionProductos({ restart, producto }) {
     const ivaTotal = (subTotal * (.08)).toFixed(2);
     const total = (parseFloat(subTotal) + parseFloat(ivaTotal)).toFixed(2);
 
-    const puntos = (parseFloat(total))/10;
+    const puntos = (parseFloat(total)) / 10;
     //En caso de ser Socio VVV
     //const puntos = (parseInt(totalIva))/5;
 
