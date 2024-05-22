@@ -56,21 +56,22 @@ function Pago({ producto, next }) {
                 .catch(error => {
                     console.log(error);
                 });
-        }, 500);
+        }, 1000);
     }, [])
-
-    const cliente = {};
+    const [cliente, setCliente] = useState({});
     useEffect(() => {
         if (Uid) {
             fetch(`/api/admin/cliente/read/${Uid}`)
                 .then(response => response.json())
                 .then(data => {
-                    cliente.idCliente = data.ID;
-                    cliente.nombre = data.Nombre;
-                    cliente.telefono = data.telefono;
-                    cliente.direccion = data.Dirección;
-                    cliente.email = data.email;
-                    cliente.monedero = data.monedero;
+                    setCliente({
+                        idCliente: data.ID,
+                        nombre: data.Nombre,
+                        telefono: data.telefono,
+                        direccion: data.Dirección,
+                        email: data.email,
+                        monedero: data.monedero
+                    });
                 })
                 .catch(error => {
                     console.log(error);
@@ -80,7 +81,7 @@ function Pago({ producto, next }) {
 
 
     const total = localStorage.getItem('total')
-
+    console.log(cliente)
     const toggleTarjeta = () => {
         setTarjeta(!tarjeta);
     }

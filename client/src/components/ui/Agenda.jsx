@@ -54,6 +54,7 @@ function Agenda({ restart }) {
     //const puntos = (parseInt(totalIva))/5;
 
     localStorage.setItem('total', totalIva)
+    localStorage.setItem('totalIva', totalIva)
     const citasList = citasItems.map(item => (
         <li key={item.idServicio} className="flex justify-between p-4 mb-4 border-2 shadow-md rounded-xl border-gray">
             <img className='w-24 h-24 mr-6 rounded-full' src={item.ImagenServicio} alt={item.nombreServicio} />
