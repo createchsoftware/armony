@@ -5,7 +5,7 @@ import { jwtDecode } from "jwt-decode";
 
 
 
-function Pago() {
+function Pago({ producto, next }) {
     const [tarjeta, setTarjeta] = useState(false);
     const [pagoRealizado, setPagoRealizado] = useState(false);
     const [Uid,setUid]=useState(null)
@@ -222,7 +222,7 @@ function Pago() {
             {pagoRealizado && (
                 <div className='soon-fondo'>
                     <div className='soon-fx'>
-                        <PagoRealizado cerrarPago={togglePago} cliente={cliente}/>
+                        <PagoRealizado cerrarPago={togglePago} cliente={cliente} total={total} next={next} />
                     </div>
                 </div>
             )}

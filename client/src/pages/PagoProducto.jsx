@@ -236,21 +236,21 @@ export default function Cita({ producto }) {
 
   const stepComponents = [
     location.state.producto ? (
-      <RevisionProductos restart={restart} key={3} producto={location.state.producto} />
+      <RevisionProductos restart={restart} next={handleClick} back={handleBack} key={3} producto={location.state.producto} />
     ) : (
-      <RevisionProductos restart={restart} key={3} />
+      <RevisionProductos restart={restart} next={handleClick} key={3} />
     ),
     location.state.producto ? (
-      <Pago key={4} producto={location.state.producto} />
+      <Pago key={4} next={handleClick} producto={location.state.producto} />
     ) : (
-      <Pago key={4} />
+      <Pago key={4} next={handleClick} />
     ),
     (location.state.producto) ? (
-      <FinalizacionPagoProd key={5} producto={location.state.producto} />
+      <FinalizacionPagoProd key={5} next={handleClick} producto={location.state.producto} />
     ) : (
-      <FinalizacionPagoProd key={5} />
+      <FinalizacionPagoProd key={5} next={handleClick} />
     ),
-    <Ticket key={6} />,
+    <Ticket key={6} next={handleClick} />,
   ];
 
   return (
