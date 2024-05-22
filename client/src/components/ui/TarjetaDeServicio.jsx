@@ -56,7 +56,7 @@ const TarjetaDeServicio = ({ servicio }) => {
       </div>
       <div className={vista ? "block" : "hidden"}>
         <div className="w-[16rem] h-[18rem] mt-1 mx-auto rounded-[2.25rem] bg-[#499382]">
-          <p className="pt-10 text-white text-center text-sm mx-5">
+          <p className="pt-10 mx-5 text-sm text-center text-white">
             {servicio.descripcion}
           </p>
         </div>
@@ -94,8 +94,8 @@ const TarjetaDeServicio = ({ servicio }) => {
           </Box>
           <p className="text-lg font-bold pl-5 w-[80%]">{servicio.nombre}</p>
         </div>
-        <p className="text-base pl-5">Costo: ${servicio.precio}</p>
-        <p className="text-base pl-5">Duracion: {servicio.tiempo} min</p>
+        <p className="pl-5 text-base">Costo: ${servicio.precio}</p>
+        <p className="pl-5 text-base">Duracion: {servicio.tiempo} min</p>
         <div className="grid place-items-center">
           <Rating
             className=""
@@ -115,7 +115,7 @@ const TarjetaDeServicio = ({ servicio }) => {
               servicio.img
             )
           }
-          className="bg-red-50 font-bold px-10 py-1 mx-10 rounded-xl ring-1 ring-rose-50 hover:ring-black"
+          className="px-10 py-1 mx-10 font-bold bg-red-50 rounded-xl ring-1 ring-rose-50 hover:ring-black"
         >
           Elegir
         </button>

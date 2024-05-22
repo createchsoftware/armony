@@ -1,4 +1,4 @@
-import { useState,useEffect } from "react";
+import { useState, useEffect } from "react";
 
 function PagoRealizado({ cerrarPago, cliente,total, next }) {
     // const total = localStorage.getItem('total')
@@ -39,7 +39,7 @@ function PagoRealizado({ cerrarPago, cliente,total, next }) {
         //     });
         // }, 5000);
 
-    const horaActual=()=>{
+    const horaActual = () => {
         let now = new Date();
 
         let hours = now.getHours();
@@ -51,32 +51,32 @@ function PagoRealizado({ cerrarPago, cliente,total, next }) {
         return `${hours}:${minutes}:${seconds}`;
     }
 
-//  useEffect(() => {
-     
-//         fetch("/api/admin/citas/venta", {
-//             method: "POST", 
-//             body: JSON.stringify({
-//       "pilar": 2,
-//       "idCliente":cliente.idCliente,
-//       "nombre": cliente.nombre,
-//       "telefono": cliente.telefono,
-//       "tarjeta":tarjeta,
-//       "monedero":cliente.monedero,
-//       "estadoPago":true,
-//       "servicio": 1,
-//       "idEmp": 36,
-//       fechaPago: new Date(),
-//       "horaPago": horaActual(),
-//       "descr": "venta de servicio",
-//       "subTotal":localStorage.getItem('totalIva'),
-//       "total":localStorage.getItem('total'),
-//       "impuesto":18,
-//             }), 
-//             headers: {
-//               "Content-Type": "application/json",
-//             },
-//           })
-//     }, [])
+    //  useEffect(() => {
+
+    //         fetch("/api/admin/citas/venta", {
+    //             method: "POST", 
+    //             body: JSON.stringify({
+    //       "pilar": 2,
+    //       "idCliente":cliente.idCliente,
+    //       "nombre": cliente.nombre,
+    //       "telefono": cliente.telefono,
+    //       "tarjeta":tarjeta,
+    //       "monedero":cliente.monedero,
+    //       "estadoPago":true,
+    //       "servicio": 1,
+    //       "idEmp": 36,
+    //       fechaPago: new Date(),
+    //       "horaPago": horaActual(),
+    //       "descr": "venta de servicio",
+    //       "subTotal":localStorage.getItem('totalIva'),
+    //       "total":localStorage.getItem('total'),
+    //       "impuesto":18,
+    //             }), 
+    //             headers: {
+    //               "Content-Type": "application/json",
+    //             },
+    //           })
+    //     }, [])
 
     return (
         <>
@@ -165,7 +165,7 @@ function PagoRealizado({ cerrarPago, cliente,total, next }) {
                                 <span className="my-6 text-xl font-bold justify-self-center">Monto:${total}</span>
                             </div>
                             <div className="grid">
-                                <button onClick={next} className='bg-[#ec5766] justify-self-center mt-6 text-xl text-white px-10 py-2 rounded-full duration-200 hover:bg-[#ffb5a7]'>Aceptar</button>
+                                <button onClick={cerrarPago} className='bg-[#ec5766] justify-self-center mt-6 text-xl text-white px-10 py-2 rounded-full duration-200 hover:bg-[#ffb5a7]'>Aceptar</button>
                             </div>
                         </div>
                     )}

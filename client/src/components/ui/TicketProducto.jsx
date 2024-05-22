@@ -12,7 +12,7 @@ const TicketProducto = () => {
   };
 
   var numTicket = 123456;
-  var value = "lo que sea";
+  var value = numTicket.toString();
 
   var onImageDownload = () => {
     const svg = document.getElementById("QRCode");

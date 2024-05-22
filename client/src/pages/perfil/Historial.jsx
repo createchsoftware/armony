@@ -110,7 +110,7 @@ function Historial() {
         <LayoutPrincipal>
             <main className='grid gap-6 mb-12 mt-24 w-[60%] m-auto'>
                 <section className='rounded-2xl mt-12 w-[100%] m-auto p-6 shadow-[0_3px_10px_rgb(0,0,0,0.2)] mb-6'>
-                    <a className='flex items-baseline content-center text-sm gap-x-4' href="/spa/perfil"> <IoIosArrowBack className='' />
+                    <a className='flex items-baseline content-center text-sm gap-x-4' href="/perfil"> <IoIosArrowBack className='' />
                         Volver</a>
                     <img className='w-32 m-auto my-8 -mt-24 rounded-full aspect-square' src="../../pictures/historialMarco.png" alt="" />
                     <img className='w-16 m-auto my-8 -mt-32 aspect-square' src="../../pictures/historial.png" alt="" />

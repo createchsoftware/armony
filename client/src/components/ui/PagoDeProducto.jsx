@@ -1,14 +1,27 @@
 import { useState, useEffect } from "react";
 import InforTarjeta from "./InfoTarjeta";
 import PagoRealizado from "./PagoRealizado";
+import { IconoMasterCard, IconoVisa } from "./Iconos";
 import { jwtDecode } from "jwt-decode";
 
 
 
-function Pago({ producto, next }) {
+function Pago({ producto }) {
     const [tarjeta, setTarjeta] = useState(false);
     const [pagoRealizado, setPagoRealizado] = useState(false);
     const [Uid, setUid] = useState(null)
+    const [descuento, setDescuento] = useState('');
+
+    const [cartItems, setCartItems] = useState(() => {
+        if (producto) {
+            // Si hay un producto en el prop, lo utilizamos
+            return producto;
+        } else {
+            // Si no hay un producto en el prop, intentamos obtenerlo del localStorage
+            const savedCart = localStorage.getItem('cartItems');
+            return savedCart ? JSON.parse(savedCart) : [];
+        }
+    });
 
     // const [tarjetas, setTarjetas] = useState([
     //     {id: 1, noTarjeta: "509612341234", tipo: "Débito", banco: "BANORTE", code: "****"},
@@ -17,7 +30,11 @@ function Pago({ producto, next }) {
 
     const [tarjetas, setTarjetas] = useState([]);
 
-
+    const totalProductos = cartItems.reduce((sum, producto) => sum + (producto.precio * producto.cantidad), 0);
+    const cantidadProductos = cartItems.reduce((sum, producto) => sum + producto.cantidad, 0);
+    const subTotal = cartItems.reduce((acc, item) => acc + item.precio * item.cantidad, 0).toFixed(2);
+    const ivaTotal = (parseFloat(subTotal) * 0.08).toFixed(2);
+    const total = (parseFloat(subTotal) + parseFloat(ivaTotal)).toFixed(2);
 
     useEffect(() => {
         const getidUser = () => {// aqui veificamos si hay una cookie con este nombre 
@@ -47,32 +64,30 @@ function Pago({ producto, next }) {
 
 
     useEffect(() => {
-        setTimeout(()=>{
-        fetch("/api/tarjetas/1.5")
-            .then(response => response.json())
-            .then(data => {
-                setTarjetas(data.array);
-            })
-            .catch(error => {
-                console.log(error);
-            });
-        },1000);
-    }, [Uid])
-    const [cliente, setCliente] = useState({});
+        setTimeout(() => {
+            fetch("/api/tarjetas/1.5")
+                .then(response => response.json())
+                .then(data => {
+                    setTarjetas(data.array);
+                })
+                .catch(error => {
+                    console.log(error);
+                });
+        }, 500);
+    }, [])
+
+    const cliente = {};
     useEffect(() => {
         if (Uid) {
             fetch(`/api/admin/cliente/read/${Uid}`)
                 .then(response => response.json())
                 .then(data => {
-                    //       setCliente({
-                    //     idCliente: data.ID,
-                    //     nombre: data.Nombre,
-                    //     telefono: data.telefono,
-                    //     direccion: data.Dirección,
-                    //     email: data.email,
-                    //     monedero: data.monedero
-                    // });
-                    console.log(data)
+                    cliente.idCliente = data.ID;
+                    cliente.nombre = data.Nombre;
+                    cliente.telefono = data.telefono;
+                    cliente.direccion = data.Dirección;
+                    cliente.email = data.email;
+                    cliente.monedero = data.monedero;
                 })
                 .catch(error => {
                     console.log(error);
@@ -80,9 +95,6 @@ function Pago({ producto, next }) {
         }
     }, [Uid]);
 
-   
-    const total=localStorage.getItem('total')
-//console.log(cliente)
     const toggleTarjeta = () => {
         setTarjeta(!tarjeta);
     }
@@ -96,17 +108,18 @@ function Pago({ producto, next }) {
 
     //const total = (574).toFixed(2);
 
-
-
-    
-
     const cardList = tarjetas.length > 0 ? (tarjetas.map(item => (
-        <li key={item.id} className="flex items-center justify-between gap-4 px-4 py-1 mb-4 border-2 shadow-md rounded-3xl border-gray">
-            <img src={"../../../pictures/" + item.imagen} className="w-1/5 h-auto" />
-            <h1 className="text-xl truncate">{item.empresa}</h1>
+        <li key={item.id} className="flex items-center justify-between gap-4 px-4 mb-4 border-2 shadow-md rounded-3xl border-gray">
+            {/* VVVVV Forma de "validar el bin" de una tarjeta */}
+            {item.numero_tarjeta.charAt(0) === "5" ? (
+                <IconoVisa />
+            ) : (
+                <IconoMasterCard />
+            )}
+            <h1 className="text-xl">{item.banco}</h1>
             <h1 className="text-xl">{item.tipo}</h1>
-            {/* <h1 className="text-xl">{item.code}</h1> */}
-            <h1 className="text-xl">****{item.numero_tarjeta.slice(0, 4)}</h1>
+            <h1 className="text-xl">{item.code}</h1>
+            <h1 className="text-xl">{item.numero_tarjeta.slice(0, 4)}</h1>
             <button onClick={togglePago} className='bg-[#ec5766] text-xl text-white px-10 py-2 rounded-full duration-200 hover:bg-[#ffb5a7]'>Continuar</button>
         </li>
     ))) : (<div></div>)
@@ -165,12 +178,16 @@ function Pago({ producto, next }) {
                         <div className='px-6 pt-6'>
                             <div className='grid p-6 mb-4 border-2 shadow-md rounded-xl border-gray'>
                                 <div className='flex justify-between px-6'>
-                                    <span className='font-bold'>1 Producto(s)</span>
-                                    <span className="text-[rgb(3,109,99)] font-bold text-xl">{total}</span>
+                                    <span className='font-bold'>{cantidadProductos} {cantidadProductos === 1 ? "producto" : "productos"}</span>
+                                    <span className="text-[rgb(3,109,99)] font-bold text-xl">{totalProductos}</span>
                                 </div>
                                 <div className='flex justify-between px-6 pt-6'>
                                     <h1 className='font-bold'>Envío</h1>
                                     <span className="text-[rgb(3,109,99)] font-bold">$0.00</span>
+                                </div>
+                                <div className='flex justify-between px-6 pt-6'>
+                                    <h1 className='font-bold'>IVA</h1>
+                                    <span className="text-[rgb(3,109,99)] font-bold">{ivaTotal}</span>
                                 </div>
                                 <div className='flex justify-between px-6 pt-6'>
                                     <h1 className='font-bold'>Cupón</h1>
@@ -184,7 +201,7 @@ function Pago({ producto, next }) {
                         </div>
                     </div>
                     {/* Bloque "Aceptamos" */}
-                    <div className="mt-4 border-2 shadow-md rounded-xl border-gray">
+                    <div className="border-2 shadow-md rounded-xl border-gray">
                         <div className='grid bg-[rgb(3,109,99)] rounded-t-xl'>
                             <p className='py-2 ml-8 text-2xl text-white'>Aceptamos</p>
                         </div>
@@ -229,7 +246,7 @@ function Pago({ producto, next }) {
             {pagoRealizado && (
                 <div className='soon-fondo'>
                     <div className='soon-fx'>
-                        <PagoRealizado cerrarPago={togglePago} cliente={cliente} total={total} next={next} />
+                        <PagoRealizado cerrarPago={togglePago} cliente={cliente} />
                     </div>
                 </div>
             )}
