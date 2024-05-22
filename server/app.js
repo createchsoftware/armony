@@ -144,7 +144,6 @@ app.post('/api/recargaSaldo', perfil.Insert_to_Monedero);
 
 app.get('/spa/signUp/Confirmacion', InsertUser);
 
-
 app.get('/api/step1.5',async (solicitud,respuesta)=>{
 
   let consulta = "select * from patologia";
