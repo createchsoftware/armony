@@ -13,6 +13,23 @@ const AgendarServicios = () => {
     setSoon(!soon);
   };
 
+  async function getId() {
+    let respuestaJson = null;
+    try {
+      const respuesta = await fetch("/api/logueado", {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+
+      respuestaJson = await respuesta.json();
+      return respuestaJson.clave;
+    } catch (error) {
+      console.log("Error");
+    }
+  }
+
   useEffect(() => {
     fetch("/api/admin/categoria/getServicesSpa")
       .then((response) => {
@@ -49,8 +66,29 @@ const AgendarServicios = () => {
     }
   }, [spa]);
 
+  useEffect(() => {
+    if (spa.length > 0) {
+      setTimeout(() => {
+        let id = getId();
+        fetch(`/api/admin/categoria/ServiceFavoritosbyId/${id}`)
+          .then((response) => {
+            if (!response.ok) {
+              throw new Error("Error al obtener los servicios de Estética");
+            }
+            return response.json();
+          })
+          .then((data) => {
+            setFavoritos(data);
+          })
+          .catch((error) => {
+            // setErrorEstetica(error.message);
+          });
+      }, 3000);
+    }
+  }, [spa]);
+
   {
-    /* FALTA AGREGAR CONEXION CON FAVORITOS */
+    /* FALTA AGREGAR CONEXION CON DESCUENTOS */
   }
 
   const [toggleState, setToggleService] = useState(1);
