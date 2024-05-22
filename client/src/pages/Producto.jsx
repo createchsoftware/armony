@@ -93,15 +93,6 @@ const ofertas = [
     },
 ]
 
-const initialProduct = {
-    id: 1,
-    nombre: 'Producto 1',
-    precio: 10,
-    descripcion: 'Descripción del producto',
-    valoracion: 5,
-    imagen: './pictures/producto1.png',
-    cantidad: 1,
-}
 
 function Producto() {
     const { id } = useParams();

@@ -18,9 +18,10 @@ import { CSSTransition, TransitionGroup } from "react-transition-group";
 import Pago from "../components/ui/Pago";
 import RevisionProductos from "../components/ui/RevisionProductos";
 import FinalizacionPago from "../components/ui/FinalizacionPagoServ";
-import Ticket from "../components/ui/TicketServicio";
+import Ticket from "../components/ui/TicketProducto";
 import "./cita/Transiciones.css";
 import { useLocation } from 'react-router-dom';
+import FinalizacionPagoProd from '../components/ui/FinalizacionPagoProd';
 
 const ofertas = [
   {
@@ -135,7 +136,6 @@ export default function Cita({ producto }) {
   };
 
   const handleClick = () => {
-    localStorage.clear()
     handleComplete();
     LocalBase();
   };
@@ -236,12 +236,21 @@ export default function Cita({ producto }) {
 
   const stepComponents = [
     location.state.producto ? (
-      <RevisionProductos restart={restart} key={3} producto={location.state.producto} />
+      <RevisionProductos restart={restart} next={handleClick} back={handleBack} key={3} producto={location.state.producto} />
     ) : (
-      <RevisionProductos restart={restart} key={3} />
-    ), <Pago key={4} />,
-    <FinalizacionPago key={5} />,
-    <Ticket key={6} />,
+      <RevisionProductos restart={restart} next={handleClick} key={3} />
+    ),
+    location.state.producto ? (
+      <Pago key={4} next={handleClick} producto={location.state.producto} />
+    ) : (
+      <Pago key={4} next={handleClick} />
+    ),
+    (location.state.producto) ? (
+      <FinalizacionPagoProd key={5} next={handleClick} producto={location.state.producto} />
+    ) : (
+      <FinalizacionPagoProd key={5} next={handleClick} />
+    ),
+    <Ticket key={6} next={handleClick} />,
   ];
 
   return (
@@ -312,6 +321,7 @@ export default function Cita({ producto }) {
                 <div className="grid grid-cols-3">
                   <button
                     disabled={activeStep === 0}
+                    // hidden={activeStep === 0 || activeStep === 1 || activeStep === 2 || activeStep === 3 || activeStep === 4 || activeStep === 5}
                     onClick={handleBack}
                     className={`${activeStep === 0
                       ? "hover:bg-transparent opacity-30 hover:text-rose-400"
@@ -322,6 +332,7 @@ export default function Cita({ producto }) {
                     Regresar
                   </button>
                   <button
+                    // hidden={activeStep === 0 || activeStep === 1 || activeStep === 2 || activeStep === 3 || activeStep === 4 || activeStep === 5}
                     onClick={handleCancel}
                     disabled={activeStep === steps.length - 1}
                     className="px-4 py-2 mx-auto text-xl text-white rounded-full bg-[#036C65] hover:bg-opacity-70"
@@ -329,6 +340,7 @@ export default function Cita({ producto }) {
                     Cancelar
                   </button>
                   <button
+                    // hidden={activeStep === 0 || activeStep === 1 || activeStep === 2 || activeStep === 3 || activeStep === 4 || activeStep === 5}
                     onClick={handleClick}
                     disabled={activeStep === steps.length - 1}
                     className="px-4 py-2 mx-auto text-xl text-white rounded-full bg-rose-400 hover:bg-red-200"

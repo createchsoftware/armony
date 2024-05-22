@@ -38,39 +38,39 @@ const sortOptions = [
 
 const sortOptions2 = [
     { name: 'General', current: true },
-    { name: 'Monedero', current: true},  
-    { name: 'Puntos', current: true}, 
-    { name: 'Servicios', current: true},  
-    { name: 'Productos', current: true}
+    { name: 'Monedero', current: true },
+    { name: 'Puntos', current: true },
+    { name: 'Servicios', current: true },
+    { name: 'Productos', current: true }
 ]
 
 
 function Movimientos() {
 
-   
 
-    function handleSearch(e){
+
+    function handleSearch(e) {
         let input = e.target.value;
 
         let longitud = input.length;
 
-        let arr = sortOptions2.filter(option=> option.name.slice(0,longitud).toLowerCase() == input.toLowerCase())
+        let arr = sortOptions2.filter(option => option.name.slice(0, longitud).toLowerCase() == input.toLowerCase())
 
-        let msg ='';
+        let msg = '';
 
-        if(arr.length > 0 && arr[0].name =='General'){
+        if (arr.length > 0 && arr[0].name == 'General') {
             setArrayM(array);  // el establecido por default
-            msg=`${arr[0].name}`;
-        }else{
-            setArrayM(array.filter((producto)=>{
+            msg = `${arr[0].name}`;
+        } else {
+            setArrayM(array.filter((producto) => {
 
-                if(arr.some(option=> producto.type.toLowerCase() == option.name.toLowerCase())){
+                if (arr.some(option => producto.type.toLowerCase() == option.name.toLowerCase())) {
                     return producto
                 }
 
             }));
-            
-            msg = arr.map(option=> option.name).join(' ');
+
+            msg = arr.map(option => option.name).join(' ');
         }
 
         setLabel2(msg);
@@ -81,16 +81,16 @@ function Movimientos() {
 
 
 
-    function handleSortOptionClick(option){
+    function handleSortOptionClick(option) {
 
-        if(option.name=='Todas'){
+        if (option.name == 'Todas') {
             setArrayF(array);
-        }else{
+        } else {
             let fecha_hoy = Date.now();
             let fechaLimite = new Date(fecha_hoy - (1000 * 60 * 60 * 24 * option.value));
-    
-    
-            setArrayF(array.filter((producto)=>{
+
+
+            setArrayF(array.filter((producto) => {
                 return new Date(producto.date).getTime() > fechaLimite.getTime()
             }))
         }
@@ -101,14 +101,14 @@ function Movimientos() {
     }
 
 
-    function obtenerPresent(){
-        setArrayPresent(arrayM.filter((objeto_tipo)=>{
+    function obtenerPresent() {
+        setArrayPresent(arrayM.filter((objeto_tipo) => {
 
-            let coincidencia = arrayF.some((objeto_fecha)=>{
+            let coincidencia = arrayF.some((objeto_fecha) => {
                 return JSON.stringify(objeto_fecha) == JSON.stringify(objeto_tipo)
             })
 
-            if(coincidencia){
+            if (coincidencia) {
                 return objeto_tipo;
             }
 
@@ -116,15 +116,15 @@ function Movimientos() {
     }
 
 
-    function handleSortOption2Click(option){
-        
-        if(option.name=='General'){
+    function handleSortOption2Click(option) {
+
+        if (option.name == 'General') {
             setArrayM(array);  // el establecido por default
-        }else{
-            setArrayM(array.filter((producto)=>{
+        } else {
+            setArrayM(array.filter((producto) => {
                 return producto.type == option.name
             }))
-    
+
         }
 
         setLabel2(option.name)
@@ -132,7 +132,7 @@ function Movimientos() {
         obtenerPresent() // siempre se debe actualizar Present
 
     }
-    
+
 
     const [array, setArray] = useState([]);
     const [arrayF, setArrayF] = useState([]);
@@ -141,31 +141,31 @@ function Movimientos() {
 
     const [opcion, setSortOption] = useState({ name: 'Todas', current: true });
     const [opcion2, setSortOption2] = useState({ name: 'General', current: true });
-    
+
 
 
     const [label, setLabel] = useState("Todas");
     const [label2, setLabel2] = useState("General");
 
-   useEffect(()=>{
-      fetch("/api/transacciones")
-         .then(response=> response.json())
-         .then(data => {
-            if(data.array){
-                setArray(data.array);
-                setArrayF(data.array);
-                setArrayM(data.array);
-                setArrayPresent(data.array); // en un principo tendra todo, puedo volver a tener todo
-            }
-         })
-         .catch(error=>{
-             console.log(error);
-         });
-   },[])
+    useEffect(() => {
+        fetch("/api/transacciones")
+            .then(response => response.json())
+            .then(data => {
+                if (data.array) {
+                    setArray(data.array);
+                    setArrayF(data.array);
+                    setArrayM(data.array);
+                    setArrayPresent(data.array); // en un principo tendra todo, puedo volver a tener todo
+                }
+            })
+            .catch(error => {
+                console.log(error);
+            });
+    }, [])
 
-   useEffect(() => {
-    obtenerPresent();
-}, [arrayF, arrayM]);
+    useEffect(() => {
+        obtenerPresent();
+    }, [arrayF, arrayM]);
 
 
     return (
@@ -192,15 +192,15 @@ function Movimientos() {
                     <div className="flex items-center ">
                         <Menu as="div" className="relative inline-block text-left">
                             <div>
-                                <Menu.Button className="inline-flex justify-center text-sm font-medium text-gray-700 group hover:text-gray-900">
-                                    por fecha
+                                <Menu.Button className="inline-flex justify-center mr-6 text-sm font-medium text-gray-700 group hover:text-gray-900">
+                                    Por fecha
                                     <ChevronDownIcon
                                         className="flex-shrink-0 w-5 h-5 ml-1 -mr-1 text-gray-400 group-hover:text-gray-500"
                                         aria-hidden="true"
                                     />
                                 </Menu.Button>
                                 <Menu.Button className="inline-flex justify-center text-sm font-medium text-gray-700 group hover:text-gray-900">
-                                    tipo de movimiento
+                                    Tipo de movimiento
                                     <ChevronDownIcon
                                         className="flex-shrink-0 w-5 h-5 ml-1 -mr-1 text-gray-400 group-hover:text-gray-500"
                                         aria-hidden="true"
@@ -217,7 +217,7 @@ function Movimientos() {
                                 leaveFrom="transform opacity-100 scale-100"
                                 leaveTo="transform opacity-0 scale-95"
                             >
-                                <Menu.Items className="absolute right-32 z-10 w-40 mt-2 origin-top-right bg-white rounded-md shadow-2xl ring-black ring-opacity-5 focus:outline-none">
+                                <Menu.Items className="absolute z-10 w-40 mt-2 origin-top-right bg-white rounded-md shadow-2xl right-32 ring-black ring-opacity-5 focus:outline-none">
                                     <div className="py-1">
                                         {sortOptions.map((option) => (
                                             <Menu.Item key={option.name}>
@@ -278,7 +278,7 @@ function Movimientos() {
                     <p className='place-content-center'>{arrayPresent.length} Transacciones</p>
                 </div>
                 <div className='rounded-xl flex justify-start place-content-center place-items-center px-12 py-4 gap-96  shadow-[0_3px_10px_rgb(0,0,0,0.2)]'>
-                    
+
                     <h1 className="text-2xl text-rose-400">
                         {label}
                         {label2}
@@ -288,36 +288,36 @@ function Movimientos() {
 
                 <div className='grid gap-6'>
                     {
-                        arrayPresent.map((objeto)=>{
+                        arrayPresent.map((objeto) => {
 
-                            if(objeto.tipo == 'cita'){
-                                return(
+                            if (objeto.tipo == 'cita') {
+                                return (
                                     <ReturnCitas
-                                      key='1' citas={objeto}/>
+                                        key='1' citas={objeto} />
                                 )
                             }
-                
-                            if(objeto.tipo == 'producto'){
-                                return(
+
+                            if (objeto.tipo == 'producto') {
+                                return (
                                     <Compras
-                                      key='1' compras={objeto}/>
+                                        key='1' compras={objeto} />
                                 )
                             }
-                
-                            if(objeto.tipo == 'Añadir puntos'){
-                                return(
+
+                            if (objeto.tipo == 'Añadir puntos') {
+                                return (
                                     <ReturnPuntos
-                                      key='1' puntos={objeto}/>
+                                        key='1' puntos={objeto} />
                                 )
                             }
-                
-                            if(objeto.tipo == 'Recargar Saldo'){
-                                return(
+
+                            if (objeto.tipo == 'Recargar Saldo') {
+                                return (
                                     <ReturnMonederos
-                                      key='1' monederos={objeto}/>
+                                        key='1' monederos={objeto} />
                                 )
                             }
-                
+
                         })
 
                     }

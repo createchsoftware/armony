@@ -45,7 +45,7 @@ function Rango() {
         <LayoutPrincipal>
             <main className='grid gap-12 my-24'>
                 <section className='rounded-2xl mt-12 w-[60%] m-auto p-6 shadow-[0_3px_10px_rgb(0,0,0,0.2)]'>
-                    <a className='flex items-baseline content-center text-sm gap-x-4' href="/spa"> <IoIosArrowBack className='' />
+                    <a className='flex items-baseline content-center text-sm gap-x-4' href="/spa/perfil"> <IoIosArrowBack className='' />
                         Volver</a>
                     <img className='w-32 m-auto my-6 -mt-24 rounded-full aspect-square' src="../../pictures/spa.png" alt="" />
                     <div className='m-auto text-center '>
