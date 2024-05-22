@@ -48,7 +48,8 @@ function Agenda({ restart }) {
    
     const iva = (total * (.08)).toFixed(2);
     const totalIva = (parseFloat(total) + parseFloat(iva)).toFixed(2);
-    localStorage.setItem('total',totalIva)
+    localStorage.setItem('totalIva',totalIva)
+    localStorage.setItem('total',total)
     const citasList = citasItems.map(item => (
         <li key={item.idServicio} className="flex justify-between p-4 mb-4 border-2 shadow-md rounded-xl border-gray">
             <img className='w-24 h-24 mr-6 rounded-full' src={item.ImagenServicio} alt={item.nombreServicio} />
