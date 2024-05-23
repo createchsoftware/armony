@@ -55,7 +55,22 @@ routerImagenes.get("/imgProdServ/:id", async (req, res) => {
   }
 });
 
-export async function uploadImage(conexion, img, idCliente) {
+export async function ultimoID(conexion) {
+  try {
+    let query = "CALL maximoIdUser()"; // Procedimiento almacenado que obtiene el ultimo id insertado en la tabla usuario
+    const [rows, fields] = await conexion.query(query); // Ejecutamos el procedimiento y almacenamos el resultado
+    endConnection(); // Cerramos la conexion con la base de datos
+    return rows[0]; // Retornamos el valor almacenado
+  } catch (err) {
+    console.error("Ha ocurrido un error al ejecutar el query: " + err);
+  }
+}
+
+/* NOTA IMPORTANTE */
+/* Si el proceso de carga se esta realizando mediante el perfil del usuario, es decir, se encuentra logueado se pasaria su id por parametro directamente al igual
+   que la imagen, pero en caso que sea durante la creacion de una nueva cuenta se debera almacenar la imagen cargada en una variable para usarse posteriormente
+   ya que el usuario se hay dado de alta y su informacion se encuentre en la base de datos para asi poder obtener su id (Esto puede realizarse con la funcion ultimoID) */
+export async function uploadImage(conexion, img, idUser) {
   const imageFile = img.target.files[0]; // Obtenemos el archivo cargado
   const url = `https://api.imgbb.com/1/upload?key=${API_IMG}&name=${imageFile.name}`; //Url compuesta con API y nombre de archivo
   const data = new FormData(); // Creamos estructura llave/valor
@@ -69,7 +84,7 @@ export async function uploadImage(conexion, img, idCliente) {
     const responseData = await response.json(); // Transformamos el resultado en JSON
     const urlImg = responseData.data.url_viewer; // Obtenemos la referencia de la imagen
     const uploadImage = "CALL updUsuarioImg(?, ?)"; // Procedimiento para actualizar la img del usuario
-    const query = mysql.format(uploadImage, [idCliente, urlImg]); // Parametros necesarios para el procedimiento
+    const query = mysql.format(uploadImage, [idUser, urlImg]); // Parametros necesarios para el procedimiento
     await conexion.query(query); // Ejecutamos el query
     endConnection(); // Cerramos la conexion con la base de datos
   } catch (err) {
