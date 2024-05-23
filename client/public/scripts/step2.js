@@ -12,12 +12,20 @@ document.getElementById('step2').addEventListener('click', async ()=>{
 
         let value_temporal = document.getElementById(`q${iterador}`);
 
+
+        value_temporal.addEventListener('input', ()=>{
+            if(value_temporal.value.length > 0) value_temporal.style.borderColor = '#ccc';
+        })
+
         let llave = `llave${iterador}`;
 
-        if(document.getElementById(`no-${iterador}`).checked){
+        let no = document.getElementById(`no-${iterador}`);
+        let si = document.getElementById(`si-${iterador}`);
+
+        if(no.checked){
             cuerpo[llave] = [value_temporal.value,0,iterador]; //selecciono que no
         }else{
-            if(document.getElementById(`si-${iterador}`).checked){
+            if(si.checked){
                 cuerpo[llave] = [value_temporal.value,1,iterador]; //selecciono que si
             }else{
                 cuerpo[llave] = null; // no selecciono nada
@@ -49,9 +57,19 @@ document.getElementById('step2').addEventListener('click', async ()=>{
         let arreglo = respuestaJson.vacios
         for(let indice in arreglo){
            let temporal = document.getElementById(arreglo[indice])
-           temporal.placeholder = "no contestaste";
-           temporal.style.backgroundColor = 'orange';
-           // 
+           temporal.value = ''
+           temporal.style.borderColor = 'orange';
+        
+
+            let toastBox = document.getElementById('toastBox');
+            let div = document.createElement('div');
+            div.classList.add('toast');
+            div.innerHTML = '<div id="texto">dejaste en blanco la pregunta '+arreglo[indice].slice(1);+'</div>   <div id="icono"><i class="fa-solid fa-circle-exclamation"></i></div>';
+            div.classList.add('orange');
+            toastBox.appendChild(div);
+            setTimeout(()=>{
+                div.remove();
+            },6000)
         }
         return;
     } 
@@ -60,9 +78,18 @@ document.getElementById('step2').addEventListener('click', async ()=>{
         let arreglo = respuestaJson.incorrectos
         for(let indice in arreglo){
            let temporal = document.getElementById(arreglo[indice])
-           temporal.placeholder = "Se mas conciso";
-           temporal.style.backgroundColor = 'red';
-           // 
+           temporal.value='';
+           temporal.style.borderColor = 'red';
+
+           let toastBox = document.getElementById('toastBox');
+           let div = document.createElement('div');
+           div.classList.add('toast');
+           div.innerHTML = '<div id="texto">se mas especifico en la pregunta '+arreglo[indice].slice(1);+', escribe mas al respecto</div>   <div id="icono"> <i class="fa-solid fa-circle-xmark"> </div>';
+           toastBox.appendChild(div);
+           setTimeout(()=>{
+               div.remove();
+           },6000)
+           
         }
         return;
     }
