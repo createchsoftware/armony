@@ -190,6 +190,8 @@ export function stringATiempo(tiempo) {
   return minutos; // Retornamos los minutos
 }
 
+console.log(stringATiempo("12:00:00"));
+
 // FUNCIONAL
 export function horaFinal(horaI, duracion) {
   // Calcula la hora en la que finaliza una cita
@@ -223,15 +225,15 @@ export function horaFinal(horaI, duracion) {
     horaF[0] += Math.trunc(minutos / 60); // Sumamos las horas
     horaF[1] += minutos - Math.trunc(minutos / 60) * 60; // Sumamos los minutos restantes
   }
+  horaF.pop(); // Sacamos los segundos
   total = horaF.join(":"); // Juntamos el array de horaF con un : entre cada elemento dando asi el formato de horas
   return total; // Retornamos la hora final
 }
 
-
 export async function getCitasByEstado(connection, data) {
   try {
     let CitasQuery = "CALL getCitasClienteByEstado(?,?)"; // Procedimiento almacenado de la base de datos
-    let query = mysql.format(CitasQuery, [data.id,data.estado]); // Parametros necesarios para la base de datos
+    let query = mysql.format(CitasQuery, [data.id, data.estado]); // Parametros necesarios para la base de datos
     const [rows, fields] = await connection.query(query); // Ejecutamos query y almacenamos valores
     endConnection(); // Cerramos conexion con la base de datos
     return rows[0]; // Retornamos valores
@@ -239,4 +241,19 @@ export async function getCitasByEstado(connection, data) {
     // Capturamos errores de ejecucion de query
     console.error(messageError, err); // Mostramos errores por consola
   }
+}
+
+function eliminarSegundos(tiempo) {
+  const nuevaHora = tiempo.split(":"); // Separamos la hora en base a sus :, obteniendo un array [HH, MM, SS]
+  nuevaHora.pop(); // Eliminamos el ultimo elemento del array (segundos), teniendo al final el array [HH, MM]
+  return nuevaHora.join(":"); // Unimos el array y retornamos un string con el nuevo formato
+}
+
+export async function horasWithoutSeconds(horas) {
+  let horasMostrar = []; // Array para almacenar horas en formato HH:MM
+  for (let i = 0; i < horas.length; i++) {
+    horasMostrar[i] = horas[i]; // Agregamos la hora original a nuestro array
+    horasMostrar[i] = eliminarSegundos(horasMostrar[i]); // Eliminamos los segundos
+  }
+  return horasMostrar; // Retornamos los segundos
 }
