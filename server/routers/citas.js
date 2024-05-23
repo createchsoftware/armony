@@ -9,7 +9,8 @@ import {
   stringATiempo,
   horaFinal,
   ventaCita,
-  getCitasByEstado
+  getCitasByEstado,
+  horasWithoutSeconds,
 } from "../db/query/queryCitas.js";
 import { searchVentaCita } from "../db/query/queryVenta.js";
 
@@ -133,11 +134,12 @@ routerCitas.get("/disponibles/:idServ/:idEmp/:fecha", async (req, res) => {
       idServ: req.params.idServ,
     });
     const horario = [];
-    var i;
+    let i;
     for (i = 0; i < resultado.length; i++) {
       horario[i] = resultado[i].hora_disponible;
     }
-    res.status(200).json(horario);
+    const horasMostrar = await horasWithoutSeconds(horario); // Horas con formato HH:MM
+    res.status(200).json(horasMostrar);
   } catch (err) {
     // Capturamos errores
     console.error(messageError, err); // Mostramos errores por consola
@@ -207,11 +209,11 @@ routerCitas.get("/citasPendientes/:idCliente/:Estado", async (req, res) => {
   try {
     const citas = await getCitasByEstado(conexion, {
       id: req.params.idCliente,
-      estado: req.params.Estado
+      estado: req.params.Estado,
     });
     res.status(200).json(citas);
   } catch (err) {
-    console.error(messageError, err); 
+    console.error(messageError, err);
     res.status(500).send(messageError);
   }
 });

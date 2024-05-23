@@ -21,15 +21,15 @@ const Suscripcion = () => {
                     </div>
                     <div className="deg"></div>
                 </div>
-                <div className="grid p-10 px-16">
+                <div className="grid h-max p-10 px-16">
                     <h1 className="font-[ILoveGlitter] py-12 px-20 justify-self-center text-6xl text-center text-[#036C65]">No te pierdas de los beneficios exclusivos de nuestra membresía</h1>
-                    <div className='border-4 border-[#A93F74] rounded-[30px]'>
-                        <div className="grid justify-center h-auto grid-cols-2 gap-4 p-10 border-[1rem] border-[#F584A7] rounded-3xl place-content-center md:grid-cols-1 md:gap-8  md:h-[52vw] md:place-content-start ">
+                    <div className='grid border-4 min-h-max border-[#A93F74] rounded-[30px]'>
+                        <div className="grid justify-center h-max grid-cols-2 gap-4 p-10 border-[1rem] border-[#F584A7] rounded-3xl place-content-center md:grid-cols-1 md:gap-8 md:place-content-start ">
                             <div className="grid w-full m-auto md:col-span-2">
                                 <img className='rounded-2xl w-48 justify-self-center duration-200 hover:w-52' src="../../pictures/tarjetaSuscripcion.png" alt="" />
                             </div>
                             <h1 className="col-span-2 font-bold text-3xl text-center text-[#F584A7] drop-shadow-[1px_1px_var(--tw-shadow-color)] shadow-[#A93F74] ">Suscripción de socio</h1>
-                            <div className="grid gap-1 text-center divide-black divide- md:gap-4 md:col-span-2">
+                            <div className="grid h-max gap-1 text-center divide-black divide- md:gap-4 md:col-span-2">
                                 <p className='bg-[#616C8926] py-4 text-2xl rounded-xl border-2 border-[#A93F74] duration-200 hover:border-[#F584A7] hover:font-bold'>$199 MXN/mes</p>
                                 <p className="text-xl">Válido para 4 personas</p>
                                 <hr className="border-2 border-gray-500 w-[80%] justify-self-center" />

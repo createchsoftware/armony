@@ -69,19 +69,23 @@ function RevisionProductos({ restart }) {
                                 </div>
                             </div>
                             {/* Código de descuento */}
-                            <div className='grid justify-center p-6 mb-4 border-2 shadow-md rounded-xl border-gray'>
-                                <h3 className='mb-4 text-xl font-bold justify-self-center'>¿Tienes un cupón de descuento?</h3>
-                                <form action="" className='flex mx-4 border-2 rounded-full shadow-md border-gray'>
+                            <div className='p-6 mb-4 border-2 shadow-md rounded-xl border-gray'>
+                                <div className='flex w-full justify-center'>
+                                    <h3 className='mb-4 text-center text-xl font-bold justify-self-center'>¿Tienes un cupón de descuento?</h3>
+                                </div>
+                                <div className='flex justify-between border-2 rounded-full shadow-md border-gray'>
                                     <input
                                         type="text"
                                         value={descuento}
                                         onChange={handleChange}
                                         maxLength="15"
-                                        className='px-2 py-2 text-center rounded-l-full'
+                                        className=' w-[70%] px-2 py-2 text-center rounded-l-full'
                                     />
-                                    <button type="submit" className='rounded-r-full text-white bg-[rgb(3,109,99)] py-2 px-8 duration-200 hover:bg-[rgb(69,181,156)] hover:font-bold'>Aplicar</button>
-                                </form>
-                                <p className='w-[80%] text-center justify-self-center text-xs mt-4'>Los <p className='text-[#D47300]'>Términos y Condiciones de los Cupones</p> de Armony aplican el uso de cupones.</p>
+                                    <button type="submit" className=' w-[30%] rounded-r-full text-center text-white bg-[rgb(3,109,99)] duration-200 hover:bg-[rgb(69,181,156)] hover:font-bold'>Aplicar</button>
+                                </div>
+                                <div className='flex w-full justify-center'>
+                                    <p className='text-center justify-self-center text-xs mt-4'>Los <p className='text-[#D47300]'>Términos y Condiciones de los Cupones</p> de Armony aplican el uso de cupones.</p>
+                                </div>
                             </div>
                             <div className='flex justify-between p-6 px-10 mb-4 border-2 shadow-md rounded-xl border-gray'>
                                 <h4 className='text-xl font-bold'>Puntos obtenidos:</h4>
