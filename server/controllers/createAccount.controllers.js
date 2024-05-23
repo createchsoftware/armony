@@ -4,10 +4,12 @@ import dotenv from 'dotenv';
 import {methods as servicios} from "../services/mail.service.js";
 import mysql from "mysql2";
 
-const regex_email = /([-!#-'*+/-9=?A-Z^-~]+(\.[-!#-'*+/-9=?A-Z^-~]+)*|"([]!#-[^-~ \t]|(\\[\t -~]))+")@([0-9A-Za-z]([0-9A-Za-z-]{0,61}[0-9A-Za-z])?(\.[0-9A-Za-z]([0-9A-Za-z-]{0,61}[0-9A-Za-z])?)*|\[((25[0-5]|2[0-4][0-9]|1[0-9]{2}|[1-9]?[0-9])(\.(25[0-5]|2[0-4][0-9]|1[0-9]{2}|[1-9]?[0-9])){3}|IPv6:((((0|[1-9A-Fa-f][0-9A-Fa-f]{0,3}):){6}|::((0|[1-9A-Fa-f][0-9A-Fa-f]{0,3}):){5}|[0-9A-Fa-f]{0,4}::((0|[1-9A-Fa-f][0-9A-Fa-f]{0,3}):){4}|(((0|[1-9A-Fa-f][0-9A-Fa-f]{0,3}):)?(0|[1-9A-Fa-f][0-9A-Fa-f]{0,3}))?::((0|[1-9A-Fa-f][0-9A-Fa-f]{0,3}):){3}|(((0|[1-9A-Fa-f][0-9A-Fa-f]{0,3}):){0,2}(0|[1-9A-Fa-f][0-9A-Fa-f]{0,3}))?::((0|[1-9A-Fa-f][0-9A-Fa-f]{0,3}):){2}|(((0|[1-9A-Fa-f][0-9A-Fa-f]{0,3}):){0,3}(0|[1-9A-Fa-f][0-9A-Fa-f]{0,3}))?::(0|[1-9A-Fa-f][0-9A-Fa-f]{0,3}):|(((0|[1-9A-Fa-f][0-9A-Fa-f]{0,3}):){0,4}(0|[1-9A-Fa-f][0-9A-Fa-f]{0,3}))?::)((0|[1-9A-Fa-f][0-9A-Fa-f]{0,3}):(0|[1-9A-Fa-f][0-9A-Fa-f]{0,3})|(25[0-5]|2[0-4][0-9]|1[0-9]{2}|[1-9]?[0-9])(\.(25[0-5]|2[0-4][0-9]|1[0-9]{2}|[1-9]?[0-9])){3})|(((0|[1-9A-Fa-f][0-9A-Fa-f]{0,3}):){0,5}(0|[1-9A-Fa-f][0-9A-Fa-f]{0,3}))?::(0|[1-9A-Fa-f][0-9A-Fa-f]{0,3})|(((0|[1-9A-Fa-f][0-9A-Fa-f]{0,3}):){0,6}(0|[1-9A-Fa-f][0-9A-Fa-f]{0,3}))?::)|(?!IPv6:)[0-9A-Za-z-]*[0-9A-Za-z]:[!-Z^-~]+)])/;
-const regex_lada = /\d{2}/;
+const regex_email = /^\S+@(gmail\.com|hotmail\.com|outlook\.com|icloud.com|itmexicali\.edu\.mx|bc\.conalep\.edu\.mx|cecytebc\.edu\.mx|miprepacetis(75|18)\.mx|cobachbc\.edu\.mx|)$/;
 const regex_nombres = /[a-zA-Zá-úñ]{3,11}/;
 const regex_apellidos = /[a-zA-Zá-úñ]{3,}/;
+const regex_lada = /^\+?\d{1,3}$/;
+const regex_telefono = /^(\d{9,10}|\d{2,3} \d{7}|\d{2,3} \d{3} \d{4}|\d{2,3}-\d{7}|\d{2,3}-\d{3}-\d{4})$/;
+
 
 
 
@@ -120,6 +122,7 @@ async function paso1(solicitud,respuesta){
 
 
 
+
           // INICIO 3 QUE EL USUARIO HAYA LLENADO TODOS LOS DATOS, NO SIGNIFCA QUE LOS HAYA LLENADO CORRECTAMENTE, AHORA TOCA VERIFICAR QUE LOS DATOS SEAN VALIDOS  
 
           let correo_valido = regex_email.test(correo[0]);
@@ -127,6 +130,7 @@ async function paso1(solicitud,respuesta){
           let nombre_valido = regex_nombres.test(nombre[0]);
           let paterno_valido = regex_apellidos.test(paterno[0]);
           let materno_valido = regex_apellidos.test(materno[0]);
+          let telefono_valido = regex_telefono.test(telefono[0]);
 
           // CREAR OTRO ARREGLO QUE ALMACENARA LOS CAMPOS INVALIDOS
           let campos_invalidos = [];
@@ -144,7 +148,7 @@ async function paso1(solicitud,respuesta){
           if(correo_valido == false){
             campos_invalidos.push(correo[1]);
           }
-          if(telefono[0].length > 10){
+          if(telefono_valido == false){
             campos_invalidos.push(telefono[1]);
           }
           if(lada_valida == false){
@@ -181,6 +185,11 @@ async function paso1(solicitud,respuesta){
               return respuesta.send({invalidos:campos_invalidos});
           }
           else{
+
+              telefono[0] = telefono[0].replace(/-/g,'');
+              telefono[0] = telefono[0].replace(/ /g,'');
+              lada[0] = lada[0].replace('\+','');
+
               // Si llegamos hasta este ELSE, significa que el usuario contesto correctamente todos los campos
 
               // INICIO 4 AHORA TOCA VERIFICAR QUE EL CORREO NO ESTE REPETIDO, YA QUE NO PUEDE HABER CORREOS REPETIDOS ENTRE USUARIOS

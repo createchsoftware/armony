@@ -125,7 +125,7 @@ async function paso1(solicitud, respuesta){
             let invalidos = [];
 
             let regex_lada = /^\+?\d{1,3}$/;
-            let regex_telefono = /^(\d{10}|\d{3} \d{7}|\d{3} \d{3} \d{4}|\d{3}-\d{7}|\d{3}-\d{3}-\d{4})$/;
+            let regex_telefono = /^(\d{9,10}|\d{2,3} \d{7}|\d{2,3} \d{3} \d{4}|\d{2,3}-\d{7}|\d{2,3}-\d{3}-\d{4})$/;
 
             if(regex_lada.test(lada) == false){
                 invalidos.push('lada');
@@ -189,7 +189,7 @@ async function paso1(solicitud, respuesta){
         }
         else{
             // no hubo campos invalidos
-            let regex_correo = /^(\S+@(gmail|hotmail|icloud|outlook)\.com|\S*@itmexicali\.edu\.mx)$/;
+            let regex_correo = /^\S+@(gmail\.com|hotmail\.com|outlook\.com|icloud.com|itmexicali\.edu\.mx|bc\.conalep\.edu\.mx|cecytebc\.edu\.mx|miprepacetis(75|18)\.mx|cobachbc\.edu\.mx|)$/;
             let invalidos = [];
 
             if(regex_correo.test(correo) == false){
@@ -290,7 +290,9 @@ async function paso2_enviar(solicitud,respuesta){
 
             let decodificada = await JsonWebToken.verify(galleta_anterior,process.env.JWT_SECRET);
 
-            let numero_random = parseInt(Math.random()*Math.pow(10,6));
+            let random = Math.random()*(1-0.1)+0.1;
+            let potencia = Math.pow(10,6);
+            let numero_random = parseInt(random*potencia);
             let codigo = numero_random.toString();
             let mensaje='';
             let enviada=false;

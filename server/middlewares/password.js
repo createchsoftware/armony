@@ -75,7 +75,7 @@ async function confirmacion(solicitud,respuesta,siguiente){
 
                 //ya que se cambio la contrasena y se envio la notificacion, toca eliminar las cookies
                 respuesta.clearCookie('Akane_cookie', { path: '/' });
-                respuesta.clearCookie('Himiko_toga', { path: '/' });
+                respuesta.clearCookie('Himiko_Toga', { path: '/' });
                 respuesta.clearCookie('Shiragiku_cookie', { path: '/' });
                 respuesta.clearCookie('Nezuko_Kamado', { path: '/' });
                 

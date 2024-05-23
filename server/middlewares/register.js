@@ -82,23 +82,27 @@ async function InsertUser(solicitud,respuesta,siguiente){
                         
                     }
 
+                    try{
 
-                    // toca crear un nuevo usuario en stripe
-                    const stripe = new Stripe(process.env.STRIPE_SECRET);
+                        // toca crear un nuevo usuario en stripe
+                        const stripe = new Stripe(process.env.STRIPE_SECRET);
 
-                    const cliente = await stripe.customers.create({
-                        email:decodificada1.correo,
-                        name:`${decodificada1.nombre} ${decodificada1.paterno} ${decodificada1.materno}`,
-                        address:{
-                            postal_code:decodificada1.codigo_postal,
-                        },
-                        phone:`+${telefono_completo}`,
-                        metadata:{
-                            usuario_id:busqueda[0].pkIdUsuario,
-                        }
-                    })
+                        const cliente = await stripe.customers.create({
+                            email:decodificada1.correo,
+                            name:`${decodificada1.nombre} ${decodificada1.paterno} ${decodificada1.materno}`,
+                            address:{
+                                postal_code:decodificada1.codigo_postal,
+                            },
+                            phone:`+${telefono_completo}`,
+                            metadata:{
+                                usuario_id:busqueda[0].pkIdUsuario,
+                            }
+                        })
 
-
+                    }catch(error){
+                        console.log('hubo un error al crear un usuario en stripe');
+                        console.log(error);
+                    }
 
 
                         let token = jsonwebtoken.sign(

@@ -4,6 +4,7 @@ import cookieParser from "cookie-parser";
 import https from "https";
 import * as fs from "fs";
 
+
 import path, { dirname } from "path";
 import { fileURLToPath } from "url";
 const _dirname = path.dirname(fileURLToPath(import.meta.url));
@@ -32,6 +33,8 @@ app.use((req, res, next) => {
   req.database = conexion;
   next();
 });
+
+
 
 //app.use(express.static(path.join(__dirname, '../client/img')));
 
