@@ -15,7 +15,7 @@ import LayoutPrincipal from "../layouts/LayoutPrincipal";
 import { Navigate, useNavigate } from "react-router-dom";
 import { CSSTransition, TransitionGroup } from "react-transition-group";
 
-import Pago from "../components/ui/Pago";
+import Pago from "../components/ui/PagoDeProducto";
 import RevisionProductos from "../components/ui/RevisionProductos";
 import FinalizacionPago from "../components/ui/FinalizacionPagoServ";
 import Ticket from "../components/ui/TicketProducto";

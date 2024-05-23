@@ -12,7 +12,7 @@ export const CarritoProvider = ({ children }) => {
         const savedCart = localStorage.getItem('cartItems');
         return savedCart ? JSON.parse(savedCart) : [];
     });
-localStorage.clear();
+
     useEffect(() => {
         localStorage.setItem('cartItems', JSON.stringify(cartItems));
     }, [cartItems]);
@@ -21,36 +21,16 @@ localStorage.clear();
     const agregarAlCarrito = (item) => {
         const existingItem = cartItems.find(i => i.id === item.id);
         if (existingItem) {
-            // Incrementar la cantidad por item.cantidad
-            setCartItems(cartItems.map(i =>
-                i.id === item.id ? { ...i, cantidad: i.cantidad + item.cantidad } : i
-            ));
+            // Si el ítem ya está en el carrito, no hacer nada
+            return;
         } else {
-            // Agregar el ítem al carrito
-            setCartItems([...cartItems, item]);
+            // Agregar el ítem al carrito con cantidad 1
+            setCartItems([...cartItems, { ...item, cantidad: 1 }]);
         }
     };
 
     const eliminarDelCarrito = (itemId) => {
         setCartItems(cartItems.filter(item => item.id !== itemId));
-    };
-
-    const increaseQuantity = (itemId) => {
-        setCartItems(cartItems.map(item =>
-            item.id === itemId ? { ...item, cantidad: item.cantidad + 1 } : item
-        ));
-    };
-
-    const decreaseQuantity = (itemId) => {
-        setCartItems(cartItems.map(item =>
-            item.id === itemId ? { ...item, cantidad: Math.max(item.cantidad - 1, 1) } : item
-        ));
-
-        // Si la cantidad es 1, eliminar el producto del carrito
-        const item = cartItems.find(item => item.id === itemId);
-        if (item && item.cantidad === 1) {
-            eliminarDelCarrito(itemId);
-        }
     };
 
     const getCartItemsCount = () => {
@@ -59,7 +39,7 @@ localStorage.clear();
 
 
     return (
-        <CarritoContext.Provider value={{ cartItems, agregarAlCarrito, eliminarDelCarrito, increaseQuantity, decreaseQuantity, getCartItemsCount }}>
+        <CarritoContext.Provider value={{ cartItems, agregarAlCarrito, eliminarDelCarrito, getCartItemsCount }}>
             {children}
         </CarritoContext.Provider>
     );

@@ -1,4 +1,4 @@
-import { useState,useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrash } from '@fortawesome/free-solid-svg-icons';
 
@@ -10,23 +10,23 @@ function Agenda({ restart }) {
     //     { id: 2, name: 'Maquillaje', price: 1100.00, quantity: 1, image: "../../../pictures/crema1.png", desc: "Shampoo con aceite de coco.", duracion: "90 min", dia: "31/03/2024", hora: "14:20", especialista: "Antonio Esparza" },
     // ]);
 
-      useEffect(() => {
+    useEffect(() => {
         setTimeout(() => {
-        iterateArray();
-    }, 1000);
+            iterateArray();
+        }, 1000);
     }, []);
 
     const iterateArray = () => {
         let myArray = JSON.parse(localStorage.getItem('citas')) || [];
         setCitasItems(myArray)
-        
-      };
 
-      const RLSCitas= (id) => {
+    };
+
+    const RLSCitas = (id) => {
         let citas = JSON.parse(localStorage.getItem('citas')) || [];
         citas = citas.filter(obj => obj.id !== id);
         localStorage.setItem('citas', JSON.stringify(citas));
-      };
+    };
 
     //Para remover por completo un servicio.
     const removeItem = (itemId) => {
@@ -45,16 +45,16 @@ function Agenda({ restart }) {
 
     const totalCitas = citasItems.reduce((total, item) => total + 1, 0);
     const total = citasItems.reduce((acc, item) => acc + item.precioServicio.replace(/[#\s]/g, '') * 1, 0).toFixed(2);
-   
+
     const iva = (total * (.08)).toFixed(2);
     const totalIva = (parseFloat(total) + parseFloat(iva)).toFixed(2);
 
-    const puntos = (parseFloat(totalIva))/10;
+    const puntos = (parseFloat(totalIva)) / 10;
     //En caso de ser Socio VVV
     //const puntos = (parseInt(totalIva))/5;
 
-    localStorage.setItem('total',totalIva)
-    localStorage.setItem('totalIva',totalIva)
+    localStorage.setItem('total', totalIva)
+    localStorage.setItem('totalIva', totalIva)
     const citasList = citasItems.map(item => (
         <li key={item.idServicio} className="flex justify-between p-4 mb-4 border-2 shadow-md rounded-xl border-gray">
             <img className='w-24 h-24 mr-6 rounded-full' src={item.ImagenServicio} alt={item.nombreServicio} />
@@ -87,7 +87,7 @@ function Agenda({ restart }) {
                 </h1>
                 <div className='flex justify-between mx-16'>
                     {/* Bloque de servicios */}
-                    <div className="rounded-xl shadow-md w-[47%] border-2 border-gray">
+                    <div className="rounded-xl shadow-md w-[45%] border-2 border-gray">
                         <div className='grid bg-[rgb(3,109,99)] rounded-t-xl'>
                             <p className='py-2 text-lg text-white justify-self-center'>Servicios</p>
                         </div>
@@ -118,7 +118,7 @@ function Agenda({ restart }) {
                         </div>
                     </div>
                     {/* Bloque de pago */}
-                    <div className="rounded-xl shadow-md w-[47%] border-2 border-gray">
+                    <div className="rounded-xl shadow-md w-[45%] border-2 border-gray">
                         <div className='grid bg-[rgb(3,109,99)] rounded-t-xl'>
                             <p className='py-2 text-lg text-white justify-self-center'>Pago</p>
                         </div>
@@ -126,7 +126,7 @@ function Agenda({ restart }) {
                             <div className='grid p-6 mb-4 border-2 shadow-md rounded-xl border-gray'>
                                 <div className='flex justify-between mb-2'>
                                     <span>{totalCitas} Servicio(s)</span>
-                                    <h1 className='font-bold'>${total}</h1>
+                                     <h1 className='font-bold'>${total}</h1>
                                 </div>
                                 <div className='flex justify-between mb-2'>
                                     <h1>IVA</h1>
@@ -150,10 +150,6 @@ function Agenda({ restart }) {
                                     />
                                     <button type="submit" className='rounded-full text-white bg-[rgb(3,109,99)] py-2 px-8 duration-200 hover:bg-[rgb(69,181,156)] hover:font-bold'>Aplicar</button>
                                 </form>
-                            </div>
-                            <div className='flex justify-between p-6 px-10 mb-4 border-2 shadow-md rounded-xl border-gray'>
-                                <h4 className='text-xl font-bold'>Puntos obtenidos:</h4>
-                                <span className='font-bold text-[rgb(3,109,99)] text-xl'>{parseInt(puntos)}</span>
                             </div>
                             <div className='flex justify-between p-6 px-10 mb-4 border-2 shadow-md rounded-xl border-gray'>
                                 <h4 className='text-xl font-bold'>Total:</h4>

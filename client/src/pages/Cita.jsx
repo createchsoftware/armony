@@ -165,6 +165,7 @@ export default function Cita() {
     let citas = JSON.parse(localStorage.getItem('citas')) || [];
     citas.push(newProduct);
     localStorage.setItem('citas', JSON.stringify(citas));
+    localStorage.getItem('citas');
   };
 
 

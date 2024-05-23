@@ -72,7 +72,7 @@ function InformacionPersonal() {
     }
 
 
-    async function Patologias(){
+    async function Patologias() {
         const respuesta2 = await fetch('/api/patologias', {
             method: "GET",
             headers: {
@@ -80,36 +80,36 @@ function InformacionPersonal() {
             }
         })
 
-        if(!respuesta2.ok){
+        if (!respuesta2.ok) {
             console.log('hubo un problema en la comunicacion back con front');
         }
 
         const respuesta2Json = await respuesta2.json();
 
-        if(respuesta2Json.patologias){
+        if (respuesta2Json.patologias) {
             setPatologias(respuesta2Json.patologias);
         }
-        
+
     }
 
 
-    function retornar(){
-        if(patologias.length == 0){
-            return ( 
+    function retornar() {
+        if (patologias.length == 0) {
+            return (
                 <div className='flex gap-x-4'>
-                   <p className='text-[#9D9999]'>No hay patologias</p>
+                    <p className='text-[#9D9999]'>No hay patologias</p>
                 </div>
             );
         }
-        else{
-            return patologias.map(objeto=>(
-                    <div className='flex gap-x-4'>
-                        <p className='text-[#9D9999]'>{objeto.nombre}</p>
-                        <p>{objeto.titulo}</p>
-                        <p>{objeto.descripcion}</p>
-                    </div>
+        else {
+            return patologias.map(objeto => (
+                <div className='flex gap-x-4'>
+                    <p className='text-[#9D9999]'>{objeto.nombre}</p>
+                    <p>{objeto.titulo}</p>
+                    <p>{objeto.descripcion}</p>
+                </div>
             ));
-            
+
         }
     }
 
@@ -203,7 +203,7 @@ function InformacionPersonal() {
                             <h2 className='text-[#EB5765] font-bold text-2xl'>Patologias:</h2>
                             <div>
                                 {
-                                   retornar()
+                                    retornar()
                                 }
                             </div>
                         </section>
