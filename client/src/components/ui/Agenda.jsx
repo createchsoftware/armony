@@ -82,12 +82,12 @@ function Agenda({ restart }) {
     return (
         <>
             <div className='grid'>
-                <h1 className='justify-self-center text-2xl px-8  border-b-2 border-b-[#ec5766] font-bold mb-10'>
+                <h1 className='justify-self-center text-2xl px-4  border-b-2 border-b-[#ec5766] font-bold mb-10'>
                     Resumen de tus citas
                 </h1>
                 <div className='flex justify-between mx-16'>
                     {/* Bloque de servicios */}
-                    <div className="rounded-xl shadow-md w-[45%] border-2 border-gray">
+                    <div className="rounded-xl shadow-md w-[47%] border-2 border-gray">
                         <div className='grid bg-[rgb(3,109,99)] rounded-t-xl'>
                             <p className='py-2 text-lg text-white justify-self-center'>Servicios</p>
                         </div>
@@ -118,7 +118,7 @@ function Agenda({ restart }) {
                         </div>
                     </div>
                     {/* Bloque de pago */}
-                    <div className="rounded-xl shadow-md w-[45%] border-2 border-gray">
+                    <div className="rounded-xl shadow-md w-[47%] border-2 border-gray">
                         <div className='grid bg-[rgb(3,109,99)] rounded-t-xl'>
                             <p className='py-2 text-lg text-white justify-self-center'>Pago</p>
                         </div>
@@ -138,18 +138,23 @@ function Agenda({ restart }) {
                                 </div>
                             </div>
                             {/* Código de descuento */}
-                            <div className='grid justify-center p-6 mb-4 border-2 shadow-md rounded-xl border-gray'>
-                                <h3 className='mb-4 text-xl font-bold justify-self-center'>Código de descuento</h3>
-                                <form action="" className='flex border-2 rounded-full shadow-md border-gray'>
+                            <div className='p-6 mb-4 border-2 shadow-md rounded-xl border-gray'>
+                                <div className='flex w-full justify-center'>
+                                    <h3 className='mb-4 text-center text-xl font-bold justify-self-center'>¿Tienes un cupón de descuento?</h3>
+                                </div>
+                                <div className='flex justify-between border-2 rounded-full shadow-md border-gray'>
                                     <input
                                         type="text"
                                         value={descuento}
                                         onChange={handleChange}
                                         maxLength="15"
-                                        className='px-6 py-2 text-center rounded-full'
+                                        className=' w-[70%] px-2 py-2 text-center rounded-l-full'
                                     />
-                                    <button type="submit" className='rounded-full text-white bg-[rgb(3,109,99)] py-2 px-8 duration-200 hover:bg-[rgb(69,181,156)] hover:font-bold'>Aplicar</button>
-                                </form>
+                                    <button type="submit" className=' w-[30%] rounded-r-full text-center text-white bg-[rgb(3,109,99)] duration-200 hover:bg-[rgb(69,181,156)] hover:font-bold'>Aplicar</button>
+                                </div>
+                                <div className='flex w-full justify-center'>
+                                    <p className='text-center justify-self-center text-xs mt-4'>Los <p className='text-[#D47300]'>Términos y Condiciones de los Cupones</p> de Armony aplican el uso de cupones.</p>
+                                </div>
                             </div>
                             <div className='flex justify-between p-6 px-10 mb-4 border-2 shadow-md rounded-xl border-gray'>
                                 <h4 className='text-xl font-bold'>Total:</h4>
