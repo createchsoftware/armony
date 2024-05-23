@@ -37,35 +37,35 @@ document.getElementById('step3').addEventListener('click',async ()=>{
 
     if(respuestaJson.confirmar){
         // ambas contraseñas no concuerdan
-        contraseña.value='';
-        contraseña.placeholder = "las contraseñas no concuerdan"
-        contraseña.backgroundColor = 'yellow';
-        confirmacion.value='';
-        confirmacion.placeholder = "las contraseñas no concuerdan";
-        confirmacion.backgroundColor = 'yellow';
+        let toastBox = document.getElementById('toastBox');
+
+        let div = document.createElement('div');
+        div.classList.add('toast');
+        div.innerHTML = '<div id="texto">Las contraseñas no concuerdan</div>     <div id="icono> <i class="fa-solid fa-equals"></i> </div>';
+        div.classList.add('orange');
+        toastBox.appendChild(div);
+        setTimeout(()=>{
+            div.remove();
+        },6000)
         return;
     }
 
     if(respuestaJson.invalidas){
         // ambas contraseñas si concuerdan, pero no son validas
+        let toastBox = document.getElementById('toastBox');
 
         let arreglo = respuestaJson.invalidas;
-        let texto = "Te falta";
-        for(let i in arreglo){
-            texto=texto+" "+arreglo[i].toString();
-        }
-        contraseña.value='';
-        confirmacion.value='';
-        contraseña.placeholder = texto;
-        contraseña.backgroundColor = 'orange';
-        return;
-    }
 
-    if(respuestaJson.fuera_rango){
-        contraseña.value='';
-        confirmacion.value='';
-        contraseña.placeholder = `La contrasena que ingresaste tiene ${respuestaJson.fuera_rango}`;
-        contraseña.backgroundColor = 'white';
+        for(let i in arreglo){
+            let div = document.createElement('div');
+            div.classList.add('toast');
+            div.innerHTML = '<div id="texto">tu contraseña '+arreglo[i]+'</div>    <div id="icono"><i class="fa-solid fa-circle-xmark"></i></div>';
+            toastBox.appendChild(div);
+
+            setTimeout(()=>{
+                div.remove();
+            },6000)
+        }
         return;
     }
 

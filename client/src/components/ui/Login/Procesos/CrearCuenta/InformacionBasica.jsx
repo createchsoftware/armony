@@ -3,10 +3,19 @@ import camara from "../../../../../../public/pictures/camara.png";
 import Pasos from "../../../PasosDeProcesos";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faAngleLeft } from "@fortawesome/free-solid-svg-icons";
+import { Helmet, HelmetProvider } from "react-helmet-async";
+import React, { useState, useEffect } from "react";
+import '../../../../../txt.css';
 
 const InformacionBasica = () => {
+
   return (
     <div>
+      <HelmetProvider>
+        <Helmet>
+            <script src="https://kit.fontawesome.com/c9a65ccec4.js" crossorigin="anonymous"></script>
+        </Helmet>
+      </HelmetProvider>
       <div className="md:h-20 h-[3.75rem] bg-white" />
       <div className="justify-center items-center mt-[6rem] mb-[6rem] md:mt-[5rem] md:mb-2 lg:mt-[8rem] lg:mb-4">
         <div className="h-[66rem] w-[25rem] md:h-[36rem] md:w-[52rem] lg:h-[40rem] lg:w-[66rem] flex flex-col rounded-xl ring-1 ring-slate-200 bg-white bg-clip-border text-gray-700 shadow-md mx-auto">
@@ -51,6 +60,7 @@ const InformacionBasica = () => {
                     type="text"
                     placeholder="Suzana"
                     className="bg-slate-200 rounded-full w-[19rem] lg:w-[24.75rem] mb-1 mx-0 py-2 focus:outline-none focus:ring-1 focus:ring-slate-800 focus:border-transparent px-6"
+                    
                   />
                   <div className="grid grid-cols-2">
                     <div>
@@ -67,6 +77,7 @@ const InformacionBasica = () => {
                         type="text"
                         placeholder="Martinez"
                         className="bg-slate-200 rounded-full w-[9rem] md:w-[9.25rem] lg:w-[12rem] mb-1 mr-2 py-2 focus:outline-none focus:ring-1 focus:ring-slate-800 focus:border-transparent px-6"
+                        
                       />
                     </div>
                     <div>
@@ -83,6 +94,7 @@ const InformacionBasica = () => {
                         type="text"
                         placeholder="Hererra"
                         className="bg-slate-200 rounded-full w-[9rem] md:w-[9.25rem] lg:w-[12rem] mb-1 mr-2 py-2 focus:outline-none focus:ring-1 focus:ring-slate-800 focus:border-transparent px-6"
+                        
                       />
                     </div>
                   </div>
@@ -100,6 +112,7 @@ const InformacionBasica = () => {
                   type="text"
                   placeholder="cliente@armony.com"
                   className="bg-slate-200 rounded-full w-[19rem] lg:w-[24.75rem] mb-1 mx-0 py-2 focus:outline-none focus:ring-1 focus:ring-slate-800 focus:border-transparent px-6"
+                  
                 />
                 <div className="grid grid-cols-2">
                   <div>
@@ -116,6 +129,7 @@ const InformacionBasica = () => {
                       type="text"
                       placeholder="+52"
                       className="bg-slate-200 rounded-full w-[9rem] md:w-[9.25rem] lg:w-[12rem] mb-1 mr-2 py-2 focus:outline-none focus:ring-1 focus:ring-slate-800 focus:border-transparent px-6"
+                      
                     />
                   </div>
                   <div>
@@ -132,6 +146,7 @@ const InformacionBasica = () => {
                       type="text"
                       placeholder="686-222-3344"
                       className="bg-slate-200 rounded-full w-[9rem] md:w-[9.25rem] lg:w-[12rem] mb-1 mr-2 py-2 focus:outline-none focus:ring-1 focus:ring-slate-800 focus:border-transparent px-6"
+                      
                     />
                   </div>
                 </div>
@@ -149,6 +164,7 @@ const InformacionBasica = () => {
                     type="text"
                     placeholder="dd"
                     className="bg-slate-200 rounded-full w-[6rem] lg:w-[7.75rem] mb-1 mr-2 py-2 focus:outline-none focus:ring-1 focus:ring-slate-800 focus:border-transparent px-6"
+                    
                   />
                   <input
                     id="month"
@@ -178,6 +194,7 @@ const InformacionBasica = () => {
                   type="text"
                   placeholder="Maria"
                   className="bg-slate-200 rounded-full w-[19rem] lg:w-[24.75rem] mb-1 mx-0 py-2 focus:outline-none focus:ring-1 focus:ring-slate-800 focus:border-transparent px-6"
+                  
                 />
                 <div>
                   <label htmlFor="" className="text-sm">
@@ -192,6 +209,7 @@ const InformacionBasica = () => {
                   type="text"
                   placeholder="Col. Residencias"
                   className="bg-slate-200 rounded-full w-[19rem] lg:w-[24.75rem] mb-1 mx-0 py-2 focus:outline-none focus:ring-1 focus:ring-slate-800 focus:border-transparent px-6"
+                  
                 />
                 <div>
                   <label htmlFor="" className="text-sm">
@@ -206,6 +224,7 @@ const InformacionBasica = () => {
                   type="text"
                   placeholder="#1234"
                   className="bg-slate-200 rounded-full w-[19rem] lg:w-[24.75rem] mb-1 mx-0 py-2 focus:outline-none focus:ring-1 focus:ring-slate-800 focus:border-transparent px-6"
+                  
                 />
                 <div>
                   <label htmlFor="" className="text-sm">
@@ -220,6 +239,7 @@ const InformacionBasica = () => {
                   type="text"
                   placeholder="12345"
                   className="bg-slate-200 rounded-full w-[19rem] lg:w-[24.75rem] mb-1 mx-0 py-2 focus:outline-none focus:ring-1 focus:ring-slate-800 focus:border-transparent px-6"
+                  
                 />
               </div>
             </form>
@@ -253,6 +273,7 @@ const InformacionBasica = () => {
           </div>
         </div>
       </div>
+      <div id="toastBox"/>
     </div>
   );
 };
