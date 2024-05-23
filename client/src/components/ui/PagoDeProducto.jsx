@@ -246,7 +246,7 @@ function Pago({ producto }) {
             {pagoRealizado && (
                 <div className='soon-fondo'>
                     <div className='soon-fx'>
-                        <PagoRealizado cerrarPago={togglePago} cliente={cliente} />
+                        <PagoRealizado cerrarPago={togglePago} cliente={cliente} total={total} />
                     </div>
                 </div>
             )}
