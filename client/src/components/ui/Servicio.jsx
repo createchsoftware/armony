@@ -69,31 +69,23 @@ function Servicio({
               }}
             >
               <div className="object-bottom">
-                <div className="grid grid-cols-[auto_70%_auto]">
-                  <div>
-                    <AiOutlineShoppingCart
-                      style={{ fontSize: "28px", color: "#3F3F3F" }}
-                    />
-                  </div>
-                  <div></div>
-                  <div>
-                    <StyledRating
-                      name="customized-color"
-                      defaultValue={isFavorite ? 1 : 0}
-                      max={1}
-                      getLabelText={(value) =>
-                        `${value} Heart${value !== 1 ? "s" : ""}`
-                      }
-                      precision={1}
-                      icon={<FavoriteIcon fontSize="inherit" />}
-                      emptyIcon={
-                        <FavoriteBorderIcon
-                          style={{ color: "#3F3F3F" }}
-                          fontSize="inherit"
-                        />
-                      }
-                    />
-                  </div>
+                <div className="grid place-content-end">
+                  <StyledRating
+                    name="customized-color"
+                    defaultValue={isFavorite ? 1 : 0}
+                    max={1}
+                    getLabelText={(value) =>
+                      `${value} Heart${value !== 1 ? "s" : ""}`
+                    }
+                    precision={1}
+                    icon={<FavoriteIcon fontSize="inherit" />}
+                    emptyIcon={
+                      <FavoriteBorderIcon
+                        style={{ color: "#3F3F3F" }}
+                        fontSize="inherit"
+                      />
+                    }
+                  />
                 </div>
               </div>
             </Box>
