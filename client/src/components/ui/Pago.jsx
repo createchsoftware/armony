@@ -223,7 +223,7 @@ function Pago({ producto, next }) {
             {tarjeta && (
                 <div className='soon-fondo'>
                     <div className='soon-fx'>
-                        <InforTarjeta cerrarInfo={toggleTarjeta} sendDatos={datosRecibidos} />
+                        <InforTarjeta cerrarInfo={toggleTarjeta}  />
                     </div>
                 </div>
             )}
