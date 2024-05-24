@@ -1,8 +1,4 @@
 import Carousel from 'react-multi-carousel';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faTrash } from '@fortawesome/free-solid-svg-icons';
-import { Rating } from '@mui/material';
-import { faCircleMinus, faCirclePlus, faAngleLeft } from '@fortawesome/free-solid-svg-icons';
 import Ofertas from '../components/ui/Ofertas';
 import Box from "@mui/material/Box";
 import Stepper from "@mui/material/Stepper";
@@ -318,8 +314,32 @@ export default function Cita({ producto }) {
                 {/* <Typography sx={{ mt: 2, mb: 1, py: 1 }}>
                                     Step {activeStep + 1}
                                 </Typography> */}
-                <div className="grid grid-cols-3">
+                <div className='grid grid-cols-2'>
+                  { isLastStep() && (
+                    <>
+                      <a
+                        disabled={activeStep === steps.length - 1}
+                        // hidden={activeStep === 0 || activeStep === 1 || activeStep === 2 || activeStep === 3 || activeStep === 4 || activeStep === 5}
+                        href='/perfil/historial'
+                        className="px-4 py-2 mx-auto text-xl bg-white rounded-full ring-1 text-rose-400 ring-rose-400"
+                        sx={{ mr: 1 }}
+                      >
+                        Ver historial
+                      </a>
+                      <a
+                        // hidden={activeStep === 0 || activeStep === 1 || activeStep === 2 || activeStep === 3 || activeStep === 4 || activeStep === 5}
+                        href='/spa/productos'
+                        disabled={activeStep === steps.length - 1}
+                        className="px-4 py-2 mx-auto text-xl text-white rounded-full bg-rose-400 hover:bg-red-200"
+                      >
+                        Finalizar
+                      </a>
+                    </>
+                  )}
+                </div>
+                <div className="hidden grid-cols-3 ">
                   <button
+                    hidden
                     disabled={activeStep === 0}
                     // hidden={activeStep === 0 || activeStep === 1 || activeStep === 2 || activeStep === 3 || activeStep === 4 || activeStep === 5}
                     onClick={handleBack}

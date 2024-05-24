@@ -3,7 +3,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faAngleLeft } from "@fortawesome/free-solid-svg-icons";
 
 // eslint-disable-next-line react/prop-types
-function InforTarjeta({cerrarInfo}, {sendDatos}){
+function InforTarjeta({cerrarInfo}){
     const [deshabilitado, setDeshabilitado] = useState(true);
     const [error, setError] = useState('');
     const [nuevaTarjeta, setNuevaTarjeta] = useState('');
@@ -66,7 +66,7 @@ function InforTarjeta({cerrarInfo}, {sendDatos}){
         if(validar()){
             setError('');
             setNuevaTarjeta(noTarjeta)
-            sendDatos(nuevaTarjeta);
+            // sendDatos(nuevaTarjeta);
         }else{
             setError('¡Favor de llenar todos los campos.');
         }

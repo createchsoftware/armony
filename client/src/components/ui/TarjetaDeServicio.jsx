@@ -21,6 +21,18 @@ const TarjetaDeServicio = ({ servicio, next }) => {
   const [vista, setVista] = useState(false);
 
   const [seleccionado, setSeleccionado] = useState(false);
+
+  function hr(hr) {
+    let h = hr.charAt(1);
+    if (h[0] == "0") {
+      return hr + " min.";
+    } else if (h[0] == "1") {
+      return hr + " hr.";
+    } else {
+      return hr + " hrs.";
+    }
+  }
+
   const agregarServ = (id, nombre, precio, tiempo, img, callback) => {
     if (!seleccionado) {
       setSeleccionado(true);
@@ -96,7 +108,7 @@ const TarjetaDeServicio = ({ servicio, next }) => {
           <p className="text-lg font-bold pl-5 w-[80%]">{servicio.nombre}</p>
         </div>
         <p className="pl-5 text-base">Costo: ${servicio.precio}</p>
-        <p className="pl-5 text-base">Duracion: {servicio.tiempo} min</p>
+        <p className="pl-5 text-base">Duracion: {hr(servicio.tiempo)}</p>
         <div className="grid place-items-center">
           <Rating
             className=""
