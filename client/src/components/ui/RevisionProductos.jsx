@@ -53,13 +53,6 @@ const ofertas = [
 
 
 function RevisionProductos({ restart, producto, next }) {
-    const navigate = useNavigate();
-
-    const handleCancel = () => {
-        navigate('/spa/productos');
-    }
-
-
     const [cartItems, setCartItems] = useState(() => {
         if (producto) {
             // Si hay un producto en el prop, lo utilizamos
@@ -204,38 +197,32 @@ function RevisionProductos({ restart, producto, next }) {
                                 </div>
                                 <div className='flex justify-center w-full'>
                                     <p className='mt-4 text-xs text-center justify-self-center'>Los <p className='text-[#D47300]'>Términos y Condiciones de los Cupones</p> de Armony aplican el uso de cupones.</p>
+                                    <div className='flex justify-center w-full'>
+                                        <p className='mt-4 text-xs text-center justify-self-center'>Los <p className='text-[#D47300] inline-flex'>Términos y Condiciones de los Cupones</p> de Armony aplican el uso de cupones.</p>
+                                    </div>
+                                </div>
+                                <div className='flex justify-between p-6 px-10 mb-4 border-2 shadow-md rounded-xl border-gray'>
+                                    <h4 className='text-xl font-bold'>Puntos obtenidos:</h4>
+                                    <span className='font-bold text-[rgb(3,109,99)] text-xl'>{parseInt(puntos)}</span>
+                                </div>
+                                <div className='flex justify-between p-6 px-10 mb-4 border-2 shadow-md rounded-xl border-gray'>
+                                    <h4 className='text-xl font-bold'>Total:</h4>
+                                    <span className='font-bold text-[rgb(3,109,99)] text-xl'>${total}</span>
                                 </div>
                             </div>
-                            <div className='flex justify-between p-6 px-10 mb-4 border-2 shadow-md rounded-xl border-gray'>
-                                <h4 className='text-xl font-bold'>Puntos obtenidos:</h4>
-                                <span className='font-bold text-[rgb(3,109,99)] text-xl'>{parseInt(puntos)}</span>
+                            <div className='flex justify-between gap-2 px-6 py-4'>
+                                <a href='/spa/productos' className='px-8 py-2 bg-[#ec5766] text-xl text-white rounded-full duration-200 hover:bg-[#ffb5a7]'>
+                                    Cancelar
+                                </a>
+                                <button onClick={() => next()} className='px-8 py-2 bg-[#ec5766] text-xl text-white rounded-full duration-200 hover:bg-[#ffb5a7]'>
+                                    Continuar
+                                </button>
                             </div>
-                            <div className='flex justify-between p-6 px-10 mb-4 border-2 shadow-md rounded-xl border-gray'>
-                                <h4 className='text-xl font-bold'>Total:</h4>
-                                <span className='font-bold text-[rgb(3,109,99)] text-xl'>${total}</span>
-                            </div>
-                        </div>
-                        <div className='flex justify-between'>
-                            <button
-                                // hidden={activeStep === 0 || activeStep === 1 || activeStep === 2 || activeStep === 3 || activeStep === 4 || activeStep === 5}
-                                onClick={() => handleCancel()}
-                                className="px-4 py-2 mx-auto text-xl text-white rounded-full bg-[#036C65] hover:bg-opacity-70"
-                            >
-                                Cancelar
-                            </button>
-                            <button
-                                // hidden={activeStep === 0 || activeStep === 1 || activeStep === 2 || activeStep === 3 || activeStep === 4 || activeStep === 5}
-                                onClick={() => next()}
-                                className="px-4 py-2 mx-auto text-xl text-white rounded-full bg-rose-400 hover:bg-red-200"
-                            >
-                                Continuar
-                            </button>
                         </div>
                     </div>
                 </div>
-            </div>
-        </>
-    )
+            </>
+            )
 }
 
-export default RevisionProductos;
+            export default RevisionProductos;
