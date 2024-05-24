@@ -23,7 +23,7 @@ const TarjetaDeServicio = ({ servicio, next }) => {
   const [seleccionado, setSeleccionado] = useState(false);
 
   function hr(hr) {
-    console.log(h);
+    let h = hr.charAt(1);
     if (h[0] == "0") {
       return hr + " min.";
     } else if (h[0] == "1") {
