@@ -5,12 +5,10 @@ import {
   createCitas,
   updateCita,
   updateCitaStaus,
-  duracionTotal,
-  stringATiempo,
-  horaFinal,
   ventaCita,
   getCitasByEstado,
   horasWithoutSeconds,
+  citaOnline,
 } from "../db/query/queryCitas.js";
 import { searchVentaCita } from "../db/query/queryVenta.js";
 
@@ -24,76 +22,108 @@ routerCitas.use(express.json()); // Analiza las request entrantes con carga JSON
 const messageError = "Ha ocurrido un error al procesar tu peticion: ";
 
 // CREATE POR PROBAR
-routerCitas.post("/create/:id", async (req, res) => {
-  try {
-    const datosCita = {
-      idVenta: "",
-      idCliente: req.params.id,
-      idEmp: 37,
-      idServ: 2,
-      idPilar: 2,
-      nombre: "Julian David Sandoval Godinez",
-      phone: "6864503452",
-      tarjeta: "5696324506590956",
-      fecha: "2024-12-17",
-      horaI: "14:00:00",
-      horaF: "",
-      descr: "Prueba de componente",
-      estado: "pendiente",
-      monedero: 0,
-      estadoPago: "pagada",
-      subTotal: 450,
-      total: 670,
-      impuesto: 0.08,
-    }; // Campos requeridos para la cita
-    var duracion = await duracionTotal(conexion, {
-      idServ: datosCita.idServ,
-    }); // Obtenemos el tiempo de duracion del servicio en String
-    datosCita.horaF = horaFinal(datosCita.horaI, duracion[0].tiempo); // Obtenemos la hora en la que finaliza la cita y la almacenamos
+// routerCitas.post("/create/:id", async (req, res) => {
+//   try {
+//     const datosCita = {
+//       idVenta: "",
+//       idCliente: req.params.id,
+//       idEmp: 37,
+//       idServ: 2,
+//       idPilar: 2,
+//       nombre: "Julian David Sandoval Godinez",
+//       phone: "6864503452",
+//       tarjeta: "5696324506590956",
+//       fecha: "2024-12-17",
+//       horaI: "14:00:00",
+//       horaF: "",
+//       descr: "Prueba de componente",
+//       estado: "pendiente",
+//       monedero: 0,
+//       estadoPago: "pagada",
+//       subTotal: 450,
+//       total: 670,
+//       impuesto: 0.08,
+//     }; // Campos requeridos para la cita
+//     let duracion = await duracionTotal(conexion, {
+//       idServ: datosCita.idServ,
+//     }); // Obtenemos el tiempo de duracion del servicio en String
+//     datosCita.horaF = horaFinal(datosCita.horaI, duracion[0].tiempo); // Obtenemos la hora en la que finaliza la cita y la almacenamos
 
-    const ventaCitaOnline = await ventaCita(conexion, {
-      idCliente: datosCita.idCliente,
-      nombre: datosCita.nombre,
-      phone: datosCita.phone,
-      tarjeta: datosCita.tarjeta,
-      monedero: datosCita.monedero,
-      estadoPago: datosCita.estadoPago,
-      subTotal: datosCita.subTotal,
-      total: datosCita.total,
-      impuesto: datosCita.impuesto,
-    }); // Pasamos parametros necesarios para el procedimiento y ejecutmamos
+//     const ventaCitaOnline = await ventaCita(conexion, {
+//       idCliente: datosCita.idCliente,
+//       nombre: datosCita.nombre,
+//       phone: datosCita.phone,
+//       tarjeta: datosCita.tarjeta,
+//       monedero: datosCita.monedero,
+//       estadoPago: datosCita.estadoPago,
+//       subTotal: datosCita.subTotal,
+//       total: datosCita.total,
+//       impuesto: datosCita.impuesto,
+//     }); // Pasamos parametros necesarios para el procedimiento y ejecutmamos
 
-    // Buscamos el id de la venta que se acaba de realizar
-    const venta = await searchVentaCita(conexion, {
-      idCliente: datosCita.idCliente,
-      tVenta: "cita",
-      phone: datosCita.phone,
-    });
-    let resultado;
-    // Verificamos que la venta se haya hecho correctamente
-    if (venta[0].pkIdVenta !== 0 && venta[0].pkIdVenta !== null) {
-      // Se hizo la venta correctamente
-      resultado = await createCitas(conexion, {
-        idVenta: venta[0].pkIdVenta,
-        idEmp: datosCita.idEmp,
-        idPilar: datosCita.idPilar,
-        idServ: datosCita.idServ,
-        fecha: datosCita.fecha,
-        horaI: datosCita.horaI,
-        horaF: datosCita.horaF,
-        descr: datosCita.descr,
-        estado: datosCita.estado,
-      }); // Pasamos parametros al procedimiento y lo ejecutamos (Alta de cita)
-      res
+//     // Buscamos el id de la venta que se acaba de realizar
+//     const venta = await searchVentaCita(conexion, {
+//       idCliente: datosCita.idCliente,
+//       tVenta: "cita",
+//       phone: datosCita.phone,
+//     });
+//     let resultado;
+//     // Verificamos que la venta se haya hecho correctamente
+//     if (venta[0].pkIdVenta !== 0 && venta[0].pkIdVenta !== null) {
+//       // Se hizo la venta correctamente
+//       resultado = await createCitas(conexion, {
+//         idVenta: venta[0].pkIdVenta,
+//         idEmp: datosCita.idEmp,
+//         idPilar: datosCita.idPilar,
+//         idServ: datosCita.idServ,
+//         fecha: datosCita.fecha,
+//         horaI: datosCita.horaI,
+//         horaF: datosCita.horaF,
+//         descr: datosCita.descr,
+//         estado: datosCita.estado,
+//       }); // Pasamos parametros al procedimiento y lo ejecutamos (Alta de cita)
+//       res
+//         .status(200)
+//         .json({ message: "Cita creada correctamente", data: resultado }); // Enviamos resultado al navegador
+//     } else
+//       [res.status(400).send("Ha ocurrido un error con el pago, " + resultado)]; // No se realizo el pago correctamente y lo enviamos al navegador
+//   } catch (err) {
+//     // Capturamos errores
+//     console.error(messageError, err); // Mostramos errores por consola
+//     res.status(500).send(messageError); // Enviamos un error INTERNAL SERVER ERROR y el error al navegador
+//   }
+// });
+
+// CITA ONLINE (PENDIENTE A PROBRAR)
+routerCitas.post("/Online/:id", async (req, res) => {
+  // Datos de prueba de cita
+  const datosCita = {
+    idVenta: "",
+    idCliente: req.params.id,
+    idEmp: 37,
+    idServ: 2,
+    idPilar: 2,
+    nombre: "Julian David Sandoval Godinez",
+    phone: "6864503452",
+    tarjeta: "5696324506590956",
+    fecha: "2024-12-17",
+    horaI: "14:00:00",
+    horaF: "",
+    descr: "Prueba de cita online No.2",
+    estado: "pendiente",
+    monedero: 0,
+    estadoPago: "pagada",
+    subTotal: 450,
+    total: 670,
+    impuesto: 0.08,
+    promo: null,
+  };
+  const resultado = await citaOnline(conexion, datosCita);
+  resultado === true
+    ? res
         .status(200)
-        .json({ message: "Cita creada correctamente", data: resultado }); // Enviamos resultado al navegador
-    } else
-      [res.status(400).send("Ha ocurrido un error con el pago, " + resultado)]; // No se realizo el pago correctamente y lo enviamos al navegador
-  } catch (err) {
-    // Capturamos errores
-    console.error(messageError, err); // Mostramos errores por consola
-    res.status(500).send(messageError); // Enviamos un error INTERNAL SERVER ERROR y el error al navegador
-  }
+        .json({ message: "Cita creada correctamente", data: resultado })
+    : res.status(400).json({ message: "Ocurrio un error: ", resultado });
 });
 
 routerCitas.post("/venta", async (req, res) => {
