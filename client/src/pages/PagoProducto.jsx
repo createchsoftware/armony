@@ -318,8 +318,9 @@ export default function Cita({ producto }) {
                 {/* <Typography sx={{ mt: 2, mb: 1, py: 1 }}>
                                     Step {activeStep + 1}
                                 </Typography> */}
-                <div className="grid grid-cols-3">
+                <div className="hidden grid-cols-3 ">
                   <button
+                    hidden
                     disabled={activeStep === 0}
                     // hidden={activeStep === 0 || activeStep === 1 || activeStep === 2 || activeStep === 3 || activeStep === 4 || activeStep === 5}
                     onClick={handleBack}
