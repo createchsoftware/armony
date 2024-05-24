@@ -6,6 +6,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Helmet, HelmetProvider } from "react-helmet-async";
 import InputContrasena from "../InputContrasena.jsx";
 import { faAngleLeft } from "@fortawesome/free-solid-svg-icons";
+import '../../../txt.css';
 
 const Login = ({ cerrar }) => {
   const [soon, setSoon] = useState(false);
@@ -98,6 +99,7 @@ const Login = ({ cerrar }) => {
           <HelmetProvider>
             <Helmet>
               <script src="../../../scripts/login.js"></script>
+              <script src="https://kit.fontawesome.com/c9a65ccec4.js" crossorigin="anonymous"></script>
             </Helmet>
           </HelmetProvider>
 
@@ -159,7 +161,9 @@ const Login = ({ cerrar }) => {
             </div>
           </div>
         )}
+        <div id="toastBox"/>
       </div>
+      
     </>
   );
 };

@@ -530,38 +530,37 @@ async function paso3(solicitud,respuesta){
             let regex_mayor = /\w{20,}/;
             
             if(regex_numero.test(contraseña)==false){
-              arreglo_regex.push("un numero");
+              arreglo_regex.push("no tiene un numero");
             }
 
             if(regex_caracter_especial.test(contraseña)==false){
-              arreglo_regex.push("un caracter especial");
+              arreglo_regex.push("no tiene un caracter especial");
             }
 
             if(regex_Mayuscula.test(contraseña)==false){
-              arreglo_regex.push("una Mayuscula");
+              arreglo_regex.push("no tiene una Mayuscula");
             }
 
             if(regex_minuscula.test(contraseña)==false){
-              arreglo_regex.push("una minuscula");
+              arreglo_regex.push("no tiene una minuscula");
+            }
+
+            if(regex_mayor.test(contraseña)==true){
+                arreglo_regex.push('es mayor de 20 caracteres');
+            }
+  
+            if(contraseña.length<8){
+                arreglo_regex.push('es menor de 8 caracteres');
             }
 
             
           
             if(arreglo_regex.length>0){
               respuesta.send({invalidas:arreglo_regex});
-              console.log('por aqui');
             }
             else{
 
-                if(regex_mayor.test(contraseña)==true){
-                  respuesta.send({fuera_rango:"mas de 20 caracteres"})
-                }else{
-                  if(contraseña.length<8){
-                    respuesta.send({fuera_rango:"menos de 8 caracteres"})
-                  }else{
-
-                    console.log('verdad que todo salio bien??');
-                    // todo salio bien
+                // todo salio bien
 
                     let token = JsonWebToken.sign(
                       {
@@ -586,9 +585,9 @@ async function paso3(solicitud,respuesta){
                     // el usuario podra continuar con el apartado patologias
                     respuesta.send({redirect:"/recuperacion/confirmacion"}); 
 
-                  }
                   
-                }
+                  
+                
             }
           }
 

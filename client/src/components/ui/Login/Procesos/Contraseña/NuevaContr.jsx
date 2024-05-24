@@ -11,6 +11,7 @@ import {
   faCircle,
   faAngleLeft,
 } from "@fortawesome/free-solid-svg-icons";
+import '../../../../../txt.css'
 
 const NuevaContr = () => {
 
@@ -19,6 +20,7 @@ const NuevaContr = () => {
       <HelmetProvider>
           <Helmet>
              <script src="../../../scripts/paso3_recuperacion.js"></script>
+             <script src="https://kit.fontawesome.com/c9a65ccec4.js" crossorigin="anonymous"></script>
           </Helmet>
       </HelmetProvider>
       <div className="md:h-20 h-[3.75rem] bg-white" />
@@ -113,6 +115,7 @@ const NuevaContr = () => {
           </div>
         </div>
       </div>
+      <div id="toastBox"/>
     </div>
   );
 };
