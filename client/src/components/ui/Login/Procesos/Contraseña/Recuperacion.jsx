@@ -4,7 +4,8 @@ import user1 from "../../../../../../public/pictures/userCl.png";
 import Pasos from "../../../PasosDeProcesos.jsx";
 import Soon from "../../../Proximamente";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faAngleLeft } from "@fortawesome/free-solid-svg-icons";
+import { faAngleLeft , faCircleExclamation, faCircleXmark, faDatabase} from "@fortawesome/free-solid-svg-icons";
+import { ToastContainer, toast } from 'react-toastify';
 
 const Recuperacion = () => {
   const [state, setState] = useState(false);
@@ -75,23 +76,27 @@ const Recuperacion = () => {
 
     const respuestaJson = await respuesta.json();
 
-    if (respuestaJson.faltantes) {
+    if(respuestaJson.faltantes){
       let faltantes = respuestaJson.faltantes;
 
       faltantes.forEach((faltante) => {
-        console.log(`Te falto llenar el dato ${faltante}`);
+        toast(<div>{`Te falto llenar el dato ${faltante}`}<FontAwesomeIcon icon={faCircleExclamation} /></div>)
       });
 
       return;
     }
 
-    if (respuestaJson.invalidos) {
+    if(respuestaJson.invalidos){
       let invalidos = respuestaJson.invalidos;
 
       invalidos.forEach((invalido) => {
-        console.log(`El campo ${invalido} no es valido`);
+        toast(<div>{`El campo ${invalido} no es valido`}<FontAwesomeIcon icon={faCircleXmark} /></div>)
       });
       return;
+    }
+
+    if(respuestaJson.mensaje){
+      toast(<div>{respuestaJson.mensaje}<FontAwesomeIcon icon={faDatabase} /></div>);
     }
 
     if (respuestaJson.redirect) {
@@ -210,7 +215,7 @@ const Recuperacion = () => {
           </div>
           <a
             onClick={toogleState}
-            className="text-teal-700 md:text-sm lg:text-base text-center"
+            className="text-teal-700 w-max m-auto md:text-sm lg:text-base text-center relative cursor-pointer before:bg-teal-700 before:absolute before:-bottom-1 before:block before:h-[1px] before:w-full before:origin-bottom-right before:scale-x-0 before:transition before:duration-300 before:ease-in-out hover:before:origin-bottom-left hover:before:scale-x-100 hover:font-bold"
           >
             {m4}
           </a>
@@ -237,6 +242,7 @@ const Recuperacion = () => {
           </div>
         </div>
       </div>
+      <ToastContainer position={'bottom-right'} theme={'light'} />
     </div>
   );
 };

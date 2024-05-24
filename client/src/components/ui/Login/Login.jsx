@@ -6,6 +6,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Helmet, HelmetProvider } from "react-helmet-async";
 import InputContrasena from "../InputContrasena.jsx";
 import { faAngleLeft } from "@fortawesome/free-solid-svg-icons";
+import '../../../txt.css';
 
 const Login = ({ cerrar }) => {
   const [soon, setSoon] = useState(false);
@@ -34,7 +35,7 @@ const Login = ({ cerrar }) => {
           </div>
           <div className="grid grid-cols-2">
             <a
-              className="text-sm lg:text-base ml-5 justify-self-start"
+              className="text-sm items-center lg:text-base ml-5 justify-self-start relative cursor-pointer before:bg-black before:absolute before:-bottom-1 before:block before:h-[1px] before:w-full before:origin-bottom-right before:scale-x-0 before:transition before:duration-300 before:ease-in-out hover:before:origin-bottom-left hover:before:scale-x-100 hover:font-bold"
               aria-label="Regresar"
               onClick={cerrar.close}
             >
@@ -45,7 +46,7 @@ const Login = ({ cerrar }) => {
               Regresar
             </a>
             <a
-              className="text-sm lg:text-base mr-5 justify-self-end"
+              className="text-sm lg:text-base mr-5 justify-self-end relative cursor-pointer before:bg-black before:absolute before:-bottom-1 before:block before:h-[1px] before:w-full before:origin-bottom-right before:scale-x-0 before:transition before:duration-300 before:ease-in-out hover:before:origin-bottom-left hover:before:scale-x-100 hover:font-bold"
               aria-label="¿Eres Administrador?"
               onClick={changeAdmin}
             >
@@ -77,7 +78,7 @@ const Login = ({ cerrar }) => {
                   class:
                     "bg-slate-200 rounded-full text-sm lg:text-base mb-2 lg:mb-3 mt-1 lg:mt-2 py-2 lg:py-3 w-[22rem] lg:w-[25rem] focus:outline-none focus:ring-1 focus:ring-[#EB5765] focus:border-transparent px-6",
                   classEye:
-                    "relative -bottom-[2.25rem] lg:-bottom-[2.75rem] left-[15.25rem] lg:left-[17rem]",
+                    "relative cursor-pointer -bottom-[2.25rem] lg:-bottom-[2.75rem] left-[15.25rem] lg:left-[17rem] hover:text-black",
                 }}
               />
               <div>
@@ -98,13 +99,14 @@ const Login = ({ cerrar }) => {
           <HelmetProvider>
             <Helmet>
               <script src="../../../scripts/login.js"></script>
+              <script src="https://kit.fontawesome.com/c9a65ccec4.js" crossorigin="anonymous"></script>
             </Helmet>
           </HelmetProvider>
 
           <button
             type="button"
             id="iniciar-sesion-fet"
-            className="bg-[#EB5765] text-white text-lg lg:text-xl rounded-full px-4 py-2 mx-auto hover:bg-red-200"
+            className="bg-[#EB5765] text-white text-lg lg:text-xl rounded-full duration-200 px-4 py-2 mx-auto hover:bg-red-200"
             aria-label="Iniciar Sesión"
           >
             Inicia Sesión
@@ -122,7 +124,7 @@ const Login = ({ cerrar }) => {
             className="absolute size-6 bottom-[5.5rem] md:bottom-[4.5rem] lg:bottom-[6.25rem] left-[7.25rem] md:left-[8rem] lg:left-[9rem]"
           />
           <button
-            className="mb-5 md:mb-3 lg:mb-5 bg-blue-400 text-white text-xs lg:text-sm pl-10 pr-4 py-3 mx-auto hover:bg-blue-300"
+            className="mb-5 md:mb-3 lg:mb-5 bg-blue-400 text-white duration-200 text-xs lg:text-sm pl-10 pr-4 py-3 mx-auto hover:bg-blue-300"
             aria-label="Continuar con Google"
             onClick={setSoon}
           >
@@ -140,13 +142,13 @@ const Login = ({ cerrar }) => {
             <a
               href="/spa/resetPassword/Recuperacion"
               onClick={cerrar.close}
-              className="ml-7 text-sm lg:text-base justify-self-start"
+              className="ml-7 text-sm lg:text-base justify-self-start relative cursor-pointer before:bg-[#036C65] before:absolute before:-bottom-1 before:block before:h-[1px] before:w-full before:origin-bottom-right before:scale-x-0 before:transition before:duration-300 before:ease-in-out hover:before:origin-bottom-left hover:before:scale-x-100 hover:font-bold"
             >
               Restablecer contraseña
             </a>
             <a
               onClick={changeReg}
-              className="mr-4 text-sm lg:text-base justify-self-end"
+              className="mr-4 text-sm lg:text-base justify-self-end relative cursor-pointer before:bg-[#036C65] before:absolute before:-bottom-1 before:block before:h-[1px] before:w-full before:origin-bottom-right before:scale-x-0 before:transition before:duration-300 before:ease-in-out hover:before:origin-bottom-left hover:before:scale-x-100 hover:font-bold"
             >
               Crear cuenta nueva
             </a>
@@ -159,7 +161,9 @@ const Login = ({ cerrar }) => {
             </div>
           </div>
         )}
+        <div id="toastBox"/>
       </div>
+      
     </>
   );
 };

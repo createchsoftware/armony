@@ -12,7 +12,7 @@ export const CarritoProvider = ({ children }) => {
         const savedCart = localStorage.getItem('cartItems');
         return savedCart ? JSON.parse(savedCart) : [];
     });
-localStorage.clear();
+    localStorage.clear();
     useEffect(() => {
         localStorage.setItem('cartItems', JSON.stringify(cartItems));
     }, [cartItems]);
@@ -146,7 +146,7 @@ const Carrito = ({ cerrar, totalProductos, logCart, loginCart }) => {
                 <h4 className="mt-8 cart-empty">No hay artículos en el carrito.</h4>
             ) : (
                 <>
-                    <ul id="cart-items overflow-y-auto" className='overflow-y-auto h-[35rem]'>{cartList}</ul>
+                    <ul id="cart-items overflow-y-auto" className='overflow-y-auto h-[30rem]'>{cartList}</ul>
                     <div className='flex justify-between'>
                         <p>Envio:</p>
                         <span>$0.00</span>

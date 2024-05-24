@@ -28,31 +28,32 @@ const steps = [
   "Agenda",
   "Pago",
   "Confirmación",
-  "Ticket"
+  "Ticket",
 ];
 
 export default function Cita() {
-
   const navigate = useNavigate();
   const [activeStep, setActiveStep] = useState(0);
   const [completed, setCompleted] = useState({});
   const [scrollPosition, setScrollPosition] = useState(0);
-  const nextButtonText = activeStep === steps.length - 1 ? "Ver agenda" : "Siguiente";
+  const nextButtonText =
+    activeStep === steps.length - 1 ? "Finalizar" : "Siguiente";
   // const citasAgregadas = [];
   // localStorage.setItem('citas', JSON.stringify(citasAgregadas));
   // useEffect(() => {
   //   localStorage.clear();
   // }, []); // Se ejecutará una vez al montar el component
 
-  useEffect(() => {//cuando el usuario llegue al paso 4  se ajecutara 
+  useEffect(() => {
+    //cuando el usuario llegue al paso 4  se ajecutara
     if (activeStep === 3) {
       paso4();
     }
   }, [activeStep]);
 
   const paso4 = () => {
-    agregadoCitas()// se guardara su servicio en un array
-    removeLSCitas()//despues se eliminaran del localstorage para posteriormente volverlos a declarar
+    agregadoCitas(); // se guardara su servicio en un array
+    removeLSCitas(); //despues se eliminaran del localstorage para posteriormente volverlos a declarar
     // LocalBase()
   };
 
@@ -135,62 +136,70 @@ export default function Cita() {
     setCompleted({});
   };
   const removeLSCitas = () => {
-    localStorage.removeItem("servicio")
-    localStorage.removeItem('nombre')
-    localStorage.removeItem('precio')
-    localStorage.removeItem('tiempo')
-    localStorage.removeItem('imagen')
-    localStorage.removeItem("paquete")
-    localStorage.removeItem("sesiones")
-    localStorage.removeItem("Especialista")
-    localStorage.removeItem("hora")
-    localStorage.removeItem("Fecha seleccionada")
-    localStorage.removeItem('NombreEspecialista')
-
-  }
+    localStorage.removeItem("servicio");
+    localStorage.removeItem("nombre");
+    localStorage.removeItem("precio");
+    localStorage.removeItem("tiempo");
+    localStorage.removeItem("imagen");
+    localStorage.removeItem("paquete");
+    localStorage.removeItem("sesiones");
+    localStorage.removeItem("Especialista");
+    localStorage.removeItem("hora");
+    localStorage.removeItem("Fecha seleccionada");
+    localStorage.removeItem("NombreEspecialista");
+  };
   const agregadoCitas = () => {
     const newProduct = {
-      "idServicio": localStorage.getItem("servicio"),
-      "nombreServicio": localStorage.getItem('nombre'),
-      "precioServicio": localStorage.getItem('precio'),
-      "tiempoServicio": localStorage.getItem('tiempo'),
-      "ImagenServicio": localStorage.getItem('imagen'),
+      idServicio: localStorage.getItem("servicio"),
+      nombreServicio: localStorage.getItem("nombre"),
+      precioServicio: localStorage.getItem("precio"),
+      tiempoServicio: localStorage.getItem("tiempo"),
+      ImagenServicio: localStorage.getItem("imagen"),
       //"Servicio":localStorage.getItem("paquete"),
       // localStorage.getItem("sesiones") ,
-      "IdEspecialista": localStorage.getItem("Especialista"),
-      "horaDisp": localStorage.getItem("hora"),
-      "FechaServicio": localStorage.getItem("Fecha seleccionada"),
-      "nombreEsp": localStorage.getItem('NombreEspecialista')
+      IdEspecialista: localStorage.getItem("Especialista"),
+      horaDisp: localStorage.getItem("hora"),
+      FechaServicio: localStorage.getItem("Fecha seleccionada"),
+      nombreEsp: localStorage.getItem("NombreEspecialista"),
     };
-    let citas = JSON.parse(localStorage.getItem('citas')) || [];
+    let citas = JSON.parse(localStorage.getItem("citas")) || [];
     citas.push(newProduct);
-    localStorage.setItem('citas', JSON.stringify(citas));
-    localStorage.getItem('citas');
+    localStorage.setItem("citas", JSON.stringify(citas));
+    localStorage.getItem("citas");
   };
-
 
   const LocalBase = () => {
     console.log(
-      localStorage.getItem("servicio") + ' ' +
-      localStorage.getItem('nombre') + ' ' +
-      localStorage.getItem('precio') + ' ' +
-      localStorage.getItem('tiempo') + ' ' +
-      localStorage.getItem('imagen') + " " +
-      localStorage.getItem("paquete") + " " +
-      localStorage.getItem("sesiones") + " " +
-      localStorage.getItem("Especialista") + " " +
-      localStorage.getItem("hora") + " " +
-      localStorage.getItem("Fecha seleccionada") + ' ' +
-      localStorage.getItem('NombreEspecialista')
+      localStorage.getItem("servicio") +
+      " " +
+      localStorage.getItem("nombre") +
+      " " +
+      localStorage.getItem("precio") +
+      " " +
+      localStorage.getItem("tiempo") +
+      " " +
+      localStorage.getItem("imagen") +
+      " " +
+      localStorage.getItem("paquete") +
+      " " +
+      localStorage.getItem("sesiones") +
+      " " +
+      localStorage.getItem("Especialista") +
+      " " +
+      localStorage.getItem("hora") +
+      " " +
+      localStorage.getItem("Fecha seleccionada") +
+      " " +
+      localStorage.getItem("NombreEspecialista")
     );
   };
   const stepComponents = [
-    <Servicios key={0} />,
+    <Servicios key={0} next={handleClick} />,
     <Paquetes key={1} />,
     <Calendario key={2} />,
-    <Agenda restart={restart} key={3} />,
-    <Pago key={4} />,
-    <FinalizacionPago key={5} />,
+    <Agenda restart={restart} next={handleClick} key={3} />,
+    <Pago next={handleClick} key={4} />,
+    <FinalizacionPago next={handleClick} key={5} />,
     <Ticket key={6} />,
   ];
 
@@ -248,6 +257,7 @@ export default function Cita() {
           <div>
             {allStepsCompleted() ? (
               navigate("/perfil/agenda")
+            ) : (
               // <React.Fragment>
               //   <Typography sx={{ mt: 2, mb: 1 }}>Pasos completados</Typography>
               //   <Box sx={{ display: "flex", flexDirection: "row", pt: 2 }}>
@@ -255,14 +265,13 @@ export default function Cita() {
               //     <Button onClick={handleReset}>Empezar de nuevo</Button>
               //   </Box>
               // </React.Fragment>
-            ) : (
               <React.Fragment>
                 {/* <Typography sx={{ mt: 2, mb: 1, py: 1 }}>
                                     Step {activeStep + 1}
                                 </Typography> */}
-                <div className="grid grid-cols-3">
+                <div className={(activeStep === 0 || activeStep === 3 || activeStep === 4 || activeStep === 6) ? "grid grid-cols-2 content-between" : "grid grid-cols-3 content-between"}>
                   <button
-                    hidden={activeStep === 5}
+                    hidden={activeStep === 0 || activeStep === 5 || activeStep === 6}
                     disabled={activeStep === 0}
                     onClick={handleBack}
                     className={`${activeStep === 0
@@ -274,15 +283,16 @@ export default function Cita() {
                     Regresar
                   </button>
                   <button
+
                     hidden={activeStep === 5}
-                    onClick={handleCancel}
-                    disabled={activeStep === steps.length - 1}
-                    className="px-4 py-2 mx-auto text-xl text-white rounded-full bg-[#036C65] hover:bg-opacity-70"
+                    onClick={activeStep === 6 ? restart : handleClick}
+                    className={"px-4 py-2 mx-auto text-xl text-white rounded-full bg-[#036C65] hover:bg-opacity-70"}
                   >
-                    Cancelar
+                    {activeStep === 6 ? "Agendar otra cita" : "Cancelar"}
                   </button>
                   <button
-                    hidden={activeStep === 5}
+                    hidden={activeStep === 3 || activeStep === 4 || activeStep === 5}
+                    // hidden={activeStep === 5 || activeStep === 4}
                     onClick={handleClick}
                     // disabled={activeStep === steps.length - 1}
                     className="px-4 py-2 mx-auto text-xl text-white rounded-full bg-rose-400 hover:bg-red-200"

@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import Carrusel from "../../CarruselServicios";
 import Soon from "../../../../components/ui/Proximamente";
 
-const AgendarServicios = () => {
+const AgendarServicios = ({ next }) => {
   const [soon, setSoon] = useState(false);
   const [spa, setSpa] = useState([]);
   const [estetica, setEstetica] = useState([]);
@@ -167,16 +167,16 @@ const AgendarServicios = () => {
           </button>
         </div>
         <div className={toggleState === 1 ? "block" : "hidden"}>
-          <Carrusel servicios={spa} />
+          <Carrusel servicios={spa} next={next} />
         </div>
         <div className={toggleState === 2 ? "block" : "hidden"}>
-          <Carrusel servicios={estetica} />
+          <Carrusel servicios={estetica} next={next} />
         </div>
         <div className={toggleState === 3 ? "block" : "hidden"}>
-          <Carrusel servicios={favoritos} />
+          <Carrusel servicios={favoritos} next={next} />
         </div>
         <div className={toggleState === 4 ? "block" : "hidden"}>
-          <Carrusel servicios={descuentos} />
+          <Carrusel servicios={descuentos} next={next} />
         </div>
       </div>
       {soon && (

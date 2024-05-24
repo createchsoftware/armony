@@ -4,19 +4,23 @@ var servicios = [
   { id: 3, nombre: "Depilación", sesiones: 1, total: 1500 },
 ];
 
-const FinalizacionPagoServ = () => {
+const FinalizacionPagoServ = ({ next }) => {
   let total;
+  let puntos;
   const setTotal = () => {
     total = 0;
     for (let i = 0; i < servicios.length; i++) {
       total += servicios[i].total;
     }
+    puntos = parseFloat(total) / 10;
   };
+  //En caso de ser Socio VVV
+  //const puntos = (parseInt(totalIva))/5;
   let sm = "sesiones";
   return (
     <>
       <div className="grid">
-        <h1 className="justify-self-center text-2xl px-8  border-b-2 border-b-[#ec5766] font-bold mb-10">
+        <h1 className="justify-self-center text-2xl px-8 border-b-2 border-b-[#ec5766] font-bold mb-10">
           Finalización de pago
         </h1>
         {/* Header */}
@@ -57,7 +61,7 @@ const FinalizacionPagoServ = () => {
                 );
               })}
               <div className="shadow-md w-[15rem] my-5 ml-[22rem] h-auto border-2 border-gray">
-                <div className="grid grid-cols-2  place-items-center">
+                <div className="grid grid-cols-2 place-items-center">
                   <p>Total</p>
                   <p className="text-[rgb(3,109,99)] font-bold">${total}</p>
                 </div>
@@ -65,8 +69,16 @@ const FinalizacionPagoServ = () => {
             </div>
             {/* Botones */}
             <div>
+              <div className="flex justify-end mb-4 mr-8">
+                <p className="text-[#056761] text-xl">
+                  Puntos obtenidos: {puntos}
+                </p>
+              </div>
               <div className="flex justify-end mb-4">
-                <button className="bg-[#ec5766] text-white px-10 py-2 mr-10 rounded-full duration-200 hover:bg-[#ffb5a7]">
+                <button
+                  onClick={() => next()}
+                  className="bg-[#ec5766] text-white px-10 py-2 mr-10 rounded-full duration-200 hover:bg-[#ffb5a7]"
+                >
                   Continuar
                 </button>
               </div>

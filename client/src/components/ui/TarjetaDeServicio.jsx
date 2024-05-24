@@ -16,12 +16,24 @@ const StyledRating = styled(Rating)({
     color: "#ff3d47",
   },
 });
-
-const TarjetaDeServicio = ({ servicio }) => {
+//FALTA HACER FUNCIONAR 'next'
+const TarjetaDeServicio = ({ servicio, next }) => {
   const [vista, setVista] = useState(false);
 
   const [seleccionado, setSeleccionado] = useState(false);
-  const agregarServ = (id, nombre, precio, tiempo, img) => {
+
+  function hr(hr) {
+    let h = hr.charAt(1);
+    if (h[0] == "0") {
+      return hr + " min.";
+    } else if (h[0] == "1") {
+      return hr + " hr.";
+    } else {
+      return hr + " hrs.";
+    }
+  }
+
+  const agregarServ = (id, nombre, precio, tiempo, img, callback) => {
     if (!seleccionado) {
       setSeleccionado(true);
       localStorage.setItem("servicio", id);
@@ -29,6 +41,7 @@ const TarjetaDeServicio = ({ servicio }) => {
       localStorage.setItem("nombre", nombre);
       localStorage.setItem("tiempo", tiempo);
       localStorage.setItem("imagen", img);
+      if (callback) callback();
     } else {
       alert("ya escogiste un servicio");
     }
@@ -95,7 +108,7 @@ const TarjetaDeServicio = ({ servicio }) => {
           <p className="text-lg font-bold pl-5 w-[80%]">{servicio.nombre}</p>
         </div>
         <p className="pl-5 text-base">Costo: ${servicio.precio}</p>
-        <p className="pl-5 text-base">Duracion: {servicio.tiempo} min</p>
+        <p className="pl-5 text-base">Duracion: {hr(servicio.tiempo)}</p>
         <div className="grid place-items-center">
           <Rating
             className=""
@@ -112,7 +125,8 @@ const TarjetaDeServicio = ({ servicio }) => {
               servicio.nombre,
               servicio.precio,
               servicio.tiempo,
-              servicio.img
+              servicio.img,
+              next
             )
           }
           className="px-10 py-1 mx-10 font-bold bg-red-50 rounded-xl ring-1 ring-rose-50 hover:ring-black"

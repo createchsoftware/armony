@@ -7,7 +7,8 @@ import mysql from "mysql2";
 dotenv.config()
 
 const regex_email = /^\S+@(gmail\.com|hotmail\.com|outlook\.com|icloud.com|itmexicali\.edu\.mx|bc\.conalep\.edu\.mx|cecytebc\.edu\.mx|miprepacetis(75|18)\.mx|cobachbc\.edu\.mx|)$/;
-const regex_usuarioID = /\d{1,5}/;
+const regex_usuarioID = /^\d{1,5}$/;
+const regex_intento_de_correo = /@|\.com|\.edu|\.mx|gmail|hotmail|outlook|icloud/;
 
 
 async function login(solicitud,respuesta){
@@ -19,10 +20,22 @@ async function login(solicitud,respuesta){
    let usuarioID_o_correo = solicitud.body.user_or_email;
    let contraseña = solicitud.body.password;
 
-   if(!usuarioID_o_correo || !contraseña){
-       respuesta.send({campos_vacios:true});
+   let campos_faltantes=[];
+
+   if(!usuarioID_o_correo || usuarioID_o_correo==''){
+    campos_faltantes.push('Te falta llenar el campo ID o correo');
+   }
+
+   if(!contraseña || contraseña==''){
+    campos_faltantes.push('Te falta poner tu contraseña');
+   }
+
+   if(campos_faltantes.length > 0){
+       respuesta.send({campos_vacios:campos_faltantes});
    }
    else{
+
+       let campos_invalidos = [];
 
        let consulta = 'select * from usuario where pkIdUsuario = ? or email = ?'
        parametros = [usuarioID_o_correo,usuarioID_o_correo];
@@ -32,22 +45,46 @@ async function login(solicitud,respuesta){
        let usuarioID_valido = regex_usuarioID.test(usuarioID_o_correo);
        let correo_valido = regex_email.test(usuarioID_o_correo);
 
+
        if(usuarioID_valido == false && correo_valido == false){
 
-           respuesta.send({campos_incorrectos:true});
+           if(regex_intento_de_correo.test(usuarioID_o_correo) == true){
+            // el usuario estaba intentando escribir un correo
+            campos_invalidos.push('tu correo electronico no es un correo valido');
+           }
+           else{
+            //puede ser que el usuario estaba intentando poner un id
+            let m = usuarioID_o_correo;
+            let l = m.length;
+
+            m = m.replace(/\D/g,''); // eliminar todos los caracteres que no sean numeros
+            if(m.length > (l/2)){
+                campos_invalidos.push("el numero que ingresaste no es un ID valido");
+            }
+            else{
+                campos_invalidos.push('Por favor, ingrese un ID o un Correo valido');
+            }
+           }
+
+       }
+
+       if(campos_invalidos.length > 0){
+        //hubo campos invalidos
+        return respuesta.send({campos_invalidos:campos_invalidos});
        }
        else{
-
-            let a_buscar;
-            if(correo_valido == true) a_buscar = "correo";
-            else a_buscar = "usuario";
 
             // segundo buscar al usuario o el email
             
             let [fields] = await solicitud.database.query(mysql.format(consulta,parametros))
 
                 if(fields.length == 0){
-                    respuesta.send({busqueda_vacia:a_buscar,valor:usuarioID_o_correo});
+                    if(correo_valido == true){
+                        return respuesta.send({mensaje:`no existe una cuenta con el correo ${usuarioID_o_correo}`});
+                    }
+                    else{
+                        return respuesta.send({mensaje:`no existe una cuenta con el ID ${usuarioID_o_correo}`});
+                    }
                 }
                 else{
                     // usuarioID o correo concuerdan con un usario en la base de datos
@@ -65,8 +102,7 @@ async function login(solicitud,respuesta){
                     let contraseña_correcta = await bcryptjs.compare(contraseña,contraseña_no_bytes);
 
                     if(contraseña_correcta == false){
-                        console.log("ups, la contrasena es incorrecta")
-                        respuesta.send({contraseña_incorrecta:true});
+                        return respuesta.send({contraseña_incorrecta:'La contraseña es incorrecta'});
                     }else{
 
                         let ingreso;
@@ -141,7 +177,7 @@ async function login(solicitud,respuesta){
                         */
                         respuesta.cookie("Naruto_cookie",token,galleta);
 
-                        respuesta.send({redirect:'/admin'});
+                        return respuesta.send({redirect:'/admin'});
 
                     }
                 }
@@ -151,7 +187,7 @@ async function login(solicitud,respuesta){
 
        
        
-   }
+}
 
 
 

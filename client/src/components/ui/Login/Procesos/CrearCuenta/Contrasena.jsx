@@ -3,10 +3,19 @@ import Pasos from "../../../PasosDeProcesos";
 import InputContrasena from "../../../InputContrasena.jsx";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faAngleLeft } from "@fortawesome/free-solid-svg-icons";
+import { Helmet, HelmetProvider } from "react-helmet-async";
+import '../../../../../txt.css'
 
 const Contrasena = () => {
+
+
   return (
     <div>
+      <HelmetProvider>
+        <Helmet>
+            <script src="https://kit.fontawesome.com/c9a65ccec4.js" crossorigin="anonymous"></script>
+        </Helmet>
+      </HelmetProvider>
       <div className="md:h-20 h-[3.75rem] bg-white" />
       <div className="justify-center items-center mt-[6rem] mb-[6rem] md:mt-[5rem] md:mb-2 lg:mt-[8rem] lg:mb-4">
         <div className="h-[40rem] w-[25rem] md:h-[28rem] lg:h-[29rem] md:w-[37rem] lg:w-[45rem] flex flex-col rounded-xl ring-1 ring-slate-200 bg-white bg-clip-border text-gray-700 shadow-md mx-auto">
@@ -39,11 +48,12 @@ const Contrasena = () => {
               <h3 className="mx-auto mb-3 text-red-500">
                 Requisitos de la contraseña
               </h3>
-              <h4 className="text-xs"> • Al menos 8 caracteres</h4>
-              <h4 className="text-xs"> • Una letra mayúscula</h4>
-              <h4 className="text-xs"> • Una letra minúscula</h4>
-              <h4 className="text-xs"> • Un número</h4>
-              <h4 className="text-xs"> • Al menos un carácter especial</h4>
+              <h4 id='menor' className="text-xs"> • Al menos 8 caracteres</h4>
+              <h4 id="mayor" className="text-xs"> • No mas de 20 caracteres</h4>
+              <h4 id="mayuscula" className="text-xs"> • Una letra mayúscula</h4>
+              <h4 id="minuscula" className="text-xs"> • Una letra minúscula</h4>
+              <h4 id="numero" className="text-xs"> • Un número</h4>
+              <h4 id="especial" className="text-xs"> • Al menos un carácter especial</h4>
               <h4 className="text-xs">
                 {" "}
                 • La contraseña no debe coincidir con su ID de correo
@@ -133,6 +143,7 @@ const Contrasena = () => {
             </div>
           </div>
         </div>
+        <div id="toastBox"/>
       </div>
     </div>
   );

@@ -9,7 +9,8 @@ const regex_nombres = /[a-zA-Zá-úñ]{3,11}/;
 const regex_apellidos = /[a-zA-Zá-úñ]{3,}/;
 const regex_lada = /^\+?\d{1,3}$/;
 const regex_telefono = /^(\d{9,10}|\d{2,3} \d{7}|\d{2,3} \d{3} \d{4}|\d{2,3}-\d{7}|\d{2,3}-\d{3}-\d{4})$/;
-
+const regex_postal = /^\d{5}$/;
+const regex_numero = /^\S{1,10}$/;
 
 
 
@@ -52,7 +53,7 @@ async function paso1(solicitud,respuesta){
         let campos_faltantes = [];
 
         if(!nombre[0]){
-          campos_faltantes.push(nombre[1]);
+          campos_faltantes.push([nombre[1],'tu nombre']);
         }
           
         if(!apodo[0]){
@@ -60,51 +61,51 @@ async function paso1(solicitud,respuesta){
         }
           
         if(!paterno[0]){
-          campos_faltantes.push(paterno[1]);
+          campos_faltantes.push([paterno[1],'tu apellido paterno']);
         }
           
         if(!materno[0]){
-          campos_faltantes.push(materno[1]);
+          campos_faltantes.push([materno[1],'tu apellido materno']);
         }
           
         if(!correo[0]){
-          campos_faltantes.push(correo[1]);
+          campos_faltantes.push([correo[1],'tu correo']);
         }
           
         if(!lada[0]){
-          campos_faltantes.push(lada[1]);
+          campos_faltantes.push([lada[1],'la lada de tu pais']);
         }
           
         if(!telefono[0]){
-          campos_faltantes.push(telefono[1]);
+          campos_faltantes.push([telefono[1],'tu telefono']);
         }
           
         if(!dia[0]){
-          campos_faltantes.push(dia[1]);
+          campos_faltantes.push([dia[1],'el dia en que naciste']);
         }
           
         if(!mes[0]){
-          campos_faltantes.push(mes[1]);
+          campos_faltantes.push([mes[1],'el mes en que naciste']);
         }
           
         if(!año[0]){
-          campos_faltantes.push(año[1]);
+          campos_faltantes.push([año[1],' el año en que naciste']);
         }
           
         if(!calle[0]){
-          campos_faltantes.push(calle[1]);
+          campos_faltantes.push([calle[1],'tu calle']);
         }
           
         if(!colonia[0]){
-          campos_faltantes.push(colonia[1]);
+          campos_faltantes.push([colonia[1],'tu colonia']);
         }
           
         if(!numero[0]){
-          campos_faltantes.push(numero[1]);
+          campos_faltantes.push([numero[1],'el numero de tu casa']);
         }
           
         if(!codigo_postal[0]){
-          campos_faltantes.push(codigo_postal[1]);
+          campos_faltantes.push([codigo_postal[1],'tu codigo postal']);
         }
           
 
@@ -131,34 +132,35 @@ async function paso1(solicitud,respuesta){
           let paterno_valido = regex_apellidos.test(paterno[0]);
           let materno_valido = regex_apellidos.test(materno[0]);
           let telefono_valido = regex_telefono.test(telefono[0]);
+          let postal_valido = regex_postal.test(codigo_postal[0]);
 
           // CREAR OTRO ARREGLO QUE ALMACENARA LOS CAMPOS INVALIDOS
           let campos_invalidos = [];
 
 
           if(nombre_valido == false){
-            campos_invalidos.push(nombre[1]);
+            campos_invalidos.push([nombre[1], 'tu nombre no es valido']);
           }
           if(paterno_valido == false){
-            campos_invalidos.push(paterno[1]); 
+            campos_invalidos.push([paterno[1],'tu apellido paterno no es valido']); 
           }
           if(materno_valido == false){
-            campos_invalidos.push(materno[1]); 
+            campos_invalidos.push([materno[1],'tu apellido materno no es valido']); 
           }
           if(correo_valido == false){
-            campos_invalidos.push(correo[1]);
+            campos_invalidos.push([correo[1],'el correo ingresado no es valido']);
           }
           if(telefono_valido == false){
-            campos_invalidos.push(telefono[1]);
+            campos_invalidos.push([telefono[1],'el telefono no es valido']);
           }
           if(lada_valida == false){
-            campos_invalidos.push(lada[1]);
+            campos_invalidos.push([lada[1],'la lada de tu pais no es valida']);
           }
-          if(numero[0].length > 4){
-            campos_invalidos.push(numero[1]);
+          if(regex_numero.test(numero[0]) == false){
+            campos_invalidos.push([numero[1],'el numero de tu casa no es valido ']);
           } 
-          if(codigo_postal[0].length > 5){
-            campos_invalidos.push(codigo_postal[1]);
+          if(postal_valido == false){
+            campos_invalidos.push([codigo_postal[1],'tu codigo postal no es valido']);
           }
             
 
@@ -166,15 +168,15 @@ async function paso1(solicitud,respuesta){
             var fecha = new Date(`${mes[0]}/${dia[0]}/${año[0]}`);
 
             if(isNaN(fecha.getTime())){
-              campos_invalidos.push(dia[1]);
-              campos_invalidos.push(mes[1]);
-              campos_invalidos.push(año[1]);
+              campos_invalidos.push([dia[1],'']);
+              campos_invalidos.push([mes[1],'']);
+              campos_invalidos.push([año[1],'']);
             }
             
           }catch(error){
-            campos_invalidos.push(dia[1]);
-            campos_invalidos.push(mes[1]);
-            campos_invalidos.push(año[1]);
+            campos_invalidos.push([dia[1],'']);
+            campos_invalidos.push([mes[1],'']);
+            campos_invalidos.push([año[1],'']);
           }
 
           //FIN 3
@@ -194,19 +196,31 @@ async function paso1(solicitud,respuesta){
 
               // INICIO 4 AHORA TOCA VERIFICAR QUE EL CORREO NO ESTE REPETIDO, YA QUE NO PUEDE HABER CORREOS REPETIDOS ENTRE USUARIOS
 
-              let consulta = "select pkIdUsuario from usuario where email = ?"
+              let consulta = "select pkIdUsuario from usuario where email = ?";
+              let [fields] = await solicitud.database.query(mysql.format(consulta,[correo[0]]));
 
-              let [fields] = await solicitud.database.query(mysql.format(consulta,[correo[0]]))
+              let conTelefono = "select pkIdUsuario from usuario where telefono = ?";
+              let [fieldsTelefono] = await solicitud.database.query(mysql.format(conTelefono,[lada[0]+telefono[0]]));
 
-              console.log(fields);
+              let repetidos = [];
+
+              if(fields.length > 0){
+                repetidos.push([correo[1],'ya hay una cuenta con este correo']);
+              }
+              if(fieldsTelefono.length > 0){
+                repetidos.push([telefono[1],'ya hay una cuenta con este telefono']);
+              }
 
               // FIN 4
               
-                  // Lo mismo que antes, si en la consulta, obtuvimos un length mayor a 0, significa que hay por lo menos 1 o mas usuarios con el correo, por lo que nuetro usuario que esta por crear una cuenta, no puede seguir adelante
-                  if(fields.length > 0 ){
-                    return respuesta.send({correo_ya_existente:true});
+                  // Lo mismo que antes, si en repetidos, obtuvimos un length mayor a 0, significa que hay por lo menos 1 o mas usuarios con el correo o el telefono, por lo que nuetro usuario que esta por crear una cuenta, no puede seguir adelante
+                  if(repetidos.length > 0){
+
+                    return respuesta.send({repetidos:repetidos});
+
                   }
                   else{
+
                     // Si llegamos a este ELSE, significa que no hay usuarios con el mismo correo en la base de datos, lo cual es correcto
 
                     //ya una vez aqui almacenamos los datos del usuario en una cookie, para ya mas despues hacer la insercion en la base de datos
@@ -390,8 +404,6 @@ async function paso2(solicitud,respuesta){
 // LLENADO DE CONTRASENA
 async function paso3(solicitud,respuesta){
 
-    console.log('que tal bobo');
-
     if(solicitud.headers.cookie == undefined){
       // no tiene ninguna cookie, lo cual significa que no acompleto ni el paso1 ni el paso2
       respuesta.send({redirect:"/spa/signUp"}); 
@@ -404,7 +416,6 @@ async function paso3(solicitud,respuesta){
       if(galleta1){
         //galleta 1 existe
         if(galleta2){
-          console.log('minimo esto no??')
           //todo bien
           let contraseña = solicitud.body.pass;
           let confirmacion = solicitud.body.again_pass;
@@ -422,65 +433,62 @@ async function paso3(solicitud,respuesta){
             let regex_mayor = /\w{20,}/;
             
             if(regex_numero.test(contraseña)==false){
-              arreglo_regex.push("un numero");
+              arreglo_regex.push("no tiene un numero");
             }
 
             if(regex_caracter_especial.test(contraseña)==false){
-              arreglo_regex.push("un caracter especial");
+              arreglo_regex.push("no tiene un caracter especial");
             }
 
             if(regex_Mayuscula.test(contraseña)==false){
-              arreglo_regex.push("una Mayuscula");
+              arreglo_regex.push("no tiene una mayuscula");
             }
 
             if(regex_minuscula.test(contraseña)==false){
-              arreglo_regex.push("una minuscula");
+              arreglo_regex.push("no tiene una minuscula");
+            }
+
+            if(regex_mayor.test(contraseña)==true){
+              arreglo_regex.push('es mayor de 20 caracteres');
+            }
+
+            if(contraseña.length<8){
+              arreglo_regex.push('es menor de 8 caracteres');
             }
 
             
           
             if(arreglo_regex.length>0){
               respuesta.send({invalidas:arreglo_regex});
-              console.log('por aqui');
+              
             }
             else{
+                    
+              // todo salio bien
 
-                if(regex_mayor.test(contraseña)==true){
-                  respuesta.send({fuera_rango:"mas de 20 caracteres"})
-                }else{
-                  if(contraseña.length<8){
-                    respuesta.send({fuera_rango:"menos de 8 caracteres"})
-                  }else{
-
-                    console.log('verdad que todo salio bien??');
-                    // todo salio bien
-
-                    let token = JsonWebToken.sign(
-                      {
-                          password:contraseña,
-                          confirmation:confirmacion
-                      },
-                      process.env.JWT_SECRET,
-                      {expiresIn:process.env.JWT_EXPIRATION}
-                    );
-              
-                    // esto es un objeto
-                    let galleta_register = {
-                        maxAge:1000*60*20,
-                        // el expires es de tipo fecha
-                        expires: new Date(Date.now() + process.env.JWT_COOKIE_EXPIRES * 24 * 60 * 60 * 1000),
-                        path:'/'
-              
-                    };
-              
-                    // genero la cookie
-                    respuesta.cookie("Rem_cookie",token,galleta_register);
-                    // el usuario podra continuar con el apartado patologias
-                    respuesta.send({redirect:"/spa/signUp/Confirmacion",logueado:true}); 
-
-                  }
-                  
-                }
+              let token = JsonWebToken.sign(
+                {
+                    password:contraseña,
+                    confirmation:confirmacion
+                },
+                process.env.JWT_SECRET,
+                {expiresIn:process.env.JWT_EXPIRATION}
+              );
+        
+              // esto es un objeto
+              let galleta_register = {
+                  maxAge:1000*60*20,
+                  // el expires es de tipo fecha
+                  expires: new Date(Date.now() + process.env.JWT_COOKIE_EXPIRES * 24 * 60 * 60 * 1000),
+                  path:'/'
+        
+              };
+        
+              // genero la cookie
+              respuesta.cookie("Rem_cookie",token,galleta_register);
+              // el usuario podra continuar con el apartado patologias
+              respuesta.send({redirect:"/spa/signUp/Confirmacion",logueado:true}); 
+  
             }
           }
         }

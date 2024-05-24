@@ -58,21 +58,19 @@ function Pago({ producto, next }) {
             });
         },1000);
     }, [Uid])
-    const [cliente, setCliente] = useState({});
+
+
+    
+   // const [cliente, setCliente] = useState({});
+
+
     useEffect(() => {
         if (Uid) {
             fetch(`/api/admin/cliente/read/${Uid}`)
                 .then(response => response.json())
                 .then(data => {
-                    //       setCliente({
-                    //     idCliente: data.ID,
-                    //     nombre: data.Nombre,
-                    //     telefono: data.telefono,
-                    //     direccion: data.Dirección,
-                    //     email: data.email,
-                    //     monedero: data.monedero
-                    // });
-                    console.log(data)
+                 
+                localStorage.setItem('cliente', JSON.stringify(data[0]));
                 })
                 .catch(error => {
                     console.log(error);
@@ -82,7 +80,6 @@ function Pago({ producto, next }) {
 
    
     const total=localStorage.getItem('total')
-//console.log(cliente)
     const toggleTarjeta = () => {
         setTarjeta(!tarjeta);
     }
@@ -96,7 +93,10 @@ function Pago({ producto, next }) {
 
     //const total = (574).toFixed(2);
 
+// setTimeout(()=>{
+//     console.log(cliente)
 
+// },[2000])
 
     
 
@@ -222,14 +222,14 @@ function Pago({ producto, next }) {
             {tarjeta && (
                 <div className='soon-fondo'>
                     <div className='soon-fx'>
-                        <InforTarjeta cerrarInfo={toggleTarjeta} sendDatos={datosRecibidos} />
+                        <InforTarjeta cerrarInfo={toggleTarjeta}  />
                     </div>
                 </div>
             )}
             {pagoRealizado && (
                 <div className='soon-fondo'>
                     <div className='soon-fx'>
-                        <PagoRealizado cerrarPago={togglePago} cliente={cliente} total={total} next={next} />
+                        <PagoRealizado cerrarPago={togglePago} total={total} next={next} />
                     </div>
                 </div>
             )}
