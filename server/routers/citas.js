@@ -99,18 +99,12 @@ routerCitas.post("/create/:id", async (req, res) => {
 routerCitas.post("/venta", async (req, res) => {
   try {
     const resultado = await ventaCita(conexion, {
-      pilar: req.body.pilar,
       idCliente: req.body.idCliente,
       nombre: req.body.nombre,
       phone: req.body.phone,
       tarjeta: req.body.tarjeta,
       monedero: req.body.monedero,
       estadoPago: req.body.estadoPago,
-      servicio: req.body.servicio,
-      idEmp: req.body.idEmp,
-      fechaPago: req.body.fechaPago,
-      horaPago: req.body.horaPago,
-      descr: req.body.descr,
       subTotal: req.body.subTotal,
       total: req.body.total,
       impuesto: req.body.impuesto,

@@ -3,43 +3,60 @@ import { useState, useEffect } from "react";
 function PagoRealizado({ cerrarPago,total, next }) {
     // const total = localStorage.getItem('total')
     const [cargando, setCargando] = useState(true);
-    const cliente={};
-    setTimeout(() => {
-        setCargando(false)
-       async function cliente(){
-     cliente =JSON.parse(localStorage.getItem('cliente'));
-    }
-// if(!cliente){
-//     const resp= fetch("/api/admin/citas/venta", {
-//         method: "POST", 
-//         body: JSON.stringify({
-//             "pilar": 2,
-//             "idCliente": cliente.idCliente,
-//             "nombre": cliente.nombre,
-//             "telefono": cliente.telefono,
-//             "tarjeta": tarjeta,
-//             "monedero": cliente.monedero,
-//             "estadoPago": "pagada",
-//             "servicio": 1,
-//             "idEmp": 36,
-//             "fechaPago": new Date(),
-//             "horaPago": horaActual(),
-//             "descr": "venta de servicio",
-//             "subTotal": localStorage.getItem('totalIva'),
-//             "total": localStorage.getItem('total'),
-//             "impuesto": 18,
-//         }), 
-//         headers: {
-//             "Content-Type": "application/json",
-//         },
-//     }).then(() => {
-//         setCargando(false);
-//     }).catch((error) => {
-//         console.error('Error en la venta:', error);
-//         setCargando(false); // cambiar a false aunque haya error
-//     });
+    const [cliente, setCliente] = useState(null);
 
-}, 5000)
+    
+
+    useEffect(() => {
+        const storedCliente = localStorage.getItem('cliente');
+        if (storedCliente) {
+            try {
+                const parsedCliente = JSON.parse(storedCliente);
+                const { ID, Nombre, telefono, monedero } = parsedCliente; // Desestructuración
+                setCliente({ ID, Nombre, telefono, monedero });
+            } catch (error) {
+                console.error("Error al parsear el cliente:", error);
+            }
+        } else {
+            console.error("No se encontró el cliente en localStorage");
+        }
+    }, []);
+    useEffect(() => {
+        if (cliente) {
+            console.log("Cliente cargado:", cliente.Nombre);
+            setTimeout(() => {
+                fetch("/api/admin/citas/venta", {
+                    method: "POST",
+                    body: JSON.stringify({
+                        "idCliente": cliente.ID,
+                        "nombre": cliente.Nombre,
+                        "phone": "6861208963",
+                        "tarjeta": '131331331313',
+                        "monedero":14,
+                        "estadoPago": "pagada",
+                        "subTotal": localStorage.getItem('totalIva'),
+                        "total": localStorage.getItem('total'),
+                        "impuesto": 18,
+                    }),
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                }).then(response => {
+                    if (!response.ok) {
+                        throw new Error('Error en la respuesta de la red');
+                    }
+                    return response.json();
+                }).then(data => {
+                    console.log('Respuesta de la venta:', data);
+                    setCargando(false);
+                }).catch((error) => {
+                    console.error('Error en la venta:', error);
+                    setCargando(false);
+                });
+            }, 5000);
+        }
+    }, [cliente]);
+
 
     
 
