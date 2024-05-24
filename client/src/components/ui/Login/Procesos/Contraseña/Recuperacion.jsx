@@ -215,7 +215,7 @@ const Recuperacion = () => {
           </div>
           <a
             onClick={toogleState}
-            className="text-teal-700 md:text-sm lg:text-base text-center"
+            className="text-teal-700 w-max m-auto md:text-sm lg:text-base text-center relative cursor-pointer before:bg-teal-700 before:absolute before:-bottom-1 before:block before:h-[1px] before:w-full before:origin-bottom-right before:scale-x-0 before:transition before:duration-300 before:ease-in-out hover:before:origin-bottom-left hover:before:scale-x-100 hover:font-bold"
           >
             {m4}
           </a>

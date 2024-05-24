@@ -210,7 +210,7 @@ function Agenda({ restart, next }) {
                 <div className="flex justify-center w-full">
                   <p className="mt-4 text-xs text-center justify-self-center">
                     Los{" "}
-                    <p className="text-[#D47300]">
+                    <p className="text-[#D47300] inline-flex">
                       Términos y Condiciones de los Cupones
                     </p>{" "}
                     de Armony aplican el uso de cupones.
