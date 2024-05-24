@@ -1,13 +1,14 @@
 import user1 from "../../../../../../public/pictures/userCl.png";
 import Pasos from "../../../PasosDeProcesos";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faAngleLeft } from "@fortawesome/free-solid-svg-icons";
+import { faAngleLeft, faCircleExclamation } from "@fortawesome/free-solid-svg-icons";
 import { Helmet, HelmetProvider } from "react-helmet-async";
 import { useEffect, useState } from 'react'; // Solo necesitas esta línea de importación
+import { ToastContainer, toast } from 'react-toastify';
 
 const Verificacion = () => {
 
-  let only_number = /[\d ]/;
+  let only_number = /\d/;
 
   const [cd1,setCD1] = useState('');
   const [cd2,setCD2] = useState('');
@@ -24,6 +25,10 @@ const Verificacion = () => {
     if(only_number.test(introducir)){ 
       setCD1(introducir);
     }
+
+    if(introducir.length == 0){
+      setCD1(introducir);
+    }
   }
 
   function ChangeCD2(evento){
@@ -32,6 +37,10 @@ const Verificacion = () => {
     if(l > 1) {  introducir = introducir.slice(0, -(l-1)); }
 
     if(only_number.test(introducir)){ 
+      setCD2(introducir);
+    }
+
+    if(introducir.length == 0){
       setCD2(introducir);
     }
   }
@@ -44,6 +53,10 @@ const Verificacion = () => {
     if(only_number.test(introducir)){ 
       setCD3(introducir);
     }
+
+    if(introducir.length == 0){
+      setCD3(introducir);
+    }
   }
 
   function ChangeCD4(evento){
@@ -52,6 +65,10 @@ const Verificacion = () => {
     if(l > 1) {  introducir = introducir.slice(0, -(l-1)); }
 
     if(only_number.test(introducir)){ 
+      setCD4(introducir);
+    }
+
+    if(introducir.length == 0){
       setCD4(introducir);
     }
   }
@@ -64,6 +81,11 @@ const Verificacion = () => {
     if(only_number.test(introducir)){ 
       setCD5(introducir);
     }
+
+    if(introducir.length == 0){
+      setCD5(introducir);
+    }
+
   }
 
   function ChangeCD6(evento){
@@ -74,6 +96,11 @@ const Verificacion = () => {
     if(only_number.test(introducir)){ 
       setCD6(introducir);
     }
+
+    if(introducir.length == 0){
+      setCD6(introducir);
+    }
+
   }
 
 
@@ -139,7 +166,7 @@ const Verificacion = () => {
 
     // en caso de que el SMS o el correo aun no se le han enviado, y este ya quiere procesar un codigo, tambien puede haber un mensaje si el codigo fue incorrecto
     if(respuestaJson.mensaje){
-      console.log(respuestaJson.mensaje);
+      toast(<div>{respuestaJson.mensaje}<FontAwesomeIcon icon={faCircleExclamation} /></div>);
     }
 
     // en caso de que deba ser redireccionado al paso 1, o en caso de haber ya acompletado el paso, si le pica a continuar, simplemente lo redireccionara al paso 3, si es su primera vez y pone bien el codigo, tambien lo reidreccionara
@@ -363,6 +390,7 @@ const Verificacion = () => {
           </div>
         </div>
       </div>
+      <ToastContainer position={'bottom-right'} theme={'light'} />
     </div>
   );
 };

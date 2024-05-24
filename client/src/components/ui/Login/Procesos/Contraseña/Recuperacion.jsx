@@ -4,7 +4,8 @@ import user1 from "../../../../../../public/pictures/userCl.png";
 import Pasos from "../../../PasosDeProcesos.jsx";
 import Soon from "../../../Proximamente";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faAngleLeft } from "@fortawesome/free-solid-svg-icons";
+import { faAngleLeft , faCircleExclamation, faCircleXmark, faDatabase} from "@fortawesome/free-solid-svg-icons";
+import { ToastContainer, toast } from 'react-toastify';
 
 const Recuperacion = () => {
   const [state, setState] = useState(false);
@@ -75,23 +76,27 @@ const Recuperacion = () => {
 
     const respuestaJson = await respuesta.json();
 
-    if (respuestaJson.faltantes) {
+    if(respuestaJson.faltantes){
       let faltantes = respuestaJson.faltantes;
 
       faltantes.forEach((faltante) => {
-        console.log(`Te falto llenar el dato ${faltante}`);
+        toast(<div>{`Te falto llenar el dato ${faltante}`}<FontAwesomeIcon icon={faCircleExclamation} /></div>)
       });
 
       return;
     }
 
-    if (respuestaJson.invalidos) {
+    if(respuestaJson.invalidos){
       let invalidos = respuestaJson.invalidos;
 
       invalidos.forEach((invalido) => {
-        console.log(`El campo ${invalido} no es valido`);
+        toast(<div>{`El campo ${invalido} no es valido`}<FontAwesomeIcon icon={faCircleXmark} /></div>)
       });
       return;
+    }
+
+    if(respuestaJson.mensaje){
+      toast(<div>{respuestaJson.mensaje}<FontAwesomeIcon icon={faDatabase} /></div>);
     }
 
     if (respuestaJson.redirect) {
@@ -237,6 +242,7 @@ const Recuperacion = () => {
           </div>
         </div>
       </div>
+      <ToastContainer position={'bottom-right'} theme={'light'} />
     </div>
   );
 };

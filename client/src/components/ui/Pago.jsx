@@ -70,8 +70,7 @@ function Pago({ producto, next }) {
                 .then(response => response.json())
                 .then(data => {
                  
-                localStorage.setItem('cliente', JSON.stringify(data));
-           
+                localStorage.setItem('cliente', JSON.stringify(data[0]));
                 })
                 .catch(error => {
                     console.log(error);

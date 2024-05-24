@@ -1,78 +1,97 @@
 import { useState, useEffect } from "react";
 
-function PagoRealizado({ cerrarPago,total, next }) {
+function PagoRealizado({ cerrarPago, total, next }) {
     // const total = localStorage.getItem('total')
     const [cargando, setCargando] = useState(true);
-    const cliente={};
-    setTimeout(() => {
-        setCargando(false)
-       async function cliente(){
-     cliente =JSON.parse(localStorage.getItem('cliente'));
+
+    const handleClick = () => {
+        cerrarPago();
+        next();
     }
-// if(!cliente){
-//     const resp= fetch("/api/admin/citas/venta", {
-//         method: "POST", 
-//         body: JSON.stringify({
-//             "pilar": 2,
-//             "idCliente": cliente.idCliente,
-//             "nombre": cliente.nombre,
-//             "telefono": cliente.telefono,
-//             "tarjeta": tarjeta,
-//             "monedero": cliente.monedero,
-//             "estadoPago": "pagada",
-//             "servicio": 1,
-//             "idEmp": 36,
-//             "fechaPago": new Date(),
-//             "horaPago": horaActual(),
-//             "descr": "venta de servicio",
-//             "subTotal": localStorage.getItem('totalIva'),
-//             "total": localStorage.getItem('total'),
-//             "impuesto": 18,
-//         }), 
-//         headers: {
-//             "Content-Type": "application/json",
-//         },
-//     }).then(() => {
-//         setCargando(false);
-//     }).catch((error) => {
-//         console.error('Error en la venta:', error);
-//         setCargando(false); // cambiar a false aunque haya error
-//     });
 
-}, 5000)
+    useEffect(() => {
+        const storedCliente = localStorage.getItem('cliente');
+        if (storedCliente) {
+            try {
+                const parsedCliente = JSON.parse(storedCliente);
+                const { ID, Nombre, telefono, monedero } = parsedCliente; // Desestructuración
+                setCliente({ ID, Nombre, telefono, monedero });
+            } catch (error) {
+                console.error("Error al parsear el cliente:", error);
+            }
+        } else {
+            console.error("No se encontró el cliente en localStorage");
+        }
+    }, []);
+    useEffect(() => {
+        if (cliente) {
+            console.log("Cliente cargado:", cliente.Nombre);
+            setTimeout(() => {
+                fetch("/api/admin/citas/venta", {
+                    method: "POST",
+                    body: JSON.stringify({
+                        "idCliente": cliente.ID,
+                        "nombre": cliente.Nombre,
+                        "phone": "6861208963",
+                        "tarjeta": '131331331313',
+                        "monedero":14,
+                        "estadoPago": "pagada",
+                        "subTotal": localStorage.getItem('totalIva'),
+                        "total": localStorage.getItem('total'),
+                        "impuesto": 18,
+                    }),
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                }).then(response => {
+                    if (!response.ok) {
+                        throw new Error('Error en la respuesta de la red');
+                    }
+                    return response.json();
+                }).then(data => {
+                    console.log('Respuesta de la venta:', data);
+                    setCargando(false);
+                }).catch((error) => {
+                    console.error('Error en la venta:', error);
+                    setCargando(false);
+                });
+            }, 5000);
+        }
+    }, [cliente]);
 
-    
 
-        // setTimeout(() => {
-        //     fetch("/api/admin/citas/venta", {
-        //         method: "POST", 
-        //         body: JSON.stringify({
-        //             "pilar": 2,
-        //             "idCliente": cliente.idCliente,
-        //             "nombre": cliente.nombre,
-        //             "telefono": cliente.telefono,
-        //             "tarjeta": tarjeta,
-        //             "monedero": cliente.monedero,
-        //             "estadoPago": "pagada",
-        //             "servicio": 1,
-        //             "idEmp": 36,
-        //             "fechaPago": new Date(),
-        //             "horaPago": horaActual(),
-        //             "descr": "venta de servicio",
-        //             "subTotal": localStorage.getItem('totalIva'),
-        //             "total": localStorage.getItem('total'),
-        //             "impuesto": 18,
-        //         }), 
-        //         headers: {
-        //             "Content-Type": "application/json",
-        //         },
-        //     }).then(() => {
-        //         setCargando(false);
-        //     }).catch((error) => {
-        //         console.error('Error en la venta:', error);
-        //         setCargando(false); // cambiar a false aunque haya error
-        //     });
-        // }, 5000);
+
+
+    // setTimeout(() => {
+    //     fetch("/api/admin/citas/venta", {
+    //         method: "POST", 
+    //         body: JSON.stringify({
+    //             "pilar": 2,
+    //             "idCliente": cliente.idCliente,
+    //             "nombre": cliente.nombre,
+    //             "telefono": cliente.telefono,
+    //             "tarjeta": tarjeta,
+    //             "monedero": cliente.monedero,
+    //             "estadoPago": "pagada",
+    //             "servicio": 1,
+    //             "idEmp": 36,
+    //             "fechaPago": new Date(),
+    //             "horaPago": horaActual(),
+    //             "descr": "venta de servicio",
+    //             "subTotal": localStorage.getItem('totalIva'),
+    //             "total": localStorage.getItem('total'),
+    //             "impuesto": 18,
+    //         }), 
+    //         headers: {
+    //             "Content-Type": "application/json",
+    //         },
+    //     }).then(() => {
+    //         setCargando(false);
+    //     }).catch((error) => {
+    //         console.error('Error en la venta:', error);
+    //         setCargando(false); // cambiar a false aunque haya error
+    //     });
+    // }, 5000);
 
     const horaActual = () => {
         let now = new Date();
@@ -197,10 +216,10 @@ function PagoRealizado({ cerrarPago,total, next }) {
                                         <path fill="#ffffff" d="M46 14L25 35.6l-7-7.2l-7 7.2L25 50l28-28.8z"></path>
                                     </g>
                                 </svg>
-                                <span className="my-6 text-xl font-bold justify-self-center">Monto:${total}</span>
+                                <span className="my-6 text-xl font-bold justify-self-center">Monto: ${total}</span>
                             </div>
                             <div className="grid">
-                                <button onClick={cerrarPago} className='bg-[#ec5766] justify-self-center mt-6 text-xl text-white px-10 py-2 rounded-full duration-200 hover:bg-[#ffb5a7]'>Aceptar</button>
+                                <button onClick={handleClick} className='bg-[#ec5766] justify-self-center mt-6 text-xl text-white px-10 py-2 rounded-full duration-200 hover:bg-[#ffb5a7]'>Aceptar</button>
                             </div>
                         </div>
                     )}

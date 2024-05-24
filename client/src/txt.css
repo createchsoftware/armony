@@ -60,6 +60,22 @@
     background:yellow;
 }
 
+.toast.blue::after{
+    background: #34495E;
+}
+
+.toast.blue i {
+    color:#34495E;
+}
+
+.toast.salmon i{
+    color: #FA8072;
+}
+
+.toast.salmon::after{
+    background: #FA8072;
+}
+
 #toastBox{
     position: absolute;
     bottom: 30px;
@@ -81,3 +97,4 @@
         width: 0;
     }
 }
+

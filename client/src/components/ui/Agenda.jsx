@@ -1,8 +1,16 @@
 import { useState, useEffect } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrash } from '@fortawesome/free-solid-svg-icons';
+import Soon from './Proximamente';
 
-function Agenda({ restart }) {
+function Agenda({ restart, next }) {
+    const [soon, setSoon] = useState(false);
+
+    const toggleSoon = () => {
+        setSoon(!soon)
+    };
+
+
     const [citasItems, setCitasItems] = useState([]);
 
     // const [citasItems, setCitasItems] = useState([
@@ -126,7 +134,7 @@ function Agenda({ restart }) {
                             <div className='grid p-6 mb-4 border-2 shadow-md rounded-xl border-gray'>
                                 <div className='flex justify-between mb-2'>
                                     <span>{totalCitas} Servicio(s)</span>
-                                     <h1 className='font-bold'>${total}</h1>
+                                    <h1 className='font-bold'>${total}</h1>
                                 </div>
                                 <div className='flex justify-between mb-2'>
                                     <h1>IVA</h1>
@@ -139,8 +147,8 @@ function Agenda({ restart }) {
                             </div>
                             {/* Código de descuento */}
                             <div className='p-6 mb-4 border-2 shadow-md rounded-xl border-gray'>
-                                <div className='flex w-full justify-center'>
-                                    <h3 className='mb-4 text-center text-xl font-bold justify-self-center'>¿Tienes un cupón de descuento?</h3>
+                                <div className='flex justify-center w-full'>
+                                    <h3 className='mb-4 text-xl font-bold text-center justify-self-center'>¿Tienes un cupón de descuento?</h3>
                                 </div>
                                 <div className='flex justify-between border-2 rounded-full shadow-md border-gray'>
                                     <input
@@ -152,8 +160,8 @@ function Agenda({ restart }) {
                                     />
                                     <button type="submit" className=' w-[30%] rounded-r-full text-center text-white bg-[rgb(3,109,99)] duration-200 hover:bg-[rgb(69,181,156)] hover:font-bold'>Aplicar</button>
                                 </div>
-                                <div className='flex w-full justify-center'>
-                                    <p className='text-center justify-self-center text-xs mt-4'>Los <p className='text-[#D47300]'>Términos y Condiciones de los Cupones</p> de Armony aplican el uso de cupones.</p>
+                                <div className='flex justify-center w-full'>
+                                    <p className='mt-4 text-xs text-center justify-self-center'>Los <p className='text-[#D47300]'>Términos y Condiciones de los Cupones</p> de Armony aplican el uso de cupones.</p>
                                 </div>
                             </div>
                             <div className='flex justify-between p-6 px-10 mb-4 border-2 shadow-md rounded-xl border-gray'>
@@ -162,12 +170,21 @@ function Agenda({ restart }) {
                             </div>
                         </div>
                         <div className='flex justify-around mb-6'>
-                            <button className='bg-[#ec5766] text-white px-10 py-2 rounded-full duration-200 hover:bg-[#ffb5a7]'>Pago anticipo</button>
-                            <button className='bg-[#ec5766] text-white px-10 py-2 rounded-full duration-200 hover:bg-[#ffb5a7]'>Pago total</button>
+                            <button onClick={toggleSoon} className='bg-[#ec5766] text-white px-10 py-2 rounded-full duration-200 hover:bg-[#ffb5a7]'>Pago anticipo</button>
+                            <button onClick={() => next()} className='bg-[#ec5766] text-white px-10 py-2 rounded-full duration-200 hover:bg-[#ffb5a7]'>Pago total</button>
                         </div>
                     </div>
                 </div>
             </div>
+            {
+                soon && (
+                    <div className='soon-fondo'>
+                        <div className='text-black soon-fx' onClick={toggleSoon}>
+                            <Soon />
+                        </div>
+                    </div>
+                )
+            }
         </>
     )
 }

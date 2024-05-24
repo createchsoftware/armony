@@ -3,18 +3,10 @@ import Pasos from "../../../PasosDeProcesos";
 import InputContrasena from "../../../InputContrasena.jsx";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faAngleLeft } from "@fortawesome/free-solid-svg-icons";
-import { ToastContainer, toast } from 'react-toastify';
 import { Helmet, HelmetProvider } from "react-helmet-async";
-import 'react-toastify/dist/ReactToastify.css';
 import '../../../../../txt.css'
 
 const Contrasena = () => {
-
-  function notificacion(mensaje){
-    toast(mensaje);
-  }
-
-  
 
 
   return (
