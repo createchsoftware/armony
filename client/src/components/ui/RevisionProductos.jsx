@@ -5,7 +5,6 @@ import { faTrash } from '@fortawesome/free-solid-svg-icons';
 import { Rating } from '@mui/material';
 import { faCircleMinus, faCirclePlus, faAngleLeft } from '@fortawesome/free-solid-svg-icons';
 import Ofertas from './Ofertas.jsx'
-import { useNavigate } from 'react-router-dom';
 
 const ofertas = [
     {
@@ -196,33 +195,31 @@ function RevisionProductos({ restart, producto, next }) {
                                     <button type="submit" className=' w-[30%] rounded-r-full text-center text-white bg-[rgb(3,109,99)] duration-200 hover:bg-[rgb(69,181,156)] hover:font-bold'>Aplicar</button>
                                 </div>
                                 <div className='flex justify-center w-full'>
-                                    <p className='mt-4 text-xs text-center justify-self-center'>Los <p className='text-[#D47300]'>Términos y Condiciones de los Cupones</p> de Armony aplican el uso de cupones.</p>
-                                    <div className='flex justify-center w-full'>
-                                        <p className='mt-4 text-xs text-center justify-self-center'>Los <p className='text-[#D47300] inline-flex'>Términos y Condiciones de los Cupones</p> de Armony aplican el uso de cupones.</p>
-                                    </div>
-                                </div>
-                                <div className='flex justify-between p-6 px-10 mb-4 border-2 shadow-md rounded-xl border-gray'>
-                                    <h4 className='text-xl font-bold'>Puntos obtenidos:</h4>
-                                    <span className='font-bold text-[rgb(3,109,99)] text-xl'>{parseInt(puntos)}</span>
-                                </div>
-                                <div className='flex justify-between p-6 px-10 mb-4 border-2 shadow-md rounded-xl border-gray'>
-                                    <h4 className='text-xl font-bold'>Total:</h4>
-                                    <span className='font-bold text-[rgb(3,109,99)] text-xl'>${total}</span>
+                                    <p className='mt-4 text-xs text-center justify-self-center'>Los <p className='text-[#D47300] inline-flex'>Términos y Condiciones de los Cupones</p> de Armony aplican el uso de cupones.</p>
                                 </div>
                             </div>
-                            <div className='flex justify-between gap-2 px-6 py-4'>
-                                <a href='/spa/productos' className='px-8 py-2 bg-[#ec5766] text-xl text-white rounded-full duration-200 hover:bg-[#ffb5a7]'>
-                                    Cancelar
-                                </a>
-                                <button onClick={() => next()} className='px-8 py-2 bg-[#ec5766] text-xl text-white rounded-full duration-200 hover:bg-[#ffb5a7]'>
-                                    Continuar
-                                </button>
+                            <div className='flex justify-between p-6 px-10 mb-4 border-2 shadow-md rounded-xl border-gray'>
+                                <h4 className='text-xl font-bold'>Puntos obtenidos:</h4>
+                                <span className='font-bold text-[rgb(3,109,99)] text-xl'>{parseInt(puntos)}</span>
                             </div>
+                            <div className='flex justify-between p-6 px-10 mb-4 border-2 shadow-md rounded-xl border-gray'>
+                                <h4 className='text-xl font-bold'>Total:</h4>
+                                <span className='font-bold text-[rgb(3,109,99)] text-xl'>${total}</span>
+                            </div>
+                        </div>
+                        <div className='flex justify-between gap-2 px-6 py-4'>
+                            <a href='/spa/productos' className='px-8 py-2 bg-[#ec5766] text-xl text-white rounded-full duration-200 hover:bg-[#ffb5a7]'>
+                                Cancelar
+                            </a>
+                            <button onClick={() => next()} className='px-8 py-2 bg-[#ec5766] text-xl text-white rounded-full duration-200 hover:bg-[#ffb5a7]'>
+                                Continuar
+                            </button>
                         </div>
                     </div>
                 </div>
-            </>
-            )
+            </div>
+        </>
+    )
 }
 
-            export default RevisionProductos;
+export default RevisionProductos;
