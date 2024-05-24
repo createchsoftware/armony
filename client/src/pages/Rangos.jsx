@@ -20,10 +20,10 @@ const Rangos = () => {
                     </div>
                     <div className="deg"></div>
                 </div>
-                <div className="grid p-10 px-16">
+                <div className="grid h-max p-10 px-16">
                     <h1 className="font-[ILoveGlitter] py-10 justify-self-center text-6xl text-[#036C65]">Descubre lo que cada rango tiene para ti</h1>
-                    <div className='border-4 border-[#B49947] rounded-[30px]'>
-                        <div className="grid justify-center h-auto grid-cols-2 gap-4 p-10 border-[1rem] border-[#F1DA88] rounded-3xl place-content-center md:grid-cols-1 md:gap-8  md:h-[40vw] md:place-content-start ">
+                    <div className='grid border-4 border-[#B49947] rounded-[30px]'>
+                        <div className="grid justify-center h-auto grid-cols-2 gap-4 p-10 border-[1rem] border-[#F1DA88] rounded-3xl place-content-center md:grid-cols-1 md:gap-8 md:place-content-start ">
                             <h1 className="col-span-2 font-bold text-3xl text-center text-[#F1DA88] drop-shadow-[1px_1px_var(--tw-shadow-color)] shadow-[black] ">Rango oro</h1>
                             <div className="grid w-full m-auto md:col-span-2">
                                 <img className='rounded-2xl w-40 justify-self-center duration-200 hover:w-44' src="../../pictures/rangoOro.png" alt="" />
@@ -39,8 +39,8 @@ const Rangos = () => {
                         </div>
                     </div>
 
-                    <div className='border-4 border-[#4873C8] rounded-[30px] mt-12'>
-                        <div className="grid justify-center h-auto grid-cols-2 gap-4 p-10 border-[1rem] border-[#99B3F6] rounded-3xl place-content-center md:grid-cols-1 md:gap-8  md:h-[44vw] md:place-content-start ">
+                    <div className='grid border-4 border-[#4873C8] rounded-[30px] mt-12'>
+                        <div className="grid justify-center h-auto grid-cols-2 gap-4 p-10 border-[1rem] border-[#99B3F6] rounded-3xl place-content-center md:grid-cols-1 md:gap-8 md:place-content-start ">
                             <h1 className="col-span-2 font-bold text-3xl text-center text-[#99B3F6] drop-shadow-[1px_1px_var(--tw-shadow-color)] shadow-[black] ">Rango platino</h1>
                             <div className="grid w-full m-auto md:col-span-2">
                                 <img className='rounded-2xl w-40 justify-self-center duration-200 hover:w-44' src="../../pictures/rangoPlatino.png" alt="" />
@@ -58,8 +58,8 @@ const Rangos = () => {
                         </div>
                     </div>
 
-                    <div className='border-4 border-[#A93F74] rounded-[30px] my-12'>
-                        <div className="grid justify-center h-auto grid-cols-2 gap-4 p-10 border-[1rem] border-[#F584A7] rounded-3xl place-content-center md:grid-cols-1 md:gap-8  md:h-[48vw] md:place-content-start ">
+                    <div className='grid border-4 border-[#A93F74] rounded-[30px] my-12'>
+                        <div className="grid justify-center h-auto grid-cols-2 gap-4 p-10 border-[1rem] border-[#F584A7] rounded-3xl place-content-center md:grid-cols-1 md:gap-8 md:place-content-start ">
                             <h1 className="col-span-2 font-bold text-3xl text-center text-[#F584A7] drop-shadow-[1px_1px_var(--tw-shadow-color)] shadow-[black] ">Rango platino</h1>
                             <div className="grid w-full m-auto md:col-span-2">
                                 <img className='rounded-2xl w-40 justify-self-center duration-200 hover:w-44' src="../../pictures/rangoVIP.png" alt="" />
