@@ -13,7 +13,7 @@ const Registro = ({ cerrar }) => {
           </div>
           <div className="grid grid-cols-2">
             <a
-              className="text-sm lg:text-base ml-5 justify-self-start"
+              className="text-sm lg:text-base ml-5 justify-self-start relative cursor-pointer before:bg-black before:absolute before:-bottom-1 before:block before:h-[1px] before:w-full before:origin-bottom-right before:scale-x-0 before:transition before:duration-300 before:ease-in-out hover:before:origin-bottom-left hover:before:scale-x-100 hover:font-bold"
               aria-label="Regresar"
               onClick={cerrar.change}
             >
@@ -23,7 +23,7 @@ const Registro = ({ cerrar }) => {
               />{" "}
               Regresar
             </a>
-            <a className="mr-5 justify-self-end" aria-label="Cerrar">
+            <a className="mr-5 justify-self-end duration-150 cursor-pointer hover:text-black" aria-label="Cerrar">
               <FontAwesomeIcon
                 style={{ fontSize: "24px" }}
                 icon={faCircleXmark}
@@ -39,7 +39,7 @@ const Registro = ({ cerrar }) => {
             <a
               href="/spa/signUp"
               onClick={cerrar.close}
-              className="mt-5 bg-[#036C65] text-white text-xs px-4 py-4 hover:bg-teal-600"
+              className="mt-5 bg-[#036C65] text-white text-xs px-4 py-4 duration-200 hover:bg-[rgb(69,181,156)]"
               aria-label="Crear cuenta"
             >
               Crear cuenta con correo electrónico y contraseña
@@ -55,7 +55,7 @@ const Registro = ({ cerrar }) => {
             className="absolute size-6 bottom-[2.75rem] left-[6.5rem] md:left-[7.5rem] lg:left-[9rem]"
           />
           <button
-            className="mb-8 bg-blue-400 text-white text-sm pl-10 pr-4 py-3 mx-auto hover:bg-blue-300"
+            className="mb-8 bg-blue-400 text-white text-sm pl-10 pr-4 py-3 mx-auto duration-200 hover:bg-blue-300"
             aria-label="Continuar con Google"
           >
             Continuar con Google

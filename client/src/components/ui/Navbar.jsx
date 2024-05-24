@@ -24,10 +24,11 @@ function Navbar() {
     const [sus, setSus] = useState(false); //<<< CARACTERISTICA GRAFICA DE QUE EL USUARIO ES SOCIO
 
     const spaRutas = location.pathname.startsWith('/spa') ||
-        location.pathname.startsWith('/favoritos')
-    const mainRutas = location.pathname.startsWith('/perfil') ||
+        location.pathname.startsWith('/favoritos') ||
         location.pathname.startsWith('/rangos') ||
         location.pathname.startsWith('/suscripcion')
+    const mainRutas = location.pathname.startsWith('/perfil')
+        
 
 
     //auto update cart items in navbar (items)

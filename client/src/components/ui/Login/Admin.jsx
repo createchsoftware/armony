@@ -21,7 +21,7 @@ const Admin = ({ cerrar }) => {
           </div>
           <div className="grid grid-cols-2">
             <a
-              className="text-sm lg:text-base ml-5 justify-self-start"
+              className="text-sm lg:text-base ml-5 justify-self-start relative cursor-pointer before:bg-black before:absolute before:-bottom-1 before:block before:h-[1px] before:w-full before:origin-bottom-right before:scale-x-0 before:transition before:duration-300 before:ease-in-out hover:before:origin-bottom-left hover:before:scale-x-100 hover:font-bold"
               aria-label="Regresar"
               onClick={cerrar.change}
             >
@@ -31,7 +31,7 @@ const Admin = ({ cerrar }) => {
               />{" "}
               Regresar
             </a>
-            <a className="mr-5 justify-self-end" aria-label="Cerrar">
+            <a className="mr-5 justify-self-end cursor-pointer hover:text-black" aria-label="Cerrar">
               <FontAwesomeIcon
                 style={{ fontSize: "24px" }}
                 icon={faCircleXmark}
@@ -63,13 +63,13 @@ const Admin = ({ cerrar }) => {
                   class:
                     "bg-slate-200 rounded-full text-sm lg:text-base mb-2 lg:mb-3 mt-1 lg:mt-2 py-2 lg:py-3 w-[22rem] lg:w-[25rem] focus:outline-none focus:ring-1 focus:ring-[#036C65] focus:border-transparent px-6",
                   classEye:
-                    "relative -bottom-[2.25rem] lg:-bottom-[2.75rem] left-[15.25rem] lg:left-[17rem]",
+                    "relative cursor-pointer -bottom-[2.25rem] lg:-bottom-[2.75rem] left-[15.25rem] lg:left-[17rem] hover:text-black",
                 }}
               />
             </div>
           </form>
           <button
-            className="flex bg-[#EB5765] text-white text-lg lg:text-xl rounded-full px-4 py-2 mx-auto mb-8 hover:bg-red-200"
+            className="flex bg-[#EB5765] text-white text-lg duration-200 lg:text-xl rounded-full px-4 py-2 mx-auto mb-8 hover:bg-red-200"
             aria-label="Iniciar Sesión"
             onClick={setSoon}
           >
