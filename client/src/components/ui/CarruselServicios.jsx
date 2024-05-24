@@ -2,7 +2,7 @@ import Carousel from "react-multi-carousel";
 import Tarjeta from "./TarjetaDeServicio.jsx";
 import { useState } from "react";
 
-const CarruselServicios = ({ servicios }) => {
+const CarruselServicios = ({ servicios, next }) => {
   return (
     <Carousel
       additionalTransfrom={0}
@@ -60,7 +60,7 @@ const CarruselServicios = ({ servicios }) => {
       // className=''
     >
       {servicios.map((servicio) => (
-        <Tarjeta servicio={servicio} />
+        <Tarjeta servicio={servicio} next={next} />
       ))}
     </Carousel>
   );

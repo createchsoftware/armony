@@ -365,6 +365,10 @@ function Calendario() {
         }
     }, [selectedDate, localStorage.getItem('Especialista')]);
 
+    // const [selectedDate, setSelectedDate] = useState(
+    //     localStorage.getItem('Fecha seleccionada') ? dayjs(localStorage.getItem('Fecha seleccionada')) : initialValue
+    // );
+
 
     const handleDateChange = (newDate) => {
         setSelectedDate(newDate);

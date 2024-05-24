@@ -3,9 +3,69 @@ import Pasos from "../../../PasosDeProcesos";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React, { Fragment, useEffect, useState } from "react";
 import { faAngleLeft } from "@fortawesome/free-solid-svg-icons";
+import { Helmet, HelmetProvider } from "react-helmet-async";
+import '../../../../../txt.css';
 
 const Patologias = () => {
+
   const [array, setArray] = useState([]);
+  const [habilitado,setHabilitado] = useState({
+    q1:true,
+    q2:true,
+    q3:true,
+    q4:true,
+    q5:true,
+    q6:true,
+    q7:true,
+    q8:true,
+    q9:true,
+    q10:true,
+  });
+
+  const [valores,setValores] = useState({
+    q1:'',
+    q2:'',
+    q3:'',
+    q4:'',
+    q5:'',
+    q6:'',
+    q7:'',
+    q8:'',
+    q9:'',
+    q10:'',
+  });
+
+
+  function habilitar(value,identificador){
+
+    if(value == true){
+
+      setValores(prevState=>{
+        return{
+          ...prevState,
+          [identificador]:''
+        };
+      });
+
+    }
+
+    setHabilitado(prevState=>{
+      return{
+        ...prevState,
+        [identificador]:value
+      };
+    });
+  }
+
+
+  function cambio(identificador,evento){
+    setValores(prevState=>{
+      return{
+        ...prevState,
+        [identificador]:evento.target.value
+      };
+    });
+  }
 
   useEffect(() => {
     fetch("/api/step1.5")
@@ -23,6 +83,11 @@ const Patologias = () => {
 
   return (
     <div>
+      <HelmetProvider>
+        <Helmet>
+            <script src="https://kit.fontawesome.com/c9a65ccec4.js" crossorigin="anonymous"></script>
+        </Helmet>
+      </HelmetProvider>
       <div className="md:h-20 h-[3.75rem] bg-white" />
       <div className="justify-center items-center mt-[6rem] mb-[6rem] md:mt-[5rem] md:mb-2 lg:mt-[8rem] lg:mb-4">
         <div className="h-[90rem] w-[25rem] md:h-[55rem] md:w-[48rem] lg:h-[50rem] lg:w-[70rem] flex flex-col rounded-xl ring-1 ring-slate-200 bg-white bg-clip-border text-gray-700 shadow-md mx-auto">
@@ -75,6 +140,7 @@ const Patologias = () => {
                             id={`no-${question[1]}`}
                             name={`estado${question[1]}`}
                             className="mr-2"
+                            onChange={() => habilitar(true,`q${question[1]}`)}
                           />
                           <label htmlFor="" className="text-xs">
                             No
@@ -86,6 +152,7 @@ const Patologias = () => {
                             id={`si-${question[1]}`}
                             name={`estado${question[1]}`}
                             className="mr-2"
+                            onChange={()=> habilitar(false,`q${question[1]}`)}
                           />
                           <label htmlFor="" className="text-xs">
                             Sí
@@ -96,7 +163,10 @@ const Patologias = () => {
                         id={`q${question[1]}`}
                         type="text"
                         className="bg-slate-200 rounded-full w-auto mb-1 mx-2 py-2 focus:outline-none focus:ring-1 focus:ring-rose-400 focus:border-transparent px-6"
-                      />
+                        value={valores[`q${question[1]}`]}
+                        onChange={(evento)=> cambio(`q${question[1]}`,evento)}
+                        disabled={habilitado[`q${question[1]}`]}
+                     />
                     </div>
                   </div>
                 </>
@@ -125,6 +195,7 @@ const Patologias = () => {
           </div>
         </div>
       </div>
+      <div id="toastBox"/>
     </div>
   );
 };

@@ -28,31 +28,32 @@ const steps = [
   "Agenda",
   "Pago",
   "Confirmación",
-  "Ticket"
+  "Ticket",
 ];
 
 export default function Cita() {
-
   const navigate = useNavigate();
   const [activeStep, setActiveStep] = useState(0);
   const [completed, setCompleted] = useState({});
   const [scrollPosition, setScrollPosition] = useState(0);
-  const nextButtonText = activeStep === steps.length - 1 ? "Ver agenda" : "Siguiente";
+  const nextButtonText =
+    activeStep === steps.length - 1 ? "Ver agenda" : "Siguiente";
   // const citasAgregadas = [];
   // localStorage.setItem('citas', JSON.stringify(citasAgregadas));
   // useEffect(() => {
   //   localStorage.clear();
   // }, []); // Se ejecutará una vez al montar el component
 
-  useEffect(() => {//cuando el usuario llegue al paso 4  se ajecutara 
+  useEffect(() => {
+    //cuando el usuario llegue al paso 4  se ajecutara
     if (activeStep === 3) {
       paso4();
     }
   }, [activeStep]);
 
   const paso4 = () => {
-    agregadoCitas()// se guardara su servicio en un array
-    removeLSCitas()//despues se eliminaran del localstorage para posteriormente volverlos a declarar
+    agregadoCitas(); // se guardara su servicio en un array
+    removeLSCitas(); //despues se eliminaran del localstorage para posteriormente volverlos a declarar
     // LocalBase()
   };
 
@@ -90,8 +91,8 @@ export default function Cita() {
     const newActiveStep =
       isLastStep() && !allStepsCompleted()
         ? // It's the last step, but not all steps have been completed,
-        // find the first step that has been completed
-        steps.findIndex((step, i) => !(i in completed))
+          // find the first step that has been completed
+          steps.findIndex((step, i) => !(i in completed))
         : activeStep + 1;
     setActiveStep(newActiveStep);
   };
@@ -135,57 +136,65 @@ export default function Cita() {
     setCompleted({});
   };
   const removeLSCitas = () => {
-    localStorage.removeItem("servicio")
-    localStorage.removeItem('nombre')
-    localStorage.removeItem('precio')
-    localStorage.removeItem('tiempo')
-    localStorage.removeItem('imagen')
-    localStorage.removeItem("paquete")
-    localStorage.removeItem("sesiones")
-    localStorage.removeItem("Especialista")
-    localStorage.removeItem("hora")
-    localStorage.removeItem("Fecha seleccionada")
-    localStorage.removeItem('NombreEspecialista')
-
-  }
+    localStorage.removeItem("servicio");
+    localStorage.removeItem("nombre");
+    localStorage.removeItem("precio");
+    localStorage.removeItem("tiempo");
+    localStorage.removeItem("imagen");
+    localStorage.removeItem("paquete");
+    localStorage.removeItem("sesiones");
+    localStorage.removeItem("Especialista");
+    localStorage.removeItem("hora");
+    localStorage.removeItem("Fecha seleccionada");
+    localStorage.removeItem("NombreEspecialista");
+  };
   const agregadoCitas = () => {
     const newProduct = {
-      "idServicio": localStorage.getItem("servicio"),
-      "nombreServicio": localStorage.getItem('nombre'),
-      "precioServicio": localStorage.getItem('precio'),
-      "tiempoServicio": localStorage.getItem('tiempo'),
-      "ImagenServicio": localStorage.getItem('imagen'),
+      idServicio: localStorage.getItem("servicio"),
+      nombreServicio: localStorage.getItem("nombre"),
+      precioServicio: localStorage.getItem("precio"),
+      tiempoServicio: localStorage.getItem("tiempo"),
+      ImagenServicio: localStorage.getItem("imagen"),
       //"Servicio":localStorage.getItem("paquete"),
       // localStorage.getItem("sesiones") ,
-      "IdEspecialista": localStorage.getItem("Especialista"),
-      "horaDisp": localStorage.getItem("hora"),
-      "FechaServicio": localStorage.getItem("Fecha seleccionada"),
-      "nombreEsp": localStorage.getItem('NombreEspecialista')
+      IdEspecialista: localStorage.getItem("Especialista"),
+      horaDisp: localStorage.getItem("hora"),
+      FechaServicio: localStorage.getItem("Fecha seleccionada"),
+      nombreEsp: localStorage.getItem("NombreEspecialista"),
     };
-    let citas = JSON.parse(localStorage.getItem('citas')) || [];
+    let citas = JSON.parse(localStorage.getItem("citas")) || [];
     citas.push(newProduct);
-    localStorage.setItem('citas', JSON.stringify(citas));
-    localStorage.getItem('citas');
+    localStorage.setItem("citas", JSON.stringify(citas));
+    localStorage.getItem("citas");
   };
-
 
   const LocalBase = () => {
     console.log(
-      localStorage.getItem("servicio") + ' ' +
-      localStorage.getItem('nombre') + ' ' +
-      localStorage.getItem('precio') + ' ' +
-      localStorage.getItem('tiempo') + ' ' +
-      localStorage.getItem('imagen') + " " +
-      localStorage.getItem("paquete") + " " +
-      localStorage.getItem("sesiones") + " " +
-      localStorage.getItem("Especialista") + " " +
-      localStorage.getItem("hora") + " " +
-      localStorage.getItem("Fecha seleccionada") + ' ' +
-      localStorage.getItem('NombreEspecialista')
+      localStorage.getItem("servicio") +
+        " " +
+        localStorage.getItem("nombre") +
+        " " +
+        localStorage.getItem("precio") +
+        " " +
+        localStorage.getItem("tiempo") +
+        " " +
+        localStorage.getItem("imagen") +
+        " " +
+        localStorage.getItem("paquete") +
+        " " +
+        localStorage.getItem("sesiones") +
+        " " +
+        localStorage.getItem("Especialista") +
+        " " +
+        localStorage.getItem("hora") +
+        " " +
+        localStorage.getItem("Fecha seleccionada") +
+        " " +
+        localStorage.getItem("NombreEspecialista")
     );
   };
   const stepComponents = [
-    <Servicios key={0} />,
+    <Servicios key={0} next={handleClick} />,
     <Paquetes key={1} />,
     <Calendario key={2} />,
     <Agenda restart={restart} key={3} />,
@@ -206,16 +215,16 @@ export default function Cita() {
                 color: "#036C65", // circle color (COMPLETED)
               },
               "& .MuiStepLabel-label.Mui-completed.MuiStepLabel-alternativeLabel":
-              {
-                color: "white", // Just text label (COMPLETED)
-              },
+                {
+                  color: "white", // Just text label (COMPLETED)
+                },
               "& .MuiStepLabel-root .Mui-active": {
                 color: "#036C65", // circle color (ACTIVE)
               },
               "& .MuiStepLabel-label.Mui-active.MuiStepLabel-alternativeLabel":
-              {
-                color: "white", // Just text label (ACTIVE)
-              },
+                {
+                  color: "white", // Just text label (ACTIVE)
+                },
               "& .MuiStepLabel-root .Mui-active .MuiStepIcon-text": {
                 fill: "white", // circle's number (ACTIVE)
               },
@@ -248,6 +257,7 @@ export default function Cita() {
           <div>
             {allStepsCompleted() ? (
               navigate("/perfil/agenda")
+            ) : (
               // <React.Fragment>
               //   <Typography sx={{ mt: 2, mb: 1 }}>Pasos completados</Typography>
               //   <Box sx={{ display: "flex", flexDirection: "row", pt: 2 }}>
@@ -255,7 +265,6 @@ export default function Cita() {
               //     <Button onClick={handleReset}>Empezar de nuevo</Button>
               //   </Box>
               // </React.Fragment>
-            ) : (
               <React.Fragment>
                 {/* <Typography sx={{ mt: 2, mb: 1, py: 1 }}>
                                     Step {activeStep + 1}
@@ -265,10 +274,11 @@ export default function Cita() {
                     hidden={activeStep === 5}
                     disabled={activeStep === 0}
                     onClick={handleBack}
-                    className={`${activeStep === 0
-                      ? "hover:bg-transparent opacity-30 hover:text-rose-400"
-                      : "hover:bg-red-50"
-                      } px-4 py-2 mx-auto text-xl bg-white rounded-full ring-1 text-rose-400 ring-rose-400`}
+                    className={`${
+                      activeStep === 0
+                        ? "hover:bg-transparent opacity-30 hover:text-rose-400"
+                        : "hover:bg-red-50"
+                    } px-4 py-2 mx-auto text-xl bg-white rounded-full ring-1 text-rose-400 ring-rose-400`}
                     sx={{ mr: 1 }}
                   >
                     Regresar
