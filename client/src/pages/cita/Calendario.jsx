@@ -375,6 +375,12 @@ function Calendario() {
         localStorage.setItem('Fecha seleccionada', newDate.format("YYYY-MM-DD"));
     };
 
+    const [especialistaSeleccionado, setEspecialistaSeleccionado] = useState(null);
+
+    const agregarEspe = (id) => {
+        setEspecialistaSeleccionado(id);
+    };
+
     return (
         <>
             <h1 className='flex justify-center justify-self-center text-2xl px-8 w-1/4  m-auto border-b-2 border-b-[#ec5766] font-bold'>
@@ -387,7 +393,6 @@ function Calendario() {
                     <div className=''>
                         <LocalizationProvider dateAdapter={AdapterDayjs}>
                             <DateCalendar
-                                disabled={!!localStorage.getItem('Especialista')}
                                 sx={[dayStyle,
                                     {
                                         svg: { fill: '#ec5766 !important' },
@@ -518,8 +523,14 @@ function Calendario() {
                                 swipeable
                             >
                                 {especialistas.length > 0 ? (especialistas.map((especialista) => (
-                                    <Especialista key={especialista.id} especialista={especialista} />
+                                    <Especialista
+                                        key={especialista.id}
+                                        especialista={especialista}
+                                        especialistaSeleccionado={especialistaSeleccionado}
+                                        manejarSeleccion={agregarEspe}
+                                    />
                                 ))) : (<div></div>)}
+
                             </Carousel>
                             {/* <CarruselServicios servicios={especialistas} itemsDesktop={1} itemsMobile={1} itemsTablet={1}/>
                                          */}

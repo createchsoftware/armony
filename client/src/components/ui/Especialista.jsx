@@ -2,9 +2,8 @@ import { Rating } from "@mui/material";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import Box from "@mui/material/Box";
-import { ChevronRight } from "lucide-react";
 import { styled } from "@mui/material/styles";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 const StyledRating = styled(Rating)({
   "& .MuiRating-iconFilled": {
@@ -15,21 +14,33 @@ const StyledRating = styled(Rating)({
   },
 });
 
-function Especialista({ especialista }) {
+function Especialista({ especialista, especialistaSeleccionado, manejarSeleccion }) {
   const [seleccionado, setSeleccionado] = useState(false);
+
+  useEffect(() => {
+    setSeleccionado(especialista.id === especialistaSeleccionado);
+  }, [especialistaSeleccionado, especialista.id]); // Dependencia actualizada
+
+  const buttonClasses = `mt-2 transition-all duration-300 m-auto hover:bg-[#036C65] hover:ring-2 hover:[#036C65] hover:ring-offset-1 group relative inline-flex h-10 items-center justify-center overflow-hidden rounded-lg border-2 px-6 font-[abeatbykai] text-neutral-200 ${seleccionado ? 'bg-[#036C65]' : 'bg-[#EB5765]'}`;
+
   function exp(xp) {
     return xp == 1 ? xp + " año" : xp + " años";
   }
 
   const agregarEspe = (id, nombre) => {
-    if (!seleccionado) {
-      setSeleccionado(true);
-      localStorage.setItem("Especialista", id);
-      localStorage.setItem("NombreEspecialista", nombre);
-    } else {
-      alert("ya escogiste un especialista");
+    // if already selected, deselect
+    if (seleccionado) {
+      setSeleccionado(false);
+      localStorage.removeItem("Especialista");
+      localStorage.removeItem("NombreEspecialista");
+      return;
     }
+    manejarSeleccion(id);
+    setSeleccionado(true);
+    localStorage.setItem("Especialista", id);
+    localStorage.setItem("NombreEspecialista", nombre);
   };
+
   return (
     <div className="md:px-8 md:py-2 rounded-3xl font-[abeatbyKai] ring-1 w-2/3 m-auto bg-rose-200">
       <Box
@@ -68,19 +79,13 @@ function Especialista({ especialista }) {
           ratedColor="amber"
         />
       </div>
-      {/* <p className='pt-4 text-lg font-bold'>Experta en:</p> */}
-      {/* <div className='flex justify-start gap-2 m-auto'>
-                {especialista.areas.map(area => (
-                    <p className='gap-2 px-1 pt-2 text-center bg-white text-rose-400'>{area}</p>
-                ))}
-            </div> */}
 
       <div div className="flex justify-center mt-2">
         <button
           onClick={() => agregarEspe(especialista.ID, especialista.Nombre)}
-          className="mt-2 transition-all duration-300  m-auto hover:bg-[#036C65] hover:ring-2 hover:[#036C65] hover:ring-offset-1 group relative inline-flex h-10 items-center justify-center overflow-hidden rounded-lg border-2 bg-[#EB5765] px-6 font-[abeatbykai] text-neutral-200"
+          className={buttonClasses}
         >
-          <span>Elegir</span>
+          <span>{seleccionado ? "Seleccionado" : "Seleccionar"}</span>
         </button>
       </div>
     </div>
