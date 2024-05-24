@@ -100,7 +100,7 @@ function Navbar() {
                             <FontAwesomeIcon icon={faBars} />
                         </button>
                         <ul className="menu">
-                            { location.pathname === '/' && (
+                            {location.pathname === '/' && (
                                 <>
                                     <li className="nav-menu-item">
                                         <a href="#" className="menu-link">
@@ -119,7 +119,7 @@ function Navbar() {
                                     </li>
                                 </>
                             )}
-                            { mainRutas && (
+                            {mainRutas && (
                                 <>
                                     <li className="nav-menu-item">
                                         <a href="/" className="menu-link">
@@ -138,7 +138,7 @@ function Navbar() {
                                     </li>
                                 </>
                             )}
-                            { spaRutas && (
+                            {spaRutas && (
                                 <>
                                     <li className="nav-menu-item">
                                         <a href="/spa" className="menu-link">
@@ -175,12 +175,12 @@ function Navbar() {
                                         <a
                                             className="flex items-center h-20 menu-link"
                                         >
-                                            <div className="w-14 h-14 mr-5 relative">
-                                                { sus && (
+                                            <div className="relative mr-5 w-14 h-14">
+                                                {sus && (
                                                     <img
                                                         src="../../../pictures/marcoSuscripcion.png"
                                                         alt=""
-                                                        className="absolute w-full h-full object-cover"
+                                                        className="absolute object-cover w-full h-full"
                                                     />
                                                 )}
                                                 <img
@@ -190,27 +190,27 @@ function Navbar() {
                                                 />
                                             </div>
                                             {usuario}
-                                            { rango === 1 ? (
+                                            {rango === 1 ? (
                                                 <img
                                                     src="../../../pictures/rangoOro.png"
                                                     alt=""
                                                     className="w-4 h-auto m-auto"
                                                 />
-                                            ):(
+                                            ) : (
                                                 rango === 2 ? (
                                                     <img
                                                         src="../../../pictures/rangoPlatino.png"
                                                         alt=""
                                                         className="w-4 h-auto m-auto"
                                                     />
-                                                ):(
+                                                ) : (
                                                     rango === 3 ? (
                                                         <img
                                                             src="../../../pictures/rangoVIP.png"
                                                             alt=""
                                                             className="w-4 h-auto m-auto"
                                                         />
-                                                    ):''
+                                                    ) : ''
                                                 )
                                             )}
                                         </a>
@@ -218,7 +218,6 @@ function Navbar() {
                                     </>
                                 ) : (
                                     <a
-                                        href="#"
                                         onClick={toggleLogin}
                                         className="menu-link menu-is"
                                     >
@@ -226,7 +225,7 @@ function Navbar() {
                                     </a>
                                 )}
                             </li>
-                            { spaRutas && (
+                            {spaRutas && (
                                 <li className="nav-menu-item">
                                     <a
                                         href="/favoritos"
