@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 function PagoRealizado({ cerrarPago, total, next }) {
     // const total = localStorage.getItem('total')
     const [cargando, setCargando] = useState(true);
+    const [cliente, setCliente] = useState(null);
 
     const handleClick = () => {
         cerrarPago();
@@ -10,53 +11,64 @@ function PagoRealizado({ cerrarPago, total, next }) {
     }
 
     useEffect(() => {
-        const storedCliente = localStorage.getItem('cliente');
-        if (storedCliente) {
-            try {
-                const parsedCliente = JSON.parse(storedCliente);
-                const { ID, Nombre, telefono, monedero } = parsedCliente; // Desestructuración
-                setCliente({ ID, Nombre, telefono, monedero });
-            } catch (error) {
-                console.error("Error al parsear el cliente:", error);
+        const fetchCliente = async () => {
+            const storedCliente = localStorage.getItem('cliente');
+            if (storedCliente) {
+                try {
+                    const parsedCliente = JSON.parse(storedCliente);
+                    const { ID, Nombre, telefono, monedero } = parsedCliente;
+                    setCliente({ ID, Nombre, telefono, monedero });
+                } catch (error) {
+                    console.error("Error al parsear el cliente:", error);
+                }
+            } else {
+                console.error("No se encontró el cliente en localStorage");
             }
-        } else {
-            console.error("No se encontró el cliente en localStorage");
-        }
+        };
+
+        fetchCliente();
     }, []);
+
     useEffect(() => {
-        if (cliente) {
-            console.log("Cliente cargado:", cliente.Nombre);
-            setTimeout(() => {
-                fetch("/api/admin/citas/venta", {
-                    method: "POST",
-                    body: JSON.stringify({
-                        "idCliente": cliente.ID,
-                        "nombre": cliente.Nombre,
-                        "phone": "6861208963",
-                        "tarjeta": '131331331313',
-                        "monedero":14,
-                        "estadoPago": "pagada",
-                        "subTotal": localStorage.getItem('totalIva'),
-                        "total": localStorage.getItem('total'),
-                        "impuesto": 18,
-                    }),
-                    headers: {
-                        "Content-Type": "application/json",
-                    },
-                }).then(response => {
-                    if (!response.ok) {
-                        throw new Error('Error en la respuesta de la red');
+        const realizarVenta = async () => {
+            if (cliente) {
+                console.log("Cliente cargado:", cliente.Nombre);
+                setTimeout(async () => {
+                    try {
+                        // const response = await fetch("/api/admin/citas/venta", {
+                        //     method: "POST",
+                        //     body: JSON.stringify({
+                        //         "idCliente": cliente.ID,
+                        //         "nombre": cliente.Nombre,
+                        //         "phone": "6861208963",
+                        //         "tarjeta": '1313',
+                        //         "monedero": 14,
+                        //         "estadoPago": "pagada",
+                        //         "subTotal": Number(localStorage.getItem('totalIva')),
+                        //         "total": Number(localStorage.getItem('total')),
+                        //         "impuesto": 18.00,
+                        //     }),
+                        //     headers: {
+                        //         "Content-Type": "application/json",
+                        //     },
+                        // });
+
+                        if (!response.ok) {
+                            throw new Error('Error en la respuesta de la red');
+                        }
+
+                        const data = await response.json();
+                        console.log('Respuesta de la venta:', data);
+                        setCargando(false);
+                    } catch (error) {
+                        console.error('Error en la venta:', error);
+                        setCargando(false);
                     }
-                    return response.json();
-                }).then(data => {
-                    console.log('Respuesta de la venta:', data);
-                    setCargando(false);
-                }).catch((error) => {
-                    console.error('Error en la venta:', error);
-                    setCargando(false);
-                });
-            }, 5000);
-        }
+                }, 5000);
+            }
+        };
+
+        realizarVenta();
     }, [cliente]);
 
 
