@@ -29,7 +29,7 @@ function Pago({ producto }) {
 
     const [tarjetas, setTarjetas] = useState([]);
 
-    const totalProductos = cartItems.reduce((sum, producto) => sum + (producto.precio * producto.cantidad), 0);
+    const totalProductos = cartItems.reduce((sum, producto) => sum + (producto.precio * producto.cantidad), 0).toFixed(2);
     const cantidadProductos = cartItems.reduce((sum, producto) => sum + producto.cantidad, 0);
     const subTotal = cartItems.reduce((acc, item) => acc + item.precio * item.cantidad, 0).toFixed(2);
     const ivaTotal = (parseFloat(subTotal) * 0.08).toFixed(2);
@@ -172,8 +172,8 @@ function Pago({ producto }) {
                         <div className='px-6 pt-6'>
                             <div className='grid p-6 mb-4 border-2 shadow-md rounded-xl border-gray'>
                                 <div className='flex justify-between px-6'>
-                                    <span className='font-bold'>{cantidadProductos} {cantidadProductos === 1 ? "producto" : "productos"}</span>
-                                    <span className="text-[rgb(3,109,99)] font-bold text-xl">{totalProductos}</span>
+                                    <span className='font-bold'>{cantidadProductos} {cantidadProductos === 1 ? "Producto" : "Productos"}</span>
+                                    <span className="text-[rgb(3,109,99)] font-bold text-xl">${totalProductos}</span>
                                 </div>
                                 <div className='flex justify-between px-6 pt-6'>
                                     <h1 className='font-bold'>Envío</h1>
@@ -181,7 +181,7 @@ function Pago({ producto }) {
                                 </div>
                                 <div className='flex justify-between px-6 pt-6'>
                                     <h1 className='font-bold'>IVA</h1>
-                                    <span className="text-[rgb(3,109,99)] font-bold">{ivaTotal}</span>
+                                    <span className="text-[rgb(3,109,99)] font-bold">${ivaTotal}</span>
                                 </div>
                                 <div className='flex justify-between px-6 pt-6'>
                                     <h1 className='font-bold'>Cupón</h1>
@@ -195,7 +195,7 @@ function Pago({ producto }) {
                         </div>
                     </div>
                     {/* Bloque "Aceptamos" */}
-                    <div className="border-2 shadow-md rounded-xl border-gray">
+                    <div className="border-2 shadow-md rounded-xl mt-2 border-gray">
                         <div className='grid bg-[rgb(3,109,99)] rounded-t-xl'>
                             <p className='py-2 ml-8 text-2xl text-white'>Aceptamos</p>
                         </div>

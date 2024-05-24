@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { IoArrowForwardSharp } from "react-icons/io5";
 import { useLocation, useNavigate } from "react-router-dom";
 
-const FinalizacionPagoProd = ({ producto }) => {
+const FinalizacionPagoProd = ({ producto, next }) => {
   const formatDate = (date) => {
     const options = {
       year: "numeric",
@@ -90,7 +90,7 @@ const FinalizacionPagoProd = ({ producto }) => {
                   <p>{formatDate(new Date())}</p>
                   <p>¡ GRACIAS POR SU COMPRA !</p>
                 </div>
-                <button className="bg-[#FFA3A3] text-white px-10 py-2 mr-10 rounded-full duration-200 hover:bg-[#ec5766]">
+                <button onClick={() => next() } className="bg-[#FFA3A3] text-white px-10 py-2 mr-10 rounded-full duration-200 hover:bg-[#ec5766]">
                   <IoArrowForwardSharp
                     style={{ fontSize: "32px", color: "#000000" }}
                   />

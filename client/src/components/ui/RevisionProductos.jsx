@@ -51,7 +51,7 @@ const ofertas = [
 // }, []);
 
 
-function RevisionProductos({ restart, producto }) {
+function RevisionProductos({ restart, producto, next }) {
     const [cartItems, setCartItems] = useState(() => {
         if (producto) {
             // Si hay un producto en el prop, lo utilizamos
@@ -195,7 +195,7 @@ function RevisionProductos({ restart, producto }) {
                                     <button type="submit" className=' w-[30%] rounded-r-full text-center text-white bg-[rgb(3,109,99)] duration-200 hover:bg-[rgb(69,181,156)] hover:font-bold'>Aplicar</button>
                                 </div>
                                 <div className='flex w-full justify-center'>
-                                    <p className='text-center justify-self-center text-xs mt-4'>Los <p className='text-[#D47300]'>Términos y Condiciones de los Cupones</p> de Armony aplican el uso de cupones.</p>
+                                    <p className='text-center justify-self-center text-xs mt-4'>Los <p className='text-[#D47300] inline-flex'>Términos y Condiciones de los Cupones</p> de Armony aplican el uso de cupones.</p>
                                 </div>
                             </div>
                             <div className='flex justify-between p-6 px-10 mb-4 border-2 shadow-md rounded-xl border-gray'>
@@ -206,6 +206,14 @@ function RevisionProductos({ restart, producto }) {
                                 <h4 className='text-xl font-bold'>Total:</h4>
                                 <span className='font-bold text-[rgb(3,109,99)] text-xl'>${total}</span>
                             </div>
+                        </div>
+                        <div className='flex justify-between px-6 py-4 gap-2'>
+                            <a href='/spa/productos' className='px-8 py-2 bg-[#ec5766] text-xl text-white rounded-full duration-200 hover:bg-[#ffb5a7]'>
+                                Cancelar
+                            </a>
+                            <button onClick={() => next() } className='px-8 py-2 bg-[#ec5766] text-xl text-white rounded-full duration-200 hover:bg-[#ffb5a7]'>
+                                Continuar
+                            </button>
                         </div>
                     </div>
                 </div>
