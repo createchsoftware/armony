@@ -12,6 +12,7 @@ import { Navigate, useNavigate } from "react-router-dom";
 import { useState,useEffect } from 'react';
 import { jwtDecode } from "jwt-decode";
 
+
 const StyledRating = styled(Rating)({
     '& .MuiRating-iconFilled': {
         color: '#ff6d75',
@@ -104,13 +105,13 @@ function Productos({ productos }) {
                     productos.map(producto => (
                         <li key={producto.id} className='border-4 bg-white grid content-between border-[#E2B3B7] p-6 py-2 rounded-xl'>
                             <div className='flex justify-end'>
-                            <Box className="float-right" onClick={() => toggleFavorite(producto.pkIdPS)}>
+                            {/* <Box className="float-right" onClick={() => toggleFavorite(producto.pkIdPS)}>
                      {favorites[producto.pkIdPS] ? 
                     <FavoriteIcon style={{ color: '#ff6d75' }} /> : 
                      <FavoriteBorderIcon  />
     }
-</Box>
-                                {/* <Box
+</Box> */}
+                                <Box
                                     className="absolute flex justify-end float-right -mr-3"
                                     sx={{
                                         '& > legend': { mt: 2 },
@@ -124,8 +125,9 @@ function Productos({ productos }) {
                                         precision={1}
                                         icon={<FavoriteIcon fontSize="inherit" />}
                                         emptyIcon={<FavoriteBorderIcon fontSize="inherit" />}
+                                        onChange={() => toggleFavorite(producto.pkIdPS)}
                                     />
-                                </Box> */}
+                                </Box>
                             </div>
                             <img onClick={() => handleViewMore(producto)} className='w-2/3 m-auto mt-6 mb-4 rounded-lg hover:cursor-pointer hover:opacity-60 aspect-square'
                                 src={producto.img ? producto.img : 'https://i.imgur.com/CCBFmSi.png'}
