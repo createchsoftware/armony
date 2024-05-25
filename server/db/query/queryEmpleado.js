@@ -1,5 +1,6 @@
 import * as mysql from "mysql2";
 import { endConnection } from "../connection.js";
+import { get } from "https";
 
 const messageError = "Ha ocurrido un error al ejecutar el query: ";
 
@@ -120,6 +121,20 @@ export async function getEmpServicio(connection, data) {
     const [rows, fields] = await connection.query(query); // Ejecucion de query y almacenamiento de datos
     endConnection(); // Cierre de conexion
     return rows[0]; // Retorno de valores
+  } catch (err) {
+    // Capturamos errores de ejecucion de query
+    console.error(messageError, err); // Mostramos errores de query por consola
+  }
+}
+
+// FUNCIONAL
+export async function getEmpFav(connection, data) {
+  try {
+    let getEF = "CALL getEmpFav(?)"; // Query para procedimiento almacenado de la base de datos
+    let query = mysql.format(getEF, [data.idCliente]); // Parametros para el procedimiento almacenado
+    const [rows, fields] = await connection.query(query); // Ejecutamos el query y almacenamos los resultados obtenidos
+    endConnection(); // Cerramos la conexion
+    return rows[0]; // Retornamos los valores obtenidos
   } catch (err) {
     // Capturamos errores de ejecucion de query
     console.error(messageError, err); // Mostramos errores de query por consola

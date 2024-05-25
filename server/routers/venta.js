@@ -100,13 +100,12 @@ routerVenta.post("/cita", async (req, res) => {
   }
 });
 
-// READ PENDIENTE
+// READ FUNCIONAL OBTIENE LA ULTIMA VENTA
 routerVenta.get("/read", async (req, res) => {
   try {
     const resultado = await searchVentaCita(conexion, {
       idCliente: req.body.idCliente,
-      nombre: req.body.nombre,
-      fechaVenta: req.body.fechaVenta,
+      tVenta: req.body.tVenta,
       phone: req.body.phone,
     }); // Parametros para el procedimiento
 

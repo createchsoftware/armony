@@ -44,6 +44,7 @@ export async function detalleVenta(connection, data) {
 }
 
 // READ VENTA
+// OBTIENE LA ULTIMA VENTA DEL CLIENTE
 export async function searchVentaCita(connection, data) {
   try {
     let busquedaVenta = "CALL searchVentaCita(?, ?, ?)"; // Procedimiento almacenado de la base de datos

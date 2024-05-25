@@ -217,3 +217,89 @@ export async function productosPromo(pool, data, res) {
     throw err;
   }
 }
+
+// FUNCIONAL
+// OBTENER LOS SERVICIOS FAVORITOS DEL CLIENTE
+export async function serviciosFav(connection, data) {
+  try {
+    let servFav = "CALL getServiciosFav(?)"; // Procedimiento almacenado de la base de datos
+    let query = mysql.format(servFav, [data.idCliente]); // Parametros para el procedimiento almacenado
+    const [rows, fileds] = await connection.query(query); // Ejecutamos el query y almacenamos los valores retornados
+    endConnection(); // Cerramos la conexion con la base de datos
+    return rows; // Retornamos los valores obtenidos
+  } catch (err) {
+    // Capturamos errores de ejecucion de query
+    console.error(messageError, err); // Mostramos errores por consola
+  }
+}
+
+// OBTENER PRODUCTOS FACIALES
+// FUNCIONAL
+export async function productosFaciales(connection) {
+  try {
+    let query = "CALL getProductosFaciales()"; // Query de procedimiento almacenado
+    const [rows, fields] = await connection.query(query); // Ejecutamos el query y almacenamos los valores
+    endConnection(); // Cerramos la conexion
+    return rows; // Retornamos los valores
+  } catch (err) {
+    // Capturamos errores de ejecucion de query
+    console.error(messageError, err); // Mostramos errores por consola
+  }
+}
+
+// OBTENER PRODUCTOS CORPORALES
+// FUNCIONAL
+export async function productosCorporales(connection) {
+  try {
+    let query = "CALL getProductosCorporales()"; // Query de procedimiento almacenado
+    const [rows, fields] = await connection.query(query); // Ejecutamos el query y almacenamos los valores obtenidos
+    endConnection(); // Cerramos la conexion
+    return rows; // Retornamos los valores obtenidos
+  } catch (err) {
+    // Capturamos errores de ejecucion de query
+    console.error(messageError, err); // Mostramos errores por consola
+  }
+}
+
+// OBTENER PRODUCTOS RELACIONADOS (FUNCIONAL)
+// Productos relacionados en base a la categoria del producto
+export async function productosRelacionados(connection, data) {
+  try {
+    let prodRela = "CALL getProdRelacionados(?)"; // Query de procedimiento almacenado de la base de datos
+    let query = mysql.format(prodRela, [data.idCliente]); // Parametros para el procedimiento almacenado
+    const [rows, fields] = await connection.query(query); // Ejecutamos el query y almacenamos los valores obtenidos
+    endConnection(); // Cerramos la conexion con la base de datos
+    return rows; // Retornamos los valores obtenidos
+  } catch (err) {
+    // Capturamos errores de ejecucion de query
+    console.error(messageError, err); // Mostramos errores por consola
+  }
+}
+
+// OBTENER PRODUCTOS CON DESCUENTO
+// FUNCIONAL
+export async function productosDescuento(connection) {
+  try {
+    let query = "CALL getProductosDesc()"; // Query del procedimiento almacenado
+    const [rows, fields] = await connection.query(query); // Ejecutamos le query y almacenamos los valores
+    endConnection(); // Cerramos la conexion
+    return rows; // Retornamos los valores obtenidos
+  } catch (err) {
+    // Capturamos errores de ejecucion de query
+    console.error(messageError, err); // Mostramos errores por consola
+  }
+}
+
+// OBTENER SERVICIOS CON DESCUENTO
+// FUNCIONAL
+export async function serviciosDescuento(connection) {
+  try {
+    let query = "CALL getServiciosDesc()"; // Query de procedimiento almacenado de la base de datos
+    const [rows, fields] = await connection.query(query); // Ejecutamos el query y almacenamos los resultados
+    endConnection(); // Cerramos la conexion con la base de datos
+    return rows; // Retornamos los valores obtenidos
+  } catch (err) {
+    // Capturamos errores de ejecucion de query
+    console.error(messageError, err); // Mostramos errores por consola
+  }
+}
