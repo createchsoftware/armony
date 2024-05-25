@@ -36,23 +36,23 @@ function PagoRealizado({ cerrarPago, total, next }) {
                 console.log("Cliente cargado:", cliente.Nombre);
                 setTimeout(async () => {
                     try {
-                        // const response = await fetch("/api/admin/citas/venta", {
-                        //     method: "POST",
-                        //     body: JSON.stringify({
-                        //         "idCliente": cliente.ID,
-                        //         "nombre": cliente.Nombre,
-                        //         "phone": "6861208963",
-                        //         "tarjeta": '1313',
-                        //         "monedero": 14,
-                        //         "estadoPago": "pagada",
-                        //         "subTotal": Number(localStorage.getItem('totalIva')),
-                        //         "total": Number(localStorage.getItem('total')),
-                        //         "impuesto": 18.00,
-                        //     }),
-                        //     headers: {
-                        //         "Content-Type": "application/json",
-                        //     },
-                        // });
+                        const response = await fetch("/api/admin/citas/venta", {
+                            method: "POST",
+                            body: JSON.stringify({
+                                "idCliente": cliente.ID,
+                                "nombre":null,
+                                "phone": null,
+                                "tarjeta":localStorage.getItem('tarjeta'),
+                                "monedero": 0,
+                                "estadoPago": "pagada",
+                                "subTotal": Number(localStorage.getItem('totalIva')),
+                                "total": Number(localStorage.getItem('total')),
+                                "impuesto": 18.00,
+                            }),
+                            headers: {
+                                "Content-Type": "application/json",
+                            },
+                        });
 
                         if (!response.ok) {
                             throw new Error('Error en la respuesta de la red');

@@ -70,7 +70,7 @@ function Agenda({ restart, next }) {
   //En caso de ser Socio VVV
   //const puntos = (parseInt(totalIva))/5;
 
-  localStorage.setItem("total", totalIva);
+  localStorage.setItem("total", total);
   localStorage.setItem("totalIva", totalIva);
   const citasList = citasItems.map((item) => (
     <li
