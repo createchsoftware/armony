@@ -39,26 +39,29 @@ function Productos({ productos }) {
         const cookie = cookies.find(c => c.trim().startsWith(cookieName + "="));
         return cookie ? cookie.split('=')[1] : null;
     };
-    const toggleFavorite = (idProducto) => {
-        console.log(setFavorites)
-        const estaEnFavoritos = favorites[idProducto];
-        const url = estaEnFavoritos ? '/api/admin/favoritos/delFavorito' : '/api/admin/favoritos/addfavorito';
 
-        fetch(url, {
+  const toggleFavorite = async (idProducto) => {
+    const estaEnFavoritos = favorites[idProducto];
+    const url = estaEnFavoritos ? '/api/admin/favoritos/delFavorito' : '/api/admin/favoritos/addfavorito';
+
+    try {
+        const response = await fetch(url, {
             method: "POST",
-            body: JSON.stringify({ idCliente: uid, IdProducto: idProducto}),
+            body: JSON.stringify({ idCliente: uid, IdProducto: idProducto }),
             headers: { "Content-Type": "application/json" },
-        })
-        .then(res => res.json())
-        .then(() => {
-          
-            setFavorites(prev => ({
-                ...prev,
-                [idProducto]: !estaEnFavoritos
-            }));
-        })
-        .catch(console.error);
-    };
+        });
+
+        if (!response.ok) {
+            throw new Error(`Error en la respuesta de la red: ${response.statusText}`);
+        }
+        setFavorites(prev => ({
+            ...prev,
+            [idProducto]: !estaEnFavoritos
+        }));
+    } catch (error) {
+        console.error('Error en la solicitud:', error);
+    }
+};
 
 
     const notify = () => toast("Producto agregado al carrito");

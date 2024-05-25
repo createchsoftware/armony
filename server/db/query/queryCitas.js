@@ -60,17 +60,17 @@ export async function citaOnline(connection, data) {
     let resultado; // Variable donde almacenaremos si se hizo correctamente
     let duracion = await duracionTotal(connection, { idServ: data.idServ }); // Calculamos la duracion total del servicio
     data.horaF = horaFinal(data.horaI, duracion[0].tiempo); // Calculamos la hora final del servicio
-    await ventaCita(connection, {
-      idCliente: data.idCliente,
-      nombre: data.nombre,
-      phone: data.phone,
-      tarjeta: data.tarjeta,
-      monedero: data.monedero,
-      estadoPago: data.estadoPago,
-      subTotal: data.subTotal,
-      total: data.total,
-      impuesto: data.impuesto,
-    }); // Ejecutamos la alta de la venta
+    // await ventaCita(connection, {
+    //   idCliente: data.idCliente,
+    //   nombre: data.nombre,
+    //   phone: data.phone,
+    //   tarjeta: data.tarjeta,
+    //   monedero: data.monedero,
+    //   estadoPago: data.estadoPago,
+    //   subTotal: data.subTotal,
+    //   total: data.total,
+    //   impuesto: data.impuesto,
+    // }); // Ejecutamos la alta de la venta
     console.log("Venta realizada correctamente");
     const getVenta = await searchVentaCita(connection, {
       idCliente: data.idCliente,

@@ -30,48 +30,82 @@ function PagoRealizado({ cerrarPago, total, next }) {
         fetchCliente();
     }, []);
 
-    useEffect(() => {
-        const realizarVenta = async () => {
+    useEffect(() => {//cuando se muestre el popup se realizara la venta y en consecuente la cita
+        //se hara de esta forma para poderlo adaptar al uso de una api para cobrar
+        const realizarVentaYCita = async () => {
             if (cliente) {
-                console.log("Cliente cargado:", cliente.Nombre);
-                setTimeout(async () => {
-                    try {
-                        const response = await fetch("/api/admin/citas/venta", {
+                try {
+                    const responseVenta = await fetch("/api/admin/citas/venta", {
+                        method: "POST",
+                        body: JSON.stringify({
+                            idCliente: cliente.ID,
+                            nombre: null,
+                            phone: null,
+                            tarjeta: localStorage.getItem('tarjeta'),
+                            monedero: 0,
+                            estadoPago: "pagada",
+                            subTotal: Number(localStorage.getItem('totalIva')),
+                            total: Number(localStorage.getItem('total')),
+                            impuesto: 18.00,
+                        }),
+                        headers: {
+                            "Content-Type": "application/json",
+                        },
+                    });
+
+                    if (!responseVenta.ok) {
+                        throw new Error('Error en la respuesta de la red');
+                    }
+
+                    const dataVenta = await responseVenta.json();
+                    console.log('Respuesta de la venta:', dataVenta);
+
+                    let citas = JSON.parse(localStorage.getItem("citas")) || [];
+
+                    for (let index = 0; index < citas.length; index++) {
+                        const responseCita = await fetch(`/api/admin/citas/Online/${cliente.ID}`, {
                             method: "POST",
                             body: JSON.stringify({
-                                "idCliente": cliente.ID,
-                                "nombre":null,
-                                "phone": null,
-                                "tarjeta":localStorage.getItem('tarjeta'),
-                                "monedero": 0,
-                                "estadoPago": "pagada",
-                                "subTotal": Number(localStorage.getItem('totalIva')),
-                                "total": Number(localStorage.getItem('total')),
-                                "impuesto": 18.00,
+                                idEmp: citas[index].IdEspecialista,
+                                idServ: citas[index].idServicio,
+                                idPilar: 2,
+                                nombre: cliente.Nombre,
+                                phone: cliente.telefono,
+                                tarjeta: localStorage.getItem('tarjeta'),
+                                fecha: citas[index].FechaServicio,
+                                horaI: citas[index].tiempoServicio,
+                                descr: "Prueba de cita fetch",
+                                estado: "pendiente",
+                                monedero: 0,
+                                estadoPago: "pagada",
+                                subTotal: Number(localStorage.getItem('totalIva')),
+                                total: Number(localStorage.getItem('total')),
+                                impuesto: 0.08,
+                                promo: null
                             }),
                             headers: {
                                 "Content-Type": "application/json",
                             },
                         });
 
-                        if (!response.ok) {
+                        if (!responseCita.ok) {
                             throw new Error('Error en la respuesta de la red');
                         }
 
-                        const data = await response.json();
-                        console.log('Respuesta de la venta:', data);
-                        setCargando(false);
-                    } catch (error) {
-                        console.error('Error en la venta:', error);
-                        setCargando(false);
+                        const dataCita = await responseCita.json();
+                        console.log('Respuesta de la cita:', dataCita);
                     }
-                }, 5000);
+
+                    setCargando(false);
+                } catch (error) {
+                    console.error('Error en la venta o en la cita:', error);
+                    setCargando(false);
+                }
             }
         };
 
-        realizarVenta();
+        realizarVentaYCita();
     }, [cliente]);
-
 
 
 

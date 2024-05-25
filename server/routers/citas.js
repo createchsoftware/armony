@@ -98,25 +98,25 @@ const messageError = "Ha ocurrido un error al procesar tu peticion: ";
 routerCitas.post("/Online/:id", async (req, res) => {
   // Datos de prueba de cita
   const datosCita = {
-    idVenta: "",
+    idVenta:"",//
     idCliente: req.params.id,
-    idEmp: 37,
-    idServ: 2,
-    idPilar: 2,
-    nombre: "Julian David Sandoval Godinez",
-    phone: "6864503452",
-    tarjeta: "5696324506590956",
-    fecha: "2024-12-17",
-    horaI: "14:00:00",
-    horaF: "",
-    descr: "Prueba de cita online No.2",
-    estado: "pendiente",
-    monedero: 0,
-    estadoPago: "pagada",
-    subTotal: 450,
-    total: 670,
-    impuesto: 0.08,
-    promo: null,
+    idEmp: req.body.idEmp,
+    idServ: req.body.idServ,
+    idPilar: req.body.idPilar,
+    nombre:req.body.nombre,
+    phone: req.body.phone,
+    tarjeta: req.body.tarjeta,
+    fecha: req.body.fecha,
+    horaI: req.body.horaI,
+    horaF: "",//
+    descr: req.body.descr,
+    estado: req.body.estado,
+    monedero: req.body.monedero,
+    estadoPago:req.body.estadoPago,
+    subTotal: req.body.subTotal,
+    total: req.body.total,
+    impuesto: req.body.impuesto,
+    promo: req.body.promo,
   };
   const resultado = await citaOnline(conexion, datosCita);
   resultado === true
