@@ -186,10 +186,10 @@ routerProductos.get("/ProductsPromo", async (req, res) => {
 
 // OBTIENE LOS SERVICIOS FAVORITOS DEL USUARIO
 // FUNCIONAL
-routerProductos.get("/serviciosFav", async (req, res) => {
+routerProductos.get("/serviciosFav/:id", async (req, res) => {
   try {
     const resultado = await serviciosFav(conexion, {
-      idCliente: req.body.idCliente,
+      idCliente: req.params.id,
     });
     res.status(202).json(resultado);
   } catch (err) {
