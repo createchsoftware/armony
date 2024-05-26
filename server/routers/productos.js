@@ -186,14 +186,12 @@ routerProductos.get("/ProductsPromo", async (req, res) => {
 
 // OBTIENE LOS SERVICIOS FAVORITOS DEL USUARIO
 // FUNCIONAL
-routerProductos.get("/serviciosFav", async (req, res) => {
+routerProductos.get("/serviciosFav/:id", async (req, res) => {
   try {
     const resultado = await serviciosFav(conexion, {
-      idCliente: req.body.idCliente,
+      idCliente: req.params.id,
     });
-    res
-      .status(200)
-      .json({ message: "Los servicios favoritos son: ", data: resultado });
+    res.status(202).json(resultado);
   } catch (err) {
     console.error("Ha ocurrido un error: ", err);
     res.status(500).send("Ha ocurrido un error al procesar tu solicitud");
@@ -261,9 +259,7 @@ routerProductos.get("/descuento", async (req, res) => {
 routerProductos.get("/servicios/descuento", async (req, res) => {
   try {
     const resultado = await serviciosDescuento(conexion);
-    res
-      .status(200)
-      .json({ message: "Servicios con descuento: ", data: resultado });
+    res.status(202).json(resultado);
   } catch (err) {
     console.error("Ha ocurrido un error: ", err);
     res.status(500).send("Ha ocurrido un error al procesar tu solicitud");

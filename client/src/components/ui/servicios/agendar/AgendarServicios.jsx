@@ -8,10 +8,7 @@ const AgendarServicios = ({ next }) => {
   const [estetica, setEstetica] = useState([]);
   const [favoritos, setFavoritos] = useState([]);
   const [descuentos, setDescuentos] = useState([]);
-
-  const toggleSoon = () => {
-    setSoon(!soon);
-  };
+  const [id, setId] = useState();
 
   async function getId() {
     let respuestaJson = null;
@@ -22,13 +19,18 @@ const AgendarServicios = ({ next }) => {
           "Content-Type": "application/json",
         },
       });
-
       respuestaJson = await respuesta.json();
-      return respuestaJson.clave;
+      setId(respuestaJson.clave);
     } catch (error) {
       console.log("Error");
     }
   }
+
+  const toggleSoon = () => {
+    setSoon(!soon);
+  };
+
+  useEffect(() => getId(), []);
 
   useEffect(() => {
     fetch("/api/admin/categoria/getServicesSpa")
@@ -69,8 +71,7 @@ const AgendarServicios = ({ next }) => {
   useEffect(() => {
     if (spa.length > 0) {
       setTimeout(() => {
-        let id = getId();
-        fetch(`/api/admin/categoria/ServiceFavoritosbyId/${id}`)
+        fetch(`/api/admin/productos/serviciosFav/${id}`)
           .then((response) => {
             if (!response.ok) {
               throw new Error("Error al obtener los servicios de Estética");
@@ -78,7 +79,7 @@ const AgendarServicios = ({ next }) => {
             return response.json();
           })
           .then((data) => {
-            setFavoritos(data);
+            setFavoritos(data[0]);
           })
           .catch((error) => {
             // setErrorEstetica(error.message);
@@ -87,9 +88,25 @@ const AgendarServicios = ({ next }) => {
     }
   }, [spa]);
 
-  {
-    /* FALTA AGREGAR CONEXION CON DESCUENTOS */
-  }
+  useEffect(() => {
+    if (spa.length > 0) {
+      setTimeout(() => {
+        fetch("/api/admin/productos/servicios/descuento")
+          .then((response) => {
+            if (!response.ok) {
+              throw new Error("Error al obtener los servicios de Estética");
+            }
+            return response.json();
+          })
+          .then((data) => {
+            setDescuentos(data[0]);
+          })
+          .catch((error) => {
+            // setErrorEstetica(error.message);
+          });
+      }, 3000);
+    }
+  }, [spa]);
 
   const [toggleState, setToggleService] = useState(1);
   const [color1, setColor1] = useState("#80B5B0");
@@ -151,16 +168,16 @@ const AgendarServicios = ({ next }) => {
           </button>
           <button
             style={{ backgroundColor: color3 }}
-            /*onClick={() => toggleService(3)}*/
-            onClick={toggleSoon}
+            onClick={() => toggleService(3)}
+            /*onClick={toggleSoon}*/
             className="font-[ABeeZee] font-bold px-10 py-1 rounded-full"
           >
             Favoritos
           </button>
           <button
             style={{ backgroundColor: color4 }}
-            /*onClick={() => toggleService(4)}*/
-            onClick={toggleSoon}
+            onClick={() => toggleService(4)}
+            /*onClick={toggleSoon}*/
             className="font-[ABeeZee] font-bold px-10 py-1 mx-3 rounded-full"
           >
             Descuentos

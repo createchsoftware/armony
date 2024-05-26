@@ -23,13 +23,15 @@ const TarjetaDeServicio = ({ servicio, next }) => {
   const [seleccionado, setSeleccionado] = useState(false);
 
   function hr(hr) {
-    let h = hr.charAt(1);
-    if (h[0] == "0") {
-      return hr + " min.";
-    } else if (h[0] == "1") {
-      return hr + " hr.";
-    } else {
-      return hr + " hrs.";
+    if (hr != undefined) {
+      let h = hr.charAt(1);
+      if (h[0] == "0") {
+        return hr + " min.";
+      } else if (h[0] == "1") {
+        return hr + " hr.";
+      } else {
+        return hr + " hrs.";
+      }
     }
   }
 

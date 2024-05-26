@@ -246,7 +246,7 @@ const InformacionBasica = () => {
             <div className="relative w-[8rem] h-[8rem] lg:w-[11rem] lg:h-[11rem] left-[5.75rem] top-[6rem] md:left-[0.25rem] md:top-[10rem] -mt-20 grid place-items-center rounded-full bg-white bg-clip-border ring-2 ring-gray-400">
               <img src={user1} alt="" className="logo2 absolute h-full" />
               <div className="absolute w-[2.5rem] h-[2.5rem] lg:w-[3rem] lg:h-[3rem] bg-white rounded-full place-self-end ring-2 ring-gray-500">
-                <img id="photo" src={camara} alt="" />
+                <input type="file" id="imagen"/>
               </div>
             </div>
           </div>
