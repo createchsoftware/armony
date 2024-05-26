@@ -1,89 +1,128 @@
+let imagen = document.getElementById('imagen');
+
+var file;
+imagen.addEventListener('change',(evento)=>{
+    file = evento.target.files[0];
+})
+
+
+let nombre = document.getElementById('nombre');
+let paterno = document.getElementById('paterno');
+let materno = document.getElementById('materno');
+let correo = document.getElementById('correo');
+let telefono = document.getElementById('telefono');
+    
+//direccion
+let calle = document.getElementById('calle');
+let colonia = document.getElementById('colonia');
+let codigoP = document.getElementById('codigoP');
+let numero = document.getElementById('numero');
+
+//fecha
+let dia =  document.getElementById('dia');
+let mes =  document.getElementById('mes');
+let año =  document.getElementById('año');
+
+
+
+
+nombre.addEventListener('input',()=>{if(nombre.value.length > 0) nombre.style.borderColor='#ccc';});
+paterno.addEventListener('input',()=>{if(paterno.value.length > 0) paterno.style.borderColor='#ccc';});
+materno.addEventListener('input',()=>{if(materno.value.length > 0) materno.style.borderColor='#ccc';});
+correo.addEventListener('input',()=>{if(correo.value.length > 0) correo.style.borderColor='#ccc';});
+telefono.addEventListener('input',()=>{if(telefono.value.length > 0) telefono.style.borderColor='#ccc';});
+calle.addEventListener('input',()=>{if(calle.value.length > 0) calle.style.borderColor='#ccc';});
+colonia.addEventListener('input',()=>{if(colonia.value.length > 0) colonia.style.borderColor='#ccc';});
+codigoP.addEventListener('input',()=>{if(postal.value.length > 0) postal.style.borderColor='#ccc';});
+numero.addEventListener('input',()=>{if(numero.value.length > 0) numero.style.borderColor='#ccc';});
+dia.addEventListener('input',()=>{if(dia.value.length > 0) dia.style.borderColor='#ccc';});
+mes.addEventListener('input',()=>{if(mes.value.length > 0) mes.style.borderColor='#ccc';});
+año.addEventListener('input',()=>{if(año.value.length > 0) año.style.borderColor='#ccc';});
+
+
+
 document.getElementById('guardar').addEventListener('click', async()=>{
 
-    console.log("me hicieron un click");
+    let cantidad = 0;
+    let formData = new FormData();
 
-    let regex_vacio = /(^\s*|\s*^)/;
+    console.log('hasta aqui');
 
-    //datos del usuario
-    let nombre = document.getElementById('nombre');
-    let paterno = document.getElementById('paterno');
-    let materno = document.getElementById('materno');
-    let correo = document.getElementById('correo');
-    let telefono = document.getElementById('telefono');
-    
-
-    //direccion
-    let calle = document.getElementById('calle');
-    let colonia = document.getElementById('colonia');
-    let codigoP = document.getElementById('codigoP');
-    let numero = document.getElementById('numero');
-
-    //fecha
-    let dia =  document.getElementById('dia');
-    let mes =  document.getElementById('mes');
-    let año =  document.getElementById('año');
-
-    let campos_a_modificar = [];
-
-    if(nombre.value && nombre.value !='' && regex_vacio.test(nombre.value) == false){
-        campos_a_modificar.push([nombre.value,nombre.id]);
+    if(nombre.value && nombre.value !=''){
+        formData.append('nombre_id',nombre.id); formData.append('nombre',nombre.value);
+        cantidad++;
     }
         
-    if(paterno.value && paterno.value !='' && regex_vacio.test(paterno.value) == false){
-        campos_a_modificar.push([paterno.value,paterno.id]);
+    if(paterno.value && paterno.value !=''){
+        formData.append('paterno_id',paterno.id); formData.append('paterno',paterno.value);
+        cantidad++;
     }
         
-    if(materno.value && materno.value !='' && regex_vacio.test(materno.value) == false){
-        campos_a_modificar.push([materno.value,materno.id]);
+    if(materno.value && materno.value !=''){
+        formData.append('materno_id',materno.id); formData.append('materno',materno.value);
+        cantidad++;
     }
         
-    if(correo.value && correo.value!='' && regex_vacio.test(correo.value) == false){
-        campos_a_modificar.push([correo.value,correo.id]);
+    if(correo.value && correo.value!=''){
+        formData.append('correo_id',correo.id); formData.append('correo',correo.value);
+        cantidad++;
     }
         
-    if(telefono.value && telefono.value!='' && regex_vacio.test(telefono.value) == false){
-        campos_a_modificar.push([telefono.value,telefono.id]);
+    if(telefono.value && telefono.value!=''){
+        formData.append('telefono_id',telefono.id); formData.append('telefono',telefono.value);
+        cantidad++;
     }
         
 
 
     //direccion
-    if(calle.value && calle.value !='' && regex_vacio.test(calle.value) == false){
-        campos_a_modificar.push([calle.value,calle.id]);
+    if(calle.value && calle.value !=''){
+        formData.append('calle_id',calle.id); formData.append('calle',calle.value);
+        cantidad++;
     }
         
-    if(colonia.value && colonia.value !='' &&  regex_vacio.test(colonia.value) == false){
-        campos_a_modificar.push([colonia.value,colonia.id]);
+    if(colonia.value && colonia.value !=''){
+        formData.append('colonia_id',colonia.id); formData.append('colonia',colonia.value);
+        cantidad++;
     }
         
-    if(codigoP.value && codigoP.value !='' &&  regex_vacio.test(codigoP.value) == false){
-        campos_a_modificar.push([codigoP.value,codigoP.id]);
+    if(codigoP.value && codigoP.value !=''){
+        formData.append('codigo_postal_id',codigoP.id); formData.append('codigo_postal',codigoP.value);
+        cantidad++;
     }
         
-    if(numero.value && numero.value !=''  &&  regex_vacio.test(numero.value) == false){
-        campos_a_modificar.push([numero.value,numero.id]);
+    if(numero.value && numero.value !=''){
+        formData.append('numero_id',numero.id); formData.append('numero',numero.value);
+        cantidad++;
     }
         
 
     //fecha
-    if(dia.value && dia.value !='' && regex_vacio.test(dia.value) == false){
-        campos_a_modificar.push([dia.value,dia.id]);
+    if(dia.value && dia.value !=''){
+        formData.append('dia_id',dia.id); formData.append('dia',dia.value);
+        cantidad++;
     }
        
-    if(mes.value && mes.value !=''  &&  regex_vacio.test(mes.value) == false){
-        campos_a_modificar.push([mes.value,mes.id]);
+    if(mes.value && mes.value !=''){
+        formData.append('mes_id',mes.id); formData.append('mes',mes.value);
+        cantidad++;
     }
      
-    if(año.value && año.value !=''  &&  regex_vacio.test(año.value) == false){
-        campos_a_modificar.push([año.value,año.id]);
+    if(año.value && año.value !=''){
+        formData.append('año_id',año.id); formData.append('año',año.value);
+        cantidad++;
+    }
+
+    if(file){
+        formData.append('image', file);
+        cantidad++;
     }
         
 
 
 
-    if(campos_a_modificar.length == 0){
+    if(cantidad == 0){
         //no hace ninguna modificacion
-        console.log("no modificaste ningun dato");
         nombre.value=''; paterno.value=''; materno.value=''; correo.value=''; telefono.value='';
         calle.value=''; colonia.value=''; codigoP.value=''; numero.value='';
         dia.value='';  mes.value='';  año.value='';
@@ -93,28 +132,9 @@ document.getElementById('guardar').addEventListener('click', async()=>{
 
         console.log("los datos en un momento seran modificados");
 
-
-        let cuerpo = {
-            cantidad:campos_a_modificar.length
-        }
-
-
-        for(let i=0;i<campos_a_modificar.length;i++){
-
-            let llave = `${campos_a_modificar[i][1]}`;
-            cuerpo[llave] =[campos_a_modificar[i][0],campos_a_modificar[i][1]];
-        }
-
-
-        console.log(cuerpo);
-        
         const respuesta = await fetch("/api/editarPerfil",{
                 method:"POST",
-                headers:{
-                    "Content-Type":"application/json",
-                },
-                body:JSON.stringify(cuerpo)
-
+                body:formData
         })
 
         if(!respuesta.ok)
@@ -125,18 +145,59 @@ document.getElementById('guardar').addEventListener('click', async()=>{
 
 
         if(respuestaJson.incorrectos){
-            let arreglo = respuestaJson.incorrectos
+
+            let toastBox = document.getElementById('toastBox');
+            let arreglo = respuestaJson.incorrectos;
+
             for(indice in arreglo){
-            let temporal = document.getElementById(arreglo[indice])
-            temporal.placeholder = "llenaste incorrectamente este campo";
-            temporal.style.backgroundColor = 'yellow';
+                let temporal = document.getElementById(arreglo[indice][0])
+                temporal.style.borderColor = 'red';
+
+
+                if(arreglo[indice][0] != 'dia' && arreglo[indice][0] != 'mes'){
+
+                    let div = document.createElement('div');
+                    div.classList.add('toast');
+    
+                    if(arreglo[indice][0] == 'año'){
+                        div.innerHTML = 'Su fecha de nacimiento no es correcta <i class="fa-solid fa-circle-xmark"></i>';   
+                    }
+                    else{
+                        div.innerHTML = '<div id="texto">'+arreglo[indice][1]+'</div>   <div id="icono"><i class="fa-solid fa-circle-xmark"></i></div>';        
+                    }
+    
+                    toastBox.appendChild(div);
+                    setTimeout(()=>{
+                    div.remove();
+                    },6000)
+                }
             }
+
+            return;
         }
 
 
-        if(respuestaJson.correo_existente){
-            correo.placeholder = "El correo que quieres ingresar no es valido";
-            correo.style.backgroundColor = 'yellow';
+        if(respuestaJson.repetidos){
+            let a = respuestaJson.repetidos;
+            let toastBox = document.getElementById('toastBox');
+
+            for(let i in a){
+                let temporal = document.getElementById(a[i][0]);
+                temporal.value='';
+                temporal.style.borderColor='#34495E';
+
+                let div = document.createElement('div');
+                div.classList.add('toast');
+                div.innerHTML ='<div id="texto">'+ a[i][1]+'</div> <div id="icono"> <i class="fa-solid fa-user"></i> </div>';
+                div.classList.add('blue');
+                toastBox.appendChild(div);
+                setTimeout(()=>{
+                    div.remove();
+                },6000);
+            }
+
+            return;
+
         }
 
         if(respuestaJson.redirect){

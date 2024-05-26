@@ -3,10 +3,28 @@ import { servidor } from "./data/datos.js";
 import cookieParser from "cookie-parser";
 import https from "https";
 import * as fs from "fs";
+import multer from 'multer';
+
 
 import path, { dirname } from "path";
 import { fileURLToPath } from "url";
 const _dirname = path.dirname(fileURLToPath(import.meta.url));
+
+const storage = multer.diskStorage({
+  destination:(solicitud,file,cb)=>{
+    cb(null,path.join(_dirname, "../client/public/pictures/avatares"))
+  },
+  filename:(solicitud,file,cb)=>{
+    const ext = file.originalname.split('.').pop();
+    cb(null, `${Date.now()}.${ext}`);
+  }
+})
+
+const upload = multer({storage:storage}); // le estamos diciendo que nos asigne todas las funciones del storage
+
+
+
+
 
 import { methods as authentication } from "./controllers/authentication.controllers.js";
 import { methods as authorization } from "./middlewares/authorization.js";
@@ -32,6 +50,7 @@ app.use((req, res, next) => {
   req.database = conexion;
   next();
 });
+
 
 //app.use(express.static(path.join(__dirname, '../client/img')));
 
@@ -89,7 +108,7 @@ app.get("/api/logueado", authorization.verificar_cookie);
 
 app.get("/api/logout", authentication.logout);
 
-app.post("/api/step1", createAccount.paso1);
+app.post("/api/step1",upload.single('image'), createAccount.paso1);
 
 app.post("/api/step2", createAccount.paso2);
 
@@ -109,7 +128,7 @@ app.get("/recuperacion/confirmacion", confirmacion);
 
 app.post("/api/deleteCard", perfil.deleteTarjeta);
 
-app.post("/api/editarPerfil", editarPerfil.change_data);
+app.post("/api/editarPerfil",upload.single('image'), editarPerfil.change_data);
 
 app.post("/api/tarjeta-nueva", perfil.InsertarTarjeta);
 

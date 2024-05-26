@@ -8,8 +8,55 @@ import Ofertas from '../../components/ui/Ofertas';
 import { useState, useEffect } from 'react';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import PopupLogin from "../ui/Login/PopupLogin";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { ArrowProps } from 'react-multi-carousel/lib/types'
+import { faDiamond, faAngleLeft, faAngleRight } from '@fortawesome/free-solid-svg-icons';
 
 function Productos() {
+    // const [log, setLog] = useState(false);
+    // const [login, setLogin] = useState(false);
+
+    // let respuestaJson = null;
+    // async function checkLogin() {
+    //     try {
+    //         const respuesta = await fetch("/api/logueado", {
+    //             method: "GET",
+    //             headers: {
+    //                 "Content-Type": "application/json",
+    //             },
+    //         });
+
+    //         respuestaJson = await respuesta.json();
+
+    //         if (respuestaJson.logueado == true) {
+    //             setLog(true);
+    //         } else {
+    //             setLog(false);
+    //         }
+    //     } catch (error) {
+    //         setLog(false);
+    //     }
+    // }
+
+    // const toggleLoginPopup = () => {
+    //     setLogin(!login);
+    // };
+
+    // const handleClickCarrito = () => {
+    //     if (log) {
+    //         return true;
+    //     } else {
+    //         toggleLoginPopup();
+    //         return false;
+    //     }
+    // };
+
+
+    // useEffect(() => {
+    //     checkLogin();
+    // }, []);
+
 
     const [descuentos, setDescuentos] = useState([]);
 
@@ -63,7 +110,7 @@ function Productos() {
                         responsive={{
                             desktop: {
                                 breakpoint: {
-                                    max: 3000,
+                                    max: 4000,
                                     min: 1024
                                 },
                                 items: 4,
@@ -94,10 +141,21 @@ function Productos() {
                         sliderclassName=""
                         slidesToSlide={1}
                         swipeable
+                        customLeftArrow={<FontAwesomeIcon
+                            icon={faAngleLeft}
+                            size="lg"
+                            className="absolute cursor-pointer top-1/2 transform -translate-y-1/2 -left-8 text-3xl text-primary-900 aspect-square bg-[#e6e6e6] rounded-full text-[#036C65] p-4 hover:opacity-90 overflow-visible z-50"
+                        />}
+                        customRightArrow={<FontAwesomeIcon
+                            size="lg"
+                            icon={faAngleRight}
+                            className="absolute cursor-pointer top-1/2 transform -translate-y-1/2 -right-8 text-3xl text-primary-900 bg-[#e6e6e6] rounded-full aspect-square text-[#036C65] p-4 hover:opacity-90 overflow-visible z-50"
+                        />}
                     // className=''
                     >
                         {descuentos.map(oferta => (
                             <Ofertas key={oferta.id} producto={oferta} />
+                            // <Ofertas key={oferta.id} producto={oferta} handleClickCarrito={handleClickCarrito} />
                         ))}
 
                     </Carousel>
@@ -109,6 +167,7 @@ function Productos() {
                 </a>
             </div>
             <ToastContainer position={'bottom-right'} theme={'light'} />
+            {/* {login && <PopupLogin cerrar={toggleLoginPopup} />} */}
         </>
     );
 }

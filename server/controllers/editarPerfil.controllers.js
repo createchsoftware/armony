@@ -5,18 +5,20 @@ import {methods as servicios} from "../services/mail.service.js";
 import mysql from "mysql2";
 
 
-const regex_email = /^([-!#-'*+/-9=?A-Z^-~]+(\.[-!#-'*+/-9=?A-Z^-~]+)*|"([]!#-[^-~ \t]|(\\[\t -~]))+")@([0-9A-Za-z]([0-9A-Za-z-]{0,61}[0-9A-Za-z])?(\.[0-9A-Za-z]([0-9A-Za-z-]{0,61}[0-9A-Za-z])?)*|\[((25[0-5]|2[0-4][0-9]|1[0-9]{2}|[1-9]?[0-9])(\.(25[0-5]|2[0-4][0-9]|1[0-9]{2}|[1-9]?[0-9])){3}|IPv6:((((0|[1-9A-Fa-f][0-9A-Fa-f]{0,3}):){6}|::((0|[1-9A-Fa-f][0-9A-Fa-f]{0,3}):){5}|[0-9A-Fa-f]{0,4}::((0|[1-9A-Fa-f][0-9A-Fa-f]{0,3}):){4}|(((0|[1-9A-Fa-f][0-9A-Fa-f]{0,3}):)?(0|[1-9A-Fa-f][0-9A-Fa-f]{0,3}))?::((0|[1-9A-Fa-f][0-9A-Fa-f]{0,3}):){3}|(((0|[1-9A-Fa-f][0-9A-Fa-f]{0,3}):){0,2}(0|[1-9A-Fa-f][0-9A-Fa-f]{0,3}))?::((0|[1-9A-Fa-f][0-9A-Fa-f]{0,3}):){2}|(((0|[1-9A-Fa-f][0-9A-Fa-f]{0,3}):){0,3}(0|[1-9A-Fa-f][0-9A-Fa-f]{0,3}))?::(0|[1-9A-Fa-f][0-9A-Fa-f]{0,3}):|(((0|[1-9A-Fa-f][0-9A-Fa-f]{0,3}):){0,4}(0|[1-9A-Fa-f][0-9A-Fa-f]{0,3}))?::)((0|[1-9A-Fa-f][0-9A-Fa-f]{0,3}):(0|[1-9A-Fa-f][0-9A-Fa-f]{0,3})|(25[0-5]|2[0-4][0-9]|1[0-9]{2}|[1-9]?[0-9])(\.(25[0-5]|2[0-4][0-9]|1[0-9]{2}|[1-9]?[0-9])){3})|(((0|[1-9A-Fa-f][0-9A-Fa-f]{0,3}):){0,5}(0|[1-9A-Fa-f][0-9A-Fa-f]{0,3}))?::(0|[1-9A-Fa-f][0-9A-Fa-f]{0,3})|(((0|[1-9A-Fa-f][0-9A-Fa-f]{0,3}):){0,6}(0|[1-9A-Fa-f][0-9A-Fa-f]{0,3}))?::)|(?!IPv6:)[0-9A-Za-z-]*[0-9A-Za-z]:[!-Z^-~]+)])$/;
-const regex_lada = /\d{2}/;
-const regex_telefono =/^\d{7}$/;
+const regex_email = /^\S+@(gmail\.com|hotmail\.com|outlook\.com|icloud.com|itmexicali\.edu\.mx|bc\.conalep\.edu\.mx|cecytebc\.edu\.mx|miprepacetis(75|18)\.mx|cobachbc\.edu\.mx|)$/;
+const regex_telefono =/^\+?\d{1,2}(-?| )(\d{9,10}|\d{2,3} \d{7}|\d{2,3} \d{3} \d{4}|\d{2,3}-\d{7}|\d{2,3}-\d{3}-\d{4})$/;
 const regex_n_a = /^[a-zA-Zá-úñ]{3,17}$/;
+const regex_postal = /^\d{5}$/;
 
 
 async function change_data(solicitud,respuesta){
 
+    console.log('se ejecuto el controller del back');
+
 
     if(solicitud.headers.cookie == undefined){
         //el usuario ya no esta logueado
-        respuesta.send({logueado:false});
+        respuesta.send({redirect:'/'});
     }
     else{
         //verificar que la cookie naruto sea la que exista
@@ -32,7 +34,7 @@ async function change_data(solicitud,respuesta){
 
             let C_L = decodificada.user;
 
-            let cuerpo = solicitud.body; //cuerpo es un objeto
+            let cuerpo = solicitud.body; //cuerpo es el objeto que contiene formData
 
             let campos_incorrectos = [];
         
@@ -41,89 +43,100 @@ async function change_data(solicitud,respuesta){
             let consulta = "update usuario set ";
 
             let buzon = '';
+            let sms = '';
         
         
             //datos del usuario
         
             if(cuerpo['nombre']){
-                if(!regex_n_a.test(cuerpo['nombre'][0]))
-                    campos_incorrectos.push(cuerpo['nombre'][1]);
+                if(!regex_n_a.test(cuerpo['nombre']))
+                    campos_incorrectos.push([cuerpo['nombre_id'],'tu nombre no es valido']);
                 else{
                     consulta+="nombre = ?,";
-                    paramteros.push(cuerpo['nombre'][0]);
+                    paramteros.push(cuerpo['nombre']);
                 }
             }
         
             if(cuerpo['paterno']){
-                if(!regex_n_a.test(cuerpo['paterno'][0]))
-                    campos_incorrectos.push(cuerpo['paterno'][1]);
+                if(!regex_n_a.test(cuerpo['paterno']))
+                    campos_incorrectos.push([cuerpo['paterno_id'],'tu apellido paterno no es valido']);
                 else{
                     consulta+="apellidoP = ?,";
-                    paramteros.push(cuerpo['paterno'][0]);
+                    paramteros.push(cuerpo['paterno']);
                 }
             }
         
             if(cuerpo['materno']){
-                if(!regex_n_a.test(cuerpo['materno'][0]))
-                    campos_incorrectos.push(cuerpo['materno'][1]);
+                if(!regex_n_a.test(cuerpo['materno']))
+                    campos_incorrectos.push([cuerpo['materno_id'],'tu apellido materno no es valido']);
                 else{
                     consulta+="apellidoM = ?,";
-                    paramteros.push(cuerpo['materno'][0]);
+                    paramteros.push(cuerpo['materno']);
                 }
             }
         
             if(cuerpo['correo']){
-                if(!regex_email.test(cuerpo['correo'][0]))
-                    campos_incorrectos.push(cuerpo['correo'][1]);
+                if(!regex_email.test(cuerpo['correo']))
+                    campos_incorrectos.push([cuerpo['correo_id'],'tu correo no es un correo valido']);
                 else{
                     consulta+="email= ?,";
-                    buzon = cuerpo['correo'][0];
-                    paramteros.push(cuerpo['correo'][0]);
+                    buzon = cuerpo['correo'];
+                    paramteros.push(cuerpo['correo']);
                 }
             }
         
             if(cuerpo['telefono']){
-                if(!regex_telefono.test(cuerpo['telefono'][0]))
-                    campos_incorrectos.push(cuerpo['telefono'][1]);
+                let phone = cuerpo['telefono'];
+
+                if(!regex_telefono.test(phone))
+                    campos_incorrectos.push([cuerpo['telefono_id'],'tu telefono no es un telefono valido']);
                 else{
                     consulta+="telefono= ?,";
-                    paramteros.push(cuerpo['telefono'][0]);
+                    phone = phone.replace('\+','');
+                    phone = phone.replace(/-/g,'');
+                    phone = phone.replace(/ /g,'');
+
+                    sms = phone;
+                    paramteros.push(phone);
                 }
             }
 
-            if(cuerpo['imagen']){
+
+            let imagen = solicitud.file;
+
+            if(imagen != undefined){
                 consulta+="img= ?,";
-                paramteros.push(cuerpo['imagen'][0]);
+                paramteros.push(imagen.filename);
             }
         
         
             //direccion
             if(cuerpo['numero']){
-                if(cuerpo['numero'][0].length > 4)
-                    campos_incorrectos.push(cuerpo['numero'][1]);
+                if(cuerpo['numero'].length > 4)
+                    campos_incorrectos.push([cuerpo['numero_id'],'el numero de tu casa es incorrecto']);
                 else{
                     consulta+="numero= ?,";
-                    paramteros.push(cuerpo['numero'][0]);
+                    paramteros.push(cuerpo['numero']);
                 }
             }
         
-            if(cuerpo['codigoP']){
-                if(cuerpo['codigoP'][0].length > 5)
-                    campos_incorrectos.push(cuerpo['codigoP'][1]);
+            if(cuerpo['codigo_postal']){
+                if(!regex_postal.test(cuerpo['codigo_postal']))
+                    campos_incorrectos.push([cuerpo['codigo_postal_id'],'tu codigo postal debe tener 5 digitos']);
                 else{
                     consulta+="codigoPostal = ?,";
-                    paramteros.push(cuerpo['codigoP'][0]);
+                    paramteros.push(cuerpo['codigo_postal']);
                 }
             }
 
             if(cuerpo['calle']){
                 consulta+="calle= ?,";
-                paramteros.push(cuerpo['calle'][0]);
+                paramteros.push(cuerpo['calle']);
             }
 
             if(cuerpo['colonia']){
                 consulta+="colonia= ?,";
-                paramteros.push(cuerpo['colonia'][0]);
+                paramteros.push(cuerpo['colonia']);
             }
 
 
@@ -137,29 +150,24 @@ async function change_data(solicitud,respuesta){
                     let dia = cuerpo['dia'];
                     let año = cuerpo['año'];
 
-                    let fecha = new Date(`${mes[0]}/${dia[0]}/${año[0]}`);
+                    let fecha = new Date(`${mes}/${dia}/${año}`);
 
                     if(isNaN(fecha.getTime())){
-
-                        console.log("NAAAAAANNNNN");
-
-                        campos_incorrectos.push(dia[1]);
-                        campos_incorrectos.push(mes[1]);
-                        campos_incorrectos.push(año[1]);
+                        campos_incorrectos.push(['dia','']);
+                        campos_incorrectos.push(['mes','']);
+                        campos_incorrectos.push(['año','']);
                     }
                     else{
-                        let newStringFecha = `${año[0]}-${mes[0]}-${dia[0]}`;
+                        let newStringFecha = `${año}-${mes}-${dia}`;
                         consulta+="fechaNac = ?,"
                         paramteros.push(newStringFecha);
                     }
                 }
                 else{
                     if(cuerpo['mes'] || cuerpo['dia'] || cuerpo['año']){
-
-                        console.log("debes de llenar todos los campos");
-                        campos_incorrectos.push("dia");  // el id del input
-                        campos_incorrectos.push("mes");  // el id del input
-                        campos_incorrectos.push("año");  // el id del input
+                        campos_incorrectos.push(["dia",'']);  // el id del input
+                        campos_incorrectos.push(["mes",'']);  // el id del input
+                        campos_incorrectos.push(["año",'']);  // el id del input
                     }
                     //si no se cumplio el if de arriba es porque simplemente no se hizo una modificacion
 
@@ -167,12 +175,9 @@ async function change_data(solicitud,respuesta){
                 
                 
             }catch(error){
-
-
-                console.log("errrrrorrrr");
-                campos_incorrectos.push("dia");  // el id del input
-                campos_incorrectos.push("mes");  // el id del input
-                campos_incorrectos.push("año");  // el id del input
+                campos_incorrectos.push(["dia",'']);  // el id del input
+                campos_incorrectos.push(["mes",'']);  // el id del input
+                campos_incorrectos.push(["año",'']);  // el id del input
             }
 
             
@@ -182,31 +187,29 @@ async function change_data(solicitud,respuesta){
                 respuesta.send({incorrectos:campos_incorrectos});
             }
             else{
-
                 // significa que no hubo campos incorrectos
+                let repetidos = [];
 
-                let consult = "select nombre from usuario where email = ?"
                 //verificar que el correo no este repetido
+                let consult = "select pkIdUsuario from usuario where email = ?"
+                let [fields] = await solicitud.database.query(mysql.format(consult,[buzon]));
 
 
-                console.log("pasaste la etapa de datos incorrectos");
-                console.log("buzon");
-                let insercion_exitosa = new Promise(async (resolve, reject) => {
-                    await solicitud.database.query(mysql.format(consult, buzon))
-                        if(resultados.length > 0){
-                            console.log("al parecer si hubo una coincidencia");
-                            resolve(false);
-                        }
-                        else{
-                            console.log("perfecto, no hubo coincidencias")
-                            resolve(true);  // lo correcto es que no haya coincidencias, osea que la longitud debe ser 0
-                        }
-                      
-                });
+                //verificar que el telefono no este repetido
+                let consult_tel = "select pkIdUsuario from usuario where telefono = ?"
+                let [fields_tel] = await solicitud.database.query(mysql.format(consult_tel,[sms]));
 
-                let primer_resultado_mysql = await insercion_exitosa
 
-                if( primer_resultado_mysql == true){
+                if(fields.length > 0){
+                    repetidos.push([cuerpo['correo_id'],' ya existe una cuenta con tu correo']);
+                }
+
+                if(fields_tel.length > 0){
+                    repetidos.push([cuerpo['telefono_id'],' ya existe una cuenta con tu numero telefonico']);
+                }
+
+
+                if(repetidos.length == 0){
 
                     consulta = consulta.slice(0, -1); // cortamos el ultimo ,
                     consulta+= ' where pkIdUsuario = ?';
@@ -301,7 +304,7 @@ async function change_data(solicitud,respuesta){
 
                 }
                 else{
-                    respuesta.send({correo_existente:true})
+                    return respuesta.send({repetidos:repetidos});
                 }
                 
         
@@ -311,7 +314,7 @@ async function change_data(solicitud,respuesta){
         }
         else{
             //algo paso, el usuario ya no esta logueado, por lo que todo se cancela
-            respuesta.send({logueado:false});
+            respuesta.send({redirect:'/'});
         }
     }
 

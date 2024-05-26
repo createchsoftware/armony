@@ -3,6 +3,7 @@ import JsonWebToken from 'jsonwebtoken';
 import dotenv from 'dotenv';
 import {methods as servicios} from "../services/mail.service.js";
 import mysql from "mysql2";
+import fs from 'fs';
 
 const regex_email = /^\S+@(gmail\.com|hotmail\.com|outlook\.com|icloud.com|itmexicali\.edu\.mx|bc\.conalep\.edu\.mx|cecytebc\.edu\.mx|miprepacetis(75|18)\.mx|cobachbc\.edu\.mx|)$/;
 const regex_nombres = /[a-zA-Zá-úñ]{3,11}/;
@@ -18,94 +19,178 @@ const regex_numero = /^\S{1,10}$/;
 // INFORMACION BASICA
 async function paso1(solicitud,respuesta){
 
-      let galletas = solicitud.headers.cookie.split('; ');
-      let galleta = galletas.find(galleta => galleta.startsWith('Naruto_cookie='));
+      if(solicitud.headers.cookie != undefined){
+
+        let galletas = solicitud.headers.cookie.split('; ');
+        let galleta_login = galletas.find(galleta => galleta.startsWith('Naruto_cookie='));
+
+        if(galleta_login){
+          return respuesta.send({redirect:'/'});
+        }
+        
+
+        let galleta_correspondiente = galletas.find(galleta => galleta.startsWith('Megumin_cookie='));
+        if(galleta_correspondiente){
+          //vamos a decodificar la galleta
+          galleta_correspondiente = galleta_correspondiente.slice(15);
 
 
-      if(galleta){
-        return respuesta.send({no_puede:true});
-        console.log('usuario logueado');
+          let decodificada = await JsonWebToken.verify(galleta_correspondiente,process.env.JWT_SECRET);
+
+          eliminar(decodificada.imagen); // esto nos eliminar una imagen si es diferente de undefined
+
+          let l = solicitud.body.lada;
+          let t = solicitud.body.telefono;
+
+          if(l!= undefined && t!= undefined){
+              t = t.replace(/-/g,'');
+              t = t.replace(/ /g,'');
+              l = l.replace('\+','');
+
+              let comparador = {
+                nombre:solicitud.body.nombre,
+                apodo:'Itsuki',
+                paterno:solicitud.body.paterno,
+                materno:solicitud.body.materno,
+                correo:solicitud.body.correo,
+                lada:l,
+                telefono:t,
+                imagen:solicitud.file,
+                calle:solicitud.body.calle,
+                colonia:solicitud.body.colonia,
+                numero:solicitud.body.numero,
+                codigo_postal:solicitud.body.codigo_postal,
+                dia:solicitud.body.dia,
+                mes:solicitud.body.mes,
+                año:solicitud.body.year
+              }
+
+              //ahora comparamos lo que el usuario tiene vs lo que se habia guardado anteriormente
+              if(JSON.stringify(comparador) == JSON.stringify(decodificada)){
+                console.log('los datos no se cambiaron con respecto a la ultima vez');
+                return respuesta.send({redirect:'/spa/signUp/Patologia'});
+              }
+            
+          }
+          // si llegamos hasta aqui, es porque si existe la galleta correspondiente, pero los datos han sido cambiados
+          respuesta.clearCookie('Megumin_cookie', { path: '/' });
+          
+
+        }
+        
+
       }
-      else{
-       // el usuario esta logueado y debemos de sacarlo
-       // INICIO 1 RECIBIR LOS DATOS QUE EL USUARIO LLENO EN EL FORMULARIO DESDE EL CLIENT
-  
-        let nombre = solicitud.body.nombre;
-        let paterno = solicitud.body.paterno;
-        let materno = solicitud.body.materno;
-        let correo = solicitud.body.correo;
-        let lada = solicitud.body.lada;
-        let telefono = solicitud.body.telefono;
-        let dia = solicitud.body.dia;
-        let mes = solicitud.body.mes;
-        let año = solicitud.body.año;
-        let imagen = solicitud.body.imagen;
-        let calle = solicitud.body.calle;
-        let colonia = solicitud.body.colonia;
-        let numero = solicitud.body.numero;
-        let codigo_postal = solicitud.body.codigo_postal;
-        let apodo = ['Itsuki','apodo'];
 
-        // FIN 1
+
+
+      
+      //  el usuario esta logueado y debemos de sacarlo
+      //  INICIO 1 RECIBIR LOS DATOS QUE EL USUARIO LLENO EN EL FORMULARIO DESDE EL CLIENT
+  
+        let nombre_id = solicitud.body.nombre_id
+        let nombre = solicitud.body.nombre;
+
+        let paterno_id = solicitud.body.paterno_id;
+        let paterno = solicitud.body.paterno;
+
+        let materno_id = solicitud.body.materno_id;
+        let materno = solicitud.body.materno;
+
+        let correo_id = solicitud.body.correo_id;
+        let correo = solicitud.body.correo;
+
+        let lada_id = solicitud.body.lada_id;
+        let lada = solicitud.body.lada;
+
+        let telefono_id = solicitud.body.telefono_id;
+        let telefono = solicitud.body.telefono;
+
+        let dia_id = solicitud.body.dia_id;
+        let dia = solicitud.body.dia;
+
+        let mes_id = solicitud.body.mes_id;
+        let mes = solicitud.body.mes;
+
+        let año_id = solicitud.body.year_id;
+        let año = solicitud.body.year;
+
+        let imagen = solicitud.file;
+
+        let calle_id = solicitud.body.calle_id;
+        let calle = solicitud.body.calle;
+
+        let colonia_id = solicitud.body.colonia_id;
+        let colonia = solicitud.body.colonia;
+
+        let numero_id = solicitud.body.numero_id;
+        let numero = solicitud.body.numero;
+
+        let codigo_postal_id = solicitud.body.codigo_postal_id;
+        let codigo_postal = solicitud.body.codigo_postal;
+
+        let apodo_id = 'apodo';
+        let apodo = 'Itsuki';
+
+        //FIN 1
       
       
         // INICIO 2  CREAR UN ARREGLO QUE ALMACENARA CAMPOS SIN CONTESTAR
         let campos_faltantes = [];
 
-        if(!nombre[0]){
-          campos_faltantes.push([nombre[1],'tu nombre']);
+        if(!nombre){
+          campos_faltantes.push([nombre_id,'tu nombre']);
         }
           
-        if(!apodo[0]){
-          campos_faltantes.push(apodo[1]);
+        if(!apodo){
+          campos_faltantes.push(apodo_id,'tu apodo');
         }
           
-        if(!paterno[0]){
-          campos_faltantes.push([paterno[1],'tu apellido paterno']);
+        if(!paterno){
+          campos_faltantes.push([paterno_id,'tu apellido paterno']);
         }
           
-        if(!materno[0]){
-          campos_faltantes.push([materno[1],'tu apellido materno']);
+        if(!materno){
+          campos_faltantes.push([materno_id,'tu apellido materno']);
         }
           
-        if(!correo[0]){
-          campos_faltantes.push([correo[1],'tu correo']);
+        if(!correo){
+          campos_faltantes.push([correo_id,'tu correo']);
         }
           
-        if(!lada[0]){
-          campos_faltantes.push([lada[1],'la lada de tu pais']);
+        if(!lada){
+          campos_faltantes.push([lada_id,'la lada de tu pais']);
         }
           
-        if(!telefono[0]){
-          campos_faltantes.push([telefono[1],'tu telefono']);
+        if(!telefono){
+          campos_faltantes.push([telefono_id,'tu telefono']);
         }
           
-        if(!dia[0]){
-          campos_faltantes.push([dia[1],'el dia en que naciste']);
+        if(!dia){
+          campos_faltantes.push([dia_id,'el dia en que naciste']);
         }
           
-        if(!mes[0]){
-          campos_faltantes.push([mes[1],'el mes en que naciste']);
+        if(!mes){
+          campos_faltantes.push([mes_id,'el mes en que naciste']);
         }
           
-        if(!año[0]){
-          campos_faltantes.push([año[1],' el año en que naciste']);
+        if(!año){
+          campos_faltantes.push([año_id,' el año en que naciste']);
         }
           
-        if(!calle[0]){
-          campos_faltantes.push([calle[1],'tu calle']);
+        if(!calle){
+          campos_faltantes.push([calle_id,'tu calle']);
         }
           
-        if(!colonia[0]){
-          campos_faltantes.push([colonia[1],'tu colonia']);
+        if(!colonia){
+          campos_faltantes.push([colonia_id,'tu colonia']);
         }
           
-        if(!numero[0]){
-          campos_faltantes.push([numero[1],'el numero de tu casa']);
+        if(!numero){
+          campos_faltantes.push([numero_id,'el numero de tu casa']);
         }
           
-        if(!codigo_postal[0]){
-          campos_faltantes.push([codigo_postal[1],'tu codigo postal']);
+        if(!codigo_postal){
+          campos_faltantes.push([codigo_postal_id,'tu codigo postal']);
         }
           
 
@@ -115,8 +200,8 @@ async function paso1(solicitud,respuesta){
 
       // si el arreglo tiene una longitud mayor a 0, significa que si hubo campos sin contestar
       if(campos_faltantes.length > 0){
+          eliminar(imagen);
           return respuesta.send({faltantes:campos_faltantes});
-          console.log('campos faltantes');
       }
       else{
           // si llegamos hasta este ELSE, signifca que la longitud es 0, y por lo tanto, el usuario lleno todos los datos
@@ -126,57 +211,57 @@ async function paso1(solicitud,respuesta){
 
           // INICIO 3 QUE EL USUARIO HAYA LLENADO TODOS LOS DATOS, NO SIGNIFCA QUE LOS HAYA LLENADO CORRECTAMENTE, AHORA TOCA VERIFICAR QUE LOS DATOS SEAN VALIDOS  
 
-          let correo_valido = regex_email.test(correo[0]);
-          let lada_valida = regex_lada.test(lada[0]);
-          let nombre_valido = regex_nombres.test(nombre[0]);
-          let paterno_valido = regex_apellidos.test(paterno[0]);
-          let materno_valido = regex_apellidos.test(materno[0]);
-          let telefono_valido = regex_telefono.test(telefono[0]);
-          let postal_valido = regex_postal.test(codigo_postal[0]);
+          let correo_valido = regex_email.test(correo);
+          let lada_valida = regex_lada.test(lada);
+          let nombre_valido = regex_nombres.test(nombre);
+          let paterno_valido = regex_apellidos.test(paterno);
+          let materno_valido = regex_apellidos.test(materno);
+          let telefono_valido = regex_telefono.test(telefono);
+          let postal_valido = regex_postal.test(codigo_postal);
 
           // CREAR OTRO ARREGLO QUE ALMACENARA LOS CAMPOS INVALIDOS
           let campos_invalidos = [];
 
 
           if(nombre_valido == false){
-            campos_invalidos.push([nombre[1], 'tu nombre no es valido']);
+            campos_invalidos.push([nombre_id, 'tu nombre no es valido']);
           }
           if(paterno_valido == false){
-            campos_invalidos.push([paterno[1],'tu apellido paterno no es valido']); 
+            campos_invalidos.push([paterno_id,'tu apellido paterno no es valido']); 
           }
           if(materno_valido == false){
-            campos_invalidos.push([materno[1],'tu apellido materno no es valido']); 
+            campos_invalidos.push([materno_id,'tu apellido materno no es valido']); 
           }
           if(correo_valido == false){
-            campos_invalidos.push([correo[1],'el correo ingresado no es valido']);
+            campos_invalidos.push([correo_id,'el correo ingresado no es valido']);
           }
           if(telefono_valido == false){
-            campos_invalidos.push([telefono[1],'el telefono no es valido']);
+            campos_invalidos.push([telefono_id,'el telefono no es valido']);
           }
           if(lada_valida == false){
-            campos_invalidos.push([lada[1],'la lada de tu pais no es valida']);
+            campos_invalidos.push([lada_id,'la lada de tu pais no es valida']);
           }
-          if(regex_numero.test(numero[0]) == false){
-            campos_invalidos.push([numero[1],'el numero de tu casa no es valido ']);
+          if(regex_numero.test(numero) == false){
+            campos_invalidos.push([numero_id,'el numero de tu casa no es valido ']);
           } 
           if(postal_valido == false){
-            campos_invalidos.push([codigo_postal[1],'tu codigo postal no es valido']);
+            campos_invalidos.push([codigo_postal_id,'tu codigo postal no es valido']);
           }
             
 
           try{
-            var fecha = new Date(`${mes[0]}/${dia[0]}/${año[0]}`);
+            var fecha = new Date(`${mes}/${dia}/${año}`);
 
             if(isNaN(fecha.getTime())){
-              campos_invalidos.push([dia[1],'']);
-              campos_invalidos.push([mes[1],'']);
-              campos_invalidos.push([año[1],'']);
+              campos_invalidos.push([dia_id,'']);
+              campos_invalidos.push([mes_id,'']);
+              campos_invalidos.push([año_id,'']);
             }
             
           }catch(error){
-            campos_invalidos.push([dia[1],'']);
-            campos_invalidos.push([mes[1],'']);
-            campos_invalidos.push([año[1],'']);
+            campos_invalidos.push([dia_id,'']);
+            campos_invalidos.push([mes_id,'']);
+            campos_invalidos.push([año_id,'']);
           }
 
           //FIN 3
@@ -184,40 +269,40 @@ async function paso1(solicitud,respuesta){
           
           // si el arreglo es mayor de 0, signifca que hubo datos incorrectos
           if(campos_invalidos.length > 0){
-              return respuesta.send({invalidos:campos_invalidos});
+            eliminar(imagen);
+            return respuesta.send({invalidos:campos_invalidos});
           }
           else{
 
-              telefono[0] = telefono[0].replace(/-/g,'');
-              telefono[0] = telefono[0].replace(/ /g,'');
-              lada[0] = lada[0].replace('\+','');
+              telefono = telefono.replace(/-/g,'');
+              telefono = telefono.replace(/ /g,'');
+              lada = lada.replace('\+','');
 
               // Si llegamos hasta este ELSE, significa que el usuario contesto correctamente todos los campos
 
               // INICIO 4 AHORA TOCA VERIFICAR QUE EL CORREO NO ESTE REPETIDO, YA QUE NO PUEDE HABER CORREOS REPETIDOS ENTRE USUARIOS
 
               let consulta = "select pkIdUsuario from usuario where email = ?";
-              let [fields] = await solicitud.database.query(mysql.format(consulta,[correo[0]]));
+              let [fields] = await solicitud.database.query(mysql.format(consulta,[correo]));
 
               let conTelefono = "select pkIdUsuario from usuario where telefono = ?";
-              let [fieldsTelefono] = await solicitud.database.query(mysql.format(conTelefono,[lada[0]+telefono[0]]));
+              let [fieldsTelefono] = await solicitud.database.query(mysql.format(conTelefono,[lada+telefono]));
 
               let repetidos = [];
 
               if(fields.length > 0){
-                repetidos.push([correo[1],'ya hay una cuenta con este correo']);
+                repetidos.push([correo_id,'ya hay una cuenta con este correo']);
               }
               if(fieldsTelefono.length > 0){
-                repetidos.push([telefono[1],'ya hay una cuenta con este telefono']);
+                repetidos.push([telefono_id,'ya hay una cuenta con este telefono']);
               }
 
               // FIN 4
               
                   // Lo mismo que antes, si en repetidos, obtuvimos un length mayor a 0, significa que hay por lo menos 1 o mas usuarios con el correo o el telefono, por lo que nuetro usuario que esta por crear una cuenta, no puede seguir adelante
                   if(repetidos.length > 0){
-
+                    eliminar(imagen);
                     return respuesta.send({repetidos:repetidos});
-
                   }
                   else{
 
@@ -225,26 +310,25 @@ async function paso1(solicitud,respuesta){
 
                     //ya una vez aqui almacenamos los datos del usuario en una cookie, para ya mas despues hacer la insercion en la base de datos
 
-
                     // este token va a estar dentro de la cookie
-                    let token = JsonWebToken.sign(
-                      {
-                          nombre:nombre[0],
-                          apodo:apodo[0],
-                          paterno:paterno[0],
-                          materno:materno[0],
-                          correo:correo[0],
-                          lada:lada[0],
-                          telefono:telefono[0],
-                          imagen:imagen[0],
-                          calle:calle[0],
-                          colonia:colonia[0],
-                          numero:numero[0],
-                          codigo_postal:codigo_postal[0],
-                          dia:dia[0],
-                          mes:mes[0],
-                          año:año[0]
-                      },
+                    let token = JsonWebToken.sign({
+                      nombre:nombre,
+                      apodo:apodo,
+                      paterno:paterno,
+                      materno:materno,
+                      correo:correo,
+                      lada:lada,
+                      telefono:telefono,
+                      imagen:imagen,
+                      calle:calle,
+                      colonia:colonia,
+                      numero:numero,
+                      codigo_postal:codigo_postal,
+                      dia:dia,
+                      mes:mes,
+                      año:año
+
+                    },
                       process.env.JWT_SECRET,
                       {expiresIn:process.env.JWT_EXPIRATION}
                     );
@@ -267,7 +351,7 @@ async function paso1(solicitud,respuesta){
           }
       }
        
-      }
+      
       
 
 }
@@ -511,7 +595,20 @@ async function paso3(solicitud,respuesta){
   
 
 }
+
+
+
+function eliminar(imagen){
+  if(imagen != undefined){
+    fs.unlink(imagen.path,(error)=>{
+      if(error){
+        console.log(error);
+      }
+    })
+  }
+}
   
+
 
 
 

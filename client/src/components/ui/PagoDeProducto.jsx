@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import InforTarjeta from "./InfoTarjeta";
-import PagoRealizado from "./PagoRealizado";
+import PagoRealizado from "./PagoRealizadoProducto";
 import { jwtDecode } from "jwt-decode";
 
 
@@ -195,7 +195,7 @@ function Pago({ producto, next }) {
                         </div>
                     </div>
                     {/* Bloque "Aceptamos" */}
-                    <div className="border-2 shadow-md rounded-xl mt-2 border-gray">
+                    <div className="mt-2 border-2 shadow-md rounded-xl border-gray">
                         <div className='grid bg-[rgb(3,109,99)] rounded-t-xl'>
                             <p className='py-2 ml-8 text-2xl text-white'>Aceptamos</p>
                         </div>

@@ -21,6 +21,7 @@ import Calendar from 'react-calendar';
 import 'react-calendar/dist/Calendar.css';
 import '../cita/EstiloCalendario.css';
 import Paper from '@mui/material/Paper';
+import PopupLogin from "../../components/ui/Login/PopupLogin";
 
 function getRandomNumber(min, max) {
     return Math.round(Math.random() * (max - min) + min);
@@ -75,7 +76,78 @@ function Calendario() {
     const [checked, setChecked] = React.useState(false);
     const [isLoading, setIsLoading] = React.useState(false);
     const [highlightedDays, setHighlightedDays] = React.useState([1, 2, 15]);
+    const [log, setLog] = useState(false);
+    const [login, setLogin] = useState(false);
+    const [favoritosSelected, setFavoritosSelected] = useState(false);
 
+    const [id, setId] = useState(null); // Para el inicio de sesión
+
+
+
+    const toggleLogin = () => {
+        setLogin(!login);
+    };
+
+    const handleFavoritos = () => {
+        log ? setFavoritosSelected(true) : toggleLogin();
+    }
+
+    const handleGeneral = () => {
+        setFavoritosSelected(false);
+    }
+
+
+    // useEffect for diferent fetch (when favoritosSelected is true fetch favoritos, when is false fetch general)
+    // useEffect(() => {
+    //     if (favoritosSelected) {
+    // fetch favoritos
+    //     } else {
+    // fetch general
+    //     }
+    // }, [favoritosSelected]);
+
+    // useEffect(() => {
+    //     const idServicio = localStorage.getItem('servicio');
+    //     const fetchData = async () => {
+    //         try {
+    //             const response = await fetch(`/api/admin/empleado/getEmpServicio/${idServicio}`);
+    //             const data = await response.json();
+    //             setEspecialistas(data);
+    //             setIsLoad(false);
+    //         } catch (error) {
+    //             console.log('error', error);
+    //             setIsLoad(false);
+    //         }
+    //     };
+    //     fetchData();
+    // }, []);
+    //console.log(especialistas);
+
+    let respuestaJson = null;
+    async function checkLogin() {
+        try {
+            const respuesta = await fetch("/api/logueado", {
+                method: "GET",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+            });
+
+            respuestaJson = await respuesta.json();
+
+            if (respuestaJson.logueado == true) {
+                setLog(true);
+            } else {
+                setLog(false);
+            }
+        } catch (error) {
+            setLog(false);
+        }
+    }
+
+    useEffect(() => {
+        checkLogin();
+    }, []);
     const handleHourClick = (index) => {
         setSelectedHourIndex(index);
     };
@@ -145,15 +217,18 @@ function Calendario() {
         if (!respuesta.ok) {
             setNombre(null);
             setCorreo(null);
+            setId(null);
         }
 
         let respuestaJson = await respuesta.json();
 
         if (respuestaJson.logueado == true) {
+            setId(respuestaJson.clave);
             setNombre(respuestaJson.nombre);
             setCorreo(respuestaJson.email);
         }
         else {
+            setId(null);
             setNombre(null);
             setCorreo(null);
         }
@@ -278,21 +353,21 @@ function Calendario() {
     //     fetchData();
     // }, []);
 
-    useEffect(() => {
-        const idServicio = localStorage.getItem('servicio');
-        const fetchData = async () => {
-            try {
-                const response = await fetch(`/api/admin/empleado/getEmpServicio/${idServicio}`);
-                const data = await response.json();
-                setEspecialistas(data);
-                setIsLoad(false);
-            } catch (error) {
-                console.log('error', error);
-                setIsLoad(false);
-            }
-        };
-        fetchData();
-    }, []);
+    // useEffect(() => {
+    //     const idServicio = localStorage.getItem('servicio');
+    //     const fetchData = async () => {
+    //         try {
+    //             const response = await fetch(`/api/admin/empleado/getEmpServicio/${idServicio}`);
+    //             const data = await response.json();
+    //             setEspecialistas(data);
+    //             setIsLoad(false);
+    //         } catch (error) {
+    //             console.log('error', error);
+    //             setIsLoad(false);
+    //         }
+    //     };
+    //     fetchData();
+    // }, []);
     //console.log(especialistas);
 
     // const especialistas = [
@@ -355,6 +430,33 @@ function Calendario() {
     //         horasDisp();
     //     }
     // }, [localStorage.getItem('Especialista')]);
+
+    useEffect(() => {
+        const fetchData = async () => {
+            setIsLoad(true); // Establecer isLoading a true al comenzar la solicitud
+
+            try {
+                let response;
+                if (favoritosSelected) {
+                    const idServicio = localStorage.getItem('servicio');
+                    response = await fetch(`/api/admin/empleado/favoritos/:' ${id}`);
+                } else {
+                    const idServicio = localStorage.getItem('servicio');
+                    response = await fetch(`/api/admin/empleado/getEmpServicio/${idServicio}`);
+                }
+
+                const data = await response.json();
+                setEspecialistas(data);
+                setIsLoad(false); // Establecer isLoading a false cuando se completa la solicitud
+            } catch (error) {
+                console.log('error', error);
+                setIsLoad(false); // Manejar errores y establecer isLoading a false
+            }
+        };
+
+        fetchData(); // Llamar a la función fetchData
+
+    }, [favoritosSelected]); // Ejecutar useEffect cuando favoritosSelected cambia
 
 
     useEffect(() => {
@@ -454,8 +556,8 @@ function Calendario() {
                     ) : (
                         <>
                             <div className='flex justify-center gap-4 m-4'>
-                                <button className='px-4 py-1 text-white rounded-xl bg-rose-400'>General</button>
-                                <button className='flex items-center justify-center gap-2 px-4 text-white rounded-xl bg-rose-400'>Favoritos
+                                <button onClick={() => handleGeneral()} className='px-4 py-1 text-white rounded-xl bg-rose-400'>General</button>
+                                <button onClick={() => handleFavoritos()} className='flex items-center justify-center gap-2 px-4 text-white rounded-xl bg-rose-400'>Favoritos
                                     <svg className="w-5 h-5 text-white dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="2" height="2" fill="currentColor" viewBox="0 0 24 24">
                                         <path d="m12.75 20.66 6.184-7.098c2.677-2.884 2.559-6.506.754-8.705-.898-1.095-2.206-1.816-3.72-1.855-1.293-.034-2.652.43-3.963 1.442-1.315-1.012-2.678-1.476-3.973-1.442-1.515.04-2.825.76-3.724 1.855-1.806 2.201-1.915 5.823.772 8.706l6.183 7.097c.19.216.46.34.743.34a.985.985 0 0 0 .743-.34Z" />
                                     </svg>
@@ -532,6 +634,7 @@ function Calendario() {
                         </>
                     )}
                 </section>
+                {login && <PopupLogin cerrar={toggleLogin} />}
             </main >
         </>
     );

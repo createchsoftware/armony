@@ -1,5 +1,3 @@
-console.log("demonios no quiere funcionar");
-
 const nombre = document.getElementById('name');
 const paterno = document.getElementById('lastname1');
 const materno = document.getElementById('lastname2');
@@ -13,6 +11,13 @@ const calle = document.getElementById('calle');
 const postal = document.getElementById('codigo_postal');
 const numero = document.getElementById('numero');
 const colonia = document.getElementById('colonia');
+const imagen = document.getElementById('imagen');
+
+var file;
+imagen.addEventListener('change',(evento)=>{
+    file = evento.target.files[0];
+})
+
 
 
 nombre.addEventListener('input',()=>{if(nombre.value.length > 0) nombre.style.borderColor='#ccc';});
@@ -29,41 +34,38 @@ postal.addEventListener('input',()=>{if(postal.value.length > 0) postal.style.bo
 numero.addEventListener('input',()=>{if(numero.value.length > 0) numero.style.borderColor='#ccc';});
 colonia.addEventListener('input',()=>{if(colonia.value.length > 0) colonia.style.borderColor='#ccc';});
 
+
+
+
 document.getElementById('step-one').addEventListener('click',async ()=>{
 
-     document.cookie = "Megumin_cookie=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;"; 
+    const formData = new FormData();
+    formData.set('nombre_id',nombre.id); formData.set('nombre',nombre.value);
+    formData.set('paterno_id',paterno.id); formData.set('paterno',paterno.value);
+    formData.set('materno_id',materno.id); formData.set('materno',materno.value);
+    formData.set('correo_id',correo.id); formData.set('correo',correo.value);
+    formData.set('lada_id',lada.id); formData.set('lada',lada.value);
+    formData.set('telefono_id',telefono.id); formData.set('telefono',telefono.value);
+    formData.set('dia_id',dia.id); formData.set('dia',dia.value);
+    formData.set('mes_id',mes.id); formData.set('mes',mes.value);
+    formData.set('year_id',año.id); formData.set('year',año.value);
+    formData.set('calle_id',calle.id); formData.set('calle',calle.value);
+    formData.set('colonia_id',colonia.id); formData.set('colonia',colonia.value);
+    formData.set('codigo_postal_id',postal.id); formData.set('codigo_postal',postal.value);
+    formData.set('numero_id',numero.id); formData.set('numero',numero.value);
+
+    if(file){
+        formData.set('image',file);
+    }
 
     const respuesta = await fetch("/api/step1",{
-
-            method:"POST",
-            headers:{
-                "Content-Type":"application/json",
-            },
-            body:JSON.stringify({
-                nombre:[nombre.value,nombre.id],
-                paterno:[paterno.value,paterno.id],
-                materno:[materno.value,materno.id],
-                correo:[correo.value,correo.id],
-                lada:[lada.value,lada.id],
-                telefono:[telefono.value,telefono.id],
-                dia:[dia.value,dia.id],
-                mes:[mes.value,mes.id],
-                año:[año.value,año.id],
-                imagen:["imagen.png","imagen"],
-                calle:[calle.value,calle.id],
-                colonia:[colonia.value,colonia.id],
-                codigo_postal:[postal.value,postal.id],
-                numero:[numero.value,numero.id]
-            })
+        method:"POST",
+        body:formData
     })  // fin del fetch
 
 
-    if(!respuesta.ok){
-        return;
-    }
+    if(!respuesta.ok){ return; }
         
-
-
     const respuestaJson = await respuesta.json();
 
 
@@ -127,13 +129,13 @@ document.getElementById('step-one').addEventListener('click',async ()=>{
     if(respuestaJson.repetidos){
 
         let a = respuestaJson.repetidos;
+        let toastBox = document.getElementById('toastBox');
 
         for(let i in a){
             let temporal = document.getElementById(a[i][0]);
             temporal.value='';
             temporal.style.borderColor='yellow';
 
-            let toastBox = document.getElementById('toastBox');
             let div = document.createElement('div');
             div.classList.add('toast');
             div.innerHTML ='<div id="texto">'+ a[i][1]+'</div> <div id="icono"> <i class="fa-solid fa-user"></i> </div>';
@@ -151,7 +153,6 @@ document.getElementById('step-one').addEventListener('click',async ()=>{
 
 
     if(respuestaJson.redirect){
-        console.log("paso 1 acompletado");
         window.location.href = respuestaJson.redirect;
     }
 
