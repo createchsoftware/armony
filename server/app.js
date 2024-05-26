@@ -10,9 +10,6 @@ import path, { dirname } from "path";
 import { fileURLToPath } from "url";
 const _dirname = path.dirname(fileURLToPath(import.meta.url));
 
-//const upload = multer({ dest: path.join(_dirname, "../client/public/pictures")});
-
-
 const storage = multer.diskStorage({
   destination:(solicitud,file,cb)=>{
     cb(null,path.join(_dirname, "../client/public/pictures/avatares"))
@@ -131,7 +128,7 @@ app.get("/recuperacion/confirmacion", confirmacion);
 
 app.post("/api/deleteCard", perfil.deleteTarjeta);
 
-app.post("/api/editarPerfil", editarPerfil.change_data);
+app.post("/api/editarPerfil",upload.single('image'), editarPerfil.change_data);
 
 app.post("/api/tarjeta-nueva", perfil.InsertarTarjeta);
 

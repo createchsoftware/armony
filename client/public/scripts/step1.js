@@ -16,7 +16,6 @@ const imagen = document.getElementById('imagen');
 var file;
 imagen.addEventListener('change',(evento)=>{
     file = evento.target.files[0];
-    console.log(file);
 })
 
 
@@ -130,13 +129,13 @@ document.getElementById('step-one').addEventListener('click',async ()=>{
     if(respuestaJson.repetidos){
 
         let a = respuestaJson.repetidos;
+        let toastBox = document.getElementById('toastBox');
 
         for(let i in a){
             let temporal = document.getElementById(a[i][0]);
             temporal.value='';
             temporal.style.borderColor='yellow';
 
-            let toastBox = document.getElementById('toastBox');
             let div = document.createElement('div');
             div.classList.add('toast');
             div.innerHTML ='<div id="texto">'+ a[i][1]+'</div> <div id="icono"> <i class="fa-solid fa-user"></i> </div>';
