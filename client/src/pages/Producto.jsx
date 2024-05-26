@@ -64,29 +64,40 @@ function Producto() {
     const { id } = useParams();
     const location = useLocation();
     const product = location.state.product || {};
-    const [log, setLog] = useState(false); //<<< PARA EL INICIO DE SESION
+    const [log, setLog] = useState(false);
     const [login, setLogin] = useState(false);
 
-    async function recibido() {
-        const respuesta = await fetch("/api/logueado", {
-            method: "GET",
-            headers: {
-                "Content-Type": "application/json",
-            },
-        });
+    let respuestaJson = null;
+    async function checkLogin() {
+        try {
+            const respuesta = await fetch("/api/logueado", {
+                method: "GET",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+            });
 
-        if (!respuesta.ok) {
-            setLog(false);
-        }
+            respuestaJson = await respuesta.json();
 
-        let respuestaJson = await respuesta.json();
-
-        if (respuestaJson.logueado == true) {
-            setLog(true);
-        } else {
+            if (respuestaJson.logueado == true) {
+                setLog(true);
+            } else {
+                setLog(false);
+            }
+        } catch (error) {
             setLog(false);
         }
     }
+
+    const toggleLoginPopup = () => {
+        setLogin(!login);
+    };
+
+
+    useEffect(() => {
+        checkLogin();
+    }, []);
+
     const [descuentos, setDescuentos] = useState([]);
 
 
@@ -121,7 +132,6 @@ function Producto() {
 
     useEffect(() => {
         window.scrollTo(0, 0);
-        recibido();
     }, [])
 
     // Si los datos no vienen en el estado de navegación, puedes hacer una
@@ -139,17 +149,21 @@ function Producto() {
 
     // Función para manejar el evento de agregar al carrito
     const handleAddCart = () => {
-        notify();
-        const producto = {
-            id: product.id,
-            nombre: product.nombre,
-            precio: parseFloat(product.precio),
-            cantidad: cantidad,
-            descripcion: product.descripcion,
-            valoracion: product.valoracion,
-            imagen: product.imagen,
-        };
-        agregarAlCarrito(producto);
+        if (log) {
+            const producto = {
+                id: product.id,
+                nombre: product.nombre,
+                precio: parseFloat(product.precio),
+                cantidad: cantidad,
+                descripcion: product.descripcion,
+                valoracion: product.valoracion,
+                imagen: product.imagen,
+            };
+            agregarAlCarrito(producto);
+            notify();
+        } else {
+            toggleLoginPopup();
+        }
     };
 
     // Función para manejar el evento de comprar
@@ -246,7 +260,7 @@ function Producto() {
                                     <Rating className='' value={product.valoracion} readOnly unratedColor="amber" ratedColor="amber" />
                                     <p>Valoraciones</p>
                                 </div>
-                                <p className="text-[#056761] my-6 text-2xl font-bold">{product.precio}</p>
+                                <p className="text-[#056761] my-6 text-2xl font-bold">{'$' + product.precio + ' MXN'}</p>
 
                                 <p className="text-[#056761] text-xl">Detalles</p>
                                 <p className="text-xl">{product.descripcion}</p>
@@ -408,7 +422,7 @@ function Producto() {
                 </main>
                 <ToastContainer position={'bottom-right'} theme={'light'} />
             </LayoutPrincipal >
-            {login && <PopupLogin cerrar={() => setLogin(!login)} />}
+            {login && <PopupLogin cerrar={toggleLoginPopup} />}
         </>
     );
 }
