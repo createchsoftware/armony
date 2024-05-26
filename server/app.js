@@ -15,7 +15,7 @@ const _dirname = path.dirname(fileURLToPath(import.meta.url));
 
 const storage = multer.diskStorage({
   destination:(solicitud,file,cb)=>{
-    cb(null,path.join(_dirname, "../client/public/pictures"))
+    cb(null,path.join(_dirname, "../client/public/pictures/avatares"))
   },
   filename:(solicitud,file,cb)=>{
     const ext = file.originalname.split('.').pop();
