@@ -4,54 +4,8 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrash } from '@fortawesome/free-solid-svg-icons';
 import { Rating } from '@mui/material';
 import { faCircleMinus, faCirclePlus, faAngleLeft } from '@fortawesome/free-solid-svg-icons';
-import Ofertas from './Ofertas.jsx'
 
-const ofertas = [
-    {
-        id: 1,
-        nombre: 'Esponjabon',
-        precio: 10,
-        descripcion: 'Esponjabon floor para baño, formul...',
-        imagen: '../../pictures/oferta1.png'
-    },
-    {
-        id: 2,
-        nombre: 'Body butter',
-        precio: 20,
-        descripcion: 'Crema corporal, artesanal, 239 ml.',
-        imagen: '../../pictures/oferta2.png'
-    },
-    {
-        id: 3,
-        nombre: 'Tónito facial',
-        precio: 15,
-        descripcion: 'Tónito facial dermatológico...',
-        imagen: '../../pictures/oferta3.png'
-    },
-    {
-        id: 4,
-        nombre: 'Mascarilla',
-        precio: 25,
-        descripcion: 'Combina el poder de la arcilla verde...',
-        imagen: '../../pictures/oferta4.png'
-    },
-]
-
-
-//useEffect para obtener las ofertas
-// useEffect(() => {
-//     fetch("/api/admin/productos/getProducts")
-//         .then(response => response.json())
-//         .then(data => {
-//             setAllProducts(data);
-//         })
-//         .catch(error => {
-//             console.log('error', error);
-//         });
-// }, []);
-
-
-function RevisionProductos({ restart, producto }) {
+function RevisionProductos({ restart, producto, next }) {
     const [cartItems, setCartItems] = useState(() => {
         if (producto) {
             // Si hay un producto en el prop, lo utilizamos
@@ -181,8 +135,8 @@ function RevisionProductos({ restart, producto }) {
                             </div>
                             {/* Código de descuento */}
                             <div className='p-6 mb-4 border-2 shadow-md rounded-xl border-gray'>
-                                <div className='flex w-full justify-center'>
-                                    <h3 className='mb-4 text-center text-xl font-bold justify-self-center'>¿Tienes un cupón de descuento?</h3>
+                                <div className='flex justify-center w-full'>
+                                    <h3 className='mb-4 text-xl font-bold text-center justify-self-center'>¿Tienes un cupón de descuento?</h3>
                                 </div>
                                 <div className='flex justify-between border-2 rounded-full shadow-md border-gray'>
                                     <input
@@ -194,8 +148,8 @@ function RevisionProductos({ restart, producto }) {
                                     />
                                     <button type="submit" className=' w-[30%] rounded-r-full text-center text-white bg-[rgb(3,109,99)] duration-200 hover:bg-[rgb(69,181,156)] hover:font-bold'>Aplicar</button>
                                 </div>
-                                <div className='flex w-full justify-center'>
-                                    <p className='text-center justify-self-center text-xs mt-4'>Los <p className='text-[#D47300]'>Términos y Condiciones de los Cupones</p> de Armony aplican el uso de cupones.</p>
+                                <div className='flex justify-center w-full'>
+                                    <p className='mt-4 text-xs text-center justify-self-center'>Los <p className='text-[#D47300] inline-flex'>Términos y Condiciones de los Cupones</p> de Armony aplican el uso de cupones.</p>
                                 </div>
                             </div>
                             <div className='flex justify-between p-6 px-10 mb-4 border-2 shadow-md rounded-xl border-gray'>
@@ -206,6 +160,14 @@ function RevisionProductos({ restart, producto }) {
                                 <h4 className='text-xl font-bold'>Total:</h4>
                                 <span className='font-bold text-[rgb(3,109,99)] text-xl'>${total}</span>
                             </div>
+                        </div>
+                        <div className='flex justify-between gap-2 px-6 py-4'>
+                            <a href='/spa/productos' className='px-8 py-2 bg-[#ec5766] text-xl text-white rounded-full duration-200 hover:bg-[#ffb5a7]'>
+                                Cancelar
+                            </a>
+                            <button onClick={() => next()} className='px-8 py-2 bg-[#ec5766] text-xl text-white rounded-full duration-200 hover:bg-[#ffb5a7]'>
+                                Continuar
+                            </button>
                         </div>
                     </div>
                 </div>

@@ -1,5 +1,6 @@
 import express from "express";
 import { conexion } from "../db/connection.js";
+import { horasWithoutSeconds } from "../db/query/queryCitas.js";
 import {
   createCategoria,
   deleteCategoria,
@@ -7,7 +8,7 @@ import {
   readCategoriaByName,
   updateCategoria,
   getServicesSpa,
-  getServicesEstetica
+  getServicesEstetica,
 } from "../db/query/queryCategoria.js";
 
 export const routerCategoria = express.Router(); // Creamos router
@@ -108,7 +109,27 @@ routerCategoria.delete("/delete", async (req, res) => {
 routerCategoria.get("/getServicesSpa", async (req, res) => {
   try {
     const resultado = await getServicesSpa(conexion);
-    res.status(202).json(resultado);
+    const horario = [];
+    let servicios = [];
+    let i;
+    for (i = 0; i < resultado.length; i++) {
+      horario[i] = resultado[i].tiempo;
+    }
+    const horasMostrar = await horasWithoutSeconds(horario); // Horas con formato HH:MM
+    for (i = 0; i < resultado.length; i++) {
+      servicios[i] = {
+        descripcion: resultado[i].descripcion,
+        estado: resultado[i].estado,
+        img: resultado[i].img,
+        nombre: resultado[i].nombre,
+        pkIdPS: resultado[i].pkIdPS,
+        precio: resultado[i].precio,
+        tiempo: horasMostrar[i],
+        valoracion: resultado[i].valoracion,
+        favorito: false, // Favorito aun no se regresa desde la base de datos
+      };
+    }
+    res.status(202).json(servicios);
   } catch (err) {
     console.error(messageError, err); // Mostramos errores
     res.status(500).send(messageError); // Enviamos un error INTERNAL SERVER ERROR y el error al navegador
@@ -118,10 +139,29 @@ routerCategoria.get("/getServicesSpa", async (req, res) => {
 routerCategoria.get("/getServicesEstetica", async (req, res) => {
   try {
     const resultado = await getServicesEstetica(conexion);
-    res.status(202).json( resultado);
+    const horario = [];
+    let servicios = [];
+    let i;
+    for (i = 0; i < resultado.length; i++) {
+      horario[i] = resultado[i].tiempo;
+    }
+    const horasMostrar = await horasWithoutSeconds(horario); // Horas con formato HH:MM
+    for (i = 0; i < resultado.length; i++) {
+      servicios[i] = {
+        descripcion: resultado[i].descripcion,
+        estado: resultado[i].estado,
+        img: resultado[i].img,
+        nombre: resultado[i].nombre,
+        pkIdPS: resultado[i].pkIdPS,
+        precio: resultado[i].precio,
+        tiempo: horasMostrar[i],
+        valoracion: resultado[i].valoracion,
+        favorito: false, // Favorito aun no se regresa desde la base de datos
+      };
+    }
+    res.status(202).json(servicios);
   } catch (err) {
     console.error(messageError, err); // Mostramos errores
     res.status(500).send(messageError); // Enviamos un error INTERNAL SERVER ERROR y el error al navegador
   }
 });
-

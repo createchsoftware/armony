@@ -6,7 +6,6 @@ import * as fs from "fs";
 import multer from 'multer';
 
 
-
 import path, { dirname } from "path";
 import { fileURLToPath } from "url";
 const _dirname = path.dirname(fileURLToPath(import.meta.url));
@@ -76,7 +75,9 @@ app.use("/api/admin/sucursal", routerSucursal);
 import { routerCategoria } from "./routers/categoria.js";
 app.use("/api/admin/categoria", routerCategoria);
 import { routerEspecialidad } from "./routers/especialidad.js"; // NOTA: NO SE A PROBADO AUN, NO FUNCIONAL
-app.use("api/admin/especialidad", routerEspecialidad);
+app.use("/api/admin/especialidad", routerEspecialidad);
+import { routerVenta } from "./routers/venta.js";
+app.use("/api/admin/ventas", routerVenta);
 
 import { routerImagenes } from "./routers/Imagen.js";
 app.use("/api/admin/imagen", routerImagenes);

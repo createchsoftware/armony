@@ -6,45 +6,30 @@ import Filtros from "../components/ui/Filtros.jsx";
 import Ofertas from "../components/ui/Ofertas.jsx";
 import { useState } from "react";
 import Soon from "../components/ui/Proximamente.jsx";
-
-const ofertas = [
-  {
-    id: 1,
-    nombre: "Esponjabon",
-    precio: 10,
-    descripcion: "Esponjabon floor para baño, formul...",
-    imagen: "../../pictures/oferta1.png",
-  },
-  {
-    id: 2,
-    nombre: "Body butter",
-    precio: 20,
-    descripcion: "Crema corporal, artesanal, 239 ml.",
-    imagen: "../../pictures/oferta2.png",
-  },
-  {
-    id: 3,
-    nombre: "Tónito facial",
-    precio: 15,
-    descripcion: "Tónito facial dermatológico...",
-    imagen: "../../pictures/oferta3.png",
-  },
-  {
-    id: 4,
-    nombre: "Mascarilla",
-    precio: 25,
-    descripcion: "Combina el poder de la arcilla verde...",
-    imagen: "../../pictures/oferta4.png",
-  },
-];
+import { useEffect } from "react";
 
 const Productos = () => {
-
+  const [descuentos, setDescuentos] = useState([]);
   const [soon, setSoon] = useState(false);
 
   const toggleSoon = () => {
     setSoon(!soon)
   };
+
+  //useEffect para obtener los productos con descuento
+  useEffect(() => {
+    fetch("/api/admin/productos/descuento")
+      .then((response) => response.json())
+      .then((data) => {
+        // Acceder al array de objetos en la posición 0 del array dentro de data
+        const descuentosArray = data.data[0];
+        setDescuentos(descuentosArray);
+        console.log(descuentosArray);
+      })
+      .catch((error) => {
+        console.log("error", error);
+      });
+  }, []);
 
   return (
     <>
@@ -161,9 +146,10 @@ const Productos = () => {
                 swipeable
               // className=''
               >
-                {ofertas.map((oferta) => (
-                  <Ofertas key={oferta.id} producto={oferta} />
-                ))}
+                {
+                  descuentos.map((oferta, index) => (
+                    <Ofertas producto={oferta} />
+                  ))}
               </Carousel>
             </div>
           </section>

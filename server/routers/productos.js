@@ -8,7 +8,13 @@ import {
   updateProdServ,
   deleteProdServ,
   getProducts,
-  productosPromo
+  productosPromo,
+  productosFaciales,
+  serviciosFav,
+  productosCorporales,
+  productosRelacionados,
+  productosDescuento,
+  serviciosDescuento,
 } from "../db/query/queryProductos.js";
 import { errorUpdate } from "../auth/validaciones.js";
 
@@ -168,11 +174,92 @@ routerProductos.get("/getProducts", async (req, res) => {
   }
 });
 
-
 routerProductos.get("/ProductsPromo", async (req, res) => {
   try {
     const resultado = await productosPromo(conexion);
     res.json(resultado);
+  } catch (err) {
+    console.error("Ha ocurrido un error: ", err);
+    res.status(500).send("Ha ocurrido un error al procesar tu solicitud");
+  }
+});
+
+// OBTIENE LOS SERVICIOS FAVORITOS DEL USUARIO
+// FUNCIONAL
+routerProductos.get("/serviciosFav/:id", async (req, res) => {
+  try {
+    const resultado = await serviciosFav(conexion, {
+      idCliente: req.params.id,
+    });
+    res.status(202).json(resultado);
+  } catch (err) {
+    console.error("Ha ocurrido un error: ", err);
+    res.status(500).send("Ha ocurrido un error al procesar tu solicitud");
+  }
+});
+
+// OBTIENE LOS PRODUCTOS DE CATEGORIA FACIAL
+// FUNCIONAL
+routerProductos.get("/faciales", async (req, res) => {
+  try {
+    const resultado = await productosFaciales(conexion);
+    res.status(200).json({ message: "Productos faciales: ", data: resultado });
+  } catch (err) {
+    console.error("Ha ocurrido un error: ", err);
+    res.status(500).send("Ha ocurrido un error al procesar tu solicitud");
+  }
+});
+
+// OBTIENE LOS PRODUCTOS DE CATEGORIA CORPORAL
+// FUNCIONAL
+routerProductos.get("/corporales", async (req, res) => {
+  try {
+    const resultado = await productosCorporales(conexion);
+    res
+      .status(200)
+      .json({ message: "Productos corporales: ", data: resultado });
+  } catch (err) {
+    console.error("Ha ocurrido un error: ", err);
+    res.status(500).send("Ha ocurrido un error al procesar tu solicitud");
+  }
+});
+
+// OBTIENE LOS PRODUCTOS RELACIONADOS A X PRODUCTO (EN BASE A LA CATEGORIA)
+// FUNCIONAL
+routerProductos.get("/relacionados/:id", async (req, res) => {
+  try {
+    const resultado = await productosRelacionados(conexion, {
+      idCliente: req.params.id,
+    });
+    res
+      .status(200)
+      .json({ message: "Productos relacionados: ", data: resultado });
+  } catch (err) {
+    console.error("Ha ocurrido un error: ", err);
+    res.status(500).send("Ha ocurrido un error al procesar tu solicitud");
+  }
+});
+
+// OBTENER LOS PRODUCTOS CON DESCUENTO
+// FUNCIONAL
+routerProductos.get("/descuento", async (req, res) => {
+  try {
+    const resultado = await productosDescuento(conexion);
+    res
+      .status(200)
+      .json({ message: "Los productos con descuento son : ", data: resultado });
+  } catch (err) {
+    console.error("Ha ocurrido un error: ", err);
+    res.status(500).send("Ha ocurrido un error al procesar tu solicitud");
+  }
+});
+
+// OBTENER LOS SERVICIOS CON DESCUENTO
+// FUNCIONAL
+routerProductos.get("/servicios/descuento", async (req, res) => {
+  try {
+    const resultado = await serviciosDescuento(conexion);
+    res.status(202).json(resultado);
   } catch (err) {
     console.error("Ha ocurrido un error: ", err);
     res.status(500).send("Ha ocurrido un error al procesar tu solicitud");

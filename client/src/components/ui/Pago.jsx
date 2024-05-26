@@ -70,8 +70,7 @@ function Pago({ producto, next }) {
                 .then(response => response.json())
                 .then(data => {
                  
-                localStorage.setItem('cliente', JSON.stringify(data));
-           
+                localStorage.setItem('cliente', JSON.stringify(data[0]));
                 })
                 .catch(error => {
                     console.log(error);
@@ -84,8 +83,9 @@ function Pago({ producto, next }) {
     const toggleTarjeta = () => {
         setTarjeta(!tarjeta);
     }
-    const togglePago = () => {
+    const togglePago = (tarjeta) => {
         setPagoRealizado(!pagoRealizado);
+        localStorage.setItem('tarjeta',tarjeta);
     }
     // const datosRecibidos = (nuevaTarjeta) => {
     //     setTarjetas([...tarjetas, {id: 3, noTarjeta: {nuevaTarjeta}, tipo: "Débito", banco: "BBVA", code: "****"}]);
@@ -108,7 +108,7 @@ function Pago({ producto, next }) {
             <h1 className="text-xl">{item.tipo}</h1>
             {/* <h1 className="text-xl">{item.code}</h1> */}
             <h1 className="text-xl">****{item.numero_tarjeta.slice(0, 4)}</h1>
-            <button onClick={togglePago} className='bg-[#ec5766] text-xl text-white px-10 py-2 rounded-full duration-200 hover:bg-[#ffb5a7]'>Continuar</button>
+            <button onClick={() =>togglePago(item.numero_tarjeta)} className='bg-[#ec5766] text-xl text-white px-10 py-2 rounded-full duration-200 hover:bg-[#ffb5a7]'>Continuar</button>
         </li>
     ))) : (<div></div>)
     return (
@@ -223,7 +223,7 @@ function Pago({ producto, next }) {
             {tarjeta && (
                 <div className='soon-fondo'>
                     <div className='soon-fx'>
-                        <InforTarjeta cerrarInfo={toggleTarjeta} sendDatos={datosRecibidos} />
+                        <InforTarjeta cerrarInfo={toggleTarjeta}  />
                     </div>
                 </div>
             )}

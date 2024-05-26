@@ -1,7 +1,36 @@
 import { Helmet, HelmetProvider } from "react-helmet-async";
 import LayoutPrincipal from "../layouts/LayoutPrincipal";
+import { useEffect, useState } from "react";
+import PopupLogin from "../components/ui/Login/PopupLogin";
 
 const Suscripcion = () => {
+    const [log, setLog] = useState(false); //<<< PARA EL INICIO DE SESION
+    const [login, setLogin] = useState(false);
+
+    async function recibido() {
+        const respuesta = await fetch("/api/logueado", {
+            method: "GET",
+            headers: {
+                "Content-Type": "application/json",
+            },
+        });
+
+        if (!respuesta.ok) {
+            setLog(false);
+        }
+
+        let respuestaJson = await respuesta.json();
+
+        if (respuestaJson.logueado == true) {
+            setLog(true);
+        } else {
+            setLog(false);
+        }
+    }
+
+    useEffect(() => {
+        recibido();
+    }, []);
 
     return (
         <>
@@ -47,9 +76,14 @@ const Suscripcion = () => {
                             </div>
                         </div>
                     </div>
-                    <a href="/suscripcion/compra" className='justify-self-center text-2xl bg-[#ec5766] p-2 px-8 text-white mx-6 rounded-xl mt-6 duration-200 hover:bg-[#ffb5a7]'>Comprar</a>
+                    { log ? (
+                        <a href="/suscripcion/compra" className='justify-self-center text-2xl bg-[#ec5766] p-2 px-8 text-white mx-6 rounded-xl mt-6 duration-200 hover:bg-[#ffb5a7]'>Comprar</a>
+                    ):(
+                        <button onClick={() => setLogin(!login)} className='justify-self-center text-2xl bg-[#ec5766] p-2 px-8 text-white mx-6 rounded-xl mt-6 duration-200 hover:bg-[#ffb5a7]'>Comprar</button>
+                    )}
                 </div>
             </LayoutPrincipal>
+            {login && <PopupLogin cerrar={() => setLogin(!login)} />}
         </>
     )
 }

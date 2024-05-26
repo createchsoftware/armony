@@ -1,13 +1,13 @@
 import { endConnection } from "../connection.js";
 import mysql from "mysql2";
-import { readEmpleadoById } from "./queryEmpleado.js";
+import { searchVentaCita } from "./queryVenta.js";
 
 const messageError = "Ha ocurrido un error al ejecutar el query: ";
 
 // CREATE
 export async function createCitas(connection, data) {
   try {
-    let insertCita = "CALL addCita(?, ?, ?, ?, ?, ?, ?, ?, ?)";
+    let insertCita = "CALL addCita(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
     let query = mysql.format(insertCita, [
       data.idVenta,
       data.idEmp,
@@ -18,6 +18,7 @@ export async function createCitas(connection, data) {
       data.horaF,
       data.descr,
       data.estado,
+      data.promo,
     ]);
     const [rows, fields] = await connection.query(query);
     endConnection();
@@ -46,6 +47,55 @@ export async function ventaCita(connection, data) {
     const [rows, fields] = await connection.query(query);
     endConnection();
     return rows;
+  } catch (err) {
+    // Capturamos errores de ejecucion de query
+    console.error(messageError, err); // Mostramos errores por consola
+  }
+}
+
+/* Sigue el orden AltaVenta => busquedaVenta => AltaCita */
+// Create cita online (FUNCIONAL)
+export async function citaOnline(connection, data) {
+  try {
+    let resultado; // Variable donde almacenaremos si se hizo correctamente
+    let duracion = await duracionTotal(connection, { idServ: data.idServ }); // Calculamos la duracion total del servicio
+    data.horaF = horaFinal(data.horaI, duracion[0].tiempo); // Calculamos la hora final del servicio
+    // await ventaCita(connection, {
+    //   idCliente: data.idCliente,
+    //   nombre: data.nombre,
+    //   phone: data.phone,
+    //   tarjeta: data.tarjeta,
+    //   monedero: data.monedero,
+    //   estadoPago: data.estadoPago,
+    //   subTotal: data.subTotal,
+    //   total: data.total,
+    //   impuesto: data.impuesto,
+    // }); // Ejecutamos la alta de la venta
+    console.log("Venta realizada correctamente");
+    const getVenta = await searchVentaCita(connection, {
+      idCliente: data.idCliente,
+      tVenta: "cita",
+      phone: data.phone,
+    }); // Buscamos el id de la venta recien hecha y lo almacenamos
+    console.log(`Se encontro la venta con id: ${getVenta[0].pkIdVenta}`);
+    // Verificamos que si encontrara la venta
+    if (getVenta[0].pkIdVenta !== 0 && getVenta[0].pkIdVenta !== null) {
+      resultado = await createCitas(connection, {
+        idVenta: getVenta[0].pkIdVenta,
+        idEmp: data.idEmp,
+        idPilar: data.idPilar,
+        idServ: data.idServ,
+        fecha: data.fecha,
+        horaI: data.horaI,
+        horaF: data.horaF,
+        descr: data.descr,
+        estado: data.estado,
+        promo: data.promo,
+      }); // Ejecutamos el alta de la cita
+      console.log("Cita creada correctamente");
+      return true; // Retornamos true como referencia que si se realizo la cita
+    }
+    return false; // Retornamos false como referencia que no se realizo la cita
   } catch (err) {
     // Capturamos errores de ejecucion de query
     console.error(messageError, err); // Mostramos errores por consola
@@ -189,8 +239,6 @@ export function stringATiempo(tiempo) {
   minutos = parseInt(tiempoString[1]); // Accedemos al segundo campo (minutos) y lo convertimos en un entero
   return minutos; // Retornamos los minutos
 }
-
-console.log(stringATiempo("12:00:00"));
 
 // FUNCIONAL
 export function horaFinal(horaI, duracion) {

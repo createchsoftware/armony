@@ -64,6 +64,7 @@ const filters = [
 ];
 
 export default function ServicioEstetica() {
+  const [login, setLogin] = useState(false);
   const [mobileFiltersOpen, setMobileFiltersOpen] = useState(false);
   const [sortOption, setSortOption] = useState(ordenamiento[0]);
   const [allProducts, setAllProducts] = useState([]);
@@ -129,6 +130,33 @@ export default function ServicioEstetica() {
         console.log("error", error);
       });
   }, []);
+  /*
+  // Función para obtener los servicios de spa
+  async function renderSpaServices() {
+    try {
+      const respuesta = await fetch("/api/admin/categoria/faltaruta", {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+      setFilteredProducts(respuesta);
+    } catch (error) {
+      console.log("error", error);
+    }
+  }
+
+  // Función para obtener los servicios de estética
+  async function renderEsteticaServices() {
+    const respuesta = await fetch("/api/admin/categoria/faltaruta", {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+    setFilteredProducts(respuesta);
+  }
+  */
 
   // Función para manejar cambios en las categorías
   const handleCategoryChange = (label, isChecked) => {
@@ -355,19 +383,21 @@ export default function ServicioEstetica() {
                         role="list"
                         className="px-2 py-3 font-medium text-gray-90"
                       >
-                        {subCategories.map((category) => (
-                          <li key={category.name}>
-                            <a
-                              href={category.href}
-                              onClick={() => {
-                                setCategory(category.label);
-                              }}
-                              className="block px-2 py-3 cursor-pointer"
-                            >
-                              {category.name}
-                            </a>
-                          </li>
-                        ))}
+                        {log
+                          ? subCategories.map((category) => (
+                              <li key={category.name}>
+                                <a
+                                  href={category.href}
+                                  onClick={() => {
+                                    setCategory(category.label);
+                                  }}
+                                  className="block px-2 py-3 cursor-pointer"
+                                >
+                                  {category.name}
+                                </a>
+                              </li>
+                            ))
+                          : null}
                       </ul>
 
                       {filters.map((section) => (
@@ -547,69 +577,71 @@ export default function ServicioEstetica() {
               <div className="grid md:justify-start md:gap-12 md:flex">
                 {/* Filters */}
                 <form className="hidden w-64 lg:block">
-                  {subCategories.map((section) => (
-                    <Disclosure
-                      as="div"
-                      key={section.id}
-                      className="py-6 border-b border-gray-200"
-                    >
-                      {({ open }) => (
-                        <>
-                          <h3 className="flow-root -my-3">
-                            <Disclosure.Button className="flex items-center justify-between w-full py-3 text-sm text-gray-400 hover:text-gray-500">
-                              <span className="font-medium text-gray-900">
-                                {section.name}
-                              </span>
-                              <span className="flex items-center ml-6">
-                                {open ? (
-                                  <MinusIcon
-                                    className="w-5 h-5"
-                                    aria-hidden="true"
-                                  />
-                                ) : (
-                                  <PlusIcon
-                                    className="w-5 h-5"
-                                    aria-hidden="true"
-                                  />
-                                )}
-                              </span>
-                            </Disclosure.Button>
-                          </h3>
-                          <Disclosure.Panel className="pt-6">
-                            <div className="space-y-4">
-                              {section.options.map((option, optionIdx) => (
-                                <div
-                                  key={option.value}
-                                  className="flex items-center"
-                                >
-                                  <input
-                                    onChange={(e) =>
-                                      handleCategoryChange(
-                                        option.label,
-                                        e.target.checked
-                                      )
-                                    }
-                                    id={`filter-${section.id}-${optionIdx}`}
-                                    name={`${section.id}[]`}
-                                    defaultValue={option.value}
-                                    type="checkbox"
-                                    defaultChecked={option.checked}
-                                    className="w-4 h-4 border-gray-300 rounded text-rose-400 focus:ring-rose-400 "
-                                  />
-                                  <label
-                                    htmlFor={`filter-${section.id}-${optionIdx}`}
-                                    className="ml-3 text-sm text-gray-600"
-                                  >
-                                    {option.label}
-                                  </label>
+                  {log
+                    ? subCategories.map((section) => (
+                        <Disclosure
+                          as="div"
+                          key={section.id}
+                          className="py-6 border-b border-gray-200"
+                        >
+                          {({ open }) => (
+                            <>
+                              <h3 className="flow-root -my-3">
+                                <Disclosure.Button className="flex items-center justify-between w-full py-3 text-sm text-gray-400 hover:text-gray-500">
+                                  <span className="font-medium text-gray-900">
+                                    {section.name}
+                                  </span>
+                                  <span className="flex items-center ml-6">
+                                    {open ? (
+                                      <MinusIcon
+                                        className="w-5 h-5"
+                                        aria-hidden="true"
+                                      />
+                                    ) : (
+                                      <PlusIcon
+                                        className="w-5 h-5"
+                                        aria-hidden="true"
+                                      />
+                                    )}
+                                  </span>
+                                </Disclosure.Button>
+                              </h3>
+                              <Disclosure.Panel className="pt-6">
+                                <div className="space-y-4">
+                                  {section.options.map((option, optionIdx) => (
+                                    <div
+                                      key={option.value}
+                                      className="flex items-center"
+                                    >
+                                      <input
+                                        onChange={(e) =>
+                                          handleCategoryChange(
+                                            option.label,
+                                            e.target.checked
+                                          )
+                                        }
+                                        id={`filter-${section.id}-${optionIdx}`}
+                                        name={`${section.id}[]`}
+                                        defaultValue={option.value}
+                                        type="checkbox"
+                                        defaultChecked={option.checked}
+                                        className="w-4 h-4 border-gray-300 rounded text-rose-400 focus:ring-rose-400 "
+                                      />
+                                      <label
+                                        htmlFor={`filter-${section.id}-${optionIdx}`}
+                                        className="ml-3 text-sm text-gray-600"
+                                      >
+                                        {option.label}
+                                      </label>
+                                    </div>
+                                  ))}
                                 </div>
-                              ))}
-                            </div>
-                          </Disclosure.Panel>
-                        </>
-                      )}
-                    </Disclosure>
-                  ))}
+                              </Disclosure.Panel>
+                            </>
+                          )}
+                        </Disclosure>
+                      ))
+                    : null}
 
                   <Disclosure
                     as="div"

@@ -8,6 +8,7 @@ import {
   updateEmpleado,
   deleteEmpleadoById,
   getEmpServicio,
+  getEmpFav,
 } from "../db/query/queryEmpleado.js";
 
 // Router
@@ -157,6 +158,21 @@ routerEmpleado.get("/getEmpServicio/:idEmp", async (req, res) => {
       emps[i] = resultado[i];
     }
     res.json(emps); // Enviamos informacion en formato JSON
+  } catch (err) {
+    // Capturamos errores
+    console.error(messageError, err); // Mostramos errores por consola
+    res.status(500).send(messageError); // Enviamos un error INTERNAL SERVER ERROR y el error al navegador
+  }
+});
+
+// Obtiene los empleados favoritos del cliente
+// FUNCIONAL
+routerEmpleado.get("/favoritos/:id", async (req, res) => {
+  try {
+    const resultado = await getEmpFav(conexion, {
+      idCliente: req.params.id,
+    });
+    res.status(200).json({ message: "Empleados favoritos: ", data: resultado });
   } catch (err) {
     // Capturamos errores
     console.error(messageError, err); // Mostramos errores por consola

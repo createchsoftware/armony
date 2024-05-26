@@ -37,7 +37,7 @@ export default function Cita() {
   const [completed, setCompleted] = useState({});
   const [scrollPosition, setScrollPosition] = useState(0);
   const nextButtonText =
-    activeStep === steps.length - 1 ? "Ver agenda" : "Siguiente";
+    activeStep === steps.length - 1 ? "Finalizar" : "Siguiente";
   // const citasAgregadas = [];
   // localStorage.setItem('citas', JSON.stringify(citasAgregadas));
   // useEffect(() => {
@@ -198,8 +198,8 @@ export default function Cita() {
     <Paquetes key={1} />,
     <Calendario key={2} />,
     <Agenda restart={restart} next={handleClick} key={3} />,
-    <Pago key={4} />,
-    <FinalizacionPago key={5} />,
+    <Pago next={handleClick} key={4} />,
+    <FinalizacionPago next={handleClick} key={5} />,
     <Ticket key={6} />,
   ];
 
@@ -269,10 +269,9 @@ export default function Cita() {
                 {/* <Typography sx={{ mt: 2, mb: 1, py: 1 }}>
                                     Step {activeStep + 1}
                                 </Typography> */}
-                <div className={(activeStep === 0 || activeStep === 3 || activeStep === 4) ? "grid grid-cols-2 content-between" : "grid grid-cols-3 content-between"}>
+                <div className={(activeStep === 0 || activeStep === 3 || activeStep === 4 || activeStep === 6) ? "grid grid-cols-2 content-between" : "grid grid-cols-3 content-between"}>
                   <button
-                    // hidden={activeStep === 5}
-                    hidden={activeStep === 0}
+                    hidden={activeStep === 0 || activeStep === 5 || activeStep === 6}
                     disabled={activeStep === 0}
                     onClick={handleBack}
                     className={`${activeStep === 0
@@ -284,12 +283,12 @@ export default function Cita() {
                     Regresar
                   </button>
                   <button
-                    // hidden={activeStep === 5 || activeStep === 3 || activeStep === 4}
-                    onClick={handleCancel}
-                    disabled={activeStep === steps.length - 1}
+
+                    hidden={activeStep === 5}
+                    onClick={activeStep === 6 ? restart : handleClick}
                     className={"px-4 py-2 mx-auto text-xl text-white rounded-full bg-[#036C65] hover:bg-opacity-70"}
                   >
-                    Cancelar
+                    {activeStep === 6 ? "Agendar otra cita" : "Cancelar"}
                   </button>
                   <button
                     hidden={activeStep === 3 || activeStep === 4 || activeStep === 5}
