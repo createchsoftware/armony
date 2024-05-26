@@ -127,7 +127,7 @@ function InformacionPersonal() {
                             <a className='flex items-baseline text-md gap-x-4' href={document.referrer}><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-4 h-4">
                                 <path strokeLinecap="round" strokeLinejoin="round" d="M9 15 3 9m0 0 6-6M3 9h12a6 6 0 0 1 0 12h-3" />
                             </svg> Volver</a>
-                            <img className='w-24 m-auto mb-6' src="../../../pictures/marcoBlanco.png" alt="" />
+                            <img className='w-24 m-auto mb-6' src={`../../../pictures/avatares/${imagen}`} alt="" />
 
                             <h1 className=''>Información personal</h1>
                             <p>Observa y edita tu información de la cuenta</p>
@@ -189,7 +189,7 @@ function InformacionPersonal() {
                                 </div>
                                 <aside className='w-[40%] my-8 '>
                                     <div className='grid gap-6 text-center '>
-                                        <img className='m-auto rounded-full md:w-1/3' src={`../../../pictures/avatares/${imagen}`} alt="" />
+                                        <img className='m-auto rounded-full md:w-1/3' src={`../../../pictures/rangoPlatino.png`} alt="" />
                                         <h2 className='text-[#EB5765]'>Rango platino</h2>
                                         <img className='w-48 m-auto' src="../../../pictures/membresiaEjemplo.png" alt="" />
                                         <a href="/perfil/editar-perfil" className="m-auto px-12 py-2  font-medium text-white whitespace-no-wrap bg-[#EB5765] border border-gray-200 rounded-full shadow-sm hover:cursor-pointer hover:bg-[#eb7580] focus:outline-none focus:shadow-none">
