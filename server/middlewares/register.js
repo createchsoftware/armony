@@ -39,8 +39,6 @@ async function InsertUser(solicitud,respuesta,siguiente){
                 galleta2 = galleta2.slice(14);
                 galleta3 = galleta3.slice(11);
 
-
-                console.log('estoy harto');
     
                     let decodificada1 = await jsonwebtoken.verify(galleta1, process.env.JWT_SECRET); // decodificar galleta 1
                     let decodificada2 = await jsonwebtoken.verify(galleta2, process.env.JWT_SECRET); // decodificar galleta 2
@@ -55,9 +53,14 @@ async function InsertUser(solicitud,respuesta,siguiente){
                     let salt =  await bcryptjs.genSalt(5);  //clave cryptografica de la contraseña del usuario
                     let hashPassword =  await bcryptjs.hash(decodificada3.password,salt);  // contraseña cryptografica
     
+                    let insertar_ruta = '';
+
+                    if(decodificada1.imagen != undefined){
+                        insertar_ruta = decodificada1.imagen.filename;
+                    }
                     
     
-                    let parametros = [decodificada1.nombre,decodificada1.paterno,decodificada1.materno,decodificada1.correo,telefono_completo,hashPassword,decodificada1.imagen,decodificada1.calle,decodificada1.colonia,decodificada1.numero,decodificada1.codigo_postal,decodificada1.apodo,nacimiento];
+                    let parametros = [decodificada1.nombre,decodificada1.paterno,decodificada1.materno,decodificada1.correo,telefono_completo,hashPassword,insertar_ruta,decodificada1.calle,decodificada1.colonia,decodificada1.numero,decodificada1.codigo_postal,decodificada1.apodo,nacimiento];
                     
                     // utilizamos una promesa para esperar que la funcion asincrona se termine
                 
@@ -115,7 +118,7 @@ async function InsertUser(solicitud,respuesta,siguiente){
                                 correo:decodificada1.correo,
                                 telefono:telefono_completo,
                                 contraseña:hashPassword,  // contrasena encriptada detro de la cookie
-                                imagen:decodificada1.imagen,
+                                imagen:insertar_ruta,
                                 calle:decodificada1.calle,
                                 colonia:decodificada1.colonia,
                                 numero:decodificada1.numero,
