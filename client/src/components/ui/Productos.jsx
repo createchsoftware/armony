@@ -137,9 +137,9 @@ function Productos({ productos }) {
                             <div>
                                 <p className='mt-2  text-[#0BC26A] text-lg'>{'$' + producto.precio + ' MXN'}</p>
                                 <Rating className='' value={producto.valoracion} readOnly unratedcolor="amber" ratedcolor="amber" />
-                                <h3 className='mt-0 text-lg'>{producto.nombre}</h3>
+                                <h3 className='mt-0 text-lg'>{producto.nombre.substring(0, 15) + '...'}</h3>
                                 <p className='mt-0 text-xs text-justify'>
-                                    {producto.descripcion.substring(0, 60) + '...'}
+                                    {producto.descripcion.substring(0, 40) + '...'}
                                 </p>
                             </div>
                             <div className='mt-2'>

@@ -7,6 +7,25 @@ import Ofertas from "../components/ui/Ofertas.jsx";
 import { useState } from "react";
 import Soon from "../components/ui/Proximamente.jsx";
 import { useEffect } from "react";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { ArrowProps } from 'react-multi-carousel/lib/types'
+import { faDiamond, faAngleLeft, faAngleRight } from '@fortawesome/free-solid-svg-icons';
+
+const CustomLeftArrow = ({ onClick }) => {
+  return (
+    <button onClick={onClick} className="custom-left-arrow">
+      <FontAwesomeIcon icon={faAngleLeft} />
+    </button>
+  );
+};
+
+const CustomRightArrow = ({ onClick }) => {
+  return (
+    <button onClick={onClick} className="custom-right-arrow">
+      <FontAwesomeIcon icon={faAngleRight} />
+    </button>
+  );
+};
 
 const Productos = () => {
   const [descuentos, setDescuentos] = useState([]);
@@ -31,6 +50,8 @@ const Productos = () => {
       });
   }, []);
 
+
+
   return (
     <>
       <HelmetProvider>
@@ -39,7 +60,7 @@ const Productos = () => {
         </Helmet>
       </HelmetProvider>
       <LayoutPrincipal>
-        <main className="bg-[#F4F1ED] pb-20">
+        <main className="bg-[#F4F1ED] pb-20 overflow-visible">
           <img
             className="w-48 translate-y-24 float-start"
             src="../../pictures/left.png"
@@ -87,19 +108,20 @@ const Productos = () => {
             </div>
           </section>
 
-          <section className="my-20 w-[80%] bg-white m-auto p-6 rounded-xl border-8 border-[#E2B3B7]">
+          <section className="my-20 w-[80%] bg-white m-auto overflow-visible py-6 px-0 rounded-xl border-8 border-[#E2B3B7]">
             <h1 className="pb-4 text-xl ml-28">Ofertas en descuento</h1>
             <hr />
-            <div className="mx-auto p-6 md:mx-28 md:p-0 selection:bg-[#EB5765] selection:text-white">
+            <div className="mx-auto md:px-0 px-2 md:mx-0 selection:bg-[#EB5765] overflow-visible selection:text-white">
               <Carousel
                 additionalTransfrom={0}
                 arrows
                 autoPlay
                 autoPlaySpeed={3000}
                 centerMode={false}
-                className="z-0"
+                className="z-0 md:px-0"
                 containerclassName="container-with-dots z-0"
-                dotListclassName=""
+                dotListClass=""
+                // customDot={<button className="bg-[#036C65] w-2 h-2 rounded-full">Hola</button>}
                 // draggable
                 focusOnSelect={false}
                 infinite
@@ -141,15 +163,26 @@ const Productos = () => {
                 rtl={false}
                 shouldResetAutoplay
                 showDots={false}
-                sliderclassName=""
+                sliderclassName="overflow-visible z-20"
                 slidesToSlide={1}
                 swipeable
+                customLeftArrow={<FontAwesomeIcon
+                  icon={faAngleLeft}
+                  size="lg"
+                  className="absolute cursor-pointer top-1/2 transform -translate-y-1/2 left-0 text-3xl text-primary-900 aspect-square bg-[#e6e6e6] rounded-full text-[#036C65] p-4 hover:opacity-90 overflow-visible z-50"
+                />}
+                customRightArrow={<FontAwesomeIcon
+                  size="lg"
+                  icon={faAngleRight}
+                  className="absolute cursor-pointer top-1/2 transform -translate-y-1/2 right-0 text-3xl text-primary-900 bg-[#e6e6e6] rounded-full aspect-square text-[#036C65] p-4 hover:opacity-90 overflow-visible z-50"
+                />}
               // className=''
               >
                 {
                   descuentos.map((oferta, index) => (
-                    <Ofertas producto={oferta} />
-                  ))}
+                    <div className="">
+                      <Ofertas producto={oferta} />
+                    </div>))}
               </Carousel>
             </div>
           </section>

@@ -20,6 +20,9 @@ import { useLocation } from 'react-router-dom';
 import FinalizacionPagoProd from '../components/ui/FinalizacionPagoProd';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { ArrowProps } from 'react-multi-carousel/lib/types'
+import { faDiamond, faAngleLeft, faAngleRight } from '@fortawesome/free-solid-svg-icons';
 
 const steps = [
   "Productos",
@@ -202,6 +205,16 @@ export default function Cita({ producto }) {
               sliderclassName=""
               slidesToSlide={1}
               swipeable
+              customLeftArrow={<FontAwesomeIcon
+                icon={faAngleLeft}
+                size="lg"
+                className="absolute cursor-pointer top-1/2 transform -translate-y-1/2 -left-3 text-3xl text-primary-900 aspect-square bg-[#e6e6e6] rounded-full text-[#036C65] p-4 hover:opacity-90 overflow-visible z-50"
+              />}
+              customRightArrow={<FontAwesomeIcon
+                size="lg"
+                icon={faAngleRight}
+                className="absolute cursor-pointer top-1/2 transform -translate-y-1/2 -right-3 text-3xl text-primary-900 bg-[#e6e6e6] rounded-full aspect-square text-[#036C65] p-4 hover:opacity-90 overflow-visible z-50"
+              />}
             >
               {descuentos.map(oferta => (
                 <Ofertas key={oferta.id} producto={oferta} />

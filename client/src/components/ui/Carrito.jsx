@@ -72,6 +72,7 @@ export const useCarrito = () => useContext(CarritoContext);
 const Carrito = ({ cerrar, totalProductos, cartLogin }) => {
     const { cartItems, eliminarDelCarrito, increaseQuantity, decreaseQuantity } = useCarrito();
     const [log, setLog] = useState(false); //<<< PARA EL INICIO DE SESION
+    const [login, setLogin] = useState(false);
 
     async function recibido() {
         const respuesta = await fetch("/api/logueado", {
@@ -93,6 +94,12 @@ const Carrito = ({ cerrar, totalProductos, cartLogin }) => {
             setLog(false);
         }
     }
+
+
+    const toggleLoginPopup = () => {
+        setLogin(!login);
+    };
+
 
     useEffect(() => {
         recibido();
@@ -177,17 +184,18 @@ const Carrito = ({ cerrar, totalProductos, cartLogin }) => {
                         <p>Total:</p>
                         <span className='font-bold'>${total}</span>
                     </div>
-                    { log ? (
+                    {log ? (
                         <button className='m-auto w-full hover:bg-opacity-90 rounded-xl py-2 px-6 text-white bg-[#45B59C]' onClick={handleComprar}>
                             Comprar
                         </button>
-                    ):(
+                    ) : (
                         <button className='m-auto w-full hover:bg-opacity-90 rounded-xl py-2 px-6 text-white bg-[#45B59C]' onClick={cartLogin}>
                             Comprar
                         </button>
                     )}
                 </>
             )}
+            {login && <PopupLogin cerrar={toggleLoginPopup} />}
         </div>
     );
 }

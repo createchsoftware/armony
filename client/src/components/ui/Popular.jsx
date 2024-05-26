@@ -7,6 +7,9 @@ import pilar3 from '../../../public/pictures/pilar3.png'
 import pilar4 from '../../../public/pictures/pilar4.png'
 import { useState } from 'react';
 import Soon from './Proximamente';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { ArrowProps } from 'react-multi-carousel/lib/types'
+import { faDiamond, faAngleLeft, faAngleRight } from '@fortawesome/free-solid-svg-icons';
 
 function Popular() {
     const [soon, setSoon] = useState(false);
@@ -71,11 +74,23 @@ function Popular() {
                 sliderclassName=""
                 slidesToSlide={1}
                 swipeable
+                customLeftArrow={<FontAwesomeIcon
+                    icon={faAngleLeft}
+                    size="lg"
+                    className="absolute cursor-pointer top-1/2 transform -translate-y-1/2 left-0 text-3xl text-primary-900 aspect-square bg-[#e6e6e6] rounded-full text-[#036C65] p-4 hover:opacity-90 overflow-visible z-50"
+                />}
+                customRightArrow={<FontAwesomeIcon
+                    size="lg"
+                    icon={faAngleRight}
+                    className="absolute cursor-pointer top-1/2 transform -translate-y-1/2 right-0 text-3xl text-primary-900 bg-[#e6e6e6] rounded-full aspect-square text-[#036C65] p-4 hover:opacity-90 overflow-visible z-50"
+                />}
             >
-                <div className='grid h-full m-4 p-8 font-[abeatbyKai]'>
-                    <a href="/spa"><img className='rounded-2xl w-72 h-96' src={pilar1} alt="" /></a>
-                    <div className='flex flex-col justify-between h-full'>
-                        <h6 className='pt-4 text-lg font-bold text-center'>SPA - Masaje facial</h6>
+                <div className='grid h-full m-4 p-4 font-[abeatbyKai]'>
+                    <div className=' h-96'>
+                        <a href="/spa"><img className='rounded-2xl w-72 h-96' src={pilar1} alt="" /></a>
+                    </div>
+                    <div className='flex flex-col justify-between h-52 '>
+                        <h6 className='text-lg font-bold text-center '>SPA - Masaje facial</h6>
                         <p className='pt-2 text-center'>Encuentra la calma en un masaje facial que renueve tu piel y brinda un momento de paz</p>
                         <div className='flex justify-center mt-4'>
                             <a href="/spa"
@@ -85,10 +100,12 @@ function Popular() {
                         </div>
                     </div>
                 </div>
-                <div className='grid h-full m-4 p-8 font-[abeatbyKai]'>
-                    <img className='rounded-2xl w-72 h-96' src={pilar2} alt="" />
-                    <div className='flex flex-col justify-between h-full'>
-                        <h6 className='pt-4 text-lg font-bold text-center'>Cafeteria</h6>
+                <div className='grid h-full m-4 p-4 font-[abeatbyKai]'>
+                    <div className=' h-96'>
+                        <img className='rounded-2xl w-72 h-96' src={pilar2} alt="" />
+                    </div>
+                    <div className='flex flex-col justify-between h-52 '>
+                        <h6 className='text-lg font-bold text-center'>Cafeteria</h6>
                         <p className='pt-2 text-center'>Disfruta de cafe y snacks en nuestra cafeteria. ¡Momentos de cafe garantizados!</p>
                         <div className='flex justify-center mt-4'>
                             <a onClick={toggleSoon}
@@ -98,10 +115,13 @@ function Popular() {
                         </div>
                     </div>
                 </div>
-                <div className='grid h-full m-4 p-8 font-[abeatbyKai]'>
-                    <img className='rounded-2xl w-72 h-96' src={pilar3} alt="" />
-                    <div className='flex flex-col justify-between h-full'>
-                        <h6 className='pt-4 text-lg font-bold text-center'>Wellness</h6>
+                <div className='grid h-full m-4 p-4 font-[abeatbyKai]'>
+                    <div className=' h-96'>
+                        <img className='rounded-2xl w-72 h-96' src={pilar3} alt="" />
+                    </div>
+                    {/* <div className='flex flex-col content-between justify-between h-full place-content-between place-items-center '> */}
+                    <div className='flex flex-col content-between justify-between h-52 place-content-between place-items-center '>
+                        <h6 className='text-lg font-bold text-center '>Wellness</h6>
                         <p className='pt-2 text-center'>En Wellness, cada elección es un voto a favor de tu bienestar fisíco, mental y emocional.</p>
                         <div className='flex justify-center mt-4'>
                             <a onClick={toggleSoon}
@@ -111,10 +131,11 @@ function Popular() {
                         </div>
                     </div>
                 </div>
-                <div className='grid h-full m-4 p-8 font-[abeatbyKai]' >
-                    <img className='rounded-2xl w-72 h-96' src={pilar4} alt="" />
-                    <div className='flex flex-col justify-between h-full'>
-                        <h6 className='pt-4 text-lg font-bold text-center'>Colectivo</h6>
+                <div className='grid h-full m-4 p-4 font-[abeatbyKai]' >
+                    <div className=' h-96'>
+                        <img className='rounded-2xl w-72 h-96' src={pilar4} alt="" />
+                    </div>                    <div className='flex flex-col justify-between h-52 '>
+                        <h6 className='text-lg font-bold text-center '>Colectivo</h6>
                         <p className='pt-2 text-center'>Cada regalo unico expresa tu amor y crea momentos inolvidables</p>
                         <div className='flex justify-center mt-4'>
                             <a onClick={toggleSoon}

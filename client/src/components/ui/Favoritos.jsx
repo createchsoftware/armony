@@ -114,14 +114,14 @@ function Favoritos() {
           <a
             style={{ backgroundColor: color1 }}
             onClick={() => toggleService(1)}
-            className="w-[8rem] text-white text-sm text-center md:text-base rounded-2xl py-3 mx-auto"
+            className="w-[8rem] hover:cursor-pointer text-white text-sm text-center md:text-base rounded-2xl py-3 mx-auto"
           >
             SPA
           </a>
           <a
             style={{ backgroundColor: color2 }}
             onClick={() => toggleService(2)}
-            className="w-[8rem] text-white text-xs md:text-base text-center rounded-2xl py-3 mx-auto "
+            className="w-[8rem] hover:cursor-pointer text-white text-xs md:text-base text-center rounded-2xl py-3 mx-auto "
           >
             Estética
           </a>
