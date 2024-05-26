@@ -68,16 +68,10 @@ const AgendarServicios = ({ next }) => {
     }
   }, [spa]);
 
-  /*useEffect(() => {
+  useEffect(() => {
     if (spa.length > 0) {
       setTimeout(() => {
-        fetch(`/api/admin/productoss/serviciosFav`, {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({ idCliente: id }),
-        })
+        fetch(`/api/admin/productos/serviciosFav/${id}`)
           .then((response) => {
             if (!response.ok) {
               throw new Error("Error al obtener los servicios de Estética");
@@ -85,14 +79,14 @@ const AgendarServicios = ({ next }) => {
             return response.json();
           })
           .then((data) => {
-            setFavoritos(data);
+            setFavoritos(data[0]);
           })
           .catch((error) => {
             // setErrorEstetica(error.message);
           });
       }, 3000);
     }
-  }, [spa]);*/
+  }, [spa]);
 
   useEffect(() => {
     if (spa.length > 0) {
@@ -174,8 +168,8 @@ const AgendarServicios = ({ next }) => {
           </button>
           <button
             style={{ backgroundColor: color3 }}
-            /*onClick={() => toggleService(3)}*/
-            onClick={toggleSoon}
+            onClick={() => toggleService(3)}
+            /*onClick={toggleSoon}*/
             className="font-[ABeeZee] font-bold px-10 py-1 rounded-full"
           >
             Favoritos
