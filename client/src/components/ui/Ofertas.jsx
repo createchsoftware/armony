@@ -76,18 +76,18 @@ function Ofertas({ producto }) {
                     />
                 </Box>
             </div>
-            <a href="/spa"><img onClick={() => handleViewMore(producto)} className='w-[100%] aspect-square' src={producto.img} alt={producto.nombre} /></a>
+            <img onClick={() => handleViewMore(producto)} className='w-[100%] hover:opacity-80 hover:cursor-pointer aspect-square' src={producto.img} alt={producto.nombre} />
             <hr />
             <p className='text-[#0BC26A] pt-4 text-lg text-center'>{'$' + Number(producto.precio) + ' MXN'} <span className='text-[#000000] line-through'>{'$' + (producto.precio + 130)}</span></p>
             <div className='flex justify-center'>
                 <Rating className='' value={5} readOnly unratedcolor="amber" ratedcolor="amber" />
             </div>
             <h6 className='pt-2 text-xl font-bold text-center'>{producto.nombre.length > 27 ? producto.nombre.substring(0, 27) + '...' : producto.nombre}</h6>
-            <p className='text-center'>{producto.descripcion}</p>
+            <p className='text-center'>{producto.descripcionOferta}</p>
             <div className='mt-2'>
                 <button onClick={() => handleClick(producto)} className=" text-xs transition-all duration-300 px-2 m-auto hover:bg-[#036C65] hover:ring-1  hover:[#036C65] hover:ring-offset-1 group relative flex h-10 items-center justify-center overflow-hidden rounded-xl border-2 bg-[#EB5765] font-[abeatbykai] text-neutral-200">Agregar <IconoAgregarAlCarrito /> <div className="w-0 translate-x-[100%] pl-0 opacity-0 transition-all duration-200 group-hover:w-0 group-hover:translate-x-0 group-hover:pl-1 group-hover:opacity-100"></div></button>
             </div>
-        </div>
+        </div >
     )
 }
 <ToastContainer position={'bottom-right'} theme={'light'} />
