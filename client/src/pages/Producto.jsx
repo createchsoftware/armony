@@ -264,12 +264,12 @@ function Producto() {
                                 <button onClick={handleAddCart} className="text-[#EB5765] py-2 w-full bg-opacity-30 bg-[#EB5765] hover:bg-opacity-90 hover:text-white rounded-full">
                                     Agregar al carrito
                                 </button>
-                                
-                                { log ? (
+
+                                {log ? (
                                     <button onClick={handleComprar} className="bg-[#EB5765] py-2 col-span-2 text-white rounded-full hover:bg-opacity-80 hover:text-white w-full">
                                         Comprar ahora
                                     </button>
-                                ):(
+                                ) : (
                                     <button onClick={() => setLogin(!login)} className="bg-[#EB5765] py-2 col-span-2 text-white rounded-full hover:bg-opacity-80 hover:text-white w-full">
                                         Comprar ahora
                                     </button>
@@ -280,69 +280,69 @@ function Producto() {
 
                     <hr className="my-4 text-black bg-black border-2 rounded-full border-gray w-[80%] m-auto" />
 
-                <section className=' rounded-2xl w-[80%] m-auto px-6 py-12 shadow-[0_3px_10px_rgb(0,0,0,0.2)]'>
-                    <h1 className='pb-4 ml-12 text-2xl'>Productos Similares</h1>
-                    <section className=' w-[100%] bg-white m-auto rounded-xl border-8 border-[#E2B3B7] py-6'>
-                        <hr />
-                        <div className='mx-auto p-6 md:mx-28 md:p-0 selection:bg-[#EB5765] selection:text-white'>
-                            <Carousel
-                                additionalTransfrom={0}
-                                arrows
-                                autoPlay
-                                autoPlaySpeed={3000}
-                                centerMode={false}
-                                className="z-0"
-                                containerclassName="container-with-dots z-0"
-                                dotListclassName=""
-                                // draggable
-                                focusOnSelect={false}
-                                infinite
-                                itemclassName=""
-                                keyBoardControl
-                                minimumTouchDrag={80}
-                                pauseOnHover
-                                renderArrowsWhenDisabled={false}
-                                renderButtonGroupOutside={false}
-                                renderDotsOutside={false}
-                                responsive={{
-                                    desktop: {
-                                        breakpoint: {
-                                            max: 3000,
-                                            min: 1024
+                    <section className=' rounded-2xl w-[80%] m-auto px-6 py-12 shadow-[0_3px_10px_rgb(0,0,0,0.2)]'>
+                        <h1 className='pb-4 ml-12 text-2xl'>Productos Similares</h1>
+                        <section className=' w-[100%] bg-white m-auto rounded-xl border-8 border-[#E2B3B7] py-6'>
+                            <hr />
+                            <div className='mx-auto p-6 md:mx-28 md:p-0 selection:bg-[#EB5765] selection:text-white'>
+                                <Carousel
+                                    additionalTransfrom={0}
+                                    arrows
+                                    autoPlay
+                                    autoPlaySpeed={3000}
+                                    centerMode={false}
+                                    className="z-0"
+                                    containerclassName="container-with-dots z-0"
+                                    dotListclassName=""
+                                    // draggable
+                                    focusOnSelect={false}
+                                    infinite
+                                    itemclassName=""
+                                    keyBoardControl
+                                    minimumTouchDrag={80}
+                                    pauseOnHover
+                                    renderArrowsWhenDisabled={false}
+                                    renderButtonGroupOutside={false}
+                                    renderDotsOutside={false}
+                                    responsive={{
+                                        desktop: {
+                                            breakpoint: {
+                                                max: 3000,
+                                                min: 1024
+                                            },
+                                            items: 4,
+                                            partialVisibilityGutter: 40
                                         },
-                                        items: 4,
-                                        partialVisibilityGutter: 40
-                                    },
-                                    mobile: {
-                                        breakpoint: {
-                                            max: 464,
-                                            min: 0
+                                        mobile: {
+                                            breakpoint: {
+                                                max: 464,
+                                                min: 0
+                                            },
+                                            items: 1,
+                                            partialVisibilityGutter: 30
                                         },
-                                        items: 1,
-                                        partialVisibilityGutter: 30
-                                    },
-                                    tablet: {
-                                        breakpoint: {
-                                            max: 1024,
-                                            min: 464
-                                        },
-                                        items: 2,
-                                        partialVisibilityGutter: 30
-                                    }
-                                }}
-                                rewind={false}
-                                rewindWithAnimation={false}
-                                rtl={false}
-                                shouldResetAutoplay
-                                showDots={false}
-                                sliderclassName=""
-                                slidesToSlide={1}
-                                swipeable
-                            // className=''
-                            >
-                                {descuentos.map(oferta => (
-                                    <Ofertas key={oferta.id} producto={oferta} />
-                                ))}
+                                        tablet: {
+                                            breakpoint: {
+                                                max: 1024,
+                                                min: 464
+                                            },
+                                            items: 2,
+                                            partialVisibilityGutter: 30
+                                        }
+                                    }}
+                                    rewind={false}
+                                    rewindWithAnimation={false}
+                                    rtl={false}
+                                    shouldResetAutoplay
+                                    showDots={false}
+                                    sliderclassName=""
+                                    slidesToSlide={1}
+                                    swipeable
+                                // className=''
+                                >
+                                    {descuentos.map(oferta => (
+                                        <Ofertas key={oferta.id} producto={oferta} />
+                                    ))}
 
                                 </Carousel>
                             </div>
