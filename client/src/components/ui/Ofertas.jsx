@@ -9,6 +9,9 @@ import { useNavigate } from 'react-router-dom';
 import { useCarrito } from '../ui/Carrito.jsx'
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import PopupLogin from "../../components/ui/Login/PopupLogin";
+import { useState } from 'react'
+import { useEffect } from 'react';
 
 const StyledRating = styled(Rating)({
     '& .MuiRating-iconFilled': {
@@ -19,7 +22,8 @@ const StyledRating = styled(Rating)({
     },
 });
 
-function Ofertas({ producto }) {
+
+function Ofertas({ producto, handleClickCarrito }) {
     const navigate = useNavigate();
     const notify = () => toast("Producto agregado al carrito");
     const { agregarAlCarrito } = useCarrito();
@@ -38,8 +42,10 @@ function Ofertas({ producto }) {
     }
 
     const handleClick = (producto) => {
-        notify();
-        handleAgregarAlCarrito(producto);
+        if (handleClickCarrito()) {
+            notify();
+            handleAgregarAlCarrito(producto);
+        }
     }
 
     const handleAgregarAlCarrito = (producto) => {
