@@ -11,48 +11,48 @@ import 'react-toastify/dist/ReactToastify.css';
 import PopupLogin from "../ui/Login/PopupLogin";
 
 function Productos() {
-    const [log, setLog] = useState(false);
-    const [login, setLogin] = useState(false);
+    // const [log, setLog] = useState(false);
+    // const [login, setLogin] = useState(false);
 
-    let respuestaJson = null;
-    async function checkLogin() {
-        try {
-            const respuesta = await fetch("/api/logueado", {
-                method: "GET",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-            });
+    // let respuestaJson = null;
+    // async function checkLogin() {
+    //     try {
+    //         const respuesta = await fetch("/api/logueado", {
+    //             method: "GET",
+    //             headers: {
+    //                 "Content-Type": "application/json",
+    //             },
+    //         });
 
-            respuestaJson = await respuesta.json();
+    //         respuestaJson = await respuesta.json();
 
-            if (respuestaJson.logueado == true) {
-                setLog(true);
-            } else {
-                setLog(false);
-            }
-        } catch (error) {
-            setLog(false);
-        }
-    }
+    //         if (respuestaJson.logueado == true) {
+    //             setLog(true);
+    //         } else {
+    //             setLog(false);
+    //         }
+    //     } catch (error) {
+    //         setLog(false);
+    //     }
+    // }
 
-    const toggleLoginPopup = () => {
-        setLogin(!login);
-    };
+    // const toggleLoginPopup = () => {
+    //     setLogin(!login);
+    // };
 
-    const handleClickCarrito = () => {
-        if (log) {
-            return true;
-        } else {
-            toggleLoginPopup();
-            return false;
-        }
-    };
+    // const handleClickCarrito = () => {
+    //     if (log) {
+    //         return true;
+    //     } else {
+    //         toggleLoginPopup();
+    //         return false;
+    //     }
+    // };
 
 
-    useEffect(() => {
-        checkLogin();
-    }, []);
+    // useEffect(() => {
+    //     checkLogin();
+    // }, []);
 
 
     const [descuentos, setDescuentos] = useState([]);
@@ -141,7 +141,8 @@ function Productos() {
                     // className=''
                     >
                         {descuentos.map(oferta => (
-                            <Ofertas key={oferta.id} producto={oferta} handleClickCarrito={handleClickCarrito} />
+                            <Ofertas key={oferta.id} producto={oferta} />
+                            // <Ofertas key={oferta.id} producto={oferta} handleClickCarrito={handleClickCarrito} />
                         ))}
 
                     </Carousel>
@@ -153,7 +154,7 @@ function Productos() {
                 </a>
             </div>
             <ToastContainer position={'bottom-right'} theme={'light'} />
-            {login && <PopupLogin cerrar={toggleLoginPopup} />}
+            {/* {login && <PopupLogin cerrar={toggleLoginPopup} />} */}
         </>
     );
 }

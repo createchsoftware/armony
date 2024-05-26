@@ -42,10 +42,8 @@ function Ofertas({ producto, handleClickCarrito }) {
     }
 
     const handleClick = (producto) => {
-        if (handleClickCarrito()) {
-            notify();
-            handleAgregarAlCarrito(producto);
-        }
+        notify();
+        handleAgregarAlCarrito(producto);
     }
 
     const handleAgregarAlCarrito = (producto) => {
