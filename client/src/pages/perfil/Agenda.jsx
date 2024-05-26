@@ -271,9 +271,8 @@ function Agenda() {
         let respuestaJson = await respuesta.json();
 
         if (respuestaJson.logueado === true) {
-            console.log("Usuario logueado", respuestaJson.clave);
             setId(respuestaJson.clave);
-            fetch(`/api/admin/citas/pendientes/${id}`)
+            fetch(`/api/admin/citas/citasPendientes/${id}`)
                 .then((response) => response.json())
                 .then((data) => {
                     console.log("Datos", data);
