@@ -18,7 +18,8 @@ function Navbar() {
     const [cart, setCart, showModal, setShowModal] = useState(false);
     const [login, setLogin] = useState(false);
     const [log, setLog] = useState(false); //<<< PARA EL INICIO DE SESION
-    const [usuario, setUsuario] = useState(false); //<<< PARA EL INICIO DE SESION
+    const [usuario, setUsuario] = useState(); //<<< PARA EL INICIO DE SESION
+    const [imagen, setImagen] = useState()
     const [items, setItems] = useState(0);
     const [rango, setRango] = useState(0); //<<< MUESTRA EL RANGO DEL USUARIO
     const [sus, setSus] = useState(false); //<<< CARACTERISTICA GRAFICA DE QUE EL USUARIO ES SOCIO
@@ -62,16 +63,19 @@ function Navbar() {
         if (!respuesta.ok) {
             setLog(false);
             setUsuario(null);
+            setImagen(null);
         }
 
         let respuestaJson = await respuesta.json();
 
         if (respuestaJson.logueado == true) {
             setLog(true);
-            setUsuario(respuestaJson.usuario);
+            setUsuario(respuestaJson.nombre);
+            setImagen(respuestaJson.imagen);
         } else {
             setLog(false);
             setUsuario(null);
+            setImagen(null);
         }
     }
 
@@ -175,18 +179,22 @@ function Navbar() {
                                         <a
                                             className="flex items-center h-20 menu-link"
                                         >
-                                            <div className="relative mr-5 w-14 h-14">
+                                            <div className="relative mr-3 w-14 h-14 align-middle items-center justify-center">
                                                 {sus && (
                                                     <img
                                                         src="../../../pictures/marcoSuscripcion.png"
                                                         alt=""
-                                                        className="absolute object-cover w-full h-full"
+                                                        className="absolute object-cover w-full h-full m-auto"
                                                     />
                                                 )}
                                                 <img
-                                                    src="../../../pictures/userDefault.png"
+                                                    src={ imagen !== null ? (
+                                                        `../../../pictures/${imagen}`
+                                                    ):(
+                                                        '../../../pictures/userDefault.png'
+                                                    )}
                                                     alt=""
-                                                    className="w-[95%] h-auto m-auto"
+                                                    className="w-[80%] h-[80%] m-auto my-[5%] rounded-full"
                                                 />
                                             </div>
                                             {usuario}
@@ -194,21 +202,21 @@ function Navbar() {
                                                 <img
                                                     src="../../../pictures/rangoOro.png"
                                                     alt=""
-                                                    className="w-4 h-auto m-auto"
+                                                    className="w-4 h-auto m-auto ml-2"
                                                 />
                                             ) : (
                                                 rango === 2 ? (
                                                     <img
                                                         src="../../../pictures/rangoPlatino.png"
                                                         alt=""
-                                                        className="w-4 h-auto m-auto"
+                                                        className="w-4 h-auto m-auto ml-2"
                                                     />
                                                 ) : (
                                                     rango === 3 ? (
                                                         <img
                                                             src="../../../pictures/rangoVIP.png"
                                                             alt=""
-                                                            className="w-4 h-auto m-auto"
+                                                            className="w-4 h-auto m-auto ml-2"
                                                         />
                                                     ) : ''
                                                 )
@@ -273,7 +281,7 @@ function Navbar() {
             {cart && (
                 <div className="overflow-y-auto cart-fondo">
                     <div className="overflow-y-auto cart-fx">
-                        <Carrito cerrar={toggleCart} totalProductos={cantProductos} logCart={log} loginCart={toggleLogin} />
+                        <Carrito cerrar={toggleCart} totalProductos={cantProductos} cartLogin={toggleLogin} />
                     </div>
                 </div>
             )}
