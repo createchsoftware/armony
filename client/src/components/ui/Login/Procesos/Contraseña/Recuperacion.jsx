@@ -147,8 +147,9 @@ const Recuperacion = () => {
             index={1}
           />
           <div className="absolute mt-5">
-            <a className="ml-3">
+            <a href="/" className="ml-3 flex w-max items-center relative cursor-pointer before:bg-black before:absolute before:-bottom-1 before:block before:h-[1px] before:w-full before:origin-bottom-right before:scale-x-0 before:transition before:duration-300 before:ease-in-out hover:before:origin-bottom-left hover:before:scale-x-100 hover:font-bold">
               <FontAwesomeIcon
+                className="mr-2"
                 style={{ fontSize: "22px" }}
                 icon={faAngleLeft}
               />{" "}
