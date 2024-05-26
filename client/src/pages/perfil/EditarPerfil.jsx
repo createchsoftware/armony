@@ -11,7 +11,7 @@ import {
     faCircle,
     faAngleLeft,
 } from "@fortawesome/free-solid-svg-icons";
-
+import '../../txt.css';
 import LayoutPrincipal from "../../layouts/LayoutPrincipal";
 
 const EditarPerfil = ({ usuario }) => {
@@ -144,7 +144,7 @@ const EditarPerfil = ({ usuario }) => {
                             <label htmlFor="">Telefono:</label>
                             <input
                                 id="telefono"
-                                type="tel"
+                                type="text"
                                 placeholder={`${telefono}`}
                                 className="w-48 px-6 py-2 mb-1 mr-24 rounded-full bg-slate-200 focus:outline-none focus:ring-1 focus:ring-rose-400 focus:border-transparent"
                             />
@@ -233,6 +233,7 @@ const EditarPerfil = ({ usuario }) => {
                         </div>
                         <HelmetProvider>
                             <Helmet>
+                                <script src="https://kit.fontawesome.com/c9a65ccec4.js" crossorigin="anonymous"></script>
                                 <script src="../../../scripts/editarPerfil.js"></script>
                             </Helmet>
                         </HelmetProvider>
@@ -248,13 +249,15 @@ const EditarPerfil = ({ usuario }) => {
                     </div>
                 </div>
                 <div className="grid gap-2 text-center place-content-center">
-                    <img src={`../../../pictures/${imagen}`} className="w-48 rounded-full shadow-2xl" alt="" />
+                    <img src={`../../../pictures/avatares/${imagen}`} className="w-48 rounded-full shadow-2xl" alt="" />
+                    <input type="file" id='imagen'/>
                     <p>ID de Usuario</p>
                     <p className="px-6 py-2 rounded-full bg-slate-200 focus:outline-none focus:ring-1 focus:ring-rose-400 focus:border-transparent"
                     >{`#${clave}`}</p>
                 </div>
 
             </main >
+            <div id="toastBox"/>
         </LayoutPrincipal >
     );
 };

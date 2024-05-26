@@ -189,7 +189,7 @@ function Navbar() {
                                                 )}
                                                 <img
                                                     src={ imagen !== null ? (
-                                                        `../../../pictures/${imagen}`
+                                                        `../../../pictures/avatares/${imagen}`
                                                     ):(
                                                         '../../../pictures/userDefault.png'
                                                     )}
