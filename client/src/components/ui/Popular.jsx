@@ -7,6 +7,9 @@ import pilar3 from '../../../public/pictures/pilar3.png'
 import pilar4 from '../../../public/pictures/pilar4.png'
 import { useState } from 'react';
 import Soon from './Proximamente';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { ArrowProps } from 'react-multi-carousel/lib/types'
+import { faDiamond, faAngleLeft, faAngleRight } from '@fortawesome/free-solid-svg-icons';
 
 function Popular() {
     const [soon, setSoon] = useState(false);
@@ -71,6 +74,16 @@ function Popular() {
                 sliderclassName=""
                 slidesToSlide={1}
                 swipeable
+                customLeftArrow={<FontAwesomeIcon
+                    icon={faAngleLeft}
+                    size="lg"
+                    className="absolute cursor-pointer top-1/2 transform -translate-y-1/2 left-0 text-3xl text-primary-900 aspect-square bg-[#e6e6e6] rounded-full text-[#036C65] p-4 hover:opacity-90 overflow-visible z-50"
+                />}
+                customRightArrow={<FontAwesomeIcon
+                    size="lg"
+                    icon={faAngleRight}
+                    className="absolute cursor-pointer top-1/2 transform -translate-y-1/2 right-0 text-3xl text-primary-900 bg-[#e6e6e6] rounded-full aspect-square text-[#036C65] p-4 hover:opacity-90 overflow-visible z-50"
+                />}
             >
                 <div className='grid h-full m-4 p-4 font-[abeatbyKai]'>
                     <div className=' h-96'>
