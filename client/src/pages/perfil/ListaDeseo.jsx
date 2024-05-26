@@ -7,7 +7,8 @@ import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import Box from '@mui/material/Box';
 import { Rating } from '@mui/material';
 import { styled } from '@mui/material/styles';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import PopupLogin from '../../components/ui/Login/PopupLogin';
 
 const StyledRating = styled(Rating)({
     '& .MuiRating-iconFilled': {
@@ -30,6 +31,33 @@ function ListaDeseo() {
     const [barSize , setBarSize] = useState('sideBar-Off')
     const [cols, setCols] = useState('grid-cols-4')
     const [sort, setSort] = useState('')
+    const [log, setLog] = useState(false); //<<< PARA EL INICIO DE SESION
+    const [login, setLogin] = useState(false);
+
+    async function recibido() {
+        const respuesta = await fetch("/api/logueado", {
+            method: "GET",
+            headers: {
+                "Content-Type": "application/json",
+            },
+        });
+
+        if (!respuesta.ok) {
+            setLog(false);
+        }
+
+        let respuestaJson = await respuesta.json();
+
+        if (respuestaJson.logueado == true) {
+            setLog(true);
+        } else {
+            setLog(false);
+        }
+    }
+
+    useEffect(() => {
+        recibido();
+    }, []);
 
     const filtrar = (type) => {
         setTipo(type);
@@ -353,7 +381,12 @@ function ListaDeseo() {
                                         <h1 className='text-[#036d63] text-xl'>${precioTotal}</h1>
                                     </div>
                                     <div className='grid'>
-                                        <a href='/spa/comprar' className='bg-[#ec5766] p-2 text-white mx-6 rounded-xl my-2 duration-200 hover:bg-[#ffb5a7]'>Comprar</a>
+                                        { log ? (
+                                            <a href='/spa/comprar' className='bg-[#ec5766] p-2 text-center text-white mx-6 rounded-xl my-2 duration-200 hover:bg-[#ffb5a7]'>Comprar</a>
+                                        ):(
+                                            <button onClick={() => setLogin(!login)} className='bg-[#ec5766] p-2 text-center text-white mx-6 rounded-xl my-2 duration-200 hover:bg-[#ffb5a7]'>Comprar</button>
+                                        )}
+                                        
                                     </div>
                                 </>
                             )}
@@ -361,6 +394,7 @@ function ListaDeseo() {
                     </div>
                 </div>
             </div>
+            {login && <PopupLogin cerrar={() => setLogin(!login)} />}
         </>
     );
 }

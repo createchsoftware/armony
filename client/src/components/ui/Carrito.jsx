@@ -5,6 +5,7 @@ import { faTrash, faCircleXmark, faCircleMinus, faCirclePlus } from '@fortawesom
 import PagoProducto from '../../pages/PagoProducto';
 const CarritoContext = createContext();
 import { Navigate, useNavigate } from "react-router-dom";
+import PopupLogin from './Login/PopupLogin';
 
 export const CarritoProvider = ({ children }) => {
 
@@ -68,8 +69,35 @@ export const CarritoProvider = ({ children }) => {
 
 export const useCarrito = () => useContext(CarritoContext);
 
-const Carrito = ({ cerrar, totalProductos, logCart, loginCart }) => {
+const Carrito = ({ cerrar, totalProductos, cartLogin }) => {
     const { cartItems, eliminarDelCarrito, increaseQuantity, decreaseQuantity } = useCarrito();
+    const [log, setLog] = useState(false); //<<< PARA EL INICIO DE SESION
+
+    async function recibido() {
+        const respuesta = await fetch("/api/logueado", {
+            method: "GET",
+            headers: {
+                "Content-Type": "application/json",
+            },
+        });
+
+        if (!respuesta.ok) {
+            setLog(false);
+        }
+
+        let respuestaJson = await respuesta.json();
+
+        if (respuestaJson.logueado == true) {
+            setLog(true);
+        } else {
+            setLog(false);
+        }
+    }
+
+    useEffect(() => {
+        recibido();
+        enviarTotal();
+    }, []);
 
     const navigate = useNavigate();
 
@@ -78,18 +106,8 @@ const Carrito = ({ cerrar, totalProductos, logCart, loginCart }) => {
         totalProductos(total);
     };
 
-    useEffect(() => {
-        enviarTotal();
-    }, [])
-
     const handleComprar = () => {
         navigate('/spa/comprar', { state: { producto: null } });
-        // if (loginCart) {
-        //     logCart();
-        //     navigate('/spa/pago-producto');
-        // } else {
-        //     navigate('/spa');
-        // }
     };
 
     const removeItem = (itemId) => {
@@ -159,12 +177,15 @@ const Carrito = ({ cerrar, totalProductos, logCart, loginCart }) => {
                         <p>Total:</p>
                         <span className='font-bold'>${total}</span>
                     </div>
-                    <button className='m-auto w-full hover:bg-opacity-90 rounded-xl py-2 px-6 text-white bg-[#45B59C]' onClick={handleComprar}>
-                        Comprar
-                        {/* {loginCart ? 'Proceder al Pago' : 'Iniciar Sesión'} */}
-                    </button>
-
-
+                    { log ? (
+                        <button className='m-auto w-full hover:bg-opacity-90 rounded-xl py-2 px-6 text-white bg-[#45B59C]' onClick={handleComprar}>
+                            Comprar
+                        </button>
+                    ):(
+                        <button className='m-auto w-full hover:bg-opacity-90 rounded-xl py-2 px-6 text-white bg-[#45B59C]' onClick={cartLogin}>
+                            Comprar
+                        </button>
+                    )}
                 </>
             )}
         </div>
