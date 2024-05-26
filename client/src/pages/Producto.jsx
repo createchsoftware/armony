@@ -132,7 +132,6 @@ function Producto() {
 
     useEffect(() => {
         window.scrollTo(0, 0);
-        recibido();
     }, [])
 
     // Si los datos no vienen en el estado de navegación, puedes hacer una
@@ -261,7 +260,7 @@ function Producto() {
                                     <Rating className='' value={product.valoracion} readOnly unratedColor="amber" ratedColor="amber" />
                                     <p>Valoraciones</p>
                                 </div>
-                                <p className="text-[#056761] my-6 text-2xl font-bold">{'$' + product.precio + 'MXN'}</p>
+                                <p className="text-[#056761] my-6 text-2xl font-bold">{'$' + product.precio + ' MXN'}</p>
 
                                 <p className="text-[#056761] text-xl">Detalles</p>
                                 <p className="text-xl">{product.descripcion}</p>
