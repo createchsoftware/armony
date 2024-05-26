@@ -9,7 +9,7 @@ import { useCarrito } from '../ui/Carrito.jsx'
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { Navigate, useNavigate } from "react-router-dom";
-import { useState,useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { jwtDecode } from "jwt-decode";
 
 
@@ -41,28 +41,28 @@ function Productos({ productos }) {
         return cookie ? cookie.split('=')[1] : null;
     };
 
-  const toggleFavorite = async (idProducto) => {
-    const estaEnFavoritos = favorites[idProducto];
-    const url = estaEnFavoritos ? '/api/admin/favoritos/delFavorito' : '/api/admin/favoritos/addfavorito';
+    const toggleFavorite = async (idProducto) => {
+        const estaEnFavoritos = favorites[idProducto];
+        const url = estaEnFavoritos ? '/api/admin/favoritos/delFavorito' : '/api/admin/favoritos/addfavorito';
 
-    try {
-        const response = await fetch(url, {
-            method: "POST",
-            body: JSON.stringify({ idCliente: uid, IdProducto: idProducto }),
-            headers: { "Content-Type": "application/json" },
-        });
+        try {
+            const response = await fetch(url, {
+                method: "POST",
+                body: JSON.stringify({ idCliente: uid, IdProducto: idProducto }),
+                headers: { "Content-Type": "application/json" },
+            });
 
-        if (!response.ok) {
-            throw new Error(`Error en la respuesta de la red: ${response.statusText}`);
+            if (!response.ok) {
+                throw new Error(`Error en la respuesta de la red: ${response.statusText}`);
+            }
+            setFavorites(prev => ({
+                ...prev,
+                [idProducto]: !estaEnFavoritos
+            }));
+        } catch (error) {
+            console.error('Error en la solicitud:', error);
         }
-        setFavorites(prev => ({
-            ...prev,
-            [idProducto]: !estaEnFavoritos
-        }));
-    } catch (error) {
-        console.error('Error en la solicitud:', error);
-    }
-};
+    };
 
 
     const notify = () => toast("Producto agregado al carrito");
@@ -105,7 +105,7 @@ function Productos({ productos }) {
                     productos.map(producto => (
                         <li key={producto.id} className='border-4 bg-white grid content-between border-[#E2B3B7] p-6 py-2 rounded-xl'>
                             <div className='flex justify-end'>
-                            {/* <Box className="float-right" onClick={() => toggleFavorite(producto.pkIdPS)}>
+                                {/* <Box className="float-right" onClick={() => toggleFavorite(producto.pkIdPS)}>
                      {favorites[producto.pkIdPS] ? 
                     <FavoriteIcon style={{ color: '#ff6d75' }} /> : 
                      <FavoriteBorderIcon  />

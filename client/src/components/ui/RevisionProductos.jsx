@@ -4,52 +4,6 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrash } from '@fortawesome/free-solid-svg-icons';
 import { Rating } from '@mui/material';
 import { faCircleMinus, faCirclePlus, faAngleLeft } from '@fortawesome/free-solid-svg-icons';
-import Ofertas from './Ofertas.jsx'
-
-const ofertas = [
-    {
-        id: 1,
-        nombre: 'Esponjabon',
-        precio: 10,
-        descripcion: 'Esponjabon floor para baño, formul...',
-        imagen: '../../pictures/oferta1.png'
-    },
-    {
-        id: 2,
-        nombre: 'Body butter',
-        precio: 20,
-        descripcion: 'Crema corporal, artesanal, 239 ml.',
-        imagen: '../../pictures/oferta2.png'
-    },
-    {
-        id: 3,
-        nombre: 'Tónito facial',
-        precio: 15,
-        descripcion: 'Tónito facial dermatológico...',
-        imagen: '../../pictures/oferta3.png'
-    },
-    {
-        id: 4,
-        nombre: 'Mascarilla',
-        precio: 25,
-        descripcion: 'Combina el poder de la arcilla verde...',
-        imagen: '../../pictures/oferta4.png'
-    },
-]
-
-
-//useEffect para obtener las ofertas
-// useEffect(() => {
-//     fetch("/api/admin/productos/getProducts")
-//         .then(response => response.json())
-//         .then(data => {
-//             setAllProducts(data);
-//         })
-//         .catch(error => {
-//             console.log('error', error);
-//         });
-// }, []);
-
 
 function RevisionProductos({ restart, producto, next }) {
     const [cartItems, setCartItems] = useState(() => {
