@@ -98,21 +98,21 @@ const messageError = "Ha ocurrido un error al procesar tu peticion: ";
 routerCitas.post("/Online/:id", async (req, res) => {
   // Datos de prueba de cita
   const datosCita = {
-    idVenta:"",//
+    idVenta: "", //
     idCliente: req.params.id,
     idEmp: req.body.idEmp,
     idServ: req.body.idServ,
     idPilar: req.body.idPilar,
-    nombre:req.body.nombre,
+    nombre: req.body.nombre,
     phone: req.body.phone,
     tarjeta: req.body.tarjeta,
     fecha: req.body.fecha,
     horaI: req.body.horaI,
-    horaF: "",//
+    horaF: "", //
     descr: req.body.descr,
     estado: req.body.estado,
     monedero: req.body.monedero,
-    estadoPago:req.body.estadoPago,
+    estadoPago: req.body.estadoPago,
     subTotal: req.body.subTotal,
     total: req.body.total,
     impuesto: req.body.impuesto,
@@ -210,7 +210,7 @@ routerCitas.patch("/status", async (req, res) => {
       idCita: 16,
       status: "hecha",
     };
-    const resultado = await updateCitaStaus(conexion, {
+    const resultado = await updateCitaStatus(conexion, {
       idCita: statusCita.idCita,
       status: statusCita.status,
     });
