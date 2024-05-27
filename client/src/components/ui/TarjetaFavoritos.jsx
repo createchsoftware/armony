@@ -30,31 +30,23 @@ const TarjetaFavoritos = ({ props }) => {
           }}
         >
           <div className="object-bottom">
-            <div className="relative grid grid-cols-[15%_25%_15%] place-items-center justify-center -top-5">
-              <div>
-                <AiOutlineShoppingCart
-                  style={{ fontSize: "28px", color: "#000000" }}
-                />
-              </div>
-              <div></div>
-              <div className="">
-                <StyledRating
-                  name="customized-color"
-                  defaultValue={props.isFavorite ? 1 : 0}
-                  max={1}
-                  getLabelText={(value) =>
-                    `${value} Heart${value !== 1 ? "s" : ""}`
-                  }
-                  precision={1}
-                  icon={<FavoriteIcon fontSize="inherit" />}
-                  emptyIcon={
-                    <FavoriteBorderIcon
-                      style={{ color: "black" }}
-                      fontSize="inherit"
-                    />
-                  }
-                />
-              </div>
+            <div className="w-[60%] grid place-content-end mx-auto relative -left-4 -top-4">
+              <StyledRating
+                name="customized-color"
+                defaultValue={props.isFavorite ? 1 : 0}
+                max={1}
+                getLabelText={(value) =>
+                  `${value} Heart${value !== 1 ? "s" : ""}`
+                }
+                precision={1}
+                icon={<FavoriteIcon fontSize="inherit" />}
+                emptyIcon={
+                  <FavoriteBorderIcon
+                    style={{ color: "black" }}
+                    fontSize="inherit"
+                  />
+                }
+              />
             </div>
           </div>
         </Box>
