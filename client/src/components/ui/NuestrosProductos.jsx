@@ -60,8 +60,6 @@ function Productos() {
 
     const [descuentos, setDescuentos] = useState([]);
 
-    const notify = () => toast("Producto agregado al carrito");
-
     // const toggleSoon = () => {
     //     setSoon(!soon)
     // };
@@ -72,9 +70,7 @@ function Productos() {
             .then((response) => response.json())
             .then((data) => {
                 // Acceder al array de objetos en la posición 0 del array dentro de data
-                const descuentosArray = data.data[0];
-                setDescuentos(descuentosArray);
-                console.log(descuentosArray);
+                setDescuentos(data.data);
             })
             .catch((error) => {
                 console.log("error", error);
@@ -83,11 +79,11 @@ function Productos() {
 
     return (
         <>
-            <img src={greenRight} alt="" className='absolute w-[12%] right-0 translate-y-[-6rem] ' />
+            <img src={greenRight} alt="" className='absolute w-[12%] right-0 translate-y-[-6rem]' />
             <h1 className='text-5xl  w-[80%] md:text-6xl mx-auto font  text-[#036C65] my-12 text-center items-center  font-[iloveglitter] mt-24'>Nuestros productos</h1>
-            <section className=' w-[80%] bg-white m-auto rounded-xl border-8 border-[#E2B3B7] py-6'>
+            <section className=' w-[80%] bg-white m-auto rounded-xl border-8 border-[#E2B3B7] py-6 relative'>
                 <hr />
-                <div className='mx-auto p-6 md:mx-28 md:p-0 selection:bg-[#EB5765] selection:text-white'>
+                <div className='mx-auto p-6 md:mx-28 md:p-0 selection:bg-[#EB5765] selection:text-white relative'>
                     <Carousel
                         additionalTransfrom={0}
                         arrows
@@ -95,15 +91,16 @@ function Productos() {
                         autoPlaySpeed={3000}
                         centerMode={false}
                         className="z-0"
-                        containerclassName="container-with-dots z-0"
+                        containerclassName="container-with-dots z-0 overflow-visible"
                         dotListclassName=""
+
                         // draggable
                         focusOnSelect={false}
-                        infinite
-                        itemclassName=""
+                        itemclassName="z-0"
                         keyBoardControl
                         minimumTouchDrag={80}
                         pauseOnHover
+                        infinite
                         renderArrowsWhenDisabled={false}
                         renderButtonGroupOutside={false}
                         renderDotsOutside={false}
@@ -114,7 +111,7 @@ function Productos() {
                                     min: 1024
                                 },
                                 items: 4,
-                                partialVisibilityGutter: 40
+                                partialVisibilityGutter: 4
                             },
                             mobile: {
                                 breakpoint: {
@@ -141,20 +138,23 @@ function Productos() {
                         sliderclassName=""
                         slidesToSlide={1}
                         swipeable
+                        itemClass='z-0'
+                        containerClass='z-0'
+                        sliderClass='z-10'
                         customLeftArrow={<FontAwesomeIcon
                             icon={faAngleLeft}
                             size="lg"
-                            className="absolute cursor-pointer top-1/2 transform -translate-y-1/2 -left-8 text-3xl text-primary-900 aspect-square bg-[#e6e6e6] rounded-full text-[#036C65] p-4 hover:opacity-90 overflow-visible z-50"
+                            className="absolute cursor-pointer top-1/2 transform -translate-y-1/2 -left-0 text-3xl text-primary-900 aspect-square bg-[#e6e6e6] rounded-full text-[#036C65] p-3 hover:opacity-90 overflow-visible z-10"
                         />}
                         customRightArrow={<FontAwesomeIcon
                             size="lg"
                             icon={faAngleRight}
-                            className="absolute cursor-pointer top-1/2 transform -translate-y-1/2 -right-8 text-3xl text-primary-900 bg-[#e6e6e6] rounded-full aspect-square text-[#036C65] p-4 hover:opacity-90 overflow-visible z-50"
+                            className="absolute cursor-pointer top-1/2 transform -translate-y-1/2 -right-0 text-3xl text-primary-900 bg-[#e6e6e6] rounded-full aspect-square text-[#036C65] p-3 hover:opacity-90 overflow-visible z-10"
                         />}
                     // className=''
                     >
                         {descuentos.map(oferta => (
-                            <Ofertas key={oferta.id} producto={oferta} />
+                            <Ofertas key={oferta.id} noDesc={true} producto={oferta} />
                             // <Ofertas key={oferta.id} producto={oferta} handleClickCarrito={handleClickCarrito} />
                         ))}
 
