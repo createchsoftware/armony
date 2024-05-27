@@ -4,7 +4,7 @@ import {
   horasDisponibles,
   createCitas,
   updateCita,
-  updateCitaStaus,
+  updateCitaStatus,
   ventaCita,
   getCitasByEstado,
   horasWithoutSeconds,

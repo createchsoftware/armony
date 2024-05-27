@@ -7,7 +7,38 @@ const CarritoContext = createContext();
 import { Navigate, useNavigate } from "react-router-dom";
 import PopupLogin from './Login/PopupLogin';
 
+
 export const CarritoProvider = ({ children }) => {
+
+    const [Uid, setUid] = useState(null)
+
+
+
+    useEffect(() => {
+        const getidUser = () => {// aqui veificamos si hay una cookie con este nombre 
+            const cookie = obteneridCookie('Naruto_cookie')
+            if (cookie) {
+
+                const decode = jwtDecode(cookie)//aqui decodificaremos la cokie
+                setUid(decode.user)
+            }
+        }
+        getidUser()
+    }, [])
+
+
+    const obteneridCookie = (namecookie) => { //en este metodo lo que hacemos es destructurar la cokie para 
+        // obtener el user y luego el id
+        const cookies = document.cookie.split(';');
+        for (let cokie of cookies) {
+            const [key, value] = cokie.split('=')
+            if (key.trim() === namecookie) {
+                return value;//retornara el valor
+            }
+        }
+        return null;
+    }
+
 
     const [cartItems, setCartItems] = useState(() => {
         const savedCart = localStorage.getItem('cartItems');
@@ -29,6 +60,18 @@ export const CarritoProvider = ({ children }) => {
         } else {
             // Agregar el ítem al carrito
             setCartItems([...cartItems, item]);
+            if (cliente) {
+                try {
+            fetch('/api/admin/carrito/addCarrito',{
+                method: "POST",
+                body: JSON.stringify({
+                    idCliente: Uid, 
+                    IdProducto: item.id 
+
+         })})
+        }catch(error){
+            console.error("error:",error)
+        }}
         }
     };
 
