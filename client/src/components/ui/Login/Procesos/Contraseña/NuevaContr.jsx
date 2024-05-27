@@ -1,6 +1,6 @@
 import user1 from "../../../../../../public/pictures/userCl.png";
 import Pasos from "../../../PasosDeProcesos.jsx";
-import InputContrasena from "../../../InputContrasena.jsx";
+import InputContrasenaLogin from "../../../InputContrasenaLogin.jsx";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Helmet, HelmetProvider } from "react-helmet-async";
 import {
@@ -14,7 +14,6 @@ import {
 import '../../../../../txt.css'
 
 const NuevaContr = () => {
-
   return (
     <div>
       <HelmetProvider>
@@ -61,7 +60,7 @@ const NuevaContr = () => {
               </label>
             </div>
             <div className="relative">
-              <InputContrasena
+              <InputContrasenaLogin
                 props={{
                   id:'contraseña',
                   texto: "Ingresa tu nueva contraseña",
@@ -79,7 +78,7 @@ const NuevaContr = () => {
               </label>
             </div>
             <div className="relative">
-              <InputContrasena
+              <InputContrasenaLogin
                 props={{
                   id:'nueva-contraseña',
                   texto: "Vuelve a ingresar tu nueva contraseña",

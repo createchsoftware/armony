@@ -76,6 +76,7 @@ import { methods as createAccount } from "./controllers/createAccount.controller
 import { methods as editarPerfil } from "./controllers/editarPerfil.controllers.js";
 import { methods as perfil } from "./controllers/perfil-data.controllers.js";
 import { methods as recuperacion } from "./controllers/recuperacion.controllers.js";
+import { methods as validation } from "./controllers/validations.controllers.js";
 import InsertUser from "./middlewares/register.js";
 import confirmacion from "./middlewares/password.js";
 
@@ -209,6 +210,12 @@ app.get("/api/monedero", perfil.getMonedero);
 app.post("/api/recargaSaldo", perfil.Insert_to_Monedero);
 
 app.get("/spa/signUp/Confirmacion", InsertUser);
+
+app.post('/api/validarIdentidad',validation.validarIdentidad);
+
+app.post('/api/validarCorreo', validation.validarCorreo);
+
+app.post('/api/validarPassword', validation.validarContrasena);
 
 app.get("/api/step1.5", async (solicitud, respuesta) => {
   let consulta = "select * from patologia";

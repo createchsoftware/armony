@@ -4,11 +4,14 @@ import Soon from "../Proximamente";
 import { useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Helmet, HelmetProvider } from "react-helmet-async";
-import InputContrasena from "../InputContrasena.jsx";
-import { faAngleLeft } from "@fortawesome/free-solid-svg-icons";
+import InputContrasenaLogin from "../InputContrasenaLogin";
+import { faAngleLeft} from "@fortawesome/free-solid-svg-icons";
 import '../../../txt.css';
 
 const Login = ({ cerrar }) => {
+
+  
+
   const [soon, setSoon] = useState(false);
 
   const toggleSoon = () => {
@@ -71,7 +74,8 @@ const Login = ({ cerrar }) => {
               <label htmlFor="pass" className="text-sm lg:text-base pt-3">
                 Contraseña
               </label>
-              <InputContrasena
+              
+              <InputContrasenaLogin
                 props={{
                   id: "pass",
                   texto: "Ingresa tu Contraseña",
@@ -81,6 +85,7 @@ const Login = ({ cerrar }) => {
                     "relative cursor-pointer -bottom-[2.25rem] lg:-bottom-[2.75rem] left-[15.25rem] lg:left-[17rem] hover:text-black",
                 }}
               />
+              
               <div>
                 <input
                   type="checkbox"

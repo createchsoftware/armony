@@ -1,8 +1,59 @@
 import InputContrasena from "../InputContrasena";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faAngleLeft } from "@fortawesome/free-solid-svg-icons";
+import { faAngleLeft , faCircleExclamation, faCircleXmark} from "@fortawesome/free-solid-svg-icons";
+import { ToastContainer, toast } from 'react-toastify';
+import { useState } from "react";
 
 const ValidarIdentidad = ({ volver, close, next }) => {
+
+  const [valor,setValor] = useState('');
+
+
+  function cambio(evento){
+    setValor(evento.target.value);
+  }
+
+  async function validar(){
+    const respuesta = await fetch('/api/validarIdentidad',{
+      method:'POST',
+      headers:{
+          "Content-Type":'application/json',
+      },
+      body:JSON.stringify({
+          password:valor
+      })
+    })
+
+    if(!respuesta.ok){
+        return;
+    }
+
+    const respuestaJson = await respuesta.json();
+
+    if(respuestaJson.vacio){
+      toast(<div>{`${respuestaJson.vacio}`}<FontAwesomeIcon icon={faCircleExclamation} /></div>);
+      return;
+    }
+
+
+    if(respuestaJson.incorrecto){
+      setValor('');
+      toast(<div>{`${respuestaJson.incorrecto}`}<FontAwesomeIcon icon={faCircleXmark} /></div>);
+      return;
+    }
+
+    if(respuestaJson.redirect){
+        window.location.href = respuestaJson.redirect;
+    }
+
+    if(respuestaJson.next){
+      next();
+    }
+  }
+
+
+
+
   return (
     <>
       <div className="md:h-20 h-[3.75rem] bg-white" />
@@ -33,18 +84,20 @@ const ValidarIdentidad = ({ volver, close, next }) => {
               </label>
             </div>
             <InputContrasena
-              props={{
-                texto: "Ingresa tu contraseña",
-                class:
-                  "bg-slate-200 md:text-sm lg:text-base rounded-full w=[15rem] md:w-96 mb-3 mt-2 mx-3 py-2 focus:outline-none focus:ring-1 focus:ring-[#EB5765] focus:border-transparent px-6",
-                classEye:
-                  "relative float-right justify-end right-[3rem] top-[1rem]",
-              }}
+                id={'contraseña-inicial'}
+                value={valor}
+                onChange={cambio}
+                texto= "Ingresa tu contraseña"
+                className=
+                  "bg-slate-200 md:text-sm lg:text-base rounded-full w=[15rem] md:w-96 mb-3 mt-2 mx-3 py-2 focus:outline-none focus:ring-1 focus:ring-[#EB5765] focus:border-transparent px-6"
+                classEye=
+                  "relative float-right justify-end right-[3rem] top-[1rem]"
+              
             />
           </form>
           <div className="grid grid-cols-2 my-auto">
             <div className="grid place-content-start ml-8">
-              <a>
+              
                 <button
                   aria-label="Cancelar"
                   onClick={close}
@@ -52,21 +105,22 @@ const ValidarIdentidad = ({ volver, close, next }) => {
                 >
                   Cancelar
                 </button>
-              </a>
+              
             </div>
             <div className="grid place-content-end mr-8">
-              <a>
+              
                 <button
-                  onClick={next}
+                  onClick={validar}
                   aria-label="Continuar"
                   className="bg-[#EB5765] text-white md:text-large lg:text-xl rounded-full w-[7rem] py-2 mx-auto hover:bg-red-200"
                 >
                   Listo
                 </button>
-              </a>
+              
             </div>
           </div>
         </div>
+        <ToastContainer position={'bottom-right'} theme={'light'} />
       </div>
     </>
   );

@@ -1,8 +1,69 @@
 import InputContrasena from "../InputContrasena";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faAngleLeft } from "@fortawesome/free-solid-svg-icons";
+import { faAngleLeft , faCircleExclamation, faCircleXmark} from "@fortawesome/free-solid-svg-icons";
+import { ToastContainer, toast } from 'react-toastify';
+import { useState } from "react";
 
 const CambiarContrasena = ({ volver, close, next }) => {
+
+  const [contrasena, setContrasena] = useState('');
+  const [contrasena_confirmacion, setContrasena_confirmacion] = useState('');
+
+
+  function cambiarContrasena(evento){
+    setContrasena(evento.target.value);
+  }
+
+  function cambiarConfirmacion(evento){
+    setContrasena_confirmacion(evento.target.value);
+  }
+
+
+  async function validarContrasena(){
+
+    const respuesta = await fetch('/api/validarPassword',{
+      method:'POST',
+      headers:{
+        'Content-Type':'application/json',
+      },
+      body:JSON.stringify({
+        contraseña:contrasena,
+        confirmacion:contrasena_confirmacion
+      })
+    })
+
+    if(!respuesta.ok){
+      return;
+    }
+
+    const respuestaJson = await respuesta.json();
+
+
+    if(respuestaJson.confirmar){
+      setContrasena('');
+      setContrasena_confirmacion('');
+      toast(<div>{`${respuestaJson.confirmar}`}<FontAwesomeIcon icon={faCircleExclamation} /></div>);
+      return;
+    }
+
+
+    if(respuestaJson.invalidas){
+      toast(<div>{'Tu contraseña no es segura'}<FontAwesomeIcon icon={faCircleXmark} /></div>);
+      return;
+    }
+
+    if(respuestaJson.redirect){
+      window.location.href = respuestaJson.redirect;
+    }
+
+    if(respuestaJson.next){
+      next();
+    }
+
+  }
+
+
+
   return (
     <>
       <div className="md:h-20 h-[3.75rem] bg-white" />
@@ -53,14 +114,14 @@ const CambiarContrasena = ({ volver, close, next }) => {
                 </div>
                 <div className="relative">
                   <InputContrasena
-                    props={{
-                      id: "contraseña",
-                      texto: "Ingresa tu Contraseña",
-                      class:
-                        "bg-slate-200 md:text-sm lg:text-base rounded-full w-[17rem] lg:w-[21rem] mb-3 mt-2 py-2 focus:outline-none focus:ring-1 focus:ring-rose-400 focus:border-transparent px-6",
-                      classEye:
-                        "absolute top-[1rem] left-[15rem] lg:left-[19rem]",
-                    }}
+                  id={'contraseña'}
+                  value={contrasena}
+                  onChange={cambiarContrasena}
+                  texto= "Ingresa tu contraseña"
+                  className=
+                    "bg-slate-200 md:text-sm lg:text-base rounded-full w=[15rem] md:w-96 mb-3 mt-2 mx-3 py-2 focus:outline-none focus:ring-1 focus:ring-[#EB5765] focus:border-transparent px-6"
+                  classEye=
+                    "relative float-right justify-end right-[3rem] top-[1rem]"
                   />
                 </div>
                 <div>
@@ -72,15 +133,15 @@ const CambiarContrasena = ({ volver, close, next }) => {
                   </label>
                 </div>
                 <div className="relative">
-                  <InputContrasena
-                    props={{
-                      id: "nueva-contraseña",
-                      texto: "Ingresa tu Contraseña",
-                      class:
-                        "bg-slate-200 md:text-sm lg:text-base rounded-full w-[17rem] lg:w-[21rem] mb-3 mt-2 py-2 focus:outline-none focus:ring-1 focus:ring-rose-400 focus:border-transparent px-6",
-                      classEye:
-                        "absolute top-[1rem] left-[15rem] lg:left-[19rem]",
-                    }}
+                <InputContrasena
+                  id={'confirmacion'}
+                  value={contrasena_confirmacion}
+                  onChange={cambiarConfirmacion}
+                  texto= "Ingresa tu contraseña"
+                  className=
+                    "bg-slate-200 md:text-sm lg:text-base rounded-full w=[15rem] md:w-96 mb-3 mt-2 mx-3 py-2 focus:outline-none focus:ring-1 focus:ring-[#EB5765] focus:border-transparent px-6"
+                  classEye=
+                    "relative float-right justify-end right-[3rem] top-[1rem]"
                   />
                 </div>
               </form>
@@ -88,7 +149,6 @@ const CambiarContrasena = ({ volver, close, next }) => {
           </div>
           <div className="grid grid-cols-2 my-auto">
             <div className="grid place-content-start ml-8">
-              <a>
                 <button
                   aria-label="Cancelar"
                   onClick={close}
@@ -96,21 +156,19 @@ const CambiarContrasena = ({ volver, close, next }) => {
                 >
                   Cancelar
                 </button>
-              </a>
             </div>
             <div className="grid place-content-end mr-8">
-              <a>
                 <button
                   aria-label="Continuar"
-                  onClick={next}
+                  onClick={validarContrasena}
                   className="bg-[#EB5765] text-white md:text-large lg:text-xl rounded-full w-[7rem] py-2 mx-auto hover:bg-red-200"
                 >
                   Listo
                 </button>
-              </a>
             </div>
           </div>
         </div>
+        <ToastContainer position={'bottom-right'} theme={'light'} />
       </div>
     </>
   );

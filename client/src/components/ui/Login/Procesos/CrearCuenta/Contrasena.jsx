@@ -1,14 +1,12 @@
 import user1 from "../../../../../../public/pictures/userGuest.png";
 import Pasos from "../../../PasosDeProcesos";
-import InputContrasena from "../../../InputContrasena.jsx";
+import InputContrasenaLogin from "../../../InputContrasenaLogin.jsx";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faAngleLeft } from "@fortawesome/free-solid-svg-icons";
 import { Helmet, HelmetProvider } from "react-helmet-async";
 import '../../../../../txt.css'
 
 const Contrasena = () => {
-
-
   return (
     <div>
       <HelmetProvider>
@@ -71,7 +69,7 @@ const Contrasena = () => {
                   </label>
                 </div>
                 <div className="relative">
-                  <InputContrasena
+                  <InputContrasenaLogin
                     props={{
                       id: "contraseña",
                       texto: "Ingresa tu Contraseña",
@@ -91,7 +89,7 @@ const Contrasena = () => {
                   </label>
                 </div>
                 <div className="relative">
-                  <InputContrasena
+                  <InputContrasenaLogin
                     props={{
                       id: "nueva-contraseña",
                       texto: "Ingresa tu Contraseña",

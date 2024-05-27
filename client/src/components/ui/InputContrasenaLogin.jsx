@@ -2,7 +2,7 @@ import { useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
 
-const InputContrasena = ({ id, value, onChange, texto, className, classEye }) =>{
+const InputContrasenaLogin = ({props}) =>{
   const [password, setPassword] = useState("");
   const [type, setType] = useState("password");
   const [icon, setIcon] = useState(faEyeSlash);
@@ -19,20 +19,18 @@ const InputContrasena = ({ id, value, onChange, texto, className, classEye }) =>
 
     return(
         <>
-            <a className={classEye}>
+            <a className={props.classEye}>
               <FontAwesomeIcon id="eye" icon={icon} onClick={toggleEye} />
             </a>
             <input
-                className={className}
+                className={props.class}
                 type={type}
-                id={id}
-                value={value}
+                id="pass"
                 name="pass"
-                placeholder={texto}
-                onChange={onChange}
+                placeholder={props.texto}
             />
         </>
     )
 }
 
-export default InputContrasena;
+export default InputContrasenaLogin;
