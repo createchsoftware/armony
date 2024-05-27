@@ -9,6 +9,7 @@ import { Rating } from '@mui/material';
 import { styled } from '@mui/material/styles';
 import { useEffect, useState } from 'react';
 import PopupLogin from '../../components/ui/Login/PopupLogin';
+import { jwtDecode } from "jwt-decode";
 
 const StyledRating = styled(Rating)({
     '& .MuiRating-iconFilled': {
@@ -173,6 +174,47 @@ function ListaDeseo() {
     // }
 ])
 
+const [Uid, setUid] = useState(null)
+useEffect(() => {
+    const getidUser = () => {// aqui veificamos si hay una cookie con este nombre 
+        const cookie = obteneridCookie('Naruto_cookie')
+        if (cookie) {
+
+            const decode = jwtDecode(cookie)//aqui decodificaremos la cokie
+            setUid(decode.user)
+        }
+    }
+    getidUser()
+}, [])
+
+
+const obteneridCookie = (namecookie) => { //en este metodo lo que hacemos es destructurar la cokie para 
+    // obtener el user y luego el id
+    const cookies = document.cookie.split(';');
+    for (let cokie of cookies) {
+        const [key, value] = cokie.split('=')
+        if (key.trim() === namecookie) {
+            return value;//retornara el valor
+        }
+    }
+    return null;
+}
+
+useEffect(()=>{
+    const Prod = async () => {
+try{
+    if(Uid){
+    const response=await fetch(`api/admin/favoritos/ProductFavoritosbyId/${Uid}`)
+    const data = await response.json();
+    setContResumen(data)
+}
+    }catch(error){
+console.error("hubo error :",error)
+    }
+}
+Prod()
+},[Uid])
+
     const presionar1 = () => {
         setBoton1('lista-boton-on')
         setBoton2('lista-boton')
@@ -193,12 +235,25 @@ function ListaDeseo() {
     }
 
     const removeProducto = (itemId) => {
-        setContResumen(contResumen.filter(item => item.id !== itemId));
+        eliminarFav(itemId)
+        setContResumen(contResumen.filter(item => item.pkIdPS !== itemId));
     };
+
+    const eliminarFav =async(idProServ)=>{
+        try{
+    await fetch("/api/admin/favoritos/delFavorito", {
+            method: "POST",
+            body: JSON.stringify({ idCliente: Uid, IdProducto: idProServ }),
+            headers: { "Content-Type": "application/json" },
+        });
+    }catch(error){
+console.log("error",error)
+    }
+    }
 
     const resumenList = contResumen.map(item => (
         ( item.tipo === '1' && 
-        <li key={item.id} className='flex justify-between mb-2'>
+        <li key={item.PKidPS} className='flex justify-between mb-2'>
             <h1>{item.nombre}</h1>
             <h1 className='text-[#036d63]'>${item.precio}</h1>
         </li>
@@ -227,7 +282,7 @@ function ListaDeseo() {
     }) 
 
     const contenido = filteredProducts.map(producto => (
-        <li key={producto.id} className='grid border-4 bg-white border-[#E2B3B7] p-6 py-2 rounded-xl mx-6 mb-6'>
+        <li key={producto.pkIdPS} className='grid border-4 bg-white border-[#E2B3B7] p-6 py-2 rounded-xl mx-6 mb-6'>
             <Box
                 className="grid justify-end z-0"
                 sx={{
@@ -242,11 +297,11 @@ function ListaDeseo() {
                     precision={1}
                     icon={<FavoriteIcon fontSize="inherit" />}
                     emptyIcon={<FavoriteBorderIcon fontSize="inherit" />}
-                    onClick={() => removeProducto(producto.id)}
+                    onClick={() => removeProducto(producto.pkIdPS)}
                 />
             </Box>
             <img className='w-4/5 justify-self-center m-auto mb-4 rounded-lg aspect-square'
-                src={producto.imagen}
+                src={producto.img}
                 alt={producto.nombre}
             />
             <div>

@@ -1,8 +1,5 @@
-var servicios = [
-  { id: 1, nombre: "Facial", sesiones: 3, total: 1700 },
-  { id: 2, nombre: "Maquillaje", sesiones: 6, total: 2400 },
-  { id: 3, nombre: "Depilación", sesiones: 1, total: 1500 },
-];
+var servicios = JSON.parse(localStorage.getItem("citas")) || [];
+console.log(localStorage.getItem("citas"))
 
 const FinalizacionPagoServ = ({ next }) => {
   let total;
@@ -10,7 +7,7 @@ const FinalizacionPagoServ = ({ next }) => {
   const setTotal = () => {
     total = 0;
     for (let i = 0; i < servicios.length; i++) {
-      total += servicios[i].total;
+      total += servicios[i].precioServicio;
     }
     puntos = parseFloat(total) / 10;
   };
@@ -50,11 +47,11 @@ const FinalizacionPagoServ = ({ next }) => {
                 return (
                   <div>
                     <div className="grid grid-cols-3 my-5 place-items-center">
-                      <p>{servicio.nombre}</p>
+                      <p>{servicio.nombreServicio}</p>
                       <p>
                         {servicio.sesiones} {sm}
                       </p>
-                      <p>${servicio.total}</p>
+                      <p>${servicio.precioServicio}</p>
                     </div>
                     <div className="flex-grow border-b-2 border-[#ec5766] mx-5" />
                   </div>
