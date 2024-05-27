@@ -14,6 +14,7 @@ import { DateCalendar } from '@mui/x-date-pickers/DateCalendar';
 import { DayCalendarSkeleton } from '@mui/x-date-pickers/DayCalendarSkeleton';
 import 'dayjs/locale/es'; // Importar locale español
 import localizedFormat from 'dayjs/plugin/localizedFormat'; // Plugin para formatos localizados
+import { jwtDecode } from "jwt-decode";
 
 dayjs.extend(localizedFormat); // Extender dayjs con el plugin
 dayjs.locale('es'); // Usar locale español
@@ -68,6 +69,8 @@ function ServerDay(props) {
 function Agenda() {
     // Calendario
     const [selectedDate, setSelectedDate] = useState(initialValue);
+    const [citasPendientes, setCitasPendientes] = useState([]);
+    const [citasFiltradas, setCitasFiltradas] = useState([]);
     const [horasDisponibles, setHorasDisponibles] = useState([]);
     const requestAbortController = React.useRef(null);
     const [isLoading, setIsLoading] = React.useState(false);
@@ -110,10 +113,7 @@ function Agenda() {
         fetchHighlightedDays(date);
     };
 
-    const handleDateChange = (newDate) => {
-        setSelectedDate(newDate);
-        localStorage.setItem('Fecha seleccionada', newDate.format("YYYY-MM-DD"));
-    };
+    
 
     const [value, onChange] = useState(new Date());
 
@@ -253,8 +253,35 @@ function Agenda() {
         // },
     };
 
-    const [citasPendientes, setCitasPendientes] = useState([]);
-    const [id, setId] = useState(null); // Para el inicio de sesión
+   
+    const [Uid, setUid] = useState(null)
+
+
+
+    useEffect(() => {
+        const getidUser = () => {// aqui veificamos si hay una cookie con este nombre 
+            const cookie = obteneridCookie('Naruto_cookie')
+            if (cookie) {
+
+                const decode = jwtDecode(cookie)//aqui decodificaremos la cokie
+                setUid(decode.user)
+            }
+        }
+        getidUser()
+    }, [])
+
+
+    const obteneridCookie = (namecookie) => { //en este metodo lo que hacemos es destructurar la cokie para 
+        // obtener el user y luego el id
+        const cookies = document.cookie.split(';');
+        for (let cokie of cookies) {
+            const [key, value] = cokie.split('=')
+            if (key.trim() === namecookie) {
+                return value;//retornara el valor
+            }
+        }
+        return null;
+    }
 
     async function recibido() {
         const respuesta = await fetch('/api/logueado', {
@@ -265,31 +292,59 @@ function Agenda() {
         });
 
         if (!respuesta.ok) {
-            setId(null);
+            setUid(null);
         }
 
         let respuestaJson = await respuesta.json();
 
         if (respuestaJson.logueado === true) {
-            setId(respuestaJson.clave);
-            fetch(`/api/admin/citas/citasPendientes/${id}`)
+            fetch(`/api/admin/citas/citasPendientes/${Uid}/pendiente`)
                 .then((response) => response.json())
                 .then((data) => {
-                    console.log("Datos", data);
                     setCitasPendientes(data);
+                    setCitasFiltradas(data);
                 })
                 .catch((error) => {
                     console.log("error", error);
                 });
         } else {
-            setId(null);
+            setUid(null)
         }
     }
 
     // Primer useEffect para verificar el inicio de sesión
     useEffect(() => {
+        if(Uid){
         recibido();
-    }, []);
+    }
+    }, [Uid]);
+
+
+
+    const handleDateChange = (newDate) => {
+        setSelectedDate(newDate);
+        const formattedDate = newDate.format("YYYY-MM-DD");
+       
+        // const citasFecha = citasPendientes.filter(cita => cita.fecha === formattedDate);
+        const citasFecha = citasPendientes.filter(cita => {
+            const citaFormattedDate = dayjs(cita.fecha).format("YYYY-MM-DD");
+            return citaFormattedDate === formattedDate;
+        });
+        
+        setCitasFiltradas(citasFecha);
+    };
+    
+
+    // useEffect(() => {
+    //     if (selectedDate) {
+    //         const formattedDate = selectedDate.format("YYYY-MM-DD");
+    //         const citasFecha = citasPendientes.filter(cita => {
+    //             const citaFormattedDate = dayjs(cita.fecha).format("YYYY-MM-DD");
+    //             return citaFormattedDate === formattedDate;
+    //         });
+    //         setCitasFiltradas(citasFecha);
+    //     }
+    // }, [selectedDate, citasPendientes]);
 
     // Segundo useEffect para obtener las citas pendientes, depende de `id`
     // useEffect(() => {
@@ -352,7 +407,7 @@ function Agenda() {
         return `${hora12}:${minutos} ${ampm}`;
     }
 
-    const citasMostrar = citasPendientes.map(cita => {
+    const citasMostrar = citasFiltradas.map(cita => {
         const date = dayjs(cita.fecha);
         const año = date.format('YYYY');
         const mes = date.format('MM');
@@ -361,14 +416,14 @@ function Agenda() {
         const nombreMes = date.format('MMMM');
 
         return (
-            <div key={cita.id} className='flex py-0 pl-0 pr-6 shadow-2xl rounded-xl place-content-between'>
+            <div key={cita.ID_Cita} className='flex py-0 pl-0 pr-6 shadow-2xl rounded-xl place-content-between'>
                 <div className='flex gap-6'>
                     <div className='bg-[#036C65] h-full w-5 rounded-full'></div>
                     <div className='my-4'>
-                        <h1>{cita.nombre}</h1>
+                        <h1>{cita.Servicio}</h1>
                         <p className='text-[#B78686]'>{cita.estado}</p>
-                        <p className='text-[#B78686]'> Especialista: {cita.especialista}</p>
-                        <p>{firstLetterUppercase(nombreDia) + ' ' + dia + ', ' + firstLetterUppercase(nombreMes) + ' ' + año + ', ' + formatHora12(cita.hora)}</p>
+                        <p className='text-[#B78686]'> Especialista: {cita.Empleado}</p>
+                        <p>{firstLetterUppercase(nombreDia) + ' ' + dia + ', ' + firstLetterUppercase(nombreMes) + ' ' + año + ', ' + formatHora12(cita.hora_Inicio)}</p>
                     </div>
                 </div>
                 <div className='flex gap-4 my-6'>
@@ -449,10 +504,12 @@ function Agenda() {
 
 
                                         }]}
-                                    disableFuture
-                                    className=''
-                                    defaultValue={initialValue}
+                                    // disableFuture
+                                    // className=''
+                                    // defaultValue={initialValue}
+                                    minDate={dayjs()} 
                                     value={selectedDate}
+                                    //onChange={(date) => setSelectedDate(date)}}
                                     onChange={handleDateChange}
                                     loading={isLoading}
                                     onMonthChange={handleMonthChange}
