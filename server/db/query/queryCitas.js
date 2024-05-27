@@ -57,7 +57,6 @@ export async function ventaCita(connection, data) {
 // Create cita online (FUNCIONAL)
 export async function citaOnline(connection, data) {
   try {
-    let resultado; // Variable donde almacenaremos si se hizo correctamente
     let duracion = await duracionTotal(connection, { idServ: data.idServ }); // Calculamos la duracion total del servicio
     data.horaF = horaFinal(data.horaI, duracion[0].tiempo); // Calculamos la hora final del servicio
     // await ventaCita(connection, {
