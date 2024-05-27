@@ -41,10 +41,25 @@ const resizeImage = (solicitud,respuesta,siguiente)=>{
       }
       else{
         //eliminar la imagen original
-        fs.unlinkSync(filePath);
+        fs.unlink(filePath, (error)=>{
+          if(error){
+            console.log(error);
+          }
+          else{
+            console.log('el archivo fue eliminado exitosamente');
+          }
+        });
 
 
-        fs.renameSync(outputPath, filePath);
+        fs.rename(outputPath, filePath, (error)=>{
+          if(error){
+            console.log(error);
+          }
+          else{
+            console.log('cambio de nombre de la imagen recortada exitosamente');
+          }
+        });
+
       }
       
       solicitud.file.resizedPath = outputPath;
