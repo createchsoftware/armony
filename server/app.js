@@ -4,6 +4,8 @@ import cookieParser from "cookie-parser";
 import https from "https";
 import * as fs from "fs";
 import multer from 'multer';
+import sharp from 'sharp';
+
 
 
 import path, { dirname } from "path";
@@ -22,7 +24,34 @@ const storage = multer.diskStorage({
 
 const upload = multer({storage:storage}); // le estamos diciendo que nos asigne todas las funciones del storage
 
+const resizeImage = (solicitud,respuesta,siguiente)=>{
+  if(!solicitud.file){
+    siguiente();
+  }
+  else{
+    const filePath = solicitud.file.path;
+    const outputPath = path.join(_dirname, "../client/public/pictures/avatares",`resized_${Date.now()}.${solicitud.file.originalname.split('.').pop()}`);
 
+    sharp(filePath)
+    .resize({width:300,height:300,fit:'cover'})
+    .toFile(outputPath, (error,informacion)=>{
+      if(error){
+        console.log(error);
+        siguiente();
+      }
+      else{
+        //eliminar la imagen original
+        fs.unlinkSync(filePath);
+
+
+        fs.renameSync(outputPath, filePath);
+      }
+      
+      solicitud.file.resizedPath = outputPath;
+      siguiente();
+    })
+  }
+}
 
 
 
@@ -108,7 +137,7 @@ app.get("/api/logueado", authorization.verificar_cookie);
 
 app.get("/api/logout", authentication.logout);
 
-app.post("/api/step1",upload.single('image'), createAccount.paso1);
+app.post("/api/step1",upload.single('image'),resizeImage, createAccount.paso1);
 
 app.post("/api/step2", createAccount.paso2);
 
@@ -128,7 +157,7 @@ app.get("/recuperacion/confirmacion", confirmacion);
 
 app.post("/api/deleteCard", perfil.deleteTarjeta);
 
-app.post("/api/editarPerfil",upload.single('image'), editarPerfil.change_data);
+app.post("/api/editarPerfil",upload.single('image'),resizeImage, editarPerfil.change_data);
 
 app.post("/api/tarjeta-nueva", perfil.InsertarTarjeta);
 
