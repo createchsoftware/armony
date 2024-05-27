@@ -226,7 +226,7 @@ export async function serviciosFav(connection, data) {
     let query = mysql.format(servFav, [data.idCliente]); // Parametros para el procedimiento almacenado
     const [rows, fileds] = await connection.query(query); // Ejecutamos el query y almacenamos los valores retornados
     endConnection(); // Cerramos la conexion con la base de datos
-    return rows; // Retornamos los valores obtenidos
+    return rows[0]; // Retornamos los valores obtenidos
   } catch (err) {
     // Capturamos errores de ejecucion de query
     console.error(messageError, err); // Mostramos errores por consola
@@ -240,7 +240,7 @@ export async function productosFaciales(connection) {
     let query = "CALL getProductosFaciales()"; // Query de procedimiento almacenado
     const [rows, fields] = await connection.query(query); // Ejecutamos el query y almacenamos los valores
     endConnection(); // Cerramos la conexion
-    return rows; // Retornamos los valores
+    return rows[0]; // Retornamos los valores
   } catch (err) {
     // Capturamos errores de ejecucion de query
     console.error(messageError, err); // Mostramos errores por consola
@@ -254,7 +254,7 @@ export async function productosCorporales(connection) {
     let query = "CALL getProductosCorporales()"; // Query de procedimiento almacenado
     const [rows, fields] = await connection.query(query); // Ejecutamos el query y almacenamos los valores obtenidos
     endConnection(); // Cerramos la conexion
-    return rows; // Retornamos los valores obtenidos
+    return rows[0]; // Retornamos los valores obtenidos
   } catch (err) {
     // Capturamos errores de ejecucion de query
     console.error(messageError, err); // Mostramos errores por consola
@@ -269,7 +269,20 @@ export async function productosRelacionados(connection, data) {
     let query = mysql.format(prodRela, [data.idCliente]); // Parametros para el procedimiento almacenado
     const [rows, fields] = await connection.query(query); // Ejecutamos el query y almacenamos los valores obtenidos
     endConnection(); // Cerramos la conexion con la base de datos
-    return rows; // Retornamos los valores obtenidos
+    return rows[0]; // Retornamos los valores obtenidos
+  } catch (err) {
+    // Capturamos errores de ejecucion de query
+    console.error(messageError, err); // Mostramos errores por consola
+  }
+}
+
+export async function serviciosRelacionados(connection, data) {
+  try {
+    let servRelaci = "CALL getServRelacionados(?)"; // Query de procedimiento almacenado
+    let query = mysql.format(servRelaci, [data.idServ]); // Pasamos lo parametros necesarios para el procedimiento
+    const [rows, fields] = await connection.query(query); // Ejecutamos el query y almacenamos los datos obtenidos
+    endConnection(); // Cerramos la conexion con la base de datos
+    return rows[0]; // Retornamos los servicios obtenidos
   } catch (err) {
     // Capturamos errores de ejecucion de query
     console.error(messageError, err); // Mostramos errores por consola
@@ -283,7 +296,7 @@ export async function productosDescuento(connection) {
     let query = "CALL getProductosDesc()"; // Query del procedimiento almacenado
     const [rows, fields] = await connection.query(query); // Ejecutamos le query y almacenamos los valores
     endConnection(); // Cerramos la conexion
-    return rows; // Retornamos los valores obtenidos
+    return rows[0]; // Retornamos los valores obtenidos
   } catch (err) {
     // Capturamos errores de ejecucion de query
     console.error(messageError, err); // Mostramos errores por consola
@@ -297,7 +310,7 @@ export async function serviciosDescuento(connection) {
     let query = "CALL getServiciosDesc()"; // Query de procedimiento almacenado de la base de datos
     const [rows, fields] = await connection.query(query); // Ejecutamos el query y almacenamos los resultados
     endConnection(); // Cerramos la conexion con la base de datos
-    return rows; // Retornamos los valores obtenidos
+    return rows[0]; // Retornamos los valores obtenidos
   } catch (err) {
     // Capturamos errores de ejecucion de query
     console.error(messageError, err); // Mostramos errores por consola

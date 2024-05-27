@@ -15,8 +15,11 @@ import {
   productosRelacionados,
   productosDescuento,
   serviciosDescuento,
+  serviciosRelacionados,
 } from "../db/query/queryProductos.js";
+import { horasWithoutSeconds } from "../db/query/queryCitas.js";
 import { errorUpdate } from "../auth/validaciones.js";
+import { isFav } from "../db/query/queryCategoria.js";
 
 // Router
 export const routerProductos = express.Router();
@@ -240,6 +243,18 @@ routerProductos.get("/relacionados/:id", async (req, res) => {
   }
 });
 
+routerProductos.get("/servicios/relacionados/:id", async (req, res) => {
+  try {
+    const resultado = await serviciosRelacionados(conexion, {
+      idServ: req.params.id,
+    });
+    res.status(200).json(resultado);
+  } catch (err) {
+    console.error("Ha ocurrido un error: ", err);
+    res.status(500).send("Ha ocurrido un error al procesar tu solicitud");
+  }
+});
+
 // OBTENER LOS PRODUCTOS CON DESCUENTO
 // FUNCIONAL
 routerProductos.get("/descuento", async (req, res) => {
@@ -256,10 +271,36 @@ routerProductos.get("/descuento", async (req, res) => {
 
 // OBTENER LOS SERVICIOS CON DESCUENTO
 // FUNCIONAL
-routerProductos.get("/servicios/descuento", async (req, res) => {
+routerProductos.get("/servicios/descuento/:id", async (req, res) => {
   try {
+    let servicios = [];
+    let horario = [];
+    let favo;
+    let favUser;
     const resultado = await serviciosDescuento(conexion);
-    res.status(202).json(resultado);
+    for (let i = 0; i < resultado.length; i++) {
+      horario[i] = resultado[i].tiempo;
+    }
+    const horasMostrar = await horasWithoutSeconds(horario); // Horas con formato HH:MM
+    for (let i = 0; i < resultado.length; i++) {
+      favo = await isFav(conexion, {
+        idUser: req.params.id,
+        idProdServ: resultado[0].pkIdPS,
+      });
+      favUser = (await (favo && favo.length > 0)) ? true : false;
+      servicios[i] = {
+        descripcion: resultado[i].descripcion,
+        estado: resultado[i].estado,
+        img: resultado[i].img,
+        nombre: resultado[i].nombre,
+        pkIdPS: resultado[i].pkIdPS,
+        precio: resultado[i].precio,
+        tiempo: horasMostrar[i],
+        valoracion: resultado[i].valoracion,
+        favorito: favUser,
+      };
+    }
+    res.status(202).json(servicios);
   } catch (err) {
     console.error("Ha ocurrido un error: ", err);
     res.status(500).send("Ha ocurrido un error al procesar tu solicitud");
