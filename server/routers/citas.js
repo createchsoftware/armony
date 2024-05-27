@@ -208,7 +208,7 @@ routerCitas.patch("/status/:idCita", async (req, res) => {
   try {
     const statusCita = {
       idCita: req.params.idCita,
-      status: req.body.estado,
+      status: req.body.status,
     };
     const resultado = await updateCitaStatus(conexion, {
       idCita: statusCita.idCita,
