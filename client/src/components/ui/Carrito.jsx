@@ -6,7 +6,7 @@ import PagoProducto from '../../pages/PagoProducto';
 const CarritoContext = createContext();
 import { Navigate, useNavigate } from "react-router-dom";
 import PopupLogin from './Login/PopupLogin';
-
+import { jwtDecode } from "jwt-decode";
 
 export const CarritoProvider = ({ children }) => {
 
