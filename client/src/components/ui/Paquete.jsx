@@ -30,9 +30,9 @@ function Paquete({ paquetes }) {
             return 'flex justify-between opacity-30';
         }
     }
-    const getPriceClass = (packageIndex, priceIndex) => {
+    const getPriceClass = (priceIndex) => {
         let baseClass = "p-2 border-2  border-black rounded-full cursor-pointer shadow-[0_0px_5px_rgb(0,0,0,0.2)] shadow-purple-600 hover:bg-slate-50";
-        if (selectedPackageIndex === packageIndex && selectedPriceIndex !== priceIndex) {
+        if (selectedPriceIndex == priceIndex) {
             return `${baseClass} opacity-30`;
         }
         return baseClass;
