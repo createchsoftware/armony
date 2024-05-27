@@ -11,8 +11,8 @@ function Rango() {
     const [nombre, setNombre] = useState(false); //<<< PARA EL INICIO DE SESION
     const [correo, setCorreo] = useState(false); //<<< PARA EL INICIO DE SESION
     const [foto, setFoto] = useState(null)
-    const [rango, setRango] = useState(3); //<<< MUESTRA EL RANGO DEL USUARIO
-    const [puntos, setPuntos] = useState(7000) //<<< PUNTOS TOTALES\
+    const [rango, setRango] = useState(0); //<<< MUESTRA EL RANGO DEL USUARIO
+    const [puntos, setPuntos] = useState(0) //<<< PUNTOS TOTALES\
     const [porcentaje, setPorcentaje] = useState(0)
 
     async function recibido() {
