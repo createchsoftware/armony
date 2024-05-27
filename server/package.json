@@ -151,6 +151,7 @@
     "mysql2": "^3.9.7",
     "node-fetch": "^3.3.2",
     "nodemailer": "^6.9.13",
+    "sharp": "^0.33.4",
     "socket.io": "^4.7.5",
     "stripe": "^15.7.0",
     "twilio": "^5.0.4",

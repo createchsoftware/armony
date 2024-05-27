@@ -81,7 +81,7 @@ function Monedero() {
                             <img className="w-8" src="../../../pictures/tarjetas.png" alt="" />
                             <p>Mis tarjetas</p>
                         </a>
-                        <a href="/perfil/historial" className="rounded-xl hover:bg-opacity-80 flex gap-4 items-center px-4 py-4 text-white bg-[#EB5765]">
+                        <a href="/perfil/movimientos" className="rounded-xl hover:bg-opacity-80 flex gap-4 items-center px-4 py-4 text-white bg-[#EB5765]">
                             <img className="w-8" src="../../../pictures/movimientos.png" alt="" />
                             <p>Movimientos</p>
                         </a>

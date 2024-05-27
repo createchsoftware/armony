@@ -117,8 +117,8 @@ async function login(solicitud,respuesta){
                         let fecha = fields[0].fechaNac;
 
                         let year = fecha.getFullYear();
-                        let month = fecha.getMonth();
-                        let day = fecha.getDay();
+                        let month = fecha.getMonth()+1;
+                        let day = fecha.getDate();
 
 
                         let dia = day.toString();;
