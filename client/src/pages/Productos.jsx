@@ -41,9 +41,7 @@ const Productos = () => {
       .then((response) => response.json())
       .then((data) => {
         // Acceder al array de objetos en la posición 0 del array dentro de data
-        const descuentosArray = data.data[0];
-        setDescuentos(descuentosArray);
-        console.log(descuentosArray);
+        setDescuentos(data.data);
       })
       .catch((error) => {
         console.log("error", error);

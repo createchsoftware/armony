@@ -163,7 +163,7 @@ export async function updateCita(connection, data) {
   }
 }
 
-export async function updateCitaStaus(connection, data) {
+export async function updateCitaStatus(connection, data) {
   try {
     let updateStatus = "CALL updCitaEstado(?, ?)"; // Procedimiento almacenado de la base de datos
     let query = mysql.format(updateStatus, [data.idCita, data.status]); // Agregamos los parametros necesarios al procedimiento

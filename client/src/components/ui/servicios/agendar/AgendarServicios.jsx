@@ -61,7 +61,7 @@ const AgendarServicios = ({ next }) => {
             return response.json();
           })
           .then((data) => {
-            setEstetica(data);
+            setEstetica(data.data);
           })
           .catch((error) => {
             // setErrorEstetica(error.message);

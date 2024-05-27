@@ -31,26 +31,28 @@ function Especialista({ especialista }) {
     }
   };
   return (
-    <div className="md:px-8 md:py-2 rounded-3xl font-[abeatbyKai] ring-1 w-2/3 m-auto bg-rose-200">
-      <Box
-        className="float-right"
-        sx={{
-          "& > legend": { mt: 2 },
-        }}
-      >
-        <StyledRating
-          name="customized-color"
-          defaultValue={0}
-          max={1}
-          getLabelText={(value) => `${value} Heart${value !== 1 ? "s" : ""}`}
-          precision={1}
-          icon={<FavoriteIcon fontSize="inherit" />}
-          emptyIcon={<FavoriteBorderIcon fontSize="inherit" />}
-        />
-      </Box>
+    <div className="md:px-8 md:py-2 rounded-3xl font-[abeatbyKai]  w-2/3 m-auto bg-rose-200">
+      <div className='flex justify-end'>
+        <Box
+          className="absolute z-20 flex justify-end float-right"
+          sx={{
+            '& > legend': { mt: 0 },
+          }}
+        >
+          <StyledRating
+            name="customized-color"
+            defaultValue={0}
+            max={1}
+            getLabelText={(value) => `${value} Heart${value !== 1 ? 's' : ''}`}
+            precision={1}
+            icon={<FavoriteIcon fontSize="inherit" />}
+            emptyIcon={<FavoriteBorderIcon fontSize="inherit" />}
+          />
+        </Box>
+      </div>
       <img
-        className="w-1/2 m-auto rounded-full aspect-square"
-        src={especialista.imagen}
+        className="w-2/3 m-auto rounded-full aspect-square"
+        src={especialista.img}
         alt=""
       />
       <p className="pt-4 text-lg font-bold text-center">

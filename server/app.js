@@ -128,6 +128,8 @@ app.use("/api/admin/imagen", routerImagenes);
 
 import { routerFavoritos } from "./routers/favoritos.js";
 app.use("/api/admin/favoritos", routerFavoritos);
+import { routerCarrito } from "./routers/carrito.js";
+app.use("/api/admin/carrito", routerCarrito);
 import { routerCitas } from "./routers/citas.js";
 app.use("/api/admin/citas", routerCitas);
 
