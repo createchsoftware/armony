@@ -69,11 +69,13 @@ const EditarPerfil = ({ usuario }) => {
             setColonia(respuestaJson.colonia);
             setNacimiento(respuestaJson.fechaNac);
             setImagen(respuestaJson.imagen);
+            
+            let birthday = respuestaJson.fechaNac.split('-');
 
-            let fecha = new Date(respuestaJson.fechaNac);
-            setDia(fecha.getDay());
-            setMes(fecha.getMonth());
-            setAño(fecha.getFullYear());
+            setDia(birthday[2]);
+            setMes(birthday[1]);
+            setAño(birthday[0]);
+
         }
         else {
             setNombre(null);
@@ -249,8 +251,8 @@ const EditarPerfil = ({ usuario }) => {
                     </div>
                 </div>
                 <div className="grid gap-2 text-center place-content-center">
-                    <img src={`../../../pictures/avatares/${imagen}`} className="w-48 rounded-full shadow-2xl" alt="" />
-                    <input type="file" id='imagen'/>
+                    <img id="subida" src={`../../../pictures/avatares/${imagen}`} className="w-48 rounded-full shadow-2xl" alt="" />
+                    <input type="file" id='imagen' accept="image/*"/>
                     <p>ID de Usuario</p>
                     <p className="px-6 py-2 rounded-full bg-slate-200 focus:outline-none focus:ring-1 focus:ring-rose-400 focus:border-transparent"
                     >{`#${clave}`}</p>

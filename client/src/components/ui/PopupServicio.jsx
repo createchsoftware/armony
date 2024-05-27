@@ -90,7 +90,7 @@ const PopupServicio = ({ cerrar, check, datos }) => {
             <div>
               <div className="mt-5">
                 <a
-                  className="ml-5 justify-self-start"
+                  className="text-sm items-center lg:text-base ml-5 justify-self-start relative cursor-pointer before:bg-black before:absolute before:-bottom-1 before:block before:h-[1px] before:w-full before:origin-bottom-right before:scale-x-0 before:transition before:duration-300 before:ease-in-out hover:before:origin-bottom-left hover:before:scale-x-100 hover:font-bold"
                   aria-label="Regresar"
                   onClick={cerrar}
                 >

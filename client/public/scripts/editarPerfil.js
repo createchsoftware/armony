@@ -6,6 +6,7 @@ imagen.addEventListener('change',(evento)=>{
 })
 
 
+
 let nombre = document.getElementById('nombre');
 let paterno = document.getElementById('paterno');
 let materno = document.getElementById('materno');
