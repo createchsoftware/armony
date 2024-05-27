@@ -1,17 +1,47 @@
 import LayoutPrincipal from "../../../layouts/LayoutPrincipal";
 import { IoIosArrowBack } from "react-icons/io";
 import { MdNavigateNext } from "react-icons/md";
+import { useState, useEffect } from "react";
 
-let email = "correo@armony.com";
+
 
 function TuCorreo() {
+
+  const [correo, setCorreo] = useState(false);
+
+  async function recibido() {
+    const respuesta = await fetch('/api/logueado', {
+        method: "GET",
+        headers: {
+            "Content-Type": "application/json",
+        }
+    })
+
+    if(!respuesta.ok) {
+        setCorreo(null);
+    }
+
+    let respuestaJson = await respuesta.json();
+
+    if (respuestaJson.logueado == true) {     
+        setCorreo(respuestaJson.email);
+    }
+    else { 
+        setCorreo(null);    
+    }
+}
+
+useEffect(() => {
+    recibido()
+}, []);
+
   return (
     <LayoutPrincipal>
       <main className="grid gap-6 my-24">
         <section className="rounded-2xl mt-12 w-[60%] m-auto px-6 pt-6 pb-3 shadow-[0_3px_10px_rgb(0,0,0,0.2)]">
           <a
             className="flex items-baseline content-center text-sm gap-x-4"
-            href="/spa"
+            href="/perfil/seguridad"
           >
             {" "}
             <IoIosArrowBack className="" />
@@ -42,7 +72,7 @@ function TuCorreo() {
                 </h2>
               </div>
               <div className="flex gap-6">
-                <h2 className="text-[#EB5765]">{email}</h2>
+                <h2 className="text-[#EB5765]">{correo}</h2>
               </div>
             </div>
           </div>

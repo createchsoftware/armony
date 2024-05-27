@@ -2,11 +2,14 @@ import express from "express";
 import { conexion } from "../db/connection.js";
 import {
   horasDisponibles,
-  createCitas,
   updateCita,
-  updateCitaStaus,
+<<<<<<< HEAD
+=======
+  updateCitaStatus,
+>>>>>>> 1892d7e5395866df94cd7a5191a51bc325aff9d1
   ventaCita,
   getCitasByEstado,
+  updateCitaStatus,
   horasWithoutSeconds,
   citaOnline,
 } from "../db/query/queryCitas.js";

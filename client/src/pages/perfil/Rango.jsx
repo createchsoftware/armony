@@ -250,7 +250,6 @@ function Rango() {
                                     <p className='grid p-2 py-4 bg-white rounded-lg'> Rango Oro
                                         <img className='w-24 m-auto mt-2' src={rangoOro} alt="" />
                                     </p>
-                                    <p className='p-2 py-4 bg-white rounded-lg'> Válido para 1 persona </p>
                                     <p className='p-2 py-4 bg-white rounded-lg'> Envío prioritario </p>
                                     <p className='p-2 py-4 bg-white rounded-lg'> Promociones exclusivas </p>
                                 </div>
@@ -258,7 +257,6 @@ function Rango() {
                                     <p className='grid p-2 py-4 bg-white rounded-lg'> Rango Platino
                                         <img className='w-24 m-auto mt-2' src={rangoPlatino} alt="" />
                                     </p>
-                                    <p className='p-2 py-4 bg-white rounded-lg'> Válido para 2 personas </p>
                                     <p className='p-2 py-4 bg-white rounded-lg'> Regalos exclusivos </p>
                                     <p className='p-2 py-4 bg-white rounded-lg'> Descuentos generosos en spa </p>
                                     <p className='p-2 py-4 bg-white rounded-lg'> Acceso anticipado a ventas </p>
@@ -271,7 +269,6 @@ function Rango() {
                                         <p className='grid p-2 py-4 bg-white rounded-lg'> Rango Platino
                                             <img className='w-24 m-auto mt-2' src={rangoPlatino} alt="" />
                                         </p>
-                                        <p className='p-2 py-4 bg-white rounded-lg'> Válido para 2 personas </p>
                                         <p className='p-2 py-4 bg-white rounded-lg'> Regalos exclusivos </p>
                                         <p className='p-2 py-4 bg-white rounded-lg'> Descuentos generosos en spa </p>
                                         <p className='p-2 py-4 bg-white rounded-lg'> Acceso anticipado a ventas </p>
@@ -280,7 +277,6 @@ function Rango() {
                                         <p className='grid p-2 py-4 bg-white rounded-lg'> Rango VIP
                                             <img className='w-24 m-auto mt-2' src={rangoVIP} alt="" />
                                         </p>
-                                        <p className='p-2 py-4 bg-white rounded-lg'> Válido para 4 personas </p>
                                         <p className='p-2 py-4 bg-white rounded-lg'> Invitaciones a eventos VIP de élite </p>
                                         <p className='p-2 py-4 bg-white rounded-lg'> Acceso anticipado a ventas exclusivas </p>
                                         <p className='p-2 py-4 bg-white rounded-lg'> Contenido premium ilimitado </p>
@@ -293,7 +289,6 @@ function Rango() {
                                         <p className='grid p-2 py-4 bg-white rounded-lg'> Rango VIP
                                             <img className='w-24 m-auto mt-2' src={rangoVIP} alt="" />
                                         </p>
-                                        <p className='p-2 py-4 bg-white rounded-lg'> Válido para 4 personas </p>
                                         <p className='p-2 py-4 bg-white rounded-lg'> Invitaciones a eventos VIP de élite </p>
                                         <p className='p-2 py-4 bg-white rounded-lg'> Acceso anticipado a ventas exclusivas </p>
                                         <p className='p-2 py-4 bg-white rounded-lg'> Contenido premium ilimitado </p>
@@ -304,7 +299,6 @@ function Rango() {
                                         <p className='grid p-2 py-4 bg-white rounded-lg'> Rango Oro
                                             <img className='w-24 m-auto mt-2' src={rangoOro} alt="" />
                                         </p>
-                                        <p className='p-2 py-4 bg-white rounded-lg'> Válido para 1 persona </p>
                                         <p className='p-2 py-4 bg-white rounded-lg'> Envío prioritario </p>
                                         <p className='p-2 py-4 bg-white rounded-lg'> Promociones exclusivas </p>
                                     </div>

@@ -113,7 +113,7 @@ function Agenda() {
         fetchHighlightedDays(date);
     };
 
-    
+
 
     const [value, onChange] = useState(new Date());
 
@@ -253,7 +253,7 @@ function Agenda() {
         // },
     };
 
-   
+
     const [Uid, setUid] = useState(null)
 
 
@@ -301,6 +301,7 @@ function Agenda() {
             fetch(`/api/admin/citas/citasPendientes/${Uid}/pendiente`)
                 .then((response) => response.json())
                 .then((data) => {
+                    console.log("Datos", data);
                     setCitasPendientes(data);
                     setCitasFiltradas(data);
                 })
@@ -314,26 +315,39 @@ function Agenda() {
 
     // Primer useEffect para verificar el inicio de sesión
     useEffect(() => {
-        if(Uid){
-        recibido();
-    }
+        if (Uid) {
+            recibido();
+        }
     }, [Uid]);
+
+
+    //use effect update citas pendientes when selected date changes
+    // useEffect(() => {
+    //     if (selectedDate) {
+    //         const formattedDate = selectedDate.format("YYYY-MM-DD");
+    //         const citasFecha = citasPendientes.filter(cita => {
+    //             const citaFormattedDate = dayjs(cita.fecha).format("YYYY-MM-DD");
+    //             return citaFormattedDate === formattedDate;
+    //         });
+    //         setCitasFiltradas(citasFecha);
+    //     }
+    // }, [selectedDate, citasPendientes]);
 
 
 
     const handleDateChange = (newDate) => {
         setSelectedDate(newDate);
         const formattedDate = newDate.format("YYYY-MM-DD");
-       
+
         // const citasFecha = citasPendientes.filter(cita => cita.fecha === formattedDate);
         const citasFecha = citasPendientes.filter(cita => {
             const citaFormattedDate = dayjs(cita.fecha).format("YYYY-MM-DD");
             return citaFormattedDate === formattedDate;
         });
-        
+
         setCitasFiltradas(citasFecha);
     };
-    
+
 
     // useEffect(() => {
     //     if (selectedDate) {
@@ -390,11 +404,48 @@ function Agenda() {
     //     }
     // }, []);
 
+    // const removeItem = (id) => {
+
+    //     const updatedCitas = citas.filter(cita => cita.id !== id);
+    //     setCitas(updatedCitas);
+    //     localStorage.setItem('citas', JSON.stringify(updatedCitas));
+    // };
     const removeItem = (id) => {
-        const updatedCitas = citas.filter(cita => cita.id !== id);
-        setCitas(updatedCitas);
-        localStorage.setItem('citas', JSON.stringify(updatedCitas));
+        setCitasFiltradas(citasFiltradas.filter(cita => cita.ID_Cita !== id));
+        if (id) {
+            console.log("id", id);
+            try {
+                fetch(`/api/admin/citas/status/${id}`, {
+                    method: 'PATCH',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ estado: 'hecha' }),
+                })
+            } catch (error) {
+                console.log("error", error);
+            }
+        }
     };
+
+    // const removeItem = async (id) => {
+    //     setCitasFiltradas(citasFiltradas.filter(cita => cita.ID_Cita !== id));
+    //     if (id) {
+    //         console.log("id", id);
+    //         try {
+    //             const response = await fetch(`/api/admin/citas/status/${id}`, {
+    //                 method: 'PATCH',
+    //                 headers: {
+    //                     'Content-Type': 'application/json',
+    //                 },
+    //                 body: JSON.stringify({ estado: 'hecha' }),
+    //             });
+    //             // Aquí puedes agregar lógica adicional si es necesario con la respuesta
+    //         } catch (error) {
+    //             console.log("error", error);
+    //         }
+    //     }
+    // };
 
     function firstLetterUppercase(string) {
         return string.charAt(0).toLocaleUpperCase() + string.slice(1);
@@ -434,7 +485,7 @@ function Agenda() {
                             <path d="M6.75071 22.1244C6.57654 22.1263 6.40577 22.0761 6.26026 21.9804C6.11475 21.8847 6.00113 21.7477 5.93394 21.587C5.86675 21.4263 5.84904 21.2492 5.8831 21.0784C5.91715 20.9076 6.00141 20.7508 6.12509 20.6281L20.2082 6.56251C20.2849 6.46594 20.3812 6.38667 20.4906 6.32991C20.6001 6.27314 20.7203 6.24015 20.8435 6.23312C20.9666 6.22608 21.0898 6.24514 21.205 6.28907C21.3203 6.33299 21.4249 6.40077 21.5121 6.48797C21.5993 6.57517 21.6671 6.67982 21.711 6.79506C21.755 6.91029 21.774 7.03351 21.767 7.15663C21.7599 7.27975 21.727 7.39999 21.6702 7.50947C21.6134 7.61895 21.5342 7.71519 21.4376 7.79189L7.37196 21.875C7.20612 22.0372 6.98266 22.1269 6.75071 22.1244Z" fill="#222222" />
                         </svg>
                     </button>
-                    <button className='duration-200 hover:text-[#ec5766] text-2xl' onClick={() => removeItem(cita.id)} >
+                    <button className='duration-200 hover:text-[#ec5766] text-2xl' onClick={() => removeItem(cita.ID_Cita)} >
                         <FontAwesomeIcon icon={faTrash} />
                     </button>
                 </div>
@@ -507,7 +558,7 @@ function Agenda() {
                                     // disableFuture
                                     // className=''
                                     // defaultValue={initialValue}
-                                    minDate={dayjs()} 
+                                    minDate={dayjs()}
                                     value={selectedDate}
                                     //onChange={(date) => setSelectedDate(date)}}
                                     onChange={handleDateChange}

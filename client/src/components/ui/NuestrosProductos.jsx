@@ -60,11 +60,9 @@ function Productos() {
 
     const [descuentos, setDescuentos] = useState([]);
 
-    const notify = () => toast("Producto agregado al carrito");
-
-    const toggleSoon = () => {
-        setSoon(!soon)
-    };
+    // const toggleSoon = () => {
+    //     setSoon(!soon)
+    // };
 
     //useEffect para obtener los productos con descuento
     useEffect(() => {
@@ -72,9 +70,7 @@ function Productos() {
             .then((response) => response.json())
             .then((data) => {
                 // Acceder al array de objetos en la posición 0 del array dentro de data
-                const descuentosArray = data.data[0];
-                setDescuentos(descuentosArray);
-                console.log(descuentosArray);
+                setDescuentos(data.data);
             })
             .catch((error) => {
                 console.log("error", error);
@@ -83,11 +79,11 @@ function Productos() {
 
     return (
         <>
-            <img src={greenRight} alt="" className='absolute w-[12%] right-0 translate-y-[-6rem] ' />
+            <img src={greenRight} alt="" className='absolute w-[12%] right-0 translate-y-[-6rem]' />
             <h1 className='text-5xl  w-[80%] md:text-6xl mx-auto font  text-[#036C65] my-12 text-center items-center  font-[iloveglitter] mt-24'>Nuestros productos</h1>
-            <section className=' w-[80%] bg-white m-auto rounded-xl border-8 border-[#E2B3B7] py-6'>
+            <section className=' w-[80%] bg-white m-auto rounded-xl border-8 border-[#E2B3B7] py-6 relative'>
                 <hr />
-                <div className='mx-auto p-6 md:mx-28 md:p-0 selection:bg-[#EB5765] selection:text-white'>
+                <div className='mx-auto p-6 md:mx-28 md:p-0 selection:bg-[#EB5765] selection:text-white relative'>
                     <Carousel
                         additionalTransfrom={0}
                         arrows
@@ -95,15 +91,16 @@ function Productos() {
                         autoPlaySpeed={3000}
                         centerMode={false}
                         className="z-0"
-                        containerclassName="container-with-dots z-0"
+                        containerclassName="container-with-dots z-0 overflow-visible"
                         dotListclassName=""
+
                         // draggable
                         focusOnSelect={false}
-                        infinite
-                        itemclassName=""
+                        itemclassName="z-0"
                         keyBoardControl
                         minimumTouchDrag={80}
                         pauseOnHover
+                        infinite
                         renderArrowsWhenDisabled={false}
                         renderButtonGroupOutside={false}
                         renderDotsOutside={false}
@@ -114,7 +111,7 @@ function Productos() {
                                     min: 1024
                                 },
                                 items: 4,
-                                partialVisibilityGutter: 40
+                                partialVisibilityGutter: 4
                             },
                             mobile: {
                                 breakpoint: {
@@ -141,20 +138,23 @@ function Productos() {
                         sliderclassName=""
                         slidesToSlide={1}
                         swipeable
+                        itemClass='z-0'
+                        containerClass='z-0'
+                        sliderClass='z-10'
                         customLeftArrow={<FontAwesomeIcon
                             icon={faAngleLeft}
                             size="lg"
-                            className="absolute cursor-pointer top-1/2 transform -translate-y-1/2 -left-8 text-3xl text-primary-900 aspect-square bg-[#e6e6e6] rounded-full text-[#036C65] p-4 hover:opacity-90 overflow-visible z-50"
+                            className="absolute cursor-pointer top-1/2 transform -translate-y-1/2 -left-0 text-3xl text-primary-900 aspect-square bg-[#e6e6e6] rounded-full text-[#036C65] p-3 hover:opacity-90 overflow-visible z-10"
                         />}
                         customRightArrow={<FontAwesomeIcon
                             size="lg"
                             icon={faAngleRight}
-                            className="absolute cursor-pointer top-1/2 transform -translate-y-1/2 -right-8 text-3xl text-primary-900 bg-[#e6e6e6] rounded-full aspect-square text-[#036C65] p-4 hover:opacity-90 overflow-visible z-50"
+                            className="absolute cursor-pointer top-1/2 transform -translate-y-1/2 -right-0 text-3xl text-primary-900 bg-[#e6e6e6] rounded-full aspect-square text-[#036C65] p-3 hover:opacity-90 overflow-visible z-10"
                         />}
                     // className=''
                     >
                         {descuentos.map(oferta => (
-                            <Ofertas key={oferta.id} producto={oferta} />
+                            <Ofertas key={oferta.id} noDesc={true} producto={oferta} />
                             // <Ofertas key={oferta.id} producto={oferta} handleClickCarrito={handleClickCarrito} />
                         ))}
 
@@ -163,7 +163,7 @@ function Productos() {
             </section>
             <div className='w-[80%] m-auto flex justify-between mb-24'>
                 <a href='/spa/productos' className='m-auto'>
-                    <button class="mt-12 transition-all duration-300 m-auto hover:bg-[#036C65] hover:ring-2 hover:ring-neutral-800 hover:ring-offset-1 group relative inline-flex h-10 items-center justify-center overflow-hidden rounded-lg border-2 bg-[#EB5765] px-6 font-[abeatbykai] text-neutral-200"><span>Ir a la tienda</span><div class="w-0 translate-x-[100%] pl-0 opacity-0 transition-all duration-200 group-hover:w-5 group-hover:translate-x-0 group-hover:pl-1 group-hover:opacity-100"><svg width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg" class="w-5 h-5"><path d="M8.14645 3.14645C8.34171 2.95118 8.65829 2.95118 8.85355 3.14645L12.8536 7.14645C13.0488 7.34171 13.0488 7.65829 12.8536 7.85355L8.85355 11.8536C8.65829 12.0488 8.34171 12.0488 8.14645 11.8536C7.95118 11.6583 7.95118 11.3417 8.14645 11.1464L11.2929 8H2.5C2.22386 8 2 7.77614 2 7.5C2 7.22386 2.22386 7 2.5 7H11.2929L8.14645 3.85355C7.95118 3.65829 7.95118 3.34171 8.14645 3.14645Z" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"></path></svg></div></button>
+                    <button className="mt-12 transition-all duration-300 m-auto hover:bg-[#036C65] hover:ring-2 hover:ring-neutral-800 hover:ring-offset-1 group relative inline-flex h-10 items-center justify-center overflow-hidden rounded-lg border-2 bg-[#EB5765] px-6 font-[abeatbykai] text-neutral-200"><span>Ir a la tienda</span><div className="w-0 translate-x-[100%] pl-0 opacity-0 transition-all duration-200 group-hover:w-5 group-hover:translate-x-0 group-hover:pl-1 group-hover:opacity-100"><svg width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg" class="w-5 h-5"><path d="M8.14645 3.14645C8.34171 2.95118 8.65829 2.95118 8.85355 3.14645L12.8536 7.14645C13.0488 7.34171 13.0488 7.65829 12.8536 7.85355L8.85355 11.8536C8.65829 12.0488 8.34171 12.0488 8.14645 11.8536C7.95118 11.6583 7.95118 11.3417 8.14645 11.1464L11.2929 8H2.5C2.22386 8 2 7.77614 2 7.5C2 7.22386 2.22386 7 2.5 7H11.2929L8.14645 3.85355C7.95118 3.65829 7.95118 3.34171 8.14645 3.14645Z" fill="currentColor" fillRule="evenodd" clipRule="evenodd"></path></svg></div></button>
                 </a>
             </div>
             <ToastContainer position={'bottom-right'} theme={'light'} />

@@ -152,7 +152,7 @@ function Perfil() {
                                 <MdNavigateNext />
                             </div>
                         </a>
-                        <a href='/perfil/historial' className='flex justify-between p-5 hover:underline rounded-xl hover:bg-slate-100'>
+                        <a href='/perfil/movimientos' className='flex justify-between p-5 hover:underline rounded-xl hover:bg-slate-100'>
                             <div className='flex gap-6'>
                                 <div className='rounded-full place-content-center md:bg-[#D9D9D9]'><img className='w-12' src="../../pictures/historial.png" alt="" /></div>
                                 <div>
