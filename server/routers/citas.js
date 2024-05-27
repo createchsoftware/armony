@@ -204,11 +204,11 @@ routerCitas.patch("/modify", async (req, res) => {
 });
 
 //Cancelacion de citas
-routerCitas.patch("/status", async (req, res) => {
+routerCitas.patch("/status/:idCita", async (req, res) => {
   try {
     const statusCita = {
-      idCita: 16,
-      status: "hecha",
+      idCita: req.params.idCita,
+      status: req.body.estado,
     };
     const resultado = await updateCitaStatus(conexion, {
       idCita: statusCita.idCita,
