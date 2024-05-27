@@ -113,8 +113,8 @@ export default function Cita() {
     const newActiveStep =
       isLastStep() && !allStepsCompleted()
         ? // It's the last step, but not all steps have been completed,
-          // find the first step that has been completed
-          steps.findIndex((step, i) => !(i in completed))
+        // find the first step that has been completed
+        steps.findIndex((step, i) => !(i in completed))
         : activeStep + 1;
     setActiveStep(newActiveStep);
   };
@@ -193,31 +193,31 @@ export default function Cita() {
   const LocalBase = () => {
     console.log(
       localStorage.getItem("servicio") +
-        " " +
-        localStorage.getItem("nombre") +
-        " " +
-        localStorage.getItem("precio") +
-        " " +
-        localStorage.getItem("tiempo") +
-        " " +
-        localStorage.getItem("imagen") +
-        " " +
-        localStorage.getItem("paquete") +
-        " " +
-        localStorage.getItem("sesiones") +
-        " " +
-        localStorage.getItem("Especialista") +
-        " " +
-        localStorage.getItem("hora") +
-        " " +
-        localStorage.getItem("Fecha seleccionada") +
-        " " +
-        localStorage.getItem("NombreEspecialista")
+      " " +
+      localStorage.getItem("nombre") +
+      " " +
+      localStorage.getItem("precio") +
+      " " +
+      localStorage.getItem("tiempo") +
+      " " +
+      localStorage.getItem("imagen") +
+      " " +
+      localStorage.getItem("paquete") +
+      " " +
+      localStorage.getItem("sesiones") +
+      " " +
+      localStorage.getItem("Especialista") +
+      " " +
+      localStorage.getItem("hora") +
+      " " +
+      localStorage.getItem("Fecha seleccionada") +
+      " " +
+      localStorage.getItem("NombreEspecialista")
     );
   };
   const stepComponents = [
     <Servicios key={0} next={handleClick} />,
-    <Paquetes key={1} />,
+    <Paquetes key={1} next={handleClick} />,
     <Calendario key={2} />,
     <Agenda restart={restart} next={handleClick} key={3} />,
     <Pago next={handleClick} key={4} />,
@@ -237,16 +237,16 @@ export default function Cita() {
                 color: "#036C65", // circle color (COMPLETED)
               },
               "& .MuiStepLabel-label.Mui-completed.MuiStepLabel-alternativeLabel":
-                {
-                  color: "white", // Just text label (COMPLETED)
-                },
+              {
+                color: "white", // Just text label (COMPLETED)
+              },
               "& .MuiStepLabel-root .Mui-active": {
                 color: "#036C65", // circle color (ACTIVE)
               },
               "& .MuiStepLabel-label.Mui-active.MuiStepLabel-alternativeLabel":
-                {
-                  color: "white", // Just text label (ACTIVE)
-                },
+              {
+                color: "white", // Just text label (ACTIVE)
+              },
               "& .MuiStepLabel-root .Mui-active .MuiStepIcon-text": {
                 fill: "white", // circle's number (ACTIVE)
               },
@@ -294,9 +294,9 @@ export default function Cita() {
                 <div
                   className={
                     activeStep === 0 ||
-                    activeStep === 3 ||
-                    activeStep === 4 ||
-                    activeStep === 6
+                      activeStep === 3 ||
+                      activeStep === 4 ||
+                      activeStep === 6
                       ? "grid grid-cols-2 content-between"
                       : "grid grid-cols-3 content-between"
                   }
@@ -307,11 +307,10 @@ export default function Cita() {
                     }
                     disabled={activeStep === 0}
                     onClick={handleBack}
-                    className={`${
-                      activeStep === 0
-                        ? "hover:bg-transparent opacity-30 hover:text-rose-400"
-                        : "hover:bg-red-50"
-                    } px-4 py-2 mx-auto text-xl bg-white rounded-full ring-1 text-rose-400 ring-rose-400`}
+                    className={`${activeStep === 0
+                      ? "hover:bg-transparent opacity-30 hover:text-rose-400"
+                      : "hover:bg-red-50"
+                      } px-4 py-2 mx-auto text-xl bg-white rounded-full ring-1 text-rose-400 ring-rose-400`}
                     sx={{ mr: 1 }}
                   >
                     Regresar
@@ -327,7 +326,7 @@ export default function Cita() {
                   </button>
                   <button
                     hidden={
-                      activeStep === 3 || activeStep === 4 || activeStep === 5
+                      activeStep === 3 || activeStep === 4 || activeStep === 5 || activeStep === 0 || activeStep === 1
                     }
                     // hidden={activeStep === 5 || activeStep === 4}
                     onClick={handleClick}

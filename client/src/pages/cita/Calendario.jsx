@@ -489,7 +489,6 @@ function Calendario() {
                     <div className=''>
                         <LocalizationProvider dateAdapter={AdapterDayjs}>
                             <DateCalendar
-                                disabled={!!localStorage.getItem('Especialista')}
                                 sx={[dayStyle,
                                     {
                                         svg: { fill: '#ec5766 !important' },
@@ -539,15 +538,19 @@ function Calendario() {
 
 
                     <div className='overflow-x-auto'>
-                        <h1 className='text-xl text-[#036C65] mb-4'>{localStorage.getItem('Especialista') ? 'Horas Disponibles:' : ''}</h1>
-                        <div className='flex text-[#EB5765] gap-2'>
-                            {horasDisponibles && horasDisponibles.map((hora, index) => (
-                                <button key={index} onClick={() => handleClick(hora, index)} className={getButtonClass(index)}>{hora}</button>
-                            ))}
-                        </div>
-
+                        <h1 className='text-xl text-[#036C65] mb-4'>
+                            {localStorage.getItem('Especialista') ? 'Horas Disponibles:' : 'Selecciona un especialista y una fecha'}
+                        </h1>
+                        {horasDisponibles && horasDisponibles.length > 0 ? (
+                            <div className='grid grid-cols-7 overflow-y-auto text-[#EB5765] gap-2'>
+                                {horasDisponibles.map((hora, index) => (
+                                    <button key={index} onClick={() => handleClick(hora, index)} className={getButtonClass(index)}>{hora}</button>
+                                ))}
+                            </div>
+                        ) : (
+                            <p>No hay horas disponibles</p>
+                        )}
                     </div>
-
                 </section>
                 <section className='w-1/3 '>
                     <h1 className='text-xl  text-[#036C65] text-center'>Selecciona tu especialista</h1>

@@ -35,12 +35,13 @@ const TarjetaDeServicio = ({ servicio, next }) => {
     }
   }
 
-  const agregarServ = (id, nombre, precio, tiempo, img, callback) => {
+  const agregarServ = (id, nombre, descripcion, precio, tiempo, img, callback) => {
     if (!seleccionado) {
       setSeleccionado(true);
       localStorage.setItem("servicio", id);
       localStorage.setItem("precio", precio);
       localStorage.setItem("nombre", nombre);
+      localStorage.setItem("descripcion", descripcion);
       localStorage.setItem("tiempo", tiempo);
       localStorage.setItem("imagen", img);
       if (callback) callback();
@@ -125,6 +126,7 @@ const TarjetaDeServicio = ({ servicio, next }) => {
             agregarServ(
               servicio.pkIdPS,
               servicio.nombre,
+              servicio.descripcion,
               servicio.precio,
               servicio.tiempo,
               servicio.img,
