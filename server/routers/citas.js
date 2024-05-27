@@ -2,9 +2,7 @@ import express from "express";
 import { conexion } from "../db/connection.js";
 import {
   horasDisponibles,
-  createCitas,
   updateCita,
-  updateCitaStaus,
   ventaCita,
   getCitasByEstado,
   horasWithoutSeconds,
