@@ -5,6 +5,7 @@ import Correo from "../../../components/ui/perfil/CambiarCorreo.jsx";
 import Confirmacion from "../../../components/ui/perfil/ConfirmacionCorreo.jsx";
 
 const CambiarCorreo = () => {
+  
   const [validar, setValidar] = useState(true);
   const [correo, setCorreo] = useState(false);
   const [conf, setConf] = useState(false);
@@ -21,10 +22,8 @@ const CambiarCorreo = () => {
 
   const redirect = () => {
     window.location.href = "/perfil/seguridad";
-    {
-      /* CAMBIAR REDIRECCIONAMIENTO */
-    }
   };
+
 
   return (
     <>

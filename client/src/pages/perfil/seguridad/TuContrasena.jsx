@@ -11,7 +11,7 @@ function TuContrasena() {
         <section className="rounded-2xl mt-12 w-[60%] m-auto px-6 pt-6 pb-3 shadow-[0_3px_10px_rgb(0,0,0,0.2)]">
           <a
             className="flex items-baseline content-center text-sm gap-x-4"
-            href="/spa"
+            href="/perfil/seguridad"
           >
             {" "}
             <IoIosArrowBack className="" />

@@ -1,7 +1,88 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faAngleLeft } from "@fortawesome/free-solid-svg-icons";
+import { faAngleLeft , faCircleExclamation, faCircleXmark, faRedo} from "@fortawesome/free-solid-svg-icons";
+import { useState } from "react";
+import { ToastContainer, toast } from 'react-toastify';
+
 
 const cambiarCorreo = ({ volver, close, next }) => {
+
+  const [correo_anterior, setCorreo_anterior] = useState('');
+  const [correo_nuevo, setCorreo_nuevo] = useState('');
+
+
+  function cambiarCA(evento){
+    setCorreo_anterior(evento.target.value);
+  }
+
+  function cambiarCN(evento){
+    setCorreo_nuevo(evento.target.value);
+  }
+
+  async function validarCorreo(){
+
+    const respuesta = await fetch('/api/validarCorreo',{
+      method:'POST',
+      headers:{
+        'Content-Type':'application/json',
+      },
+      body:JSON.stringify({
+        correo_anterior:correo_anterior,
+        correo_nuevo:correo_nuevo
+      })
+    })
+
+    if(!respuesta.ok){
+      return;
+    }
+
+    const respuestaJson = await respuesta.json();
+
+    if(respuestaJson.vacios){
+      let av = respuestaJson.vacios;
+
+      for(let i in av){
+        toast(<div>{`${av[i]}`}<FontAwesomeIcon icon={faCircleExclamation} /></div>);
+      }
+
+      return;
+    }
+
+    if(respuestaJson.incorrectos){
+      let ai = respuestaJson.incorrectos;
+
+      for(let i in ai){
+
+        if(ai[i][0] == 0){
+          setCorreo_anterior('');
+        }
+        else{
+          setCorreo_nuevo('');
+        }
+
+        toast(<div>{`${ai[i][1]}`}<FontAwesomeIcon icon={faCircleXmark} /></div>);
+      }
+
+      return;
+    }
+
+    if(respuestaJson.reintento){
+      setCorreo_anterior('');
+      setCorreo_nuevo('');
+      toast(<div>{`${respuestaJson.reintento}`}<FontAwesomeIcon icon={faRedo} /></div>);
+    }
+
+    if(respuestaJson.redirect){
+      window.location.href = respuestaJson.redirect;
+    }
+
+    if(respuestaJson.next){
+      next();
+    }
+
+  }
+
+
+
   return (
     <>
       <div className="md:h-20 h-[3.75rem] bg-white" />
@@ -34,6 +115,8 @@ const cambiarCorreo = ({ volver, close, next }) => {
             <input
               id="email"
               type="text"
+              value={correo_anterior}
+              onChange={cambiarCA}
               placeholder="Ingresa su correo electónico actual"
               className="bg-slate-200 md:text-sm lg:text-base rounded-full w=[18rem] md:w-96 mb-1 mt-2 mx-3 py-2 focus:outline-none focus:ring-1 focus:ring-rose-400 focus:border-transparent px-6"
             />
@@ -46,13 +129,15 @@ const cambiarCorreo = ({ volver, close, next }) => {
             <input
               id="email"
               type="text"
+              value={correo_nuevo}
+              onChange={cambiarCN}
               placeholder="Ingresa el nuevo correo electónico"
               className="bg-slate-200 md:text-sm lg:text-base rounded-full w=[18rem] md:w-96 mb-1 mt-2 mx-3 py-2 focus:outline-none focus:ring-1 focus:ring-rose-400 focus:border-transparent px-6"
             />
           </form>
           <div className="grid grid-cols-2 my-auto">
             <div className="grid place-content-start ml-8">
-              <a>
+              
                 <button
                   aria-label="Cancelar"
                   onClick={close}
@@ -60,21 +145,22 @@ const cambiarCorreo = ({ volver, close, next }) => {
                 >
                   Cancelar
                 </button>
-              </a>
+              
             </div>
             <div className="grid place-content-end mr-8">
-              <a>
+              
                 <button
                   aria-label="Continuar"
-                  onClick={next}
+                  onClick={validarCorreo}
                   className="bg-[#EB5765] text-white md:text-large lg:text-xl rounded-full w-[7rem] py-2 mx-auto hover:bg-red-200"
                 >
                   Listo
                 </button>
-              </a>
+              
             </div>
           </div>
         </div>
+        <ToastContainer position={'bottom-right'} theme={'light'} />
       </div>
     </>
   );
