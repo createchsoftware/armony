@@ -3,10 +3,7 @@ import { conexion } from "../db/connection.js";
 import {
   horasDisponibles,
   updateCita,
-<<<<<<< HEAD
   updateCitaStatus,
-=======
->>>>>>> c0cf27621962129b5a42aecdfe829edeaa0baa65
   ventaCita,
   getCitasByEstado,
   horasWithoutSeconds,
