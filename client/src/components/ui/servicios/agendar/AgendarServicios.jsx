@@ -30,7 +30,9 @@ const AgendarServicios = ({ next }) => {
     setSoon(!soon);
   };
 
-  useEffect(() => getId(), []);
+  useEffect(() => {
+    getId();
+  }, []);
 
   useEffect(() => {
     fetch("/api/admin/categoria/getServicesSpa")

@@ -109,7 +109,7 @@ function Perfil() {
                                 <div className='rounded-full place-content-center md:bg-[#D9D9D9]'><img className='w-10 md:w-12' src="../../pictures/rango.png" alt="" /></div>
                                 <div>
                                     <h2>Rango</h2>
-                                    <p className='text-gray-500'>Mi nivel de raango</p>
+                                    <p className='text-gray-500'>Mi nivel de rango</p>
                                 </div>
                             </div>
                             <div className='flex items-center justify-end'>
