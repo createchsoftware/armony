@@ -15,6 +15,10 @@ import { DayCalendarSkeleton } from "@mui/x-date-pickers/DayCalendarSkeleton";
 import "dayjs/locale/es"; // Importar locale español
 import localizedFormat from "dayjs/plugin/localizedFormat"; // Plugin para formatos localizados
 import { jwtDecode } from "jwt-decode";
+import { Button } from "primereact/button";
+import { Dialog } from "primereact/dialog";
+import 'primereact/resources/themes/saga-blue/theme.css';
+import 'primereact/resources/primereact.min.css';
 
 dayjs.extend(localizedFormat); // Extender dayjs con el plugin
 dayjs.locale("es"); // Usar locale español
@@ -252,11 +256,11 @@ function Agenda() {
       width: "100%",
     },
     "& .MuiPickersFadeTransitionGroup-root-MuiDateCalendar-viewTransitionContainer":
-      {
-        // Handles size of week row parent, 1.6 aspect is good for now
-        aspectRatio: "1.6",
-        overflow: "hidden",
-      },
+    {
+      // Handles size of week row parent, 1.6 aspect is good for now
+      aspectRatio: "1.6",
+      overflow: "hidden",
+    },
     "& .MuiDayCalendar-slideTransition": {
       // Handles size of week row parent, 1.6 aspect is good for now
       aspectRatio: 1.6,
@@ -444,11 +448,22 @@ function Agenda() {
   //     localStorage.setItem('citas', JSON.stringify(updatedCitas));
   // };
 
+  const [visible, setVisible] = useState(false);
+  const [selectedId, setSelectedId] = useState(null);
+
   const removeItem = (id) => {
+    setVisible(true);
+    setSelectedId(id);
+  };
+
+  const confirmRemoval = async () => {
+    const id = selectedId;
     setCitasFiltradas(citasFiltradas.filter((cita) => cita.ID_Cita !== id));
+    setVisible(false);
+    setSelectedId(null);
     if (id) {
       try {
-        fetch(`/api/admin/citas/status/${id}`, {
+        await fetch(`/api/admin/citas/status/${id}`, {
           method: "PATCH",
           headers: {
             "Content-Type": "application/json",
@@ -712,6 +727,29 @@ function Agenda() {
               )}
             </div>
           </section>
+        </div>
+
+        <div className="flex card justify-content-center">
+          {/* Botón para mostrar el diálogo */}
+          {citasFiltradas.map((cita) => (
+            <div key={cita.ID_Cita}>
+              <p>{cita.nombre}</p>
+              <Button label="Remove" onClick={() => removeItem(cita.ID_Cita)} />
+            </div>
+          ))}
+
+          {/* Diálogo de confirmación */}
+          <Dialog header="Confirmación" visible={visible} style={{ width: '50vw' }} onHide={() => setVisible(false)} className="mt-8 ml-8">
+            <div className="m-8">
+              <p className="m-0 mb-4 text-xl">
+                ¿Estás seguro de que deseas eliminar esta cita?
+              </p>
+              <div className="flex gap-8 text-xl">
+                <Button label="Si, cancelar" icon="pi pi-check" onClick={confirmRemoval} className="p-button-success p-mr-2 hover:text-red-800" />
+                <Button label="No, mantener" icon="pi pi-times" onClick={() => setVisible(false)} className="p-button-secondary hover:text-green-500" />
+              </div>
+            </div>
+          </Dialog>
         </div>
       </main>
     </LayoutPrincipal>
