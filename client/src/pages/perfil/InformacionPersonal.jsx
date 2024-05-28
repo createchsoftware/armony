@@ -2,6 +2,27 @@ import React, { useState, useEffect } from 'react'
 import LayoutPrincipal from '../../layouts/LayoutPrincipal'
 
 function InformacionPersonal() {
+    async function checkLogin() {
+        let respuestaJson = null;
+        try {
+          const respuesta = await fetch("/api/logueado", {
+            method: "GET",
+            headers: {
+              "Content-Type": "application/json",
+            },
+          });
+    
+          respuestaJson = await respuesta.json();
+    
+          if (respuestaJson.logueado != true) {
+            window.location.href = "/spa";
+          }
+        } catch (error) {
+          window.location.href = "/spa";
+        }
+      }
+    
+      useEffect(() => checkLogin(), []);
 
     const [nombre, setNombre] = useState(false); //<<< PARA EL INICIO DE SESION
     const [correo, setCorreo] = useState(false); //<<< PARA EL INICIO DE SESION
@@ -73,6 +94,24 @@ function InformacionPersonal() {
         }
     }
 
+    async function Rango() {
+        const respuesta3 = await fetch("/api/perfil/rangos", {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        });
+    
+        if (!respuesta3.ok) {
+          return;
+        }
+    
+        const respuesta3Json = await respuesta3.json();
+    
+        if (respuesta3Json.informacion) {
+          setRango(respuesta3Json.informacion[0]);
+        }
+    }
 
     async function Patologias() {
         const respuesta2 = await fetch('/api/patologias', {
@@ -117,6 +156,7 @@ function InformacionPersonal() {
 
     useEffect(() => {
         recibido();
+        Rango();
         Patologias();
     }, []);
 
