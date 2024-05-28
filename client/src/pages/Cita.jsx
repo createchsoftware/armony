@@ -127,7 +127,7 @@ export default function Cita() {
   const handleCancel = () => {
     // setActiveStep(0);
     // setCompleted({});
-    navigate("/spa");
+    window.location.href = '/spa';
   };
 
   const handleStep = (step) => () => {
@@ -145,7 +145,7 @@ export default function Cita() {
   const handleClick = () => {
     handleComplete();
     if (isLastStep() || activeStep === 6) {
-      navigate("/perfil/agenda");
+      window.location.href = "/perfil/agenda";
     }
     //     setTimeout(() => {
     //     iterateArray();
@@ -320,7 +320,7 @@ export default function Cita() {
                   </button>
                   <button
                     hidden={activeStep === 5}
-                    onClick={activeStep === 6 ? restart : handleClick}
+                    onClick={activeStep === 6 ? restart : handleCancel}
                     className={
                       "px-4 py-2 mx-auto text-xl text-white rounded-full bg-[#036C65] hover:bg-opacity-70"
                     }

@@ -43,7 +43,7 @@ function Tarjetas() {
 
                     <div className='border-4 border-[#4873C8] rounded-[30px]'>
                         <div className="grid h-full justify-center grid-cols-2 gap-4 p-4 border-[1rem] rounded-3xl  border-[#99B3F6] place-content-center md:grid-cols-1 md:gap-8 md:place-content-start">
-                            <h1 className="col-span-2 font-bold text-xl text-center text-[#99B3F6] drop-shadow-[2px_2px_var(--tw-shadow-color)] shadow-[black] ">Membresia Golden</h1>
+                            <h1 className="col-span-2 font-bold text-xl text-center text-[#99B3F6] drop-shadow-[2px_2px_var(--tw-shadow-color)] shadow-[black] ">Rango platino</h1>
                             <div className="grid w-full m-auto md:col-span-2">
                                 <img className='w-2/3 rounded-2xl justify-self-center' src={platino} alt="" />
                             </div>
@@ -60,7 +60,7 @@ function Tarjetas() {
                     </div>
                     <div className='border-4 border-[#A93F74] rounded-[30px] '>
                         <div className="grid justify-center h-full grid-cols-2 gap-4 p-4 border-[1rem] rounded-3xl  border-[#F584A7] place-content-center md:grid-cols-1 md:gap-8 md:place-content-start">
-                            <h1 className="col-span-2 font-bold text-center text-[#F584A7] drop-shadow-[2px_2px_var(--tw-shadow-color)] shadow-[black]">Membresia Platino</h1>
+                            <h1 className="col-span-2 font-bold text-center text-[#F584A7] drop-shadow-[2px_2px_var(--tw-shadow-color)] shadow-[black]">Rango VIP</h1>
                             <div className="grid w-full m-auto md:col-span-2">
                                 <img className='w-2/3 rounded-2xl justify-self-center' src={vip} alt="" />
                             </div>

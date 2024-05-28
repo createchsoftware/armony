@@ -172,48 +172,48 @@ function ListaDeseo() {
     //     valoracion: 5,
     //     fav: true,
     // }
-])
+    ])
 
-const [Uid, setUid] = useState(null)
-useEffect(() => {
-    const getidUser = () => {// aqui veificamos si hay una cookie con este nombre 
-        const cookie = obteneridCookie('Naruto_cookie')
-        if (cookie) {
+    const [Uid, setUid] = useState(null)
+    useEffect(() => {
+        const getidUser = () => {// aqui veificamos si hay una cookie con este nombre 
+            const cookie = obteneridCookie('Naruto_cookie')
+            if (cookie) {
 
-            const decode = jwtDecode(cookie)//aqui decodificaremos la cokie
-            setUid(decode.user)
+                const decode = jwtDecode(cookie)//aqui decodificaremos la cokie
+                setUid(decode.user)
+            }
         }
-    }
-    getidUser()
-}, [])
+        getidUser()
+    }, [])
 
 
-const obteneridCookie = (namecookie) => { //en este metodo lo que hacemos es destructurar la cokie para 
-    // obtener el user y luego el id
-    const cookies = document.cookie.split(';');
-    for (let cokie of cookies) {
-        const [key, value] = cokie.split('=')
-        if (key.trim() === namecookie) {
-            return value;//retornara el valor
+    const obteneridCookie = (namecookie) => { //en este metodo lo que hacemos es destructurar la cokie para 
+        // obtener el user y luego el id
+        const cookies = document.cookie.split(';');
+        for (let cokie of cookies) {
+            const [key, value] = cokie.split('=')
+            if (key.trim() === namecookie) {
+                return value;//retornara el valor
+            }
         }
+        return null;
     }
-    return null;
-}
 
-useEffect(()=>{
-    const Prod = async () => {
-try{
-    if(Uid){
-    const response=await fetch(`api/admin/favoritos/ProductFavoritosbyId/${Uid}`)
-    const data = await response.json();
-    setContResumen(data)
-}
-    }catch(error){
-console.error("hubo error :",error)
-    }
-}
-Prod()
-},[Uid])
+    useEffect(()=>{
+        const Prod = async () => {
+            try{
+                if(Uid){
+                    const response=await fetch(`api/admin/favoritos/ProductFavoritosbyId/${Uid}`)
+                    const data = await response.json();
+                    setContResumen(data)
+                }
+            }catch(error){
+                console.error("hubo error :",error)
+            }
+        }
+        Prod()
+    },[Uid])
 
     const presionar1 = () => {
         setBoton1('lista-boton-on')
@@ -241,14 +241,14 @@ Prod()
 
     const eliminarFav =async(idProServ)=>{
         try{
-    await fetch("/api/admin/favoritos/delFavorito", {
+        await fetch("/api/admin/favoritos/delFavorito", {
             method: "POST",
             body: JSON.stringify({ idCliente: Uid, IdProducto: idProServ }),
             headers: { "Content-Type": "application/json" },
-        });
-    }catch(error){
-console.log("error",error)
-    }
+            });
+        }catch(error){
+            console.log("error",error)
+        }
     }
 
     const resumenList = contResumen.map(item => (
