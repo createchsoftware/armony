@@ -61,7 +61,8 @@ const AgendarServicios = ({ next }) => {
             return response.json();
           })
           .then((data) => {
-            setEstetica(data.data);
+            console.log(data);
+            setEstetica(data);
           })
           .catch((error) => {
             // setErrorEstetica(error.message);
@@ -81,7 +82,8 @@ const AgendarServicios = ({ next }) => {
             return response.json();
           })
           .then((data) => {
-            setFavoritos(data[0]);
+            console.log(data);
+            setFavoritos(data);
           })
           .catch((error) => {
             // setErrorEstetica(error.message);
@@ -101,7 +103,8 @@ const AgendarServicios = ({ next }) => {
             return response.json();
           })
           .then((data) => {
-            setDescuentos(data[0]);
+            console.log(data);
+            setDescuentos(data);
           })
           .catch((error) => {
             // setErrorEstetica(error.message);
