@@ -86,7 +86,7 @@ function Ofertas({ producto, handleClickCarrito, noDesc }) {
             <img onClick={() => handleViewMore(producto)} className='w-[100%] h-[100%] hover:opacity-80 ml-0  hover:cursor-pointer aspect-square' src={producto.img} alt={producto.nombre} />
             <hr />
             <div className='grid h-64 place-content-between'>
-                <p className='text-[#0BC26A] pt-4 text-lg text-center'>{'$' + Number(producto.precio) + ' MXN'}</p>
+                <p className='text-[#0BC26A] pt-4 text-lg text-center'>{'$' + Number(producto.precio) + ' MXN'} <span className='text-[#000000] line-through'>{'$' + formatPrice(Number(producto.precio) + 120)}</span></p>
                 <div className='flex justify-center'>
                     <Rating className='' value={5} readOnly unratedcolor="amber" ratedcolor="amber" />
                 </div>

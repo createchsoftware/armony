@@ -29,7 +29,7 @@ function Navbar() {
         location.pathname.startsWith('/rangos') ||
         location.pathname.startsWith('/suscripcion')
     const mainRutas = location.pathname.startsWith('/perfil')
-        
+
 
 
     //auto update cart items in navbar (items)
@@ -126,19 +126,31 @@ function Navbar() {
                             {mainRutas && (
                                 <>
                                     <li className="nav-menu-item">
-                                        <a href="/" className="menu-link">
+                                        <a href="/spa" className="menu-link">
                                             Inicio
                                         </a>
                                     </li>
+                                    <li className="cursor-pointer nav-menu-item">
+                                        <a className="menu-link">
+                                            Servicios
+                                        </a>
+                                        <SubMenuServicios />
+                                    </li>
                                     <li className="nav-menu-item">
-                                        <a href="/#nosotros" className="menu-link">
-                                            Nosotros
+                                        <a href="/spa/productos" className="menu-link">
+                                            Productos
                                         </a>
                                     </li>
                                     <li className="nav-menu-item">
-                                        <a href="/#contacto" className="menu-link">
-                                            Contacto
-                                        </a>
+                                        {log ? (
+                                            <a href="/spa/agendar" className="menu-link">
+                                                Agendar
+                                            </a>
+                                        ) : (
+                                            <a href="#" className="menu-link" onClick={toggleLogin}>
+                                                Agendar
+                                            </a>
+                                        )}
                                     </li>
                                 </>
                             )}
@@ -179,7 +191,7 @@ function Navbar() {
                                         <a
                                             className="flex items-center h-20 menu-link"
                                         >
-                                            <div className="relative mr-3 w-14 h-14 align-middle items-center justify-center">
+                                            <div className="relative items-center justify-center mr-3 align-middle w-14 h-14">
                                                 {sus && (
                                                     <img
                                                         src="../../../pictures/marcoSuscripcion.png"
@@ -188,9 +200,9 @@ function Navbar() {
                                                     />
                                                 )}
                                                 <img
-                                                    src={ imagen !== null ? (
+                                                    src={imagen !== null ? (
                                                         `../../../pictures/avatares/${imagen}`
-                                                    ):(
+                                                    ) : (
                                                         '../../../pictures/userDefault.png'
                                                     )}
                                                     alt=""

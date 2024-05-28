@@ -58,9 +58,9 @@ function App() {
     <>
       <Favicon url="/favicon.ico" />
       <HelmetProvider>
-          <Helmet>
-            <script src={"../../scripts/chatbot.js?token=" + import.meta.env.VITE_VOICEFLOW_ID}></script>
-          </Helmet>
+        <Helmet>
+          <script src={"../../scripts/chatbot.js?token=" + import.meta.env.VITE_VOICEFLOW_ID}></script>
+        </Helmet>
       </HelmetProvider>
       <Router>
         <Routes>
@@ -149,7 +149,7 @@ function App() {
           <Route path="/recuperacion/confirmacion" element={<Confirmacion />} />
           <Route path="/recuperacion/paso3" element={<NuevaContr />} />
           <Route path="/recuperacion/paso1" element={<Recuperacion />} />
-          <Route path="/recuperacion/paso2" element={<Verificacion />} />          
+          <Route path="/recuperacion/paso2" element={<Verificacion />} />
           <Route path="*" element={<Error />} />
         </Routes>
       </Router>

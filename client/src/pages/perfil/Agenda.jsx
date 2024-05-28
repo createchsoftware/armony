@@ -420,7 +420,7 @@ function Agenda() {
                     headers: {
                         'Content-Type': 'application/json',
                     },
-                    body: JSON.stringify({ estado: 'hecha' }),
+                    body: JSON.stringify({ estado: 'cancelada' }),
                 })
             } catch (error) {
                 console.log("error", error);
