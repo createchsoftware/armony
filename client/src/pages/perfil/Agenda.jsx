@@ -730,19 +730,11 @@ function Agenda() {
         </div>
 
         <div className="flex card justify-content-center">
-          {/* Botón para mostrar el diálogo */}
-          {citasFiltradas.map((cita) => (
-            <div key={cita.ID_Cita}>
-              <p>{cita.nombre}</p>
-              <Button label="Remove" onClick={() => removeItem(cita.ID_Cita)} />
-            </div>
-          ))}
-
           {/* Diálogo de confirmación */}
           <Dialog header="Confirmación" visible={visible} style={{ width: '50vw' }} onHide={() => setVisible(false)} className="mt-8 ml-8">
             <div className="m-8">
               <p className="m-0 mb-4 text-xl">
-                ¿Estás seguro de que deseas eliminar esta cita?
+                ¿Estás seguro de que deseas cancelar esta cita?
               </p>
               <div className="flex gap-8 text-xl">
                 <Button label="Si, cancelar" icon="pi pi-check" onClick={confirmRemoval} className="p-button-success p-mr-2 hover:text-red-800" />
