@@ -464,23 +464,6 @@ function Agenda() {
   //     setCitas(updatedCitas);
   //     localStorage.setItem('citas', JSON.stringify(updatedCitas));
   // };
-  const removeItem = (id) => {
-    setCitasFiltradas(citasFiltradas.filter((cita) => cita.ID_Cita !== id));
-    if (id) {
-      console.log("id", id);
-      try {
-        fetch(`/api/admin/citas/status/${id}`, {
-          method: "PATCH",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({ estado: "hecha" }),
-        });
-      } catch (error) {
-        console.log("error", error);
-      }
-    }
-  };
 
   // const removeItem = async (id) => {
   //     setCitasFiltradas(citasFiltradas.filter(cita => cita.ID_Cita !== id));
