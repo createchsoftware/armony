@@ -16,6 +16,8 @@ function InformacionPersonal() {
     const [imagen, setImagen] = useState(false); //<<< PARA EL INICIO DE SESION
     const [clave, setClave] = useState(false); //<<< PARA EL INICIO DE SESION
     const [patologias, setPatologias] = useState([]);
+    const [rango, setRango] = useState(0); //<<< MUESTRA EL RANGO DEL USUARIO
+    const [sus, setSus] = useState(false); //<<< CARACTERISTICA GRAFICA DE QUE EL USUARIO ES SOCIO
 
     async function recibido() {
         const respuesta = await fetch('/api/logueado', {
@@ -103,7 +105,7 @@ function InformacionPersonal() {
         }
         else {
             return patologias.map(objeto => (
-                <div className='flex gap-x-4'>
+                <div key={objeto.nombre} className='flex gap-x-4'>
                     <p className='text-[#9D9999]'>{objeto.nombre}</p>
                     <p>{objeto.titulo}</p>
                     <p>{objeto.descripcion}</p>
@@ -124,13 +126,20 @@ function InformacionPersonal() {
                 <main className='grid p-12 m-12 md:flex'>
                     <div className='grid gap-6 md:w-[80%] m-auto'>
                         <section className='grid text-center rounded-2xl w-[100%] p-6 shadow-[0_3px_10px_rgb(0,0,0,0.2)]'>
-                            <a className='flex items-baseline text-md gap-x-4' href={document.referrer}><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-4 h-4">
-                                <path strokeLinecap="round" strokeLinejoin="round" d="M9 15 3 9m0 0 6-6M3 9h12a6 6 0 0 1 0 12h-3" />
-                            </svg> Volver</a>
-                            <img className='w-24 m-auto mb-6' src={`../../../pictures/avatares/${imagen}`} alt="" />
-
-                            <h1 className=''>Información personal</h1>
-                            <p>Observa y edita tu información de la cuenta</p>
+                            <a className='flex items-baseline text-md gap-x-4 relative cursor-pointer before:bg-black before:absolute before:-bottom-1 before:block before:h-[1px] before:w-full before:origin-bottom-right before:scale-x-0 before:transition before:duration-300 before:ease-in-out hover:before:origin-bottom-left hover:before:scale-x-100 hover:font-bold' href={document.referrer}>
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-4 h-4">
+                                    <path strokeLinecap="round" strokeLinejoin="round" d="M9 15 3 9m0 0 6-6M3 9h12a6 6 0 0 1 0 12h-3" />
+                                </svg> Volver
+                            </a>
+                            <div className='w-32 m-auto my-6 -mt-24 bg-white rounded-full shadow-lg aspect-square place-content-center'>
+                                <div className=' w-[85%] bg-[#AAE0FF] rounded-full aspect-square m-auto place-content-center'>
+                                    <img className='m-auto w-[65%]' src="../../../pictures/iconoInfoPersonal.png" alt="" />
+                                </div>
+                            </div>
+                            <div className='m-auto text-center '>
+                                <h1 className=''>Información personal</h1>
+                                <h2>Observa y edita tu información de la cuenta</h2>
+                            </div>
                         </section>
                         <div>
                             <div className='flex '>
@@ -188,10 +197,43 @@ function InformacionPersonal() {
                                     </section>
                                 </div>
                                 <aside className='w-[40%] my-8 '>
-                                    <div className='grid gap-6 text-center '>
-                                        <img className='m-auto rounded-full md:w-1/3' src={`../../../pictures/rangoPlatino.png`} alt="" />
-                                        <h2 className='text-[#EB5765]'>Rango platino</h2>
-                                        <img className='w-48 m-auto' src="../../../pictures/membresiaEjemplo.png" alt="" />
+                                    <div className='grid grid-cols-1 gap-6 text-center '>
+                                        <div className='relative w-32 m-auto mb-4 align-middle items-center justify-center'>
+                                            {sus && (
+                                                <img
+                                                    src="../../../pictures/marcoSuscripcion.png"
+                                                    alt=""
+                                                    className="absolute object-cover w-full h-full m-auto"
+                                                />
+                                            )}
+                                            <img className='w-[85%] m-auto aspect-square rounded-full' src={`../../../pictures/avatares/${imagen}`} alt="" />
+                                        </div>
+                                        {rango === 1 ? (
+                                            <>
+                                                <h1 className="font-bold text-2xl text-center text-[#F1DA88] drop-shadow-[1px_1px_var(--tw-shadow-color)] shadow-[black] ">Rango oro</h1>
+                                                <img className='m-auto md:w-1/3' src={`../../../pictures/rangoOro.png`} alt="" />
+                                            </>
+                                        ) : (
+                                            rango === 2 ? (
+                                                <>
+                                                    <h1 className="font-bold text-2xl text-center text-[#99B3F6] drop-shadow-[1px_1px_var(--tw-shadow-color)] shadow-[black] ">Rango platino</h1>
+                                                    <img className='m-auto md:w-1/3' src={`../../../pictures/rangoPlatino.png`} alt="" />
+                                                </>
+                                            ) : (
+                                                rango === 3 ? (
+                                                    <>
+                                                        <h1 className="font-bold text-2xl text-center text-[#F584A7] drop-shadow-[1px_1px_var(--tw-shadow-color)] shadow-[black] ">Rango VIP</h1>
+                                                        <img className='m-auto md:w-1/3' src={`../../../pictures/rangoVIP.png`} alt="" />
+                                                    </>
+                                                ) : (
+                                                    <>
+                                                        <h1 className="font-bold text-2xl text-center text-[#F584A7] drop-shadow-[1px_1px_var(--tw-shadow-color)] shadow-[black] ">Sin rango</h1>
+                                                        <img className='m-auto md:w-1/3 opacity-15' src={`../../../pictures/rangoOro.png`} alt="" />
+                                                    </>
+                                                )
+                                            )
+                                        )}
+                                        {/* <img className='w-48 m-auto' src="../../../pictures/membresiaEjemplo.png" alt="" /> */}
                                         <a href="/perfil/editar-perfil" className="m-auto px-12 py-2  font-medium text-white whitespace-no-wrap bg-[#EB5765] border border-gray-200 rounded-full shadow-sm hover:cursor-pointer hover:bg-[#eb7580] focus:outline-none focus:shadow-none">
                                             Editar
                                         </a>
