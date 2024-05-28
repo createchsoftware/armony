@@ -72,7 +72,7 @@ function Servicio({
                 <div className="grid place-content-end">
                   <StyledRating
                     name="customized-color"
-                    defaultValue={isFavorite ? 1 : 0}
+                    defaultValue={isFavorite}
                     max={1}
                     getLabelText={(value) =>
                       `${value} Heart${value !== 1 ? "s" : ""}`
