@@ -3,7 +3,6 @@ import { conexion } from "../db/connection.js";
 import {
   horasDisponibles,
   updateCita,
-  updateCitaStatus,  
   ventaCita,
   getCitasByEstado,
   updateCitaStatus,
