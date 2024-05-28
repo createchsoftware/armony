@@ -1,10 +1,30 @@
 import LayoutPrincipal from "../../../layouts/LayoutPrincipal";
 import { IoIosArrowBack } from "react-icons/io";
 import { MdNavigateNext } from "react-icons/md";
-
-let pass = "contraseña123";
+import { useEffect } from "react";
 
 function TuContrasena() {
+  async function checkLogin() {
+    let respuestaJson = null;
+    try {
+      const respuesta = await fetch("/api/logueado", {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+
+      respuestaJson = await respuesta.json();
+
+      if (respuestaJson.logueado != true) {
+        window.location.href = "/spa";
+      }
+    } catch (error) {
+      window.location.href = "/spa";
+    }
+  }
+
+  useEffect(() => checkLogin(), []);
   return (
     <LayoutPrincipal>
       <main className="grid gap-6 my-24">
@@ -26,22 +46,6 @@ function TuContrasena() {
             <h1 className="text-[#036C65] font-semibold text-2xl mb-2">
               Tu contraseña
             </h1>
-          </div>
-        </section>
-
-        <section className="w-[60%] m-auto mt-8">
-          <h2 className="text-[#036C65] text-2xl mb-4">
-            Contraseña de tu cuenta Armony
-          </h2>
-          <div className="rounded-2xl m-auto grid  p-6 shadow-[0_3px_10px_rgb(0,0,0,0.2)]">
-            <div>
-              <div className="flex gap-6 mb-[1rem]">
-                <h2>La contraseña que utilizas para acceder a Armony</h2>
-              </div>
-              <div className="flex gap-6">
-                <h2 className="text-[#EB5765]">{pass}</h2>
-              </div>
-            </div>
           </div>
         </section>
 
