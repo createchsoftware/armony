@@ -252,12 +252,12 @@ function ListaDeseo() {
     }
 
     const resumenList = contResumen.map(item => (
-        ( item.tipo === '1' && 
+        // ( item.tipo === '1' && 
         <li key={item.PKidPS} className='flex justify-between mb-2'>
             <h1>{item.nombre}</h1>
             <h1 className='text-[#036d63]'>${item.precio}</h1>
         </li>
-        )
+        //)
     ))
 
     const handleSortChange = (event) => {
@@ -265,7 +265,7 @@ function ListaDeseo() {
     }
 
     const filteredProducts = contResumen.filter(producto =>
-        (tipo === 'all' || producto.tipo === tipo) &&
+        // (tipo === 'all' || producto.tipo === tipo) &&
         producto.nombre.toLowerCase().includes(searchTerm.toLowerCase())
     ).sort((a, b) => {
         if (sort === 'nombre-asc') {
@@ -326,8 +326,9 @@ function ListaDeseo() {
         .filter(producto => producto.tipo === '1')
         .reduce((total, producto) => total + producto.precio, 0)
         .toFixed(2);
+
     const cantProductos = contResumen
-        .filter(producto => producto.tipo === '1')
+        // .filter(producto => producto.tipo === '1')
         .length;
 
     const handleSearch = (event) => {
@@ -340,9 +341,9 @@ function ListaDeseo() {
             setBarSize('sideBar-Off')
         ):(
             setBarSize('sideBar-On')
-            
         )
     }
+    
     return (
         <>
             <Navbar />
@@ -415,7 +416,8 @@ function ListaDeseo() {
                     </div>
                     <div className={resumen}>
                         <div className={width}>
-                            { contResumen.filter(producto => producto.tipo === '1').length === 0 ? (
+                            {/* { contResumen.filter(producto => producto.tipo === '1').length === 0 ? ( */}
+                            { contResumen.length === 0 ? (
                                 <h1 className='text-center text-xl py-6'>No hay productos</h1>
                             ):(
                                 <>
@@ -441,7 +443,6 @@ function ListaDeseo() {
                                         ):(
                                             <button onClick={() => setLogin(!login)} className='bg-[#ec5766] p-2 text-center text-white mx-6 rounded-xl my-2 duration-200 hover:bg-[#ffb5a7]'>Comprar</button>
                                         )}
-                                        
                                     </div>
                                 </>
                             )}
