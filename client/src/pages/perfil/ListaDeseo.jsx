@@ -172,48 +172,48 @@ function ListaDeseo() {
     //     valoracion: 5,
     //     fav: true,
     // }
-])
+    ])
 
-const [Uid, setUid] = useState(null)
-useEffect(() => {
-    const getidUser = () => {// aqui veificamos si hay una cookie con este nombre 
-        const cookie = obteneridCookie('Naruto_cookie')
-        if (cookie) {
+    const [Uid, setUid] = useState(null)
+    useEffect(() => {
+        const getidUser = () => {// aqui veificamos si hay una cookie con este nombre 
+            const cookie = obteneridCookie('Naruto_cookie')
+            if (cookie) {
 
-            const decode = jwtDecode(cookie)//aqui decodificaremos la cokie
-            setUid(decode.user)
+                const decode = jwtDecode(cookie)//aqui decodificaremos la cokie
+                setUid(decode.user)
+            }
         }
-    }
-    getidUser()
-}, [])
+        getidUser()
+    }, [])
 
 
-const obteneridCookie = (namecookie) => { //en este metodo lo que hacemos es destructurar la cokie para 
-    // obtener el user y luego el id
-    const cookies = document.cookie.split(';');
-    for (let cokie of cookies) {
-        const [key, value] = cokie.split('=')
-        if (key.trim() === namecookie) {
-            return value;//retornara el valor
+    const obteneridCookie = (namecookie) => { //en este metodo lo que hacemos es destructurar la cokie para 
+        // obtener el user y luego el id
+        const cookies = document.cookie.split(';');
+        for (let cokie of cookies) {
+            const [key, value] = cokie.split('=')
+            if (key.trim() === namecookie) {
+                return value;//retornara el valor
+            }
         }
+        return null;
     }
-    return null;
-}
 
-useEffect(()=>{
-    const Prod = async () => {
-try{
-    if(Uid){
-    const response=await fetch(`api/admin/favoritos/ProductFavoritosbyId/${Uid}`)
-    const data = await response.json();
-    setContResumen(data)
-}
-    }catch(error){
-console.error("hubo error :",error)
-    }
-}
-Prod()
-},[Uid])
+    useEffect(()=>{
+        const Prod = async () => {
+            try{
+                if(Uid){
+                    const response=await fetch(`api/admin/favoritos/ProductFavoritosbyId/${Uid}`)
+                    const data = await response.json();
+                    setContResumen(data)
+                }
+            }catch(error){
+                console.error("hubo error :",error)
+            }
+        }
+        Prod()
+    },[Uid])
 
     const presionar1 = () => {
         setBoton1('lista-boton-on')
@@ -241,23 +241,23 @@ Prod()
 
     const eliminarFav =async(idProServ)=>{
         try{
-    await fetch("/api/admin/favoritos/delFavorito", {
+        await fetch("/api/admin/favoritos/delFavorito", {
             method: "POST",
             body: JSON.stringify({ idCliente: Uid, IdProducto: idProServ }),
             headers: { "Content-Type": "application/json" },
-        });
-    }catch(error){
-console.log("error",error)
-    }
+            });
+        }catch(error){
+            console.log("error",error)
+        }
     }
 
     const resumenList = contResumen.map(item => (
-        ( item.tipo === '1' && 
+        // ( item.tipo === '1' && 
         <li key={item.PKidPS} className='flex justify-between mb-2'>
             <h1>{item.nombre}</h1>
             <h1 className='text-[#036d63]'>${item.precio}</h1>
         </li>
-        )
+        //)
     ))
 
     const handleSortChange = (event) => {
@@ -265,7 +265,7 @@ console.log("error",error)
     }
 
     const filteredProducts = contResumen.filter(producto =>
-        (tipo === 'all' || producto.tipo === tipo) &&
+        // (tipo === 'all' || producto.tipo === tipo) &&
         producto.nombre.toLowerCase().includes(searchTerm.toLowerCase())
     ).sort((a, b) => {
         if (sort === 'nombre-asc') {
@@ -326,8 +326,9 @@ console.log("error",error)
         .filter(producto => producto.tipo === '1')
         .reduce((total, producto) => total + producto.precio, 0)
         .toFixed(2);
+
     const cantProductos = contResumen
-        .filter(producto => producto.tipo === '1')
+        // .filter(producto => producto.tipo === '1')
         .length;
 
     const handleSearch = (event) => {
@@ -340,9 +341,9 @@ console.log("error",error)
             setBarSize('sideBar-Off')
         ):(
             setBarSize('sideBar-On')
-            
         )
     }
+    
     return (
         <>
             <Navbar />
@@ -415,7 +416,8 @@ console.log("error",error)
                     </div>
                     <div className={resumen}>
                         <div className={width}>
-                            { contResumen.filter(producto => producto.tipo === '1').length === 0 ? (
+                            {/* { contResumen.filter(producto => producto.tipo === '1').length === 0 ? ( */}
+                            { contResumen.length === 0 ? (
                                 <h1 className='text-center text-xl py-6'>No hay productos</h1>
                             ):(
                                 <>
@@ -441,7 +443,6 @@ console.log("error",error)
                                         ):(
                                             <button onClick={() => setLogin(!login)} className='bg-[#ec5766] p-2 text-center text-white mx-6 rounded-xl my-2 duration-200 hover:bg-[#ffb5a7]'>Comprar</button>
                                         )}
-                                        
                                     </div>
                                 </>
                             )}

@@ -3,37 +3,55 @@ import { IoIosArrowBack } from "react-icons/io";
 import { MdNavigateNext } from "react-icons/md";
 import { useState, useEffect } from "react";
 
-
-
 function TuCorreo() {
+  async function checkLogin() {
+    let respuestaJson = null;
+    try {
+      const respuesta = await fetch("/api/logueado", {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+
+      respuestaJson = await respuesta.json();
+
+      if (respuestaJson.logueado != true) {
+        window.location.href = "/spa";
+      }
+    } catch (error) {
+      window.location.href = "/spa";
+    }
+  }
+
+  useEffect(() => checkLogin(), []);
 
   const [correo, setCorreo] = useState(false);
 
   async function recibido() {
-    const respuesta = await fetch('/api/logueado', {
-        method: "GET",
-        headers: {
-            "Content-Type": "application/json",
-        }
-    })
+    const respuesta = await fetch("/api/logueado", {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
 
-    if(!respuesta.ok) {
-        setCorreo(null);
+    if (!respuesta.ok) {
+      setCorreo(null);
     }
 
     let respuestaJson = await respuesta.json();
 
-    if (respuestaJson.logueado == true) {     
-        setCorreo(respuestaJson.email);
+    if (respuestaJson.logueado == true) {
+      setCorreo(respuestaJson.email);
+    } else {
+      setCorreo(null);
     }
-    else { 
-        setCorreo(null);    
-    }
-}
+  }
 
-useEffect(() => {
-    recibido()
-}, []);
+  useEffect(() => {
+    recibido();
+  }, []);
 
   return (
     <LayoutPrincipal>

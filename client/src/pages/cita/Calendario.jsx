@@ -22,6 +22,9 @@ import 'react-calendar/dist/Calendar.css';
 import '../cita/EstiloCalendario.css';
 import Paper from '@mui/material/Paper';
 import PopupLogin from "../../components/ui/Login/PopupLogin";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { ArrowProps } from 'react-multi-carousel/lib/types'
+import { faDiamond, faAngleLeft, faAngleRight } from '@fortawesome/free-solid-svg-icons';
 
 function getRandomNumber(min, max) {
     return Math.round(Math.random() * (max - min) + min);
@@ -622,6 +625,16 @@ function Calendario({ next }) {
                                 sliderclassName=""
                                 slidesToSlide={1}
                                 swipeable
+                                customLeftArrow={<FontAwesomeIcon
+                                    icon={faAngleLeft}
+                                    size="lg"
+                                    className="absolute cursor-pointer top-1/2 transform -translate-y-1/2 -left-0 text-3xl text-primary-900 aspect-square bg-[#e6e6e6] rounded-full text-[#036C65] p-3 hover:opacity-90 overflow-visible z-10"
+                                />}
+                                customRightArrow={<FontAwesomeIcon
+                                    size="lg"
+                                    icon={faAngleRight}
+                                    className="absolute cursor-pointer top-1/2 transform -translate-y-1/2 -right-0 text-3xl text-primary-900 bg-[#e6e6e6] rounded-full aspect-square text-[#036C65] p-3 hover:opacity-90 overflow-visible z-10"
+                                />}
                             >
                                 {especialistas.length > 0 ? (especialistas.map((especialista) => (
                                     <Especialista key={especialista.id} especialista={especialista} />

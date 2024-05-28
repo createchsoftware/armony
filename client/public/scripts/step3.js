@@ -4,8 +4,8 @@ document.getElementById('step3').addEventListener('click',async ()=>{
 
     document.cookie = "Rem_cookie=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;"; 
 
-    let contraseña = document.getElementById('contraseña');
-    let confirmacion = document.getElementById('nueva-contraseña');
+    let contraseña = document.getElementsByClassName('contrasena-texto')[0];
+    let confirmacion = document.getElementsByClassName('contrasena-texto')[1];
     let politicas = document.getElementById('state');
 
 

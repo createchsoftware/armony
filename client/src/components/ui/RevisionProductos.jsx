@@ -56,7 +56,7 @@ function RevisionProductos({ restart, producto, next }) {
 
     const cartList = cartItems.map(item => (
         <li key={item.id} className="flex p-4 mb-4 border-2 shadow-md rounded-xl border-gray">
-            <img className='w-[25%] h-auto mx-4 shadow-md' src={item.imagen} alt={item.nombre} />
+            <img className='w-[25%] h-auto max-h-48 mx-4 shadow-md' src={item.imagen} alt={item.nombre} />
             <div className='grid content-between w-3/4 mx-4'>
                 <div className='flex justify-between'>
                     <div className='grid'>
@@ -91,7 +91,7 @@ function RevisionProductos({ restart, producto, next }) {
             <div className='grid mb-8'>
                 <div className='flex justify-between mx-16'>
                     {/* Bloque de productos */}
-                    <div className="rounded-xl shadow-md w-[55%] overflow-y-auto border-2 border-gray">
+                    <div className="rounded-xl shadow-md w-[55%] border-2 border-gray">
                         <div className='flex bg-[rgb(3,109,99)] rounded-t-xl justify-between items-center'>
                             <a href="/spa/productos" className='flex items-center ml-6 text-white relative cursor-pointer before:bg-white before:absolute before:-bottom-1 before:block before:h-[1px] before:w-full before:origin-bottom-right before:scale-x-0 before:transition before:duration-300 before:ease-in-out hover:before:origin-bottom-left hover:before:scale-x-100 hover:font-bold'>
                                 <FontAwesomeIcon icon={faAngleLeft} />
@@ -100,7 +100,7 @@ function RevisionProductos({ restart, producto, next }) {
                             <p className='py-2 text-lg text-white mr-[45%]'>Resumen</p>
                         </div>
                         {/* Contenido de los productos en carrito */}
-                        <div className='px-6 pt-6 overflow-y-visible'>
+                        <div className='px-6 pt-6 overflow-y-auto h-[35rem]'>
                             {cartItems.length === 0 ? (
                                 <div className='grid'>
                                     <h4 className="mt-4 mb-10 text-xl font-bold justify-self-center">No hay productos en el carrito.</h4>

@@ -1,11 +1,32 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import LayoutSecundario from "../../../layouts/LayoutSecundario.jsx";
 import ValidarIdentidad from "../../../components/ui/perfil/ValidarIdentidad.jsx";
 import Correo from "../../../components/ui/perfil/CambiarCorreo.jsx";
 import Confirmacion from "../../../components/ui/perfil/ConfirmacionCorreo.jsx";
 
 const CambiarCorreo = () => {
-  
+  async function checkLogin() {
+    let respuestaJson = null;
+    try {
+      const respuesta = await fetch("/api/logueado", {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+
+      respuestaJson = await respuesta.json();
+
+      if (respuestaJson.logueado != true) {
+        window.location.href = "/spa";
+      }
+    } catch (error) {
+      window.location.href = "/spa";
+    }
+  }
+
+  useEffect(() => checkLogin(), []);
+
   const [validar, setValidar] = useState(true);
   const [correo, setCorreo] = useState(false);
   const [conf, setConf] = useState(false);
@@ -23,7 +44,6 @@ const CambiarCorreo = () => {
   const redirect = () => {
     window.location.href = "/perfil/seguridad";
   };
-
 
   return (
     <>
