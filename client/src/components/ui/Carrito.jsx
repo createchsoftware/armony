@@ -28,6 +28,18 @@ export const CarritoProvider = ({ children }) => {
         } else {
             // Agregar el ítem al carrito
             setCartItems([...cartItems, item]);
+            if (Uid) {
+                try {
+            fetch('/api/admin/carrito/addCarrito',{
+                method: "POST",
+                body: JSON.stringify({
+                    idCliente: Uid, 
+                    IdProducto: item.id 
+
+         })})
+        }catch(error){
+            console.error("error:",error)
+        }}
         }
     };
 
