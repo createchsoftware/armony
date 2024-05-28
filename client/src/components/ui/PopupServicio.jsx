@@ -34,11 +34,6 @@ const PopupServicio = ({ cerrar, check, datos }) => {
       descripcion: datos.descripcion,
       img: datos.img,
     },
-    {
-      nombre: "nombre 4",
-      descripcion: datos.descripcion,
-      img: datos.img,
-    },
   ];
   const [similares, setSimilares] = useState(sim);
   useEffect(() => {
