@@ -86,8 +86,8 @@ export default function ServicioEstetica() {
       });
 
       respuestaJson = await respuesta.json();
-      await setId(respuestaJson.clave);
       if (respuestaJson.logueado == true) {
+        await setId(respuestaJson.clave);
         setLog(true);
       } else {
         setId(0);
