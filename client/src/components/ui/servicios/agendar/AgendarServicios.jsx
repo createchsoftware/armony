@@ -35,7 +35,7 @@ const AgendarServicios = ({ next }) => {
   }, []);
 
   useEffect(() => {
-    fetch("/api/admin/categoria/getServicesSpa")
+    fetch(`/api/admin/categoria/getServicesSpa/${id}`)
       .then((response) => {
         if (!response.ok) {
           throw new Error("Error al obtener los servicios de Spa");
@@ -53,7 +53,7 @@ const AgendarServicios = ({ next }) => {
   useEffect(() => {
     if (spa.length > 0) {
       setTimeout(() => {
-        fetch("/api/admin/categoria/getServicesEstetica")
+        fetch(`/api/admin/categoria/getServicesEstetica/${id}`)
           .then((response) => {
             if (!response.ok) {
               throw new Error("Error al obtener los servicios de Estética");
@@ -93,7 +93,7 @@ const AgendarServicios = ({ next }) => {
   useEffect(() => {
     if (spa.length > 0) {
       setTimeout(() => {
-        fetch("/api/admin/productos/servicios/descuento")
+        fetch(`/api/admin/productos/servicios/descuento/${id}`)
           .then((response) => {
             if (!response.ok) {
               throw new Error("Error al obtener los servicios de Estética");
