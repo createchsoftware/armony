@@ -117,6 +117,7 @@ export default function Filtros() {
 
     //useEffect para obtener los productos
     useEffect(() => {
+        setTimeout(() => {
         fetch("/api/admin/productos/getProducts")
             .then(response => response.json())
             .then(data => {
@@ -125,6 +126,7 @@ export default function Filtros() {
             .catch(error => {
                 console.log('error', error);
             });
+        },[1000])
     }, []);
 
     // Función para manejar la búsqueda
