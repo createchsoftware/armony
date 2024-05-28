@@ -52,6 +52,7 @@ const CarruselServicios = ({ servicios, next }) => {
           partialVisibilityGutter: 30,
         },
       }}
+
       rewind={false}
       rewindWithAnimation={false}
       rtl={false}
