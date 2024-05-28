@@ -21,6 +21,7 @@ const StyledRating = styled(Rating)({
 });
 
 function Servicio({
+  idP,
   nombre,
   descripcion,
   precio,
@@ -140,11 +141,13 @@ function Servicio({
       {serv && (
         <PopupServicio
           datos={{
+            id: idP,
             nombre: nombre,
             descripcion: descripcion,
             precio: precio,
             img: imagen,
             rating: rating,
+            isFavorite: isFavorite,
           }}
           cerrar={closeServ}
           check={toggleServ}

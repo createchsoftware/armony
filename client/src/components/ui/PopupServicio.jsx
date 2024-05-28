@@ -41,6 +41,24 @@ const PopupServicio = ({ cerrar, check, datos }) => {
     },
   ];
   const [similares, setSimilares] = useState(sim);
+  useEffect(() => {
+    setTimeout(() => {
+      fetch(`/api/admin/productos/servicios/relacionados/${datos.id}`)
+        .then((response) => {
+          if (!response.ok) {
+            throw new Error("Error al obtener los servicios relacionados");
+          }
+          return response.json();
+        })
+        .then((data) => {
+          setSimilares(data);
+        })
+        .catch((error) => {
+          console.log("error", error);
+        });
+    }, 3000);
+  }, []);
+
   let rDesc;
   if (datos.rating > 3) {
     rDesc = "Excelente";
@@ -63,6 +81,10 @@ const PopupServicio = ({ cerrar, check, datos }) => {
     }
   };
 
+  useEffect(() => {
+    checkRes();
+  }, []);
+
   const handleNext = () => {
     if (indexItem + renderItems < similares.length) {
       setIndexItem(indexItem + 1);
@@ -75,8 +97,6 @@ const PopupServicio = ({ cerrar, check, datos }) => {
     }
   };
 
-  useEffect(() => checkRes, []);
-
   const mostrarSimilares = similares.slice(indexItem, indexItem + renderItems);
 
   return (
@@ -88,9 +108,9 @@ const PopupServicio = ({ cerrar, check, datos }) => {
         <div className="relative w-[25rem] md:w-[35rem] lg:w-[50rem] flex flex-row md:flex-col my-auto rounded-3xl bg-white bg-clip-border text-gray-700 shadow-md">
           <div className="grid grid-cols-[60%_40%] lg:grid-cols-[70%_30%]">
             <div>
-              <div className="mt-5">
+              <div className="mt-5 ml-5">
                 <a
-                  className="text-sm items-center lg:text-base ml-5 justify-self-start relative cursor-pointer before:bg-black before:absolute before:-bottom-1 before:block before:h-[1px] before:w-full before:origin-bottom-right before:scale-x-0 before:transition before:duration-300 before:ease-in-out hover:before:origin-bottom-left hover:before:scale-x-100 hover:font-bold"
+                  className="text-sm items-center w-full lg:text-base justify-self-start relative cursor-pointer before:bg-black before:absolute before:-bottom-1 before:block before:h-[1px] before:w-full before:origin-bottom-right before:scale-x-0 before:transition before:duration-300 before:ease-in-out hover:before:origin-bottom-left hover:before:scale-x-100 hover:font-bold"
                   aria-label="Regresar"
                   onClick={cerrar}
                 >
@@ -155,7 +175,7 @@ const PopupServicio = ({ cerrar, check, datos }) => {
               <div className="absolute top-3 right-[1rem]">
                 <StyledRating
                   name="customized-color"
-                  defaultValue={0}
+                  defaultValue={datos.isFavorite}
                   max={1}
                   getLabelText={(value) =>
                     `${value} Heart${value !== 1 ? "s" : ""}`
