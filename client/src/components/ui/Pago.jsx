@@ -47,21 +47,21 @@ function Pago({ producto, next }) {
 
 
     useEffect(() => {
-        setTimeout(()=>{
-        fetch("/api/tarjetas/1.5")
-            .then(response => response.json())
-            .then(data => {
-                setTarjetas(data.array);
-            })
-            .catch(error => {
-                console.log(error);
-            });
-        },1000);
+        setTimeout(() => {
+            fetch("/api/tarjetas/1.5")
+                .then(response => response.json())
+                .then(data => {
+                    setTarjetas(data.array);
+                })
+                .catch(error => {
+                    console.log(error);
+                });
+        }, 1000);
     }, [Uid])
 
 
-    
-   // const [cliente, setCliente] = useState({});
+
+    // const [cliente, setCliente] = useState({});
 
 
     useEffect(() => {
@@ -69,8 +69,8 @@ function Pago({ producto, next }) {
             fetch(`/api/admin/cliente/read/${Uid}`)
                 .then(response => response.json())
                 .then(data => {
-                 
-                localStorage.setItem('cliente', JSON.stringify(data[0]));
+
+                    localStorage.setItem('cliente', JSON.stringify(data[0]));
                 })
                 .catch(error => {
                     console.log(error);
@@ -78,14 +78,19 @@ function Pago({ producto, next }) {
         }
     }, [Uid]);
 
-   
-    const total=localStorage.getItem('total')
+
+    // ADD IVA TO TOTAL
+    const subTotal = localStorage.getItem('total')
+    const ivaTotal = (parseFloat(subTotal) * 0.08).toFixed(2);
+    const total = (parseFloat(subTotal) + parseFloat(ivaTotal)).toFixed(2);
     const toggleTarjeta = () => {
         setTarjeta(!tarjeta);
     }
+
+
     const togglePago = (tarjeta) => {
         setPagoRealizado(!pagoRealizado);
-        localStorage.setItem('tarjeta',tarjeta);
+        localStorage.setItem('tarjeta', tarjeta);
     }
     // const datosRecibidos = (nuevaTarjeta) => {
     //     setTarjetas([...tarjetas, {id: 3, noTarjeta: {nuevaTarjeta}, tipo: "Débito", banco: "BBVA", code: "****"}]);
@@ -94,12 +99,12 @@ function Pago({ producto, next }) {
 
     //const total = (574).toFixed(2);
 
-// setTimeout(()=>{
-//     console.log(cliente)
+    // setTimeout(()=>{
+    //     console.log(cliente)
 
-// },[2000])
+    // },[2000])
 
-    
+
 
     const cardList = tarjetas.length > 0 ? (tarjetas.map(item => (
         <li key={item.id} className="flex items-center justify-between gap-4 px-4 py-1 mb-4 border-2 shadow-md rounded-3xl border-gray">
@@ -108,7 +113,7 @@ function Pago({ producto, next }) {
             <h1 className="text-xl">{item.tipo}</h1>
             {/* <h1 className="text-xl">{item.code}</h1> */}
             <h1 className="text-xl">****{item.numero_tarjeta.slice(0, 4)}</h1>
-            <button onClick={() =>togglePago(item.numero_tarjeta)} className='bg-[#ec5766] text-xl text-white px-10 py-2 rounded-full duration-200 hover:bg-[#ffb5a7]'>Continuar</button>
+            <button onClick={() => togglePago(item.numero_tarjeta)} className='bg-[#ec5766] text-xl text-white px-10 py-2 rounded-full duration-200 hover:bg-[#ffb5a7]'>Continuar</button>
         </li>
     ))) : (<div></div>)
     return (
@@ -167,7 +172,7 @@ function Pago({ producto, next }) {
                             <div className='grid p-6 mb-4 border-2 shadow-md rounded-xl border-gray'>
                                 <div className='flex justify-between px-6'>
                                     <span className='font-bold'>1 Producto(s)</span>
-                                    <span className="text-[rgb(3,109,99)] font-bold text-xl">{total}</span>
+                                    <span className="text-[rgb(3,109,99)] font-bold text-xl">{subTotal}</span>
                                 </div>
                                 <div className='flex justify-between px-6 pt-6'>
                                     <h1 className='font-bold'>Envío</h1>
@@ -223,7 +228,7 @@ function Pago({ producto, next }) {
             {tarjeta && (
                 <div className='soon-fondo'>
                     <div className='soon-fx'>
-                        <InforTarjeta cerrarInfo={toggleTarjeta}  />
+                        <InforTarjeta cerrarInfo={toggleTarjeta} />
                     </div>
                 </div>
             )}
