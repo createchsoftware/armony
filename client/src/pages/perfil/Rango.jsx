@@ -43,8 +43,30 @@ function Rango() {
         }
     }
 
+
+    async function callRango(){
+        const respuesta3 = await fetch('/api/perfil/rangos',{
+            method:'GET',
+            headers:{
+                'Content-Type':'application/json',
+            }
+        })
+
+        if(!respuesta3.ok){
+            return;
+        }
+
+        const respuesta3Json = await respuesta3.json();
+
+        if(respuesta3Json.informacion){
+            setRango(respuesta3Json.informacion[0]);
+            setPuntos(respuesta3Json.informacion[1]);
+        }
+    }
+
     useEffect(() => {
         recibido()
+        callRango()
         switch (rango){
         case 0:
             setPorcentaje(parseInt(100*((puntos)/1000)));
@@ -78,14 +100,14 @@ function Rango() {
                             <h1 className='text-[#EB5765] font-semibold text-xl'>{nombre}</h1>
                             {rango === 1 ? (
                                 <img
-                                    src="../../../pictures/rangoOro.png"
+                                    src="../../../pictures/rangoPlatino.png"
                                     alt=""
                                     className="w-8 h-auto"
                                 />
                             ) : (
                                 rango === 2 ? (
                                     <img
-                                        src="../../../pictures/rangoPlatino.png"
+                                        src="../../../pictures/rangoOro.png"
                                         alt=""
                                         className="w-8 h-auto"
                                     />
@@ -111,14 +133,14 @@ function Rango() {
                             <div className='grid gap-2 px-2 py-6 bg-white rounded-lg'>
                             {rango === 1 ? (
                                 <>
-                                    <p>Rango Oro</p>
-                                    <img className='w-24 m-auto' src={rangoOro} alt="" />
+                                    <p>Rango Platino</p>
+                                    <img className='w-24 m-auto' src={rangoPlatino} alt="" />
                                 </>
                             ) : (
                                 rango === 2 ? (
                                     <>
-                                        <p>Rango Platino</p>
-                                        <img className='w-24 m-auto' src={rangoPlatino} alt="" />
+                                        <p>Rango Oro</p>
+                                        <img className='w-24 m-auto' src={rangoOro} alt="" />
                                     </>
                                 ) : (
                                     rango === 3 ? (
@@ -146,22 +168,22 @@ function Rango() {
                         {rango === 1 ? (
                             <>
                                 <div className='flex items-center justify-between gap-4 px-3'>
-                                    <img className='w-24' src={rangoOro} alt="" />
+                                    <img className='w-24' src={rangoPlatino} alt="" />
                                     <div className="w-full bg-gray-200 rounded-full h-2.5 mb-4 dark:bg-gray-700">
                                         <div className=" bg-[#036C65] h-1.5 rounded-full dark:bg-gray-300" style={{width: porcentaje+'%'}}></div>
                                     </div>
-                                    <img className='w-24' src={rangoPlatino} alt="" />
+                                    <img className='w-24' src={rangoOro} alt="" />
                                 </div>
                                 <div className='flex items-center justify-between text-gray-500'>
                                     <div className='px-10 text-center '>
-                                        <p>Oro</p>
+                                        <p>Platino</p>
                                     </div>
                                     <div>
                                         <p>{puntos-1000} puntos</p>
                                     </div>
                                     <div className='text-center '>
                                         <p>2000 puntos</p>
-                                        <p>Platino</p>
+                                        <p>Oro</p>
                                     </div>
                                 </div>
                             </>
@@ -169,7 +191,7 @@ function Rango() {
                             rango === 2 ? (
                                 <>
                                     <div className='flex items-center justify-between gap-4 px-3'>
-                                        <img className='w-24' src={rangoPlatino} alt="" />
+                                        <img className='w-24' src={rangoOro} alt="" />
                                         <div className="w-full bg-gray-200 rounded-full h-2.5 mb-4 dark:bg-gray-700">
                                             <div className="bg-[#036C65] h-1.5 rounded-full dark:bg-gray-300" style={{width: porcentaje+'%'}}></div>
                                         </div>
@@ -177,7 +199,7 @@ function Rango() {
                                     </div>
                                     <div className='flex items-center justify-between text-gray-500'>
                                         <div className='px-10 text-center '>
-                                            <p>Platino</p>
+                                            <p>Oro</p>
                                         </div>
                                         <div>
                                             <p>{puntos-3000} puntos</p>
@@ -192,7 +214,7 @@ function Rango() {
                                 rango === 3 ? (
                                     <>
                                         <div className='flex items-center justify-between gap-4 px-3'>
-                                            <img className='w-24' src={rangoPlatino} alt="" />
+                                            <img className='w-24' src={rangoOro} alt="" />
                                             <div className="w-full bg-gray-200 rounded-full h-2.5 mb-4 dark:bg-gray-700">
                                                 <div className="bg-[#036C65] h-1.5 rounded-full dark:bg-gray-300" style={{width: porcentaje+'%'}}></div>
                                             </div>
@@ -200,7 +222,7 @@ function Rango() {
                                         </div>
                                         <div className='flex items-center justify-between text-gray-500'>
                                             <div className='px-10 text-center '>
-                                                <p>Platino</p>
+                                                <p>Oro</p>
                                             </div>
                                             <div>
                                                 <p>{puntos-3000} puntos</p>
@@ -214,11 +236,11 @@ function Rango() {
                                 ) : (
                                     <>
                                         <div className='flex items-center justify-between gap-4 px-3'>
-                                            <img className='w-24 opacity-25' src={rangoOro} alt="" />
+                                            <img className='w-24 opacity-25' src={rangoPlatino} alt="" />
                                             <div className="w-full bg-gray-200 rounded-full h-2.5 mb-4 dark:bg-gray-700">
                                                 <div className=" bg-[#036C65] h-1.5 rounded-full dark:bg-gray-300" style={{width: porcentaje+'%'}}></div>
                                             </div>
-                                            <img className='w-24' src={rangoOro} alt="" />
+                                            <img className='w-24' src={rangoPlatino} alt="" />
                                         </div>
                                         <div className='flex items-center justify-between text-gray-500'>
                                             <div className='px-10 text-center '>
@@ -229,7 +251,7 @@ function Rango() {
                                             </div>
                                             <div className='text-center '>
                                                 <p>1000 puntos</p>
-                                                <p>Oro</p>
+                                                <p>Platino</p>
                                             </div>
                                         </div>
                                     </>
@@ -244,43 +266,43 @@ function Rango() {
                         <h2 className='text-[#036C65] text-lg'>Beneficios con los que cuentas</h2>
                         <p className='text-sm text-justify'>Estos son los beneficios con lo que cuentas, así como los que puedes alcanzar en el próximo rango.</p>
                         <div className='flex justify-center gap-6'>
-                        {rango === 1 ? (
+                        {rango === 2 ? (
                             <>
                                 <div className='w-[46%] rounded-xl text-center bg-[#45B59C] mt-4 grid gap-4 my-auto  p-3'>
                                     <p className='grid p-2 py-4 bg-white rounded-lg'> Rango Oro
                                         <img className='w-24 m-auto mt-2' src={rangoOro} alt="" />
                                     </p>
-                                    <p className='p-2 py-4 bg-white rounded-lg'> Envío prioritario </p>
-                                    <p className='p-2 py-4 bg-white rounded-lg'> Promociones exclusivas </p>
-                                </div>
-                                <div className='w-[46%] rounded-xl text-center bg-[#45B59C] mt-4 grid gap-4 my-auto  p-3'>
-                                    <p className='grid p-2 py-4 bg-white rounded-lg'> Rango Platino
-                                        <img className='w-24 m-auto mt-2' src={rangoPlatino} alt="" />
-                                    </p>
                                     <p className='p-2 py-4 bg-white rounded-lg'> Regalos exclusivos </p>
                                     <p className='p-2 py-4 bg-white rounded-lg'> Descuentos generosos en spa </p>
                                     <p className='p-2 py-4 bg-white rounded-lg'> Acceso anticipado a ventas </p>
                                 </div>
+                                <div className='w-[46%] rounded-xl text-center bg-[#45B59C] mt-4 grid gap-4 my-auto  p-3'>
+                                    <p className='grid p-2 py-4 bg-white rounded-lg'> Rango VIP
+                                        <img className='w-24 m-auto mt-2' src={rangoVIP} alt="" />
+                                    </p>
+                                    <p className='p-2 py-4 bg-white rounded-lg'> Invitaciones a eventos VIP de élite </p>
+                                    <p className='p-2 py-4 bg-white rounded-lg'> Acceso anticipado a ventas exclusivas </p>
+                                    <p className='p-2 py-4 bg-white rounded-lg'> Contenido premium ilimitado </p>
+                                    <p className='p-2 py-4 bg-white rounded-lg'> Acceso a todos los servicios de nuestro spa </p>
+                                </div>
                             </>
                         ) : (
-                            rango === 2 ? (
+                            rango === 1 ? (
                                 <>
                                     <div className='w-[46%] rounded-xl text-center bg-[#45B59C] mt-4 grid gap-4 my-auto  p-3'>
                                         <p className='grid p-2 py-4 bg-white rounded-lg'> Rango Platino
                                             <img className='w-24 m-auto mt-2' src={rangoPlatino} alt="" />
                                         </p>
+                                        <p className='p-2 py-4 bg-white rounded-lg'> Envío prioritario </p>
+                                        <p className='p-2 py-4 bg-white rounded-lg'> Promociones exclusivas </p>
+                                    </div>
+                                    <div className='w-[46%] rounded-xl text-center bg-[#45B59C] mt-4 grid gap-4 my-auto  p-3'>
+                                        <p className='grid p-2 py-4 bg-white rounded-lg'> Rango Oro
+                                            <img className='w-24 m-auto mt-2' src={rangoOro} alt="" />
+                                        </p>
                                         <p className='p-2 py-4 bg-white rounded-lg'> Regalos exclusivos </p>
                                         <p className='p-2 py-4 bg-white rounded-lg'> Descuentos generosos en spa </p>
                                         <p className='p-2 py-4 bg-white rounded-lg'> Acceso anticipado a ventas </p>
-                                    </div>
-                                    <div className='w-[46%] rounded-xl text-center bg-[#45B59C] mt-4 grid gap-4 my-auto  p-3'>
-                                        <p className='grid p-2 py-4 bg-white rounded-lg'> Rango VIP
-                                            <img className='w-24 m-auto mt-2' src={rangoVIP} alt="" />
-                                        </p>
-                                        <p className='p-2 py-4 bg-white rounded-lg'> Invitaciones a eventos VIP de élite </p>
-                                        <p className='p-2 py-4 bg-white rounded-lg'> Acceso anticipado a ventas exclusivas </p>
-                                        <p className='p-2 py-4 bg-white rounded-lg'> Contenido premium ilimitado </p>
-                                        <p className='p-2 py-4 bg-white rounded-lg'> Acceso a todos los servicios de nuestro spa </p>
                                     </div>
                                 </>
                             ) : (
@@ -296,8 +318,8 @@ function Rango() {
                                     </div>
                                 ) : (
                                     <div className='w-[46%] rounded-xl text-center bg-[#45B59C] mt-4 grid gap-4 my-auto  p-3'>
-                                        <p className='grid p-2 py-4 bg-white rounded-lg'> Rango Oro
-                                            <img className='w-24 m-auto mt-2' src={rangoOro} alt="" />
+                                        <p className='grid p-2 py-4 bg-white rounded-lg'> Rango Platino
+                                            <img className='w-24 m-auto mt-2' src={rangoPlatino} alt="" />
                                         </p>
                                         <p className='p-2 py-4 bg-white rounded-lg'> Envío prioritario </p>
                                         <p className='p-2 py-4 bg-white rounded-lg'> Promociones exclusivas </p>
