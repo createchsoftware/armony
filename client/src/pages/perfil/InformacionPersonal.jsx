@@ -1,5 +1,8 @@
 import React, { useState, useEffect } from 'react'
 import LayoutPrincipal from '../../layouts/LayoutPrincipal'
+import rangoPlatino from "../../../public/pictures/rangoPlatino.png";
+import rangoVIP from "../../../public/pictures/rangoVIP.png";
+import rangoOro from "../../../public/pictures/rangoOro.png";
 
 function InformacionPersonal() {
 
@@ -15,6 +18,7 @@ function InformacionPersonal() {
     const [fechaNac, setNacimiento] = useState(false); //<<< PARA EL INICIO DE SESION
     const [imagen, setImagen] = useState(false); //<<< PARA EL INICIO DE SESION
     const [clave, setClave] = useState(false); //<<< PARA EL INICIO DE SESION
+    const [rango, setRango] = useState(0);
     const [patologias, setPatologias] = useState([]);
 
     async function recibido() {
@@ -71,6 +75,24 @@ function InformacionPersonal() {
         }
     }
 
+    async function Rango(){
+        const respuesta3 = await fetch('/api/perfil/rangos',{
+            method:'GET',
+            headers:{
+                'Content-Type':'application/json',
+            }
+        })
+
+        if(!respuesta3.ok){
+            return;
+        }
+
+        const respuesta3Json = await respuesta3.json();
+
+        if(respuesta3Json.informacion){
+            setRango(respuesta3Json.informacion[0]);
+        }
+    }
 
     async function Patologias() {
         const respuesta2 = await fetch('/api/patologias', {
@@ -91,6 +113,7 @@ function InformacionPersonal() {
         }
 
     }
+
 
 
     function retornar() {
@@ -115,6 +138,7 @@ function InformacionPersonal() {
 
     useEffect(() => {
         recibido();
+        Rango();
         Patologias();
     }, []);
 
@@ -189,8 +213,38 @@ function InformacionPersonal() {
                                 </div>
                                 <aside className='w-[40%] my-8 '>
                                     <div className='grid gap-6 text-center '>
-                                        <img className='m-auto rounded-full md:w-1/3' src={`../../../pictures/rangoPlatino.png`} alt="" />
-                                        <h2 className='text-[#EB5765]'>Rango platino</h2>
+                                        <div className='m-auto text-center '>
+                                        <div className='rounded-xl m-auto w-1/3 text-center bg-[#45B59C] mt-4 my-auto  p-3'>      
+                            <div className='grid gap-2 px-2 py-6 bg-white rounded-lg'>
+                            {rango === 1 ? (
+                                <>
+                                    <p>Rango Platino</p>
+                                    <img className='w-24 m-auto' src={rangoPlatino} alt="" />
+                                </>
+                            ) : (
+                                rango === 2 ? (
+                                    <>
+                                        <p>Rango Oro</p>
+                                        <img className='w-24 m-auto' src={rangoOro} alt="" />
+                                    </>
+                                ) : (
+                                    rango === 3 ? (
+                                        <>
+                                            <p>Rango VIP</p>
+                                            <img className='w-24 m-auto' src={rangoVIP} alt="" />
+                                        </>
+                                    ) : (
+                                        <>
+                                            <p>No ha alcanzado algún rango.</p>
+                                        </>
+                                    )
+                                )
+                            )}
+                                
+                            </div>
+                        </div>
+                                    </div>
+                                        <h2 className='text-[#EB5765]'>{rango===0 ? ('Sin rango'):( rango==1 ?('Rango platino'):(rango===2 ?('Rango golden'):('Rango VIP')))}</h2>
                                         <img className='w-48 m-auto' src="../../../pictures/membresiaEjemplo.png" alt="" />
                                         <a href="/perfil/editar-perfil" className="m-auto px-12 py-2  font-medium text-white whitespace-no-wrap bg-[#EB5765] border border-gray-200 rounded-full shadow-sm hover:cursor-pointer hover:bg-[#eb7580] focus:outline-none focus:shadow-none">
                                             Editar
