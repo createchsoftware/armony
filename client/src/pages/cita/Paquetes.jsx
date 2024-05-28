@@ -28,7 +28,7 @@ function Paquetes({ next }) {
     const [selectedPriceIndex, setSelectedPriceIndex] = useState(null);
 
     const getPriceClass = (priceIndex) => {
-        let baseClass = "p-2 border-2 border-black rounded-full cursor-pointer text-center shadow-[0_0px_5px_rgb(0,0,0,0.2)] shadow-purple-600";
+        let baseClass = "p-2 border-2 border-black hover:bg-purple-600 hover:text-white rounded-full cursor-pointer text-center shadow-[0_0px_5px_rgb(0,0,0,0.2)] shadow-purple-600";
         if (selectedPriceIndex === priceIndex) {
             return `${baseClass} opacity-100 bg-purple-600 text-white`; // Cambia de color y opacidad al seleccionarse
         }
@@ -63,19 +63,19 @@ function Paquetes({ next }) {
                         <div className='grid gap-4 text-xl place-items-center '>
                             <div>
                                 <div className="flex gap-32 font-[abeatbykai]">
-                                    <div className='grid gap-6'>
+                                    <div className='grid gap-6 '>
                                         <div>1 Sesión</div>
                                         <div className={getPriceClass(1)} onClick={() => handleClickPrice(1)}>
                                             {'$ ' + precio}
                                         </div>
                                     </div>
-                                    <div className='grid gap-6'>
+                                    <div className='grid gap-6 '>
                                         <div>5 Sesiones</div>
                                         <div className={getPriceClass(2)} onClick={() => handleClickPrice(2)}>
                                             {'$ ' + (precio * 5)}
                                         </div>
                                     </div>
-                                    <div className='grid gap-6'>
+                                    <div className='grid gap-6 '>
                                         <div>10 Sesiones</div>
                                         <div className={getPriceClass(3)} onClick={() => handleClickPrice(3)}>
                                             {'$ ' + (precio * 10)}
