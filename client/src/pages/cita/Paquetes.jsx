@@ -43,6 +43,7 @@ function Paquetes({ next }) {
     const servicio = localStorage.getItem("nombre");
     const descripcion = localStorage.getItem("descripcion");
     const imagen = localStorage.getItem("imagen");
+    const precio = localStorage.getItem("precio");
 
     return (
         <>
@@ -65,19 +66,19 @@ function Paquetes({ next }) {
                                     <div className='grid gap-6'>
                                         <div>1 Sesión</div>
                                         <div className={getPriceClass(1)} onClick={() => handleClickPrice(1)}>
-                                            {'$ ' + 122}
+                                            {'$ ' + precio}
                                         </div>
                                     </div>
                                     <div className='grid gap-6'>
                                         <div>5 Sesiones</div>
                                         <div className={getPriceClass(2)} onClick={() => handleClickPrice(2)}>
-                                            {'$ ' + 122}
+                                            {'$ ' + (precio * 5)}
                                         </div>
                                     </div>
                                     <div className='grid gap-6'>
                                         <div>10 Sesiones</div>
                                         <div className={getPriceClass(3)} onClick={() => handleClickPrice(3)}>
-                                            {'$ ' + 122}
+                                            {'$ ' + (precio * 10)}
                                         </div>
                                     </div>
                                 </div>
