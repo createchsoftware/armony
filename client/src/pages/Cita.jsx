@@ -144,7 +144,7 @@ export default function Cita() {
 
   const handleClick = () => {
     handleComplete();
-    if (isLastStep()) {
+    if (isLastStep() || activeStep === 6) {
       navigate("/perfil/agenda");
     }
     //     setTimeout(() => {
