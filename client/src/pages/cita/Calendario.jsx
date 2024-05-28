@@ -69,7 +69,7 @@ function ServerDay(props) {
     );
 }
 
-function Calendario() {
+function Calendario({ next }) {
     const [especialistas, setEspecialistas] = React.useState([]);
     const [selectedHourIndex, setSelectedHourIndex] = useState(null);
     const requestAbortController = React.useRef(null);
@@ -278,6 +278,7 @@ function Calendario() {
     const handleClick = (hora, index) => {
         horaDis(hora)
         handleHourClick(index)
+        next()
     }
     const [seleccionado, setSeleccionado] = useState(false);
     const horaDis = (hora) => {
