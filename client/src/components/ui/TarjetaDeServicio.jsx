@@ -35,7 +35,15 @@ const TarjetaDeServicio = ({ servicio, next }) => {
     }
   }
 
-  const agregarServ = (id, nombre, descripcion, precio, tiempo, img, callback) => {
+  const agregarServ = (
+    id,
+    nombre,
+    descripcion,
+    precio,
+    tiempo,
+    img,
+    callback
+  ) => {
     if (!seleccionado) {
       setSeleccionado(true);
       localStorage.setItem("servicio", id);
@@ -95,6 +103,7 @@ const TarjetaDeServicio = ({ servicio, next }) => {
               name="customized-color"
               defaultValue={0}
               max={1}
+              value={servicio.favorito}
               getLabelText={(value) =>
                 `${value} Heart${value !== 1 ? "s" : ""}`
               }
