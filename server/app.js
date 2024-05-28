@@ -201,6 +201,8 @@ app.get("/perfil/historial", authorization.logeado);
 
 app.get("/api/patologias", authorization.Patologias);
 
+app.get("/api/perfil/rangos", authorization.Rango);
+
 app.get("/api/tarjetas/1.5", perfil.getTarjetas);
 
 app.get("/api/transacciones", perfil.getTransacciones);
