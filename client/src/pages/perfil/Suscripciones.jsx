@@ -142,25 +142,3 @@ function Suscripciones() {
 }
 
 export default Suscripciones;
-
-// <div className='rounded-2xl m-auto grid gap-4 px-8 py-4 shadow-[0_3px_10px_rgb(0,0,0,0.2)] mb-12'>
-//     <div className='flex justify-center gap-6'>
-//         <div className='rounded-xl text-center bg-[#45B59C] mt-4 grid gap-4 my-auto  p-3'>
-//             <p className='grid p-2 bg-white rounded-lg'> Rango Oro
-//                 <img className='w-24 m-auto mt-2' src="../../../pictures/membresia2.png" alt="" />
-//             </p>
-//             <p className='p-2 bg-white rounded-lg'> Envío prioritario </p>
-//             <p className='p-2 bg-white rounded-lg'> Contenido excluisvo </p>
-//             <p className='p-2 bg-white rounded-lg'> Promociones exclusivas </p>
-//         </div>
-//         <div className='rounded-xl text-center bg-[#45B59C] mt-4 grid gap-4 my-auto  p-3'>
-//             <p className='grid p-2 bg-white rounded-lg'> Rango VIP
-//                 <img className='w-24 m-auto mt-2' src="../../../pictures/membresia1.png" alt="" />
-//             </p>
-//             <p className='p-2 bg-white rounded-lg'> Todo el contenido de los rangos anteriores </p>
-//             <p className='p-2 bg-white rounded-lg'> Regalos de alta gama </p>
-//             <p className='p-2 bg-white rounded-lg'> Contenido premium ilimitado </p>
-//             <p className='p-2 bg-white rounded-lg'> Invitaciones a eventos VIP de élite. </p>
-//         </div>
-//     </div>
-// </div>
