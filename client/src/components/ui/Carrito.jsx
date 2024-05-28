@@ -60,7 +60,7 @@ export const CarritoProvider = ({ children }) => {
         } else {
             // Agregar el ítem al carrito
             setCartItems([...cartItems, item]);
-            if (cliente) {
+            if (Uid) {
                 try {
             fetch('/api/admin/carrito/addCarrito',{
                 method: "POST",
