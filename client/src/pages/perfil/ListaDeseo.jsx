@@ -341,9 +341,9 @@ function ListaDeseo() {
             setBarSize('sideBar-Off')
         ):(
             setBarSize('sideBar-On')
-            
         )
     }
+    
     return (
         <>
             <Navbar />
@@ -443,7 +443,6 @@ function ListaDeseo() {
                                         ):(
                                             <button onClick={() => setLogin(!login)} className='bg-[#ec5766] p-2 text-center text-white mx-6 rounded-xl my-2 duration-200 hover:bg-[#ffb5a7]'>Comprar</button>
                                         )}
-                                        
                                     </div>
                                 </>
                             )}
