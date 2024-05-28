@@ -90,6 +90,7 @@ export default function ServicioEstetica() {
       if (respuestaJson.logueado == true) {
         setLog(true);
       } else {
+        setId(0);
         setLog(false);
       }
     } catch (error) {
