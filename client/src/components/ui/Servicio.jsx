@@ -39,7 +39,8 @@ function Servicio({
   };
   const toggleServ = () => {
     if (log == true) {
-      navigate("/spa/agendar");
+      setServ(!serv);
+      window.location.href = "/spa/agendar";
     } else {
       setServ(!serv);
       setLogin(!login);
