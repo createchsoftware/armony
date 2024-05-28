@@ -16,7 +16,7 @@ import {
   productosDescuento,
   serviciosDescuento,
   serviciosRelacionados,
-  ventaProdOnline
+  ventaProdOnline,
 } from "../db/query/queryProductos.js";
 import { horasWithoutSeconds } from "../db/query/queryCitas.js";
 import { errorUpdate } from "../auth/validaciones.js";
@@ -195,7 +195,18 @@ routerProductos.get("/serviciosFav/:id", async (req, res) => {
     const resultado = await serviciosFav(conexion, {
       idCliente: req.params.id,
     });
-    res.status(202).json(resultado);
+    const horario = [];
+    let servicios = resultado;
+    let i;
+    for (i = 0; i < resultado.length; i++) {
+      horario[i] = resultado[i].tiempo;
+    }
+    const horasMostrar = await horasWithoutSeconds(horario);
+    for (i = 0; i < resultado.length; i++) {
+      servicios[i].tiempo = horasMostrar[i];
+      servicios[i].favorito = true;
+    }
+    res.status(202).json(servicios);
   } catch (err) {
     console.error("Ha ocurrido un error: ", err);
     res.status(500).send("Ha ocurrido un error al procesar tu solicitud");
@@ -308,24 +319,22 @@ routerProductos.get("/servicios/descuento/:id", async (req, res) => {
   }
 });
 
-
-
 routerProductos.post("/createVentaProduct", async (req, res) => {
   try {
     const resultado = await ventaProdOnline(conexion, {
-      idCliente:req.body.idCliente,
-      idProd:req.body.idProd,
-      cantidad:req.body.cantidad,
-      tarjeta:req.body.tarjeta,
-      monedero:req.body.monedero,
-      subtotal:req.body.subtotal,
-      total:req.body.total,
-      impuesto:req.body.impuesto,
+      idCliente: req.body.idCliente,
+      idProd: req.body.idProd,
+      cantidad: req.body.cantidad,
+      tarjeta: req.body.tarjeta,
+      monedero: req.body.monedero,
+      subtotal: req.body.subtotal,
+      total: req.body.total,
+      impuesto: req.body.impuesto,
     }); // Parametros enviados por body
     res.status(201).json({
       message: "se realizo la compra con exito",
       data: resultado,
-    }); 
+    });
   } catch (err) {
     console.error(messageError, err);
     res.status(500).send(messageError, err);
