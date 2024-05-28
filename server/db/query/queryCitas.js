@@ -79,7 +79,7 @@ export async function citaOnline(connection, data) {
     console.log(`Se encontro la venta con id: ${getVenta[0].pkIdVenta}`);
     // Verificamos que si encontrara la venta
     if (getVenta[0].pkIdVenta !== 0 && getVenta[0].pkIdVenta !== null) {
-      resultado = await createCitas(connection, {
+      const resultado = await createCitas(connection, {
         idVenta: getVenta[0].pkIdVenta,
         idEmp: data.idEmp,
         idPilar: data.idPilar,
