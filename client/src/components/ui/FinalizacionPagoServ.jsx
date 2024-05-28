@@ -1,8 +1,6 @@
-
-
 const FinalizacionPagoServ = ({ next }) => {
   var servicios = JSON.parse(localStorage.getItem("citas")) || [];
-  console.log(localStorage.getItem("citas"))
+  console.log(localStorage.getItem("citas"));
   // let total;
   // let puntos;
   // const setTotal = () => {
@@ -61,17 +59,17 @@ const FinalizacionPagoServ = ({ next }) => {
                 return (
                   <div>
                     <div className="grid grid-cols-3 my-5 place-items-center">
-                      <p>{servicio.nombreServicio}</p>
-                      <p>
+                      <p className="text-center">{servicio.nombreServicio}</p>
+                      <p className="text-center">
                         {servicio.sesiones} {sm}
                       </p>
-                      <p>${servicio.precioServicio}</p>
+                      <p className="text-center">${servicio.precioServicio}</p>
                     </div>
                     <div className="flex-grow border-b-2 border-[#ec5766] mx-5" />
                   </div>
                 );
               })}
-              <div className="shadow-md w-[18rem] my-5 ml-[22rem] h-auto border-2 border-gray">
+              <div className="shadow-md w-[18rem] py-3 my-5 ml-[21rem] h-auto border-2 rounded-md border-gray">
                 <div className="grid grid-cols-2 overflow-hidden place-items-center">
                   <p>Total + IVA</p>
                   <p className="text-[rgb(3,109,99)] font-bold">${total}</p>
