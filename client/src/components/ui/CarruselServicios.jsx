@@ -1,6 +1,9 @@
 import Carousel from "react-multi-carousel";
 import Tarjeta from "./TarjetaDeServicio.jsx";
 import { useState } from "react";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { ArrowProps } from 'react-multi-carousel/lib/types'
+import { faDiamond, faAngleLeft, faAngleRight } from '@fortawesome/free-solid-svg-icons';
 
 const CarruselServicios = ({ servicios, next }) => {
   return (
@@ -57,7 +60,17 @@ const CarruselServicios = ({ servicios, next }) => {
       sliderclassName=""
       slidesToSlide={1}
       swipeable
-      // className=''
+      customLeftArrow={<FontAwesomeIcon
+        icon={faAngleLeft}
+        size="lg"
+        className="absolute cursor-pointer top-1/2 transform -translate-y-1/2 -left-0 text-3xl text-primary-900 aspect-square bg-[#e6e6e6] rounded-full text-[#036C65] p-3 hover:opacity-90 overflow-visible z-10"
+      />}
+      customRightArrow={<FontAwesomeIcon
+        size="lg"
+        icon={faAngleRight}
+        className="absolute cursor-pointer top-1/2 transform -translate-y-1/2 -right-0 text-3xl text-primary-900 bg-[#e6e6e6] rounded-full aspect-square text-[#036C65] p-3 hover:opacity-90 overflow-visible z-10"
+      />}
+    // className=''
     >
       {servicios.map((servicio) => (
         <Tarjeta servicio={servicio} next={next} />
