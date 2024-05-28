@@ -35,23 +35,25 @@ const AgendarServicios = ({ next }) => {
   }, []);
 
   useEffect(() => {
-    fetch(`/api/admin/categoria/getServicesSpa/${id}`)
-      .then((response) => {
-        if (!response.ok) {
-          throw new Error("Error al obtener los servicios de Spa");
-        }
-        return response.json();
-      })
-      .then((data) => {
-        setSpa(data);
-      })
-      .catch((error) => {
-        //setErrorSpa(error.message);
-      });
-  }, []);
+    if (id != undefined) {
+      fetch(`/api/admin/categoria/getServicesSpa/${id}`)
+        .then((response) => {
+          if (!response.ok) {
+            throw new Error("Error al obtener los servicios de Spa");
+          }
+          return response.json();
+        })
+        .then((data) => {
+          setSpa(data);
+        })
+        .catch((error) => {
+          //setErrorSpa(error.message);
+        });
+    }
+  }, [id]);
 
   useEffect(() => {
-    if (spa.length > 0) {
+    if (id != undefined) {
       setTimeout(() => {
         fetch(`/api/admin/categoria/getServicesEstetica/${id}`)
           .then((response) => {
@@ -68,10 +70,10 @@ const AgendarServicios = ({ next }) => {
           });
       }, 3000);
     }
-  }, [spa]);
+  }, [id]);
 
   useEffect(() => {
-    if (spa.length > 0) {
+    if (id != undefined) {
       setTimeout(() => {
         fetch(`/api/admin/productos/serviciosFav/${id}`)
           .then((response) => {
@@ -88,10 +90,10 @@ const AgendarServicios = ({ next }) => {
           });
       }, 3000);
     }
-  }, [spa]);
+  }, [id]);
 
   useEffect(() => {
-    if (spa.length > 0) {
+    if (id != undefined) {
       setTimeout(() => {
         fetch(`/api/admin/productos/servicios/descuento/${id}`)
           .then((response) => {
@@ -108,7 +110,7 @@ const AgendarServicios = ({ next }) => {
           });
       }, 3000);
     }
-  }, [spa]);
+  }, [id]);
 
   const [toggleState, setToggleService] = useState(1);
   const [color1, setColor1] = useState("#80B5B0");

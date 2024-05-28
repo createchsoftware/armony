@@ -1,16 +1,31 @@
-var servicios = JSON.parse(localStorage.getItem("citas")) || [];
-console.log(localStorage.getItem("citas"))
+
 
 const FinalizacionPagoServ = ({ next }) => {
-  let total;
-  let puntos;
-  const setTotal = () => {
-    total = 0;
-    for (let i = 0; i < servicios.length; i++) {
-      total += servicios[i].precioServicio;
-    }
-    puntos = parseFloat(total) / 10;
-  };
+  var servicios = JSON.parse(localStorage.getItem("citas")) || [];
+  console.log(localStorage.getItem("citas"))
+  // let total;
+  // let puntos;
+  // const setTotal = () => {
+  //   total = 0;
+  //   for (let i = 0; i < servicios.length; i++) {
+  //     total += servicios[i].precioServicio;
+  //   }
+  //   puntos = parseFloat(total) / 10;
+  // };
+  // Calcular subTotal
+  const subTotal = servicios
+    .reduce((acc, item) => acc + Number(item.precioServicio) * 1, 0)
+    .toFixed(2);
+
+  // Calcular IVA
+  const ivaTotal = (parseFloat(subTotal) * 0.08).toFixed(2);
+
+  // Calcular total
+  const total = (parseFloat(subTotal) + parseFloat(ivaTotal)).toFixed(2);
+
+  // Calcular puntos
+  const puntos = (parseFloat(total) / 10).toFixed(0);
+
   //En caso de ser Socio VVV
   //const puntos = (parseInt(totalIva))/5;
   let sm = "sesiones";
@@ -43,7 +58,6 @@ const FinalizacionPagoServ = ({ next }) => {
                 } else {
                   sm = "sesiones";
                 }
-                setTotal();
                 return (
                   <div>
                     <div className="grid grid-cols-3 my-5 place-items-center">
@@ -57,9 +71,9 @@ const FinalizacionPagoServ = ({ next }) => {
                   </div>
                 );
               })}
-              <div className="shadow-md w-[15rem] my-5 ml-[22rem] h-auto border-2 border-gray">
-                <div className="grid grid-cols-2 place-items-center">
-                  <p>Total</p>
+              <div className="shadow-md w-[18rem] my-5 ml-[22rem] h-auto border-2 border-gray">
+                <div className="grid grid-cols-2 overflow-hidden place-items-center">
+                  <p>Total + IVA</p>
                   <p className="text-[rgb(3,109,99)] font-bold">${total}</p>
                 </div>
               </div>
