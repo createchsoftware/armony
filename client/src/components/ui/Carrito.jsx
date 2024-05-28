@@ -5,40 +5,8 @@ import { faTrash, faCircleXmark, faCircleMinus, faCirclePlus } from '@fortawesom
 import PagoProducto from '../../pages/PagoProducto';
 const CarritoContext = createContext();
 import { Navigate, useNavigate } from "react-router-dom";
-import PopupLogin from './Login/PopupLogin';
-import { jwtDecode } from "jwt-decode";
 
 export const CarritoProvider = ({ children }) => {
-
-    const [Uid, setUid] = useState(null)
-
-
-
-    useEffect(() => {
-        const getidUser = () => {// aqui veificamos si hay una cookie con este nombre 
-            const cookie = obteneridCookie('Naruto_cookie')
-            if (cookie) {
-
-                const decode = jwtDecode(cookie)//aqui decodificaremos la cokie
-                setUid(decode.user)
-            }
-        }
-        getidUser()
-    }, [])
-
-
-    const obteneridCookie = (namecookie) => { //en este metodo lo que hacemos es destructurar la cokie para 
-        // obtener el user y luego el id
-        const cookies = document.cookie.split(';');
-        for (let cokie of cookies) {
-            const [key, value] = cokie.split('=')
-            if (key.trim() === namecookie) {
-                return value;//retornara el valor
-            }
-        }
-        return null;
-    }
-
 
     const [cartItems, setCartItems] = useState(() => {
         const savedCart = localStorage.getItem('cartItems');
@@ -112,42 +80,8 @@ export const CarritoProvider = ({ children }) => {
 
 export const useCarrito = () => useContext(CarritoContext);
 
-const Carrito = ({ cerrar, totalProductos, cartLogin }) => {
+const Carrito = ({ cerrar, totalProductos, logCart, loginCart }) => {
     const { cartItems, eliminarDelCarrito, increaseQuantity, decreaseQuantity } = useCarrito();
-    const [log, setLog] = useState(false); //<<< PARA EL INICIO DE SESION
-    const [login, setLogin] = useState(false);
-
-    async function recibido() {
-        const respuesta = await fetch("/api/logueado", {
-            method: "GET",
-            headers: {
-                "Content-Type": "application/json",
-            },
-        });
-
-        if (!respuesta.ok) {
-            setLog(false);
-        }
-
-        let respuestaJson = await respuesta.json();
-
-        if (respuestaJson.logueado == true) {
-            setLog(true);
-        } else {
-            setLog(false);
-        }
-    }
-
-
-    const toggleLoginPopup = () => {
-        setLogin(!login);
-    };
-
-
-    useEffect(() => {
-        recibido();
-        enviarTotal();
-    }, []);
 
     const navigate = useNavigate();
 
@@ -156,8 +90,18 @@ const Carrito = ({ cerrar, totalProductos, cartLogin }) => {
         totalProductos(total);
     };
 
+    useEffect(() => {
+        enviarTotal();
+    }, [])
+
     const handleComprar = () => {
         navigate('/spa/comprar', { state: { producto: null } });
+        // if (loginCart) {
+        //     logCart();
+        //     navigate('/spa/pago-producto');
+        // } else {
+        //     navigate('/spa');
+        // }
     };
 
     const removeItem = (itemId) => {
@@ -227,18 +171,14 @@ const Carrito = ({ cerrar, totalProductos, cartLogin }) => {
                         <p>Total:</p>
                         <span className='font-bold'>${total}</span>
                     </div>
-                    {log ? (
-                        <button className='m-auto w-full hover:bg-opacity-90 rounded-xl py-2 px-6 text-white bg-[#45B59C]' onClick={handleComprar}>
-                            Comprar
-                        </button>
-                    ) : (
-                        <button className='m-auto w-full hover:bg-opacity-90 rounded-xl py-2 px-6 text-white bg-[#45B59C]' onClick={cartLogin}>
-                            Comprar
-                        </button>
-                    )}
+                    <button className='m-auto w-full hover:bg-opacity-90 rounded-xl py-2 px-6 text-white bg-[#45B59C]' onClick={handleComprar}>
+                        Comprar
+                        {/* {loginCart ? 'Proceder al Pago' : 'Iniciar Sesión'} */}
+                    </button>
+
+
                 </>
             )}
-            {login && <PopupLogin cerrar={toggleLoginPopup} />}
         </div>
     );
 }

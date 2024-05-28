@@ -162,7 +162,7 @@ routerCategoria.get("/getServicesEstetica/:id", async (req, res) => {
         idUser: req.params.id,
         idProdServ: resultado[i].pkIdPS,
       });
-      favUser = (await (fav && favo.length > 0)) ? true : false;
+      favUser = (await (favo && favo.length > 0)) ? true : false;
       servicios[i] = {
         descripcion: resultado[i].descripcion,
         estado: resultado[i].estado,

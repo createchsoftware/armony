@@ -79,6 +79,7 @@ export default function ServicioEstetica() {
   const [color1, setColor1] = useState("#EB5765");
   const [color2, setColor2] = useState("#F6B3B9");
   const [log, setLog] = useState(false);
+  const [id, setId] = useState();
 
   const [soon, setSoon] = useState(false);
   const toggleSoon = () => {
@@ -96,7 +97,7 @@ export default function ServicioEstetica() {
       });
 
       respuestaJson = await respuesta.json();
-
+      await setId(respuestaJson.clave);
       if (respuestaJson.logueado == true) {
         setLog(true);
       } else {
@@ -121,15 +122,24 @@ export default function ServicioEstetica() {
 
   //useEffect para obtener los servicios de la estética
   useEffect(() => {
-    fetch("/api/admin/categoria/getServicesSpa")
-      .then((response) => response.json())
-      .then((data) => {
-        setAllProducts(data);
-      })
-      .catch((error) => {
-        console.log("error", error);
-      });
-  }, []);
+    if (id != undefined) {
+      setTimeout(() => {
+        fetch(`/api/admin/categoria/getServicesSpa/${id}`)
+          .then((response) => {
+            if (!response.ok) {
+              throw new Error("Error al obtener los servicios de Spa");
+            }
+            return response.json();
+          })
+          .then((data) => {
+            setAllProducts(data);
+          })
+          .catch((error) => {
+            console.log("error", error);
+          });
+      }, 3000);
+    }
+  }, [id]);
   /*
   // Función para obtener los servicios de spa
   async function renderSpaServices() {
@@ -848,7 +858,7 @@ export default function ServicioEstetica() {
                               precio={servicio.precio}
                               imagen={servicio.img}
                               rating={servicio.rating}
-                              isFavorite={servicio.fav}
+                              isFavorite={servicio.favorito}
                               log={log}
                             />
                           ))
@@ -872,7 +882,7 @@ export default function ServicioEstetica() {
                               precio={servicio.precio}
                               imagen={servicio.img}
                               rating={servicio.rating}
-                              isFavorite={servicio.fav}
+                              isFavorite={servicio.favorito}
                               log={log}
                             />
                           ))
