@@ -16,6 +16,9 @@ function RevisionProductos({ restart, producto, next }) {
             return savedCart ? JSON.parse(savedCart) : [];
         }
     });
+
+    console.log(cartItems);
+
     //  ^^^ ES SOLO TEST PARA PROBAR LA FUNCIONALIDAD DEL RESUMEN DE CITAS
 
     //Para remover por completo un servicio.
