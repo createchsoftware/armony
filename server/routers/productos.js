@@ -196,7 +196,18 @@ routerProductos.get("/serviciosFav/:id", async (req, res) => {
     const resultado = await serviciosFav(conexion, {
       idCliente: req.params.id,
     });
-    res.status(202).json(resultado);
+    const horario = [];
+    let servicios = resultado;
+    let i;
+    for (i = 0; i < resultado.length; i++) {
+      horario[i] = resultado[i].tiempo;
+    }
+    const horasMostrar = await horasWithoutSeconds(horario);
+    for (i = 0; i < resultado.length; i++) {
+      servicios[i].tiempo = horasMostrar[i];
+      servicios[i].favorito = true;
+    }
+    res.status(202).json(servicios);
   } catch (err) {
     console.error("Ha ocurrido un error: ", err);
     res.status(500).send("Ha ocurrido un error al procesar tu solicitud");

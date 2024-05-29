@@ -1,15 +1,38 @@
+import { useEffect } from "react";
 import LayoutPrincipal from "../../layouts/LayoutPrincipal";
 import { IoIosArrowBack } from "react-icons/io";
 import { MdNavigateNext } from "react-icons/md";
 
 function Seguridad() {
+  async function checkLogin() {
+    let respuestaJson = null;
+    try {
+      const respuesta = await fetch("/api/logueado", {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+
+      respuestaJson = await respuesta.json();
+
+      if (respuestaJson.logueado != true) {
+        window.location.href = "/spa";
+      }
+    } catch (error) {
+      window.location.href = "/spa";
+    }
+  }
+
+  useEffect(() => checkLogin(), []);
+
   return (
     <LayoutPrincipal>
       <main className="grid gap-6 my-24">
         <section className="rounded-2xl mt-12 w-[60%] m-auto p-6 shadow-[0_3px_10px_rgb(0,0,0,0.2)]">
           <a
             className="flex items-baseline content-center text-sm gap-x-4"
-            href="/spa"
+            href="/perfil"
           >
             {" "}
             <IoIosArrowBack className="" />

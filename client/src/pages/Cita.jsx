@@ -127,7 +127,7 @@ export default function Cita() {
   const handleCancel = () => {
     // setActiveStep(0);
     // setCompleted({});
-    navigate("/spa");
+    window.location.href = '/spa';
   };
 
   const handleStep = (step) => () => {
@@ -144,6 +144,9 @@ export default function Cita() {
 
   const handleClick = () => {
     handleComplete();
+    if (isLastStep() || activeStep === 6) {
+      window.location.href = "/perfil/agenda";
+    }
     //     setTimeout(() => {
     //     iterateArray();
     // }, 1000);
@@ -218,7 +221,7 @@ export default function Cita() {
   const stepComponents = [
     <Servicios key={0} next={handleClick} />,
     <Paquetes key={1} next={handleClick} />,
-    <Calendario key={2} />,
+    <Calendario next={handleClick} key={2} />,
     <Agenda restart={restart} next={handleClick} key={3} />,
     <Pago next={handleClick} key={4} />,
     <FinalizacionPago next={handleClick} key={5} />,
@@ -317,7 +320,7 @@ export default function Cita() {
                   </button>
                   <button
                     hidden={activeStep === 5}
-                    onClick={activeStep === 6 ? restart : handleClick}
+                    onClick={activeStep === 6 ? restart : handleCancel}
                     className={
                       "px-4 py-2 mx-auto text-xl text-white rounded-full bg-[#036C65] hover:bg-opacity-70"
                     }
@@ -326,7 +329,7 @@ export default function Cita() {
                   </button>
                   <button
                     hidden={
-                      activeStep === 3 || activeStep === 4 || activeStep === 5 || activeStep === 0 || activeStep === 1
+                      activeStep === 3 || activeStep === 4 || activeStep === 5 || activeStep === 0 || activeStep === 1 || activeStep === 2
                     }
                     // hidden={activeStep === 5 || activeStep === 4}
                     onClick={handleClick}

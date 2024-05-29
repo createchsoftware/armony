@@ -46,15 +46,14 @@ function Productos({ productos }) {
         const url = estaEnFavoritos ? '/api/admin/favoritos/delFavorito' : '/api/admin/favoritos/addfavorito';
 
         try {
-            const response = await fetch(url, {
+            setTimeout(()=>{
+         fetch(url, {
                 method: "POST",
                 body: JSON.stringify({ idCliente: uid, IdProducto: idProducto }),
                 headers: { "Content-Type": "application/json" },
             });
-
-            if (!response.ok) {
-                throw new Error(`Error en la respuesta de la red: ${response.statusText}`);
-            }
+        },[1000])
+            
             setFavorites(prev => ({
                 ...prev,
                 [idProducto]: !estaEnFavoritos
@@ -105,13 +104,13 @@ function Productos({ productos }) {
                     productos.map(producto => (
                         <li key={producto.id} className='border-4 bg-white grid content-between border-[#E2B3B7] p-6 py-2 rounded-xl'>
                             <div className='flex justify-end'>
-                                {/* <Box className="float-right" onClick={() => toggleFavorite(producto.pkIdPS)}>
+                                <Box className="float-right" onClick={() => toggleFavorite(producto.pkIdPS)}>
                      {favorites[producto.pkIdPS] ? 
                     <FavoriteIcon style={{ color: '#ff6d75' }} /> : 
                      <FavoriteBorderIcon  />
     }
-</Box> */}
-                                <Box
+</Box>
+                                {/* <Box
                                     className="absolute flex justify-end float-right -mr-3"
                                     sx={{
                                         '& > legend': { mt: 2 },
@@ -127,7 +126,7 @@ function Productos({ productos }) {
                                         emptyIcon={<FavoriteBorderIcon fontSize="inherit" />}
                                         onChange={() => toggleFavorite(producto.pkIdPS)}
                                     />
-                                </Box>
+                                </Box> */}
                             </div>
                             <img onClick={() => handleViewMore(producto)} className='w-2/3 m-auto mt-6 mb-4 rounded-lg hover:cursor-pointer hover:opacity-60 aspect-square'
                                 src={producto.img ? producto.img : 'https://i.imgur.com/CCBFmSi.png'}

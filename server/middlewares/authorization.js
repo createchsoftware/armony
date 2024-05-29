@@ -160,6 +160,65 @@ async function Patologias(solicitud,respuesta){
 }
 
 
+async function Rango(solicitud,respuesta){
+    if(solicitud.headers.cookie == undefined){
+        respuesta.send({logueado:false});
+    }
+    else{
+        let galletas = solicitud.headers.cookie.split('; ');
+
+        let galleta = galletas.find(galleta=>galleta.startsWith('Naruto_cookie='));
+
+        if(galleta){
+            galleta = galleta.slice(14);
+
+            let decodificada = await jsonwebtoken.verify(galleta, process.env.JWT_SECRET);
+
+            let consulta = 'call getRangoCliente(?)';
+            let [fields] = await solicitud.database.query(mysql.format(consulta,[decodificada.user]));
+
+            let consulta2 = 'call getPuntosCliente(?)';
+            let [fields2] = await solicitud.database.query(mysql.format(consulta2,[decodificada.user]));
+
+            let rango = 0;
+            let puntos = 0;
+
+            console.log(fields);
+            console.log(fields2);
+
+            
+
+            if(fields[0].length > 0){
+                let s = fields[0][0].rango;
+
+                if(s=='Platino'){
+                    rango = 1;
+                }
+                if(s=='Golden'){
+                    rango = 2;
+                }
+                if(s=='Black'){
+                    rango = 3;
+                }
+            }
+
+            if(fields2[0].length > 0){
+                puntos = fields2[0][0].puntos;
+            }
+            
+
+            console.log(rango);
+            console.log(puntos);
+            
+            respuesta.send({informacion:[rango,puntos]});
+        }
+        else{
+            respuesta.send({logueado:false});
+        }
+    }
+}
+
+
 
 
 
@@ -174,5 +233,6 @@ export const  methods = {
     verificar_cookie,
     logeado,
     no_logeado,
-    Patologias
+    Patologias,
+    Rango
 }

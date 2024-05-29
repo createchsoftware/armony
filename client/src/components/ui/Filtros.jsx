@@ -60,6 +60,48 @@ export default function Filtros() {
     const [rating, setRating] = useState(0);
     const [precio, setPrecio] = useState(null);
 
+
+    // async function getId() {
+    //     let respuestaJson = null;
+    //     try {
+    //         const respuesta = await fetch("/api/logueado", {
+    //             method: "GET",
+    //             headers: {
+    //                 "Content-Type": "application/json",
+    //             },
+    //         });
+    //         respuestaJson = await respuesta.json();
+    //         setId(respuestaJson.clave);
+    //     } catch (error) {
+    //         console.log("Error");
+    //     }
+    // }
+
+
+    // useEffect(() => {
+    //     getId();
+    // }, []);
+
+    // useEffect(() => {
+    //     if (id != undefined) {
+    //         setTimeout(() => {
+    //             fetch(`/api/admin/productos/ProductFavoritosbyId/${id}`)
+    //                 .then((response) => {
+    //                     if (!response.ok) {
+    //                         throw new Error("Error al obtener los servicios de Estética");
+    //                     }
+    //                     return response.json();
+    //                 })
+    //                 .then((data) => {
+    //                     setFavoritos(data);
+    //                 })
+    //                 .catch((error) => {
+    //                     // setErrorEstetica(error.message);
+    //                 });
+    //         }, 3000);
+    //     }
+    // }, [id]);
+
     // Función para manejar cambios en las categorías
     const handleCategoryChange = (label, isChecked) => {
         setCategories(prev => {
@@ -117,6 +159,7 @@ export default function Filtros() {
 
     //useEffect para obtener los productos
     useEffect(() => {
+        setTimeout(() => {
         fetch("/api/admin/productos/getProducts")
             .then(response => response.json())
             .then(data => {
@@ -125,6 +168,7 @@ export default function Filtros() {
             .catch(error => {
                 console.log('error', error);
             });
+        },[1000])
     }, []);
 
     // Función para manejar la búsqueda

@@ -1,10 +1,32 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import LayoutSecundario from "../../../layouts/LayoutSecundario.jsx";
 import ValidarIdentidad from "../../../components/ui/perfil/ValidarIdentidad.jsx";
 import Contrasena from "../../../components/ui/perfil/CambiarContrasena.jsx";
 import Confirmacion from "../../../components/ui/perfil/ConfirmacionContrasena.jsx";
 
 const CambiarContrasena = () => {
+  async function checkLogin() {
+    let respuestaJson = null;
+    try {
+      const respuesta = await fetch("/api/logueado", {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+
+      respuestaJson = await respuesta.json();
+
+      if (respuestaJson.logueado != true) {
+        window.location.href = "/spa";
+      }
+    } catch (error) {
+      window.location.href = "/spa";
+    }
+  }
+
+  useEffect(() => checkLogin(), []);
+
   const [validar, setValidar] = useState(true);
   const [pass, setPass] = useState(false);
   const [conf, setConf] = useState(false);
