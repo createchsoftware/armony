@@ -16,7 +16,8 @@ import {
   productosDescuento,
   serviciosDescuento,
   serviciosRelacionados,
-  ventaProdOnline
+  ventaProdOnline,
+  favoritosGeneral,
 } from "../db/query/queryProductos.js";
 import { horasWithoutSeconds } from "../db/query/queryCitas.js";
 import { errorUpdate } from "../auth/validaciones.js";
@@ -308,26 +309,29 @@ routerProductos.get("/servicios/descuento/:id", async (req, res) => {
   }
 });
 
-
-
 routerProductos.post("/createVentaProduct", async (req, res) => {
   try {
     const resultado = await ventaProdOnline(conexion, {
-      idCliente:req.body.idCliente,
-      idProd:req.body.idProd,
-      cantidad:req.body.cantidad,
-      tarjeta:req.body.tarjeta,
-      monedero:req.body.monedero,
-      subtotal:req.body.subtotal,
-      total:req.body.total,
-      impuesto:req.body.impuesto,
+      idCliente: req.body.idCliente,
+      idProd: req.body.idProd,
+      cantidad: req.body.cantidad,
+      tarjeta: req.body.tarjeta,
+      monedero: req.body.monedero,
+      subtotal: req.body.subtotal,
+      total: req.body.total,
+      impuesto: req.body.impuesto,
     }); // Parametros enviados por body
     res.status(201).json({
       message: "se realizo la compra con exito",
       data: resultado,
-    }); 
+    });
   } catch (err) {
     console.error(messageError, err);
     res.status(500).send(messageError, err);
   }
+});
+
+routerProductos.get("/favoritos", async (req, res) => {
+  const resultado = await favoritosGeneral(conexion);
+  res.status(202).json(resultado);
 });
