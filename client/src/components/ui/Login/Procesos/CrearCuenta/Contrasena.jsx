@@ -2,7 +2,7 @@ import user1 from "../../../../../../public/pictures/userGuest.png";
 import Pasos from "../../../PasosDeProcesos";
 import InputContrasenaLogin from "../../../InputContrasenaLogin.jsx";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faAngleLeft } from "@fortawesome/free-solid-svg-icons";
+import { faAngleLeft , faTriangleExclamation , faPersonDigging} from "@fortawesome/free-solid-svg-icons";
 import { Helmet, HelmetProvider } from "react-helmet-async";
 import '../../../../../txt.css'
 
@@ -140,6 +140,9 @@ const Contrasena = () => {
               </button>
             </div>
           </div>
+        </div>
+        <div className="soon" id='oculto'>
+
         </div>
         <div id="toastBox"/>
       </div>

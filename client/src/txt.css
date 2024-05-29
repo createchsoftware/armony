@@ -15,6 +15,23 @@
 }
 
 
+#process-img {
+    width: 100px;
+    height: 100px;
+    animation: rotateAnimation 5s linear infinite; /* 5s para un ciclo completo, linear para un giro suave, infinite para que continúe girando indefinidamente */
+}
+
+
+@keyframes rotateAnimation{
+    0%{
+        transform: rotate(0deg);
+    }
+    100%{
+        transform: rotate(1080deg);
+    }
+}
+
+
 .toast::after{
     content: '';
     position: absolute;

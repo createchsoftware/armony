@@ -226,7 +226,7 @@ function Rango() {
                 </div>
                 <div className="flex items-center justify-between text-gray-500">
                   <div className="px-10 text-center ">
-                    <p>Platino</p>
+                    <p>Oro</p>
                   </div>
                   <div>
                     <p>{puntos - 1000} puntos</p>
