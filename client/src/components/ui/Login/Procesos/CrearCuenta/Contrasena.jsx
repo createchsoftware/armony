@@ -2,7 +2,7 @@ import user1 from "../../../../../../public/pictures/userGuest.png";
 import Pasos from "../../../PasosDeProcesos";
 import InputContrasenaLogin from "../../../InputContrasenaLogin.jsx";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faAngleLeft } from "@fortawesome/free-solid-svg-icons";
+import { faAngleLeft , faTriangleExclamation , faPersonDigging} from "@fortawesome/free-solid-svg-icons";
 import { Helmet, HelmetProvider } from "react-helmet-async";
 import '../../../../../txt.css'
 
@@ -74,7 +74,7 @@ const Contrasena = () => {
                       id: "contraseña",
                       texto: "Ingresa tu Contraseña",
                       class:
-                        "bg-slate-200 md:text-sm lg:text-base rounded-full w-[17rem] lg:w-[21rem] mb-3 mt-2 py-2 focus:outline-none focus:ring-1 focus:ring-rose-400 focus:border-transparent px-6",
+                        "contrasena-texto bg-slate-200 md:text-sm lg:text-base rounded-full w-[17rem] lg:w-[21rem] mb-3 mt-2 py-2 focus:outline-none focus:ring-1 focus:ring-rose-400 focus:border-transparent px-6",
                       classEye:
                         "absolute top-[1rem] left-[15rem] lg:left-[19rem]",
                     }}
@@ -94,7 +94,7 @@ const Contrasena = () => {
                       id: "nueva-contraseña",
                       texto: "Ingresa tu Contraseña",
                       class:
-                        "bg-slate-200 md:text-sm lg:text-base rounded-full w-[17rem] lg:w-[21rem] mb-3 mt-2 py-2 focus:outline-none focus:ring-1 focus:ring-rose-400 focus:border-transparent px-6",
+                        "contrasena-texto bg-slate-200 md:text-sm lg:text-base rounded-full w-[17rem] lg:w-[21rem] mb-3 mt-2 py-2 focus:outline-none focus:ring-1 focus:ring-rose-400 focus:border-transparent px-6",
                       classEye:
                         "absolute top-[1rem] left-[15rem] lg:left-[19rem]",
                     }}
@@ -140,6 +140,9 @@ const Contrasena = () => {
               </button>
             </div>
           </div>
+        </div>
+        <div className="soon" id='oculto'>
+
         </div>
         <div id="toastBox"/>
       </div>

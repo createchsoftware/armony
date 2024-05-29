@@ -1,8 +1,31 @@
+import { useEffect } from "react";
 import LayoutPrincipal from "../../layouts/LayoutPrincipal";
 import { IoIosArrowBack } from "react-icons/io";
 import { MdNavigateNext } from "react-icons/md";
 
 function Seguridad() {
+  async function checkLogin() {
+    let respuestaJson = null;
+    try {
+      const respuesta = await fetch("/api/logueado", {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+
+      respuestaJson = await respuesta.json();
+
+      if (respuestaJson.logueado != true) {
+        window.location.href = "/spa";
+      }
+    } catch (error) {
+      window.location.href = "/spa";
+    }
+  }
+
+  useEffect(() => checkLogin(), []);
+
   return (
     <LayoutPrincipal>
       <main className="grid gap-6 my-24">

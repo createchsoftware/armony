@@ -17,7 +17,7 @@ const StyledRating = styled(Rating)({
   },
 });
 
-const PopupServicio = ({ cerrar, check, datos }) => {
+const PopupServicio = ({ cerrar, check, datos, update }) => {
   let sim = [
     {
       nombre: "nombre 1",
@@ -31,11 +31,6 @@ const PopupServicio = ({ cerrar, check, datos }) => {
     },
     {
       nombre: "nombre 3",
-      descripcion: datos.descripcion,
-      img: datos.img,
-    },
-    {
-      nombre: "nombre 4",
       descripcion: datos.descripcion,
       img: datos.img,
     },
@@ -84,6 +79,10 @@ const PopupServicio = ({ cerrar, check, datos }) => {
   useEffect(() => {
     checkRes();
   }, []);
+
+  function changeData(update, similar) {
+    if (update) update(similar);
+  }
 
   const handleNext = () => {
     if (indexItem + renderItems < similares.length) {
@@ -240,7 +239,7 @@ const PopupServicio = ({ cerrar, check, datos }) => {
                       : similar.descripcion}
                   </p>
                   <button
-                    onClick={check}
+                    onClick={() => changeData(update, similar)}
                     className=" transition-all duration-300  m-auto hover:bg-[#036C65] hover:ring-2 hover:[#036C65] hover:ring-offset-1 group relative inline-flex h-10 md:h-8 lg:h-10 items-center justify-center overflow-hidden rounded-lg border-2 bg-[#EB5765] px-6 font-[abeatbykai] text-neutral-200"
                   >
                     <span>Ver </span>

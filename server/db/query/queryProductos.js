@@ -316,6 +316,18 @@ export async function serviciosDescuento(connection) {
   }
 }
 
+export async function favoritosGeneral(connection) {
+  try {
+    let query = "CALL getFavoritos()"; // Query de procedimiento almacenado
+    const [rows, fields] = await connection.query(query); // Ejecutamos el query y almacenamos los valores obtenidos
+    endConnection(); // Cerramos la conexion con la base de datos
+    return rows[0]; // Retornamos el arreglo con los valores obtenidos
+  } catch (err) {
+    // Capturamos errores de ejecucion de query
+    console.error(messageError, err); // Mostramos errores por consola
+  }
+}
+
 export async function detalleVenta(connection, data) {
   try {
     const call='CALL addDetalleVenta(?,?,?,?'

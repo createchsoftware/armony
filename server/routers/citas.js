@@ -3,9 +3,9 @@ import { conexion } from "../db/connection.js";
 import {
   horasDisponibles,
   updateCita,
+  updateCitaStatus,
   ventaCita,
   getCitasByEstado,
-  updateCitaStatus,
   horasWithoutSeconds,
   citaOnline,
 } from "../db/query/queryCitas.js";
@@ -202,7 +202,7 @@ routerCitas.patch("/modify", async (req, res) => {
   }
 });
 
-//Cancelacion de citas
+//Update de status de citas
 routerCitas.patch("/status/:idCita", async (req, res) => {
   try {
     const statusCita = {

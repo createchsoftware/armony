@@ -30,7 +30,24 @@ function Navbar() {
         location.pathname.startsWith('/suscripcion')
     const mainRutas = location.pathname.startsWith('/perfil')
 
-
+    async function callRango() {
+        const respuesta3 = await fetch("/api/perfil/rangos", {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        });
+    
+        if (!respuesta3.ok) {
+          return;
+        }
+    
+        const respuesta3Json = await respuesta3.json();
+    
+        if (respuesta3Json.informacion) {
+          setRango(respuesta3Json.informacion[0]);
+        }
+    }
 
     //auto update cart items in navbar (items)
     useEffect(() => {
@@ -80,6 +97,7 @@ function Navbar() {
     }
 
     useEffect(() => {
+        callRango();
         recibido();
     }, []);
 
@@ -219,14 +237,14 @@ function Navbar() {
                                             ) : (
                                                 rango === 2 ? (
                                                     <img
-                                                        src="../../../pictures/rangoPlatino.png"
+                                                        src="../../../pictures/nuevoPlatino.png"
                                                         alt=""
                                                         className="w-4 h-auto m-auto ml-2"
                                                     />
                                                 ) : (
                                                     rango === 3 ? (
                                                         <img
-                                                            src="../../../pictures/rangoVIP.png"
+                                                            src="../../../pictures/nuevoVIP.png"
                                                             alt=""
                                                             className="w-4 h-auto m-auto ml-2"
                                                         />

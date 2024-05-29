@@ -17,6 +17,7 @@ import {
   serviciosDescuento,
   serviciosRelacionados,
   ventaProdOnline,
+  favoritosGeneral,
 } from "../db/query/queryProductos.js";
 import { horasWithoutSeconds } from "../db/query/queryCitas.js";
 import { errorUpdate } from "../auth/validaciones.js";
@@ -354,4 +355,9 @@ routerProductos.post("/detallesventa/:id", async (req, res) => {
         .status(200)
         .json({ message: "Cita creada correctamente", data: resultado })
     : res.status(400).json({ message: "Ocurrio un error: ", resultado });
+});
+
+routerProductos.get("/favoritos", async (req, res) => {
+  const resultado = await favoritosGeneral(conexion);
+  res.status(202).json(resultado);
 });
