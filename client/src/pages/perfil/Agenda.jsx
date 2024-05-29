@@ -587,25 +587,24 @@ function Agenda() {
   return (
     <LayoutPrincipal>
       <main className="grid gap-6 p-8 mt-24 mb-12 m-auto w-[90%]">
-        <section className="rounded-2xl p-9 w-1/2 m-auto shadow-[0_3px_10px_rgb(0,0,0,0.2)]">
+        <section className="rounded-2xl p-4 w-1/2 m-auto shadow-[0_3px_10px_rgb(0,0,0,0.2)]">
           <a
-            className="flex items-baseline content-center text-sm gap-x-4"
+            className="flex w-max items-center ml-6 text-black relative cursor-pointer before:bg-black before:absolute before:-bottom-1 before:block before:h-[1px] before:w-full before:origin-bottom-right before:scale-x-0 before:transition before:duration-300 before:ease-in-out hover:before:origin-bottom-left hover:before:scale-x-100 hover:font-bold"
             href="/perfil"
           >
             {" "}
             <IoIosArrowBack className="" />
             Volver
           </a>
-          <img
-            className="w-32 m-auto my-12 rounded-full -mt-28 aspect-square"
-            src="../../pictures/agendaFondo.png"
-            alt=""
-          />
-          <img
-            className="w-16 m-auto my-12 -mt-36 aspect-square"
-            src="../../pictures/agendaDentro.png"
-            alt=""
-          />
+          <div className="w-32 m-auto my-6 -mt-24 bg-white rounded-full shadow-lg aspect-square place-content-center">
+            <div className=" w-[85%] bg-[#E2B3B7] rounded-full aspect-square m-auto place-content-center">
+              <img
+                className="m-auto w-[65%]"
+                src="../../../pictures/agendaIcono.png"
+                alt=""
+              />
+            </div>
+          </div>
           <div className="m-auto text-center ">
             <h1 className="text-[#036C65] font-semibold text-2xl mb-2">
               Agenda
