@@ -853,14 +853,14 @@ export default function ServicioEstetica() {
                           .slice(0, 8)
                           .map((servicio) => (
                             <Servicio
-                              idP={servicio.pkIdPS}
+                              pkIdPS={servicio.pkIdPS}
                               key={servicio.nombre}
                               nombre={servicio.nombre}
                               descripcion={servicio.descripcion}
                               precio={servicio.precio}
                               imagen={servicio.img}
-                              rating={servicio.valoracion}
-                              isFavorite={servicio.favorito}
+                              valoracion={servicio.valoracion}
+                              favorito={servicio.favorito}
                               log={log}
                             />
                           ))
@@ -878,14 +878,14 @@ export default function ServicioEstetica() {
                           .slice(0, 8)
                           .map((servicio) => (
                             <Servicio
-                              idP={servicio.pkIdPS}
+                              pkIdPS={servicio.pkIdPS}
                               key={servicio.nombre}
                               nombre={servicio.nombre}
                               descripcion={servicio.descripcion}
                               precio={servicio.precio}
                               imagen={servicio.img}
-                              rating={servicio.valoracion}
-                              isFavorite={servicio.favorito}
+                              valoracion={servicio.valoracion}
+                              favorito={servicio.favorito}
                               log={log}
                             />
                           ))
