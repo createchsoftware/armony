@@ -1,8 +1,8 @@
 import { useState, useEffect } from "react";
 import LayoutPrincipal from "../../layouts/LayoutPrincipal";
 import { IoIosArrowBack } from "react-icons/io";
-import rangoPlatino from "../../../public/pictures/rangoPlatino.png";
-import rangoVIP from "../../../public/pictures/rangoVIP.png";
+import rangoPlatino from "../../../public/pictures/nuevoPlatino.png";
+import rangoVIP from "../../../public/pictures/nuevoVIP.png";
 import rangoOro from "../../../public/pictures/rangoOro.png";
 
 function Rango() {
@@ -94,6 +94,9 @@ function Rango() {
       case 2:
         setPorcentaje(parseInt(100 * ((puntos - 3000) / 5000)));
         break;
+      case 3:
+        setPorcentaje(10);
+        break;
     }
   }, []);
 
@@ -123,19 +126,19 @@ function Rango() {
               <h1 className="text-[#EB5765] font-semibold text-xl">{nombre}</h1>
               {rango === 1 ? (
                 <img
-                  src="../../../pictures/rangoOro.png"
+                  src={rangoOro}
                   alt=""
                   className="w-8 h-auto"
                 />
               ) : rango === 2 ? (
                 <img
-                  src="../../../pictures/rangoPlatino.png"
+                  src={rangoPlatino}
                   alt=""
                   className="w-8 h-auto"
                 />
               ) : rango === 3 ? (
                 <img
-                  src="../../../pictures/rangoVIP.png"
+                  src={rangoVIP}
                   alt=""
                   className="w-8 h-auto"
                 />
@@ -183,15 +186,32 @@ function Rango() {
 
         <section className="w-[60%] m-auto">
           <div className="rounded-2xl  m-auto grid gap-4 p-12 shadow-[0_3px_10px_rgb(0,0,0,0.2)]">
-            <h2 className="text-[#036C65] text-lg">
-              Sube tu rango al siguiente nivel
-            </h2>
-            <p className="text-sm text-justify">
-              Cada vez que compras productos o servicios en armony, acumulas
-              puntos para subir de nivel tu cuenta, y por lo tanto, obtener
-              mejores beneficios. Aquí tienes una pequeña muestra de tu progreso
-              en armony.
-            </p>
+            {rango === 3 ? (
+              <>
+                <h2 className="text-[#036C65] text-lg">
+                  Haz alcanzado el nivel máximo.
+                </h2>
+                <p className="text-sm text-justify">
+                  ¡Continúa comprando para permanecer en el rango VIP!
+                  Cada vez que compras productos o servicios en armony, acumulas
+                  puntos para subir de nivel tu cuenta, y por lo tanto, obtener
+                  mejores beneficios. Aquí tienes una pequeña muestra de tu progreso
+                  en armony.
+                </p>
+              </>
+            ):(
+              <>
+                <h2 className="text-[#036C65] text-lg">
+                  Sube tu rango al siguiente nivel
+                </h2>
+                <p className="text-sm text-justify">
+                  Cada vez que compras productos o servicios en armony, acumulas
+                  puntos para subir de nivel tu cuenta, y por lo tanto, obtener
+                  mejores beneficios. Aquí tienes una pequeña muestra de tu progreso
+                  en armony.
+                </p>
+              </>
+            )}
             {rango === 1 ? (
               <>
                 <div className="flex items-center justify-between gap-4 px-3">
@@ -245,7 +265,7 @@ function Rango() {
             ) : rango === 3 ? (
               <>
                 <div className="flex items-center justify-between gap-4 px-3">
-                  <img className="w-24" src={rangoPlatino} alt="" />
+                  <img className="w-24 opacity-15" src={rangoPlatino} alt="" />
                   <div className="w-full bg-gray-200 rounded-full h-2.5 mb-4 dark:bg-gray-700">
                     <div
                       className="bg-[#036C65] h-1.5 rounded-full dark:bg-gray-300"
