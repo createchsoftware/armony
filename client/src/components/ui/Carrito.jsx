@@ -30,16 +30,18 @@ export const CarritoProvider = ({ children }) => {
             setCartItems([...cartItems, item]);
             if (Uid) {
                 try {
-            fetch('/api/admin/carrito/addCarrito',{
-                method: "POST",
-                body: JSON.stringify({
-                    idCliente: Uid, 
-                    IdProducto: item.id 
+                    fetch('/api/admin/carrito/addCarrito', {
+                        method: "POST",
+                        body: JSON.stringify({
+                            idCliente: Uid,
+                            IdProducto: item.id
 
-         })})
-        }catch(error){
-            console.error("error:",error)
-        }}
+                        })
+                    })
+                } catch (error) {
+                    console.error("error:", error)
+                }
+            }
         }
     };
 

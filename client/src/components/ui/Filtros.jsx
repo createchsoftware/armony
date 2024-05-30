@@ -6,6 +6,7 @@ import ContenedorProductos from './ContenedorProductos'
 import { Slider, Box } from '@mui/material';
 //import { products } from '../../data/productos.json'
 import Rating from '@mui/material/Rating';
+import Soon from './Proximamente';
 
 function classNames(...clases) {
     return clases.filter(Boolean).join(' ')
@@ -61,6 +62,7 @@ export default function Filtros() {
     const [rating, setRating] = useState(0);
     const [precio, setPrecio] = useState(null);
     const [id, setId] = useState(null);
+    const [soon, setSoon] = useState(false);
 
     async function getId() {
         let respuestaJson = null;
@@ -88,17 +90,32 @@ export default function Filtros() {
 
 
     useEffect(() => {
-        if (id != undefined) {
-            fetch(`/api/admin/productos/FavoritosbyId/${id}`)
-                .then(response => response.json())
-                .then(data => {
+        setTimeout(() => {
+            console.log(id);
+            fetch(`/api/admin/favoritos/ProductFavoritosbyId/${id}`)
+                .then((response) => {
+                    if (!response.ok) {
+                        throw new Error("Error al obtener productos favoritos");
+                    }
+                    return response.json();
+                })
+                .then((data) => {
                     setProductosFavorites(data);
                     console.log("favoritos" + data);
                 })
-                .catch(error => {
-                    console.log('error', error);
+                .catch((error) => {
+                    //setErrorSpa(error.message);
                 });
-        }
+            // fetch(`/api/admin/productos/FavoritosbyId/${id}`)
+            //     .then(response => response.json())
+            //     .then(data => {
+            //         setProductosFavorites(data);
+            //         console.log("favoritos" + data);
+            //     })
+            //     .catch(error => {
+            //         console.log('error', error);
+            //     });
+        }, [1000])
     }, [id]);
 
     // Función para manejar cambios en las categorías
@@ -669,6 +686,13 @@ export default function Filtros() {
                             </div>
 
                         </section>
+                        {soon && (
+                            <div className='soon-fondo'>
+                                <div className='text-black soon-fx' onClick={toggleSoon}>
+                                    <Soon />
+                                </div>
+                            </div>
+                        )}
                     </main>
                 </div>
             </div>

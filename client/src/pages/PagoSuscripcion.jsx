@@ -205,22 +205,22 @@ export default function Cita({ producto }) {
                   >
                     Cancelar
                   </button>
-                  { isLastStep() ? (
+                  {isLastStep() ? (
                     <a
-                        href="/suscripcion"
-                        className="px-4 py-2 mx-auto text-xl text-white rounded-full bg-rose-400 hover:bg-red-200"
+                      href="/suscripcion"
+                      className="px-4 py-2 mx-auto text-xl text-white rounded-full bg-rose-400 hover:bg-red-200"
                     >
-                        Finalizar
+                      Finalizar
                     </a>
-                  ):(
+                  ) : (
                     <button
-                        onClick={handleClick}
-                        disabled={activeStep === steps.length - 1}
-                        className="px-4 py-2 mx-auto text-xl text-white rounded-full bg-rose-400 hover:bg-red-200"
+                      onClick={handleClick}
+                      disabled={activeStep === steps.length - 1}
+                      className="px-4 py-2 mx-auto text-xl text-white rounded-full bg-rose-400 hover:bg-red-200"
                     >
-                        Siguiente
+                      Siguiente
                     </button>
-                  ) }
+                  )}
                 </div>
               </React.Fragment>
             )}

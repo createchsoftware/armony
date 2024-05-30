@@ -1,31 +1,16 @@
 import Paquete from '../../components/ui/Paquete';
 import ContenedorPaquetes from '../../components/ui/ContenedorPaquetes';
 import { useState } from 'react';
-
-const paquetes = [
-    {
-        id: 1,
-        nombre: "Paquete 1",
-        descripcion: "Facial Hidratante",
-        precios: [500, 2000, 4000]
-    },
-    {
-        id: 2,
-        nombre: "Paquete 2",
-        descripcion: "Facial Antiarrugas",
-        precios: [600, 2500, 5000]
-    },
-    {
-        id: 3,
-        nombre: "Paquete 3",
-        descripcion: "Facial Antimanchas",
-        precios: [700, 3000, 6000]
-    }
-];
-
+import Soon from '../../components/ui/Proximamente';
 
 function Paquetes({ next }) {
     const [selectedPriceIndex, setSelectedPriceIndex] = useState(null);
+    const [soon, setSoon] = useState(false);
+
+
+    const toggleSoon = () => {
+        setSoon(!soon);
+    };
 
     const getPriceClass = (priceIndex) => {
         let baseClass = "p-2 border-2 border-black hover:bg-purple-600 hover:text-white rounded-full cursor-pointer text-center shadow-[0_0px_5px_rgb(0,0,0,0.2)] shadow-purple-600";
@@ -35,16 +20,34 @@ function Paquetes({ next }) {
         return `${baseClass} `; // Opacidad de 50 para las no seleccionadas
     };
 
-    const handleClickPrice = (index) => {
-        setSelectedPriceIndex(index);
-        next();
-    };
 
     const servicio = localStorage.getItem("nombre");
     const descripcion = localStorage.getItem("descripcion");
     const imagen = localStorage.getItem("imagen");
     const precio = localStorage.getItem("precio");
 
+    const handleClickPrice = (index) => {
+        if (index === 1) {
+            setSelectedPriceIndex(index);
+            next();
+            localStorage.setItem("precio", precio);
+            localStorage.setItem("sesiones", 1);
+        }
+        if (index === 2) {
+            toggleSoon
+            // setSelectedPriceIndex(index);
+            // next();
+            // localStorage.setItem("precio", 2000);
+            // localStorage.setItem("sesiones", 5);
+        }
+        if (index === 3) {
+            toggleSoon
+            // setSelectedPriceIndex(index);
+            // next();
+            // localStorage.setItem("precio", 4000);
+            // localStorage.setItem("sesiones", 10);
+        }
+    };
     return (
         <>
             <h1 className='flex justify-center justify-self-center text-2xl px-8 w-1/3 m-auto border-b-2 border-b-[#ec5766] font-bold'>
@@ -69,23 +72,30 @@ function Paquetes({ next }) {
                                             {'$ ' + precio}
                                         </div>
                                     </div>
-                                    <div className='grid gap-6 '>
+                                    <div className='grid gap-6 opacity-50'>
                                         <div>5 Sesiones</div>
-                                        <div className={getPriceClass(2)} onClick={() => handleClickPrice(2)}>
+                                        <button disabled className={getPriceClass(2) + "hover:cursor-not-allowed"} onClick={() => handleClickPrice(2)}>
                                             {'$ ' + (precio * 5)}
-                                        </div>
+                                        </button>
                                     </div>
-                                    <div className='grid gap-6 '>
+                                    <div className='grid gap-6 opacity-50 '>
                                         <div>10 Sesiones</div>
-                                        <div className={getPriceClass(3)} onClick={() => handleClickPrice(3)}>
+                                        <button disabled className={getPriceClass(3) + "hover:cursor-not-allowed"} onClick={() => handleClickPrice(3)}>
                                             {'$ ' + (precio * 10)}
-                                        </div>
+                                        </button>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div >
+                {soon && (
+                    <div className='soon-fondo'>
+                        <div className='text-black soon-fx' onClick={toggleSoon}>
+                            <Soon />
+                        </div>
+                    </div>
+                )}
             </div >
         </>
     );
