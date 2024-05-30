@@ -21,6 +21,7 @@ const StyledRating = styled(Rating)({
 });
 
 function Servicio({
+  idUser,
   pkIdPS,
   nombre,
   descripcion,
@@ -42,6 +43,7 @@ function Servicio({
   const [login, setLogin] = useState(false);
   const [serv, setServ] = useState(false);
   const [pData, setPData] = useState(data);
+  const [fav, setFav] = useState(favorito);
   const navigate = useNavigate();
 
   const toggleLogin = () => {
@@ -62,6 +64,32 @@ function Servicio({
     setPData(data);
     setServ(!serv);
   };
+  async function callFav() {
+    if (idUser != 0) {
+      try {
+        const respuesta = await fetch("/api/admin/productos/setFavorito", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            id: idUser,
+            idPS: pkIdPS,
+            estado: fav,
+          }),
+        });
+
+        respuestaJson = await respuesta.json();
+        if (respuestaJson.res == true) {
+          await setFav(!fav);
+        } else {
+          await setFav(fav);
+        }
+      } catch (error) {
+        console.log(error, "error");
+      }
+    }
+  }
   return (
     <>
       <div className="grid gap-4 m-4 text-center md:m-8">
@@ -86,8 +114,9 @@ function Servicio({
               <div className="object-bottom">
                 <div className="grid place-content-end">
                   <StyledRating
+                    onClick={() => callFav()}
                     name="customized-color"
-                    defaultValue={favorito}
+                    defaultValue={fav}
                     max={1}
                     getLabelText={(value) =>
                       `${value} Heart${value !== 1 ? "s" : ""}`

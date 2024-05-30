@@ -328,35 +328,51 @@ export async function favoritosGeneral(connection) {
   }
 }
 
-export async function detalleVenta(connection, data) {
+export async function setFavorito(connection, data) {
   try {
-    const call="CALL addDetalleVenta( ?, ?, ?, ?)"
-    const [rows, fields] = await connection.query(call,[ 
-      data.idProducto,
-        data.idVenta,
-       data.idPromo,
-       data.cantidad]); 
+    let query = "CALL setProdServFav(?, ?, ?)"; // Query de procedimiento almacenado
+    const [rows, fields] = await connection.query(query, [
+      data.idCliente,
+      data.idPS,
+      data.estado,
+    ]); // Ejecutamos el query y almacenamos los valores obtenidos
+    endConnection(); // Cerramos la conexion con la base de datos
+    return rows[0]; // Retornamos el arreglo con los valores obtenidos
   } catch (err) {
     // Capturamos errores de ejecucion de query
     console.error(messageError, err); // Mostramos errores por consola
   }
 }
 
+export async function detalleVenta(connection, data) {
+  try {
+    const call = "CALL addDetalleVenta( ?, ?, ?, ?)";
+    const [rows, fields] = await connection.query(call, [
+      data.idProducto,
+      data.idVenta,
+      data.idPromo,
+      data.cantidad,
+    ]);
+  } catch (err) {
+    // Capturamos errores de ejecucion de query
+    console.error(messageError, err); // Mostramos errores por consola
+  }
+}
 
 export async function processVenta(connection, data) {
   try {
     console.log("Venta realizada correctamente");
     const getVenta = await searchVentaProducto(connection, {
-      idCliente: data.idCliente
+      idCliente: data.idCliente,
     }); // Buscamos el id de la venta recien hecha y lo almacenamos
     console.log(`Se encontro la venta con id: ${getVenta[0].pkIdVenta}`);
     // Verificamos que si encontrara la venta
     if (getVenta[0].pkIdVenta !== 0 && getVenta[0].pkIdVenta !== null) {
       const resultado = await detalleVenta(connection, {
-        idProducto:data.idProducto,
+        idProducto: data.idProducto,
         idVenta: getVenta[0].pkIdVenta,
-        idPromo:data.idPromo,
-        cantidad:data.cantidad
+        idPromo: data.idPromo,
+        cantidad: data.cantidad,
       }); // Ejecutamos el alta de la cita
       console.log("detallesVenta creada correctamente");
       return true; // Retornamos true como referencia que si se realizo la cita

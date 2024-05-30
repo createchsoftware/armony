@@ -18,7 +18,8 @@ import {
   serviciosRelacionados,
   ventaProdOnline,
   favoritosGeneral,
-  processVenta
+  processVenta,
+  setFavorito,
 } from "../db/query/queryProductos.js";
 import { horasWithoutSeconds } from "../db/query/queryCitas.js";
 import { errorUpdate } from "../auth/validaciones.js";
@@ -341,14 +342,13 @@ routerProductos.post("/createVentaProduct", async (req, res) => {
   }
 });
 
-
 routerProductos.post("/detallesventa", async (req, res) => {
   // Datos de prueba de cita
   const datosCita = {
     idCliente: req.body.id,
-    idProducto:req.body.idProducto,
-    idPromo:req.body.idPromo,
-    cantidad:req.body.cantidad
+    idProducto: req.body.idProducto,
+    idPromo: req.body.idPromo,
+    cantidad: req.body.cantidad,
   };
   const resultado = await processVenta(conexion, datosCita);
   resultado === true
@@ -360,5 +360,15 @@ routerProductos.post("/detallesventa", async (req, res) => {
 
 routerProductos.get("/favoritos", async (req, res) => {
   const resultado = await favoritosGeneral(conexion);
+  res.status(202).json(resultado);
+});
+
+routerProductos.post("/setFavorito", async (req, res) => {
+  const data = {
+    idCliente: req.body.id,
+    idPS: req.body.idPS,
+    estado: req.body.estado,
+  };
+  const resultado = await setFavorito(conexion, data);
   res.status(202).json(resultado);
 });

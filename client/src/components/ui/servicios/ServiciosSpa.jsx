@@ -853,6 +853,7 @@ export default function ServicioEstetica() {
                           .slice(0, 8)
                           .map((servicio) => (
                             <Servicio
+                              idUser={id}
                               pkIdPS={servicio.pkIdPS}
                               key={servicio.nombre}
                               nombre={servicio.nombre}
@@ -878,6 +879,7 @@ export default function ServicioEstetica() {
                           .slice(0, 8)
                           .map((servicio) => (
                             <Servicio
+                              idUser={id}
                               pkIdPS={servicio.pkIdPS}
                               key={servicio.nombre}
                               nombre={servicio.nombre}
