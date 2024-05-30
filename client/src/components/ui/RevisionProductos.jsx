@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Carousel from 'react-multi-carousel';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrash } from '@fortawesome/free-solid-svg-icons';
@@ -49,10 +49,34 @@ function RevisionProductos({ restart, producto, next }) {
     const subTotal = cartItems.reduce((acc, item) => acc + item.precio * item.cantidad, 0).toFixed(2);
     const ivaTotal = (subTotal * (.08)).toFixed(2);
     const total = (parseFloat(subTotal) + parseFloat(ivaTotal)).toFixed(2);
+    const [puntosTotal, setPuntosTotal] = useState(0); //<<< PUNTOS TOTALES\
 
     const puntos = (parseFloat(total)) / 10;
     //En caso de ser Socio VVV
     //const puntos = (parseInt(totalIva))/5;
+
+    async function callRango() {
+        const respuesta3 = await fetch("/api/perfil/rangos", {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        });
+    
+        if (!respuesta3.ok) {
+          return;
+        }
+    
+        const respuesta3Json = await respuesta3.json();
+    
+        if (respuesta3Json.informacion) {
+          setPuntosTotal(respuesta3Json.informacion[1]);
+        }
+    }
+    
+    useEffect(() => {
+        callRango();
+    }, []);
 
     const cartList = cartItems.map(item => (
         <li key={item.id} className="flex p-4 mb-4 border-2 shadow-md rounded-xl border-gray">
@@ -136,6 +160,14 @@ function RevisionProductos({ restart, producto, next }) {
                                     <h1 className='font-bold'>$0.00</h1>
                                 </div>
                             </div>
+                            <div className='flex justify-between p-6 px-10 mb-4 border-2 shadow-md rounded-xl border-gray'>
+                                <h4 className='text-xl font-bold'>Total:</h4>
+                                <span className='font-bold text-[rgb(3,109,99)] text-xl'>${total}</span>
+                            </div>
+                            <div className='flex justify-between p-6 px-10 mb-4 border-2 shadow-md rounded-xl border-gray'>
+                                <h4 className='text-xl font-bold'>Puntos obtenidos:</h4>
+                                <span className='font-bold text-[rgb(3,109,99)] text-xl'>{parseInt(puntos)}</span>
+                            </div>
                             {/* Código de descuento */}
                             <div className='p-6 mb-4 border-2 shadow-md rounded-xl border-gray'>
                                 <div className='flex justify-center w-full'>
@@ -155,13 +187,20 @@ function RevisionProductos({ restart, producto, next }) {
                                     <p className='mt-4 text-xs text-center justify-self-center'>Los <p className='text-[#D47300] inline-flex'>Términos y Condiciones de los Cupones</p> de Armony aplican el uso de cupones.</p>
                                 </div>
                             </div>
-                            <div className='flex justify-between p-6 px-10 mb-4 border-2 shadow-md rounded-xl border-gray'>
-                                <h4 className='text-xl font-bold'>Puntos obtenidos:</h4>
-                                <span className='font-bold text-[rgb(3,109,99)] text-xl'>{parseInt(puntos)}</span>
-                            </div>
-                            <div className='flex justify-between p-6 px-10 mb-4 border-2 shadow-md rounded-xl border-gray'>
-                                <h4 className='text-xl font-bold'>Total:</h4>
-                                <span className='font-bold text-[rgb(3,109,99)] text-xl'>${total}</span>
+                            <div className='p-6 mb-4 border-2 shadow-md rounded-xl border-gray'>
+                                <div className='flex justify-center w-full'>
+                                    <h3 className='mb-4 text-xl font-bold text-center justify-self-center'>Puntos armony (puntos: {puntosTotal})</h3>
+                                </div>
+                                <div className='flex justify-between border-2 rounded-full shadow-md border-gray'>
+                                    <input
+                                        type="text"
+                                        value={descuento}
+                                        onChange={handleChange}
+                                        maxLength="15"
+                                        className=' w-[70%] px-2 py-2 text-center rounded-l-full'
+                                    />
+                                    <button type="submit" className=' w-[30%] rounded-r-full text-center text-white bg-[rgb(3,109,99)] duration-200 hover:bg-[rgb(69,181,156)] hover:font-bold'>Aplicar</button>
+                                </div>
                             </div>
                         </div>
                         <div className='flex justify-between gap-2 px-6 py-4'>

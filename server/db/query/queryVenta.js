@@ -99,3 +99,19 @@ export async function cancelVenta(connection, data) {
     console.error(messageError, err); // Mostramos errores por consola
   }
 }
+
+
+export async function searchVentaProducto(connection, data) {
+  try {
+    let busquedaVenta = "CALL searchVentaProducto(?)"; // Procedimiento almacenado de la base de datos
+    let query = mysql.format(busquedaVenta, [
+      data.idCliente
+    ]); // Parametros necesarios para el procedimiento
+    const [rows, fields] = await connection.query(query); // Ejecutamos query y almacenamos valores
+    endConnection(); // Cerramos conexion con la base de datos
+    return rows[0]; // retornamos valores
+  } catch (err) {
+    // Capturamos errores de ejecucion de query
+    console.error(messageError, err); // Mostramos errores por consola
+  }
+}

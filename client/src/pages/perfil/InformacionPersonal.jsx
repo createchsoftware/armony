@@ -256,14 +256,14 @@ function InformacionPersonal() {
                                         ) : (
                                             rango === 2 ? (
                                                 <>
-                                                    <h1 className="font-bold text-2xl text-center text-[#99B3F6] drop-shadow-[1px_1px_var(--tw-shadow-color)] shadow-[black] ">Rango platino</h1>
-                                                    <img className='m-auto md:w-1/3' src={`../../../pictures/rangoPlatino.png`} alt="" />
+                                                    <h1 className="font-bold text-2xl text-center text-gray-500 drop-shadow-[1px_1px_var(--tw-shadow-color)] shadow-[black] ">Rango platino</h1>
+                                                    <img className='m-auto md:w-1/3' src={`../../../pictures/nuevoPlatino.png`} alt="" />
                                                 </>
                                             ) : (
                                                 rango === 3 ? (
                                                     <>
-                                                        <h1 className="font-bold text-2xl text-center text-[#F584A7] drop-shadow-[1px_1px_var(--tw-shadow-color)] shadow-[black] ">Rango VIP</h1>
-                                                        <img className='m-auto md:w-1/3' src={`../../../pictures/rangoVIP.png`} alt="" />
+                                                        <h1 className="font-bold text-2xl text-center text-purple-950 drop-shadow-[1px_1px_var(--tw-shadow-color)] shadow-[black] ">Rango VIP</h1>
+                                                        <img className='m-auto md:w-1/3' src={`../../../pictures/nuevoVIP.png`} alt="" />
                                                     </>
                                                 ) : (
                                                     <>
@@ -274,7 +274,7 @@ function InformacionPersonal() {
                                             )
                                         )}
                                         {/* <img className='w-48 m-auto' src="../../../pictures/membresiaEjemplo.png" alt="" /> */}
-                                        <a href="/perfil/editar-perfil" className="m-auto px-12 py-2  font-medium text-white whitespace-no-wrap bg-[#EB5765] border border-gray-200 rounded-full shadow-sm hover:cursor-pointer hover:bg-[#eb7580] focus:outline-none focus:shadow-none">
+                                        <a href="/perfil/editar-perfil" className="m-auto px-12 py-2  font-medium text-white whitespace-no-wrap bg-[#EB5765] border border-gray-200 rounded-full duration-200 shadow-sm hover:cursor-pointer hover:bg-[#F584A7] focus:outline-none focus:shadow-none">
                                             Editar
                                         </a>
                                     </div>

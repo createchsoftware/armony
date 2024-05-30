@@ -759,13 +759,13 @@ export default function ServicioEstetica() {
                   ) : (
                     filteredProducts.map((servicio) => (
                       <Servicio
-                        idP={servicio.pkIdPS}
+                        pkIdPS={servicio.pkIdPS}
                         nombre={servicio.nombre}
                         descripcion={servicio.descripcion}
                         precio={servicio.precio}
                         imagen={servicio.img}
-                        rating={servicio.valoracion}
-                        isFavorite={servicio.favorito}
+                        valoracion={servicio.valoracion}
+                        favorito={servicio.favorito}
                         log={log}
                       />
                     ))

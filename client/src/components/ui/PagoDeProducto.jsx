@@ -8,8 +8,9 @@ import { jwtDecode } from "jwt-decode";
 function Pago({ producto, next }) {
     const [tarjeta, setTarjeta] = useState(false);
     const [pagoRealizado, setPagoRealizado] = useState(false);
-    const [Uid, setUid] = useState(null)
+    const [Uid, setUid] = useState(null);
     const [descuento, setDescuento] = useState('');
+    const [monedero, setMonedero] = useState(null);
 
     const [cartItems, setCartItems] = useState(() => {
         if (producto) {
@@ -33,7 +34,10 @@ function Pago({ producto, next }) {
     const cantidadProductos = cartItems.reduce((sum, producto) => sum + producto.cantidad, 0);
     const subTotal = cartItems.reduce((acc, item) => acc + item.precio * item.cantidad, 0).toFixed(2);
     const ivaTotal = (parseFloat(subTotal) * 0.08).toFixed(2);
+    localStorage.setItem('totalIva',ivaTotal)
     const total = (parseFloat(subTotal) + parseFloat(ivaTotal)).toFixed(2);
+    localStorage.setItem('total',total)
+
 
     useEffect(() => {
         const getidUser = () => {// aqui veificamos si hay una cookie con este nombre 
@@ -45,6 +49,16 @@ function Pago({ producto, next }) {
             }
         }
         getidUser()
+        fetch("/api/monedero")
+            .then((response) => response.json())
+            .then((data) => {
+                if (data.data) {
+                setMonedero(data.data[0].monedero);
+                }
+            })
+            .catch((error) => {
+                console.log(error);
+            });
     }, [])
 
 
@@ -72,21 +86,21 @@ function Pago({ producto, next }) {
                 .catch(error => {
                     console.log(error);
                 });
-        }, 500);
-    }, [])
+        }, 1000);
+    }, [Uid])
 
-    const cliente = {};
+
+
+    // const [cliente, setCliente] = useState({});
+
+
     useEffect(() => {
         if (Uid) {
             fetch(`/api/admin/cliente/read/${Uid}`)
                 .then(response => response.json())
                 .then(data => {
-                    cliente.idCliente = data.ID;
-                    cliente.nombre = data.Nombre;
-                    cliente.telefono = data.telefono;
-                    cliente.direccion = data.Dirección;
-                    cliente.email = data.email;
-                    cliente.monedero = data.monedero;
+
+                    localStorage.setItem('cliente', JSON.stringify(data[0]));
                 })
                 .catch(error => {
                     console.log(error);
@@ -96,6 +110,7 @@ function Pago({ producto, next }) {
 
     const toggleTarjeta = () => {
         setTarjeta(!tarjeta);
+        localStorage.setItem('tarjeta', tarjeta);
     }
     const togglePago = () => {
         setPagoRealizado(!pagoRealizado);
@@ -159,6 +174,17 @@ function Pago({ producto, next }) {
                                 <h1 className="text-xl">Nueva tarjeta de débito</h1>
                                 <button onClick={toggleTarjeta} className='bg-[#ec5766] text-xl text-white px-10 py-2 rounded-full duration-200 hover:bg-[#ffb5a7]'>Continuar</button>
                             </li>
+                            <li className=" mt-3">
+                                <h1 className="text-2xl">Otras formas de pago </h1>
+                                <div className="flex items-center justify-between gap-4 px-4 mb-4 border-2 shadow-md rounded-3xl border-gray">
+                                    <img src="../../../pictures/wallet.png" alt="" className="w-16" />
+                                    <div className="grid">
+                                        <h1 className="text-xl">Pago con monedero</h1>
+                                        <h1 className="text-l">Saldo disponible: ${monedero}</h1>
+                                    </div>
+                                    <button className='bg-[#ec5766] text-xl text-white px-10 py-2 rounded-full duration-200 hover:bg-[#ffb5a7]'>Continuar</button>
+                                </div>
+                            </li>
                         </ul>
                     </div>
                 </div>
@@ -217,7 +243,7 @@ function Pago({ producto, next }) {
             {pagoRealizado && (
                 <div className='soon-fondo'>
                     <div className='soon-fx'>
-                        <PagoRealizado cerrarPago={togglePago} cliente={cliente} total={total} next={next} />
+                        <PagoRealizado cerrarPago={togglePago} total={total} next={next} />
                     </div>
                 </div>
             )}

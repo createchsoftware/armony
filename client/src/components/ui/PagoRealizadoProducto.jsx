@@ -1,19 +1,25 @@
 import { useState, useEffect } from "react";
+import { jwtDecode } from "jwt-decode";
 
 function PagoRealizado({ cerrarPago, total, next }) {
 
   // const total = localStorage.getItem('total')
-  const [cargando, setCargando] = useState(true);
-  const [cliente, setCliente] = useState(null);
+  const [cargando, setCargando] = useState(true)
+  const [cliente, setCliente]= useState(null)
+
 
   const handleClick = () => {
     cerrarPago();
     next();
   };
+  
+
+  
 
   useEffect(() => {
     const fetchCliente = async () => {
       const storedCliente = localStorage.getItem('cliente');
+      console.log(storedCliente)
       if (storedCliente) {
         try {
           const parsedCliente = JSON.parse(storedCliente);
@@ -35,15 +41,12 @@ function PagoRealizado({ cerrarPago, total, next }) {
     const realizarVentaYCita = async () => {
       if (cliente) {
         try {
-          const responseVenta = await fetch("/api/admin/citas/venta", {
+          const responseVenta = await fetch("/api/admin/productos/createVentaProduct", {
             method: "POST",
             body: JSON.stringify({
               idCliente: cliente.ID,
-              nombre: null,
-              phone: null,
               tarjeta: localStorage.getItem('tarjeta'),
               monedero: 0,
-              estadoPago: "pagada",
               subTotal: Number(localStorage.getItem('totalIva')),
               total: Number(localStorage.getItem('total')),
               impuesto: 18.00,
@@ -60,29 +63,16 @@ function PagoRealizado({ cerrarPago, total, next }) {
           const dataVenta = await responseVenta.json();
           console.log('Respuesta de la venta:', dataVenta);
 
-          let citas = JSON.parse(localStorage.getItem("citas")) || [];
+          let carrito = JSON.parse(localStorage.getItem("cartItems")) || [];
 
-          for (let index = 0; index < citas.length; index++) {
-            const responseCita = await fetch(`/api/admin/citas/Online/${cliente.ID}`, {
+          for (let index = 0; index < carrito.length; index++) {
+            const responseCita = await fetch(`/api/admin/productos/detallesventa/${cliente.ID}`, {
               method: "POST",
               body: JSON.stringify({
-                idEmp: citas[index].IdEspecialista,
-                idServ: citas[index].idServicio,
-                idPilar: 2,
-                nombre: cliente.Nombre,
-                phone: cliente.telefono,
-                tarjeta: localStorage.getItem('tarjeta'),
-                fecha: citas[index].FechaServicio,
-                horaI: citas[index].tiempoServicio,
-                descr: "Prueba de cita fetch",
-                estado: "pendiente",
-                monedero: 0,
-                estadoPago: "pagada",
-                subTotal: Number(localStorage.getItem('totalIva')),
-                total: Number(localStorage.getItem('total')),
-                impuesto: 0.08,
-                promo: null
-              }),
+                idPromo:0,
+                idProducto: carrito[index].id,
+                cantidad:carrito[index].cantidad
+                            }),
               headers: {
                 "Content-Type": "application/json",
               },
@@ -92,8 +82,8 @@ function PagoRealizado({ cerrarPago, total, next }) {
               throw new Error('Error en la respuesta de la red');
             }
 
-            const dataCita = await responseCita.json();
-            console.log('Respuesta de la cita:', dataCita);
+            const dataVenta = await responseCita.json();
+            console.log('Respuesta de detallesVenta:',dataVenta);
           }
 
           setCargando(false);

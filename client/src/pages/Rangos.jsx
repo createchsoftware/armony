@@ -37,14 +37,14 @@ const Rangos = () => {
                         </div>
                     </div>
 
-                    <div className='grid border-4 border-[#4873C8] rounded-[30px] mt-12'>
-                        <div className="grid justify-center h-auto grid-cols-2 gap-4 p-10 border-[1rem] border-[#99B3F6] rounded-3xl place-content-center md:grid-cols-1 md:gap-8 md:place-content-start ">
-                            <h1 className="col-span-2 font-bold text-3xl text-center text-[#99B3F6] drop-shadow-[1px_1px_var(--tw-shadow-color)] shadow-[black] ">Rango platino</h1>
+                    <div className='grid border-4 border-gray-500 rounded-[30px] mt-12'>
+                        <div className="grid justify-center h-auto grid-cols-2 gap-4 p-10 border-[1rem] border-gray-300 rounded-3xl place-content-center md:grid-cols-1 md:gap-8 md:place-content-start ">
+                            <h1 className="col-span-2 font-bold text-3xl text-center text-gray-300 drop-shadow-[1px_1px_var(--tw-shadow-color)] shadow-[black] ">Rango platino</h1>
                             <div className="grid w-full m-auto md:col-span-2">
-                                <img className='rounded-2xl w-40 justify-self-center duration-200 hover:w-44' src="../../pictures/rangoPlatino.png" alt="" />
+                                <img className='rounded-2xl w-40 justify-self-center duration-200 hover:w-44' src="../../pictures/nuevoPlatino.png" alt="" />
                             </div>
                             <div className="grid gap-1 text-center divide-black divide- md:gap-4 md:col-span-2">
-                                <p className='bg-[#616C8926] py-4 text-2xl rounded-xl border-2 border-[#4873C8] duration-200 hover:border-[#99B3F6] hover:font-bold'>2,000 puntos</p>
+                                <p className='bg-[#616C8926] py-4 text-2xl rounded-xl border-2 border-gray-500 duration-200 hover:border-gray-300 hover:font-bold'>2,000 puntos</p>
                                 <p className="text-xl">Regalos exclusivos</p>
                                 <hr className="border-2 border-gray-500 w-[80%] justify-self-center" />
                                 <p className="text-xl">Descuentos generosos en spa</p>
@@ -54,14 +54,14 @@ const Rangos = () => {
                         </div>
                     </div>
 
-                    <div className='grid border-4 border-[#A93F74] rounded-[30px] my-12'>
-                        <div className="grid justify-center h-auto grid-cols-2 gap-4 p-10 border-[1rem] border-[#F584A7] rounded-3xl place-content-center md:grid-cols-1 md:gap-8 md:place-content-start ">
-                            <h1 className="col-span-2 font-bold text-3xl text-center text-[#F584A7] drop-shadow-[1px_1px_var(--tw-shadow-color)] shadow-[black] ">Rango VIP</h1>
+                    <div className='grid border-4 border-purple-950 rounded-[30px] my-12'>
+                        <div className="grid justify-center h-auto grid-cols-2 gap-4 p-10 border-[1rem] border-purple-800 rounded-3xl place-content-center md:grid-cols-1 md:gap-8 md:place-content-start ">
+                            <h1 className="col-span-2 font-bold text-3xl text-center text-purple-800 drop-shadow-[1px_1px_var(--tw-shadow-color)] shadow-[black] ">Rango VIP</h1>
                             <div className="grid w-full m-auto md:col-span-2">
-                                <img className='rounded-2xl w-40 justify-self-center duration-200 hover:w-44' src="../../pictures/rangoVIP.png" alt="" />
+                                <img className='rounded-2xl w-40 justify-self-center duration-200 hover:w-44' src="../../pictures/nuevoVIP.png" alt="" />
                             </div>
                             <div className="grid gap-1 text-center divide-black divide- md:gap-4 md:col-span-2">
-                                <p className='bg-[#616C8926] py-4 text-2xl rounded-xl border-2 border-[#A93F74] duration-200 hover:border-[#F584A7] hover:font-bold'>5,000 puntos</p>
+                                <p className='bg-[#616C8926] py-4 text-2xl rounded-xl border-2 border-purple-950 duration-200 hover:border-purple-800 hover:font-bold'>5,000 puntos</p>
                                 <p className="text-xl">Invitaciones a eventos VIP de élite</p>
                                 <hr className="border-2 border-gray-500 w-[80%] justify-self-center" />
                                 <p className="text-xl">Acceso anticipado a ventas exclusivas</p>

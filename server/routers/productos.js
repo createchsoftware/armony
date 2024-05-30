@@ -17,6 +17,7 @@ import {
   serviciosDescuento,
   serviciosRelacionados,
   ventaProdOnline,
+  favoritosGeneral,
 } from "../db/query/queryProductos.js";
 import { horasWithoutSeconds } from "../db/query/queryCitas.js";
 import { errorUpdate } from "../auth/validaciones.js";
@@ -323,8 +324,6 @@ routerProductos.post("/createVentaProduct", async (req, res) => {
   try {
     const resultado = await ventaProdOnline(conexion, {
       idCliente: req.body.idCliente,
-      idProd: req.body.idProd,
-      cantidad: req.body.cantidad,
       tarjeta: req.body.tarjeta,
       monedero: req.body.monedero,
       subtotal: req.body.subtotal,
@@ -339,4 +338,26 @@ routerProductos.post("/createVentaProduct", async (req, res) => {
     console.error(messageError, err);
     res.status(500).send(messageError, err);
   }
+});
+
+
+routerProductos.post("/detallesventa/:id", async (req, res) => {
+  // Datos de prueba de cita
+  const datosCita = {
+    idCliente: req.params.id,
+    idVenta: "",
+    idPromo:data.idPromo,
+    cantidad:data.cantidad
+  };
+  const resultado = await processVenta(conexion, datosCita);
+  resultado === true
+    ? res
+        .status(200)
+        .json({ message: "Cita creada correctamente", data: resultado })
+    : res.status(400).json({ message: "Ocurrio un error: ", resultado });
+});
+
+routerProductos.get("/favoritos", async (req, res) => {
+  const resultado = await favoritosGeneral(conexion);
+  res.status(202).json(resultado);
 });

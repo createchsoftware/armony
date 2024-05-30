@@ -21,17 +21,27 @@ const StyledRating = styled(Rating)({
 });
 
 function Servicio({
-  idP,
+  pkIdPS,
   nombre,
   descripcion,
   precio,
   imagen,
-  rating,
-  isFavorite,
+  valoracion,
+  favorito,
   log,
 }) {
+  const data = {
+    id: pkIdPS,
+    nombre: nombre,
+    descripcion: descripcion,
+    precio: precio,
+    img: imagen,
+    valoracion: valoracion,
+    favorito: favorito,
+  };
   const [login, setLogin] = useState(false);
   const [serv, setServ] = useState(false);
+  const [pData, setPData] = useState(data);
   const navigate = useNavigate();
 
   const toggleLogin = () => {
@@ -39,14 +49,17 @@ function Servicio({
   };
   const toggleServ = () => {
     if (log == true) {
+      setPData(data);
       setServ(!serv);
       window.location.href = "/spa/agendar";
     } else {
+      setPData(data);
       setServ(!serv);
       setLogin(!login);
     }
   };
   const closeServ = () => {
+    setPData(data);
     setServ(!serv);
   };
   return (
@@ -74,7 +87,7 @@ function Servicio({
                 <div className="grid place-content-end">
                   <StyledRating
                     name="customized-color"
-                    defaultValue={isFavorite}
+                    defaultValue={favorito}
                     max={1}
                     getLabelText={(value) =>
                       `${value} Heart${value !== 1 ? "s" : ""}`
@@ -108,7 +121,7 @@ function Servicio({
           </div>
           <Rating
             className="m-auto"
-            value={rating}
+            value={valoracion}
             unratedColor="amber"
             ratedColor="amber"
             readOnly
@@ -141,17 +154,10 @@ function Servicio({
       {login && <PopupLogin cerrar={toggleLogin} />}
       {serv && (
         <PopupServicio
-          datos={{
-            id: idP,
-            nombre: nombre,
-            descripcion: descripcion,
-            precio: precio,
-            img: imagen,
-            rating: rating,
-            isFavorite: isFavorite,
-          }}
+          datos={pData}
           cerrar={closeServ}
           check={toggleServ}
+          update={setPData}
         />
       )}
     </>
