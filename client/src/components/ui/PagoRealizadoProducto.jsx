@@ -66,9 +66,10 @@ function PagoRealizado({ cerrarPago, total, next }) {
           let carrito = JSON.parse(localStorage.getItem("cartItems")) || [];
 
           for (let index = 0; index < carrito.length; index++) {
-            const responseCita = await fetch(`/api/admin/productos/detallesventa/${cliente.ID}`, {
+            const responseCita = await fetch(`/api/admin/productos/detallesventa`, {
               method: "POST",
               body: JSON.stringify({
+                idCliente:cliente.ID,
                 idPromo:0,
                 idProducto: carrito[index].id,
                 cantidad:carrito[index].cantidad

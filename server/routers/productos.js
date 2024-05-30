@@ -18,6 +18,7 @@ import {
   serviciosRelacionados,
   ventaProdOnline,
   favoritosGeneral,
+  processVenta
 } from "../db/query/queryProductos.js";
 import { horasWithoutSeconds } from "../db/query/queryCitas.js";
 import { errorUpdate } from "../auth/validaciones.js";
@@ -341,19 +342,19 @@ routerProductos.post("/createVentaProduct", async (req, res) => {
 });
 
 
-routerProductos.post("/detallesventa/:id", async (req, res) => {
+routerProductos.post("/detallesventa", async (req, res) => {
   // Datos de prueba de cita
   const datosCita = {
-    idCliente: req.params.id,
-    idVenta: "",
-    idPromo:data.idPromo,
-    cantidad:data.cantidad
+    idCliente: req.body.id,
+    idProducto:req.body.idProducto,
+    idPromo:req.body.idPromo,
+    cantidad:req.body.cantidad
   };
   const resultado = await processVenta(conexion, datosCita);
   resultado === true
     ? res
         .status(200)
-        .json({ message: "Cita creada correctamente", data: resultado })
+        .json({ message: "venta creada exitosamente", data: resultado })
     : res.status(400).json({ message: "Ocurrio un error: ", resultado });
 });
 

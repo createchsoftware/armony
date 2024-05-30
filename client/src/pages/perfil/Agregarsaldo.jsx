@@ -4,6 +4,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faAngleLeft } from "@fortawesome/free-solid-svg-icons";
 import Navbar from '../../components/ui/Navbar'
 import InforTarjeta from '../../components/ui/InfoTarjeta';
+import { Helmet, HelmetProvider } from 'react-helmet-async';
 
 function AgregarSaldo(){
     const [sTarjeta, setsTarjeta] = useState({});
@@ -11,6 +12,8 @@ function AgregarSaldo(){
     const [array_toShow, setArray_toShow] = useState([]);
     const [monto_a_recargar, setMonto] = useState('0.0');
     const [addTarjeta, setAddTarjeta] = useState(false);
+    const [confirm, setConfirm] = useState(false);
+    const [ticket, setTicket] = useState(false);
 
     async function seleccionarTarjeta(tarjeta){
         setsTarjeta(tarjeta);
@@ -94,6 +97,9 @@ function AgregarSaldo(){
             console.log('hola');
             window.location.href = respuestaJson.redirect;
         }
+
+        setConfirm(!confirm)
+        setTicket(!ticket)
     }
 
     const tarjeta = array_toShow.map(tarjetas => (
@@ -115,18 +121,30 @@ function AgregarSaldo(){
         </div>
     ))
 
+    // const confirmar = () => {
+    //     setConfirm(!confirm);
+    //     setTicket(!ticket);
+    //     handleSubmit();
+    // }
+
     const toggleTarjeta = () => {
         setAddTarjeta(!addTarjeta);
     }
 
     return (
         <>
+            <HelmetProvider>
+                <Helmet>
+                    <script src="../../scripts/index.js"></script>
+                </Helmet>
+            </HelmetProvider>
             <Navbar />
             <div className='grid w-1/2 rounded-2xl p-1 m-auto shadow-lg mt-24 mb-8 border-r border-l border-b border-[#036C65]'>
                 <div className='px-5 py-2'>
                     <a
                         className="w-full text-sm items-center lg:text-base justify-self-start relative cursor-pointer before:bg-black before:absolute before:-bottom-1 before:block before:h-[1px] before:w-full before:origin-bottom-right before:scale-x-0 before:transition before:duration-300 before:ease-in-out hover:before:origin-bottom-left hover:before:scale-x-100 hover:font-bold"
                         aria-label="Volver"
+                        href='/perfil/monedero'
                         >
                         <FontAwesomeIcon
                             style={{ fontSize: "22px" }}
@@ -171,7 +189,7 @@ function AgregarSaldo(){
                             </div>
                         </div>
                     </div>
-                    <button onClick={handleSubmit}>
+                    <button onClick={() => setConfirm(!confirm)} className='w-full mt-4 px-4 py-2 bg-[#EB5765] rounded-full text-white duration-200 hover:bg-[#ffb5a7]'>
                         Confirmar
                     </button>
                 </div>
@@ -180,6 +198,50 @@ function AgregarSaldo(){
                 <div className='soon-fondo'>
                     <div className='soon-fx'>
                         <InforTarjeta cerrarInfo={toggleTarjeta} />
+                    </div>
+                </div>
+            )}
+            {confirm && (
+                <div className='cart-fondo'>
+                    <div className='cart-fx'>
+                        <div className='grid mt-60 w-1/3 bg-white rounded-2xl p-6 m-auto'>
+                            <h1 className='text-[#EB5765] text-2xl mb-8 justify-self-center text-center'>¿Estás segura?</h1>
+                            <h1 className='mb-8 justify-self-center text-center'>Da click es aceptar si deseas continuar con la compra.</h1>
+                            <button onClick={handleSubmit} className='px-4 py-2 bg-[#EB5765] rounded-full text-white duration-200 hover:bg-[#ffb5a7]'>Aceptar</button>
+                        </div>
+                    </div>
+                </div>
+            )}
+            {ticket && (
+                <div className='cart-fondo'>
+                    <div className='cart-fx'>
+                        <div className='grid mt-60 w-1/3 bg-white rounded-2xl p-8 m-auto'>
+                            <h1 className='text-[#EB5765] text-2xl mb-4 justify-self-center text-center'>¡Recarga exitosa!</h1>
+                            <img src="../../../pictures/logoArmony.png" className='justify-self-center w-1/4 h-auto mb-4' alt="" />
+                            <div className='mb-4'>
+                                <div className='flex justify-between'>
+                                    <h1>Total</h1>
+                                    <p> . . . . . . . . . . . . </p>
+                                    <h1>${monto_a_recargar}</h1>
+                                </div>
+                                <div className='flex justify-between'>
+                                    <h1>Tarjeta</h1>
+                                    <p> . . . . . . . . . . . . </p>
+                                    <h1>412309359815</h1>
+                                </div>
+                                <div className='flex justify-between'>
+                                    <h1>Fecha</h1>
+                                    <p> . . . . . . . . . . . . </p>
+                                    <h1>08/05/2024</h1>
+                                </div>
+                                <div className='flex justify-between'>
+                                    <h1>Hora</h1>
+                                    <p> . . . . . . . . . . . . </p>
+                                    <h1>10:10 a.m.</h1>
+                                </div>
+                            </div>
+                            <button onClick={() => setTicket(!ticket)} className='w-1/3 justify-self-center px-4 py-2 bg-[#EB5765] rounded-full text-white duration-200 hover:bg-[#ffb5a7]'>Regresar</button>
+                        </div>
                     </div>
                 </div>
             )}
