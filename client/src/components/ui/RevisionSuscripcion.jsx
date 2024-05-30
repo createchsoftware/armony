@@ -5,18 +5,24 @@ import { useState } from 'react';
 // eslint-disable-next-line react/prop-types
 function RevisionProductos({ restart }) {
     const suscripcion = 199
-    const [descuento, setDescuento] = useState('')
-    const handleChange = (event) => {
-        setDescuento(event.target.value)
-    }
 
-    const puntos = suscripcion/10;
+
+    localStorage.setItem('puntosSuscripcion', suscripcion / 10)
+    localStorage.setItem('totalSuscripcion', suscripcion)
+
+    console.log(localStorage.getItem('puntosSuscripcion'))
+    console.log(localStorage.getItem('totalSuscripcion'))
+
+    // console.log(localStorage.getItem('puntosSuscripcion'))
+    // console.log(localStorage.getItem('totalSuscripcion'))
+
+    const puntos = suscripcion / 10;
     //En caso de ser Socio VVV
     //const puntos = (parseInt(totalIva))/5;
 
     return (
         <>
-            <div className='grid mb-8'>
+            <div className='grid'>
                 <div className='flex justify-between mx-16'>
                     <div className="rounded-xl shadow-md w-[55%] h-max border-2 border-gray">
                         <div className='flex bg-[rgb(3,109,99)] rounded-t-xl justify-between items-center'>
@@ -70,10 +76,10 @@ function RevisionProductos({ restart }) {
                             </div>
                             {/* Código de descuento */}
                             <div className='p-6 mb-4 border-2 shadow-md rounded-xl border-gray'>
-                                <div className='flex w-full justify-center'>
-                                    <h3 className='mb-4 text-center text-xl font-bold justify-self-center'>¿Tienes un cupón de descuento?</h3>
+                                <div className='flex justify-center w-full'>
+                                    <h3 className='mb-4 text-xl font-bold text-center justify-self-center'>¿Tienes un cupón de descuento?</h3>
                                 </div>
-                                <div className='flex justify-between border-2 rounded-full shadow-md border-gray'>
+                                {/* <div className='flex justify-between border-2 rounded-full shadow-md border-gray'>
                                     <input
                                         type="text"
                                         value={descuento}
@@ -82,9 +88,9 @@ function RevisionProductos({ restart }) {
                                         className=' w-[70%] px-2 py-2 text-center rounded-l-full'
                                     />
                                     <button type="submit" className=' w-[30%] rounded-r-full text-center text-white bg-[rgb(3,109,99)] duration-200 hover:bg-[rgb(69,181,156)] hover:font-bold'>Aplicar</button>
-                                </div>
-                                <div className='flex w-full justify-center'>
-                                    <p className='text-center justify-self-center text-xs mt-4'>Los <p className='text-[#D47300]'>Términos y Condiciones de los Cupones</p> de Armony aplican el uso de cupones.</p>
+                                </div> */}
+                                <div className='flex justify-center w-full'>
+                                    <p className='mt-4 text-xs text-center justify-self-center'>Los <p className='text-[#D47300]'>Términos y Condiciones de los Cupones</p> de Armony aplican el uso de cupones.</p>
                                 </div>
                             </div>
                             <div className='flex justify-between p-6 px-10 mb-4 border-2 shadow-md rounded-xl border-gray'>

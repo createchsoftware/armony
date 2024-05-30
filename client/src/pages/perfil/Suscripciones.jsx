@@ -63,7 +63,7 @@ function Suscripciones() {
                             </div>
                         </div>
                     </section>
-                ):(
+                ) : (
                     <section className='w-[60%] m-auto'>
                         <h2 className='text-[#036C65] text-2xl ml-12 mb-4'>Tu suscripción</h2>
                         <div className='rounded-2xl m-auto grid gap-4 p-12 shadow-[0_3px_10px_rgb(0,0,0,0.2)]'>
@@ -81,7 +81,7 @@ function Suscripciones() {
                                 Previo a la fecha de vencimiento, se te hará llegar una notificación a tu correo electrónico.</p>
                             <div className='flex items-center justify-between gap-4 px-3'>
                                 <div className="w-full bg-gray-200 rounded-full h-2.5 mb-4 dark:bg-gray-700">
-                                    <div className=" bg-[#036C65] h-1.5 rounded-full dark:bg-gray-300" style={{width: '50%'}}></div>
+                                    <div className=" bg-[#036C65] h-1.5 rounded-full dark:bg-gray-300" style={{ width: '50%' }}></div>
                                 </div>
                             </div>
                             <div className='flex items-center justify-between text-gray-500'>
@@ -97,7 +97,7 @@ function Suscripciones() {
                             <button className='bg-[#EB5765] text-white mt-6 py-3 w-1/2 m-auto shadow-[0_3px_10px_rgb(0,0,0,0.2)] rounded-lg duration-200 hover:bg-[rgb(255,181,167)]'>Renovar suscripción</button>
                         </div>
                     </section>
-                ):(
+                ) : (
                     <section className='w-[60%] m-auto'>
                         <h2 className='text-[#036C65] text-2xl ml-12 mb-4'>Hazte socio</h2>
                         <div className='rounded-2xl  m-auto grid gap-4 p-12 shadow-[0_3px_10px_rgb(0,0,0,0.2)]'>
@@ -111,7 +111,7 @@ function Suscripciones() {
                                 <div className='grid gap-4'>
                                     <p><span className='text-[#F584A7]'>Tipo de compra:</span> {"Suscripción"}</p>
                                     <p><span className='text-[#F584A7]'>Precio: </span>{"$199 MXN"}</p>
-                                    <p><span className='text-[#F584A7]'>Tiempo de vigencia: {"Vigente por un mes"}</span></p>
+                                    <p><span className='text-[#F584A7]'>Tiempo de vigencia: </span> {"Vigente por un mes"}</p>
                                 </div>
                             </div>
                             <p>Tan fácil como comprarlo por tan solo $199 MXN. Una vez llegado el día de facturación tu suscripción se te cobrará con la tarjeta añadida a tu cuenta.
@@ -128,7 +128,7 @@ function Suscripciones() {
                                 <p className='text-sm text-justify'>¿Estás seguro que quisieras cancelar tu suscripción? Una vez cancelada tu suscripción, los cambios son irreversibles.</p>
                                 <button className='bg-[#036C65] text-white mt-6 py-3 w-1/2 m-auto shadow-[0_3px_10px_rgb(0,0,0,0.2)] rounded-lg duration-200 hover:bg-[#45B59C]'>Cancelar suscripción</button>
                             </>
-                        ):(
+                        ) : (
                             <>
                                 <p className='text-sm text-justify'>Una vez cancelada la suscripción, los cambios son irreversibles.</p>
                                 <button className='bg-gray-400 mt-6 py-3 w-1/2 m-auto shadow-[0_3px_10px_rgb(0,0,0,0.2)] rounded-lg'>Cancelar suscripción</button>

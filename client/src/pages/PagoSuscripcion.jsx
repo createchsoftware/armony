@@ -7,9 +7,9 @@ import Typography from "@mui/material/Typography";
 import React, { useState, useEffect } from "react";
 import LayoutPrincipal from "../layouts/LayoutPrincipal";
 import { CSSTransition, TransitionGroup } from "react-transition-group";
-import Pago from "../components/ui/Pago";
+import Pago from "../components/ui/PagoDeSuscripcion";
 import RevisionSuscripcion from "../components/ui/RevisionSuscripcion";
-import FinalizacionPago from "../components/ui/FinalizacionPagoServ";
+import FinalizacionPago from "../components/ui/FinalizacionPagoSus";
 import Ticket from "../components/ui/TicketServicio";
 import "./cita/Transiciones.css";
 
@@ -88,7 +88,6 @@ export default function Cita({ producto }) {
   };
 
   const handleClick = () => {
-    localStorage.clear()
     handleComplete();
     LocalBase();
   };
@@ -116,8 +115,8 @@ export default function Cita({ producto }) {
 
   const stepComponents = [
     <RevisionSuscripcion key={3} />,
-    <Pago key={4} />,
-    <FinalizacionPago key={5} />,
+    <Pago next={handleClick} key={4} />,
+    <FinalizacionPago next={handleClick} key={5} />,
     <Ticket key={6} />,
   ];
 
@@ -186,12 +185,13 @@ export default function Cita({ producto }) {
                 {/* <Typography sx={{ mt: 2, mb: 1, py: 1 }}>
                                     Step {activeStep + 1}
                                 </Typography> */}
-                <div className="grid grid-cols-3">
+                <div className={activeStep === 0 ? "grid content-end place-content-end w-[85%] mx-auto" : "grid grid-cols-2"}>
                   <button
+                    hidden={activeStep === 0 || activeStep === 1 || activeStep === 2 || isLastStep()}
                     disabled={activeStep === 0}
                     onClick={handleBack}
                     className={`${activeStep === 0
-                      ? "hover:bg-transparent opacity-30 hover:text-rose-400"
+                      ? "hover:bg-transparent opacity-30 pr-8 hover:text-rose-400"
                       : "hover:bg-red-50"
                       } px-4 py-2 mx-auto text-xl bg-white rounded-full ring-1 text-rose-400 ring-rose-400`}
                     sx={{ mr: 1 }}
@@ -199,6 +199,7 @@ export default function Cita({ producto }) {
                     Regresar
                   </button>
                   <button
+                    hidden={activeStep === 0 || activeStep === 1 || activeStep === 2 || isLastStep()}
                     onClick={handleCancel}
                     disabled={activeStep === steps.length - 1}
                     className="px-4 py-2 mx-auto text-xl text-white rounded-full bg-[#036C65] hover:bg-opacity-70"
@@ -207,6 +208,7 @@ export default function Cita({ producto }) {
                   </button>
                   {isLastStep() ? (
                     <a
+                      hidden
                       href="/suscripcion"
                       className="px-4 py-2 mx-auto text-xl text-white rounded-full bg-rose-400 hover:bg-red-200"
                     >
@@ -214,6 +216,7 @@ export default function Cita({ producto }) {
                     </a>
                   ) : (
                     <button
+                      hidden={activeStep === 1 || activeStep === 2}
                       onClick={handleClick}
                       disabled={activeStep === steps.length - 1}
                       className="px-4 py-2 mx-auto text-xl text-white rounded-full bg-rose-400 hover:bg-red-200"
