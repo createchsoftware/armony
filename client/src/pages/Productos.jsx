@@ -37,6 +37,7 @@ const Productos = () => {
 
   //useEffect para obtener los productos con descuento
   useEffect(() => {
+    setTimeout(()=>{
     fetch("/api/admin/productos/descuento")
       .then((response) => response.json())
       .then((data) => {
@@ -46,6 +47,7 @@ const Productos = () => {
       .catch((error) => {
         console.log("error", error);
       });
+    },[1000])
   }, []);
 
 
