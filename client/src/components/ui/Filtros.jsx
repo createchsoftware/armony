@@ -54,53 +54,52 @@ export default function Filtros() {
     const [sortOption, setSortOption] = useState(ordenamiento[0])
     const [allProducts, setAllProducts] = useState([])
     const [filteredProducts, setFilteredProducts] = useState([])
+    const [productosFavorites, setProductosFavorites] = useState([])
     const [categories, setCategories] = useState([]);
     const [marcas, setMarcas] = useState([]);
     const [busqueda, setSearch] = useState('');
     const [rating, setRating] = useState(0);
     const [precio, setPrecio] = useState(null);
+    const [id, setId] = useState(null);
+
+    async function getId() {
+        let respuestaJson = null;
+        try {
+            const respuesta = await fetch("/api/logueado", {
+                method: "GET",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+            });
+            respuestaJson = await respuesta.json();
+            setId(respuestaJson.clave);
+        } catch (error) {
+            console.log("Error");
+        }
+    }
+
+    const toggleSoon = () => {
+        setSoon(!soon);
+    };
+
+    useEffect(() => {
+        getId();
+    }, []);
 
 
-    // async function getId() {
-    //     let respuestaJson = null;
-    //     try {
-    //         const respuesta = await fetch("/api/logueado", {
-    //             method: "GET",
-    //             headers: {
-    //                 "Content-Type": "application/json",
-    //             },
-    //         });
-    //         respuestaJson = await respuesta.json();
-    //         setId(respuestaJson.clave);
-    //     } catch (error) {
-    //         console.log("Error");
-    //     }
-    // }
-
-
-    // useEffect(() => {
-    //     getId();
-    // }, []);
-
-    // useEffect(() => {
-    //     if (id != undefined) {
-    //         setTimeout(() => {
-    //             fetch(`/api/admin/productos/ProductFavoritosbyId/${id}`)
-    //                 .then((response) => {
-    //                     if (!response.ok) {
-    //                         throw new Error("Error al obtener los servicios de Estética");
-    //                     }
-    //                     return response.json();
-    //                 })
-    //                 .then((data) => {
-    //                     setFavoritos(data);
-    //                 })
-    //                 .catch((error) => {
-    //                     // setErrorEstetica(error.message);
-    //                 });
-    //         }, 3000);
-    //     }
-    // }, [id]);
+    useEffect(() => {
+        if (id != undefined) {
+            fetch(`/api/admin/productos/FavoritosbyId/${id}`)
+                .then(response => response.json())
+                .then(data => {
+                    setProductosFavorites(data);
+                    console.log("favoritos" + data);
+                })
+                .catch(error => {
+                    console.log('error', error);
+                });
+        }
+    }, [id]);
 
     // Función para manejar cambios en las categorías
     const handleCategoryChange = (label, isChecked) => {
@@ -160,15 +159,15 @@ export default function Filtros() {
     //useEffect para obtener los productos
     useEffect(() => {
         setTimeout(() => {
-        fetch("/api/admin/productos/getProducts")
-            .then(response => response.json())
-            .then(data => {
-                setAllProducts(data);
-            })
-            .catch(error => {
-                console.log('error', error);
-            });
-        },[1000])
+            fetch("/api/admin/productos/getProducts")
+                .then(response => response.json())
+                .then(data => {
+                    setAllProducts(data);
+                })
+                .catch(error => {
+                    console.log('error', error);
+                });
+        }, [1000])
     }, []);
 
     // Función para manejar la búsqueda
