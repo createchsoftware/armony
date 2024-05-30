@@ -69,7 +69,7 @@ function Monedero() {
       <main className="grid gap-12 my-24">
         <section className="rounded-2xl mt-12 w-[60%] m-auto p-6 shadow-[0_3px_10px_rgb(0,0,0,0.2)]">
           <a
-            className="flex items-baseline content-center text-sm gap-x-4"
+            className="flex content-center gap-x-4 w-full text-sm items-center lg:text-base justify-self-start relative cursor-pointer before:bg-black before:absolute before:-bottom-1 before:block before:h-[1px] before:w-full before:origin-bottom-right before:scale-x-0 before:transition before:duration-300 before:ease-in-out hover:before:origin-bottom-left hover:before:scale-x-100 hover:font-bold"
             href="/perfil"
           >
             {" "}
