@@ -9,6 +9,7 @@ function Pago({ producto, next }) {
     const [tarjeta, setTarjeta] = useState(false);
     const [pagoRealizado, setPagoRealizado] = useState(false);
     const [Uid, setUid] = useState(null)
+    const [monedero, setMonedero] = useState(null);
 
     // const [tarjetas, setTarjetas] = useState([
     //     {id: 1, noTarjeta: "509612341234", tipo: "Débito", banco: "BANORTE", code: "****"},
@@ -29,6 +30,17 @@ function Pago({ producto, next }) {
             }
         }
         getidUser()
+
+        fetch("/api/monedero")
+            .then((response) => response.json())
+            .then((data) => {
+                if (data.data) {
+                setMonedero(data.data[0].monedero);
+                }
+            })
+            .catch((error) => {
+                console.log(error);
+            });
     }, [])
 
 
@@ -157,6 +169,17 @@ function Pago({ producto, next }) {
                                 </svg>
                                 <h1 className="text-xl">Nueva tarjeta de débito</h1>
                                 <button onClick={toggleTarjeta} className='bg-[#ec5766] text-xl text-white px-10 py-2 rounded-full duration-200 hover:bg-[#ffb5a7]'>Continuar</button>
+                            </li>
+                            <li className=" mt-3">
+                                <h1 className="text-2xl">Otras formas de pago </h1>
+                                <div className="flex items-center justify-between gap-4 px-4 mb-4 border-2 shadow-md rounded-3xl border-gray">
+                                    <img src="../../../pictures/wallet.png" alt="" className="w-16" />
+                                    <div className="grid">
+                                        <h1 className="text-xl">Pago con monedero</h1>
+                                        <h1 className="text-l">Saldo disponible: ${monedero}</h1>
+                                    </div>
+                                    <button className='bg-[#ec5766] text-xl text-white px-10 py-2 rounded-full duration-200 hover:bg-[#ffb5a7]'>Continuar</button>
+                                </div>
                             </li>
                         </ul>
                     </div>
