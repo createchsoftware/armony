@@ -306,7 +306,7 @@ export default function Cita() {
                 >
                   <button
                     hidden={
-                      activeStep === 0 || activeStep === 5 || activeStep === 6
+                      activeStep === 5 || activeStep === 6
                     }
                     disabled={activeStep === 0}
                     onClick={handleBack}
