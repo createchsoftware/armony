@@ -97,6 +97,9 @@ function AgregarSaldo(){
             console.log('hola');
             window.location.href = respuestaJson.redirect;
         }
+
+        setConfirm(!confirm)
+        setTicket(!ticket)
     }
 
     const tarjeta = array_toShow.map(tarjetas => (
@@ -118,10 +121,11 @@ function AgregarSaldo(){
         </div>
     ))
 
-    const confirmar = () => {
-        setConfirm(!confirm);
-        setTicket(!ticket);
-    }
+    // const confirmar = () => {
+    //     setConfirm(!confirm);
+    //     setTicket(!ticket);
+    //     handleSubmit();
+    // }
 
     const toggleTarjeta = () => {
         setAddTarjeta(!addTarjeta);
@@ -203,7 +207,7 @@ function AgregarSaldo(){
                         <div className='grid mt-60 w-1/3 bg-white rounded-2xl p-6 m-auto'>
                             <h1 className='text-[#EB5765] text-2xl mb-8 justify-self-center text-center'>¿Estás segura?</h1>
                             <h1 className='mb-8 justify-self-center text-center'>Da click es aceptar si deseas continuar con la compra.</h1>
-                            <button onClick={() => {confirmar(), handleSubmit}} className='px-4 py-2 bg-[#EB5765] rounded-full text-white duration-200 hover:bg-[#ffb5a7]'>Aceptar</button>
+                            <button onClick={handleSubmit} className='px-4 py-2 bg-[#EB5765] rounded-full text-white duration-200 hover:bg-[#ffb5a7]'>Aceptar</button>
                         </div>
                     </div>
                 </div>
