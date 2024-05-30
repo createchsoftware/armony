@@ -728,16 +728,21 @@ function Agenda() {
           </section>
         </div>
 
-        <div className="flex card justify-content-center">
+        <div className="flex card justify-content-center font-[abeatbykai] rounded-xl">
           {/* Diálogo de confirmación */}
-          <Dialog header="Confirmación" visible={visible} style={{ width: '50vw' }} onHide={() => setVisible(false)} className="mt-8 ml-8">
-            <div className="m-8">
-              <p className="m-0 mb-4 text-xl">
+          <Dialog header="" visible={visible} style={{ width: '50vw' }} onHide={() => setVisible(false)} className="rounded-3xl font-[abeatbykai]  overflow-hidden  border-[#ec5766]">
+            <div className="mb-8 ml-8 rounded-3xl">
+              <p className="m-0 mb-4 text-2xl font-bold">
+                Confirmación
+              </p>
+              <p className="m-0 mb-1 text-xl">
                 ¿Estás seguro de que deseas cancelar esta cita?
               </p>
-              <div className="flex gap-8 text-xl">
-                <Button label="Si, cancelar" icon="pi pi-check" onClick={confirmRemoval} className="p-button-success p-mr-2 hover:text-red-800" />
-                <Button label="No, mantener" icon="pi pi-times" onClick={() => setVisible(false)} className="p-button-secondary hover:text-green-500" />
+              <div className="flex gap-8 text-lg">
+                <button onClick={confirmRemoval} className="px-2 py-1 text-red-500 duration-200 rounded-md p-button-success p-mr-2 hover:bg-red-500 hover:text-white">Si, cancelar</button>
+                <button onClick={() => setVisible(false)} className="px-2 py-1 text-green-500 transition duration-200 rounded-md p-button-success p-mr-2 hover:bg-green-500 hover:text-white">No, mantener</button>
+                {/* <Button label="Si, cancelar " icon="pi pi-check" onClick={confirmRemoval} className="p-button-success p-mr-2 hover:text-red-500 hover:bg-white" /> */}
+                {/* <Button label="No, mantener" icon="pi pi-times" onClick={() => setVisible(false)} className="p-button-secondary hover:text-green-500 hover:bg-white" /> */}
               </div>
             </div>
           </Dialog>
