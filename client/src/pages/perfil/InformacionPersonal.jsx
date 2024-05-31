@@ -38,7 +38,7 @@ function InformacionPersonal() {
     const [clave, setClave] = useState(false); //<<< PARA EL INICIO DE SESION
     const [patologias, setPatologias] = useState([]);
     const [rango, setRango] = useState(0); //<<< MUESTRA EL RANGO DEL USUARIO
-    const [sus, setSus] = useState(false); //<<< CARACTERISTICA GRAFICA DE QUE EL USUARIO ES SOCIO
+    const [sus, setSus] = useState(true); //<<< CARACTERISTICA GRAFICA DE QUE EL USUARIO ES SOCIO
 
     async function recibido() {
         const respuesta = await fetch('/api/logueado', {
@@ -238,7 +238,7 @@ function InformacionPersonal() {
                                 </div>
                                 <aside className='w-[40%] my-8 '>
                                     <div className='grid grid-cols-1 gap-6 text-center '>
-                                        <div className='relative w-32 m-auto mb-4 align-middle items-center justify-center'>
+                                        <div className='relative w-40 m-auto mb-4 align-middle items-center justify-center'>
                                             {sus && (
                                                 <img
                                                     src="../../../pictures/marcoSuscripcion.png"
@@ -246,7 +246,9 @@ function InformacionPersonal() {
                                                     className="absolute object-cover w-full h-full m-auto"
                                                 />
                                             )}
-                                            <img className='w-[85%] m-auto aspect-square rounded-full' src={`../../../pictures/avatares/${imagen}`} alt="" />
+                                            <div className="flex w-full h-full items-center justify-center">
+                                                <img className='w-[85%] m-auto aspect-square rounded-full' src={imagen !== null ? `../../../pictures/avatares/${imagen}`: "../../../pictures/userDefault.png"} alt="" />
+                                            </div>
                                         </div>
                                         {rango === 1 ? (
                                             <>

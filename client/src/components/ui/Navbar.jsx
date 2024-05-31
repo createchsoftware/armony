@@ -209,7 +209,7 @@ function Navbar() {
                                         <a
                                             className="flex items-center h-20 menu-link"
                                         >
-                                            <div className="relative items-center justify-center mr-3 align-middle w-14 h-14">
+                                            <div className="relative mr-3 align-middle w-14 h-14">
                                                 {sus && (
                                                     <img
                                                         src="../../../pictures/marcoSuscripcion.png"
@@ -217,15 +217,17 @@ function Navbar() {
                                                         className="absolute object-cover w-full h-full m-auto"
                                                     />
                                                 )}
-                                                <img
-                                                    src={imagen !== null ? (
-                                                        `../../../pictures/avatares/${imagen}`
-                                                    ) : (
-                                                        '../../../pictures/userDefault.png'
-                                                    )}
-                                                    alt=""
-                                                    className="w-[80%] h-[80%] m-auto my-[5%] rounded-full"
-                                                />
+                                                <div className="flex w-full h-full items-center justify-center">
+                                                    <img
+                                                        src={imagen !== null ? (
+                                                            `../../../pictures/avatares/${imagen}`
+                                                        ) : (
+                                                            '../../../pictures/userDefault.png'
+                                                        )}
+                                                        alt=""
+                                                        className="w-[80%] h-[80%] m-auto my-[5%] rounded-full"
+                                                    />
+                                                </div>
                                             </div>
                                             {usuario}
                                             {rango === 1 ? (

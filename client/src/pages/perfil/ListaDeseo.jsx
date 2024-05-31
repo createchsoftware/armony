@@ -310,9 +310,9 @@ function ListaDeseo() {
         } else if (sort === 'nombre-desc') {
             return b.nombre.localeCompare(a.nombre);
         } else if (sort === 'precio-asc') {
-            return a.precio - b.precio;
-        } else if (sort === 'precio-desc') {
             return b.precio - a.precio;
+        } else if (sort === 'precio-desc') {
+            return a.precio - b.precio;
         } else {
             return 0;
         }
@@ -360,8 +360,8 @@ function ListaDeseo() {
     ))
 
     const precioTotal = contResumen
-        .filter(producto => producto.tipo === '1')
-        .reduce((total, producto) => total + producto.precio, 0)
+        // .filter(producto => producto.tipo === '1')
+        .reduce((total, producto) => total + parseFloat(producto.precio), 0)
         .toFixed(2);
 
     const cantProductos = contResumen
@@ -413,7 +413,7 @@ function ListaDeseo() {
                                 </nav>
                             </aside>
                         </div>
-                        <div className='w-full h-full menu-deseo'>
+                        <div className='grid w-full h-full menu-deseo'>
                             <img src="../../../pictures/decoArmony1.png" alt="" className='absolute -rotate-90 -right-7 w-60 h-180 top-60' />
                             <div className='flex justify-center mt-5'>
                                 <form action="" className='flex items-center w-4/5 justify-center border-2 border-[rgb(255,181,167)] rounded-lg'>
@@ -428,14 +428,14 @@ function ListaDeseo() {
                             </div>
                             <div className='flex justify-end py-2 pr-24'>
                                 <select value={sort} onChange={handleSortChange} className='flex border-0 w-max gap-2 relative cursor-pointer before:bg-black before:absolute before:-bottom-1 before:block before:h-[1px] before:w-full before:origin-bottom-right before:scale-x-0 before:transition before:duration-300 before:ease-in-out hover:before:origin-bottom-left hover:before:scale-x-100 hover:font-bold'>
-                                    <option value="" className='hover:font-bold hover:text-[#ec5766]'> Ordenamiento por:</option>
-                                    <option value="nombre-asc" className='hover:font-bold hover:text-[#ec5766]'> Nombre (A-Z)</option>
-                                    <option value="nombre-desc" className='hover:font-bold hover:text-[#ec5766]'> Nombre (Z-A)</option>
-                                    <option value="precio-asc" className='hover:font-bold hover:text-[#ec5766]'> Precio: Mayor a menor</option>
-                                    <option value="precio-desc" className='hover:font-bold hover:text-[#ec5766]'> Precio: Menor a mayor</option>
+                                    <option value="" className='hover:font-bold hover:bg-[#ec5766]'> Ordenamiento por:</option>
+                                    <option value="nombre-asc" className='hover:font-bold hover:bg-[#ec5766]'> Nombre (A-Z)</option>
+                                    <option value="nombre-desc" className='hover:font-bold hover:bg-[#ec5766]'> Nombre (Z-A)</option>
+                                    <option value="precio-asc" className='hover:font-bold hover:bg-[#ec5766]'> Precio: Mayor a menor</option>
+                                    <option value="precio-desc" className='hover:font-bold hover:bg-[#ec5766]'> Precio: Menor a mayor</option>
                                 </select>
                             </div>
-                            <div className='grid h-full px-12 overflow-y-scroll pb-14'>
+                            <div className='grid h-full px-12 overflow-y-scroll mb-14'>
                                 {/* Contenido */}
                                 {contResumen.length === 0 ? (
                                     !showProduct &&
@@ -445,9 +445,9 @@ function ListaDeseo() {
                                         {contenido}
                                     </ul>
                                 )}
-                                {showProduct && contResumen.filter(producto => producto.tipo === '1').length === 0 &&
+                                {/* {showProduct && contResumen.filter(producto => producto.tipo === '1').length === 0 &&
                                     <p className='m-auto'>No se encontraron productos.</p>
-                                }
+                                } */}
                             </div>
                         </div>
                     </div>
