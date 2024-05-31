@@ -63,6 +63,17 @@ function PagoRealizado({ cerrarPago, total, next }) {
           const dataVenta = await responseVenta.json();
           console.log('Respuesta de la venta:', dataVenta);
 
+
+          const result=await fetch(`/api/admin/productos/idVentaProduct/${cliente.ID}`)
+          .then(response => response.json())
+          .then(data => {
+            localStorage.setItem('idventaProduct',data);
+          })
+          .catch(error => {
+              console.log('error', error);
+          });
+
+
           let carrito = JSON.parse(localStorage.getItem("cartItems")) || [];
 
           for (let index = 0; index < carrito.length; index++) {

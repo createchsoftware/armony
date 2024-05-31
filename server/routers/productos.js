@@ -21,6 +21,7 @@ import {
   processVenta,
   setFavorito,
 } from "../db/query/queryProductos.js";
+import { searchVentaProducto } from "../db/query/queryVenta.js";
 import { horasWithoutSeconds } from "../db/query/queryCitas.js";
 import { errorUpdate } from "../auth/validaciones.js";
 import { isFav } from "../db/query/queryCategoria.js";
@@ -371,4 +372,16 @@ routerProductos.post("/setFavorito", async (req, res) => {
   };
   const resultado = await setFavorito(conexion, data);
   res.status(202).json(resultado);
+});
+
+routerProductos.get("/idVentaProduct/:id", async (req, res) => {
+  try {
+    const idventa = await searchVentaProducto(conexion, {
+      id: req.params.id
+    });
+    res.status(200).json(idventa);
+  } catch (err) {
+    console.error(messageError, err);
+    res.status(500).send(messageError);
+  }
 });
