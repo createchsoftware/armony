@@ -13,6 +13,7 @@ import { jwtDecode } from "jwt-decode";
 import { Navigate, useNavigate } from "react-router-dom";
 import 'react-tooltip/dist/react-tooltip.css'
 import { Tooltip } from 'react-tooltip'
+import { Bot } from 'lucide-react';
 
 const StyledRating = styled(Rating)({
     '& .MuiRating-iconFilled': {
@@ -221,22 +222,40 @@ function ListaDeseo() {
     }, [Uid])
 
     const presionar1 = () => {
-        setBoton1('lista-boton-on')
-        setBoton2('lista-boton')
-        setResumen('lista-resumen-on')
-        setWidth('w-1/2')
-        filtrar('1')
-        setShowProduct(true)
-        setCols('grid-cols-3')
+        if(boton1 !== 'lista-boton-on')
+        {
+            setBoton1('lista-boton-on')
+            setBoton2('lista-boton')
+            setResumen('lista-resumen-on')
+            setWidth('w-1/2')
+            filtrar('1')
+            setShowProduct(true)
+            setCols('grid-cols-3')
+        }else{
+            setBoton1('lista-boton')
+            setResumen('lista-resumen-off')
+            setWidth('w-full')
+            filtrar('all')
+            setShowProduct(false)
+            setCols('grid-cols-4')
+        }
+        
     }
     const presionar2 = () => {
-        setBoton2('lista-boton-on')
-        setBoton1('lista-boton')
-        setResumen('lista-resumen-off')
-        setWidth('w-full')
-        filtrar('2')
-        setShowProduct(false)
-        setCols('grid-cols-4')
+        if(boton2 !== 'lista-boton-on')
+        {
+            setBoton2('lista-boton-on')
+            setBoton1('lista-boton')
+            setResumen('lista-resumen-off')
+            setWidth('w-full')
+            filtrar('2')
+            setShowProduct(false)
+            setCols('grid-cols-4')
+        }else{
+            setBoton2('lista-boton')
+            filtrar('all')
+        }
+        
     }
 
     const removeProducto = (itemId) => {

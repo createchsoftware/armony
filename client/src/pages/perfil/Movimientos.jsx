@@ -1,26 +1,10 @@
 import LayoutPrincipal from "../../layouts/LayoutPrincipal";
-import { IoIosArrowBack } from "react-icons/io";
-import { MdNavigateNext } from "react-icons/md";
 import { Fragment, useEffect, useState } from "react";
-import { Dialog, Disclosure, Menu, Transition } from "@headlessui/react";
-import { XMarkIcon } from "@heroicons/react/24/outline";
+import { Menu, Transition } from "@headlessui/react";
 import {
-  ChevronDownIcon,
-  FunnelIcon,
-  MinusIcon,
-  PlusIcon,
-  Squares2X2Icon,
+  ChevronDownIcon
 } from "@heroicons/react/20/solid";
 //import { products } from '../../data/productos.json'
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  fa1,
-  fa2,
-  fa3,
-  fa4,
-  faCircle,
-  faAngleLeft,
-} from "@fortawesome/free-solid-svg-icons";
 
 import Compras from "../../components/ui/Compras";
 import ReturnCitas from "../../components/ui/ReturnCita";
