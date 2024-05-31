@@ -256,7 +256,6 @@ async function InsertarTarjeta(solicitud,respuesta){
 
 
             if(faltantes.length > 0){
-                console.log(`El valor es:${principal[0]} okay`);
                 // el usuario no lleno todos los campos
                 respuesta.send({campos_faltantes:faltantes});
             }
