@@ -22,6 +22,8 @@ function TarjetaNueva() {
 
       respuestaJson = await respuesta.json();
 
+      setAdd(true);
+
       if (respuestaJson.logueado != true) {
         window.location.href = "/spa";
       }
@@ -110,7 +112,10 @@ function TarjetaNueva() {
     }));
   }
 
-  async function llamadaBackend(){
+  async function llamadaBackend(evento){
+
+    evento.preventDefault();
+
     const respuesta = await fetch('/api/tarjeta-nueva',{
       method:'POST',
       headers:{
@@ -135,28 +140,39 @@ function TarjetaNueva() {
     const respuestaJson = await respuesta.json();
 
     if(respuestaJson.campos_faltantes){
-      let ar = respuestaJson.faltantes;
-      let colores_faltantes = colores;
+      let ar = respuestaJson.campos_faltantes;
+
       for(let i in ar){
-          colores_faltantes[ar[i]] = 'orange';
+        setColores(prevState => ({
+          ...prevState,
+          [ar[i]]: 'orange'
+        }));
       }
-      setColores(colores_faltantes);
 
       toast(<div>{`Tienes campos sin contestar`}<FontAwesomeIcon icon={faCircleExclamation} /></div>);
+
+      return;
     }
 
     if(respuestaJson.incorrectos){
       let ar = respuestaJson.incorrectos;
-      let construido_incorrectos = objeto;
-      let colores_incorrectos = colores;
-      for(let i in ar){
-          construido_incorrectos[ar[i]] = ''; //limpiar el value
-          colores_incorrectos[ar[i]] = 'red';
-      }
-      setObjeto(construido_incorrectos);
-      setColores(colores_incorrectos);
 
-      toast(<div>{`Tienes campos incorrectos`}<FontAwesomeIcon icon={faCircleXmark} /></div>)
+      for(let i in ar){
+        setObjeto(prevState => ({
+          ...prevState,
+          [ar[i]]: ''
+        }));
+
+        setColores(prevState => ({
+          ...prevState,
+          [ar[i]]: 'red'
+        }));
+
+      }
+
+      toast(<div>{`Tienes campos incorrectos`}<FontAwesomeIcon icon={faCircleXmark} /></div>);
+
+      return;
     }
 
     if(respuestaJson.redirect){
@@ -165,6 +181,7 @@ function TarjetaNueva() {
 
     if(respuestaJson.fallo){
       console.log("hubo un problema en la insercion de la tarjeta");
+      return;
     }
 
   }

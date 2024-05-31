@@ -205,9 +205,8 @@ async function deleteTarjeta(solicitud,respuesta){
 
 
 async function InsertarTarjeta(solicitud,respuesta){
-
     if(solicitud.headers.cookie == undefined){
-        respuesta.send({logueado:false});
+        return respuesta.send({logueado:false});
     }
     else{
         let galletas = solicitud.headers.cookie.split('; ');
@@ -217,7 +216,7 @@ async function InsertarTarjeta(solicitud,respuesta){
             //el usuario esta logueado
             galleta = galleta.slice(14);
 
-            console.log('hola');
+            console.log('el usuario esta logueado');
 
 
             let decodificada = await jsonwebtoken.verify(galleta,process.env.JWT_SECRET);
@@ -234,30 +233,31 @@ async function InsertarTarjeta(solicitud,respuesta){
 
             let faltantes = [];
 
-            if(!titular[0]){
+            if(!titular[0] || titular[0]==''){
                 faltantes.push(titular[1]);
             }
-            if(!numero[0]){
+            if(!numero[0] || numero[0]==''){
                 faltantes.push(numero[1]);
             }
-            if(!mes[0]){
+            if(!mes[0] || mes[0]==''){
                 faltantes.push(mes[1]);
             }
-            if(!año[0]){
+            if(!año[0] || año[0]==''){
                 faltantes.push(año[1]);
             }
-            if(!cvv[0]){
+            if(!cvv[0] || cvv[0]==''){
                 faltantes.push(cvv[1]);
             }
-            if(!tipo[0]){
+            if(!tipo[0] || tipo[0]==''){
                 faltantes.push(tipo[1]);
             }
 
 
 
             if(faltantes.length > 0){
+                console.log('hubo campos faltantes');
                 // el usuario no lleno todos los campos
-                respuesta.send({campos_faltantes:faltantes});
+                return respuesta.send({campos_faltantes:faltantes});
             }
             else{
                 // todos los campos fueron llenados
@@ -373,8 +373,8 @@ async function InsertarTarjeta(solicitud,respuesta){
 
                 if(invalidos.length > 0){
                     // hubos algunos campos incorrectos
-                    console.log('por AQUIII')
-                    respuesta.send({incorrectos:invalidos});
+                    console.log('hubo campos invalidos');
+                    return respuesta.send({incorrectos:invalidos});
                 }
                 else{
                     // todos los campos fueron llenados y de forma correcta
@@ -418,10 +418,10 @@ async function InsertarTarjeta(solicitud,respuesta){
                     try{
                         await solicitud.database.query(mysql.format(consulta,parametros));
                         console.log('La Insercion fue exitosa');
-                        respuesta.send({redirect:'/perfil/tarjetas'})
+                        return respuesta.send({redirect:'/perfil/tarjetas'});
                     }catch(error){
-                        console.log(error)
-                        respuesta.send({fallo:true})
+                        console.log('No se pudo insertar la tarjeta');
+                        return respuesta.send({fallo:true});
                     }
 
                 }
@@ -434,7 +434,7 @@ async function InsertarTarjeta(solicitud,respuesta){
         }
         else{
             // el usuario no esta logueado
-            respuesta.send({logueado:false});
+            return respuesta.send({logueado:false});
         }
     }
 }
