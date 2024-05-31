@@ -10,6 +10,8 @@ import {
   getServicesSpa,
   getServicesEstetica,
   isFav,
+  getServicesFacial,
+  getServicesCorpo,
 } from "../db/query/queryCategoria.js";
 
 export const routerCategoria = express.Router(); // Creamos router
@@ -110,6 +112,82 @@ routerCategoria.delete("/delete", async (req, res) => {
 routerCategoria.get("/getServicesSpa/:id", async (req, res) => {
   try {
     const resultado = await getServicesSpa(conexion);
+    const horario = [];
+    let servicios = [];
+    let favo;
+    let favUser;
+    let i;
+    for (i = 0; i < resultado.length; i++) {
+      horario[i] = resultado[i].tiempo;
+    }
+    const horasMostrar = await horasWithoutSeconds(horario); // Horas con formato HH:MM
+    for (i = 0; i < resultado.length; i++) {
+      favo = await isFav(conexion, {
+        idUser: req.params.id,
+        idProdServ: resultado[i].pkIdPS,
+      }); // Verificamos si el servicio ya es un favorito del cliente
+
+      favUser = (await (favo && favo.length > 0)) ? true : false; // En caso de que el array no este vacio el servicio si es un favorito del cliente, caso contrario no lo es
+      servicios[i] = {
+        descripcion: resultado[i].descripcion,
+        estado: resultado[i].estado,
+        img: resultado[i].img,
+        nombre: resultado[i].nombre,
+        pkIdPS: resultado[i].pkIdPS,
+        precio: resultado[i].precio,
+        tiempo: horasMostrar[i],
+        valoracion: resultado[i].valoracion,
+        favorito: favUser,
+      };
+    }
+    res.status(202).json(servicios);
+  } catch (err) {
+    console.error(messageError, err); // Mostramos errores
+    res.status(500).send(messageError); // Enviamos un error INTERNAL SERVER ERROR y el error al navegador
+  }
+});
+
+routerCategoria.get("/getServicesFacial/:id", async (req, res) => {
+  try {
+    const resultado = await getServicesFacial(conexion);
+    const horario = [];
+    let servicios = [];
+    let favo;
+    let favUser;
+    let i;
+    for (i = 0; i < resultado.length; i++) {
+      horario[i] = resultado[i].tiempo;
+    }
+    const horasMostrar = await horasWithoutSeconds(horario); // Horas con formato HH:MM
+    for (i = 0; i < resultado.length; i++) {
+      favo = await isFav(conexion, {
+        idUser: req.params.id,
+        idProdServ: resultado[i].pkIdPS,
+      }); // Verificamos si el servicio ya es un favorito del cliente
+
+      favUser = (await (favo && favo.length > 0)) ? true : false; // En caso de que el array no este vacio el servicio si es un favorito del cliente, caso contrario no lo es
+      servicios[i] = {
+        descripcion: resultado[i].descripcion,
+        estado: resultado[i].estado,
+        img: resultado[i].img,
+        nombre: resultado[i].nombre,
+        pkIdPS: resultado[i].pkIdPS,
+        precio: resultado[i].precio,
+        tiempo: horasMostrar[i],
+        valoracion: resultado[i].valoracion,
+        favorito: favUser,
+      };
+    }
+    res.status(202).json(servicios);
+  } catch (err) {
+    console.error(messageError, err); // Mostramos errores
+    res.status(500).send(messageError); // Enviamos un error INTERNAL SERVER ERROR y el error al navegador
+  }
+});
+
+routerCategoria.get("/getServicesCorporal/:id", async (req, res) => {
+  try {
+    const resultado = await getServicesCorpo(conexion);
     const horario = [];
     let servicios = [];
     let favo;
