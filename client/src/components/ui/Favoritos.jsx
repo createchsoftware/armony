@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import favorito1 from "../../../public/pictures/favorito1.png";
 import favorito2 from "../../../public/pictures/favorito4.png";
 import favorito3 from "../../../public/pictures/favorito3.png";
@@ -8,7 +8,7 @@ import favorito6 from "../../../public/pictures/manicuraserv.png";
 import greenLeft from "../../../public/pictures/greenLeft.png";
 import TarjetaFavoritos from "./TarjetaFavoritos";
 
-var spa = [
+/*var spa = [
   {
     nombre: "Masaje básico y facial",
     descr:
@@ -72,12 +72,50 @@ var estetica = [
     rating: 5,
     fav: true,
   },
-];
+];*/
 
 function Favoritos() {
   const [toggleState, setToggleService] = useState(1);
+  const [spa, setSpa] = useState([]);
+  const [estetica, setEstetica] = useState([]);
   const [color1, setColor1] = useState("#EB5765");
   const [color2, setColor2] = useState("#F6B3B9");
+
+  useEffect(() => {
+    setTimeout(() => {
+      fetch("/api/admin/favoritos/ServiceFavoritosSpa")
+        .then((response) => {
+          if (!response.ok) {
+            throw new Error("Error al obtener los favoritos de spa");
+          }
+          return response.json();
+        })
+        .then((data) => {
+          setSpa(data);
+        })
+        .catch((error) => {
+          console.log("error", error);
+        });
+    }, 3000);
+  }, []);
+
+  useEffect(() => {
+    setTimeout(() => {
+      fetch("/api/admin/favoritos/ServiceFavoritosEstetica")
+        .then((response) => {
+          if (!response.ok) {
+            throw new Error("Error al obtener los favoritos de estetica");
+          }
+          return response.json();
+        })
+        .then((data) => {
+          setEstetica(data);
+        })
+        .catch((error) => {
+          console.log("error", error);
+        });
+    }, 3000);
+  }, []);
 
   const toggleService = (index) => {
     if (index === 1) {
@@ -90,6 +128,24 @@ function Favoritos() {
       setToggleService(index);
     }
   };
+
+  /*useEffect(() => {
+    setTimeout(() => {
+      fetch("/api/admin/productos/favoritos")
+        .then((response) => {
+          if (!response.ok) {
+            throw new Error("Error al obtener los servicios relacionados");
+          }
+          return response.json();
+        })
+        .then((data) => {
+          setSimilares(data);
+        })
+        .catch((error) => {
+          console.log("error", error);
+        });
+    }, 3000);
+  }, []);*/
 
   const setNavigate = () => {
     if (toggleState === 1) {
@@ -134,12 +190,13 @@ function Favoritos() {
                   <TarjetaFavoritos
                     props={{
                       nombre: servicio.nombre,
-                      descr: servicio.descr,
+                      descr: servicio.descripcion,
                       img: servicio.img,
                       precio: servicio.precio,
-                      dur: servicio.dur,
-                      rating: servicio.rating,
-                      isFavorite: servicio.fav,
+                      dur: servicio.tiempo,
+                      rating: servicio.valoracion,
+                      //isFavorite: servicio.fav,
+                      isFavorite: true,
                     }}
                   />
                 );
@@ -153,12 +210,13 @@ function Favoritos() {
                   <TarjetaFavoritos
                     props={{
                       nombre: servicio.nombre,
-                      descr: servicio.descr,
+                      descr: servicio.descripcion,
                       img: servicio.img,
                       precio: servicio.precio,
-                      dur: servicio.dur,
-                      rating: servicio.rating,
-                      isFavorite: servicio.fav,
+                      dur: servicio.tiempo,
+                      rating: servicio.valoracion,
+                      //isFavorite: servicio.fav,
+                      isFavorite: true,
                     }}
                   />
                 );
