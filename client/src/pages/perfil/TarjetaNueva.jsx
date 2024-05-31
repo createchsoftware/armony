@@ -2,10 +2,12 @@ import { Helmet, HelmetProvider } from "react-helmet-async";
 import LayoutPrincipal from "../../layouts/LayoutPrincipal";
 import { useEffect, useState } from "react"; // Solo necesitas esta línea de importación
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faAngleLeft, faCirclePlus } from "@fortawesome/free-solid-svg-icons";
+import { faAngleLeft, faCirclePlus , faCircleExclamation, faCircleXmark} from "@fortawesome/free-solid-svg-icons";
 import EditarTarjeta from "../../components/ui/EditarTarjeta";
+import { ToastContainer, toast } from 'react-toastify';
 
 import TarjetasPagoEstatica from "../../components/ui/Tarjeta_de_pago_estaticas";
+import { borderColor } from "@mui/system";
 
 function TarjetaNueva() {
   async function checkLogin() {
@@ -19,6 +21,8 @@ function TarjetaNueva() {
       });
 
       respuestaJson = await respuesta.json();
+
+      setAdd(true);
 
       if (respuestaJson.logueado != true) {
         window.location.href = "/spa";
@@ -64,15 +68,126 @@ function TarjetaNueva() {
       });
   }, []);
 
-  console.log(array); //  <---------- los datos del backend aqui estan, los pueden ver en el navegador
 
+
+
+
+  const [ objeto, setObjeto] = useState({
+    titular:'',
+    numero:'',
+    mes:'',
+    año:'',
+    cvv:'',
+    recordar:false,
+    principal:true,
+    tipo:''
+  });
+
+  const [ colores, setColores] = useState({
+    titular:'#ccc',
+    numero:'#ccc',
+    mes:'#ccc',
+    año:'#ccc',
+    cvv:'#ccc',
+    tipo:'#ccc'
+  });
+
+
+
+  function change(evento){
+
+    let {name, value} = evento.target;
+
+
+    if(typeof value == 'string'){
+      setColores(prevState => ({
+        ...prevState,
+        [name]: '#ccc'
+      }));
+    }
+
+    setObjeto(prevState => ({
+      ...prevState,
+      [name]: value
+    }));
+  }
+
+  async function llamadaBackend(evento){
+
+    evento.preventDefault();
+
+    const respuesta = await fetch('/api/tarjeta-nueva',{
+      method:'POST',
+      headers:{
+        'Content-Type':'application/json',
+      },
+      body:JSON.stringify({
+        titular:[objeto.titular,'titular'],
+        numero:[objeto.numero,'numero'],
+        mes:[objeto.mes,'mes'],
+        año:[objeto.año,'año'],
+        cvv:[objeto.cvv,'cvv'],
+        recordar:[objeto.recordar,'recordar'],
+        principal:[objeto.principal,'principal'],
+        tipo:[objeto.tipo,'tipo']
+      })
+    })
+
+    if(!respuesta.ok){
+      return;
+    }
+
+    const respuestaJson = await respuesta.json();
+
+    if(respuestaJson.campos_faltantes){
+      let ar = respuestaJson.campos_faltantes;
+
+      for(let i in ar){
+        setColores(prevState => ({
+          ...prevState,
+          [ar[i]]: 'orange'
+        }));
+      }
+
+      toast(<div>{`Tienes campos sin contestar`}<FontAwesomeIcon icon={faCircleExclamation} /></div>);
+
+      return;
+    }
+
+    if(respuestaJson.incorrectos){
+      let ar = respuestaJson.incorrectos;
+
+      for(let i in ar){
+        setObjeto(prevState => ({
+          ...prevState,
+          [ar[i]]: ''
+        }));
+
+        setColores(prevState => ({
+          ...prevState,
+          [ar[i]]: 'red'
+        }));
+
+      }
+
+      toast(<div>{`Tienes campos incorrectos`}<FontAwesomeIcon icon={faCircleXmark} /></div>);
+
+      return;
+    }
+
+    if(respuestaJson.redirect){
+      window.location.href = respuestaJson.redirect;
+    }
+
+    if(respuestaJson.fallo){
+      console.log("hubo un problema en la insercion de la tarjeta");
+      return;
+    }
+
+  }
+  
   return (
     <>
-      <HelmetProvider>
-        <Helmet>
-          <script src="../../../scripts/addCard.js"></script>
-        </Helmet>
-      </HelmetProvider>
       <LayoutPrincipal>
         <main className="grid gap-12 my-24">
           <section className="flex rounded-2xl mt-12 w-[60%] m-auto p-6 shadow-[0_3px_10px_rgb(0,0,0,0.2)]">
@@ -218,6 +333,9 @@ function TarjetaNueva() {
                       type="text"
                       id="titular"
                       name="titular"
+                      value={objeto.titular}
+                      style={{borderColor:colores.titular}}
+                      onChange={change}
                       className="grid mt-2 rounded shadow-md"
                     />
                   </div>
@@ -228,6 +346,9 @@ function TarjetaNueva() {
                       id="numero"
                       maxLength={16}
                       name="numero"
+                      value={objeto.numero}
+                      style={{borderColor:colores.numero}}
+                      onChange={change}
                       className="grid mt-2 rounded shadow-md"
                     />
                   </div>
@@ -242,6 +363,9 @@ function TarjetaNueva() {
                           id="mes"
                           name="mes"
                           maxLength={2}
+                          value={objeto.mes}
+                          style={{borderColor:colores.mes}}
+                          onChange={change}
                           className="w-20 text-center rounded shadow-md"
                         />
                         <h2 className="mx-4 text-xl font-bold text-center">
@@ -252,6 +376,9 @@ function TarjetaNueva() {
                           id="año"
                           name="año"
                           maxLength={2}
+                          value={objeto.año}
+                          style={{borderColor:colores.año}}
+                          onChange={change}
                           className="w-20 text-center rounded shadow-md"
                         />
                       </div>
@@ -264,7 +391,10 @@ function TarjetaNueva() {
                         type="text"
                         id="cvv"
                         name="cvv"
+                        value={objeto.cvv}
+                        style={{borderColor:colores.cvv}}
                         maxLength={3}
+                        onChange={change}
                         className="w-20 text-center rounded shadow-md justify-self-center"
                       />
                     </div>
@@ -277,19 +407,22 @@ function TarjetaNueva() {
                       type="text"
                       id="tipo"
                       name="tipo"
+                      value={objeto.tipo}
+                      style={{borderColor:colores.tipo}}
+                      onChange={change}
                       placeholder="debito/credito"
                     />
                   </div>
 
                   <div className="grid mt-4">
                     <div>
-                      <input type="checkbox" id="recordar" name="recordar" />
+                      <input type="checkbox" id="recordar" name="recordar" value={objeto.recordar} onChange={change}/>
                       <label htmlFor="recordar" className="ml-2">
                         Recordar tarjeta
                       </label>
                     </div>
                     <div>
-                      <input type="checkbox" id="principal" name="principal" />
+                      <input type="checkbox" id="principal" name="principal" value={objeto.principal} onChange={change}/>
                       <label htmlFor="principal" className="ml-2">
                         Poner como tarjeta principal
                       </label>
@@ -304,6 +437,7 @@ function TarjetaNueva() {
                     </a>
                     <button
                       id="add-Tarjeta"
+                      onClick={llamadaBackend}
                       className="bg-[#ec5766] cursor-pointer justify-self-center text-xl text-white px-10 py-2 rounded-full duration-200 hover:bg-[#ffb5a7]"
                     >
                       Agregar tarjeta
@@ -350,6 +484,7 @@ function TarjetaNueva() {
           </div>
         </div>
       )}
+      <ToastContainer position={'bottom-right'} theme={'light'} />
     </>
   );
 }

@@ -19,7 +19,7 @@ const TarjetaFavoritos = ({ props }) => {
     <div>
       <div>
         <img
-          className="relative m-auto aspect-square w-[60%] -bottom-6"
+          className="relative m-auto aspect-square w-[60%] -bottom-6 rounded-3xl"
           src={props.img}
           alt=""
         />

@@ -68,6 +68,8 @@ export default function ServicioEstetica() {
   const [mobileFiltersOpen, setMobileFiltersOpen] = useState(false);
   const [sortOption, setSortOption] = useState(ordenamiento[0]);
   const [allProducts, setAllProducts] = useState([]);
+  const [facial, setFacial] = useState([]);
+  const [corpo, setCorpo] = useState([]);
   const [filteredProducts, setFilteredProducts] = useState([]);
   const [categories, setCategories] = useState([]);
   const [marcas, setMarcas] = useState([]);
@@ -121,19 +123,20 @@ export default function ServicioEstetica() {
   //         .catch(err => console.log(err))
   // }, [])
 
-  //useEffect para obtener los servicios de la estética
+  //useEffect para obtener los servicios faciales
   useEffect(() => {
     if (id != undefined) {
       setTimeout(() => {
-        fetch(`/api/admin/categoria/getServicesSpa/${id}`)
+        fetch(`/api/admin/categoria/getServicesFacial/${id}`)
           .then((response) => {
             if (!response.ok) {
-              throw new Error("Error al obtener los servicios de Spa");
+              throw new Error("Error al obtener los servicios faciales");
             }
             return response.json();
           })
           .then((data) => {
-            setAllProducts(data);
+            setFacial(data);
+            setAllProducts(facial);
           })
           .catch((error) => {
             console.log("error", error);
@@ -141,6 +144,34 @@ export default function ServicioEstetica() {
       }, 3000);
     }
   }, [id]);
+
+  //useEffect para obtener los servicios corporales
+  useEffect(() => {
+    if (id != undefined) {
+      setTimeout(() => {
+        fetch(`/api/admin/categoria/getServicesCorporal/${id}`)
+          .then((response) => {
+            if (!response.ok) {
+              throw new Error("Error al obtener los servicios corporales");
+            }
+            return response.json();
+          })
+          .then((data) => {
+            setCorpo(data);
+          })
+          .catch((error) => {
+            console.log("error", error);
+          });
+      }, 3000);
+    }
+  }, [id]);
+
+  useEffect(() => {
+    if (allProducts == undefined) {
+      console.log(1);
+      setAllProducts(facial);
+    }
+  }, [facial]);
   /*
   // Función para obtener los servicios de spa
   async function renderSpaServices() {
@@ -295,11 +326,14 @@ export default function ServicioEstetica() {
     if (index === 1) {
       setColor1("#EB5765");
       setColor2("#F6B3B9");
-      setToggleService(index);
+      setAllProducts(facial);
+      //setToggleService(index);
     } else {
       setColor2("#EB5765");
       setColor1("#F6B3B9");
-      setToggleService(index);
+      setAllProducts([]);
+      setAllProducts(corpo);
+      //setToggleService(index);
     }
   };
 
@@ -314,16 +348,14 @@ export default function ServicioEstetica() {
         <div className="grid grid-cols-2 my-16">
           <a
             style={{ backgroundColor: color1 }}
-            onClick={toggleSoon}
-            //onClick={() => toggleService(1)}
+            onClick={() => toggleService(1)}
             className="px-10 py-4 mx-auto text-sm text-white rounded-full hover:cursor-pointer hover:bg-opacity-80 md:text-base"
           >
             Tratamientos faciales
           </a>
           <a
             style={{ backgroundColor: color2 }}
-            onClick={toggleSoon}
-            //onClick={() => toggleService(2)}
+            onClick={() => toggleService(2)}
             className="px-10 py-4 mx-auto text-xs text-white rounded-full hover:cursor-pointer hover:bg-opacity-80 md:text-base "
           >
             Tratamientos corporales
