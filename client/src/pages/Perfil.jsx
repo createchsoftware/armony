@@ -8,6 +8,7 @@ function Perfil() {
     const [nombre, setNombre] = useState(false); //<<< PARA EL INICIO DE SESION
     const [correo, setCorreo] = useState(false); //<<< PARA EL INICIO DE SESION
     const [imagen, setImagen] = useState(false); //<<< PARA EL INICIO DE SESION
+    const [sus, setSus] = useState(false); //<<< CARACTERISTICA GRAFICA DE QUE EL USUARIO ES SOCIO
 
     async function recibido() {
         const respuesta = await fetch('/api/logueado', {
@@ -47,9 +48,20 @@ function Perfil() {
             <LayoutPrincipal>
                 <main className='mt-40'>
                     <section className='rounded-2xl w-[60%] m-auto p-6 shadow-[0_3px_10px_rgb(0,0,0,0.2)]'>
-                        <a className='flex content-center text-sm gap-x-4 w-max items-center ml-6 text-black relative cursor-pointer before:bg-black before:absolute before:-bottom-1 before:block before:h-[1px] before:w-full before:origin-bottom-right before:scale-x-0 before:transition before:duration-300 before:ease-in-out hover:before:origin-bottom-left hover:before:scale-x-100 hover:font-bold' href={document.referrer}> <IoIosArrowBack className='' />
+                        <a className='flex content-center text-sm gap-x-4 w-max items-center ml-6 text-black relative cursor-pointer before:bg-black before:absolute before:-bottom-1 before:block before:h-[1px] before:w-full before:origin-bottom-right before:scale-x-0 before:transition before:duration-300 before:ease-in-out hover:before:origin-bottom-left hover:before:scale-x-100 hover:font-bold' href='/'> <IoIosArrowBack className='' />
                             Volver</a>
-                        <img className='w-40 m-auto my-6 -mt-32 rounded-full aspect-square' src={`../../pictures/avatares/${imagen}`} alt="" />
+                        <div className='relative w-40 m-auto my-6 -mt-32 aspect-square'>
+                            {sus && (
+                                <img
+                                    src="../../../pictures/marcoSuscripcion.png"
+                                    alt=""
+                                    className="absolute object-cover w-full h-full m-auto"
+                                />
+                            )}
+                            <div className="flex w-full h-full items-center justify-center">
+                                <img className='w-[85%] m-auto aspect-square rounded-full' src={imagen !== null ? `../../../pictures/avatares/${imagen}`: "../../../pictures/userDefault.png"} alt="" />
+                            </div>
+                        </div>
                         <div className='w-1/2 m-auto text-center'>
                             <h1 className='text-[#EB5765]'>{nombre === null ? "NOMBRE DE USUARIO" : nombre}</h1>
                             <h1 className=''>{correo === null ? "correo@armony.com" : correo}</h1>

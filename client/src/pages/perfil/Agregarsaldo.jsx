@@ -121,12 +121,6 @@ function AgregarSaldo(){
         </div>
     ))
 
-    // const confirmar = () => {
-    //     setConfirm(!confirm);
-    //     setTicket(!ticket);
-    //     handleSubmit();
-    // }
-
     const toggleTarjeta = () => {
         setAddTarjeta(!addTarjeta);
     }

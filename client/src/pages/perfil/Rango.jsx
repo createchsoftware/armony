@@ -28,11 +28,12 @@ function Rango() {
 
   useEffect(() => checkLogin(), []);
   const [nombre, setNombre] = useState(false); //<<< PARA EL INICIO DE SESION
-  const [correo, setCorreo] = useState(false); //<<< PARA EL INICIO DE SESION
+  //const [correo, setCorreo] = useState(false); //<<< PARA EL INICIO DE SESION
   const [foto, setFoto] = useState(null);
   const [rango, setRango] = useState(0); //<<< MUESTRA EL RANGO DEL USUARIO
   const [puntos, setPuntos] = useState(0); //<<< PUNTOS TOTALES\
   const [porcentaje, setPorcentaje] = useState(0);
+  const [sus, setSus] = useState(false); //<<< CARACTERISTICA GRAFICA DE QUE EL USUARIO ES SOCIO
 
   async function recibido() {
     const respuesta = await fetch("/api/logueado", {
@@ -44,7 +45,7 @@ function Rango() {
 
     if (!respuesta.ok) {
       setNombre(null);
-      setCorreo(null);
+      //setCorreo(null);
       setFoto(null);
     }
 
@@ -52,11 +53,11 @@ function Rango() {
 
     if (respuestaJson.logueado == true) {
       setNombre(respuestaJson.nombre);
-      setCorreo(respuestaJson.email);
+      //setCorreo(respuestaJson.email);
       setFoto(respuestaJson.imagen);
     } else {
       setNombre(null);
-      setCorreo(null);
+      //setCorreo(null);
       setFoto(null);
     }
   }
@@ -112,15 +113,26 @@ function Rango() {
             <IoIosArrowBack className="" />
             Volver
           </a>
-          <img
-            src={
-              foto !== null
-                ? `../../../pictures/avatares/${foto}`
-                : "../../../pictures/userDefault.png"
-            }
-            alt=""
-            className="w-32 m-auto my-6 -mt-24 rounded-full aspect-square"
-          />
+          <div className="relative w-36 h-36 m-auto my-6 -mt-24 aspect-square align-middle items-center justify-center">
+            {sus && (
+              <img
+                  src="../../../pictures/marcoSuscripcion.png"
+                  alt=""
+                  className="absolute object-cover w-full h-full m-auto"
+              />
+            )}
+            <div className="flex w-full h-full items-center justify-center">
+              <img
+                src={
+                  foto !== null
+                    ? `../../../pictures/avatares/${foto}`
+                    : "../../../pictures/userDefault.png"
+                }
+                alt=""
+                className="w-[85%] m-auto rounded-full aspect-square"
+              />
+            </div>
+          </div>
           <div className="m-auto text-center ">
             <div className="flex items-center justify-center gap-4">
               <h1 className="text-[#EB5765] font-semibold text-xl">{nombre}</h1>
