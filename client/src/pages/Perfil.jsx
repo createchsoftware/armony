@@ -48,7 +48,7 @@ function Perfil() {
             <LayoutPrincipal>
                 <main className='mt-40'>
                     <section className='rounded-2xl w-[60%] m-auto p-6 shadow-[0_3px_10px_rgb(0,0,0,0.2)]'>
-                        <a className='flex content-center text-sm gap-x-4 w-max items-center ml-6 text-black relative cursor-pointer before:bg-black before:absolute before:-bottom-1 before:block before:h-[1px] before:w-full before:origin-bottom-right before:scale-x-0 before:transition before:duration-300 before:ease-in-out hover:before:origin-bottom-left hover:before:scale-x-100 hover:font-bold' href={document.referrer}> <IoIosArrowBack className='' />
+                        <a className='flex content-center text-sm gap-x-4 w-max items-center ml-6 text-black relative cursor-pointer before:bg-black before:absolute before:-bottom-1 before:block before:h-[1px] before:w-full before:origin-bottom-right before:scale-x-0 before:transition before:duration-300 before:ease-in-out hover:before:origin-bottom-left hover:before:scale-x-100 hover:font-bold' href='/'> <IoIosArrowBack className='' />
                             Volver</a>
                         <div className='relative w-40 m-auto my-6 -mt-32 aspect-square'>
                             {sus && (
