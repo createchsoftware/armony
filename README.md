@@ -15,10 +15,5 @@
 </div>
 <hr>
 
-# ⚠️ CONTINUACIÓN DEL PROYECTO ⚠️
-¡Oye, tú! ¿Decidiste ser "programador" en Ingeniería de Software, y vas a continuar con el proyecto Armony?
-
-Por favor, lee el archivo **README.pdf**. Este es un manual técnico que te ayudará a comenzar desde cero, y continuar el proyecto con éxito. ¡Confiamos en tí!
-
 # Licencia
 El código íntegro de este proyecto se distribuye bajo la licencia de <a href="https://github.com/createchsoftware/armony/blob/main/LICENSE">The Unlicense</a> dado a que es un proyecto escolar. Algunas imagenes son propiedad de <a href="https://www.irasutoya.com/">いらすとや (Irasutoya)</a> o están distribuidas bajo licencias Creative Commons.
