@@ -179,6 +179,11 @@ function Navbar() {
                                             Inicio
                                         </a>
                                     </li>
+                                    <li className="nav-menu-item">
+                                        <a href="/suscripcion" className="menu-link">
+                                            Suscripción
+                                        </a>
+                                    </li>
                                     <li className="cursor-pointer nav-menu-item">
                                         <a className="menu-link">
                                             Servicios
