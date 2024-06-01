@@ -221,7 +221,7 @@ const Start = () => {
             </div>*/}
             {/* ¿Quiénes somos? */}
             <div className="somos" id="nosotros">
-                <img src="../../../pictures/logoArmony.png" alt="" id="logo1" />
+                <img src="../../../pictures/logoArmony.png" alt="Logotipo de armony" id="logo1" />
                 <h1 id="titulo">realza tu belleza interior.</h1>
                 <div className="somos-div">
                     <section className="somos-arm">
@@ -242,7 +242,7 @@ const Start = () => {
                         </h3>
                     </section>
                     <section className="somos-fotos">
-                        <img src="../../../pictures/somosArmony.png" alt="" id="fondo" />
+                        <img src="../../../pictures/somosArmony.png" alt='Empleados de armony' id="fondo" />
                     </section>
                 </div>
             </div>
@@ -262,49 +262,49 @@ const Start = () => {
                         <div className="pilar no1" rel={0}>
                             <a href="#servicios" className="pilar-btn" onClick={toggleSoon}>
                                 <h3 className="pilar-text">Cafetería Cultura &amp; Art</h3>
-                                <img src="../../../pictures/1cafeteria.jpg" alt="" className="pilar-photo"/>
+                                <img src="../../../pictures/1cafeteria.jpg" alt="Pilar Cafetería & Cultura" className="pilar-photo"/>
                                 <div className="deg2" />
                             </a>
                         </div>
                         <div className="pilar no2" rel={1}>
                             <a href="#servicios" className="pilar-btn" onClick={toggleSoon}>
                                 <h3 className="pilar-text">Wellness Hábitos saludables</h3>
-                                <img src="../../../pictures/2wellness.jpg" alt="" className="pilar-photo"/>
+                                <img src="../../../pictures/2wellness.jpg" alt="Pilar Wellness, Hábitos salidables" className="pilar-photo"/>
                                 <div className="deg2" />
                             </a>
                         </div>
                         <div className="pilar no7 no3" rel={2}>
                             <a href="/spa" className="pilar-btn">
                                 <h3 className="pilar-text">Spa<br/>Salon &amp; Beauty</h3>
-                                <img src="../../../pictures/7spa.jpg" alt="" className="pilar-photo" />
+                                <img src="../../../pictures/7spa.jpg" alt="Pilar Spa, Salon & Beauty" className="pilar-photo" />
                                 <div className="deg2" />
                             </a>
                         </div>
                         <div className="pilar no4" rel={3}>
                             <a href="#servicios" className="pilar-btn" onClick={toggleSoon}>
                                 <h3 className="pilar-text">Colectivo Regalos &amp; More</h3>
-                                <img src="../../../pictures/3colectivo.jpg" alt="" className="pilar-photo" />
+                                <img src="../../../pictures/3colectivo.jpg" alt="Pilar Colectivo" className="pilar-photo" />
                                 <div className="deg2" />
                             </a>
                         </div>
                         <div className="pilar no5" rel={4}>
                             <a href="#servicios" className="pilar-btn" onClick={toggleSoon}>
                                 <h3 className="pilar-text">Emprendimiento &amp; Fly</h3>
-                                <img src="../../../pictures/4fly.jpg" alt="" className="pilar-photo" />
+                                <img src="../../../pictures/4fly.jpg" alt="Pilar Emprendimiento" className="pilar-photo" />
                                 <div className="deg2" />
                             </a>
                         </div>
                         <div className="pilar no6" rel={5}>
                             <a href="#servicios" className="pilar-btn" onClick={toggleSoon}>
-                                <h3 className="pilar-text">School Knowlegde &amp; Learning</h3>
-                                <img src="../../../pictures/5school.png" alt="" className="pilar-photo" />
+                                <h3 className="pilar-text">School Knowledge &amp; Learning</h3>
+                                <img src="../../../pictures/5school.png" alt="Pilar School & Knowledge" className="pilar-photo" />
                                 <div className="deg2" />
                             </a>
                         </div>
                         <div className="pilar no7" rel={6}>
                             <a href="#servicios" className="pilar-btn" onClick={toggleSoon}>
                                 <h3 className="pilar-text">Clínica</h3>
-                                <img src="../../../pictures/6clinica.jpg" alt=""  className="pilar-photo"/>
+                                <img src="../../../pictures/6clinica.jpg" alt="Pilar Clínica"  className="pilar-photo"/>
                                 <div className="deg2" />
                             </a>
                         </div>

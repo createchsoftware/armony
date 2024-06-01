@@ -10,6 +10,10 @@ import { styled } from '@mui/material/styles';
 import { useEffect, useState } from 'react';
 import PopupLogin from '../../components/ui/Login/PopupLogin';
 import { jwtDecode } from "jwt-decode";
+import { Navigate, useNavigate } from "react-router-dom";
+import 'react-tooltip/dist/react-tooltip.css'
+import { Tooltip } from 'react-tooltip'
+import { Bot } from 'lucide-react';
 
 const StyledRating = styled(Rating)({
     '& .MuiRating-iconFilled': {
@@ -21,15 +25,17 @@ const StyledRating = styled(Rating)({
 });
 
 function ListaDeseo() {
+    const navigate = useNavigate();
+
     const [boton1, setBoton1] = useState('lista-boton');
     const [boton2, setBoton2] = useState('lista-boton');
     const [resumen, setResumen] = useState('lista-resumen-off');
     const [width, setWidth] = useState('w-full');
-    const [tipo, setTipo] = useState('all');
+    const [tipoProducto, settipoProducto] = useState('all');
     const [showProduct, setShowProduct] = useState(false);
     const [searchTerm, setSearchTerm] = useState('');
     const [sideBar, setSiderBar] = useState(false);
-    const [barSize , setBarSize] = useState('sideBar-Off')
+    const [barSize, setBarSize] = useState('sideBar-Off')
     const [cols, setCols] = useState('grid-cols-4')
     const [sort, setSort] = useState('')
     const [log, setLog] = useState(false); //<<< PARA EL INICIO DE SESION
@@ -61,117 +67,117 @@ function ListaDeseo() {
     }, []);
 
     const filtrar = (type) => {
-        setTipo(type);
+        settipoProducto(type);
     }
 
     const [contResumen, setContResumen] = useState([
-    // CONTENIDO COMENTADO. ¡¡¡USAR SOLAMENTE PARA PRUEBAS ES CASO DE NO HABER AUN CONEXION FRONT-BACK!!!
-    // {
-    //     id: 1,
-    //     tipo: '1',
-    //     nombre: 'Producto 1',
-    //     precio: 100,
-    //     categoria: 'Cosméticos',
-    //     marca: 'POND’S',
-    //     valoracion: 4,
-    //     imagen: 'https://tailwindui.com/img/ecommerce-images/category-page-04-image-card-01.jpg',
-    //     descripcion: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit',
-    // },
-    // {
-    //     id: 2,
-    //     tipo: '1',
-    //     nombre: 'Producto 2',
-    //     precio: 200,
-    //     categoria: 'Facial',
-    //     marca: 'Hidra Sense',
-    //     valoracion: 3,
-    //     imagen: 'https://tailwindui.com/img/ecommerce-images/category-page-04-image-card-02.jpg',
-    //     descripcion: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit',
-    // },
-    // {
-    //     id: 3,
-    //     tipo: '1',
-    //     nombre: 'Producto 3',
-    //     precio: 300,
-    //     categoria: 'Crema',
-    //     marca: 'Savasana',
-    //     valoracion: 2,
-    //     imagen: 'https://tailwindui.com/img/ecommerce-images/category-page-04-image-card-03.jpg',
-    //     descripcion: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit',
-    // },
-    // {
-    //     id: 4,
-    //     tipo: '1',
-    //     nombre: 'Producto 4',
-    //     precio: 400,
-    //     categoria: 'Spray',
-    //     marca: 'CeraVe',
-    //     valoracion: 1,
-    //     imagen: 'https://tailwindui.com/img/ecommerce-images/category-page-04-image-card-04.jpg',
-    //     descripcion: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit',
-    // },
-    // {
-    //     id: 5,
-    //     tipo: '1',
-    //     nombre: 'Producto 5',
-    //     precio: 500,
-    //     categoria: 'Serúm',
-    //     marca: 'Cetaphil',
-    //     valoracion: 5,
-    //     imagen: 'https://tailwindui.com/img/ecommerce-images/category-page-04-image-card-05.jpg',
-    //     descripcion: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit',
-    // },
-    // {
-    //     id: 6,
-    //     tipo: '1',
-    //     nombre: 'Producto 6',
-    //     precio: 600,
-    //     categoria: 'Depilación',
-    //     marca: 'Mizon',
-    //     valoracion: 4,
-    //     imagen: 'https://tailwindui.com/img/ecommerce-images/category-page-04-image-card-06.jpg',
-    //     descripcion: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit',
-    // },
-    // {
-    //     id: 7,
-    //     tipo: '2',
-    //     nombre: "HydroFacial",
-    //     descripcion: "Estimula la restauración natural de la piel",
-    //     precio: 1800,
-    //     imagen: "../../../public/pictures/Hydrafacial.png",
-    //     valoracion: 5,
-    //     fav: true,
-    // },
-    // {
-    //     id: 8,
-    //     tipo: '2',
-    //     nombre: "Mesoterapia virtual",
-    //     descripcion: "Aumenta la permeabilidad de la piel",
-    //     precio: 1800,
-    //     imagen: "../../../public/pictures/MesoterapiaVirtual.png",
-    //     valoracion: 5,
-    //     fav: true,
-    // },
-    // {
-    //     id: 9,
-    //     tipo: '2',
-    //     nombre: "Uñas",
-    //     descripcion: "Transformación de las manos elevando confianza",
-    //     precio: 1200,
-    //     imagen: "../../../public/pictures/unas.png",
-    //     valoracion: 5,
-    //     fav: true,
-    // },
-    // {
-    //     id: 10,
-    //     tipo: '2',
-    //     nombre: "Pedicura",
-    //     descripcion: "Tratamiento estético para los pies",
-    //     precio: 1800,
-    //     imagen: "../../../public/pictures/pedicura.png",
-    //     valoracion: 5,
-    //     fav: true,
-    // }
+        // CONTENIDO COMENTADO. ¡¡¡USAR SOLAMENTE PARA PRUEBAS ES CASO DE NO HABER AUN CONEXION FRONT-BACK!!!
+        // {
+        //     id: 1,
+        //     tipo: '1',
+        //     nombre: 'Producto 1',
+        //     precio: 100,
+        //     categoria: 'Cosméticos',
+        //     marca: 'POND’S',
+        //     valoracion: 4,
+        //     imagen: 'https://tailwindui.com/img/ecommerce-images/category-page-04-image-card-01.jpg',
+        //     descripcion: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit',
+        // },
+        // {
+        //     id: 2,
+        //     tipo: '1',
+        //     nombre: 'Producto 2',
+        //     precio: 200,
+        //     categoria: 'Facial',
+        //     marca: 'Hidra Sense',
+        //     valoracion: 3,
+        //     imagen: 'https://tailwindui.com/img/ecommerce-images/category-page-04-image-card-02.jpg',
+        //     descripcion: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit',
+        // },
+        // {
+        //     id: 3,
+        //     tipo: '1',
+        //     nombre: 'Producto 3',
+        //     precio: 300,
+        //     categoria: 'Crema',
+        //     marca: 'Savasana',
+        //     valoracion: 2,
+        //     imagen: 'https://tailwindui.com/img/ecommerce-images/category-page-04-image-card-03.jpg',
+        //     descripcion: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit',
+        // },
+        // {
+        //     id: 4,
+        //     tipo: '1',
+        //     nombre: 'Producto 4',
+        //     precio: 400,
+        //     categoria: 'Spray',
+        //     marca: 'CeraVe',
+        //     valoracion: 1,
+        //     imagen: 'https://tailwindui.com/img/ecommerce-images/category-page-04-image-card-04.jpg',
+        //     descripcion: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit',
+        // },
+        // {
+        //     id: 5,
+        //     tipo: '1',
+        //     nombre: 'Producto 5',
+        //     precio: 500,
+        //     categoria: 'Serúm',
+        //     marca: 'Cetaphil',
+        //     valoracion: 5,
+        //     imagen: 'https://tailwindui.com/img/ecommerce-images/category-page-04-image-card-05.jpg',
+        //     descripcion: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit',
+        // },
+        // {
+        //     id: 6,
+        //     tipo: '1',
+        //     nombre: 'Producto 6',
+        //     precio: 600,
+        //     categoria: 'Depilación',
+        //     marca: 'Mizon',
+        //     valoracion: 4,
+        //     imagen: 'https://tailwindui.com/img/ecommerce-images/category-page-04-image-card-06.jpg',
+        //     descripcion: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit',
+        // },
+        // {
+        //     id: 7,
+        //     tipo: '2',
+        //     nombre: "HydroFacial",
+        //     descripcion: "Estimula la restauración natural de la piel",
+        //     precio: 1800,
+        //     imagen: "../../../public/pictures/Hydrafacial.png",
+        //     valoracion: 5,
+        //     fav: true,
+        // },
+        // {
+        //     id: 8,
+        //     tipo: '2',
+        //     nombre: "Mesoterapia virtual",
+        //     descripcion: "Aumenta la permeabilidad de la piel",
+        //     precio: 1800,
+        //     imagen: "../../../public/pictures/MesoterapiaVirtual.png",
+        //     valoracion: 5,
+        //     fav: true,
+        // },
+        // {
+        //     id: 9,
+        //     tipo: '2',
+        //     nombre: "Uñas",
+        //     descripcion: "Transformación de las manos elevando confianza",
+        //     precio: 1200,
+        //     imagen: "../../../public/pictures/unas.png",
+        //     valoracion: 5,
+        //     fav: true,
+        // },
+        // {
+        //     id: 10,
+        //     tipo: '2',
+        //     nombre: "Pedicura",
+        //     descripcion: "Tratamiento estético para los pies",
+        //     precio: 1800,
+        //     imagen: "../../../public/pictures/pedicura.png",
+        //     valoracion: 5,
+        //     fav: true,
+        // }
     ])
 
     const [Uid, setUid] = useState(null)
@@ -200,38 +206,58 @@ function ListaDeseo() {
         return null;
     }
 
-    useEffect(()=>{
+    useEffect(() => {
         const Prod = async () => {
-            try{
-                if(Uid){
-                    const response=await fetch(`api/admin/favoritos/ProductFavoritosbyId/${Uid}`)
+            try {
+                if (Uid) {
+                    const response = await fetch(`api/admin/favoritos/ProductFavoritosbyId/${Uid}`)
                     const data = await response.json();
                     setContResumen(data)
                 }
-            }catch(error){
-                console.error("hubo error :",error)
+            } catch (error) {
+                console.error("hubo error :", error)
             }
         }
         Prod()
-    },[Uid])
+    }, [Uid])
 
+
+    // variable por la cual filtrar -> tipoProducto   (si es null es un servicio y si es venta es un producto)
     const presionar1 = () => {
-        setBoton1('lista-boton-on')
-        setBoton2('lista-boton')
-        setResumen('lista-resumen-on')
-        setWidth('w-1/2')
-        filtrar('1')
-        setShowProduct(true)
-        setCols('grid-cols-3')
+        if(boton1 !== 'lista-boton-on')
+        {
+            setBoton1('lista-boton-on')
+            setBoton2('lista-boton')
+            setResumen('lista-resumen-on')
+            setWidth('w-1/2')
+            filtrar('null')
+            setShowProduct(true)
+            setCols('grid-cols-3')
+        }else{
+            setBoton1('lista-boton')
+            setResumen('lista-resumen-off')
+            setWidth('w-full')
+            filtrar('all')
+            setShowProduct(false)
+            setCols('grid-cols-4')
+        }
+        
     }
     const presionar2 = () => {
-        setBoton2('lista-boton-on')
-        setBoton1('lista-boton')
-        setResumen('lista-resumen-off')
-        setWidth('w-full')
-        filtrar('2')
-        setShowProduct(false)
-        setCols('grid-cols-4')
+        if(boton2 !== 'lista-boton-on')
+        {
+            setBoton2('lista-boton-on')
+            setBoton1('lista-boton')
+            setResumen('lista-resumen-off')
+            setWidth('w-full')
+            filtrar('venta')
+            setShowProduct(false)
+            setCols('grid-cols-4')
+        }else{
+            setBoton2('lista-boton')
+            filtrar('all')
+        }
+        
     }
 
     const removeProducto = (itemId) => {
@@ -239,15 +265,15 @@ function ListaDeseo() {
         setContResumen(contResumen.filter(item => item.pkIdPS !== itemId));
     };
 
-    const eliminarFav =async(idProServ)=>{
-        try{
-        await fetch("/api/admin/favoritos/delFavorito", {
-            method: "POST",
-            body: JSON.stringify({ idCliente: Uid, IdProducto: idProServ }),
-            headers: { "Content-Type": "application/json" },
+    const eliminarFav = async (idProServ) => {
+        try {
+            await fetch("/api/admin/favoritos/delFavorito", {
+                method: "POST",
+                body: JSON.stringify({ idCliente: Uid, IdProducto: idProServ }),
+                headers: { "Content-Type": "application/json" },
             });
-        }catch(error){
-            console.log("error",error)
+        } catch (error) {
+            console.log("error", error)
         }
     }
 
@@ -264,6 +290,19 @@ function ListaDeseo() {
         setSort(event.target.value)
     }
 
+    const handleViewMore = (producto) => {
+        // navigate to the product page with the product current id
+        const product = {
+            id: producto.pkIdPS,
+            nombre: producto.nombre,
+            precio: parseFloat(producto.precio),
+            descripcion: producto.descripcion,
+            valoracion: producto.valoracion || 5,
+            imagen: producto.img,
+        };
+        navigate(`/spa/producto/${product.id}`, { state: { product } });
+    }
+
     const filteredProducts = contResumen.filter(producto =>
         // (tipo === 'all' || producto.tipo === tipo) &&
         producto.nombre.toLowerCase().includes(searchTerm.toLowerCase())
@@ -273,18 +312,18 @@ function ListaDeseo() {
         } else if (sort === 'nombre-desc') {
             return b.nombre.localeCompare(a.nombre);
         } else if (sort === 'precio-asc') {
-            return a.precio - b.precio;
-        } else if (sort === 'precio-desc') {
             return b.precio - a.precio;
+        } else if (sort === 'precio-desc') {
+            return a.precio - b.precio;
         } else {
             return 0;
         }
-    }) 
+    })
 
     const contenido = filteredProducts.map(producto => (
         <li key={producto.pkIdPS} className='grid border-4 bg-white border-[#E2B3B7] p-6 py-2 rounded-xl mx-6 mb-6'>
             <Box
-                className="grid justify-end z-0"
+                className="z-0 grid justify-end"
                 sx={{
                     '& > legend': { mt: 2 },
                 }}
@@ -300,7 +339,7 @@ function ListaDeseo() {
                     onClick={() => removeProducto(producto.pkIdPS)}
                 />
             </Box>
-            <img className='w-4/5 justify-self-center m-auto mb-4 rounded-lg aspect-square'
+            <img data-tooltip-id="ver" data-tooltip-content="Ver producto" onClick={() => handleViewMore(producto)} className='w-4/5 m-auto mb-4 rounded-lg hover:cursor-pointer hover:opacity-60 justify-self-center aspect-square'
                 src={producto.img}
                 alt={producto.nombre}
             />
@@ -313,18 +352,18 @@ function ListaDeseo() {
                 </p>
             </div>
             <div className='grid mt-2'>
-                { producto.tipo === "1" ? (
-                    <button className=" text-xs gap-2  transition-all duration-300 px-8  hover:bg-[#036C65] hover:ring-1  hover:[#036C65] hover:ring-offset-1 group relative flex h-10 items-center justify-center overflow-hidden rounded-xl border-2 bg-[#EB5765] font-[abeatbykai] text-neutral-200"><span>Agregar</span> <IconoAgregarAlCarrito /> <div className="w-0 translate-x-[100%] pl-0 opacity-0 transition-all duration-200 group-hover:w-0 group-hover:translate-x-0 group-hover:pl-1 group-hover:opacity-100"></div></button>
-                ):(
-                    <button className=" text-xs gap-2  transition-all duration-300 px-8  hover:bg-[#036C65] hover:ring-1  hover:[#036C65] hover:ring-offset-1 group relative flex h-10 items-center justify-center overflow-hidden rounded-xl border-2 bg-[#EB5765] font-[abeatbykai] text-neutral-200"><span>Agendar</span><div className="w-0 translate-x-[100%] pl-0 opacity-0 transition-all duration-200 group-hover:w-0 group-hover:translate-x-0 group-hover:pl-1 group-hover:opacity-100"></div></button>
-                ) }
+                {/* {producto.tipo === "1" ? ( */}
+                    <button className=" text-xs gap-2  transition-all duration-300 px-8  hover:bg-[#036C65] hover:ring-1  hover:[#036C65] hover:ring-offset-1 group relative flex h-10 items-center justify-center overflow-hidden rounded-xl border-2 bg-[#EB5765] font-[abeatbykai] text-neutral-200"><span>Comprar</span> <IconoAgregarAlCarrito /> <div className="w-0 translate-x-[100%] pl-0 opacity-0 transition-all duration-200 group-hover:w-0 group-hover:translate-x-0 group-hover:pl-1 group-hover:opacity-100"></div></button>
+                {/* ) : ( */}
+                    {/* <button className=" text-xs gap-2  transition-all duration-300 px-8  hover:bg-[#036C65] hover:ring-1  hover:[#036C65] hover:ring-offset-1 group relative flex h-10 items-center justify-center overflow-hidden rounded-xl border-2 bg-[#EB5765] font-[abeatbykai] text-neutral-200"><span>Agendar</span><div className="w-0 translate-x-[100%] pl-0 opacity-0 transition-all duration-200 group-hover:w-0 group-hover:translate-x-0 group-hover:pl-1 group-hover:opacity-100"></div></button> */}
+                {/* )} */}
             </div>
         </li>
     ))
 
     const precioTotal = contResumen
-        .filter(producto => producto.tipo === '1')
-        .reduce((total, producto) => total + producto.precio, 0)
+        // .filter(producto => producto.tipo === '1')
+        .reduce((total, producto) => total + parseFloat(producto.precio), 0)
         .toFixed(2);
 
     const cantProductos = contResumen
@@ -332,18 +371,18 @@ function ListaDeseo() {
         .length;
 
     const handleSearch = (event) => {
-      setSearchTerm(event.target.value);
+        setSearchTerm(event.target.value);
     };
 
     const toggleBar = () => {
         setSiderBar(!sideBar)
         sideBar ? (
             setBarSize('sideBar-Off')
-        ):(
+        ) : (
             setBarSize('sideBar-On')
         )
     }
-    
+
     return (
         <>
             <Navbar />
@@ -352,23 +391,23 @@ function ListaDeseo() {
                     <div className='flex w-[100%]'>
                         <div className={barSize} >
                             <aside className='menu-deseo bg-[#fb9ea6] w-full' >
-                                <nav className='h-full flex flex-col'>
-                                    <div className='flex items-center mx-8 py-8 cursor-pointer' onClick={toggleBar}>
+                                <nav className='flex flex-col h-full'>
+                                    <div className='flex items-center py-8 mx-8 cursor-pointer' onClick={toggleBar}>
                                         <FontAwesomeIcon className='text-2xl hover:text-white' icon={faBars} />
-                                        { sideBar && 
-                                            <p className='text-xl ml-8 truncate'>Mi lista de deseos</p>
+                                        {sideBar &&
+                                            <p className='ml-8 text-xl truncate'>Mi lista de deseos</p>
                                         }
                                     </div>
-                                    <ul className='text-xl flex-1'>
+                                    <ul className='flex-1 text-xl'>
                                         <li className={boton1} onClick={presionar1}>
                                             <FontAwesomeIcon className='ml-6' icon={faBasketShopping} />
-                                            { sideBar && 
+                                            {sideBar &&
                                                 <p className='ml-3 truncate'>Productos</p>
                                             }
                                         </li>
                                         <li className={boton2} onClick={presionar2}>
                                             <FontAwesomeIcon className='ml-6' icon={faHandHoldingHeart} />
-                                            { sideBar && 
+                                            {sideBar &&
                                                 <p className='ml-3 truncate'>Servicios</p>
                                             }
                                         </li>
@@ -376,12 +415,12 @@ function ListaDeseo() {
                                 </nav>
                             </aside>
                         </div>
-                        <div className='menu-deseo w-full h-full'>
-                            <img src="../../../pictures/decoArmony1.png" alt="" className='absolute -right-7 -rotate-90 w-60 h-180 top-60' />
+                        <div className='grid w-full h-full menu-deseo'>
+                            <img src="../../../pictures/decoArmony1.png" alt="" className='absolute -rotate-90 -right-7 w-60 h-180 top-60' />
                             <div className='flex justify-center mt-5'>
-                                <form action="" className='flex items-center w-4/5 justify-center border-2 border-[rgb(255,181,167)] rounded-lg'>
+                                <form action="" className='flex h-10 items-center w-4/5 justify-center border-2 border-[rgb(255,181,167)] rounded-lg'>
                                     <input
-                                        className='w-full rounded-lg px-5 py-2'
+                                        className='w-full h-full px-5 py-2 rounded-lg'
                                         type="buscar"
                                         placeholder="Buscar..."
                                         onChange={handleSearch}
@@ -389,58 +428,58 @@ function ListaDeseo() {
                                     <FontAwesomeIcon icon={faMagnifyingGlass} className='mx-4 text-[rgb(255,181,167)] text-xl' />
                                 </form>
                             </div>
-                            <div className='flex justify-end pr-24 py-2'>
+                            <div className='flex justify-end py-2 pr-24'>
                                 <select value={sort} onChange={handleSortChange} className='flex border-0 w-max gap-2 relative cursor-pointer before:bg-black before:absolute before:-bottom-1 before:block before:h-[1px] before:w-full before:origin-bottom-right before:scale-x-0 before:transition before:duration-300 before:ease-in-out hover:before:origin-bottom-left hover:before:scale-x-100 hover:font-bold'>
-                                    <option value="" className='hover:font-bold hover:text-[#ec5766]'> Ordenamiento por:</option>
-                                    <option value="nombre-asc" className='hover:font-bold hover:text-[#ec5766]'> Nombre (A-Z)</option>
-                                    <option value="nombre-desc" className='hover:font-bold hover:text-[#ec5766]'> Nombre (Z-A)</option>
-                                    <option value="precio-asc" className='hover:font-bold hover:text-[#ec5766]'> Precio: Mayor a menor</option>
-                                    <option value="precio-desc" className='hover:font-bold hover:text-[#ec5766]'> Precio: Menor a mayor</option>
+                                    <option value="" className='hover:font-bold hover:bg-[#ec5766]'> Ordenamiento por:</option>
+                                    <option value="nombre-asc" className='hover:font-bold hover:bg-[#ec5766]'> Nombre (A-Z)</option>
+                                    <option value="nombre-desc" className='hover:font-bold hover:bg-[#ec5766]'> Nombre (Z-A)</option>
+                                    <option value="precio-asc" className='hover:font-bold hover:bg-[#ec5766]'> Precio: Mayor a menor</option>
+                                    <option value="precio-desc" className='hover:font-bold hover:bg-[#ec5766]'> Precio: Menor a mayor</option>
                                 </select>
                             </div>
-                            <div className='grid px-12 pb-14 h-full overflow-y-scroll'>
+                            <div className='grid h-full px-12 overflow-y-scroll mb-14'>
                                 {/* Contenido */}
-                                { contResumen.length === 0 ? (
+                                {contResumen.length === 0 ? (
                                     !showProduct &&
                                     <p className='m-auto'>No se encontraron artículos</p>
-                                ):(
+                                ) : (
                                     <ul className={'grid h-max gap-2 duration-200 ' + cols}>
                                         {contenido}
                                     </ul>
                                 )}
-                                { showProduct && contResumen.filter(producto => producto.tipo === '1').length === 0 && 
+                                {/* {showProduct && contResumen.filter(producto => producto.tipo === '1').length === 0 &&
                                     <p className='m-auto'>No se encontraron productos.</p>
-                                }
+                                } */}
                             </div>
                         </div>
                     </div>
                     <div className={resumen}>
                         <div className={width}>
                             {/* { contResumen.filter(producto => producto.tipo === '1').length === 0 ? ( */}
-                            { contResumen.length === 0 ? (
-                                <h1 className='text-center text-xl py-6'>No hay productos</h1>
-                            ):(
+                            {contResumen.length === 0 ? (
+                                <h1 className='py-6 text-xl text-center'>No hay productos</h1>
+                            ) : (
                                 <>
-                                    <h1 className='text-center text-xl py-6'>Total artículos ({cantProductos})</h1>
-                                    <hr className='border-2 w-full border-black' />
+                                    <h1 className='py-6 text-xl text-center'>Total artículos ({cantProductos})</h1>
+                                    <hr className='w-full border-2 border-black' />
                                     <ul className='p-8'>{resumenList}</ul>
-                                    <hr className='border-2 w-full border-black mb-6' />
-                                    <h1 className='text-left text-xl px-6 mb-4'>Gastos de envío</h1>
-                                    <p className='text-left text-gray-500 text-l px-6'>Si tu compra supera $1,000 conseguiras gastos de envío gratis.</p>
-                                    { precioTotal >= 1000 ? (
+                                    <hr className='w-full mb-6 border-2 border-black' />
+                                    <h1 className='px-6 mb-4 text-xl text-left'>Gastos de envío</h1>
+                                    <p className='px-6 text-left text-gray-500 text-l'>Si tu compra supera $1,000 conseguiras gastos de envío gratis.</p>
+                                    {precioTotal >= 1000 ? (
                                         <p className='text-right text-[#45b59c] text-l px-6'>Envío gratis.</p>
-                                    ):(
+                                    ) : (
                                         <p className='text-right text-[#45b59c] text-l px-6'>Envío NO gratis.</p>
                                     )}
-                                    <hr className='border-2 w-full border-black my-6' />
+                                    <hr className='w-full my-6 border-2 border-black' />
                                     <div className='flex justify-between px-8'>
                                         <h1 className='text-xl'>Total:</h1>
                                         <h1 className='text-[#036d63] text-xl'>${precioTotal}</h1>
                                     </div>
                                     <div className='grid'>
-                                        { log ? (
+                                        {log ? (
                                             <a href='/spa/comprar' className='bg-[#ec5766] p-2 text-center text-white mx-6 rounded-xl my-2 duration-200 hover:bg-[#ffb5a7]'>Comprar</a>
-                                        ):(
+                                        ) : (
                                             <button onClick={() => setLogin(!login)} className='bg-[#ec5766] p-2 text-center text-white mx-6 rounded-xl my-2 duration-200 hover:bg-[#ffb5a7]'>Comprar</button>
                                         )}
                                     </div>
@@ -451,6 +490,7 @@ function ListaDeseo() {
                 </div>
             </div>
             {login && <PopupLogin cerrar={() => setLogin(!login)} />}
+            <Tooltip id="ver" />
         </>
     );
 }

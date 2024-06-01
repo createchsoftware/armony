@@ -240,3 +240,17 @@ routerCitas.get("/citasPendientes/:idCliente/:Estado", async (req, res) => {
     res.status(500).send(messageError);
   }
 });
+
+routerCitas.get("/idVentaCita/:id/:tipo/:phone", async (req, res) => {
+  try {
+    const idventa = await searchVentaCita(conexion, {
+      idCliente: req.params.id,
+      tVenta:req.params.tipo,
+      phone: data.phone,
+    });
+    res.status(200).json(idventa);
+  } catch (err) {
+    console.error(messageError, err);
+    res.status(500).send(messageError);
+  }
+});

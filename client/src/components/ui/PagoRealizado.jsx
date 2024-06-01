@@ -60,6 +60,18 @@ function PagoRealizado({ cerrarPago, total, next }) {
           const dataVenta = await responseVenta.json();
           console.log('Respuesta de la venta:', dataVenta);
 
+
+         await fetch(`/api/admin/citas/idVentaCita/${cliente.ID}`)
+          .then(response => response.json())
+          .then(data => {
+            localStorage.setItem('idventaCita',data[0].pkIdVenta);
+          })
+          .catch(error => {
+              console.log('error', error);
+          });
+
+
+
           let citas = JSON.parse(localStorage.getItem("citas")) || [];
 
           for (let index = 0; index < citas.length; index++) {

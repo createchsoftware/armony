@@ -18,6 +18,7 @@ import { useParams } from 'react-router-dom';
 import { Navigate, useNavigate } from "react-router-dom";
 import { useLocation } from 'react-router-dom';
 import PopupLogin from "../components/ui/Login/PopupLogin.jsx";
+import { Helmet, HelmetProvider } from "react-helmet-async";
 
 const StyledRating = styled(Rating)({
     '& .MuiRating-iconFilled': {
@@ -218,6 +219,11 @@ function Producto() {
 
     return (
         <>
+            <HelmetProvider>
+                <Helmet>
+                    <script src="../../scripts/index.js"></script>
+                </Helmet>
+            </HelmetProvider>
             <LayoutPrincipal>
                 <main className="flex flex-col gap-12 my-24">
                     <section className=' flex  rounded-3xl w-[80%] overflow-hidden m-auto shadow-[0_3px_10px_rgb(0,0,0,0.2)]'>

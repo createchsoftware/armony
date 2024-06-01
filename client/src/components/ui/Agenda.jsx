@@ -3,10 +3,49 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrash } from "@fortawesome/free-solid-svg-icons";
 import Soon from "./Proximamente";
 import Eliminar from "./EliminarAdvertencia";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import { useRef } from "react";
 
 function Agenda({ restart, next }) {
+  const notify = () => toast("Selecciona un servicio primero");
+  const citasRef = useRef([]);  // Inicialización de citasRef
+
   const [soon, setSoon] = useState(false);
   const [del, setDel] = useState(false);
+  const [selectedCitaIndex, setSelectedCitaIndex] = useState(null);
+
+  const handleModificar = () => {
+    selectedCitaIndex === null && notify();
+  };
+
+  const handleCitaClick = (index) => {
+    setSelectedCitaIndex(index);
+  };
+
+  const citaClassName = (index) => {
+    // diseno base
+    let baseClass =
+      "flex justify-between p-4 mb-4 border-2 hover:border-[#ec5766] hover:border-1 duration-300 shadow-md hover:cursor-pointer rounded-xl border-gray"
+    if (selectedCitaIndex === index) {
+      // si esta seleccionado borde 
+      return `${baseClass} border-[#ec5766] border-2 duration-300`;
+    }
+    return baseClass;
+  };
+
+  const handleClickOutside = (event) => {
+    if (Agenda.current.every(ref => ref && !ref.contains(event.target))) {
+      setSelectedCitaIndex(null);
+    }
+  };
+
+  useEffect(() => {
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
 
   const toggleSoon = () => {
     setSoon(!soon);
@@ -72,10 +111,12 @@ function Agenda({ restart, next }) {
 
   localStorage.setItem("total", total);
   localStorage.setItem("totalIva", totalIva);
-  const citasList = citasItems.map((item) => (
+  const citasList = citasItems.map((item, index) => (
     <li
-      key={item.idServicio}
-      className="flex justify-between p-4 mb-4 border-2 shadow-md rounded-xl border-gray"
+      key={index}
+      onClick={() => handleCitaClick(index)}
+      className={citaClassName(index)}
+    // className="flex justify-between p-4 mb-4 border-2 shadow-md rounded-xl border-gray"
     >
       <img
         className="w-24 h-24 mr-6 rounded-full"
@@ -87,7 +128,7 @@ function Agenda({ restart, next }) {
           <span className="mr-5 font-bold text-l">{item.nombreServicio}</span>
         </div>
         <div className="flex justify-between">
-          <span className="text-m">Duracion: {item.tiempoServicio}</span>
+          <span className="mr-2 text-m ">Duracion: {item.tiempoServicio}</span>
           <span className="text-m">Costo: ${item.precioServicio}</span>
         </div>
         <div className="flex justify-around">
@@ -150,7 +191,7 @@ function Agenda({ restart, next }) {
                 </div>
               ) : (
                 <div className="flex justify-around mb-4">
-                  <button className="bg-[#ec5766] text-white px-10 py-2 rounded-full duration-200 hover:bg-[#ffb5a7]">
+                  <button onClick={() => handleModificar()} className="bg-[#ec5766] text-white px-10 py-2 rounded-full duration-200 hover:bg-[#ffb5a7]">
                     Modificar
                   </button>
                   <button
@@ -255,6 +296,7 @@ function Agenda({ restart, next }) {
           </div>
         </div>
       )}
+      <ToastContainer position={'bottom-right'} theme={'light'} />
     </>
   );
 }

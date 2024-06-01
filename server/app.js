@@ -141,10 +141,6 @@ app.get("/api/admin", (req, res) => {
   res.send("Funcionando");
 });
 
-app.get("/cuenta", (req, res) => {
-  res.sendFile(path.join(_dirname, "/temporal/cuenta.html"));
-});
-
 // app.get('/estado-logueado', (solicitud, respuesta) => {
 //   respuesta.json({ logueado: true }); // Aquí puedes verificar el estado de logueado como lo haces en la ruta principal
 // });
@@ -202,6 +198,8 @@ app.get("/perfil/historial", authorization.logeado);
 app.get("/api/patologias", authorization.Patologias);
 
 app.get("/api/perfil/rangos", authorization.Rango);
+
+app.get("/api/tarjetas/1.5.2", perfil.getOpcionesPago); 
 
 app.get("/api/tarjetas/1.5", perfil.getTarjetas);
 

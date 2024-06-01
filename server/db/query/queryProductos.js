@@ -361,9 +361,9 @@ export async function detalleVenta(connection, data) {
 
 export async function processVenta(connection, data) {
   try {
-    console.log("Venta realizada correctamente");
+    
     const getVenta = await searchVentaProducto(connection, {
-      idCliente: data.idCliente,
+      idCliente: data.idCliente
     }); // Buscamos el id de la venta recien hecha y lo almacenamos
     console.log(`Se encontro la venta con id: ${getVenta[0].pkIdVenta}`);
     // Verificamos que si encontrara la venta

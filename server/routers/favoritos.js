@@ -5,6 +5,8 @@ import {
   delFavorito,
   ProductFavoritosbyId,
   ServiceFavoritosbyId,
+  ServiceFavoritosEstetica,
+  ServiceFavoritosSpa,
 } from "../db/query/queryFavoritos.js";
 import { conexion } from "../db/connection.js";
 
@@ -53,6 +55,28 @@ routerFavoritos.get("/ServiceFavoritosbyId/:id", async (req, res) => {
     const resultado = await ServiceFavoritosbyId(conexion, {
       idCliente: req.params.id,
     });
+    res.send(JSON.stringify(resultado));
+  } catch (err) {
+    res.status(500).send({ error: "Hubo un problema", err });
+  }
+});
+
+// FUNCIONAL
+// OBTIENE LOS SERVICIOS FAVORITOS DEL CLIENTE
+routerFavoritos.get("/ServiceFavoritosSpa", async (req, res) => {
+  try {
+    const resultado = await ServiceFavoritosSpa(conexion);
+    res.send(JSON.stringify(resultado));
+  } catch (err) {
+    res.status(500).send({ error: "Hubo un problema", err });
+  }
+});
+
+// FUNCIONAL
+// OBTIENE LOS SERVICIOS FAVORITOS DEL CLIENTE
+routerFavoritos.get("/ServiceFavoritosEstetica", async (req, res) => {
+  try {
+    const resultado = await ServiceFavoritosEstetica(conexion);
     res.send(JSON.stringify(resultado));
   } catch (err) {
     res.status(500).send({ error: "Hubo un problema", err });

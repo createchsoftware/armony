@@ -9,19 +9,7 @@ function Pago({ producto, next }) {
     const [tarjeta, setTarjeta] = useState(false);
     const [pagoRealizado, setPagoRealizado] = useState(false);
     const [Uid, setUid] = useState(null);
-    const [descuento, setDescuento] = useState('');
     const [monedero, setMonedero] = useState(null);
-
-    const [cartItems, setCartItems] = useState(() => {
-        if (producto) {
-            // Si hay un producto en el prop, lo utilizamos
-            return producto;
-        } else {
-            // Si no hay un producto en el prop, intentamos obtenerlo del localStorage
-            const savedCart = localStorage.getItem('cartItems');
-            return savedCart ? JSON.parse(savedCart) : [];
-        }
-    });
 
     // const [tarjetas, setTarjetas] = useState([
     //     {id: 1, noTarjeta: "509612341234", tipo: "Débito", banco: "BANORTE", code: "****"},
@@ -30,14 +18,12 @@ function Pago({ producto, next }) {
 
     const [tarjetas, setTarjetas] = useState([]);
 
-    const totalProductos = cartItems.reduce((sum, producto) => sum + (producto.precio * producto.cantidad), 0).toFixed(2);
-    const cantidadProductos = cartItems.reduce((sum, producto) => sum + producto.cantidad, 0);
-    const subTotal = cartItems.reduce((acc, item) => acc + item.precio * item.cantidad, 0).toFixed(2);
+    const subTotal = localStorage.getItem('totalSuscripcion');
+    const puntos = localStorage.getItem('puntosSuscripcion');
     const ivaTotal = (parseFloat(subTotal) * 0.08).toFixed(2);
-    localStorage.setItem('totalIva',ivaTotal)
     const total = (parseFloat(subTotal) + parseFloat(ivaTotal)).toFixed(2);
-    localStorage.setItem('total',total)
 
+    console.log(subTotal, puntos, ivaTotal, total);
 
     useEffect(() => {
         const getidUser = () => {// aqui veificamos si hay una cookie con este nombre 
@@ -53,7 +39,7 @@ function Pago({ producto, next }) {
             .then((response) => response.json())
             .then((data) => {
                 if (data.data) {
-                setMonedero(data.data[0].monedero);
+                    setMonedero(data.data[0].monedero);
                 }
             })
             .catch((error) => {
@@ -108,12 +94,12 @@ function Pago({ producto, next }) {
         }
     }, [Uid]);
 
-    const toggleTarjeta = (tarj) => {
+    const toggleTarjeta = () => {
         setTarjeta(!tarjeta);
-    }
-    const togglePago = (tarjeta) => {
-        setPagoRealizado(!pagoRealizado);
         localStorage.setItem('tarjeta', tarjeta);
+    }
+    const togglePago = () => {
+        setPagoRealizado(!pagoRealizado);
     }
     // const datosRecibidos = (nuevaTarjeta) => {
     //     setTarjetas([...tarjetas, {id: 3, noTarjeta: {nuevaTarjeta}, tipo: "Débito", banco: "BBVA", code: "****"}]);
@@ -131,7 +117,7 @@ function Pago({ producto, next }) {
                     <h1 className="text-xl">{item.tipo}</h1>
                     {/* <h1 className="text-xl">{item.code}</h1> */}
                     <h1 className="text-xl">{item.numero_tarjeta.slice(0, 4)}</h1>
-                    <button onClick={()=>togglePago(item.numero_tarjeta)} className='bg-[#ec5766] text-xl text-white px-10 py-2 rounded-full duration-200 hover:bg-[#ffb5a7]'>Continuar</button>
+                    <button onClick={togglePago} className='bg-[#ec5766] text-xl text-white px-10 py-2 rounded-full duration-200 hover:bg-[#ffb5a7]'>Continuar</button>
                 </li>
             );
         }
@@ -141,12 +127,13 @@ function Pago({ producto, next }) {
                     <img src={"../../../pictures/" + item.imagen} className="w-1/5 h-auto" />
                     <h1 className="text-xl">{item.monedero}</h1>
                     <h1 className="text-xl">{item.tipo}</h1>
-                    <button onClick={()=>togglePago(item.monedero)} className='bg-[#ec5766] text-xl text-white px-10 py-2 rounded-full duration-200 hover:bg-[#ffb5a7]'>Continuar</button>
+                    <button onClick={togglePago} className='bg-[#ec5766] text-xl text-white px-10 py-2 rounded-full duration-200 hover:bg-[#ffb5a7]'>Continuar</button>
                 </li>
             );
         }
     }
     )) : (<div></div>)
+
 
     return (
         <>
@@ -190,7 +177,7 @@ function Pago({ producto, next }) {
                                 <h1 className="text-xl">Nueva tarjeta de débito</h1>
                                 <button onClick={toggleTarjeta} className='bg-[#ec5766] text-xl text-white px-10 py-2 rounded-full duration-200 hover:bg-[#ffb5a7]'>Continuar</button>
                             </li>
-                            <li className=" mt-3">
+                            <li className="mt-3 ">
                                 <h1 className="text-2xl">Otras formas de pago </h1>
                                 <div className="flex items-center justify-between gap-4 px-4 mb-4 border-2 shadow-md rounded-3xl border-gray">
                                     <img src="../../../pictures/wallet.png" alt="" className="w-16" />
@@ -214,8 +201,8 @@ function Pago({ producto, next }) {
                         <div className='px-6 pt-6'>
                             <div className='grid p-6 mb-4 border-2 shadow-md rounded-xl border-gray'>
                                 <div className='flex justify-between px-6'>
-                                    <span className='font-bold'>{cantidadProductos} {cantidadProductos === 1 ? "Producto" : "Productos"}</span>
-                                    <span className="text-[rgb(3,109,99)] font-bold text-xl">${totalProductos}</span>
+                                    <span className='font-bold'>1 producto</span>
+                                    <span className="text-[rgb(3,109,99)] font-bold text-xl">${subTotal}</span>
                                 </div>
                                 <div className='flex justify-between px-6 pt-6'>
                                     <h1 className='font-bold'>Envío</h1>
@@ -241,10 +228,10 @@ function Pago({ producto, next }) {
                         <div className='grid bg-[rgb(3,109,99)] rounded-t-xl'>
                             <p className='py-2 ml-8 text-2xl text-white'>Aceptamos</p>
                         </div>
-                        <div className='flex justify-between items-center px-6 py-2 gap-2'>
-                            <img className="w-28 h-auto" src="../../../pictures/Visa.png" alt="" />
-                            <img className="w-28 h-auto" src="../../../pictures/MasterCard.png" alt="" />
-                            <img className="w-28 h-auto" src="../../../pictures/AmericanExpress.png" alt="" />
+                        <div className='flex items-center justify-between gap-2 px-6 py-2'>
+                            <img className="h-auto w-28" src="../../../pictures/Visa.png" alt="" />
+                            <img className="h-auto w-28" src="../../../pictures/MasterCard.png" alt="" />
+                            <img className="h-auto w-28" src="../../../pictures/AmericanExpress.png" alt="" />
                         </div>
                     </div>
                 </div>

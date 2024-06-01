@@ -94,6 +94,33 @@ export async function getServicesSpa(connection) {
     console.error(messageError, err); // Mostramos errores por consola
   }
 }
+
+export async function getServicesFacial(connection) {
+  try {
+    let searchCatId = "CALL getServiciosFaciales()"; // Procedimiento de la DB
+    let query = mysql.format(searchCatId); // Parametros para el procedimiento
+    const [rows, fields] = await connection.query(query); // Ejecucion de query y almacenamiento de resultado
+    // endConnection(); // Cierre de conexion
+    return rows[0]; // Retorno de valores
+  } catch (err) {
+    // Capturamos errores de ejecucion de query
+    console.error(messageError, err); // Mostramos errores por consola
+  }
+}
+
+export async function getServicesCorpo(connection) {
+  try {
+    let searchCatId = "CALL getServiciosCorporales()"; // Procedimiento de la DB
+    let query = mysql.format(searchCatId); // Parametros para el procedimiento
+    const [rows, fields] = await connection.query(query); // Ejecucion de query y almacenamiento de resultado
+    // endConnection(); // Cierre de conexion
+    return rows[0]; // Retorno de valores
+  } catch (err) {
+    // Capturamos errores de ejecucion de query
+    console.error(messageError, err); // Mostramos errores por consola
+  }
+}
+
 export async function getServicesEstetica(connection) {
   try {
     let searchCatId = "CALL getServiciosEstetica()";

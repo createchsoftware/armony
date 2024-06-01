@@ -117,175 +117,215 @@ const EditarPerfil = ({ usuario }) => {
 
   return (
     <LayoutPrincipal>
-      <main className="w-[80%] m-auto  flex justify-between mt-20 mb-12">
-        <div className="w-2/3 p-8 my-6 shadow-lg rounded-xl">
-          <div className="flex gap-56 my-6">
-            <a href={document.referrer} className="">
-              <FontAwesomeIcon
-                style={{ fontSize: "22px" }}
-                icon={faAngleLeft}
-              />{" "}
-              Volver
-            </a>
-            <h1 className="text-3xl text-rose-400">Editar Perfil</h1>
-          </div>
-          <div className="flex justify-between">
-            <h2>INFORMACION PERSONAL</h2>
-          </div>
-          <div className="flex justify-between">
-            <div>
-              <label htmlFor="">Nombre:</label>
+      <main className="w-[80%] m-auto grid justify-between mt-20 mb-12">
+        <div className="flex w-[60%] my-6 justify-self-center items-center shadow-lg rounded-xl border">
+          <a href={document.referrer} className="flex gap-2 my-4 w-max items-center ml-6 text-black relative cursor-pointer before:bg-black before:absolute before:-bottom-1 before:block before:h-[1px] before:w-full before:origin-bottom-right before:scale-x-0 before:transition before:duration-300 before:ease-in-out hover:before:origin-bottom-left hover:before:scale-x-100 hover:font-bold">
+            <FontAwesomeIcon
+              style={{ fontSize: "22px" }}
+              icon={faAngleLeft}
+            />{" "}
+            Volver
+          </a>
+          <div className="flex-glow"></div>
+          <h1 className="text-3xl text-rose-400 font-bold text-center absolute left-1/2 transform -translate-x-1/2">Editar Perfil</h1>
+        </div>
+        <div className="flex w-[90%] justify-self-center justify-between px-12 py-8 my-6 shadow-lg rounded-xl border">
+          {/* BLOQUE INFORMACION */}
+          <div className="grid w-[50%]">
+            <div className="flex justify-start my-2">
+              <h2 className="text-xl font-bold text-[rgb(3,109,99)]">INFORMACION PERSONAL</h2>
+            </div>
+            <div className="flex justify-between items-center mb-1">
+              <label htmlFor="">Nombre(s):</label>
               <input
                 id="nombre"
                 type="text"
+                aria-label="Ingresa nombre."
                 placeholder={`${nombre}`}
-                className="w-48 px-6 py-2 mb-1 mr-2 rounded-full bg-slate-200 focus:outline-none focus:ring-1 focus:ring-rose-400 focus:border-transparent"
+                className="w-2/3 px-6 py-1 mb-1 mr-2 rounded-full bg-slate-200 focus:outline-none focus:ring-1 focus:ring-rose-400 focus:border-transparent"
               />
             </div>
-          </div>
-          <div>
-            <label htmlFor="">Apellido Paterno:</label>
-            <input
-              id="paterno"
-              type="text"
-              placeholder={`${apellidoP}`}
-              className="w-48 px-6 py-2 mb-1 mr-2 rounded-full bg-slate-200 focus:outline-none focus:ring-1 focus:ring-rose-400 focus:border-transparent"
-            />
-          </div>
-          <div className="flex justify-between">
-            <div>
+            <div className="flex justify-between items-center mb-1">
+              <label htmlFor="">Apellido Paterno:</label>
+              <input
+                id="paterno"
+                type="text"
+                aria-label="Ingresa apellido paterno."
+                placeholder={`${apellidoP}`}
+                className="w-2/3 px-6 py-1 mb-1 mr-2 rounded-full bg-slate-200 focus:outline-none focus:ring-1 focus:ring-rose-400 focus:border-transparent"
+              />
+            </div>
+            <div className="flex justify-between items-center mb-1">
               <label htmlFor="">Apellido Materno:</label>
               <input
                 id="materno"
                 type="text"
+                aria-label="Ingresa apellido materno."
                 placeholder={`${apellidoM}`}
-                className="w-48 px-6 py-2 mb-1 mr-2 rounded-full bg-slate-200 focus:outline-none focus:ring-1 focus:ring-rose-400 focus:border-transparent"
+                className="w-2/3 px-6 py-1 mb-1 mr-2 rounded-full bg-slate-200 focus:outline-none focus:ring-1 focus:ring-rose-400 focus:border-transparent"
               />
             </div>
-            <div>
-              <label htmlFor="">Telefono:</label>
-              <input
-                id="telefono"
-                type="text"
-                placeholder={`${telefono}`}
-                className="w-48 px-6 py-2 mb-1 mr-24 rounded-full bg-slate-200 focus:outline-none focus:ring-1 focus:ring-rose-400 focus:border-transparent"
-              />
+            <div className="flex justify-between items-center mb-1">
+              <div className="flex gap-2 items-center">
+                <label htmlFor="">Lada:</label>
+                <input
+                  id="telefono"
+                  type="text"
+                  aria-label="Ingresa LADA."
+                  placeholder={`${telefono}`}
+                  className="w-48 px-6 py-1 mb-1 mr-24 rounded-full bg-slate-200 focus:outline-none focus:ring-1 focus:ring-rose-400 focus:border-transparent"
+                />
+              </div>
+              <div className="flex gap-2 items-center">
+                <label htmlFor="">Telefono:</label>
+                <input
+                  id="telefono"
+                  type="text"
+                  aria-label="Ingresa teléfono."
+                  placeholder={`${telefono}`}
+                  className="w-48 px-6 py-1 mb-1 mr-24 rounded-full bg-slate-200 focus:outline-none focus:ring-1 focus:ring-rose-400 focus:border-transparent"
+                />
+              </div>
             </div>
-          </div>
-          <h2>FECHA DE NACIMIENTO</h2>
-          <div className="flex justify-start">
-            <div>
-              <label htmlFor="">Dia</label>
-              <input
-                id="dia"
-                type="number"
-                min={1}
-                max={31}
-                placeholder={`${dia}`}
-                className="w-24 px-6 py-2 mb-1 rounded-full bg-slate-200 focus:outline-none focus:ring-1 focus:ring-rose-400 focus:border-transparent"
-              />
+            <div className="flex justify-start my-2">
+              <h2 className="text-xl font-bold text-[rgb(3,109,99)]">FECHA DE NACIMIENTO</h2>
             </div>
-            <div>
-              <label htmlFor="">Mes</label>
-              <input
-                id="mes"
-                type="number"
-                placeholder={`${mes}`}
-                className="w-24 px-6 py-2 mb-1 rounded-full bg-slate-200 focus:outline-none focus:ring-1 focus:ring-rose-400 focus:border-transparent"
-              />
+            <div className="flex justify-between items-center mb-1">
+              <div className="flex justify-between items-center gap-3">
+                <label htmlFor="">Día:</label>
+                <input
+                  id="dia"
+                  type="number"
+                  aria-label="Ingresa día de nacimiento."
+                  min={1}
+                  max={31}
+                  placeholder={`${dia}`}
+                  className="w-32 px-6 py-1 mb-1 rounded-full bg-slate-200 focus:outline-none focus:ring-1 focus:ring-rose-400 focus:border-transparent"
+                />
+              </div>
+              <div className="flex justify-between items-center gap-3">
+                <label htmlFor="">Mes:</label>
+                <input
+                  id="mes"
+                  type="number"
+                  aria-label="Ingresa mes de nacimiento."
+                  placeholder={`${mes}`}
+                  className="w-32 px-6 py-1 mb-1 rounded-full bg-slate-200 focus:outline-none focus:ring-1 focus:ring-rose-400 focus:border-transparent"
+                />
+              </div>
+              <div className="flex justify-between items-center gap-3">
+                <label htmlFor="">Año:</label>
+                <input
+                  id="año"
+                  type="number"
+                  aria-label="Ingresa año de nacimiento."
+                  placeholder={`${año}`}
+                  className="w-32 px-6 py-1 mb-1 rounded-full bg-slate-200 focus:outline-none focus:ring-1 focus:ring-rose-400 focus:border-transparent"
+                />
+              </div>
             </div>
-            <div>
-              <label htmlFor="">Año</label>
-              <input
-                id="año"
-                type="number"
-                placeholder={`${año}`}
-                className="w-24 px-6 py-2 mb-1 rounded-full bg-slate-200 focus:outline-none focus:ring-1 focus:ring-rose-400 focus:border-transparent"
-              />
+            {/* SE ELIMINO EL CORREO ELECTRONICO DEL DISEÑO !!! < < < < < < < < < < < < < < < < < < < < < < */}
+            {/* <div className="flex justify-start my-2">
+              <h2 className="text-xl font-bold text-[rgb(3,109,99)]">E-MAIL</h2>
             </div>
-          </div>
-          <h2>E-MAIL</h2>
-          <input
-            id="correo"
-            type="email"
-            placeholder={`${correo}`}
-            className="px-6 py-2 mb-1 rounded-full w-60 bg-slate-200 focus:outline-none focus:ring-1 focus:ring-rose-400 focus:border-transparent"
-          />
-          <h2>DOMICILIO</h2>
-          <div className="flex justify-between">
-            <div>
+            <input
+              id="correo"
+              type="email"
+              aria-label="Ingresa correo electrónico"
+              placeholder={`${correo}`}
+              className="px-6 py-1 mb-1 rounded-full w-full bg-slate-200 focus:outline-none focus:ring-1 focus:ring-rose-400 focus:border-transparent"
+            /> */}
+            <div className="flex justify-start my-2">
+              <h2 className="text-xl font-bold text-[rgb(3,109,99)]">DOMICILIO</h2>
+            </div>
+            <div className="flex justify-between items-center  mb-1">
               <label htmlFor="">Calle:</label>
               <input
                 id="calle"
                 type="text"
+                aria-label="Ingresa calle del domicilio."
                 placeholder={`${calle}`}
-                className="w-48 px-6 py-2 mb-1 rounded-full bg-slate-200 focus:outline-none focus:ring-1 focus:ring-rose-400 focus:border-transparent"
+                className="w-3/4 px-6 py-1 mb-1 rounded-full bg-slate-200 focus:outline-none focus:ring-1 focus:ring-rose-400 focus:border-transparent"
               />
             </div>
-            <div>
-              <label htmlFor="">Colonia:</label>
+            <div className="flex justify-between items-center mb-1">
+              <div className="flex gap-3 items-center">
+                <label htmlFor="">Colonia:</label>
+                <input
+                  id="colonia"
+                  type="tel"
+                  aria-label="Ingresa colonia de domicilio."
+                  placeholder={`${colonia}`}
+                  className="w-52 px-6 py-1 mb-1 mr-24 rounded-full bg-slate-200 focus:outline-none focus:ring-1 focus:ring-rose-400 focus:border-transparent"
+                />
+              </div>
+              <div className="flex gap-3 items-center">
+                <label htmlFor="">Codigo Postal:</label>
+                <input
+                  id="codigoP"
+                  type="text"
+                  aria-label="Ingresa código postal del domicilio."
+                  placeholder={`${codigoP}`}
+                  className="w-32 px-6 py-1 mb-1 mr-2 rounded-full bg-slate-200 focus:outline-none focus:ring-1 focus:ring-rose-400 focus:border-transparent"
+                />
+              </div>
+            </div>
+            <div className="flex justify-between items-center mb-1">
+              <label htmlFor="">Numero:</label>
               <input
-                id="colonia"
-                type="tel"
-                placeholder={`${colonia}`}
-                className="w-48 px-6 py-2 mb-1 mr-24 rounded-full bg-slate-200 focus:outline-none focus:ring-1 focus:ring-rose-400 focus:border-transparent"
+                id="numero"
+                type="text"
+                aria-label="Ingresa número del domicilio."
+                placeholder={`${numero}`}
+                className="w-48 px-6 py-1 mb-1 mr-2 rounded-full bg-slate-200 focus:outline-none focus:ring-1 focus:ring-rose-400 focus:border-transparent"
               />
             </div>
-          </div>
-          <label htmlFor="">Codigo Postal:</label>
-          <input
-            id="codigoP"
-            type="text"
-            placeholder={`${codigoP}`}
-            className="w-48 px-6 py-2 mb-1 mr-2 rounded-full bg-slate-200 focus:outline-none focus:ring-1 focus:ring-rose-400 focus:border-transparent"
-          />
-          <label htmlFor="">Numero:</label>
-          <input
-            id="numero"
-            type="text"
-            placeholder={`${numero}`}
-            className="w-48 px-6 py-2 mb-1 mr-2 rounded-full bg-slate-200 focus:outline-none focus:ring-1 focus:ring-rose-400 focus:border-transparent"
-          />
-          <div className="grid grid-cols-2 my-6">
-            <div className="grid place-content-start">
-              <button
-                id="cancelar"
-                aria-label="Cancelar"
-                className="px-4 py-2 mx-auto text-xl bg-white rounded-full text-rose-400 hover:bg-red-50 ring-2 ring-rose-400"
-              >
-                Cancelar
-              </button>
-            </div>
-            <HelmetProvider>
-              <Helmet>
-                <script
-                  src="https://kit.fontawesome.com/c9a65ccec4.js"
-                  crossorigin="anonymous"
-                ></script>
-                <script src="../../../scripts/editarPerfil.js"></script>
-              </Helmet>
-            </HelmetProvider>
-            <div className="grid place-content-end">
-              <button
-                id="guardar"
-                aria-label="Continuar"
-                className="px-4 py-2 mx-auto text-xl text-white rounded-full bg-rose-400 hover:bg-red-200"
-              >
-                Guardar
-              </button>
+            
+            <div className="grid grid-cols-2 my-6">
+              <div className="grid place-content-start">
+                <button
+                  id="cancelar"
+                  aria-label="Cancelar"
+                  className="px-4 py-2 mx-auto text-xl bg-white rounded-full text-rose-400 hover:bg-red-50 ring-2 ring-rose-400"
+                >
+                  Cancelar
+                </button>
+              </div>
+              <HelmetProvider>
+                <Helmet>
+                  <script
+                    src="https://kit.fontawesome.com/c9a65ccec4.js"
+                    crossOrigin="anonymous"
+                  ></script>
+                  <script src="../../../scripts/editarPerfil.js"></script>
+                </Helmet>
+              </HelmetProvider>
+              <div className="grid place-content-end">
+                <button
+                  id="guardar"
+                  aria-label="Continuar"
+                  className="px-4 py-2 mx-auto text-xl text-white rounded-full bg-rose-400 hover:bg-red-200"
+                >
+                  Guardar
+                </button>
+              </div>
             </div>
           </div>
-        </div>
-        <div className="grid gap-2 text-center place-content-center">
-          <img
-            id="subida"
-            src={`../../../pictures/avatares/${imagen}`}
-            className="w-48 rounded-full shadow-2xl"
-            alt=""
-          />
-          <input type="file" id="imagen" accept="image/*" />
-          <p>ID de Usuario</p>
-          <p className="px-6 py-2 rounded-full bg-slate-200 focus:outline-none focus:ring-1 focus:ring-rose-400 focus:border-transparent">{`#${clave}`}</p>
+          {/* BLOQUE DE IMAGEN */}
+          <div className="grid w-1/3 gap-2 text-center place-content-start">
+            <div className="flex justify-self-center justify-start my-2">
+              <h2 className="text-xl font-bold text-[rgb(3,109,99)]">FOTO DE PERFIL</h2>
+            </div>
+            <img
+              id="subida"
+              src={`../../../pictures/avatares/${imagen}`}
+              className="w-48 rounded-full shadow-2xl justify-self-center"
+              alt="Foto de perfil del usuario."
+            />
+            <input type="file" id="imagen" accept="image/*" />
+            <p className="text-xl text-[#ec5766] justify-self-center ">ID de Usuario</p>
+            <p className="px-6 justify-self-center py-2 rounded-full bg-slate-200 focus:outline-none focus:ring-1 focus:ring-rose-400 focus:border-transparent">{`#${clave}`}</p>
+          </div>
         </div>
       </main>
       <div id="toastBox" />
