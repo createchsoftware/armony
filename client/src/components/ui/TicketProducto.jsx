@@ -10,7 +10,6 @@ const TicketProducto = () => {
   const toggleSoon = () => {
     setSoon(!soon);
   };
-
   var numTicket = 123456;
   var value =localStorage.getItem('idventaProduct')
 

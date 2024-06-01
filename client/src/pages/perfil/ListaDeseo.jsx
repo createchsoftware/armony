@@ -31,7 +31,7 @@ function ListaDeseo() {
     const [boton2, setBoton2] = useState('lista-boton');
     const [resumen, setResumen] = useState('lista-resumen-off');
     const [width, setWidth] = useState('w-full');
-    const [tipo, setTipo] = useState('all');
+    const [tipoProducto, settipoProducto] = useState('all');
     const [showProduct, setShowProduct] = useState(false);
     const [searchTerm, setSearchTerm] = useState('');
     const [sideBar, setSiderBar] = useState(false);
@@ -67,7 +67,7 @@ function ListaDeseo() {
     }, []);
 
     const filtrar = (type) => {
-        setTipo(type);
+        settipoProducto(type);
     }
 
     const [contResumen, setContResumen] = useState([
@@ -221,6 +221,8 @@ function ListaDeseo() {
         Prod()
     }, [Uid])
 
+
+    // variable por la cual filtrar -> tipoProducto   (si es null es un servicio y si es venta es un producto)
     const presionar1 = () => {
         if(boton1 !== 'lista-boton-on')
         {
@@ -228,7 +230,7 @@ function ListaDeseo() {
             setBoton2('lista-boton')
             setResumen('lista-resumen-on')
             setWidth('w-1/2')
-            filtrar('1')
+            filtrar('null')
             setShowProduct(true)
             setCols('grid-cols-3')
         }else{
@@ -248,7 +250,7 @@ function ListaDeseo() {
             setBoton1('lista-boton')
             setResumen('lista-resumen-off')
             setWidth('w-full')
-            filtrar('2')
+            filtrar('venta')
             setShowProduct(false)
             setCols('grid-cols-4')
         }else{

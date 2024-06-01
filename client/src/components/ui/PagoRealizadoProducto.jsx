@@ -1,5 +1,4 @@
 import { useState, useEffect } from "react";
-import { jwtDecode } from "jwt-decode";
 
 function PagoRealizado({ cerrarPago, total, next }) {
 
@@ -19,7 +18,6 @@ function PagoRealizado({ cerrarPago, total, next }) {
   useEffect(() => {
     const fetchCliente = async () => {
       const storedCliente = localStorage.getItem('cliente');
-      console.log(storedCliente)
       if (storedCliente) {
         try {
           const parsedCliente = JSON.parse(storedCliente);
@@ -59,15 +57,14 @@ function PagoRealizado({ cerrarPago, total, next }) {
           if (!responseVenta.ok) {
             throw new Error('Error en la respuesta de la red');
           }
-
           const dataVenta = await responseVenta.json();
           console.log('Respuesta de la venta:', dataVenta);
 
-
-          const result=await fetch(`/api/admin/productos/idVentaProduct/${cliente.ID}`)
+        
+          await fetch(`/api/admin/productos/idVentaProduct/${cliente.ID}`)
           .then(response => response.json())
           .then(data => {
-            localStorage.setItem('idventaProduct',data);
+            localStorage.setItem('idventaProduct',data[0].pkIdVenta);
           })
           .catch(error => {
               console.log('error', error);
@@ -81,8 +78,8 @@ function PagoRealizado({ cerrarPago, total, next }) {
               method: "POST",
               body: JSON.stringify({
                 idCliente:cliente.ID,
-                idPromo:0,
-                idProducto: carrito[index].id,
+                idPromo:1,
+                idProducto:carrito[index].id,
                 cantidad:carrito[index].cantidad
                             }),
               headers: {
@@ -105,7 +102,7 @@ function PagoRealizado({ cerrarPago, total, next }) {
         }
       }
     };
-
+        
     realizarVentaYCita();
   }, [cliente]);
 

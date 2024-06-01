@@ -105,7 +105,7 @@ export async function searchVentaProducto(connection, data) {
   try {
     let busquedaVenta = "CALL searchVentaProducto(?)"; // Procedimiento almacenado de la base de datos
     let query = mysql.format(busquedaVenta, [
-      data.id
+      data.idCliente
     ]); // Parametros necesarios para el procedimiento
     const [rows, fields] = await connection.query(query); // Ejecutamos query y almacenamos valores
     endConnection(); // Cerramos conexion con la base de datos
