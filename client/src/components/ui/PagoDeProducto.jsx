@@ -131,7 +131,7 @@ function Pago({ producto, next }) {
                     <h1 className="text-xl">{item.tipo}</h1>
                     {/* <h1 className="text-xl">{item.code}</h1> */}
                     <h1 className="text-xl">{item.numero_tarjeta.slice(0, 4)}</h1>
-                    <button onClick={togglePago} className='bg-[#ec5766] text-xl text-white px-10 py-2 rounded-full duration-200 hover:bg-[#ffb5a7]'>Continuar</button>
+                    <button onClick={()=>togglePago(item.numero_tarjeta)} className='bg-[#ec5766] text-xl text-white px-10 py-2 rounded-full duration-200 hover:bg-[#ffb5a7]'>Continuar</button>
                 </li>
             );
         }
@@ -141,26 +141,13 @@ function Pago({ producto, next }) {
                     <img src={"../../../pictures/" + item.imagen} className="w-1/5 h-auto" />
                     <h1 className="text-xl">{item.monedero}</h1>
                     <h1 className="text-xl">{item.tipo}</h1>
-                    <button onClick={togglePago} className='bg-[#ec5766] text-xl text-white px-10 py-2 rounded-full duration-200 hover:bg-[#ffb5a7]'>Continuar</button>
+                    <button onClick={()=>togglePago(item.monedero)} className='bg-[#ec5766] text-xl text-white px-10 py-2 rounded-full duration-200 hover:bg-[#ffb5a7]'>Continuar</button>
                 </li>
             );
         }
     }
     )) : (<div></div>)
 
-
-
-
-    const cardList = tarjetas.length > 0 ? (tarjetas.map(item => (
-        <li key={item.id} className="flex items-center justify-between gap-4 px-4 mb-4 border-2 shadow-md rounded-3xl border-gray">
-            <img src={"../../../pictures/" + item.imagen} className="w-1/5 h-auto" />
-            <h1 className="text-xl truncate">{item.empresa}</h1>
-            <h1 className="text-xl">{item.tipo}</h1>
-            {/* <h1 className="text-xl">{item.code}</h1> */}
-            <h1 className="text-xl">{item.numero_tarjeta.slice(0, 4)}</h1>
-            <button onClick={()=>togglePago(item.numero_tarjeta)} className='bg-[#ec5766] text-xl text-white px-10 py-2 rounded-full duration-200 hover:bg-[#ffb5a7]'>Continuar</button>
-        </li>
-    ))) : (<div></div>)
     return (
         <>
             <div className='flex justify-between mx-16'>
