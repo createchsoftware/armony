@@ -78,7 +78,7 @@ function Pago({ producto, next }) {
 
     useEffect(() => {
         setTimeout(() => {
-            fetch("/api/tarjetas/1.5")
+            fetch("/api/tarjetas/1.5.2")
                 .then(response => response.json())
                 .then(data => {
                     setTarjetas(data.array);
@@ -122,16 +122,35 @@ function Pago({ producto, next }) {
 
     //const total = (574).toFixed(2);
 
-    const cardList = tarjetas.length > 0 ? (tarjetas.map(item => (
-        <li key={item.id} className="flex items-center justify-between gap-4 px-4 mb-4 border-2 shadow-md rounded-3xl border-gray">
-            <img src={"../../../pictures/" + item.imagen} className="w-1/5 h-auto" />
-            <h1 className="text-xl truncate">{item.empresa}</h1>
-            <h1 className="text-xl">{item.tipo}</h1>
-            {/* <h1 className="text-xl">{item.code}</h1> */}
-            <h1 className="text-xl">{item.numero_tarjeta.slice(0, 4)}</h1>
-            <button onClick={togglePago} className='bg-[#ec5766] text-xl text-white px-10 py-2 rounded-full duration-200 hover:bg-[#ffb5a7]'>Continuar</button>
-        </li>
-    ))) : (<div></div>)
+    const cardList = tarjetas.length > 0 ? (tarjetas.map(item => {
+        if(item.tipo != 'monedero'){
+            return (
+                <li key={item.id} className="flex items-center justify-between gap-4 px-4 mb-4 border-2 shadow-md rounded-3xl border-gray">
+                    <img src={"../../../pictures/" + item.imagen} className="w-1/5 h-auto" />
+                    <h1 className="text-xl truncate">{item.empresa}</h1>
+                    <h1 className="text-xl">{item.tipo}</h1>
+                    {/* <h1 className="text-xl">{item.code}</h1> */}
+                    <h1 className="text-xl">{item.numero_tarjeta.slice(0, 4)}</h1>
+                    <button onClick={togglePago} className='bg-[#ec5766] text-xl text-white px-10 py-2 rounded-full duration-200 hover:bg-[#ffb5a7]'>Continuar</button>
+                </li>
+            );
+        }
+        else{
+            return(
+                <li key={item.id} className="flex items-center justify-between gap-4 px-4 mb-4 border-2 shadow-md rounded-3xl border-gray">
+                    <img src={"../../../pictures/" + item.imagen} className="w-1/5 h-auto" />
+                    <h1 className="text-xl">{item.monedero}</h1>
+                    <h1 className="text-xl">{item.tipo}</h1>
+                    <button onClick={togglePago} className='bg-[#ec5766] text-xl text-white px-10 py-2 rounded-full duration-200 hover:bg-[#ffb5a7]'>Continuar</button>
+                </li>
+            );
+        }
+    }
+    )) : (<div></div>)
+
+
+
+
     return (
         <>
             <div className='flex justify-between mx-16'>
