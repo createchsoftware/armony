@@ -91,7 +91,7 @@ body {
 }
 .nav-menu-item {
   font-size: 20px;
-  margin: 0 20px;
+  margin: 0 15px;
   line-height: 80px;
   width: max-content;
 }
@@ -1015,7 +1015,7 @@ body {
   }
 
   .nav-menu-item {
-    line-height: 50px;
+    line-height: 40px;
   }
 
   .nav-cart{

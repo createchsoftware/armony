@@ -38,7 +38,7 @@ function InformacionPersonal() {
     const [clave, setClave] = useState(false); //<<< PARA EL INICIO DE SESION
     const [patologias, setPatologias] = useState([]);
     const [rango, setRango] = useState(0); //<<< MUESTRA EL RANGO DEL USUARIO
-    const [sus, setSus] = useState(true); //<<< CARACTERISTICA GRAFICA DE QUE EL USUARIO ES SOCIO
+    const [sus, setSus] = useState(false); //<<< CARACTERISTICA GRAFICA DE QUE EL USUARIO ES SOCIO
 
     async function recibido() {
         const respuesta = await fetch('/api/logueado', {

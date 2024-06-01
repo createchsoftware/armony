@@ -152,7 +152,7 @@ function AgregarSaldo(){
                     <img className='w-24 h-auto justify-self-center' src="../../../pictures/logoArmony.png" alt="" />
                     <label htmlFor="monto" className='my-6 text-2xl justify-self-center'>Monto de Recarga:</label>
                     <input type="text" name='monto' id='monto' placeholder='0.0' className='bg-[#036C65] text-white text-2xl text-center w-full rounded-2xl' onChange={obtenerValorEnTiempoReal}/>
-                    <h1 className='text-2xl my-4'>Metodos de pago:</h1>
+                    <h1 className='text-2xl my-4'>Métodos de pago:</h1>
                     <div className='rounded-xl shadow-md'>
                         <div className='h-8 bg-[#036C65] rounded-t-xl' />
                         <div className='py-4 px-10'>

@@ -824,12 +824,6 @@ async function Insert_to_Monedero(solicitud,respuesta){
 
 
 
-
-
-
-
-
-
 function retornarHeader(fecha,init,limit){
 
     fecha = fecha.getTime();
@@ -851,6 +845,114 @@ function retornarHeader(fecha,init,limit){
     }
 
 }
+
+
+
+
+async function getOpcionesPago(solicitud,respuesta){
+    if(solicitud.headers.cookie == undefined){
+        respuesta.send({logueado:false});
+    }
+    else{
+        let galletas = solicitud.headers.cookie.split("; ");
+        let galleta = galletas.find(galleta => galleta.startsWith("Naruto_cookie="));
+
+        if(galleta){
+            //el usuario esta logueado
+
+            galleta = galleta.slice(14);
+
+            let decodificada = await jsonwebtoken.verify(galleta, process.env.JWT_SECRET);
+
+            let consulta = "call getTarjetasIdCliente(?)";
+
+            let [resultados] = await solicitud.database.query(mysql.format(consulta,[decodificada.user]));
+
+            let arreglo = resultados[0];
+
+            let arreglo_a_enviar = [];
+
+            for(let i in arreglo){
+
+                // Entregar una fecha mas limpia
+                let fecha = arreglo[i].fechaVencimiento;
+                let year = fecha.getFullYear()
+                year = year.toString();
+                year = year.slice(2);
+                let month = fecha.getMonth() + 1;
+                let mes = `0${month}`;
+                arreglo[i].fechaVencimiento = `${mes}/${year}`;
+
+
+                arreglo[i].cvv = arreglo[i].cvv.toString('utf-8');
+
+                arreglo[i].exp_month = fecha.getMonth() +1;
+                arreglo[i].exp_year = fecha.getFullYear();
+                arreglo[i].codigoPostal = decodificada.postal;
+                
+                if(arreglo[i].longitud == 16){
+                    if(arreglo[i].primeros_digitos.startsWith('5')){
+                        arreglo[i].empresa = 'Mastercard';
+                        arreglo[i].imagen = 'MasterCard.png';
+                    }
+                    if(arreglo[i].primeros_digitos.startsWith('4')){
+                        arreglo[i].empresa = 'Visa';
+                        arreglo[i].imagen = 'Visa.png';
+                    }
+                }
+                else{
+                    if(arreglo[i].longitud == 15){
+                        if(arreglo[i].primeros_digitos =='37' ||arreglo[i].primeros_digitos == '34'){
+                            arreglo[i].empresa = 'American Express';
+                            arreglo[i].imagen = 'AmericanExpress.png';
+                        }
+                    }
+
+                }
+
+
+                delete arreglo[i].primeros_digitos;
+                
+                if(arreglo[i].empresa){
+                    arreglo_a_enviar.push(arreglo[i]);
+                }
+            }
+
+
+            let conMonedero = "call getMonedero(?)";
+            let [fields] = await solicitud.database.query(mysql.format(conMonedero,[decodificada.user]));
+
+            let objeto_monedero = fields[0][0];
+
+            objeto_monedero.label = 'Tarjeta de monedero';
+            objeto_monedero.imagen = 'icon.png';
+            objeto_monedero.tipo = 'monedero';
+
+            
+            let cantidad = parseFloat(objeto_monedero.monedero);
+
+            if(cantidad != 0.0){
+                console.log('esto si ocurrio');
+                arreglo_a_enviar.push(objeto_monedero);
+            }
+
+            console.log(arreglo_a_enviar);
+            console.log(objeto_monedero);
+
+            return respuesta.send({array:arreglo_a_enviar});
+            
+        }
+        else{
+            respuesta.send({logueado:false});
+        }
+    }
+}
+
+
+
+
+
+
 
 
 
@@ -906,5 +1008,6 @@ export const methods = {
     InsertarTarjeta,
     getTransacciones,
     getMonedero,
-    Insert_to_Monedero
+    Insert_to_Monedero,
+    getOpcionesPago
 }
