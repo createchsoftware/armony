@@ -114,7 +114,7 @@ function Navbar() {
                         <a href="/">
                             <img
                                 src="../../../pictures/armonyLogo.png"
-                                alt=""
+                                alt="Logo de armony, aquí puedes ir al inicio del sitio web."
                                 className="logo"
                             />
                         </a>
@@ -213,7 +213,7 @@ function Navbar() {
                                                 {sus && (
                                                     <img
                                                         src="../../../pictures/marcoSuscripcion.png"
-                                                        alt=""
+                                                        alt="Marco decorativo para socios."
                                                         className="absolute object-cover w-full h-full m-auto"
                                                     />
                                                 )}
@@ -224,7 +224,7 @@ function Navbar() {
                                                         ) : (
                                                             '../../../pictures/userDefault.png'
                                                         )}
-                                                        alt=""
+                                                        alt="Foto de perfil del usuario."
                                                         className="w-[80%] h-[80%] m-auto my-[5%] rounded-full"
                                                     />
                                                 </div>
@@ -233,21 +233,21 @@ function Navbar() {
                                             {rango === 1 ? (
                                                 <img
                                                     src="../../../pictures/rangoOro.png"
-                                                    alt=""
+                                                    alt="Eres rango oro."
                                                     className="w-4 h-auto m-auto ml-2"
                                                 />
                                             ) : (
                                                 rango === 2 ? (
                                                     <img
                                                         src="../../../pictures/nuevoPlatino.png"
-                                                        alt=""
+                                                        alt="Eres rango platino."
                                                         className="w-4 h-auto m-auto ml-2"
                                                     />
                                                 ) : (
                                                     rango === 3 ? (
                                                         <img
                                                             src="../../../pictures/nuevoVIP.png"
-                                                            alt=""
+                                                            alt="Eres rango VIP."
                                                             className="w-4 h-auto m-auto ml-2"
                                                         />
                                                     ) : ''

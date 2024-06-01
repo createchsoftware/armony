@@ -16,7 +16,7 @@ const Rangos = () => {
                         <p className="text-4xl text-center text-white justify-self-center mt-4 drop-shadow-[1px_1px_var(--tw-shadow-color)] shadow-[gray]">Conoce los beneficios que cada rango tiene para ti</p>
                     </div>
                     <div className="grid w-2/5 items-center">
-                        <img className="justify-self-center pr-6" src="../../pictures/RangosInfo.png" alt="" />
+                        <img className="justify-self-center pr-6" src="../../pictures/RangosInfo.png" alt="Los rangos disponibles para los usuarios." />
                     </div>
                     <div className="deg"></div>
                 </div>
@@ -26,7 +26,7 @@ const Rangos = () => {
                         <div className="grid justify-center h-auto grid-cols-2 gap-4 p-10 border-[1rem] border-[#F1DA88] rounded-3xl place-content-center md:grid-cols-1 md:gap-8 md:place-content-start ">
                             <h1 className="col-span-2 font-bold text-3xl text-center text-[#F1DA88] drop-shadow-[1px_1px_var(--tw-shadow-color)] shadow-[black] ">Rango oro</h1>
                             <div className="grid w-full m-auto md:col-span-2">
-                                <img className='rounded-2xl w-40 justify-self-center duration-200 hover:w-44' src="../../pictures/rangoOro.png" alt="" />
+                                <img className='rounded-2xl w-40 justify-self-center duration-200 hover:w-44' src="../../pictures/rangoOro.png" alt="Rango oro" />
                             </div>
                             <div className="grid gap-1 text-center divide-black divide- md:gap-4 md:col-span-2">
                                 <p className='bg-[#616C8926] py-4 text-2xl rounded-xl border-2 border-[#B49947] duration-200 hover:border-[#F1DA88] hover:font-bold'>1,000 puntos</p>
@@ -41,7 +41,7 @@ const Rangos = () => {
                         <div className="grid justify-center h-auto grid-cols-2 gap-4 p-10 border-[1rem] border-gray-300 rounded-3xl place-content-center md:grid-cols-1 md:gap-8 md:place-content-start ">
                             <h1 className="col-span-2 font-bold text-3xl text-center text-gray-300 drop-shadow-[1px_1px_var(--tw-shadow-color)] shadow-[black] ">Rango platino</h1>
                             <div className="grid w-full m-auto md:col-span-2">
-                                <img className='rounded-2xl w-40 justify-self-center duration-200 hover:w-44' src="../../pictures/nuevoPlatino.png" alt="" />
+                                <img className='rounded-2xl w-40 justify-self-center duration-200 hover:w-44' src="../../pictures/nuevoPlatino.png" alt="Rango platino" />
                             </div>
                             <div className="grid gap-1 text-center divide-black divide- md:gap-4 md:col-span-2">
                                 <p className='bg-[#616C8926] py-4 text-2xl rounded-xl border-2 border-gray-500 duration-200 hover:border-gray-300 hover:font-bold'>2,000 puntos</p>
@@ -58,7 +58,7 @@ const Rangos = () => {
                         <div className="grid justify-center h-auto grid-cols-2 gap-4 p-10 border-[1rem] border-purple-800 rounded-3xl place-content-center md:grid-cols-1 md:gap-8 md:place-content-start ">
                             <h1 className="col-span-2 font-bold text-3xl text-center text-purple-800 drop-shadow-[1px_1px_var(--tw-shadow-color)] shadow-[black] ">Rango VIP</h1>
                             <div className="grid w-full m-auto md:col-span-2">
-                                <img className='rounded-2xl w-40 justify-self-center duration-200 hover:w-44' src="../../pictures/nuevoVIP.png" alt="" />
+                                <img className='rounded-2xl w-40 justify-self-center duration-200 hover:w-44' src="../../pictures/nuevoVIP.png" alt="Rango VIP" />
                             </div>
                             <div className="grid gap-1 text-center divide-black divide- md:gap-4 md:col-span-2">
                                 <p className='bg-[#616C8926] py-4 text-2xl rounded-xl border-2 border-purple-950 duration-200 hover:border-purple-800 hover:font-bold'>5,000 puntos</p>

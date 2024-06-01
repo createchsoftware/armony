@@ -13,7 +13,7 @@ function Tarjetas() {
                 {/* <h1 className="justify-self-center text-4xl md:text-6xl font-[iloveglitter] text-[#036C65]">¡Hazte socio!</h1> */}
                 <div className="items-center gap-0 text-center md:grid md:grid-cols-2 place-content-center">
                     <div>
-                        <img src={"../../../pictures/rangos.png"} alt="" className='w-5/6' />
+                        <img src={"../../../pictures/rangos.png"} alt="Rangos, los tres rangos disponibles que se pueden alcanzar." className='w-5/6' />
                     </div>
                     <div className='p-8 mt-0 bg-gradient-to-b from-[#F6CFEE] via-[#FFF1DD] to-[#DDF3FA] rounded-xl'>
                         <h1 className="text-4xl md:text-6xl font-[iloveglitter] font-bold text-[#036C65]">Conoce el potencial de los rangos</h1>
@@ -29,7 +29,7 @@ function Tarjetas() {
                         <div className="grid justify-center h-full grid-cols-2 gap-4 p-4 border-[1rem]  border-[#F1DA88] rounded-3xl place-content-center md:grid-cols-1 md:gap-8 md:place-content-start ">
                             <h1 className="col-span-2 font-bold text-xl text-center text-[#F1DA88] drop-shadow-[1px_1px_var(--tw-shadow-color)] shadow-[black] ">Rango oro</h1>
                             <div className="grid w-full m-auto md:col-span-2">
-                                <img className='w-2/3 rounded-2xl justify-self-center' src={oro} alt="" />
+                                <img className='w-2/3 rounded-2xl justify-self-center' src={oro} alt="Rango oro" />
                             </div>
                             <div className="grid gap-1 text-center divide-black divide- md:gap-4 md:col-span-2">
                                 <p className='bg-[#616C8926] py-2 text-xl rounded-xl'>1,000 puntos</p>
@@ -45,7 +45,7 @@ function Tarjetas() {
                         <div className="grid h-full justify-center grid-cols-2 gap-4 p-4 border-[1rem] rounded-3xl  border-gray-300 place-content-center md:grid-cols-1 md:gap-8 md:place-content-start">
                             <h1 className="col-span-2 font-bold text-xl text-center text-gray-300 drop-shadow-[2px_2px_var(--tw-shadow-color)] shadow-[black] ">Rango platino</h1>
                             <div className="grid w-full m-auto md:col-span-2">
-                                <img className='w-2/3 rounded-2xl justify-self-center' src={platino} alt="" />
+                                <img className='w-2/3 rounded-2xl justify-self-center' src={platino} alt="Rango platino" />
                             </div>
                             <div className="grid gap-1 text-center divide-black divide- md:gap-4 md:col-span-2">
                                 <p className='bg-[#616C8926] py-2 text-xl rounded-xl'>2,000 puntos</p>
@@ -62,7 +62,7 @@ function Tarjetas() {
                         <div className="grid justify-center h-full grid-cols-2 gap-4 p-4 border-[1rem] rounded-3xl  border-purple-800 place-content-center md:grid-cols-1 md:gap-8 md:place-content-start">
                             <h1 className="col-span-2 font-bold text-center text-purple-800 drop-shadow-[2px_2px_var(--tw-shadow-color)] shadow-[black]">Rango VIP</h1>
                             <div className="grid w-full m-auto md:col-span-2">
-                                <img className='w-2/3 rounded-2xl justify-self-center' src={vip} alt="" />
+                                <img className='w-2/3 rounded-2xl justify-self-center' src={vip} alt="Rango VIP" />
                             </div>
                             <div className="grid gap-1 text-center divide-black divide- md:gap-4 md:col-span-2">
                                 <p className='bg-[#616C8926] py-2 text-xl rounded-xl'>5,000 puntos</p>

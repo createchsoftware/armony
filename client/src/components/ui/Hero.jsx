@@ -21,8 +21,6 @@ const Hero = () => {
                     <div className="deg1"></div>
                     <div className="deg"></div>
                 </div>
-
-
             </div>
         </>
     )

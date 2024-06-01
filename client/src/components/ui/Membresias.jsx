@@ -6,7 +6,7 @@ function Membresias() {
         <>
             <img src={greenLeft} alt="" className='absolute w-[12%] left-0 ' />
             <div className='my-12 grid grid-cols-1 gap:6 md:gap-16 text-center  place-content-center md:grid-cols-2 md:text-left mx-auto font-[abeatbykai] selection:bg-[#EB5765] selection:text-white w-[80%]'>
-                <img className='' src={membresias} alt="" />
+                <img className='' src={membresias} alt="Tarjeta de suscripción para socio." />
                 <div className='m-auto'>
                     <h1 className='text-6xl font-[iloveglitter] text-[#036C65]'>Conoce nuestra suscripción</h1>
                     <p className='mt-10'>
