@@ -140,3 +140,16 @@ export async function getEmpFav(connection, data) {
     console.error(messageError, err); // Mostramos errores de query por consola
   }
 }
+
+export async function diasInhabiles(connection, data) {
+  try {
+    let diasInhabil = "CALL (?)";
+    let query = mysql.format(diasInhabil, [data.idEmpleado]);
+    const [rows, fields] = await connection.query(query);
+    endConnection();
+    return rows[0];
+  } catch (err) {
+    // Capturamos errores de ejecucion de query
+    console.error(messageError, err); // Mostramos errores de query por consola
+  }
+}
