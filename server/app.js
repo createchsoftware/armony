@@ -141,10 +141,6 @@ app.get("/api/admin", (req, res) => {
   res.send("Funcionando");
 });
 
-app.get("/cuenta", (req, res) => {
-  res.sendFile(path.join(_dirname, "/temporal/cuenta.html"));
-});
-
 // app.get('/estado-logueado', (solicitud, respuesta) => {
 //   respuesta.json({ logueado: true }); // Aquí puedes verificar el estado de logueado como lo haces en la ruta principal
 // });
