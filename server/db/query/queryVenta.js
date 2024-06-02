@@ -115,3 +115,21 @@ export async function searchVentaProducto(connection, data) {
     console.error(messageError, err); // Mostramos errores por consola
   }
 }
+
+
+export async function createVentaSus(connection, data) {
+  try {
+    let insertVentaQuery = "CALL addVentaSuscripcionOnline(?, ?, ?);"; // Procedimiento almacenado en MySQL
+    let query = mysql.format(insertVentaQuery, [
+      data.idCliente,
+      data.tarjeta,
+      data.monedero
+    ]); // parametros para el procedimiento
+    const [rows, fields] = await connection.query(query); // Ejecutamos el query y almacenamos el resultado
+    endConnection(); // Cierre de conexion
+    return rows; // retornamos las filas afectadas
+  } catch (err) {
+    // Capturamos errores de ejecucion de query
+    console.error(messageError, err); // Mostramos errores por consola
+  }
+}

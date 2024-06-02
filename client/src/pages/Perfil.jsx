@@ -8,6 +8,7 @@ function Perfil() {
     const [nombre, setNombre] = useState(false); //<<< PARA EL INICIO DE SESION
     const [correo, setCorreo] = useState(false); //<<< PARA EL INICIO DE SESION
     const [imagen, setImagen] = useState(false); //<<< PARA EL INICIO DE SESION
+    const [clave, setClave] = useState(false);
     const [sus, setSus] = useState(false); //<<< CARACTERISTICA GRAFICA DE QUE EL USUARIO ES SOCIO
 
     async function recibido() {
@@ -30,14 +31,32 @@ function Perfil() {
             setNombre(respuestaJson.nombre);
             setCorreo(respuestaJson.email);
             setImagen(respuestaJson.imagen);
+            setClave(respuestaJson.clave)
             console.log('esta es mi imagen' + respuestaJson.imagen);
         }
         else {
             setNombre(null);
             setCorreo(null);
             setImagen(null);
+            
         }
     }
+    useEffect(() => {
+        
+        const Prod = async () => {
+            try {
+                if (clave) {
+   
+                    const response = await fetch(`/api/admin/cliente/StatusSus/${clave}`)
+                    const data = await response.json();
+                    setSus(data)
+                }
+            } catch (error) {
+                console.error("hubo error :", error)
+            }
+        }
+        Prod()
+    }, [clave])
 
     useEffect(() => {
         recibido()

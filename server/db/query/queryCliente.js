@@ -125,3 +125,20 @@ export async function deletePatoCliente(connection, data) {
     console.error(messageError, err); // Mostramos el error
   }
 }
+
+
+export async function searchStatusSus(connection, data) {
+  try {
+    let Query = "CALL getSuscripcionEstadoCliente(?)"; // Procedimiento almacenado de la DB
+    let query = mysql.format(Query, [data.idCliente]);
+    const [rows, fields] = await connection.query(query); // Ejecutamos el query y almacenamos resultados
+    endConnection(); // Cerramos conexion con la DB
+    return rows[0]; // Retornamos las filas afectadas
+  } catch (err) {
+    // Capturamos error de query en caso de suceder
+    console.error(messageError, err); // Mostramos el error
+  }
+}
+
+
+

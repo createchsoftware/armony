@@ -30,6 +30,7 @@ function Rango() {
   const [nombre, setNombre] = useState(false); //<<< PARA EL INICIO DE SESION
   //const [correo, setCorreo] = useState(false); //<<< PARA EL INICIO DE SESION
   const [foto, setFoto] = useState(null);
+  const [clave, setClave] = useState(false);
   const [rango, setRango] = useState(0); //<<< MUESTRA EL RANGO DEL USUARIO
   const [puntos, setPuntos] = useState(0); //<<< PUNTOS TOTALES\
   const [porcentaje, setPorcentaje] = useState(0);
@@ -53,6 +54,7 @@ function Rango() {
 
     if (respuestaJson.logueado == true) {
       setNombre(respuestaJson.nombre);
+      setClave(respuestaJson.clave)
       //setCorreo(respuestaJson.email);
       setFoto(respuestaJson.imagen);
     } else {
@@ -100,6 +102,25 @@ function Rango() {
         break;
     }
   }, []);
+
+
+  useEffect(() => {
+        
+    const Prod = async () => {
+        try {
+            if (clave) {
+
+                const response = await fetch(`/api/admin/cliente/StatusSus/${clave}`)
+                const data = await response.json();
+                setSus(data)
+            }
+        } catch (error) {
+            console.error("hubo error :", error)
+        }
+    }
+    Prod()
+}, [clave])
+
 
   return (
     <LayoutPrincipal>

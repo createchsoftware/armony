@@ -210,7 +210,8 @@ function ListaDeseo() {
         const Prod = async () => {
             try {
                 if (Uid) {
-                    const response = await fetch(`api/admin/favoritos/ProductFavoritosbyId/${Uid}`)
+    //este fetch traera todos los favoritos del cliente,solo incluyendo servicios y productos
+                    const response = await fetch(`api/admin/favoritos/FavoritosbyId/${Uid}`)
                     const data = await response.json();
                     setContResumen(data)
                 }
@@ -222,7 +223,7 @@ function ListaDeseo() {
     }, [Uid])
 
 
-    // variable por la cual filtrar -> tipoProducto   (si es null es un servicio y si es venta es un producto)
+    // variable por la cual filtrar -> tipoProducto   (si es 'null' es un servicio y si es 'venta' es un producto)
     const presionar1 = () => {
         if(boton1 !== 'lista-boton-on')
         {

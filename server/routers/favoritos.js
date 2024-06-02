@@ -7,6 +7,7 @@ import {
   ServiceFavoritosbyId,
   ServiceFavoritosEstetica,
   ServiceFavoritosSpa,
+  FavoritosbyId
 } from "../db/query/queryFavoritos.js";
 import { conexion } from "../db/connection.js";
 
@@ -82,3 +83,15 @@ routerFavoritos.get("/ServiceFavoritosEstetica", async (req, res) => {
     res.status(500).send({ error: "Hubo un problema", err });
   }
 });
+
+routerFavoritos.get("/FavoritosbyId/:id", async (req, res) => {
+  try {
+    const resultado = await FavoritosbyId(conexion, {
+      idCliente: req.params.id,
+    });
+    res.send(JSON.stringify(resultado));
+  } catch (err) {
+    res.status(500).send({ error: "Hubo un problema", err });
+  }
+});
+
