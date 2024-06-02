@@ -961,6 +961,10 @@ async function getSuscripcion(solicitud,respuesta){
         let galleta = galletas.find(galleta => galleta.startsWith('Naruto_cookie='));
 
         if(galleta){
+
+            let dia_semana = ['Domingo','Lunes','Martes','Miercoles','Jueves','Viernes','Sabado'];
+            let meses = ['Enero','Febrero','Marzo','Abril','Mayo','Junio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'];
+
             galleta = galleta.slice(14);
 
             let consulta = 'call getSuscripcionActual(?)';
@@ -980,15 +984,17 @@ async function getSuscripcion(solicitud,respuesta){
                 let mE = objeto_respuesta.fechaExpiracion.getMonth()+1;
                 let dE = objeto_respuesta.fechaExpiracion.getDate();
 
-                objeto_respuesta.mE = mE;
+                objeto_respuesta.mE = meses[mE-1];
                 objeto_respuesta.dE = dE;
+                objeto_respuesta.sE = dia_semana[objeto_respuesta.fechaExpiracion.getDay()];
 
                 let aI = objeto_respuesta.fechaInicio.getFullYear();
                 let mI = objeto_respuesta.fechaInicio.getMonth()+1;
                 let dI = objeto_respuesta.fechaInicio.getDate();
 
-                objeto_respuesta.mI = mI;
+                objeto_respuesta.mI = meses[mI-1];
                 objeto_respuesta.dI = dI;
+                objeto_respuesta.sI = dia_semana[objeto_respuesta.fechaInicio.getDay()];
 
                 objeto_respuesta.fechaExpiracion = `${aE}-${mE}-${dE}`;
                 objeto_respuesta.fechaInicio  = `${aI}-${mI}-${dI}`;

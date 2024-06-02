@@ -10,9 +10,12 @@ function Suscripciones() {
 
     const [diaInicio,setDiaInicio] = useState('');
     const [mesInicio,setMesInicio] = useState('');
+    const [semanaInicio,setSemanaInicio] = useState('');
 
     const [diaFinal,setDiaFinal] = useState('');
     const [mesFinal,setMesFinal] = useState('');
+    const [semanaFinal,setSemanaFinal] = useState('');
+    
 
     async function recibido() {
         const respuesta = await fetch('/api/suscripcion', {
@@ -35,10 +38,14 @@ function Suscripciones() {
 
                 let ob = respuestaJson.objeto_respuesta;
                 setSus(true);
+
                 setDiaInicio(ob.dI);
                 setMesInicio(ob.mI);
+                setSemanaInicio(ob.sI);
+
                 setDiaFinal(ob.dE);
                 setMesFinal(ob.mE);
+                setSemanaFinal(ob.sE);
 
             }
             setNombre(respuestaJson.nombre);
@@ -106,11 +113,11 @@ function Suscripciones() {
                             <div className='flex items-center justify-between text-gray-500'>
                                 <div className='px-10 text-center '>
                                     <p className='text-gray-500'>{mesInicio}</p>
-                                    <p className='text-gray-500'>Sábado - 04</p>
+                                    <p className='text-gray-500'>{semanaInicio} - {diaInicio}</p>
                                 </div>
                                 <div className='text-center '>
-                                    <p className='text-gray-500'>Abril</p>
-                                    <p className='text-gray-500'>Sábado - 04</p>
+                                    <p className='text-gray-500'>{mesFinal}</p>
+                                    <p className='text-gray-500'>{semanaFinal} - {diaFinal}</p>
                                 </div>
                             </div>
                             <button className='bg-[#EB5765] text-white mt-6 py-3 w-1/2 m-auto shadow-[0_3px_10px_rgb(0,0,0,0.2)] rounded-lg duration-200 hover:bg-[rgb(255,181,167)]'>Renovar suscripción</button>
