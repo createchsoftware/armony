@@ -1,10 +1,9 @@
-import React, { useEffect, useState, createContext, useContext } from 'react';
+import { useEffect, useState, createContext, useContext } from 'react';
 import { Rating } from '@mui/material';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrash, faCircleXmark, faCircleMinus, faCirclePlus } from '@fortawesome/free-solid-svg-icons';
-import PagoProducto from '../../pages/PagoProducto';
 const CarritoContext = createContext();
-import { Navigate, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 export const CarritoProvider = ({ children }) => {
 
@@ -82,7 +81,7 @@ export const CarritoProvider = ({ children }) => {
 
 export const useCarrito = () => useContext(CarritoContext);
 
-const Carrito = ({ cerrar, totalProductos, logCart, loginCart }) => {
+const Carrito = ({ cerrar, totalProductos, logCart }) => {
     const { cartItems, eliminarDelCarrito, increaseQuantity, decreaseQuantity } = useCarrito();
     const [log, setLog] = useState(false);
 
