@@ -3,6 +3,7 @@ import bcryptjs from 'bcryptjs';
 import dotenv from 'dotenv';
 import mysql from "mysql2";
 import Stripe from 'stripe';
+import {methods as servicios} from "../services/mail.service.js";
 
 dotenv.config();
 
@@ -403,9 +404,40 @@ async function InsertarTarjeta(solicitud,respuesta){
 
                     let predeterminada = 0;
 
-                    if(principal[0] == true){
+
+                    let buscar_predeterminada ='select * from tarjeta where predeterminada = 1 and fkCliente = ?';
+
+                    let [fields_predeterminada] = await solicitud.database.query(mysql.format(buscar_predeterminada,[decodificada.user]));
+                    
+                    let objeto_predeterminada = fields_predeterminada[0][0];
+
+                    if(!objeto_predeterminada){
+                        // no existe ningun usuario con la tarjeta predeterminada
+
+                        // aunque el usuario no haya puesto que es predeterminada, al ser la primer tarjeta sera la predeterminada
                         predeterminada = 1;
                     }
+                    else{
+                        // supongamos que ya existe una tarjeta predeterminada, pero si el usuario puso que esta iba a ser la nueva predeterminada, entonces 
+
+                        if(principal==true){
+                        
+                            try{
+                                // tenemos que actualizar la anterior tarjeta predeterminada
+                                let u_consulta = 'update tarjeta set predeterminada = 0 where pkIdNumero = ? and fkCliente = ?';
+                                let u_parametros = [objeto_predeterminada.pkIdNumero, decodificada.user];
+                                await solicitud.database.query(mysql.format(u_consulta,u_parametros));
+
+                                predeterminada = 1;
+                            }
+                            catch(error){
+                                // probablemente nunca vaya a ver un error, pero por si acaso
+                                console.log('no se pudo quitar como predeterminada la tarjeta anterior');
+                            }
+     
+                        }
+                    }
+                    
 
                     let parametros = [numero[0],decodificada.user,tipo[0],titular[0],fecha_a_introducir,cvv[0],predeterminada,'id-stripe'];
 
@@ -1010,6 +1042,66 @@ async function getSuscripcion(solicitud,respuesta){
 }
 
 
+async function deleteSuscripcion(solicitud,respuesta){
+    if(solicitud.headers.cookie == undefined){
+        return respuesta.send({logueado:false});
+    }
+    else{
+        let galletas = solicitud.headers.cookie.split('; ');
+        let galleta = galletas.find(galleta=> galleta.startsWith('Naruto_cookie='));
+
+        if(galleta){
+            galleta = galleta.slice(14);
+
+            let decodificada = await jsonwebtoken.verify(galleta, process.env.JWT_SECRET);
+
+            let consulta = 'cancelarSuscripcion(?)';
+
+            let exito = false;            
+
+            try{
+                // ejecutamos la cancelacion de la suscripcion
+                await solicitud.database.query(mysql.format(consulta,[decodificada.user]));
+
+                exito = true;
+            }
+            catch(error){
+                exito = false;
+            }
+            
+
+            if(exito == true){
+                try{
+                    let full_name = `${decodificada.paterno} ${decodificada.materno} ${decodificada.nombre}`;
+    
+                    //toca enviar al usuario un correo
+                    let sending = await servicios.CancelacionSuscripcion(decodificada.correo,"token",full_name);
+                }catch(error){
+                    console.log('envio incorrecto');
+                    console.log(error);
+                }
+
+                // independientemente del resultado del try catch, el proceso fue exitoso
+                return respuesta.send({logueado:true,suscripcion:false,redirect:'/perfil/suscripciones'});
+            }
+            else{
+                return respuesta.send({logueado:true,suscripcion:true}); // no se cancelo la suscripcion
+            }
+           
+            
+
+
+            
+
+
+        }
+        else{
+            return respuesta.send({logueado:false});
+        }
+    }
+}
+
+
 
 
 
@@ -1071,5 +1163,6 @@ export const methods = {
     getMonedero,
     Insert_to_Monedero,
     getOpcionesPago,
-    getSuscripcion
+    getSuscripcion,
+    deleteSuscripcion
 }
