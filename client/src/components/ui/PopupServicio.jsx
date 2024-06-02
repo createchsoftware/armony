@@ -265,6 +265,9 @@ const PopupServicio = ({ cerrar, check, datos, update }) => {
                     </p>
                     <button
                       onClick={() => changeData(update, similar)}
+                      disabled={
+                        similar.descripcion === "Cargando..." ? true : false
+                      }
                       className=" transition-all duration-300  m-auto hover:bg-[#036C65] hover:ring-2 hover:[#036C65] hover:ring-offset-1 group relative inline-flex h-10 md:h-8 lg:h-10 items-center justify-center overflow-hidden rounded-lg border-2 bg-[#EB5765] px-6 font-[abeatbykai] text-neutral-200"
                     >
                       <span>Ver </span>
