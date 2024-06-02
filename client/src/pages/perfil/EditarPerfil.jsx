@@ -140,6 +140,7 @@ const EditarPerfil = ({ usuario }) => {
               <input
                 id="nombre"
                 type="text"
+                aria-label="Ingresa nombre."
                 placeholder={`${nombre}`}
                 className="w-2/3 px-6 py-1 mb-1 mr-2 rounded-full bg-slate-200 focus:outline-none focus:ring-1 focus:ring-rose-400 focus:border-transparent"
               />
@@ -149,6 +150,7 @@ const EditarPerfil = ({ usuario }) => {
               <input
                 id="paterno"
                 type="text"
+                aria-label="Ingresa apellido paterno."
                 placeholder={`${apellidoP}`}
                 className="w-2/3 px-6 py-1 mb-1 mr-2 rounded-full bg-slate-200 focus:outline-none focus:ring-1 focus:ring-rose-400 focus:border-transparent"
               />
@@ -158,6 +160,7 @@ const EditarPerfil = ({ usuario }) => {
               <input
                 id="materno"
                 type="text"
+                aria-label="Ingresa apellido materno."
                 placeholder={`${apellidoM}`}
                 className="w-2/3 px-6 py-1 mb-1 mr-2 rounded-full bg-slate-200 focus:outline-none focus:ring-1 focus:ring-rose-400 focus:border-transparent"
               />
@@ -168,6 +171,7 @@ const EditarPerfil = ({ usuario }) => {
                 <input
                   id="telefono"
                   type="text"
+                  aria-label="Ingresa LADA."
                   placeholder={`${telefono}`}
                   className="w-48 px-6 py-1 mb-1 mr-24 rounded-full bg-slate-200 focus:outline-none focus:ring-1 focus:ring-rose-400 focus:border-transparent"
                 />
@@ -177,6 +181,7 @@ const EditarPerfil = ({ usuario }) => {
                 <input
                   id="telefono"
                   type="text"
+                  aria-label="Ingresa teléfono."
                   placeholder={`${telefono}`}
                   className="w-48 px-6 py-1 mb-1 mr-24 rounded-full bg-slate-200 focus:outline-none focus:ring-1 focus:ring-rose-400 focus:border-transparent"
                 />
@@ -187,10 +192,11 @@ const EditarPerfil = ({ usuario }) => {
             </div>
             <div className="flex justify-between items-center mb-1">
               <div className="flex justify-between items-center gap-3">
-                <label htmlFor="">Dia:</label>
+                <label htmlFor="">Día:</label>
                 <input
                   id="dia"
                   type="number"
+                  aria-label="Ingresa día de nacimiento."
                   min={1}
                   max={31}
                   placeholder={`${dia}`}
@@ -202,6 +208,7 @@ const EditarPerfil = ({ usuario }) => {
                 <input
                   id="mes"
                   type="number"
+                  aria-label="Ingresa mes de nacimiento."
                   placeholder={`${mes}`}
                   className="w-32 px-6 py-1 mb-1 rounded-full bg-slate-200 focus:outline-none focus:ring-1 focus:ring-rose-400 focus:border-transparent"
                 />
@@ -211,20 +218,23 @@ const EditarPerfil = ({ usuario }) => {
                 <input
                   id="año"
                   type="number"
+                  aria-label="Ingresa año de nacimiento."
                   placeholder={`${año}`}
                   className="w-32 px-6 py-1 mb-1 rounded-full bg-slate-200 focus:outline-none focus:ring-1 focus:ring-rose-400 focus:border-transparent"
                 />
               </div>
             </div>
-            <div className="flex justify-start my-2">
+            {/* SE ELIMINO EL CORREO ELECTRONICO DEL DISEÑO !!! < < < < < < < < < < < < < < < < < < < < < < */}
+            {/* <div className="flex justify-start my-2">
               <h2 className="text-xl font-bold text-[rgb(3,109,99)]">E-MAIL</h2>
             </div>
             <input
               id="correo"
               type="email"
+              aria-label="Ingresa correo electrónico"
               placeholder={`${correo}`}
               className="px-6 py-1 mb-1 rounded-full w-full bg-slate-200 focus:outline-none focus:ring-1 focus:ring-rose-400 focus:border-transparent"
-            />
+            /> */}
             <div className="flex justify-start my-2">
               <h2 className="text-xl font-bold text-[rgb(3,109,99)]">DOMICILIO</h2>
             </div>
@@ -233,6 +243,7 @@ const EditarPerfil = ({ usuario }) => {
               <input
                 id="calle"
                 type="text"
+                aria-label="Ingresa calle del domicilio."
                 placeholder={`${calle}`}
                 className="w-3/4 px-6 py-1 mb-1 rounded-full bg-slate-200 focus:outline-none focus:ring-1 focus:ring-rose-400 focus:border-transparent"
               />
@@ -243,6 +254,7 @@ const EditarPerfil = ({ usuario }) => {
                 <input
                   id="colonia"
                   type="tel"
+                  aria-label="Ingresa colonia de domicilio."
                   placeholder={`${colonia}`}
                   className="w-52 px-6 py-1 mb-1 mr-24 rounded-full bg-slate-200 focus:outline-none focus:ring-1 focus:ring-rose-400 focus:border-transparent"
                 />
@@ -252,6 +264,7 @@ const EditarPerfil = ({ usuario }) => {
                 <input
                   id="codigoP"
                   type="text"
+                  aria-label="Ingresa código postal del domicilio."
                   placeholder={`${codigoP}`}
                   className="w-32 px-6 py-1 mb-1 mr-2 rounded-full bg-slate-200 focus:outline-none focus:ring-1 focus:ring-rose-400 focus:border-transparent"
                 />
@@ -262,6 +275,7 @@ const EditarPerfil = ({ usuario }) => {
               <input
                 id="numero"
                 type="text"
+                aria-label="Ingresa número del domicilio."
                 placeholder={`${numero}`}
                 className="w-48 px-6 py-1 mb-1 mr-2 rounded-full bg-slate-200 focus:outline-none focus:ring-1 focus:ring-rose-400 focus:border-transparent"
               />
@@ -306,7 +320,7 @@ const EditarPerfil = ({ usuario }) => {
               id="subida"
               src={`../../../pictures/avatares/${imagen}`}
               className="w-48 rounded-full shadow-2xl justify-self-center"
-              alt=""
+              alt="Foto de perfil del usuario."
             />
             <input type="file" id="imagen" accept="image/*" />
             <p className="text-xl text-[#ec5766] justify-self-center ">ID de Usuario</p>

@@ -8,9 +8,7 @@ import pilar4 from "../../../public/pictures/pilar4.png";
 import { useState } from "react";
 import Soon from "./Proximamente";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { ArrowProps } from "react-multi-carousel/lib/types";
 import {
-  faDiamond,
   faAngleLeft,
   faAngleRight,
 } from "@fortawesome/free-solid-svg-icons";
@@ -100,7 +98,7 @@ function Popular() {
               <img
                 className="rounded-2xl w-72 h-96 mx-auto"
                 src={pilar1}
-                alt=""
+                alt="Pilar polular: Spa, Salon & Beauty"
               />
             </a>
           </div>
@@ -128,7 +126,7 @@ function Popular() {
             <img
               className="rounded-2xl w-72 h-96 mx-auto"
               src={pilar2}
-              alt=""
+              alt="Pilar popular: Cafetería."
             />
           </div>
           <div className="flex flex-col justify-between h-52 ">
@@ -153,7 +151,7 @@ function Popular() {
             <img
               className="rounded-2xl w-72 h-96 mx-auto"
               src={pilar3}
-              alt=""
+              alt="Pilar popular: Wellness, hábitos saludables."
             />
           </div>
           {/* <div className='flex flex-col content-between justify-between h-full place-content-between place-items-center '> */}
@@ -179,7 +177,7 @@ function Popular() {
             <img
               className="rounded-2xl w-72 h-96 mx-auto"
               src={pilar4}
-              alt=""
+              alt="Pilar popular: Colectivo"
             />
           </div>{" "}
           <div className="flex flex-col justify-between h-52 ">

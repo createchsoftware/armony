@@ -71,11 +71,11 @@ function ServerDay(props) {
             viewBox="0 0 32 32"
             xmlns="http://www.w3.org/2000/svg"
           >
-            <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+            <g id="SVGRepo_bgCarrier" strokeWidth="0"></g>
             <g
               id="SVGRepo_tracerCarrier"
-              stroke-linecap="round"
-              stroke-linejoin="round"
+              strokeLinecap="round"
+              strokeLinejoin="round"
             ></g>
             <g id="SVGRepo_iconCarrier">
               {" "}
@@ -601,7 +601,7 @@ function Agenda() {
               <img
                 className="m-auto w-[65%]"
                 src="../../../pictures/agendaIcono.png"
-                alt=""
+                alt="Bienvenida a tu agenda."
               />
             </div>
           </div>
@@ -695,7 +695,7 @@ function Agenda() {
                     r="19.5"
                     fill="white"
                     stroke="#EB5765"
-                    stroke-width="2"
+                    strokeWidth="2"
                   />
                   <line
                     x1="20.9082"
@@ -703,8 +703,8 @@ function Agenda() {
                     x2="20.9082"
                     y2="31.8068"
                     stroke="#EB5765"
-                    stroke-width="5"
-                    stroke-linecap="round"
+                    strokeWidth="5"
+                    strokeLinecap="round"
                   />
                   <line
                     x1="9.19434"
@@ -712,8 +712,8 @@ function Agenda() {
                     x2="30.9698"
                     y2="20.0918"
                     stroke="#EB5765"
-                    stroke-width="5"
-                    stroke-linecap="round"
+                    strokeWidth="5"
+                    strokeLinecap="round"
                   />
                 </svg>
               </a>

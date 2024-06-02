@@ -7,6 +7,7 @@ import {
   updatePatoCliente,
   updateApodo,
   deletePatoCliente,
+  searchStatusSus
 } from "../db/query/queryCliente.js"; // Querys
 import { encontrado } from "../auth/validaciones.js"; // Validaciones
 
@@ -139,5 +140,25 @@ routerCliente.delete("/delete/cliente_patologia", async (req, res) => {
     // Capturamos errores
     console.error(messageError, err); // Mostramos errores por consola
     res.status(500).send(messageError); // Enviamos un error INTERNAL SERVER ERROR y el error al navegador
+  }
+});
+
+
+routerCliente.get('/StatusSus/:id', async (req, res) => {
+  try {
+    // Obtenemos el ID del cliente desde los parámetros de la URL
+    const idCliente = req.params.id;
+    // Realizamos la consulta a la base de datos
+    const resultado = await searchStatusSus(conexion, { idCliente });
+
+    if (resultado[0]) {
+      return res.status(404).send(true);
+    }else{
+    return res.status(200).json(false);
+  }
+  } catch (err) {
+    // Capturamos errores y enviamos un mensaje de error al navegador
+    console.error(messageError, err);
+    return res.status(500).send(messageError);
   }
 });

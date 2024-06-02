@@ -1,24 +1,13 @@
 import LayoutPrincipal from "../../layouts/LayoutPrincipal";
 import { IoIosArrowBack } from "react-icons/io";
-import { MdNavigateNext } from "react-icons/md";
 import { Fragment, useEffect, useState } from "react";
-import { Dialog, Disclosure, Menu, Transition } from "@headlessui/react";
-import { XMarkIcon } from "@heroicons/react/24/outline";
+import { Menu, Transition } from "@headlessui/react";
 import {
-  ChevronDownIcon,
-  FunnelIcon,
-  MinusIcon,
-  PlusIcon,
-  Squares2X2Icon,
+  ChevronDownIcon
 } from "@heroicons/react/20/solid";
 //import { products } from '../../data/productos.json'
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
-  fa1,
-  fa2,
-  fa3,
-  fa4,
-  faCircle,
   faAngleLeft,
 } from "@fortawesome/free-solid-svg-icons";
 import Compras from "../../components/ui/Compras";
@@ -151,7 +140,7 @@ function Historial() {
           <img
             className="w-16 m-auto my-8 -mt-32 aspect-square"
             src="../../pictures/historial.png"
-            alt=""
+            alt="Bienvenida al historial."
           />
           <div className="m-auto text-center">
             <h1 className="mt-10 text-[#036C65] font-semibold text-2xl mb-2">
@@ -185,6 +174,7 @@ function Historial() {
                 type="text"
                 id="search"
                 placeholder="Buscar..."
+                aria-label="Buscar."
                 onChange={(e) => {
                   handleSearch(e);
                 }}

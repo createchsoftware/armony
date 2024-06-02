@@ -21,6 +21,7 @@ import {
   processVenta,
   setFavorito,
 } from "../db/query/queryProductos.js";
+import { searchVentaProducto } from "../db/query/queryVenta.js";
 import { horasWithoutSeconds } from "../db/query/queryCitas.js";
 import { errorUpdate } from "../auth/validaciones.js";
 import { isFav } from "../db/query/queryCategoria.js";
@@ -324,6 +325,13 @@ routerProductos.get("/servicios/descuento/:id", async (req, res) => {
 
 routerProductos.post("/createVentaProduct", async (req, res) => {
   try {
+    // console.log(req.body.idCliente,
+    //   req.body.tarjeta,
+    //   req.body.monedero,
+    //    req.body.subtotal,
+    //    req.body.total,
+    //   req.body.impuesto
+    // )
     const resultado = await ventaProdOnline(conexion, {
       idCliente: req.body.idCliente,
       tarjeta: req.body.tarjeta,
@@ -331,7 +339,8 @@ routerProductos.post("/createVentaProduct", async (req, res) => {
       subtotal: req.body.subtotal,
       total: req.body.total,
       impuesto: req.body.impuesto,
-    }); // Parametros enviados por body
+    });
+    
     res.status(201).json({
       message: "se realizo la compra con exito",
       data: resultado,
@@ -344,8 +353,15 @@ routerProductos.post("/createVentaProduct", async (req, res) => {
 
 routerProductos.post("/detallesventa", async (req, res) => {
   // Datos de prueba de cita
+
+  console.log(req.body.idCliente,
+    req.body.idProducto,
+    req.body.idPromo,
+    req.body.cantidad,
+)
+
   const datosCita = {
-    idCliente: req.body.id,
+    idCliente: req.body.idCliente,
     idProducto: req.body.idProducto,
     idPromo: req.body.idPromo,
     cantidad: req.body.cantidad,
@@ -371,4 +387,16 @@ routerProductos.post("/setFavorito", async (req, res) => {
   };
   const resultado = await setFavorito(conexion, data);
   res.status(202).json(resultado);
+});
+
+routerProductos.get("/idVentaProduct/:id", async (req, res) => {
+  try {
+    const idventa = await searchVentaProducto(conexion, {
+      idCliente: req.params.id
+    });
+    res.status(200).json(idventa);
+  } catch (err) {
+    console.error(messageError, err);
+    res.status(500).send(messageError);
+  }
 });

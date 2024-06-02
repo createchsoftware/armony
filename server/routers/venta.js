@@ -4,8 +4,12 @@ import { createVenta, searchVentaCita } from "../db/query/queryVenta.js";
 import {
   createCitas,
   duracionTotal,
-  stringATiempo,
+  stringATiempo
 } from "../db/query/queryCitas.js";
+
+import {createVentaSus} from "../db/query/queryVenta.js";
+
+
 
 // Router
 export const routerVenta = express.Router();
@@ -159,3 +163,18 @@ routerVenta.patch("", async (req, res) => {
     res.status(500).send(messageError); // Enviamos un error INTERNAL SERVER ERROR y el error al navegador
   }
 });
+
+
+routerVenta.post("/createVentaSus", async (req, res) => {
+  try {
+    const resultado = await createVentaSus(conexion, {
+      idCliente: req.body.idCliente,
+      tarjeta: req.body.tarjeta,
+      monedero: req.body.monedero
+    });
+  } catch (err) {
+    // Capturamos errores
+    console.error(messageError, err); // Mostramos errores por consola
+    res.status(500).send(messageError, err); // Enviamos un error INTERNAL SERVER ERROR y el error al navegador
+  }
+})

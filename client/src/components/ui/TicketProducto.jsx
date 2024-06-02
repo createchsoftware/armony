@@ -10,9 +10,8 @@ const TicketProducto = () => {
   const toggleSoon = () => {
     setSoon(!soon);
   };
-
   var numTicket = 123456;
-  var value = numTicket.toString();
+  var value =localStorage.getItem('idventaProduct')
 
   var onImageDownload = () => {
     const svg = document.getElementById("QRCode");

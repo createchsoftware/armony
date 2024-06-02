@@ -38,7 +38,10 @@ function InformacionPersonal() {
     const [clave, setClave] = useState(false); //<<< PARA EL INICIO DE SESION
     const [patologias, setPatologias] = useState([]);
     const [rango, setRango] = useState(0); //<<< MUESTRA EL RANGO DEL USUARIO
-    const [sus, setSus] = useState(true); //<<< CARACTERISTICA GRAFICA DE QUE EL USUARIO ES SOCIO
+    const [sus, setSus] = useState(false); //<<< CARACTERISTICA GRAFICA DE QUE EL USUARIO ES SOCIO
+
+
+
 
     async function recibido() {
         const respuesta = await fetch('/api/logueado', {
@@ -133,6 +136,11 @@ function InformacionPersonal() {
 
     }
 
+        
+    
+    
+
+
 
     function retornar() {
         if (patologias.length == 0) {
@@ -158,7 +166,25 @@ function InformacionPersonal() {
         recibido();
         Rango();
         Patologias();
+      
     }, []);
+
+    useEffect(() => {
+       // console.log(clave)
+        const Prod = async () => {
+            try {
+                if (clave) {
+                    const response = await fetch(`/api/admin/cliente/StatusSus/${clave}`)
+                    const data = await response.json();
+                    setSus(data)
+                    
+                }
+            } catch (error) {
+                console.error("hubo error :", error)
+            }
+        }
+        Prod()
+    }, [clave])
 
     return (
         <>
