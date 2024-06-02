@@ -18,27 +18,26 @@ const StyledRating = styled(Rating)({
 });
 
 const PopupServicio = ({ cerrar, check, datos, update }) => {
-  let sim = [
-    // {
-    //   nombre: "nombre 1",
-    //   descripcion: datos.descripcion,
-    //   img: datos.img,
-    // },
-    // {
-    //   nombre: "nombre 2",
-    //   descripcion: datos.descripcion,
-    //   img: datos.img,
-    // },
-    // {
-    //   nombre: "nombre 3",
-    //   descripcion: datos.descripcion,
-    //   img: datos.img,
-    // },
+  const sim = [
+    {
+      nombre: "Cargando...",
+      descripcion: "Cargando...",
+      img: "../../../pictures/logoArmony.png",
+    },
+    {
+      nombre: "Cargando... ",
+      descripcion: "Cargando...",
+      img: "../../../pictures/logoArmony.png",
+    },
+    {
+      nombre: "Cargando...  ",
+      descripcion: "Cargando...",
+      img: "../../../pictures/logoArmony.png",
+    },
   ];
-  const [similares, setSimilares] = useState([]);
+  const [similares, setSimilares] = useState(sim);
   const [indexItem, setIndexItem] = useState(0);
   const [renderItems, setRenderItems] = useState();
-  //const [mostrarSimilares, setMostrarSimilares] = useState([]);
 
   useEffect(() => {
     setTimeout(() => {
@@ -50,6 +49,7 @@ const PopupServicio = ({ cerrar, check, datos, update }) => {
           return response.json();
         })
         .then((data) => {
+          setSimilares([]);
           setSimilares(changeOrder(data));
         })
         .catch((error) => {
