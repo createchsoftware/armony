@@ -303,6 +303,20 @@ function ListaDeseo() {
         navigate(`/spa/producto/${product.id}`, { state: { product } });
     }
 
+    const handleComprar = (productoComprar) => {
+        // navigate('/spa/comprar');
+        const productoBuy = {
+            id: productoComprar.id,
+            nombre: productoComprar.nombre,
+            precio: parseFloat(productoComprar.precio),
+            cantidad: 1,
+            descripcion: productoComprar.descripcion,
+            valoracion: productoComprar.valoracion,
+            imagen: productoComprar.img,
+        };
+        navigate('/spa/comprar', { state: { producto: [productoBuy] } });
+    };
+
     const filteredProducts = contResumen.filter(producto =>
         (tipoProducto === 'all' || producto.tipoProducto === tipoProducto) &&
         producto.nombre.toLowerCase().includes(searchTerm.toLowerCase())
@@ -352,11 +366,20 @@ function ListaDeseo() {
                 </p>
             </div>
             <div className='grid mt-2'>
-                {producto.tipoProducto === "venta" ? (
-                    <button className=" text-xs gap-2  transition-all duration-300 px-8  hover:bg-[#036C65] hover:ring-1  hover:[#036C65] hover:ring-offset-1 group relative flex h-10 items-center justify-center overflow-hidden rounded-xl border-2 bg-[#EB5765] font-[abeatbykai] text-neutral-200"><span>Comprar</span> <IconoAgregarAlCarrito /> <div className="w-0 translate-x-[100%] pl-0 opacity-0 transition-all duration-200 group-hover:w-0 group-hover:translate-x-0 group-hover:pl-1 group-hover:opacity-100"></div></button>
-                ) : (
-                    <button className=" text-xs gap-2  transition-all duration-300 px-8  hover:bg-[#036C65] hover:ring-1  hover:[#036C65] hover:ring-offset-1 group relative flex h-10 items-center justify-center overflow-hidden rounded-xl border-2 bg-[#EB5765] font-[abeatbykai] text-neutral-200"><span>Agendar</span><div className="w-0 translate-x-[100%] pl-0 opacity-0 transition-all duration-200 group-hover:w-0 group-hover:translate-x-0 group-hover:pl-1 group-hover:opacity-100"></div></button>
+                {log ? (
+                    producto.tipoProducto === "venta" ? (
+                        <button onClick={() => handleComprar(producto)} className=" text-xs gap-2  transition-all duration-300 px-8  hover:bg-[#036C65] hover:ring-1  hover:[#036C65] hover:ring-offset-1 group relative flex h-10 items-center justify-center overflow-hidden rounded-xl border-2 bg-[#EB5765] font-[abeatbykai] text-neutral-200"><span>Comprar</span> <IconoAgregarAlCarrito /> <div className="w-0 translate-x-[100%] pl-0 opacity-0 transition-all duration-200 group-hover:w-0 group-hover:translate-x-0 group-hover:pl-1 group-hover:opacity-100"></div></button>
+                    ) : (
+                        <a href='/spa/agendar' className=" text-xs gap-2  transition-all duration-300 px-8  hover:bg-[#036C65] hover:ring-1  hover:[#036C65] hover:ring-offset-1 group relative flex h-10 items-center justify-center overflow-hidden rounded-xl border-2 bg-[#EB5765] font-[abeatbykai] text-neutral-200"><span>Agendar</span><div className="w-0 translate-x-[100%] pl-0 opacity-0 transition-all duration-200 group-hover:w-0 group-hover:translate-x-0 group-hover:pl-1 group-hover:opacity-100"></div></a>
+                    )
+                ):(
+                    producto.tipoProducto === "venta" ? (
+                        <button onClick={() => setLogin(!login)} className=" text-xs gap-2  transition-all duration-300 px-8  hover:bg-[#036C65] hover:ring-1  hover:[#036C65] hover:ring-offset-1 group relative flex h-10 items-center justify-center overflow-hidden rounded-xl border-2 bg-[#EB5765] font-[abeatbykai] text-neutral-200"><span>Comprar</span> <IconoAgregarAlCarrito /> <div className="w-0 translate-x-[100%] pl-0 opacity-0 transition-all duration-200 group-hover:w-0 group-hover:translate-x-0 group-hover:pl-1 group-hover:opacity-100"></div></button>
+                    ) : (
+                        <button onClick={() => setLogin(!login)} className=" text-xs gap-2  transition-all duration-300 px-8  hover:bg-[#036C65] hover:ring-1  hover:[#036C65] hover:ring-offset-1 group relative flex h-10 items-center justify-center overflow-hidden rounded-xl border-2 bg-[#EB5765] font-[abeatbykai] text-neutral-200"><span>Agendar</span><div className="w-0 translate-x-[100%] pl-0 opacity-0 transition-all duration-200 group-hover:w-0 group-hover:translate-x-0 group-hover:pl-1 group-hover:opacity-100"></div></button>
+                    )
                 )}
+                
             </div>
         </li>
     ))
