@@ -70,6 +70,7 @@ const ServiciosYFiltro = ({ servicios, log, idUser }) => {
   const [busqueda, setSearch] = useState("");
   const [rating, setRating] = useState(0);
   const [precio, setPrecio] = useState(null);
+  const [msg, setMsg] = useState("Cargando...");
 
   //useEffect from api call
   // useEffect(() => {
@@ -118,6 +119,9 @@ const ServiciosYFiltro = ({ servicios, log, idUser }) => {
 
   useEffect(() => {
     setAllProducts(servicios);
+    if (servicios.length != 0) {
+      setMsg("No hay servicios de estetica disponibles");
+    }
   }, [servicios]);
 
   // useEffect para filtrar los productos según los filtros aplicados
@@ -668,7 +672,7 @@ const ServiciosYFiltro = ({ servicios, log, idUser }) => {
             <div className="grid grid-cols-2 md:grid-cols-3 md:content-start w-[90%] md:w-[100%] rounded-lg ring-4 ring-[#E2B3B7] mx-auto mb-10">
               {filteredProducts.length === 0 ? (
                 <p className="flex justify-center w-full col-span-3 m-auto mt-40">
-                  No hay servicios de estetica disponibles
+                  {msg}
                 </p>
               ) : (
                 filteredProducts.map((servicio) => (
