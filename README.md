@@ -16,7 +16,7 @@
 <hr>
 
 # ⚠️ AVISO: Continuación del proyecto ⚠️
-Por cuestiones de tiempo y circunstancias en las que se desarrolló este proyecto, este código se archivó el día miércoles 5 de julio a las 20:00 hrs. y no será modificado en el futuro.
+Por cuestiones de tiempo y circunstancias en las que se desarrolló este proyecto, este código se archivó el día miércoles 5 de junio a las 20:00 hrs. y no será modificado en el futuro.
 
 Si deseas continuar con el proyecto o tomar plantillas del mismo, es necesario enviarme un correo a <a href="mailto:a21490577@itmexicali.edu.mx">a21490577@itmexicali.edu.mx</a> para darte las instrucciones correspondientes y los recursos que puedas necesitar.
 
