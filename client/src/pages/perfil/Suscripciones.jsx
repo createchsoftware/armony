@@ -2,14 +2,27 @@ import React, { useState, useEffect } from 'react'
 import LayoutPrincipal from '../../layouts/LayoutPrincipal'
 import { IoIosArrowBack } from "react-icons/io";
 import { MdNavigateNext } from "react-icons/md";
+import { ToastContainer, toast } from 'react-toastify';
+
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faCircleExclamation} from "@fortawesome/free-solid-svg-icons";
 
 function Suscripciones() {
     const [nombre, setNombre] = useState(false); //<<< PARA EL INICIO DE SESION
     const [correo, setCorreo] = useState(false); //<<< PARA EL INICIO DE SESION
     const [sus, setSus] = useState(false); //<<< PARA VERIFICAR SI ES MIEMBRO EL USUARIO
 
+    const [diaInicio,setDiaInicio] = useState('');
+    const [mesInicio,setMesInicio] = useState('');
+    const [semanaInicio,setSemanaInicio] = useState('');
+
+    const [diaFinal,setDiaFinal] = useState('');
+    const [mesFinal,setMesFinal] = useState('');
+    const [semanaFinal,setSemanaFinal] = useState('');
+    
+
     async function recibido() {
-        const respuesta = await fetch('/api/logueado', {
+        const respuesta = await fetch('/api/suscripcion', {
             method: "GET",
             headers: {
                 "Content-Type": "application/json",
@@ -24,14 +37,59 @@ function Suscripciones() {
         let respuestaJson = await respuesta.json();
 
         if (respuestaJson.logueado == true) {
+
+            if(respuestaJson.objeto_respuesta != false){
+
+                let ob = respuestaJson.objeto_respuesta;
+                setSus(true);
+
+                setDiaInicio(ob.dI);
+                setMesInicio(ob.mI);
+                setSemanaInicio(ob.sI);
+
+                setDiaFinal(ob.dE);
+                setMesFinal(ob.mE);
+                setSemanaFinal(ob.sE);
+
+            }
             setNombre(respuestaJson.nombre);
             setCorreo(respuestaJson.email);
         }
-        else {
+        else{
             setNombre(null);
             setCorreo(null);
         }
     }
+
+
+    async function cancelarSuscripcion(){
+        const respuesta2 = await fetch('/api/delete/suscripcion',{
+            method:'DELETE',
+            headers:{
+                "Content-Type":'application/json',
+            }
+        })
+
+        if(!respuesta2.ok){
+            return;
+        }
+
+        const respuesta2Json = await respuesta2.json();
+
+        if(respuesta2Json.logueado == true){
+
+            if(respuesta2Json.suscripcion == false){
+                // la suscripcion fue eliminada con exito
+                window.location.href = respuesta2Json.redirect;
+            }
+            else{
+                // la suscripcion no fue eliminada, un toast que diga que no se pudo
+                toast(<div>{`Al parecer estamos teniendo problemas al cancelar tu suscripcion`}<FontAwesomeIcon icon={faCircleExclamation} /></div>);
+            }
+        }
+    }
+
+    
 
     useEffect(() => {
         recibido()
@@ -86,12 +144,12 @@ function Suscripciones() {
                             </div>
                             <div className='flex items-center justify-between text-gray-500'>
                                 <div className='px-10 text-center '>
-                                    <p className='text-gray-500'>Marzo</p>
-                                    <p className='text-gray-500'>Sábado - 04</p>
+                                    <p className='text-gray-500'>{mesInicio}</p>
+                                    <p className='text-gray-500'>{semanaInicio} - {diaInicio}</p>
                                 </div>
                                 <div className='text-center '>
-                                    <p className='text-gray-500'>Abril</p>
-                                    <p className='text-gray-500'>Sábado - 04</p>
+                                    <p className='text-gray-500'>{mesFinal}</p>
+                                    <p className='text-gray-500'>{semanaFinal} - {diaFinal}</p>
                                 </div>
                             </div>
                             <button className='bg-[#EB5765] text-white mt-6 py-3 w-1/2 m-auto shadow-[0_3px_10px_rgb(0,0,0,0.2)] rounded-lg duration-200 hover:bg-[rgb(255,181,167)]'>Renovar suscripción</button>
@@ -126,7 +184,7 @@ function Suscripciones() {
                         {sus ? (
                             <>
                                 <p className='text-sm text-justify'>¿Estás seguro que quisieras cancelar tu suscripción? Una vez cancelada tu suscripción, los cambios son irreversibles.</p>
-                                <button className='bg-[#036C65] text-white mt-6 py-3 w-1/2 m-auto shadow-[0_3px_10px_rgb(0,0,0,0.2)] rounded-lg duration-200 hover:bg-[#45B59C]'>Cancelar suscripción</button>
+                                <button className='bg-[#036C65] text-white mt-6 py-3 w-1/2 m-auto shadow-[0_3px_10px_rgb(0,0,0,0.2)] rounded-lg duration-200 hover:bg-[#45B59C]' onClick={cancelarSuscripcion}>Cancelar suscripción</button>
                             </>
                         ) : (
                             <>
@@ -135,6 +193,7 @@ function Suscripciones() {
                             </>
                         )}
                     </div>
+                    <ToastContainer position={'bottom-right'} theme={'light'} />
                 </section>
             </main>
         </LayoutPrincipal >

@@ -1,10 +1,9 @@
-import React, { useEffect, useState, createContext, useContext } from 'react';
+import { useEffect, useState, createContext, useContext } from 'react';
 import { Rating } from '@mui/material';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrash, faCircleXmark, faCircleMinus, faCirclePlus } from '@fortawesome/free-solid-svg-icons';
-import PagoProducto from '../../pages/PagoProducto';
 const CarritoContext = createContext();
-import { Navigate, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 export const CarritoProvider = ({ children }) => {
 
@@ -82,10 +81,32 @@ export const CarritoProvider = ({ children }) => {
 
 export const useCarrito = () => useContext(CarritoContext);
 
-const Carrito = ({ cerrar, totalProductos, logCart, loginCart }) => {
+const Carrito = ({ cerrar, totalProductos, logCart }) => {
     const { cartItems, eliminarDelCarrito, increaseQuantity, decreaseQuantity } = useCarrito();
+    const [log, setLog] = useState(false);
 
     const navigate = useNavigate();
+
+    async function recibido() {
+        const respuesta = await fetch("/api/logueado", {
+            method: "GET",
+            headers: {
+                "Content-Type": "application/json",
+            },
+        });
+
+        if (!respuesta.ok) {
+            setLog(false);
+        }
+
+        let respuestaJson = await respuesta.json();
+
+        if (respuestaJson.logueado == true) {
+            setLog(true);
+        } else {
+            setLog(false);
+        }
+    }
 
     const enviarTotal = () => {
         const total = cartItems.reduce((total, item) => total + item.cantidad, 0);
@@ -94,6 +115,7 @@ const Carrito = ({ cerrar, totalProductos, logCart, loginCart }) => {
 
     useEffect(() => {
         enviarTotal();
+        recibido();
     }, [])
 
     const handleComprar = () => {
@@ -173,12 +195,9 @@ const Carrito = ({ cerrar, totalProductos, logCart, loginCart }) => {
                         <p>Total:</p>
                         <span className='font-bold'>${total}</span>
                     </div>
-                    <button className='m-auto w-full hover:bg-opacity-90 rounded-xl py-2 px-6 text-white bg-[#45B59C]' onClick={handleComprar}>
+                    <button className='m-auto w-full hover:bg-opacity-90 rounded-xl py-2 px-6 text-white bg-[#45B59C]' onClick={log ? (handleComprar):(logCart)}>
                         Comprar
-                        {/* {loginCart ? 'Proceder al Pago' : 'Iniciar Sesión'} */}
                     </button>
-
-
                 </>
             )}
         </div>

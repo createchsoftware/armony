@@ -15,6 +15,7 @@ function Navbar() {
     const location = useLocation();
 
     const { getCartItemsCount } = useCarrito();
+    const [clave, setClave] = useState(false);
     const [cart, setCart, showModal, setShowModal] = useState(false);
     const [login, setLogin] = useState(false);
     const [log, setLog] = useState(false); //<<< PARA EL INICIO DE SESION
@@ -89,6 +90,7 @@ function Navbar() {
             setLog(true);
             setUsuario(respuestaJson.nombre);
             setImagen(respuestaJson.imagen);
+            setClave(respuestaJson.clave);
         } else {
             setLog(false);
             setUsuario(null);
@@ -100,6 +102,23 @@ function Navbar() {
         callRango();
         recibido();
     }, []);
+    
+    useEffect(() => {
+        
+        const Prod = async () => {
+            try {
+                if (clave) {
+    
+                    const response = await fetch(`/api/admin/cliente/StatusSus/${clave}`)
+                    const data = await response.json();
+                    setSus(data)
+                }
+            } catch (error) {
+                console.error("hubo error :", error)
+            }
+        }
+        Prod()
+    }, [clave])
 
     return (
         <>
@@ -318,7 +337,7 @@ function Navbar() {
             {cart && (
                 <div className="overflow-y-auto cart-fondo">
                     <div className="overflow-y-auto cart-fx">
-                        <Carrito cerrar={toggleCart} totalProductos={cantProductos} cartLogin={toggleLogin} />
+                        <Carrito cerrar={toggleCart} totalProductos={cantProductos} logCart={toggleLogin} />
                     </div>
                 </div>
             )}

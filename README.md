@@ -15,5 +15,12 @@
 </div>
 <hr>
 
+# ⚠️ AVISO: Continuación del proyecto ⚠️
+Por cuestiones de tiempo y circunstancias en las que se desarrolló este proyecto, este código se archivó el día miércoles 5 de junio a las 20:00 hrs. y no será modificado en el futuro.
+
+Si deseas continuar con el proyecto o tomar plantillas del mismo, es necesario enviarme un correo a <a href="mailto:a21490577@itmexicali.edu.mx">a21490577@itmexicali.edu.mx</a> para darte las instrucciones correspondientes y los recursos que puedas necesitar.
+
+Muchas gracias.
+
 # Licencia
-El código íntegro de este proyecto se distribuye bajo la licencia de <a href="https://github.com/createchsoftware/armony/blob/main/LICENSE">The Unlicense</a> dado a que es un proyecto escolar. Algunas imagenes son propiedad de <a href="https://www.irasutoya.com/">いらすとや (Irasutoya)</a> o están distribuidas bajo licencias Creative Commons.
+El código íntegro de este proyecto se distribuye bajo la licencia de <a href="https://github.com/createchsoftware/armony/blob/main/LICENSE">The Unlicense</a> dado a que es un proyecto escolar. Algunas imagenes son propiedad de <a href="https://www.irasutoya.com/">Irasutoya</a> o están distribuidas bajo licencias Creative Commons.

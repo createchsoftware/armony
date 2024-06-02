@@ -10,10 +10,9 @@ import { styled } from '@mui/material/styles';
 import { useEffect, useState } from 'react';
 import PopupLogin from '../../components/ui/Login/PopupLogin';
 import { jwtDecode } from "jwt-decode";
-import { Navigate, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import 'react-tooltip/dist/react-tooltip.css'
 import { Tooltip } from 'react-tooltip'
-import { Bot } from 'lucide-react';
 
 const StyledRating = styled(Rating)({
     '& .MuiRating-iconFilled': {
@@ -210,7 +209,8 @@ function ListaDeseo() {
         const Prod = async () => {
             try {
                 if (Uid) {
-                    const response = await fetch(`api/admin/favoritos/ProductFavoritosbyId/${Uid}`)
+    //este fetch traera todos los favoritos del cliente,solo incluyendo servicios y productos
+                    const response = await fetch(`api/admin/favoritos/FavoritosbyId/${Uid}`)
                     const data = await response.json();
                     setContResumen(data)
                 }
@@ -222,7 +222,7 @@ function ListaDeseo() {
     }, [Uid])
 
 
-    // variable por la cual filtrar -> tipoProducto   (si es null es un servicio y si es venta es un producto)
+    // variable por la cual filtrar -> tipoProducto   (si es 'null' es un servicio y si es 'venta' es un producto)
     const presionar1 = () => {
         if(boton1 !== 'lista-boton-on')
         {
@@ -230,7 +230,7 @@ function ListaDeseo() {
             setBoton2('lista-boton')
             setResumen('lista-resumen-on')
             setWidth('w-1/2')
-            filtrar('null')
+            filtrar('venta')
             setShowProduct(true)
             setCols('grid-cols-3')
         }else{
@@ -250,7 +250,7 @@ function ListaDeseo() {
             setBoton1('lista-boton')
             setResumen('lista-resumen-off')
             setWidth('w-full')
-            filtrar('venta')
+            filtrar(null)
             setShowProduct(false)
             setCols('grid-cols-4')
         }else{
@@ -278,12 +278,12 @@ function ListaDeseo() {
     }
 
     const resumenList = contResumen.map(item => (
-        // ( item.tipo === '1' && 
+        ( item.tipoProducto === 'venta' && 
         <li key={item.PKidPS} className='flex justify-between mb-2'>
-            <h1>{item.nombre}</h1>
+            <h1 className='truncate'>{item.nombre}</h1>
             <h1 className='text-[#036d63]'>${item.precio}</h1>
         </li>
-        //)
+        )
     ))
 
     const handleSortChange = (event) => {
@@ -303,8 +303,22 @@ function ListaDeseo() {
         navigate(`/spa/producto/${product.id}`, { state: { product } });
     }
 
+    const handleComprar = (productoComprar) => {
+        // navigate('/spa/comprar');
+        const productoBuy = {
+            id: productoComprar.id,
+            nombre: productoComprar.nombre,
+            precio: parseFloat(productoComprar.precio),
+            cantidad: 1,
+            descripcion: productoComprar.descripcion,
+            valoracion: productoComprar.valoracion,
+            imagen: productoComprar.img,
+        };
+        navigate('/spa/comprar', { state: { producto: [productoBuy] } });
+    };
+
     const filteredProducts = contResumen.filter(producto =>
-        // (tipo === 'all' || producto.tipo === tipo) &&
+        (tipoProducto === 'all' || producto.tipoProducto === tipoProducto) &&
         producto.nombre.toLowerCase().includes(searchTerm.toLowerCase())
     ).sort((a, b) => {
         if (sort === 'nombre-asc') {
@@ -348,26 +362,51 @@ function ListaDeseo() {
                 <Rating className='' value={producto.valoracion} readOnly unratedcolor="amber" ratedcolor="amber" />
                 <h3 className='mt-0 text-xl font-bold'>{producto.nombre}</h3>
                 <p className='mt-0 text-xs text-justify'>
-                    {producto.descripcion}
+                    {producto.descripcion.length > 147 ? (
+                        producto.descripcion.substring(0, 147) + '...'
+                    ):(
+                        producto.descripcion
+                    )}
                 </p>
             </div>
             <div className='grid mt-2'>
-                {/* {producto.tipo === "1" ? ( */}
-                    <button className=" text-xs gap-2  transition-all duration-300 px-8  hover:bg-[#036C65] hover:ring-1  hover:[#036C65] hover:ring-offset-1 group relative flex h-10 items-center justify-center overflow-hidden rounded-xl border-2 bg-[#EB5765] font-[abeatbykai] text-neutral-200"><span>Comprar</span> <IconoAgregarAlCarrito /> <div className="w-0 translate-x-[100%] pl-0 opacity-0 transition-all duration-200 group-hover:w-0 group-hover:translate-x-0 group-hover:pl-1 group-hover:opacity-100"></div></button>
-                {/* ) : ( */}
-                    {/* <button className=" text-xs gap-2  transition-all duration-300 px-8  hover:bg-[#036C65] hover:ring-1  hover:[#036C65] hover:ring-offset-1 group relative flex h-10 items-center justify-center overflow-hidden rounded-xl border-2 bg-[#EB5765] font-[abeatbykai] text-neutral-200"><span>Agendar</span><div className="w-0 translate-x-[100%] pl-0 opacity-0 transition-all duration-200 group-hover:w-0 group-hover:translate-x-0 group-hover:pl-1 group-hover:opacity-100"></div></button> */}
-                {/* )} */}
+                {log ? (
+                    producto.tipoProducto === "venta" ? (
+                        <button onClick={() => handleComprar(producto)} className=" text-xs gap-2  transition-all duration-300 px-8  hover:bg-[#036C65] hover:ring-1  hover:[#036C65] hover:ring-offset-1 group relative flex h-10 items-center justify-center overflow-hidden rounded-xl border-2 bg-[#EB5765] font-[abeatbykai] text-neutral-200"><span>Comprar</span> <IconoAgregarAlCarrito /> <div className="w-0 translate-x-[100%] pl-0 opacity-0 transition-all duration-200 group-hover:w-0 group-hover:translate-x-0 group-hover:pl-1 group-hover:opacity-100"></div></button>
+                    ) : (
+                        <a href='/spa/agendar' className=" text-xs gap-2  transition-all duration-300 px-8  hover:bg-[#036C65] hover:ring-1  hover:[#036C65] hover:ring-offset-1 group relative flex h-10 items-center justify-center overflow-hidden rounded-xl border-2 bg-[#EB5765] font-[abeatbykai] text-neutral-200"><span>Agendar</span><div className="w-0 translate-x-[100%] pl-0 opacity-0 transition-all duration-200 group-hover:w-0 group-hover:translate-x-0 group-hover:pl-1 group-hover:opacity-100"></div></a>
+                    )
+                ):(
+                    producto.tipoProducto === "venta" ? (
+                        <button onClick={() => setLogin(!login)} className=" text-xs gap-2  transition-all duration-300 px-8  hover:bg-[#036C65] hover:ring-1  hover:[#036C65] hover:ring-offset-1 group relative flex h-10 items-center justify-center overflow-hidden rounded-xl border-2 bg-[#EB5765] font-[abeatbykai] text-neutral-200"><span>Comprar</span> <IconoAgregarAlCarrito /> <div className="w-0 translate-x-[100%] pl-0 opacity-0 transition-all duration-200 group-hover:w-0 group-hover:translate-x-0 group-hover:pl-1 group-hover:opacity-100"></div></button>
+                    ) : (
+                        <button onClick={() => setLogin(!login)} className=" text-xs gap-2  transition-all duration-300 px-8  hover:bg-[#036C65] hover:ring-1  hover:[#036C65] hover:ring-offset-1 group relative flex h-10 items-center justify-center overflow-hidden rounded-xl border-2 bg-[#EB5765] font-[abeatbykai] text-neutral-200"><span>Agendar</span><div className="w-0 translate-x-[100%] pl-0 opacity-0 transition-all duration-200 group-hover:w-0 group-hover:translate-x-0 group-hover:pl-1 group-hover:opacity-100"></div></button>
+                    )
+                )}
+                
             </div>
         </li>
     ))
 
+    const handleComprarTodo = () => {
+        const contProducts = contResumen
+        .filter(producto => producto.tipoProducto === 'venta')
+        .map(producto => ({
+            ...producto,
+            precio: typeof producto.precio === 'number' && !isNaN(producto.precio)
+                ? producto.precio
+                : 0
+        }));
+        navigate('/spa/comprar', { state: { producto: [contProducts] } });
+    };
+
     const precioTotal = contResumen
-        // .filter(producto => producto.tipo === '1')
+        .filter(producto => producto.tipoProducto === 'venta')
         .reduce((total, producto) => total + parseFloat(producto.precio), 0)
         .toFixed(2);
 
     const cantProductos = contResumen
-        // .filter(producto => producto.tipo === '1')
+        .filter(producto => producto.tipoProducto === 'venta')
         .length;
 
     const handleSearch = (event) => {
@@ -447,44 +486,45 @@ function ListaDeseo() {
                                         {contenido}
                                     </ul>
                                 )}
-                                {/* {showProduct && contResumen.filter(producto => producto.tipo === '1').length === 0 &&
+                                {showProduct && contResumen.filter(producto => producto.tipoProducto === 'venta').length === 0 &&
                                     <p className='m-auto'>No se encontraron productos.</p>
-                                } */}
+                                }
                             </div>
                         </div>
                     </div>
                     <div className={resumen}>
                         <div className={width}>
-                            {/* { contResumen.filter(producto => producto.tipo === '1').length === 0 ? ( */}
-                            {contResumen.length === 0 ? (
-                                <h1 className='py-6 text-xl text-center'>No hay productos</h1>
-                            ) : (
-                                <>
-                                    <h1 className='py-6 text-xl text-center'>Total artículos ({cantProductos})</h1>
-                                    <hr className='w-full border-2 border-black' />
-                                    <ul className='p-8'>{resumenList}</ul>
-                                    <hr className='w-full mb-6 border-2 border-black' />
-                                    <h1 className='px-6 mb-4 text-xl text-left'>Gastos de envío</h1>
-                                    <p className='px-6 text-left text-gray-500 text-l'>Si tu compra supera $1,000 conseguiras gastos de envío gratis.</p>
-                                    {precioTotal >= 1000 ? (
-                                        <p className='text-right text-[#45b59c] text-l px-6'>Envío gratis.</p>
-                                    ) : (
-                                        <p className='text-right text-[#45b59c] text-l px-6'>Envío NO gratis.</p>
-                                    )}
-                                    <hr className='w-full my-6 border-2 border-black' />
-                                    <div className='flex justify-between px-8'>
-                                        <h1 className='text-xl'>Total:</h1>
-                                        <h1 className='text-[#036d63] text-xl'>${precioTotal}</h1>
-                                    </div>
-                                    <div className='grid'>
-                                        {log ? (
-                                            <a href='/spa/comprar' className='bg-[#ec5766] p-2 text-center text-white mx-6 rounded-xl my-2 duration-200 hover:bg-[#ffb5a7]'>Comprar</a>
+                            {/* {contResumen.filter(producto => producto.tipoProducto === 'venta').length === 0 ? ( */}
+                                {contResumen.length === 0 ? (
+                                    <h1 className='py-6 text-xl text-center'>No hay productos</h1>
+                                ) : (
+                                    <>
+                                        <h1 className='py-6 text-xl text-center'>Total artículos ({cantProductos})</h1>
+                                        <hr className='w-full border-2 border-black' />
+                                        <ul className='p-8'>{resumenList}</ul>
+                                        <hr className='w-full mb-6 border-2 border-black' />
+                                        <h1 className='px-6 mb-4 text-xl text-left'>Gastos de envío</h1>
+                                        <p className='px-6 text-left text-gray-500 text-l'>Si tu compra supera $1,000 conseguiras gastos de envío gratis.</p>
+                                        {precioTotal >= 1000 ? (
+                                            <p className='text-right text-[#45b59c] text-l px-6'>Envío gratis.</p>
                                         ) : (
-                                            <button onClick={() => setLogin(!login)} className='bg-[#ec5766] p-2 text-center text-white mx-6 rounded-xl my-2 duration-200 hover:bg-[#ffb5a7]'>Comprar</button>
+                                            <p className='text-right text-[#45b59c] text-l px-6'>Envío NO gratis.</p>
                                         )}
-                                    </div>
-                                </>
-                            )}
+                                        <hr className='w-full my-6 border-2 border-black' />
+                                        <div className='flex justify-between px-8'>
+                                            <h1 className='text-xl'>Total:</h1>
+                                            <h1 className='text-[#036d63] text-xl'>${precioTotal}</h1>
+                                        </div>
+                                        <div className='grid'>
+                                            {log ? (
+                                                <button onClick={handleComprarTodo} className='bg-[#ec5766] p-2 text-center text-white mx-6 rounded-xl my-2 duration-200 hover:bg-[#ffb5a7]'>Comprar</button>
+                                            ) : (
+                                                <button onClick={() => setLogin(!login)} className='bg-[#ec5766] p-2 text-center text-white mx-6 rounded-xl my-2 duration-200 hover:bg-[#ffb5a7]'>Comprar</button>
+                                            )}
+                                        </div>
+                                    </>
+                                )}
+                            {/* ):''} */}
                         </div>
                     </div>
                 </div>

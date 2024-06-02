@@ -1,5 +1,5 @@
-import Carousel from 'react-multi-carousel';
-import Ofertas from '../components/ui/Ofertas';
+import Carousel from "react-multi-carousel";
+import Ofertas from "../components/ui/Ofertas";
 import Box from "@mui/material/Box";
 import Stepper from "@mui/material/Stepper";
 import Step from "@mui/material/Step";
@@ -16,23 +16,21 @@ import RevisionProductos from "../components/ui/RevisionProductos";
 import FinalizacionPago from "../components/ui/FinalizacionPagoServ";
 import Ticket from "../components/ui/TicketProducto";
 import "./cita/Transiciones.css";
-import { useLocation } from 'react-router-dom';
-import FinalizacionPagoProd from '../components/ui/FinalizacionPagoProd';
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { ArrowProps } from 'react-multi-carousel/lib/types'
-import { faDiamond, faAngleLeft, faAngleRight } from '@fortawesome/free-solid-svg-icons';
+import { useLocation } from "react-router-dom";
+import FinalizacionPagoProd from "../components/ui/FinalizacionPagoProd";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { ArrowProps } from "react-multi-carousel/lib/types";
+import {
+  faDiamond,
+  faAngleLeft,
+  faAngleRight,
+} from "@fortawesome/free-solid-svg-icons";
 
-const steps = [
-  "Productos",
-  "Pago",
-  "Confirmación",
-  "Ticket"
-];
+const steps = ["Productos", "Pago", "Confirmación", "Ticket"];
 
 export default function Cita({ producto }) {
-
   const notify = () => toast("Producto agregado al carrito");
   const location = useLocation();
   const navigate = useNavigate();
@@ -42,6 +40,28 @@ export default function Cita({ producto }) {
   const [scrollPosition, setScrollPosition] = useState(0);
 
   const [descuentos, setDescuentos] = useState([]);
+
+  async function checkLogin() {
+    let respuestaJson = null;
+    try {
+      const respuesta = await fetch("/api/logueado", {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+
+      respuestaJson = await respuesta.json();
+
+      if (respuestaJson.logueado != true) {
+        window.location.href = "/spa";
+      }
+    } catch (error) {
+      window.location.href = "/spa";
+    }
+  }
+
+  useEffect(() => checkLogin(), []);
 
   //useEffect para obtener los productos con descuento
   useEffect(() => {
@@ -91,8 +111,8 @@ export default function Cita({ producto }) {
     const newActiveStep =
       isLastStep() && !allStepsCompleted()
         ? // It's the last step, but not all steps have been completed,
-        // find the first step that has been completed
-        steps.findIndex((step, i) => !(i in completed))
+          // find the first step that has been completed
+          steps.findIndex((step, i) => !(i in completed))
         : activeStep + 1;
     setActiveStep(newActiveStep);
   };
@@ -133,25 +153,25 @@ export default function Cita({ producto }) {
   const LocalBase = () => {
     console.log(
       localStorage.getItem("servicio") +
-      " " +
-      localStorage.getItem("paquete") +
-      " " +
-      localStorage.getItem("sesiones") +
-      " " +
-      localStorage.getItem("Especialista") +
-      " " +
-      localStorage.getItem("hora") +
-      " " +
-      localStorage.getItem("Fecha seleccionada")
+        " " +
+        localStorage.getItem("paquete") +
+        " " +
+        localStorage.getItem("sesiones") +
+        " " +
+        localStorage.getItem("Especialista") +
+        " " +
+        localStorage.getItem("hora") +
+        " " +
+        localStorage.getItem("Fecha seleccionada")
     );
   };
   const revisionProductosContent = (
     <>
-      <div className='p-8 mt-12 border-2 shadow-md rounded-xl border-gray'>
-        <h1 className='text-3xl ml-[8%]'>Productos similares</h1>
-        <section className='my-4 w-[90%] bg-white m-auto p-6 rounded-xl border-8 border-[#E2B3B7]'>
+      <div className="p-8 mt-12 border-2 shadow-md rounded-xl border-gray">
+        <h1 className="text-3xl ml-[8%]">Productos similares</h1>
+        <section className="my-4 w-[90%] bg-white m-auto p-6 rounded-xl border-8 border-[#E2B3B7]">
           <hr />
-          <div className='mx-auto p-6 md:p-0 selection:bg-[#EB5765] selection:text-white'>
+          <div className="mx-auto p-6 md:p-0 selection:bg-[#EB5765] selection:text-white">
             <Carousel
               additionalTransfrom={0}
               arrows
@@ -174,27 +194,27 @@ export default function Cita({ producto }) {
                 desktop: {
                   breakpoint: {
                     max: 3000,
-                    min: 1024
+                    min: 1024,
                   },
                   items: 4,
-                  partialVisibilityGutter: 40
+                  partialVisibilityGutter: 40,
                 },
                 mobile: {
                   breakpoint: {
                     max: 464,
-                    min: 0
+                    min: 0,
                   },
                   items: 1,
-                  partialVisibilityGutter: 30
+                  partialVisibilityGutter: 30,
                 },
                 tablet: {
                   breakpoint: {
                     max: 1024,
-                    min: 464
+                    min: 464,
                   },
                   items: 2,
-                  partialVisibilityGutter: 30
-                }
+                  partialVisibilityGutter: 30,
+                },
               }}
               rewind={false}
               rewindWithAnimation={false}
@@ -204,18 +224,22 @@ export default function Cita({ producto }) {
               sliderclassName=""
               slidesToSlide={1}
               swipeable
-              customLeftArrow={<FontAwesomeIcon
-                icon={faAngleLeft}
-                size="lg"
-                className="absolute cursor-pointer top-1/2 transform -translate-y-1/2 -left-3 text-3xl text-primary-900 aspect-square bg-[#e6e6e6] rounded-full text-[#036C65] p-4 hover:opacity-90 overflow-visible z-50"
-              />}
-              customRightArrow={<FontAwesomeIcon
-                size="lg"
-                icon={faAngleRight}
-                className="absolute cursor-pointer top-1/2 transform -translate-y-1/2 -right-3 text-3xl text-primary-900 bg-[#e6e6e6] rounded-full aspect-square text-[#036C65] p-4 hover:opacity-90 overflow-visible z-50"
-              />}
+              customLeftArrow={
+                <FontAwesomeIcon
+                  icon={faAngleLeft}
+                  size="lg"
+                  className="absolute cursor-pointer top-1/2 transform -translate-y-1/2 -left-3 text-3xl text-primary-900 aspect-square bg-[#e6e6e6] rounded-full text-[#036C65] p-4 hover:opacity-90 overflow-visible z-50"
+                />
+              }
+              customRightArrow={
+                <FontAwesomeIcon
+                  size="lg"
+                  icon={faAngleRight}
+                  className="absolute cursor-pointer top-1/2 transform -translate-y-1/2 -right-3 text-3xl text-primary-900 bg-[#e6e6e6] rounded-full aspect-square text-[#036C65] p-4 hover:opacity-90 overflow-visible z-50"
+                />
+              }
             >
-              {descuentos.map(oferta => (
+              {descuentos.map((oferta) => (
                 <Ofertas key={oferta.id} producto={oferta} />
               ))}
             </Carousel>
@@ -225,13 +249,18 @@ export default function Cita({ producto }) {
     </>
   );
 
-
   //si el producto es null o undefined, hacer stepComponents[activeStep]
   //si el producto no es null o undefined, hacer stepComponents[activeStep] con el producto
 
   const stepComponents = [
     location.state.producto ? (
-      <RevisionProductos restart={restart} next={handleClick} back={handleBack} key={3} producto={location.state.producto} />
+      <RevisionProductos
+        restart={restart}
+        next={handleClick}
+        back={handleBack}
+        key={3}
+        producto={location.state.producto}
+      />
     ) : (
       <RevisionProductos restart={restart} next={handleClick} key={3} />
     ),
@@ -240,8 +269,12 @@ export default function Cita({ producto }) {
     ) : (
       <Pago key={4} next={handleClick} />
     ),
-    (location.state.producto) ? (
-      <FinalizacionPagoProd key={5} next={handleClick} producto={location.state.producto} />
+    location.state.producto ? (
+      <FinalizacionPagoProd
+        key={5}
+        next={handleClick}
+        producto={location.state.producto}
+      />
     ) : (
       <FinalizacionPagoProd key={5} next={handleClick} />
     ),
@@ -260,16 +293,16 @@ export default function Cita({ producto }) {
                 color: "#036C65", // circle color (COMPLETED)
               },
               "& .MuiStepLabel-label.Mui-completed.MuiStepLabel-alternativeLabel":
-              {
-                color: "white", // Just text label (COMPLETED)
-              },
+                {
+                  color: "white", // Just text label (COMPLETED)
+                },
               "& .MuiStepLabel-root .Mui-active": {
                 color: "#036C65", // circle color (ACTIVE)
               },
               "& .MuiStepLabel-label.Mui-active.MuiStepLabel-alternativeLabel":
-              {
-                color: "white", // Just text label (ACTIVE)
-              },
+                {
+                  color: "white", // Just text label (ACTIVE)
+                },
               "& .MuiStepLabel-root .Mui-active .MuiStepIcon-text": {
                 fill: "white", // circle's number (ACTIVE)
               },
@@ -313,13 +346,13 @@ export default function Cita({ producto }) {
                 {/* <Typography sx={{ mt: 2, mb: 1, py: 1 }}>
                                     Step {activeStep + 1}
                                 </Typography> */}
-                <div className='grid grid-cols-2'>
+                <div className="grid grid-cols-2">
                   {isLastStep() && (
                     <>
                       <a
                         disabled={activeStep === steps.length - 1}
                         // hidden={activeStep === 0 || activeStep === 1 || activeStep === 2 || activeStep === 3 || activeStep === 4 || activeStep === 5}
-                        href='/perfil/movimientos'
+                        href="/perfil/movimientos"
                         className="px-4 py-2 mx-auto text-xl bg-white rounded-full ring-1 text-rose-400 ring-rose-400"
                         sx={{ mr: 1 }}
                       >
@@ -327,7 +360,7 @@ export default function Cita({ producto }) {
                       </a>
                       <a
                         // hidden={activeStep === 0 || activeStep === 1 || activeStep === 2 || activeStep === 3 || activeStep === 4 || activeStep === 5}
-                        href='/spa/productos'
+                        href="/spa/productos"
                         disabled={activeStep === steps.length - 1}
                         className="px-4 py-2 mx-auto text-xl text-white rounded-full bg-rose-400 hover:bg-red-200"
                       >
@@ -342,10 +375,11 @@ export default function Cita({ producto }) {
                     disabled={activeStep === 0}
                     // hidden={activeStep === 0 || activeStep === 1 || activeStep === 2 || activeStep === 3 || activeStep === 4 || activeStep === 5}
                     onClick={handleBack}
-                    className={`${activeStep === 0
-                      ? "hover:bg-transparent opacity-30 hover:text-rose-400"
-                      : "hover:bg-red-50"
-                      } px-4 py-2 mx-auto text-xl bg-white rounded-full ring-1 text-rose-400 ring-rose-400`}
+                    className={`${
+                      activeStep === 0
+                        ? "hover:bg-transparent opacity-30 hover:text-rose-400"
+                        : "hover:bg-red-50"
+                    } px-4 py-2 mx-auto text-xl bg-white rounded-full ring-1 text-rose-400 ring-rose-400`}
                     sx={{ mr: 1 }}
                   >
                     Regresar
@@ -385,7 +419,7 @@ export default function Cita({ producto }) {
           {activeStep === 0 && revisionProductosContent}
         </Box>
       </div>
-      <ToastContainer position={'bottom-right'} theme={'light'} />
+      <ToastContainer position={"bottom-right"} theme={"light"} />
     </LayoutPrincipal>
   );
 }

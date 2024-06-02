@@ -79,3 +79,16 @@ export async function ServiceFavoritosEstetica(connection) {
     throw err;
   }
 }
+
+export async function FavoritosbyId(connection, data) {
+  try {
+    const call = "CALL getFavoritosCliente(?)"; // Procedimiento almacenado de la base de datos
+    const query = mysql.format(call, data.idCliente); // Parametros necesarios para el procedimiento
+    const [rows, fieds] = await connection.query(query); // Ejecutamos query y almacenamos los valores resultantes
+    endConnection(); // Cerramos la conexion con la base de datos
+    return rows[0]; // Retornamos los valores obtenidos en base al query
+  } catch (err) {
+    console.log("Ha ocurrido un error al ejecutar el query: ", err);
+    throw err;
+  }
+}
