@@ -199,6 +199,8 @@ app.get("/api/patologias", authorization.Patologias);
 
 app.get("/api/perfil/rangos", authorization.Rango);
 
+app.get("/api/suscripcion", perfil.getSuscripcion); 
+
 app.get("/api/tarjetas/1.5.2", perfil.getOpcionesPago); 
 
 app.get("/api/tarjetas/1.5", perfil.getTarjetas);

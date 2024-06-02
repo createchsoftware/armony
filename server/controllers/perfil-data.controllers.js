@@ -951,6 +951,61 @@ async function getOpcionesPago(solicitud,respuesta){
 
 
 
+async function getSuscripcion(solicitud,respuesta){
+    if(solicitud.headers.cookie == undefined){
+        return respuesta.send({logueado:false});
+    }
+    else{
+        let galletas = solicitud.headers.cookie.split('; ');
+
+        let galleta = galletas.find(galleta => galleta.startsWith('Naruto_cookie='));
+
+        if(galleta){
+            galleta = galleta.slice(14);
+
+            let consulta = 'call getSuscripcionActual(?)';
+
+            let decodificada = await jsonwebtoken.verify(galleta, process.env.JWT_SECRET);
+
+            let [fields] = await solicitud.database.query(mysql.format(consulta,[decodificada.user]));
+
+            let objeto_respuesta = fields[0][0];
+
+            if(!objeto_respuesta){
+                // no existe una suscripcion vigente
+                objeto_respuesta=false;
+            }
+            else{
+                let aE = objeto_respuesta.fechaExpiracion.getFullYear();
+                let mE = objeto_respuesta.fechaExpiracion.getMonth()+1;
+                let dE = objeto_respuesta.fechaExpiracion.getDate();
+
+                objeto_respuesta.mE = mE;
+                objeto_respuesta.dE = dE;
+
+                let aI = objeto_respuesta.fechaInicio.getFullYear();
+                let mI = objeto_respuesta.fechaInicio.getMonth()+1;
+                let dI = objeto_respuesta.fechaInicio.getDate();
+
+                objeto_respuesta.mI = mI;
+                objeto_respuesta.dI = dI;
+
+                objeto_respuesta.fechaExpiracion = `${aE}-${mE}-${dE}`;
+                objeto_respuesta.fechaInicio  = `${aI}-${mI}-${dI}`;
+            }
+            
+
+            return respuesta.send({logueado:true,nombre:decodificada.nombre,correo:decodificada.correo,objeto_respuesta:objeto_respuesta});
+        }
+        else{
+            return respuesta.send({logueado:false});
+        }
+    }
+}
+
+
+
+
 
 
 
@@ -1009,5 +1064,6 @@ export const methods = {
     getTransacciones,
     getMonedero,
     Insert_to_Monedero,
-    getOpcionesPago
+    getOpcionesPago,
+    getSuscripcion
 }

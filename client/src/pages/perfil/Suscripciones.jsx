@@ -8,8 +8,14 @@ function Suscripciones() {
     const [correo, setCorreo] = useState(false); //<<< PARA EL INICIO DE SESION
     const [sus, setSus] = useState(false); //<<< PARA VERIFICAR SI ES MIEMBRO EL USUARIO
 
+    const [diaInicio,setDiaInicio] = useState('');
+    const [mesInicio,setMesInicio] = useState('');
+
+    const [diaFinal,setDiaFinal] = useState('');
+    const [mesFinal,setMesFinal] = useState('');
+
     async function recibido() {
-        const respuesta = await fetch('/api/logueado', {
+        const respuesta = await fetch('/api/suscripcion', {
             method: "GET",
             headers: {
                 "Content-Type": "application/json",
@@ -24,14 +30,27 @@ function Suscripciones() {
         let respuestaJson = await respuesta.json();
 
         if (respuestaJson.logueado == true) {
+
+            if(respuestaJson.objeto_respuesta != false){
+
+                let ob = respuestaJson.objeto_respuesta;
+                setSus(true);
+                setDiaInicio(ob.dI);
+                setMesInicio(ob.mI);
+                setDiaFinal(ob.dE);
+                setMesFinal(ob.mE);
+
+            }
             setNombre(respuestaJson.nombre);
             setCorreo(respuestaJson.email);
         }
-        else {
+        else{
             setNombre(null);
             setCorreo(null);
         }
     }
+
+    
 
     useEffect(() => {
         recibido()
@@ -86,7 +105,7 @@ function Suscripciones() {
                             </div>
                             <div className='flex items-center justify-between text-gray-500'>
                                 <div className='px-10 text-center '>
-                                    <p className='text-gray-500'>Marzo</p>
+                                    <p className='text-gray-500'>{mesInicio}</p>
                                     <p className='text-gray-500'>Sábado - 04</p>
                                 </div>
                                 <div className='text-center '>
