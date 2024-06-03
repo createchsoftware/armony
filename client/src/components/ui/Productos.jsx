@@ -11,7 +11,8 @@ import 'react-toastify/dist/ReactToastify.css';
 import { Navigate, useNavigate } from "react-router-dom";
 import { useState, useEffect } from 'react';
 import { jwtDecode } from "jwt-decode";
-
+import 'react-tooltip/dist/react-tooltip.css'
+import { Tooltip } from 'react-tooltip'
 
 const StyledRating = styled(Rating)({
     '& .MuiRating-iconFilled': {
@@ -128,7 +129,7 @@ function Productos({ productos }) {
                                     />
                                 </Box> */}
                             </div>
-                            <img onClick={() => handleViewMore(producto)} className='w-2/3 m-auto mt-6 mb-4 rounded-lg hover:cursor-pointer hover:opacity-60 aspect-square'
+                            <img data-tooltip-id="ver" data-tooltip-content="Ver producto" onClick={() => handleViewMore(producto)} className='w-2/3 m-auto mt-6 mb-4 rounded-lg hover:cursor-pointer hover:opacity-60 aspect-square'
                                 src={producto.img ? producto.img : 'https://i.imgur.com/CCBFmSi.png'}
                                 // src={'https://i.imgur.com/CCBFmSi.png'}
                                 alt={producto.nombre}
@@ -149,6 +150,7 @@ function Productos({ productos }) {
                 }
             </ul>
             <ToastContainer position={'bottom-right'} theme={'light'} />
+            <Tooltip id="ver" />
         </div>
     )
 }
