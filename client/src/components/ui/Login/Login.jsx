@@ -95,7 +95,7 @@ const Login = ({ cerrar }) => {
                   value={true}
                 />
                 <label htmlFor="remember" className="ml-2 text-sm lg:text-base">
-                  Recuerdame
+                  Recuérdame
                 </label>
               </div>
             </div>

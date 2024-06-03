@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import LayoutPrincipal from '../../layouts/LayoutPrincipal'
 import { IoIosArrowBack } from "react-icons/io";
-import { MdNavigateNext } from "react-icons/md";
 import { ToastContainer, toast } from 'react-toastify';
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -19,7 +18,7 @@ function Suscripciones() {
     const [diaFinal,setDiaFinal] = useState('');
     const [mesFinal,setMesFinal] = useState('');
     const [semanaFinal,setSemanaFinal] = useState('');
-    const [disFaltantes,setdisFaltantes] = useState('');
+    const [diasFaltantes,setDiasFaltantes] = useState(0);
     
 
     async function recibido() {
@@ -64,7 +63,7 @@ function Suscripciones() {
 
 
     //metodo para calcular los dias faltantes para que la suscripcion acabe 
-const calcularDiasFaltantes = async (fechaI, fechaF) => {
+    const calcularDiasFaltantes = async (fechaI, fechaF) => {
         const fechaActual = new Date();
     
         if (fechaF > fechaActual) {
@@ -74,7 +73,7 @@ const calcularDiasFaltantes = async (fechaI, fechaF) => {
             return diferencia / 1000 / 60 / 60 / 24;
         }
         
-        return 0; //si retorna 0 es que la fecha actual sobrepaso la fecha final  o ya no esta vigente la sus
+        return 0; //si retorna 0 es que la fecha actual sobrepaso la fecha final o ya no esta vigente la sus
     }
 
     async function cancelarSuscripcion(){
@@ -108,14 +107,14 @@ const calcularDiasFaltantes = async (fechaI, fechaF) => {
 
     useEffect(() => {
         recibido()
+        setDiasFaltantes(parseInt(100 * ((30 - calcularDiasFaltantes)/30)));
     }, []);
-
 
     return (
         <LayoutPrincipal>
             <main className='grid gap-12 my-24'>
                 <section className='rounded-2xl mt-12 w-[60%] m-auto p-6 shadow-[0_3px_10px_rgb(0,0,0,0.2)]'>
-                    <a className='flex w-max items-center ml-6 text-black relative cursor-pointer before:bg-black before:absolute before:-bottom-1 before:block before:h-[1px] before:w-full before:origin-bottom-right before:scale-x-0 before:transition before:duration-300 before:ease-in-out hover:before:origin-bottom-left hover:before:scale-x-100 hover:font-bold' href="/perfil"> <IoIosArrowBack className='' />
+                    <a className='flex gap-2 w-max items-center ml-6 text-black relative cursor-pointer before:bg-black before:absolute before:-bottom-1 before:block before:h-[1px] before:w-full before:origin-bottom-right before:scale-x-0 before:transition before:duration-300 before:ease-in-out hover:before:origin-bottom-left hover:before:scale-x-100 hover:font-bold' href="/perfil"> <IoIosArrowBack className='' />
                         Volver</a>
                     <img className='w-32 m-auto my-6 -mt-24 rounded-full aspect-square' src="../../pictures/suscripcionCirculo.png" alt="" />
                     <div className='m-auto text-center '>
@@ -154,7 +153,7 @@ const calcularDiasFaltantes = async (fechaI, fechaF) => {
                                 Previo a la fecha de vencimiento, se te hará llegar una notificación a tu correo electrónico.</p>
                             <div className='flex items-center justify-between gap-4 px-3'>
                                 <div className="w-full bg-gray-200 rounded-full h-2.5 mb-4 dark:bg-gray-700">
-                                    <div className=" bg-[#036C65] h-1.5 rounded-full dark:bg-gray-300" style={{ width: '50%' }}></div>
+                                    <div className=" bg-[#036C65] h-1.5 rounded-full dark:bg-gray-300" style={{ width: diasFaltantes + '%' }}></div>
                                 </div>
                             </div>
                             <div className='flex items-center justify-between text-gray-500'>
