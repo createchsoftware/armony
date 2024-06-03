@@ -20,10 +20,7 @@ function Suscripciones() {
     const [semanaFinal, setSemanaFinal] = useState('');
     const [diasFaltantes, setDiasFaltantes] = useState(0);
 
-    const [diaFinal,setDiaFinal] = useState('');
-    const [mesFinal,setMesFinal] = useState('');
-    const [semanaFinal,setSemanaFinal] = useState('');
-    const [disFaltantes,setdisFaltantes] = useState('');
+    
     
 
 
