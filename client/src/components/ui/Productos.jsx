@@ -11,7 +11,8 @@ import 'react-toastify/dist/ReactToastify.css';
 import { Navigate, useNavigate } from "react-router-dom";
 import { useState, useEffect } from 'react';
 import { jwtDecode } from "jwt-decode";
-
+import 'react-tooltip/dist/react-tooltip.css'
+import { Tooltip } from 'react-tooltip'
 
 const StyledRating = styled(Rating)({
     '& .MuiRating-iconFilled': {
@@ -99,9 +100,10 @@ function Productos({ productos }) {
     };
     return (
         <div className="w-2/3 m-auto md:w-auto">
-            <ul className='grid grid-cols-1 gap-2 md:grid-cols-4 md:ml-28'>
+            <ul className='grid grid-cols-1 gap-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 md:ml-28'>
                 {
                     productos.map(producto => (
+                        console.log(producto),
                         <li key={producto.id} className='border-4 bg-white grid content-between border-[#E2B3B7] p-6 py-2 rounded-xl'>
                             <div className='flex justify-end'>
                                 <Box className="float-right hover:cursor-pointer" onClick={() => toggleFavorite(producto.pkIdPS)}>
@@ -128,7 +130,7 @@ function Productos({ productos }) {
                                     />
                                 </Box> */}
                             </div>
-                            <img onClick={() => handleViewMore(producto)} className='w-2/3 m-auto mt-6 mb-4 rounded-lg hover:cursor-pointer hover:opacity-60 aspect-square'
+                            <img data-tooltip-id="ver" data-tooltip-content="Ver producto" onClick={() => handleViewMore(producto)} className='w-2/3 m-auto mt-6 mb-4 rounded-lg hover:cursor-pointer hover:opacity-60 aspect-square'
                                 src={producto.img ? producto.img : 'https://i.imgur.com/CCBFmSi.png'}
                                 // src={'https://i.imgur.com/CCBFmSi.png'}
                                 alt={producto.nombre}
@@ -149,6 +151,7 @@ function Productos({ productos }) {
                 }
             </ul>
             <ToastContainer position={'bottom-right'} theme={'light'} />
+            <Tooltip id="ver" />
         </div>
     )
 }

@@ -4,6 +4,7 @@ import { faBasketShopping, faHandHoldingHeart, faBars, faMagnifyingGlass } from 
 import Navbar from '../../components/ui/Navbar';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
+import { Fragment } from 'react'
 import Box from '@mui/material/Box';
 import { Rating } from '@mui/material';
 import { styled } from '@mui/material/styles';
@@ -13,6 +14,10 @@ import { jwtDecode } from "jwt-decode";
 import { useNavigate } from "react-router-dom";
 import 'react-tooltip/dist/react-tooltip.css'
 import { Tooltip } from 'react-tooltip'
+import { Link } from 'react-router-dom';
+import { Dialog, Disclosure, Menu, Transition } from '@headlessui/react'
+import { XMarkIcon } from '@heroicons/react/24/outline'
+import { ChevronDownIcon, FunnelIcon, MinusIcon, PlusIcon, Squares2X2Icon } from '@heroicons/react/20/solid'
 
 const StyledRating = styled(Rating)({
     '& .MuiRating-iconFilled': {
@@ -179,6 +184,8 @@ function ListaDeseo() {
         // }
     ])
 
+
+
     const [Uid, setUid] = useState(null)
     useEffect(() => {
         const getidUser = () => {// aqui veificamos si hay una cookie con este nombre 
@@ -209,7 +216,7 @@ function ListaDeseo() {
         const Prod = async () => {
             try {
                 if (Uid) {
-    //este fetch traera todos los favoritos del cliente,solo incluyendo servicios y productos
+                    //este fetch traera todos los favoritos del cliente,solo incluyendo servicios y productos
                     const response = await fetch(`api/admin/favoritos/FavoritosbyId/${Uid}`)
                     const data = await response.json();
                     setContResumen(data)
@@ -221,11 +228,14 @@ function ListaDeseo() {
         Prod()
     }, [Uid])
 
+    function classNames(...classes) {
+        return classes.filter(Boolean).join(' ');
+    }
+
 
     // variable por la cual filtrar -> tipoProducto   (si es 'null' es un servicio y si es 'venta' es un producto)
     const presionar1 = () => {
-        if(boton1 !== 'lista-boton-on')
-        {
+        if (boton1 !== 'lista-boton-on') {
             setBoton1('lista-boton-on')
             setBoton2('lista-boton')
             setResumen('lista-resumen-on')
@@ -233,7 +243,7 @@ function ListaDeseo() {
             filtrar('venta')
             setShowProduct(true)
             setCols('grid-cols-3')
-        }else{
+        } else {
             setBoton1('lista-boton')
             setResumen('lista-resumen-off')
             setWidth('w-full')
@@ -241,11 +251,10 @@ function ListaDeseo() {
             setShowProduct(false)
             setCols('grid-cols-4')
         }
-        
+
     }
     const presionar2 = () => {
-        if(boton2 !== 'lista-boton-on')
-        {
+        if (boton2 !== 'lista-boton-on') {
             setBoton2('lista-boton-on')
             setBoton1('lista-boton')
             setResumen('lista-resumen-off')
@@ -253,11 +262,11 @@ function ListaDeseo() {
             filtrar(null)
             setShowProduct(false)
             setCols('grid-cols-4')
-        }else{
+        } else {
             setBoton2('lista-boton')
             filtrar('all')
         }
-        
+
     }
 
     const removeProducto = (itemId) => {
@@ -278,11 +287,11 @@ function ListaDeseo() {
     }
 
     const resumenList = contResumen.map(item => (
-        ( item.tipoProducto === 'venta' && 
-        <li key={item.PKidPS} className='flex justify-between mb-2'>
-            <h1 className='truncate'>{item.nombre}</h1>
-            <h1 className='text-[#036d63]'>${item.precio}</h1>
-        </li>
+        (item.tipoProducto === 'venta' &&
+            <li key={item.PKidPS} className='flex justify-between mb-2'>
+                <h1 className='truncate'>{item.nombre}</h1>
+                <h1 className='text-[#036d63]'>${item.precio}</h1>
+            </li>
         )
     ))
 
@@ -290,7 +299,7 @@ function ListaDeseo() {
         setSort(event.target.value)
     }
 
-    const handleViewMore = (producto) => {
+    const handleViewMoreProduct = (producto) => {
         // navigate to the product page with the product current id
         const product = {
             id: producto.pkIdPS,
@@ -301,6 +310,11 @@ function ListaDeseo() {
             imagen: producto.img,
         };
         navigate(`/spa/producto/${product.id}`, { state: { product } });
+    }
+
+    const handleViewMoreService = (producto) => {
+        // navigate to the services with link
+        // 
     }
 
     const handleComprar = (productoComprar) => {
@@ -353,7 +367,7 @@ function ListaDeseo() {
                     onClick={() => removeProducto(producto.pkIdPS)}
                 />
             </Box>
-            <img data-tooltip-id="ver" data-tooltip-content="Ver producto" onClick={() => handleViewMore(producto)} className='w-4/5 m-auto mb-4 rounded-lg hover:cursor-pointer hover:opacity-60 justify-self-center aspect-square'
+            <img data-tooltip-id="ver" data-tooltip-content={producto.tipoProducto === "venta" ? "Ver produto" : "Ver servicio"} onClick={producto.tipo === "venta" ? () => handleViewMoreProduct(producto) : () => handleViewMoreService(producto)} className='w-4/5 m-auto mb-4 rounded-lg hover:cursor-pointer hover:opacity-60 justify-self-center aspect-square'
                 src={producto.img}
                 alt={producto.nombre}
             />
@@ -364,7 +378,7 @@ function ListaDeseo() {
                 <p className='mt-0 text-xs text-justify'>
                     {producto.descripcion.length > 147 ? (
                         producto.descripcion.substring(0, 147) + '...'
-                    ):(
+                    ) : (
                         producto.descripcion
                     )}
                 </p>
@@ -376,28 +390,31 @@ function ListaDeseo() {
                     ) : (
                         <a href='/spa/agendar' className=" text-xs gap-2  transition-all duration-300 px-8  hover:bg-[#036C65] hover:ring-1  hover:[#036C65] hover:ring-offset-1 group relative flex h-10 items-center justify-center overflow-hidden rounded-xl border-2 bg-[#EB5765] font-[abeatbykai] text-neutral-200"><span>Agendar</span><div className="w-0 translate-x-[100%] pl-0 opacity-0 transition-all duration-200 group-hover:w-0 group-hover:translate-x-0 group-hover:pl-1 group-hover:opacity-100"></div></a>
                     )
-                ):(
+                ) : (
                     producto.tipoProducto === "venta" ? (
                         <button onClick={() => setLogin(!login)} className=" text-xs gap-2  transition-all duration-300 px-8  hover:bg-[#036C65] hover:ring-1  hover:[#036C65] hover:ring-offset-1 group relative flex h-10 items-center justify-center overflow-hidden rounded-xl border-2 bg-[#EB5765] font-[abeatbykai] text-neutral-200"><span>Comprar</span> <IconoAgregarAlCarrito /> <div className="w-0 translate-x-[100%] pl-0 opacity-0 transition-all duration-200 group-hover:w-0 group-hover:translate-x-0 group-hover:pl-1 group-hover:opacity-100"></div></button>
                     ) : (
                         <button onClick={() => setLogin(!login)} className=" text-xs gap-2  transition-all duration-300 px-8  hover:bg-[#036C65] hover:ring-1  hover:[#036C65] hover:ring-offset-1 group relative flex h-10 items-center justify-center overflow-hidden rounded-xl border-2 bg-[#EB5765] font-[abeatbykai] text-neutral-200"><span>Agendar</span><div className="w-0 translate-x-[100%] pl-0 opacity-0 transition-all duration-200 group-hover:w-0 group-hover:translate-x-0 group-hover:pl-1 group-hover:opacity-100"></div></button>
                     )
                 )}
-                
+
             </div>
         </li>
     ))
 
     const handleComprarTodo = () => {
         const contProducts = contResumen
-        .filter(producto => producto.tipoProducto === 'venta')
-        .map(producto => ({
-            ...producto,
-            precio: typeof producto.precio === 'number' && !isNaN(producto.precio)
-                ? producto.precio
-                : 0
-        }));
-        navigate('/spa/comprar', { state: { producto: [contProducts] } });
+            .filter(producto => producto.tipoProducto === 'venta')
+            .map(producto => ({
+                id: producto.id,
+                nombre: producto.nombre,
+                precio: parseFloat(producto.precio),
+                cantidad: 1,
+                descripcion: producto.descripcion,
+                valoracion: producto.valoracion,
+                imagen: producto.img,
+            }));
+        navigate('/spa/comprar', { state: { producto: contProducts } });
     };
 
     const precioTotal = contResumen
@@ -468,13 +485,99 @@ function ListaDeseo() {
                                 </form>
                             </div>
                             <div className='flex justify-end py-2 pr-24'>
-                                <select value={sort} onChange={handleSortChange} className='flex border-0 w-max gap-2 relative cursor-pointer before:bg-black before:absolute before:-bottom-1 before:block before:h-[1px] before:w-full before:origin-bottom-right before:scale-x-0 before:transition before:duration-300 before:ease-in-out hover:before:origin-bottom-left hover:before:scale-x-100 hover:font-bold'>
-                                    <option value="" className='hover:font-bold hover:bg-[#ec5766]'> Ordenamiento por:</option>
-                                    <option value="nombre-asc" className='hover:font-bold hover:bg-[#ec5766]'> Nombre (A-Z)</option>
-                                    <option value="nombre-desc" className='hover:font-bold hover:bg-[#ec5766]'> Nombre (Z-A)</option>
-                                    <option value="precio-asc" className='hover:font-bold hover:bg-[#ec5766]'> Precio: Mayor a menor</option>
-                                    <option value="precio-desc" className='hover:font-bold hover:bg-[#ec5766]'> Precio: Menor a mayor</option>
-                                </select>
+                                <div className="flex items-center">
+                                    <Menu as="div" className="relative inline-block text-left">
+                                        <div>
+                                            <Menu.Button className="inline-flex justify-center text-sm font-medium text-gray-700 group hover:text-gray-900">
+                                                Ordenanamiento por
+                                                <ChevronDownIcon
+                                                    className="flex-shrink-0 w-5 h-5 ml-1 -mr-1 text-gray-400 group-hover:text-gray-500"
+                                                    aria-hidden="true"
+                                                />
+                                            </Menu.Button>
+                                        </div>
+
+                                        <Transition
+                                            as={Fragment}
+                                            enter="transition ease-out duration-100"
+                                            enterFrom="transform opacity-0 scale-95"
+                                            enterTo="transform opacity-100 scale-100"
+                                            leave="transition ease-in duration-75"
+                                            leaveFrom="transform opacity-100 scale-100"
+                                            leaveTo="transform opacity-0 scale-95"
+                                        >
+                                            <Menu.Items className="absolute right-0 z-10 w-40 mt-2 origin-top-right bg-white rounded-md shadow-2xl ring-1 ring-black ring-opacity-5 focus:outline-none">
+                                                <div className="py-1">
+                                                    <Menu.Item>
+                                                        {({ active }) => (
+                                                            <button
+                                                                onClick={() => handleSortChange({ target: { value: 'nombre-asc' } })}
+                                                                className={classNames(
+                                                                    active ? 'bg-gray-100' : '',
+                                                                    'block w-full text-left px-4 py-2 text-sm text-gray-700 hover:font-bold'
+                                                                )}
+                                                            >
+                                                                Nombre (A-Z)
+                                                            </button>
+                                                        )}
+                                                    </Menu.Item>
+                                                    <Menu.Item>
+                                                        {({ active }) => (
+                                                            <button
+                                                                onClick={() => handleSortChange({ target: { value: 'nombre-desc' } })}
+                                                                className={classNames(
+                                                                    active ? 'bg-gray-100' : '',
+                                                                    'block w-full text-left px-4 py-2 text-sm text-gray-700 hover:font-bold'
+                                                                )}
+                                                            >
+                                                                Nombre (Z-A)
+                                                            </button>
+                                                        )}
+                                                    </Menu.Item>
+                                                    <Menu.Item>
+                                                        {({ active }) => (
+                                                            <button
+                                                                onClick={() => handleSortChange({ target: { value: 'precio-asc' } })}
+                                                                className={classNames(
+                                                                    active ? 'bg-gray-100' : '',
+                                                                    'block w-full text-left px-4 py-2 text-sm text-gray-700 hover:font-bold'
+                                                                )}
+                                                            >
+                                                                Precio: Mayor a menor
+                                                            </button>
+                                                        )}
+                                                    </Menu.Item>
+                                                    <Menu.Item>
+                                                        {({ active }) => (
+                                                            <button
+                                                                onClick={() => handleSortChange({ target: { value: 'precio-desc' } })}
+                                                                className={classNames(
+                                                                    active ? 'bg-gray-100' : '',
+                                                                    'block w-full text-left px-4 py-2 text-sm text-gray-700 hover:font-bold'
+                                                                )}
+                                                            >
+                                                                Precio: Menor a mayor
+                                                            </button>
+                                                        )}
+                                                    </Menu.Item>
+                                                </div>
+                                            </Menu.Items>
+                                        </Transition>
+                                    </Menu>
+
+                                    <button type="button" className="p-2 ml-5 -m-2 text-gray-400 hover:text-gray-500 sm:ml-7">
+                                        <span className="sr-only">View grid</span>
+                                        <Squares2X2Icon className="w-5 h-5" aria-hidden="true" />
+                                    </button>
+                                    <button
+                                        type="button"
+                                        className="p-2 ml-4 -m-2 text-gray-400 hover:text-gray-500 sm:ml-6 lg:hidden"
+                                        onClick={() => console.log('Filters clicked')}
+                                    >
+                                        <span className="sr-only">Filters</span>
+                                        <FunnelIcon className="w-5 h-5" aria-hidden="true" />
+                                    </button>
+                                </div>
                             </div>
                             <div className='grid h-full px-12 overflow-y-scroll mb-14'>
                                 {/* Contenido */}
@@ -495,35 +598,35 @@ function ListaDeseo() {
                     <div className={resumen}>
                         <div className={width}>
                             {/* {contResumen.filter(producto => producto.tipoProducto === 'venta').length === 0 ? ( */}
-                                {contResumen.length === 0 ? (
-                                    <h1 className='py-6 text-xl text-center'>No hay productos</h1>
-                                ) : (
-                                    <>
-                                        <h1 className='py-6 text-xl text-center'>Total artículos ({cantProductos})</h1>
-                                        <hr className='w-full border-2 border-black' />
-                                        <ul className='p-8'>{resumenList}</ul>
-                                        <hr className='w-full mb-6 border-2 border-black' />
-                                        <h1 className='px-6 mb-4 text-xl text-left'>Gastos de envío</h1>
-                                        <p className='px-6 text-left text-gray-500 text-l'>Si tu compra supera $1,000 conseguiras gastos de envío gratis.</p>
-                                        {precioTotal >= 1000 ? (
-                                            <p className='text-right text-[#45b59c] text-l px-6'>Envío gratis.</p>
+                            {contResumen.length === 0 ? (
+                                <h1 className='py-6 text-xl text-center'>No hay productos</h1>
+                            ) : (
+                                <>
+                                    <h1 className='py-6 text-xl text-center'>Total artículos ({cantProductos})</h1>
+                                    <hr className='w-full border-2 border-black' />
+                                    <ul className='p-8'>{resumenList}</ul>
+                                    <hr className='w-full mb-6 border-2 border-black' />
+                                    <h1 className='px-6 mb-4 text-xl text-left'>Gastos de envío</h1>
+                                    <p className='px-6 text-left text-gray-500 text-l'>Si tu compra supera $1,000 conseguiras gastos de envío gratis.</p>
+                                    {precioTotal >= 1000 ? (
+                                        <p className='text-right text-[#45b59c] text-l px-6'>Envío gratis.</p>
+                                    ) : (
+                                        <p className='text-right text-[#45b59c] text-l px-6'>Envío NO gratis.</p>
+                                    )}
+                                    <hr className='w-full my-6 border-2 border-black' />
+                                    <div className='flex justify-between px-8'>
+                                        <h1 className='text-xl'>Total:</h1>
+                                        <h1 className='text-[#036d63] text-xl'>${precioTotal}</h1>
+                                    </div>
+                                    <div className='grid'>
+                                        {log ? (
+                                            <button onClick={handleComprarTodo} className='bg-[#ec5766] p-2 text-center text-white mx-6 rounded-xl my-2 duration-200 hover:bg-[#ffb5a7]'>Comprar</button>
                                         ) : (
-                                            <p className='text-right text-[#45b59c] text-l px-6'>Envío NO gratis.</p>
+                                            <button onClick={() => setLogin(!login)} className='bg-[#ec5766] p-2 text-center text-white mx-6 rounded-xl my-2 duration-200 hover:bg-[#ffb5a7]'>Comprar</button>
                                         )}
-                                        <hr className='w-full my-6 border-2 border-black' />
-                                        <div className='flex justify-between px-8'>
-                                            <h1 className='text-xl'>Total:</h1>
-                                            <h1 className='text-[#036d63] text-xl'>${precioTotal}</h1>
-                                        </div>
-                                        <div className='grid'>
-                                            {log ? (
-                                                <button onClick={handleComprarTodo} className='bg-[#ec5766] p-2 text-center text-white mx-6 rounded-xl my-2 duration-200 hover:bg-[#ffb5a7]'>Comprar</button>
-                                            ) : (
-                                                <button onClick={() => setLogin(!login)} className='bg-[#ec5766] p-2 text-center text-white mx-6 rounded-xl my-2 duration-200 hover:bg-[#ffb5a7]'>Comprar</button>
-                                            )}
-                                        </div>
-                                    </>
-                                )}
+                                    </div>
+                                </>
+                            )}
                             {/* ):''} */}
                         </div>
                     </div>

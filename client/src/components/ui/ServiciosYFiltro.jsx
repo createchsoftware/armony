@@ -60,7 +60,7 @@ const filters = [
   },
 ];
 
-const ServiciosYFiltro = ({ servicios, log, idUser }) => {
+const ServiciosYFiltro = ({ servicios, log, idUser, st }) => {
   const [mobileFiltersOpen, setMobileFiltersOpen] = useState(false);
   const [sortOption, setSortOption] = useState(ordenamiento[0]);
   const [allProducts, setAllProducts] = useState([]);
@@ -686,6 +686,7 @@ const ServiciosYFiltro = ({ servicios, log, idUser }) => {
                     valoracion={servicio.valoracion}
                     favorito={servicio.favorito}
                     log={log}
+                    st={st}
                   />
                 ))
               )}

@@ -143,7 +143,7 @@ const EditarPerfil = ({ usuario }) => {
             Volver
           </a>
           <div className="flex-glow"></div>
-          <h1 className="text-3xl text-rose-400 font-bold text-center absolute left-1/2 transform -translate-x-1/2">Editar Perfil</h1>
+          <h1 className="absolute text-3xl font-bold text-center transform -translate-x-1/2 text-rose-400 left-1/2">Editar Perfil</h1>
         </div>
         <div className="flex w-[90%] justify-self-center justify-between px-12 py-8 my-6 shadow-lg rounded-xl border">
           {/* BLOQUE INFORMACION */}
@@ -151,7 +151,7 @@ const EditarPerfil = ({ usuario }) => {
             <div className="flex justify-start my-2">
               <h2 className="text-xl font-bold text-[rgb(3,109,99)]">INFORMACION PERSONAL</h2>
             </div>
-            <div className="flex justify-between items-center mb-1">
+            <div className="flex items-center justify-between mb-1">
               <label htmlFor="">Nombre(s):</label>
               <input
                 id="nombre"
@@ -161,7 +161,7 @@ const EditarPerfil = ({ usuario }) => {
                 className="w-2/3 px-6 py-1 mb-1 mr-2 rounded-full bg-slate-200 focus:outline-none focus:ring-1 focus:ring-rose-400 focus:border-transparent"
               />
             </div>
-            <div className="flex justify-between items-center mb-1">
+            <div className="flex items-center justify-between mb-1">
               <label htmlFor="">Apellido Paterno:</label>
               <input
                 id="paterno"
@@ -171,7 +171,7 @@ const EditarPerfil = ({ usuario }) => {
                 className="w-2/3 px-6 py-1 mb-1 mr-2 rounded-full bg-slate-200 focus:outline-none focus:ring-1 focus:ring-rose-400 focus:border-transparent"
               />
             </div>
-            <div className="flex justify-between items-center mb-1">
+            <div className="flex items-center justify-between mb-1">
               <label htmlFor="">Apellido Materno:</label>
               <input
                 id="materno"
@@ -181,8 +181,8 @@ const EditarPerfil = ({ usuario }) => {
                 className="w-2/3 px-6 py-1 mb-1 mr-2 rounded-full bg-slate-200 focus:outline-none focus:ring-1 focus:ring-rose-400 focus:border-transparent"
               />
             </div>
-            <div className="flex justify-between items-center mb-1">
-              <div className="flex gap-2 items-center">
+            <div className="flex items-center justify-between mb-1">
+              <div className="flex items-center gap-2">
                 <label htmlFor="">Lada:</label>
                 <input
                   id="lada"
@@ -192,7 +192,7 @@ const EditarPerfil = ({ usuario }) => {
                   className="w-48 px-6 py-1 mb-1 mr-24 rounded-full bg-slate-200 focus:outline-none focus:ring-1 focus:ring-rose-400 focus:border-transparent"
                 />
               </div>
-              <div className="flex gap-2 items-center">
+              <div className="flex items-center gap-2">
                 <label htmlFor="">Telefono:</label>
                 <input
                   id="telefono"
@@ -206,8 +206,8 @@ const EditarPerfil = ({ usuario }) => {
             <div className="flex justify-start my-2">
               <h2 className="text-xl font-bold text-[rgb(3,109,99)]">FECHA DE NACIMIENTO</h2>
             </div>
-            <div className="flex justify-between items-center mb-1">
-              <div className="flex justify-between items-center gap-3">
+            <div className="flex items-center justify-between mb-1">
+              <div className="flex items-center justify-between gap-3">
                 <label htmlFor="">Día:</label>
                 <input
                   id="dia"
@@ -219,7 +219,7 @@ const EditarPerfil = ({ usuario }) => {
                   className="w-32 px-6 py-1 mb-1 rounded-full bg-slate-200 focus:outline-none focus:ring-1 focus:ring-rose-400 focus:border-transparent"
                 />
               </div>
-              <div className="flex justify-between items-center gap-3">
+              <div className="flex items-center justify-between gap-3">
                 <label htmlFor="">Mes:</label>
                 <input
                   id="mes"
@@ -229,7 +229,7 @@ const EditarPerfil = ({ usuario }) => {
                   className="w-32 px-6 py-1 mb-1 rounded-full bg-slate-200 focus:outline-none focus:ring-1 focus:ring-rose-400 focus:border-transparent"
                 />
               </div>
-              <div className="flex justify-between items-center gap-3">
+              <div className="flex items-center justify-between gap-3">
                 <label htmlFor="">Año:</label>
                 <input
                   id="año"
@@ -249,12 +249,12 @@ const EditarPerfil = ({ usuario }) => {
               type="email"
               aria-label="Ingresa correo electrónico"
               placeholder={`${correo}`}
-              className="px-6 py-1 mb-1 rounded-full w-full bg-slate-200 focus:outline-none focus:ring-1 focus:ring-rose-400 focus:border-transparent"
+              className="w-full px-6 py-1 mb-1 rounded-full bg-slate-200 focus:outline-none focus:ring-1 focus:ring-rose-400 focus:border-transparent"
             /> */}
             <div className="flex justify-start my-2">
               <h2 className="text-xl font-bold text-[rgb(3,109,99)]">DOMICILIO</h2>
             </div>
-            <div className="flex justify-between items-center  mb-1">
+            <div className="flex items-center justify-between mb-1">
               <label htmlFor="">Calle:</label>
               <input
                 id="calle"
@@ -264,18 +264,18 @@ const EditarPerfil = ({ usuario }) => {
                 className="w-3/4 px-6 py-1 mb-1 rounded-full bg-slate-200 focus:outline-none focus:ring-1 focus:ring-rose-400 focus:border-transparent"
               />
             </div>
-            <div className="flex justify-between items-center mb-1">
-              <div className="flex gap-3 items-center">
+            <div className="flex items-center justify-between mb-1">
+              <div className="flex items-center gap-3">
                 <label htmlFor="">Colonia:</label>
                 <input
                   id="colonia"
                   type="tel"
                   aria-label="Ingresa colonia de domicilio."
                   placeholder={`${colonia}`}
-                  className="w-52 px-6 py-1 mb-1 mr-24 rounded-full bg-slate-200 focus:outline-none focus:ring-1 focus:ring-rose-400 focus:border-transparent"
+                  className="px-6 py-1 mb-1 mr-24 rounded-full w-52 bg-slate-200 focus:outline-none focus:ring-1 focus:ring-rose-400 focus:border-transparent"
                 />
               </div>
-              <div className="flex gap-3 items-center">
+              <div className="flex items-center gap-3">
                 <label htmlFor="">Codigo Postal:</label>
                 <input
                   id="codigoP"
@@ -286,7 +286,7 @@ const EditarPerfil = ({ usuario }) => {
                 />
               </div>
             </div>
-            <div className="flex justify-between items-center mb-1">
+            <div className="flex items-center justify-between mb-1">
               <label htmlFor="">Numero:</label>
               <input
                 id="numero"
@@ -296,16 +296,17 @@ const EditarPerfil = ({ usuario }) => {
                 className="w-48 px-6 py-1 mb-1 mr-2 rounded-full bg-slate-200 focus:outline-none focus:ring-1 focus:ring-rose-400 focus:border-transparent"
               />
             </div>
-            
+
             <div className="grid grid-cols-2 my-6">
               <div className="grid place-content-start">
-                <button
+                <a
+                  href={document.referrer}
                   id="cancelar"
                   aria-label="Cancelar"
                   className="px-4 py-2 mx-auto text-xl bg-white rounded-full text-rose-400 hover:bg-red-50 ring-2 ring-rose-400"
                 >
                   Cancelar
-                </button>
+                </a>
               </div>
               
               <div className="grid place-content-end">
@@ -331,7 +332,7 @@ const EditarPerfil = ({ usuario }) => {
           </div>
           {/* BLOQUE DE IMAGEN */}
           <div className="grid w-1/3 gap-2 text-center place-content-start">
-            <div className="flex justify-self-center justify-start my-2">
+            <div className="flex justify-start my-2 justify-self-center">
               <h2 className="text-xl font-bold text-[rgb(3,109,99)]">FOTO DE PERFIL</h2>
             </div>
             <img
@@ -342,7 +343,7 @@ const EditarPerfil = ({ usuario }) => {
             />
             <input type="file" id="imagen" accept="image/*" />
             <p className="text-xl text-[#ec5766] justify-self-center ">ID de Usuario</p>
-            <p className="px-6 justify-self-center py-2 rounded-full bg-slate-200 focus:outline-none focus:ring-1 focus:ring-rose-400 focus:border-transparent">{`#${clave}`}</p>
+            <p className="px-6 py-2 rounded-full justify-self-center bg-slate-200 focus:outline-none focus:ring-1 focus:ring-rose-400 focus:border-transparent">{`#${clave}`}</p>
           </div>
         </div>
       </main>
