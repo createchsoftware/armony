@@ -406,12 +406,15 @@ function ListaDeseo() {
         const contProducts = contResumen
             .filter(producto => producto.tipoProducto === 'venta')
             .map(producto => ({
-                ...producto,
-                precio: typeof producto.precio === 'number' && !isNaN(producto.precio)
-                    ? producto.precio
-                    : 0
+                id: producto.id,
+                nombre: producto.nombre,
+                precio: parseFloat(producto.precio),
+                cantidad: 1,
+                descripcion: producto.descripcion,
+                valoracion: producto.valoracion,
+                imagen: producto.img,
             }));
-        navigate('/spa/comprar', { state: { producto: [contProducts] } });
+        navigate('/spa/comprar', { state: { producto: contProducts } });
     };
 
     const precioTotal = contResumen
