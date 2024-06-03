@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import InforTarjeta from "./InfoTarjeta";
-import PagoRealizado from "./PagoRealizadoProducto";
+import PagoRealizado from "./PagoRealizadoSus";
 import { jwtDecode } from "jwt-decode";
 
 

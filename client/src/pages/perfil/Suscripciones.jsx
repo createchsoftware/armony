@@ -22,6 +22,8 @@ function Suscripciones() {
     const [disFaltantes,setdisFaltantes] = useState('');
     
 
+
+
     async function recibido() {
         const respuesta = await fetch('/api/suscripcion', {
             method: "GET",
@@ -103,8 +105,6 @@ const calcularDiasFaltantes = async (fechaI, fechaF) => {
             }
         }
     }
-
-    
 
     useEffect(() => {
         recibido()
