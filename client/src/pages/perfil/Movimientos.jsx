@@ -4,7 +4,8 @@ import { Menu, Transition } from "@headlessui/react";
 import {
   ChevronDownIcon
 } from "@heroicons/react/20/solid";
-//import { products } from '../../data/productos.json'
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faAngleLeft, faSliders } from "@fortawesome/free-solid-svg-icons";
 
 import Compras from "../../components/ui/Compras";
 import ReturnCitas from "../../components/ui/ReturnCita";
@@ -178,6 +179,30 @@ function Movimientos() {
   return (
     <LayoutPrincipal>
       <main className="grid gap-6 mb-12 mt-24 w-[60%] m-auto">
+        <section className="rounded-2xl mt-12 w-full m-auto p-6 shadow-[0_3px_10px_rgb(0,0,0,0.2)]">
+          <a
+            href="/perfil"
+            className="flex w-max items-center ml-6 text-black relative cursor-pointer before:bg-black before:absolute before:-bottom-1 before:block before:h-[1px] before:w-full before:origin-bottom-right before:scale-x-0 before:transition before:duration-300 before:ease-in-out hover:before:origin-bottom-left hover:before:scale-x-100 hover:font-bold"
+          >
+            <FontAwesomeIcon icon={faAngleLeft} />
+            <p className="ml-2">Volver</p>
+          </a>
+          <div className="w-32 m-auto my-6 -mt-24 bg-white rounded-full shadow-lg aspect-square place-content-center">
+            <div className=" w-[85%] bg-[#AA91EF] rounded-full aspect-square m-auto place-content-center">
+              <img
+                className="m-auto w-[65%]"
+                src="../../pictures/historial.png"
+                alt=""
+              />
+            </div>
+          </div>
+          <div className="m-auto text-center ">
+            <h1 className="text-[#036C65] font-semibold text-2xl mb-2">
+              Historial de movimientos
+            </h1>
+            <h2>Actividades registradas de tus productos y servicios</h2>
+          </div>
+        </section>
         <div className="flex justify-between gap-4 ">
           <div className="max-w-md border-gray-400 border-1">
             <div className="relative flex items-center w-full h-12 overflow-hidden bg-white border-b-2 rounded-lg focus-within:shadow-lg border-gray">
@@ -212,17 +237,19 @@ function Movimientos() {
           <div className="flex items-center ">
             <Menu as="div" className="relative inline-block text-left">
               <div>
-                <Menu.Button className="inline-flex justify-center mr-6 text-sm font-medium text-gray-700 group hover:text-gray-900">
+                <Menu.Button className="inline-flex gap-1 justify-center items-center mr-6 text-md font-medium text-gray-700 group hover:text-gray-900">
+                  <FontAwesomeIcon icon={faSliders} />
                   Por fecha
                   <ChevronDownIcon
-                    className="flex-shrink-0 w-5 h-5 ml-1 -mr-1 text-gray-400 group-hover:text-gray-500"
+                    className="flex-shrink-0 w-5 h-5 text-gray-400 group-hover:text-gray-500"
                     aria-hidden="true"
                   />
                 </Menu.Button>
-                <Menu.Button className="inline-flex justify-center text-sm font-medium text-gray-700 group hover:text-gray-900">
+                <Menu.Button className="inline-flex gap-1 justify-center items-center text-md font-medium text-gray-700 group hover:text-gray-900">
+                  <FontAwesomeIcon icon={faSliders} />
                   Tipo de movimiento
                   <ChevronDownIcon
-                    className="flex-shrink-0 w-5 h-5 ml-1 -mr-1 text-gray-400 group-hover:text-gray-500"
+                    className="flex-shrink-0 w-5 h-5 text-gray-400 group-hover:text-gray-500"
                     aria-hidden="true"
                   />
                 </Menu.Button>

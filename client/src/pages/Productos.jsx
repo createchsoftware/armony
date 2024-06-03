@@ -37,17 +37,17 @@ const Productos = () => {
 
   //useEffect para obtener los productos con descuento
   useEffect(() => {
-    setTimeout(()=>{
-    fetch("/api/admin/productos/descuento")
-      .then((response) => response.json())
-      .then((data) => {
-        // Acceder al array de objetos en la posición 0 del array dentro de data
-        setDescuentos(data.data);
-      })
-      .catch((error) => {
-        console.log("error", error);
-      });
-    },[1000])
+    setTimeout(() => {
+      fetch("/api/admin/productos/descuento")
+        .then((response) => response.json())
+        .then((data) => {
+          // Acceder al array de objetos en la posición 0 del array dentro de data
+          setDescuentos(data.data);
+        })
+        .catch((error) => {
+          console.log("error", error);
+        });
+    }, [1000])
   }, []);
 
 
@@ -193,11 +193,11 @@ const Productos = () => {
             <Filtros />
           </section>
 
-          <section className="my-20 w-[80%] m-auto grid rounded-xl">
+          <section className="my-20 w-[80%] m-auto grid grid-cols rounded-xl">
             <div className="p-6 text-xl text-center bg-white rounded-xl ">
               <h2>Promociones del día</h2>
             </div>
-            <div className="grid grid-cols-3 gap-2 ">
+            <div className="grid grid-cols-2 gap-2 md:grid-cols-3 ">
               <div className="grid bg-white ">
                 <img src="../../pictures/ofertas1.png" alt="" />
                 <div className="grid gap-2 p-6">

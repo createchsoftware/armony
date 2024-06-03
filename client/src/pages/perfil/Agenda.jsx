@@ -535,8 +535,9 @@ function Agenda() {
           <div className="bg-[#036C65] h-full w-5 rounded-full"></div>
           <div className="my-4">
             <h1>{cita.Servicio}</h1>
-            <p className="text-[#B78686]">{cita.estado}</p>
+            <p className="text-[#B78686]">{cita.estado.charAt(0).toUpperCase() + cita.estado.slice(1)}</p>
             <p className="text-[#B78686]"> Especialista: {cita.Empleado}</p>
+            <p className="text-[#B78686]">Sesiones: {1}</p>
             <p>
               {firstLetterUppercase(nombreDia) +
                 " " +

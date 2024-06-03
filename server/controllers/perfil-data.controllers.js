@@ -3,6 +3,7 @@ import bcryptjs from 'bcryptjs';
 import dotenv from 'dotenv';
 import mysql from "mysql2";
 import Stripe from 'stripe';
+import { conexion } from "../db/connection.js";
 import {methods as servicios} from "../services/mail.service.js";
 
 dotenv.config();
@@ -1030,6 +1031,7 @@ async function getSuscripcion(solicitud,respuesta){
 
                 objeto_respuesta.fechaExpiracion = `${aE}-${mE}-${dE}`;
                 objeto_respuesta.fechaInicio  = `${aI}-${mI}-${dI}`;
+
             }
             
 
@@ -1102,6 +1104,104 @@ async function deleteSuscripcion(solicitud,respuesta){
 }
 
 
+// esta funcion no recibe ni solicitud ni manda una respuesta
+async function LectorRenovacionSuscripcion(){
+
+    //asegurarnos de no enviar correos dias despues de cuando se le vencio
+    let consulta = 'select * from clienteMembresia where activo = ? and fkMembresia = 1 and fechaExpiracion = curdate()';
+
+    // las consultas normales, osea las que he manejado a lo largo del proyecto las suelo hacer asi:
+    let [fields] = await conexion.query(mysql.format(consulta,[0]));
+
+    let f = fields;
+
+    let usuarios_vencidos = [];
+
+    if(f != undefined){
+        // seleccionar los usuarios que se les vencio su suscripcion
+        for(let i in f){
+            usuarios_vencidos.push(f[i].fkCliente);
+        }
+ 
+        console.log(usuarios_vencidos);
+
+        //mandarle correo a dichos usuario
+        for(let i in usuarios_vencidos){
+            let consulta_correo = 'select * from usuario where pkIdUsuario = ?';
+
+            let [correo_usuario] = await conexion.query(mysql.format(consulta_correo,[usuarios_vencidos[i]]));
+
+            let CE = correo_usuario[0].email;
+
+            let nU = correo_usuario[0].nombre;
+            let pU = correo_usuario[0].apellidoP;
+            let mU = correo_usuario[0].apellidoM;
+
+            let full_name = `${pU} ${mU} ${nU}`;
+
+            try{
+                //toca enviar al usuario un correo
+                await servicios.vencimientoSuscripcion(CE,"token",full_name);
+            }catch(error){
+                console.log('envio incorrecto');
+                console.log(error);
+            }
+        }
+    }
+    
+    
+}
+
+
+
+
+async function Renovacion(){
+
+    let consulta = 'select * from clienteMembresia inner join cliente on clienteMembresia.fkCliente = cliente.fkUsuario where activo = 1 and fkMembresia = 1 and fechaInicio = curdate() and renovacion_auto = 1';
+
+    let [fields] = await conexion.query(mysql.format(consulta));
+
+    let f = fields;
+
+    let renovadores = [];
+
+    if(f != undefined){
+        for(let i in f){
+            renovadores.push(f[i].fkCliente); // anadir el id del cliente a la lista
+        }
+    }
+
+    for(let i in renovadores){
+        let consulta_correo = 'select * from usuario where pkIdUsuario = ?';
+
+        let [correo_usuario] = await conexion.query(mysql.format(consulta_correo,[renovadores[i]]));
+
+        let CE = correo_usuario[0].email;
+
+        let nU = correo_usuario[0].nombre;
+        let pU = correo_usuario[0].apellidoP;
+        let mU = correo_usuario[0].apellidoM;
+
+        let full_name = `${pU} ${mU} ${nU}`;
+
+        try{
+            //toca enviar al usuario un correo
+            await servicios.renovacionSuscripcion(CE,"token",full_name);
+        }catch(error){
+            console.log('no se pudo realizar el envio');
+            console.log(error);
+        }
+    }
+   
+}
+
+
+
+
+
+
+
+
 
 
 
@@ -1164,5 +1264,7 @@ export const methods = {
     Insert_to_Monedero,
     getOpcionesPago,
     getSuscripcion,
-    deleteSuscripcion
+    deleteSuscripcion,
+    LectorRenovacionSuscripcion,
+    Renovacion
 }

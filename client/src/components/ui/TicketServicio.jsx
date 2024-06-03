@@ -11,8 +11,7 @@ const TicketServicio = () => {
     setSoon(!soon);
   };
 
-  var numTicket = 123456;
- var value = localStorage.getItem('idventaCita')
+  var value = localStorage.getItem('idventaCita')
 
 
   var onImageDownload = () => {
@@ -36,7 +35,7 @@ const TicketServicio = () => {
 
   return (
     <>
-      <div className="grid items-center content-center m-auto place-items-center font-bold">
+      <div className="grid items-center content-center m-auto font-bold place-items-center">
         <h1 className="justify-self-center text-2xl px-8 border-b-2 border-b-[#ec5766] font-bold mb-10">
           Ticket
         </h1>
@@ -44,7 +43,7 @@ const TicketServicio = () => {
           <div className="border-2 shadow-md rounded-xl border-gray">
             <div className="grid bg-[rgb(3,109,99)] rounded-t-xl">
               <p className="py-2 text-lg text-white justify-self-center">
-                Ticket #{numTicket}
+                Ticket #{value}
               </p>
             </div>
             <h1 className="mt-8 mb-4 mx-[10rem]">

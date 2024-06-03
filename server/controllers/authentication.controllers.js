@@ -136,7 +136,6 @@ async function login(solicitud,respuesta){
                         let fechaNacimiento = `${año}-${mes}-${dia}`;
 
 
-
                         let token = JsonWebToken.sign(
                             {
                                 user:fields[0].pkIdUsuario,
@@ -296,6 +295,13 @@ async function register(solicitud, respuesta){
             await respuesta.redirect('/');
         }
         
+
+
+
+
+
+
+
 
 
 export const methods = {

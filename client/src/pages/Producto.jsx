@@ -19,6 +19,8 @@ import { Navigate, useNavigate } from "react-router-dom";
 import { useLocation } from 'react-router-dom';
 import PopupLogin from "../components/ui/Login/PopupLogin.jsx";
 import { Helmet, HelmetProvider } from "react-helmet-async";
+import { ArrowProps } from 'react-multi-carousel/lib/types'
+import { faDiamond, faAngleLeft, faAngleRight } from '@fortawesome/free-solid-svg-icons';
 
 const StyledRating = styled(Rating)({
     '& .MuiRating-iconFilled': {
@@ -357,6 +359,16 @@ function Producto() {
                                     sliderclassName=""
                                     slidesToSlide={1}
                                     swipeable
+                                    customLeftArrow={<FontAwesomeIcon
+                                        icon={faAngleLeft}
+                                        size="lg"
+                                        className="absolute cursor-pointer top-1/2 transform -translate-y-1/2 -left-0 text-3xl text-primary-900 aspect-square bg-[#e6e6e6] rounded-full text-[#036C65] p-3 hover:opacity-90 overflow-visible z-10"
+                                    />}
+                                    customRightArrow={<FontAwesomeIcon
+                                        size="lg"
+                                        icon={faAngleRight}
+                                        className="absolute cursor-pointer top-1/2 transform -translate-y-1/2 -right-0 text-3xl text-primary-900 bg-[#e6e6e6] rounded-full aspect-square text-[#036C65] p-3 hover:opacity-90 overflow-visible z-10"
+                                    />}
                                 // className=''
                                 >
                                     {descuentos.map(oferta => (

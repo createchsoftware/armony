@@ -6,7 +6,7 @@ export async function addfavorito(connection, data) {
     const call = "CALL addFavorito(?,?)";
     const query = mysql.format(call, [data.idCliente, data.IdProducto]);
     const [rows, fields] = await connection.query(query);
-    //endConnection(); // Cerramos la conexion con la BD
+    endConnection(); // Cerramos la conexion con la BD
     return rows;
   } catch (err) {
     console.log("Ha ocurrido un error al ejecutar el query: ", err);
@@ -20,7 +20,7 @@ export async function delFavorito(connection, data) {
     const call = "CALL delFav(?,?)"; // Procedimiento almacenado de la base de datos
     const query = mysql.format(call, [data.idCliente, data.IdProducto]); // Parametros necesarios para el procedimiento
     const [rows, fields] = await connection.query(query);
-    //endConnection(); // Cerramos la conexion con la BD
+    endConnection(); // Cerramos la conexion con la BD
     return rows; // Cerramos la conexion con la base de datos
   } catch (err) {
     console.log("Ha ocurrido un error al ejecutar el query: ", err);
