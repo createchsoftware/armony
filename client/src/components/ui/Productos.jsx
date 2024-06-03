@@ -59,6 +59,7 @@ function Productos({ productos }) {
                 ...prev,
                 [idProducto]: !estaEnFavoritos
             }));
+            console.log('Favoritos:', favorites);
         } catch (error) {
             console.error('Error en la solicitud:', error);
         }
@@ -119,7 +120,6 @@ function Productos({ productos }) {
                                 >
                                     <StyledRating
                                         name="customized-color"
-                                        defaultValue={0}
                                         max={1}
                                         value={favorites[producto.pkIdPS] ? 1 : 0}
                                         getLabelText={(value) => `${value} Heart${value !== 1 ? 's' : ''}`}
