@@ -240,9 +240,9 @@ app.get("/api/step1.5", async (solicitud, respuesta) => {
 });
 
 
-// cron.schedule("0 0 * * *",()=>{
-//   perfil.LectorRenovacionSuscripcion()
-// });
+cron.schedule("0 0 0 * * *",()=>{
+  perfil.LectorRenovacionSuscripcion()
+});
 
 app.get("*", (solicitud, respuesta) => {
   respuesta.sendFile(path.join(_dirname, "../client/dist/index.html"));
