@@ -177,7 +177,7 @@ function Pedidos() {
       <main className="grid gap-6 mb-12 mt-36 w-[60%] m-auto">
         <section className="rounded-2xl p-9 shadow-[0_3px_10px_rgb(0,0,0,0.2)]">
           <a
-            className="flex items-baseline content-center text-sm gap-x-4"
+            className="flex gap-2 w-max items-center ml-6 text-black relative cursor-pointer before:bg-black before:absolute before:-bottom-1 before:block before:h-[1px] before:w-full before:origin-bottom-right before:scale-x-0 before:transition before:duration-300 before:ease-in-out hover:before:origin-bottom-left hover:before:scale-x-100 hover:font-bold"
             href="/perfil"
           >
             {" "}
@@ -196,9 +196,9 @@ function Pedidos() {
           />
           <div className="m-auto text-center ">
             <h1 className="text-[#036C65] font-semibold text-2xl mb-2">
-              Pedidos
+              Mis pedidos
             </h1>
-            <h2 className="text-xl">Calendario de citas pendientes</h2>
+            <h2 className="text-xl">Estado de los pedidos en proceso de entrega y ya entregados</h2>
           </div>
         </section>
 
@@ -295,12 +295,12 @@ function Pedidos() {
         <div className="grid gap-6">
           {ret1()}
           {arrayF.map((objeto) => (
-            <Compras key={objeto.id} compras={objeto} />
+            <Compras key={objeto.id} compras={objeto} entregado={false} />
           ))}
           {ret()}
           {ret2()}
           {arrayF2.map((objeto) => (
-            <Compras key={objeto.id} compras={objeto} />
+            <Compras key={objeto.id} compras={objeto} entregado={true} />
           ))}
         </div>
       </main>
