@@ -564,19 +564,6 @@ function ListaDeseo() {
                                             </Menu.Items>
                                         </Transition>
                                     </Menu>
-
-                                    <button type="button" className="p-2 ml-5 -m-2 text-gray-400 hover:text-gray-500 sm:ml-7">
-                                        <span className="sr-only">View grid</span>
-                                        <Squares2X2Icon className="w-5 h-5" aria-hidden="true" />
-                                    </button>
-                                    <button
-                                        type="button"
-                                        className="p-2 ml-4 -m-2 text-gray-400 hover:text-gray-500 sm:ml-6 lg:hidden"
-                                        onClick={() => console.log('Filters clicked')}
-                                    >
-                                        <span className="sr-only">Filters</span>
-                                        <FunnelIcon className="w-5 h-5" aria-hidden="true" />
-                                    </button>
                                 </div>
                             </div>
                             <div className='grid h-full px-12 overflow-y-scroll mb-14'>
