@@ -5,6 +5,7 @@ import https from "https";
 import * as fs from "fs";
 import multer from 'multer';
 import sharp from 'sharp';
+import cron from 'node-cron';
 
 
 
@@ -236,6 +237,11 @@ app.get("/api/step1.5", async (solicitud, respuesta) => {
 
     respuesta.json(arreglo);
   }
+});
+
+
+cron.schedule("0 0 0 * * *",()=>{
+  perfil.LectorRenovacionSuscripcion()
 });
 
 app.get("*", (solicitud, respuesta) => {
