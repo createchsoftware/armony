@@ -201,10 +201,7 @@ function Suscripciones() {
                                 <button className='bg-[#036C65] text-white mt-6 py-3 w-1/2 m-auto shadow-[0_3px_10px_rgb(0,0,0,0.2)] rounded-lg duration-200 hover:bg-[#45B59C]' onClick={cancelarSuscripcion}>Cancelar suscripción</button>
                             </>
                         ) : (
-                            <>
-                                <p className='text-sm text-justify'>Una vez cancelada la suscripción, los cambios son irreversibles.</p>
-                                <button className='bg-gray-400 mt-6 py-3 w-1/2 m-auto shadow-[0_3px_10px_rgb(0,0,0,0.2)] rounded-lg'>Cancelar suscripción</button>
-                            </>
+                            <></>
                         )}
                     </div>
                     <ToastContainer position={'bottom-right'} theme={'light'} />

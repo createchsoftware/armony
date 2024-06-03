@@ -52,6 +52,7 @@ const EditarPerfil = ({ usuario }) => {
   const [dia, setDia] = useState(false); //<<< PARA EL INICIO DE SESION
   const [mes, setMes] = useState(false); //<<< PARA EL INICIO DE SESION
   const [año, setAño] = useState(false); //<<< PARA EL INICIO DE SESION
+  const [lada, setLada] = useState(false); //<<< PARA EL INICIO DE SESION
 
   async function recibido() {
     const respuesta = await fetch("/api/logueado", {
@@ -73,6 +74,7 @@ const EditarPerfil = ({ usuario }) => {
       setColonia(null);
       setNacimiento(null);
       setImagen(null);
+      setLada(null);
     }
 
     let respuestaJson = await respuesta.json();
@@ -83,13 +85,26 @@ const EditarPerfil = ({ usuario }) => {
       setCorreo(respuestaJson.email);
       setPaterno(respuestaJson.apellidoP);
       setMaterno(respuestaJson.apellidoM);
-      setTelefono(respuestaJson.telefono);
       setPostal(respuestaJson.codigoP);
       setNumero(respuestaJson.numero);
       setCalle(respuestaJson.calle);
       setColonia(respuestaJson.colonia);
       setNacimiento(respuestaJson.fechaNac);
       setImagen(respuestaJson.imagen);
+
+
+      let tel = respuestaJson.telefono;
+
+      if(tel.startsWith('1')){
+        setLada(tel.slice(0,-(tel.length-1)));
+        setTelefono(tel.slice(1));
+      }
+      else{
+        setLada(tel.slice(0,-(tel.length-2)));
+        setTelefono(tel.slice(2));
+      }
+
+
 
       let birthday = respuestaJson.fechaNac.split("-");
 
@@ -108,6 +123,7 @@ const EditarPerfil = ({ usuario }) => {
       setColonia(null);
       setNacimiento(null);
       setImagen(null);
+      setLada(null);
     }
   }
 
@@ -169,10 +185,10 @@ const EditarPerfil = ({ usuario }) => {
               <div className="flex items-center gap-2">
                 <label htmlFor="">Lada:</label>
                 <input
-                  id="telefono"
+                  id="lada"
                   type="text"
                   aria-label="Ingresa LADA."
-                  placeholder={`${telefono}`}
+                  placeholder={`${lada}`}
                   className="w-48 px-6 py-1 mb-1 mr-24 rounded-full bg-slate-200 focus:outline-none focus:ring-1 focus:ring-rose-400 focus:border-transparent"
                 />
               </div>
@@ -292,15 +308,7 @@ const EditarPerfil = ({ usuario }) => {
                   Cancelar
                 </a>
               </div>
-              <HelmetProvider>
-                <Helmet>
-                  <script
-                    src="https://kit.fontawesome.com/c9a65ccec4.js"
-                    crossOrigin="anonymous"
-                  ></script>
-                  <script src="../../../scripts/editarPerfil.js"></script>
-                </Helmet>
-              </HelmetProvider>
+              
               <div className="grid place-content-end">
                 <button
                   id="guardar"
@@ -310,6 +318,16 @@ const EditarPerfil = ({ usuario }) => {
                   Guardar
                 </button>
               </div>
+
+              <HelmetProvider>
+                <Helmet>
+                  <script
+                    src="https://kit.fontawesome.com/c9a65ccec4.js"
+                    crossOrigin="anonymous"
+                  ></script>
+                  <script src="../../../scripts/editarPerfil.js"></script>
+                </Helmet>
+              </HelmetProvider>
             </div>
           </div>
           {/* BLOQUE DE IMAGEN */}
