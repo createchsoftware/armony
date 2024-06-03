@@ -22,7 +22,9 @@ export async function enableConnect() {
   } catch (err) {
     // Capturamos error de conexion
     console.error("No pudo conectarse a la DB: ", err); // Mostramos error de conexion
-    throw err; // Tiramos el error para detener ejecucion
+    setTimeout(enableConnect, 1000); // Reintenta la conexion con la base de datos con un tiempo de espera de un segundo
+    console.error(err);
+    // throw err; // Tiramos el error para detener ejecucion
   }
 }
 
