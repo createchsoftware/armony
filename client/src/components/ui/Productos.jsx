@@ -103,16 +103,15 @@ function Productos({ productos }) {
             <ul className='grid grid-cols-1 gap-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 md:ml-28'>
                 {
                     productos.map(producto => (
-                        console.log(producto),
                         <li key={producto.id} className='border-4 bg-white grid content-between border-[#E2B3B7] p-6 py-2 rounded-xl'>
                             <div className='flex justify-end'>
-                                <Box className="float-right hover:cursor-pointer" onClick={() => toggleFavorite(producto.pkIdPS)}>
+                                {/* <Box className="float-right hover:cursor-pointer" onClick={() => toggleFavorite(producto.pkIdPS)}>
                                     {favorites[producto.pkIdPS] ?
                                         <FavoriteIcon style={{ color: '#ff6d75' }} /> :
                                         <FavoriteBorderIcon />
                                     }
-                                </Box>
-                                {/* <Box
+                                </Box> */}
+                                <Box
                                     className="absolute flex justify-end float-right -mr-3"
                                     sx={{
                                         '& > legend': { mt: 2 },
@@ -122,13 +121,14 @@ function Productos({ productos }) {
                                         name="customized-color"
                                         defaultValue={0}
                                         max={1}
+                                        value={favorites[producto.pkIdPS] ? 1 : 0}
                                         getLabelText={(value) => `${value} Heart${value !== 1 ? 's' : ''}`}
                                         precision={1}
                                         icon={<FavoriteIcon fontSize="inherit" />}
                                         emptyIcon={<FavoriteBorderIcon fontSize="inherit" />}
                                         onChange={() => toggleFavorite(producto.pkIdPS)}
                                     />
-                                </Box> */}
+                                </Box>
                             </div>
                             <img data-tooltip-id="ver" data-tooltip-content="Ver producto" onClick={() => handleViewMore(producto)} className='w-2/3 m-auto mt-6 mb-4 rounded-lg hover:cursor-pointer hover:opacity-60 aspect-square'
                                 src={producto.img ? producto.img : 'https://i.imgur.com/CCBFmSi.png'}
@@ -137,7 +137,7 @@ function Productos({ productos }) {
                             />
                             <div>
                                 <p className='mt-2  text-[#0BC26A] text-lg'>{'$' + producto.precio + ' MXN'}</p>
-                                <Rating className='' value={producto.valoracion} readOnly unratedcolor="amber" ratedcolor="amber" />
+                                <Rating className='' value={Math.floor(parseFloat(producto.valoracion))} readOnly unratedcolor="amber" ratedcolor="amber" />
                                 <h3 className='mt-0 text-lg'>{producto.nombre.substring(0, 15) + '...'}</h3>
                                 <p className='mt-0 text-xs text-justify'>
                                     {producto.descripcion.substring(0, 40) + '...'}
