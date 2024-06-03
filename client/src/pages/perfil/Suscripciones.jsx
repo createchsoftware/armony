@@ -4,22 +4,22 @@ import { IoIosArrowBack } from "react-icons/io";
 import { ToastContainer, toast } from 'react-toastify';
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCircleExclamation} from "@fortawesome/free-solid-svg-icons";
+import { faCircleExclamation } from "@fortawesome/free-solid-svg-icons";
 
 function Suscripciones() {
     const [nombre, setNombre] = useState(false); //<<< PARA EL INICIO DE SESION
     const [correo, setCorreo] = useState(false); //<<< PARA EL INICIO DE SESION
     const [sus, setSus] = useState(false); //<<< PARA VERIFICAR SI ES MIEMBRO EL USUARIO
 
-    const [diaInicio,setDiaInicio] = useState('');
-    const [mesInicio,setMesInicio] = useState('');
-    const [semanaInicio,setSemanaInicio] = useState('');
+    const [diaInicio, setDiaInicio] = useState('');
+    const [mesInicio, setMesInicio] = useState('');
+    const [semanaInicio, setSemanaInicio] = useState('');
 
-    const [diaFinal,setDiaFinal] = useState('');
-    const [mesFinal,setMesFinal] = useState('');
-    const [semanaFinal,setSemanaFinal] = useState('');
-    const [diasFaltantes,setDiasFaltantes] = useState(0);
-    
+    const [diaFinal, setDiaFinal] = useState('');
+    const [mesFinal, setMesFinal] = useState('');
+    const [semanaFinal, setSemanaFinal] = useState('');
+    const [diasFaltantes, setDiasFaltantes] = useState(0);
+
 
     async function recibido() {
         const respuesta = await fetch('/api/suscripcion', {
@@ -37,8 +37,8 @@ function Suscripciones() {
         let respuestaJson = await respuesta.json();
 
         if (respuestaJson.logueado == true) {
-            
-            if(respuestaJson.objeto_respuesta != false){
+
+            if (respuestaJson.objeto_respuesta != false) {
 
                 let ob = respuestaJson.objeto_respuesta;
                 setSus(true);
@@ -55,7 +55,7 @@ function Suscripciones() {
             setNombre(respuestaJson.nombre);
             setCorreo(respuestaJson.email);
         }
-        else{
+        else {
             setNombre(null);
             setCorreo(null);
         }
@@ -65,49 +65,49 @@ function Suscripciones() {
     //metodo para calcular los dias faltantes para que la suscripcion acabe 
     const calcularDiasFaltantes = async (fechaI, fechaF) => {
         const fechaActual = new Date();
-    
+
         if (fechaF > fechaActual) {
             const fechaInicio = new Date(fechaI);
             const fechaFin = new Date(fechaF);
             let diferencia = fechaFin.getTime() - fechaInicio.getTime();
             return diferencia / 1000 / 60 / 60 / 24;
         }
-        
+
         return 0; //si retorna 0 es que la fecha actual sobrepaso la fecha final o ya no esta vigente la sus
     }
 
-    async function cancelarSuscripcion(){
-        const respuesta2 = await fetch('/api/delete/suscripcion',{
-            method:'DELETE',
-            headers:{
-                "Content-Type":'application/json',
+    async function cancelarSuscripcion() {
+        const respuesta2 = await fetch('/api/delete/suscripcion', {
+            method: 'DELETE',
+            headers: {
+                "Content-Type": 'application/json',
             }
         })
 
-        if(!respuesta2.ok){
+        if (!respuesta2.ok) {
             return;
         }
 
         const respuesta2Json = await respuesta2.json();
 
-        if(respuesta2Json.logueado == true){
+        if (respuesta2Json.logueado == true) {
 
-            if(respuesta2Json.suscripcion == false){
+            if (respuesta2Json.suscripcion == false) {
                 // la suscripcion fue eliminada con exito
                 window.location.href = respuesta2Json.redirect;
             }
-            else{
+            else {
                 // la suscripcion no fue eliminada, un toast que diga que no se pudo
                 toast(<div>{`Al parecer estamos teniendo problemas al cancelar tu suscripcion`}<FontAwesomeIcon icon={faCircleExclamation} /></div>);
             }
         }
     }
 
-    
+
 
     useEffect(() => {
         recibido()
-        setDiasFaltantes(parseInt(100 * ((30 - calcularDiasFaltantes)/30)));
+        setDiasFaltantes(parseInt(100 * ((30 - calcularDiasFaltantes) / 30)));
     }, []);
 
     return (
@@ -201,7 +201,9 @@ function Suscripciones() {
                                 <button className='bg-[#036C65] text-white mt-6 py-3 w-1/2 m-auto shadow-[0_3px_10px_rgb(0,0,0,0.2)] rounded-lg duration-200 hover:bg-[#45B59C]' onClick={cancelarSuscripcion}>Cancelar suscripción</button>
                             </>
                         ) : (
-                            <></>
+                            <>
+                                <div className='bg-gray-400 text-center mt-6 py-3 w-1/2 m-auto shadow-[0_3px_10px_rgb(0,0,0,0.2)] rounded-lg'>No tienes una suscripción vigente</div>
+                            </>
                         )}
                     </div>
                     <ToastContainer position={'bottom-right'} theme={'light'} />
