@@ -8,6 +8,7 @@ function Suscripciones() {
     const [correo, setCorreo] = useState(false); //<<< PARA EL INICIO DE SESION
     const [sus, setSus] = useState(false); //<<< PARA VERIFICAR SI ES MIEMBRO EL USUARIO
 
+    
     const [diaInicio,setDiaInicio] = useState('');
     const [mesInicio,setMesInicio] = useState('');
     const [semanaInicio,setSemanaInicio] = useState('');
@@ -33,7 +34,7 @@ function Suscripciones() {
         let respuestaJson = await respuesta.json();
 
         if (respuestaJson.logueado == true) {
-
+            
             if(respuestaJson.objeto_respuesta != false){
 
                 let ob = respuestaJson.objeto_respuesta;
@@ -57,7 +58,7 @@ function Suscripciones() {
         }
     }
 
-    
+
 
     useEffect(() => {
         recibido()

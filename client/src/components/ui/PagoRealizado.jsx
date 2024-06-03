@@ -33,7 +33,21 @@ function PagoRealizado({ cerrarPago, total, next }) {
   useEffect(() => {//cuando se muestre el popup se realizara la venta y en consecuente la cita
     //se hara de esta forma para poderlo adaptar al uso de una api para cobrar
     const realizarVentaYCita = async () => {
+      
       if (cliente) {
+        let card;
+        let money;
+
+        console.log(localStorage.getItem('monedero'),localStorage.getItem('tarjeta'))
+
+            if(Number(localStorage.getItem('monedero'))>0){
+              money=1
+              card=null;
+            }
+            else if(localStorage.getItem('tarjeta')!==null){
+              card=localStorage.getItem('tarjeta')
+              money=0;
+            }
         try {
           const responseVenta = await fetch("/api/admin/citas/venta", {
             method: "POST",
@@ -41,8 +55,8 @@ function PagoRealizado({ cerrarPago, total, next }) {
               idCliente: cliente.ID,
               nombre: null,
               phone: null,
-              tarjeta: localStorage.getItem('tarjeta'),
-              monedero: 0,
+              tarjeta:card,
+              monedero:money,
               estadoPago: "pagada",
               subTotal: Number(localStorage.getItem('totalIva')),
               total: Number(localStorage.getItem('total')),
@@ -61,9 +75,10 @@ function PagoRealizado({ cerrarPago, total, next }) {
           console.log('Respuesta de la venta:', dataVenta);
 
 
-         await fetch(`/api/admin/citas/idVentaCita/${cliente.ID}`)
+         await fetch(`/api/admin/citas/idVentaCita/${cliente.ID}/cita/${cliente.telefono}`)
           .then(response => response.json())
           .then(data => {
+            console.log(data[0].pkIdVenta)
             localStorage.setItem('idventaCita',data[0].pkIdVenta);
           })
           .catch(error => {

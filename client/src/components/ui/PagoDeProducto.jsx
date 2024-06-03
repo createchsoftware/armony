@@ -11,6 +11,7 @@ function Pago({ producto, next }) {
     const [Uid, setUid] = useState(null);
     const [descuento, setDescuento] = useState('');
     const [monedero, setMonedero] = useState(null);
+   
 
     const [cartItems, setCartItems] = useState(() => {
         if (producto) {
@@ -34,9 +35,9 @@ function Pago({ producto, next }) {
     const cantidadProductos = cartItems.reduce((sum, producto) => sum + producto.cantidad, 0);
     const subTotal = cartItems.reduce((acc, item) => acc + item.precio * item.cantidad, 0).toFixed(2);
     const ivaTotal = (parseFloat(subTotal) * 0.08).toFixed(2);
-    localStorage.setItem('totalIva',ivaTotal)
     const total = (parseFloat(subTotal) + parseFloat(ivaTotal)).toFixed(2);
     localStorage.setItem('total',total)
+    localStorage.setItem('subTotal',subTotal)
 
 
     useEffect(() => {
@@ -111,9 +112,10 @@ function Pago({ producto, next }) {
     const toggleTarjeta = (tarj) => {
         setTarjeta(!tarjeta);
     }
-    const togglePago = (tarjeta) => {
+    const togglePago = (tarjeta,mone) => {
         setPagoRealizado(!pagoRealizado);
         localStorage.setItem('tarjeta', tarjeta);
+        localStorage.setItem('monedero', mone);
     }
     // const datosRecibidos = (nuevaTarjeta) => {
     //     setTarjetas([...tarjetas, {id: 3, noTarjeta: {nuevaTarjeta}, tipo: "Débito", banco: "BBVA", code: "****"}]);
@@ -131,7 +133,7 @@ function Pago({ producto, next }) {
                     <h1 className="text-xl">{item.tipo}</h1>
                     {/* <h1 className="text-xl">{item.code}</h1> */}
                     <h1 className="text-xl">{item.numero_tarjeta.slice(0, 4)}</h1>
-                    <button onClick={()=>togglePago(item.numero_tarjeta)} className='bg-[#ec5766] text-xl text-white px-10 py-2 rounded-full duration-200 hover:bg-[#ffb5a7]'>Continuar</button>
+                    <button onClick={()=>togglePago(item.numero_tarjeta,null)} className='bg-[#ec5766] text-xl text-white px-10 py-2 rounded-full duration-200 hover:bg-[#ffb5a7]'>Continuar</button>
                 </li>
             );
         }
@@ -141,7 +143,7 @@ function Pago({ producto, next }) {
                     <img src={"../../../pictures/" + item.imagen} className="w-1/5 h-auto" />
                     <h1 className="text-xl">{item.monedero}</h1>
                     <h1 className="text-xl">{item.tipo}</h1>
-                    <button onClick={()=>togglePago(item.monedero)} className='bg-[#ec5766] text-xl text-white px-10 py-2 rounded-full duration-200 hover:bg-[#ffb5a7]'>Continuar</button>
+                    <button onClick={()=>togglePago(null,item.monedero)} className='bg-[#ec5766] text-xl text-white px-10 py-2 rounded-full duration-200 hover:bg-[#ffb5a7]'>Continuar</button>
                 </li>
             );
         }

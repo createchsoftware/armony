@@ -246,7 +246,7 @@ routerCitas.get("/idVentaCita/:id/:tipo/:phone", async (req, res) => {
     const idventa = await searchVentaCita(conexion, {
       idCliente: req.params.id,
       tVenta:req.params.tipo,
-      phone: data.phone,
+      phone: req.params.phone,
     });
     res.status(200).json(idventa);
   } catch (err) {

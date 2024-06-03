@@ -73,10 +73,20 @@ export default function Cita() {
     }
   }, [activeStep]);
 
+  useEffect(() => {
+    //cuando el usuario llegue al paso 4  se ajecutara
+    if (activeStep === 5) {
+      paso6();
+    }
+  }, [activeStep]);
+
   const paso4 = () => {
     agregadoCitas(); // se guardara su servicio en un array
     removeLSCitas(); //despues se eliminaran del localstorage para posteriormente volverlos a declarar
     // LocalBase()
+  };
+  const paso6 = () => {
+    removeLSPago(); 
   };
 
   const restart = () => {
@@ -172,6 +182,14 @@ export default function Cita() {
     localStorage.removeItem("hora");
     localStorage.removeItem("Fecha seleccionada");
     localStorage.removeItem("NombreEspecialista");
+
+    
+  };
+
+  const removeLSPago = () => {
+    localStorage.removeItem("tarjeta");
+    localStorage.removeItem("cliente");
+    localStorage.removeItem("total");
   };
   const agregadoCitas = () => {
     const newProduct = {

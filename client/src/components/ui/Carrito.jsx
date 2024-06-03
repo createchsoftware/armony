@@ -8,6 +8,9 @@ import { Navigate, useNavigate } from "react-router-dom";
 
 export const CarritoProvider = ({ children }) => {
 
+     localStorage.setItem('tarjeta',null)
+    localStorage.setItem('monedero',-1)
+
     const [cartItems, setCartItems] = useState(() => {
         const savedCart = localStorage.getItem('cartItems');
         return savedCart ? JSON.parse(savedCart) : [];
