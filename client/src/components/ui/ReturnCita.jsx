@@ -7,7 +7,7 @@ function ReturnCitas({ citas }) {
             <hr />
             <div className="flex justify-between w-full">
                 <div className='flex justify-between gap-4 '>
-                    <img src={`../../../pictures/${citas.imagen}`}
+                    <img src={citas.imagen}
                         alt={citas.nombre} className='w-24 h-24' />
                     <div className='grid place-content-center'>
                         <h1 className='text-xl'>{citas.nombre}</h1>
@@ -17,8 +17,8 @@ function ReturnCitas({ citas }) {
                         <p className='text-sm'><span className="font-bold">Hora: </span> {citas.hora}</p>
                     </div>
                 </div>
-                <div className='grid gap-2 p-2 '>
-                    <button className='px-10 py-1 text-white rounded-full bg-[#EB5765]'>Opinar</button>
+                <div className='grid content-center gap-2 p-2 '>
+                    <button className='w-48 px-10 py-2 h-max text-white rounded-full bg-[#EB5765]'>Opinar</button>
                 </div>
 
 

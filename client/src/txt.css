@@ -115,3 +115,8 @@
     }
 }
 
+#cancelar:hover{
+    border-color: blue;
+    color: blue;
+}
+

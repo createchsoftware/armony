@@ -17,7 +17,7 @@ const StyledRating = styled(Rating)({
   },
 });
 
-const PopupServicio = ({ cerrar, check, datos, update }) => {
+const PopupServicio = ({ cerrar, check, datos, update, st }) => {
   const sim = [
     {
       nombre: "Cargando...",
@@ -118,6 +118,31 @@ const PopupServicio = ({ cerrar, check, datos, update }) => {
     }
   };
 
+  const callFav = async () => {
+    if (datos.id != 0) {
+      try {
+        const respuesta = await fetch("/api/admin/productos/setFavorito", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            id: datos.idUser,
+            idPS: datos.id,
+            estado: datos.favorito,
+          }),
+        });
+
+        let respuestaJson = await respuesta.json();
+        if ((await respuestaJson[0].res) == true) {
+          st();
+        }
+      } catch (error) {
+        console.log(error, "error");
+      }
+    }
+  };
+
   const mostrarSimilares = similares.slice(indexItem, indexItem + renderItems);
 
   return (
@@ -195,8 +220,9 @@ const PopupServicio = ({ cerrar, check, datos, update }) => {
             <div>
               <div className="absolute top-3 right-[1rem]">
                 <StyledRating
+                  onClick={callFav}
                   name="customized-color"
-                  defaultValue={datos.isFavorite}
+                  value={datos.favorito}
                   max={1}
                   getLabelText={(value) =>
                     `${value} Heart${value !== 1 ? "s" : ""}`

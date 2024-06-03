@@ -1,26 +1,10 @@
 import LayoutPrincipal from "../../layouts/LayoutPrincipal";
 import { IoIosArrowBack } from "react-icons/io";
-import { MdNavigateNext } from "react-icons/md";
 import { Fragment, useEffect, useState } from "react";
-import { Dialog, Disclosure, Menu, Transition } from "@headlessui/react";
-import { XMarkIcon } from "@heroicons/react/24/outline";
+import { Menu, Transition } from "@headlessui/react";
 import {
-  ChevronDownIcon,
-  FunnelIcon,
-  MinusIcon,
-  PlusIcon,
-  Squares2X2Icon,
+  ChevronDownIcon
 } from "@heroicons/react/20/solid";
-//import { products } from '../../data/productos.json'
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  fa1,
-  fa2,
-  fa3,
-  fa4,
-  faCircle,
-  faAngleLeft,
-} from "@fortawesome/free-solid-svg-icons";
 import Compras from "../../components/ui/Compras";
 
 function classNames(...clases) {
@@ -131,6 +115,7 @@ function Pedidos() {
   const [array2, setArray2] = useState([]);
   const [arrayF, setArrayF] = useState([]);
   const [arrayF2, setArrayF2] = useState([]);
+  const [politicas, setPoliticas] = useState(false);
 
   const [opcion, setSortOption] = useState({ name: "Todas", current: true });
 
@@ -177,7 +162,7 @@ function Pedidos() {
       <main className="grid gap-6 mb-12 mt-36 w-[60%] m-auto">
         <section className="rounded-2xl p-9 shadow-[0_3px_10px_rgb(0,0,0,0.2)]">
           <a
-            className="flex items-baseline content-center text-sm gap-x-4"
+            className="flex gap-2 w-max items-center ml-6 text-black relative cursor-pointer before:bg-black before:absolute before:-bottom-1 before:block before:h-[1px] before:w-full before:origin-bottom-right before:scale-x-0 before:transition before:duration-300 before:ease-in-out hover:before:origin-bottom-left hover:before:scale-x-100 hover:font-bold"
             href="/perfil"
           >
             {" "}
@@ -196,9 +181,9 @@ function Pedidos() {
           />
           <div className="m-auto text-center ">
             <h1 className="text-[#036C65] font-semibold text-2xl mb-2">
-              Pedidos
+              Mis pedidos
             </h1>
-            <h2 className="text-xl">Calendario de citas pendientes</h2>
+            <h2 className="text-xl">Estado de los pedidos en proceso de entrega y ya entregados</h2>
           </div>
         </section>
 
@@ -295,15 +280,45 @@ function Pedidos() {
         <div className="grid gap-6">
           {ret1()}
           {arrayF.map((objeto) => (
-            <Compras key={objeto.id} compras={objeto} />
+            <Compras key={objeto.id} compras={objeto} entregado={false} />
           ))}
           {ret()}
           {ret2()}
           {arrayF2.map((objeto) => (
-            <Compras key={objeto.id} compras={objeto} />
+            <Compras key={objeto.id} compras={objeto} entregado={true} />
           ))}
         </div>
+
+        <div className="flex justify-center">
+          <button onClick={() => setPoliticas(!politicas)} className='w-2/5 justify-self-center px-4 py-2 mb-2 bg-[#EB5765] rounded-full text-white duration-200 hover:bg-[#ffb5a7]'>Política de devoluciones</button>
+        </div>
       </main>
+      {politicas && 
+        <div className='cart-fondo'>
+          <div className='cart-fx'>
+            <div className='grid mt-32 w-1/3 bg-white rounded-2xl py-8 px-12 m-auto'>
+              <button onClick={() => setPoliticas(!politicas)} className='flex w-max items-baseline text-md gap-x-4 relative cursor-pointer before:bg-black before:absolute before:-bottom-1 before:block before:h-[1px] before:w-full before:origin-bottom-right before:scale-x-0 before:transition before:duration-300 before:ease-in-out hover:before:origin-bottom-left hover:before:scale-x-100 hover:font-bold' href={document.referrer}>
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-4 h-4">
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M9 15 3 9m0 0 6-6M3 9h12a6 6 0 0 1 0 12h-3" />
+                  </svg>
+              </button>
+              <h1 className="text-[#EB5765] text-2xl justify-self-center">Políticas de devoluciones</h1>
+              <div className="justify-self-center my-2 w-[95%] border border-black" />
+              <img className="w-20 h-auto justify-self-center" src="../../../pictures/logoArmony.png" alt="" />
+              <div className="grid">
+                <p className="py-3">Política 1</p>
+                <p className="py-3">Política 2</p>
+                <p className="py-3">Política 3</p>
+                <p className="py-3">Política 4</p>
+                <p className="py-3">Política 5</p>
+                <p className="py-3">Política 6</p>
+                <p className="py-3">Política 7</p>
+                <p className="py-3">Política 8</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      }
     </LayoutPrincipal>
   );
 }

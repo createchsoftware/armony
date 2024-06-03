@@ -1,25 +1,25 @@
 import React, { useState, useEffect } from 'react'
 import LayoutPrincipal from '../../layouts/LayoutPrincipal'
 import { IoIosArrowBack } from "react-icons/io";
-import { MdNavigateNext } from "react-icons/md";
 import { ToastContainer, toast } from 'react-toastify';
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCircleExclamation} from "@fortawesome/free-solid-svg-icons";
+import { faCircleExclamation } from "@fortawesome/free-solid-svg-icons";
 
 function Suscripciones() {
     const [nombre, setNombre] = useState(false); //<<< PARA EL INICIO DE SESION
     const [correo, setCorreo] = useState(false); //<<< PARA EL INICIO DE SESION
     const [sus, setSus] = useState(false); //<<< PARA VERIFICAR SI ES MIEMBRO EL USUARIO
 
-    const [diaInicio,setDiaInicio] = useState('');
-    const [mesInicio,setMesInicio] = useState('');
-    const [semanaInicio,setSemanaInicio] = useState('');
+    const [diaInicio, setDiaInicio] = useState('');
+    const [mesInicio, setMesInicio] = useState('');
+    const [semanaInicio, setSemanaInicio] = useState('');
 
-    const [diaFinal,setDiaFinal] = useState('');
-    const [mesFinal,setMesFinal] = useState('');
-    const [semanaFinal,setSemanaFinal] = useState('');
-    
+    const [diaFinal, setDiaFinal] = useState('');
+    const [mesFinal, setMesFinal] = useState('');
+    const [semanaFinal, setSemanaFinal] = useState('');
+    const [diasFaltantes, setDiasFaltantes] = useState(0);
+
 
     async function recibido() {
         const respuesta = await fetch('/api/suscripcion', {
@@ -38,7 +38,7 @@ function Suscripciones() {
 
         if (respuestaJson.logueado == true) {
 
-            if(respuestaJson.objeto_respuesta != false){
+            if (respuestaJson.objeto_respuesta != false) {
 
                 let ob = respuestaJson.objeto_respuesta;
                 setSus(true);
@@ -55,52 +55,66 @@ function Suscripciones() {
             setNombre(respuestaJson.nombre);
             setCorreo(respuestaJson.email);
         }
-        else{
+        else {
             setNombre(null);
             setCorreo(null);
         }
     }
 
 
-    async function cancelarSuscripcion(){
-        const respuesta2 = await fetch('/api/delete/suscripcion',{
-            method:'DELETE',
-            headers:{
-                "Content-Type":'application/json',
+    //metodo para calcular los dias faltantes para que la suscripcion acabe 
+    const calcularDiasFaltantes = async (fechaI, fechaF) => {
+        const fechaActual = new Date();
+
+        if (fechaF > fechaActual) {
+            const fechaInicio = new Date(fechaI);
+            const fechaFin = new Date(fechaF);
+            let diferencia = fechaFin.getTime() - fechaInicio.getTime();
+            return diferencia / 1000 / 60 / 60 / 24;
+        }
+
+        return 0; //si retorna 0 es que la fecha actual sobrepaso la fecha final o ya no esta vigente la sus
+    }
+
+    async function cancelarSuscripcion() {
+        const respuesta2 = await fetch('/api/delete/suscripcion', {
+            method: 'DELETE',
+            headers: {
+                "Content-Type": 'application/json',
             }
         })
 
-        if(!respuesta2.ok){
+        if (!respuesta2.ok) {
             return;
         }
 
         const respuesta2Json = await respuesta2.json();
 
-        if(respuesta2Json.logueado == true){
+        if (respuesta2Json.logueado == true) {
 
-            if(respuesta2Json.suscripcion == false){
+            if (respuesta2Json.suscripcion == false) {
                 // la suscripcion fue eliminada con exito
                 window.location.href = respuesta2Json.redirect;
             }
-            else{
+            else {
                 // la suscripcion no fue eliminada, un toast que diga que no se pudo
                 toast(<div>{`Al parecer estamos teniendo problemas al cancelar tu suscripcion`}<FontAwesomeIcon icon={faCircleExclamation} /></div>);
             }
         }
     }
 
-    
+
 
     useEffect(() => {
         recibido()
+        setDiasFaltantes(parseInt(100 * ((30 - calcularDiasFaltantes) / 30)));
     }, []);
-
 
     return (
         <LayoutPrincipal>
             <main className='grid gap-12 my-24'>
                 <section className='rounded-2xl mt-12 w-[60%] m-auto p-6 shadow-[0_3px_10px_rgb(0,0,0,0.2)]'>
-                    <a className='flex w-max items-center ml-6 text-black relative cursor-pointer before:bg-black before:absolute before:-bottom-1 before:block before:h-[1px] before:w-full before:origin-bottom-right before:scale-x-0 before:transition before:duration-300 before:ease-in-out hover:before:origin-bottom-left hover:before:scale-x-100 hover:font-bold' href="/perfil"> <IoIosArrowBack className='' />
+                    <a className='flex gap-2 w-max items-center ml-6 text-black relative cursor-pointer before:bg-black before:absolute before:-bottom-1 before:block before:h-[1px] before:w-full before:origin-bottom-right before:scale-x-0 before:transition before:duration-300 before:ease-in-out hover:before:origin-bottom-left hover:before:scale-x-100 hover:font-bold' href="/perfil"> <IoIosArrowBack className='' />
                         Volver</a>
                     <img className='w-32 m-auto my-6 -mt-24 rounded-full aspect-square' src="../../pictures/suscripcionCirculo.png" alt="" />
                     <div className='m-auto text-center '>
@@ -139,7 +153,7 @@ function Suscripciones() {
                                 Previo a la fecha de vencimiento, se te hará llegar una notificación a tu correo electrónico.</p>
                             <div className='flex items-center justify-between gap-4 px-3'>
                                 <div className="w-full bg-gray-200 rounded-full h-2.5 mb-4 dark:bg-gray-700">
-                                    <div className=" bg-[#036C65] h-1.5 rounded-full dark:bg-gray-300" style={{ width: '50%' }}></div>
+                                    <div className=" bg-[#036C65] h-1.5 rounded-full dark:bg-gray-300" style={{ width: diasFaltantes + '%' }}></div>
                                 </div>
                             </div>
                             <div className='flex items-center justify-between text-gray-500'>
@@ -188,8 +202,7 @@ function Suscripciones() {
                             </>
                         ) : (
                             <>
-                                <p className='text-sm text-justify'>Una vez cancelada la suscripción, los cambios son irreversibles.</p>
-                                <button className='bg-gray-400 mt-6 py-3 w-1/2 m-auto shadow-[0_3px_10px_rgb(0,0,0,0.2)] rounded-lg'>Cancelar suscripción</button>
+                                <div className='bg-gray-400 text-center mt-6 py-3 w-1/2 m-auto shadow-[0_3px_10px_rgb(0,0,0,0.2)] rounded-lg'>No tienes una suscripción vigente</div>
                             </>
                         )}
                     </div>

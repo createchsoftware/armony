@@ -10,8 +10,8 @@ imagen.addEventListener('change',(evento)=>{
 let nombre = document.getElementById('nombre');
 let paterno = document.getElementById('paterno');
 let materno = document.getElementById('materno');
-let correo = document.getElementById('correo');
 let telefono = document.getElementById('telefono');
+let lada = document.getElementById('lada');
     
 //direccion
 let calle = document.getElementById('calle');
@@ -30,7 +30,6 @@ let año =  document.getElementById('año');
 nombre.addEventListener('input',()=>{if(nombre.value.length > 0) nombre.style.borderColor='#ccc';});
 paterno.addEventListener('input',()=>{if(paterno.value.length > 0) paterno.style.borderColor='#ccc';});
 materno.addEventListener('input',()=>{if(materno.value.length > 0) materno.style.borderColor='#ccc';});
-correo.addEventListener('input',()=>{if(correo.value.length > 0) correo.style.borderColor='#ccc';});
 telefono.addEventListener('input',()=>{if(telefono.value.length > 0) telefono.style.borderColor='#ccc';});
 calle.addEventListener('input',()=>{if(calle.value.length > 0) calle.style.borderColor='#ccc';});
 colonia.addEventListener('input',()=>{if(colonia.value.length > 0) colonia.style.borderColor='#ccc';});
@@ -39,10 +38,14 @@ numero.addEventListener('input',()=>{if(numero.value.length > 0) numero.style.bo
 dia.addEventListener('input',()=>{if(dia.value.length > 0) dia.style.borderColor='#ccc';});
 mes.addEventListener('input',()=>{if(mes.value.length > 0) mes.style.borderColor='#ccc';});
 año.addEventListener('input',()=>{if(año.value.length > 0) año.style.borderColor='#ccc';});
+lada.addEventListener('input',()=>{if(lada.value.length > 0) lada.style.borderColor='#ccc';});
 
 
+let btn = document.getElementById('guardar');
 
-document.getElementById('guardar').addEventListener('click', async()=>{
+btn.style.zIndex = '100';
+
+btn.addEventListener('click', async()=>{
 
     let cantidad = 0;
     let formData = new FormData();
@@ -64,13 +67,13 @@ document.getElementById('guardar').addEventListener('click', async()=>{
         cantidad++;
     }
         
-    if(correo.value && correo.value!=''){
-        formData.append('correo_id',correo.id); formData.append('correo',correo.value);
-        cantidad++;
-    }
-        
     if(telefono.value && telefono.value!=''){
         formData.append('telefono_id',telefono.id); formData.append('telefono',telefono.value);
+        cantidad++;
+    }
+
+    if(lada.value && lada.value!=''){
+        formData.append('lada_id',lada.id); formData.append('lada',lada.value);
         cantidad++;
     }
         
@@ -124,9 +127,9 @@ document.getElementById('guardar').addEventListener('click', async()=>{
 
     if(cantidad == 0){
         //no hace ninguna modificacion
-        nombre.value=''; paterno.value=''; materno.value=''; correo.value=''; telefono.value='';
+        nombre.value=''; paterno.value=''; materno.value=''; telefono.value='';
         calle.value=''; colonia.value=''; codigoP.value=''; numero.value='';
-        dia.value='';  mes.value='';  año.value='';
+        dia.value='';  mes.value='';  año.value=''; lada.value='';
         return;
     }
     else{
@@ -149,6 +152,8 @@ document.getElementById('guardar').addEventListener('click', async()=>{
 
             let toastBox = document.getElementById('toastBox');
             let arreglo = respuestaJson.incorrectos;
+
+            console.log(arreglo);
 
             for(indice in arreglo){
                 let temporal = document.getElementById(arreglo[indice][0])
@@ -214,8 +219,8 @@ document.getElementById('cancelar').addEventListener('click', async()=>{
     document.getElementById('nombre').value = '';
     document.getElementById('paterno').value = '';
     document.getElementById('materno').value = '';
-    document.getElementById('correo').value = '';
     document.getElementById('telefono').value = '';
+    document.getElementById('lada').value = '';
     
     //direccion
     document.getElementById('calle').value = '';

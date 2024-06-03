@@ -2,6 +2,7 @@ import Paquete from '../../components/ui/Paquete';
 import ContenedorPaquetes from '../../components/ui/ContenedorPaquetes';
 import { useState } from 'react';
 import Soon from '../../components/ui/Proximamente';
+import { parse } from '@fortawesome/fontawesome-svg-core';
 
 function Paquetes({ next }) {
     const [selectedPriceIndex, setSelectedPriceIndex] = useState(null);
@@ -69,19 +70,19 @@ function Paquetes({ next }) {
                                     <div className='grid gap-6 '>
                                         <div>1 Sesión</div>
                                         <div className={getPriceClass(1)} onClick={() => handleClickPrice(1)}>
-                                            {'$ ' + precio}
+                                            {'$ ' + parseFloat(precio).toFixed(0)}
                                         </div>
                                     </div>
                                     <div className='grid gap-6 opacity-50'>
                                         <div>5 Sesiones</div>
-                                        <button disabled className={getPriceClass(2) + "hover:cursor-not-allowed"} onClick={() => handleClickPrice(2)}>
-                                            {'$ ' + (precio * 5)}
+                                        <button disabled className={getPriceClass(0) + "hover:cursor-not-allowed"} onClick={() => handleClickPrice(2)}>
+                                            {'$ ' + parseFloat(precio * 5).toFixed(0)}
                                         </button>
                                     </div>
                                     <div className='grid gap-6 opacity-50 '>
                                         <div>10 Sesiones</div>
                                         <button disabled className={getPriceClass(3) + "hover:cursor-not-allowed"} onClick={() => handleClickPrice(3)}>
-                                            {'$ ' + (precio * 10)}
+                                            {'$ ' + parseFloat(precio * 10).toFixed(0)}
                                         </button>
                                     </div>
                                 </div>

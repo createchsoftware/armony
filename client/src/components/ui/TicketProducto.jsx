@@ -10,8 +10,7 @@ const TicketProducto = () => {
   const toggleSoon = () => {
     setSoon(!soon);
   };
-  var numTicket = 123456;
-  var value =localStorage.getItem('idventaProduct')
+  var value = localStorage.getItem('idventaProduct')
 
   var onImageDownload = () => {
     const svg = document.getElementById("QRCode");
@@ -42,7 +41,7 @@ const TicketProducto = () => {
           <div className="border-2 shadow-md rounded-xl border-gray">
             <div className="grid bg-[rgb(3,109,99)] rounded-t-xl">
               <p className="py-2 text-lg text-white justify-self-center">
-                Ticket #{numTicket}
+                Ticket #{value}
               </p>
             </div>
             <h1 className="mt-8 mb-4 mx-[10rem]">

@@ -6,9 +6,10 @@ import mysql from "mysql2";
 
 
 const regex_email = /^\S+@(gmail\.com|hotmail\.com|outlook\.com|icloud.com|itmexicali\.edu\.mx|bc\.conalep\.edu\.mx|cecytebc\.edu\.mx|miprepacetis(75|18)\.mx|cobachbc\.edu\.mx|)$/;
-const regex_telefono =/^\+?\d{1,2}(-?| )(\d{9,10}|\d{2,3} \d{7}|\d{2,3} \d{3} \d{4}|\d{2,3}-\d{7}|\d{2,3}-\d{3}-\d{4})$/;
+const regex_telefono =/^(\d{9,10}|\d{2,3} \d{7}|\d{2,3} \d{3} \d{4}|\d{2,3}-\d{7}|\d{2,3}-\d{3}-\d{4})$/;
 const regex_n_a = /^[a-zA-Zá-úñ]{3,17}$/;
 const regex_postal = /^\d{5}$/;
+const regex_lada = /^\+?\d{1,3}$/;
 
 
 async function change_data(solicitud,respuesta){
@@ -42,7 +43,6 @@ async function change_data(solicitud,respuesta){
         
             let consulta = "update usuario set ";
 
-            let buzon = '';
             let sms = '';
         
         
@@ -75,30 +75,45 @@ async function change_data(solicitud,respuesta){
                 }
             }
         
-            if(cuerpo['correo']){
-                if(!regex_email.test(cuerpo['correo']))
-                    campos_incorrectos.push([cuerpo['correo_id'],'tu correo no es un correo valido']);
-                else{
-                    consulta+="email= ?,";
-                    buzon = cuerpo['correo'];
-                    paramteros.push(cuerpo['correo']);
-                }
-            }
         
-            if(cuerpo['telefono']){
+            if(cuerpo['telefono'] && cuerpo['lada']){
                 let phone = cuerpo['telefono'];
+                let lada = cuerpo['lada'];
 
-                if(!regex_telefono.test(phone))
+                let avanzar = true;
+
+
+                if(!regex_telefono.test(phone)){
                     campos_incorrectos.push([cuerpo['telefono_id'],'tu telefono no es un telefono valido']);
-                else{
+                    avanzar = false;
+                }
+                if(!regex_lada.test(lada)){
+                    campos_incorrectos.push([cuerpo['lada_id'],'La lada no es una lada valida']);
+                    avanzar = false;
+                }
+                    
+                if(avanzar == true){
                     consulta+="telefono= ?,";
-                    phone = phone.replace('\+','');
+                    
                     phone = phone.replace(/-/g,'');
                     phone = phone.replace(/ /g,'');
 
-                    sms = phone;
-                    paramteros.push(phone);
+                    lada = lada.replace('\+','');
+
+                    sms = lada+phone;
+                    paramteros.push(lada+phone);
                 }
+            }
+            else{
+                if(cuerpo['telefono'] && !cuerpo['lada']){
+                    //significa que la persona si puso el telefono pero no la lada
+                    campos_incorrectos.push([cuerpo['telefono_id'],'No puede ingresar un numero telefonico sin una lada']);
+                }
+                if(!cuerpo['telefono'] && cuerpo['lada']){
+                    // signfica que la persona si puso la lada pero no el telefono
+                    campos_incorrectos.push([cuerpo['lada_id'],'No puede ingresar una lada sin un numero telefonico']);
+                }
+                // si la persona no puso ninguno de los dos, sencillamente no hacemos nada
             }
 
 
@@ -190,19 +205,9 @@ async function change_data(solicitud,respuesta){
                 // significa que no hubo campos incorrectos
                 let repetidos = [];
 
-                //verificar que el correo no este repetido
-                let consult = "select pkIdUsuario from usuario where email = ?"
-                let [fields] = await solicitud.database.query(mysql.format(consult,[buzon]));
-
-
                 //verificar que el telefono no este repetido
                 let consult_tel = "select pkIdUsuario from usuario where telefono = ?"
                 let [fields_tel] = await solicitud.database.query(mysql.format(consult_tel,[sms]));
-
-
-                if(fields.length > 0){
-                    repetidos.push([cuerpo['correo_id'],' ya existe una cuenta con tu correo']);
-                }
 
                 if(fields_tel.length > 0){
                     repetidos.push([cuerpo['telefono_id'],' ya existe una cuenta con tu numero telefonico']);
@@ -219,84 +224,51 @@ async function change_data(solicitud,respuesta){
                     console.log(paramteros);
                     console.log(consulta);
             
-                    let insercion_exitosa2 = new Promise(async (resolve, reject) => {
-                        await solicitud.database.query(mysql.format(consulta, paramteros))
-                            resolve(true);
-                    });
+                    await solicitud.database.query(mysql.format(consulta, paramteros))
+                    
 
                     try{
+                        respuesta.clearCookie('Naruto_cookie', { path: '/' }); 
 
-                        let segundo_resultado_mysql = await insercion_exitosa2;
+                        //toca jalar la informacion
+                        let ultima_consulta = 'select * from usuario where pkIdUsuario = ?';
 
-                        if(segundo_resultado_mysql == true){
+                        let [fields] = await solicitud.database.query(ultima_consulta, C_L)
 
-                            respuesta.clearCookie('Naruto_cookie', { path: '/' }); 
-
-                            //toca jalar la informacion
-                            let ultima_consulta = 'select * from usuario where pkIdUsuario = ?';
-
-                            let [fields] = await solicitud.database.query(ultima_consulta, C_L)
-
-                                let contraseña_bytes = fields[0].pass; // contrasena en bytes desde la base de datos
-                                let contraseña_no_bytes = contraseña_bytes.toString('utf-8'); //contrasena en string, pero sigue estando encriptada
+                        let contraseña_bytes = fields[0].pass; // contrasena en bytes desde la base de datos
+                        let contraseña_no_bytes = contraseña_bytes.toString('utf-8'); //contrasena en string, pero sigue estando encriptada
                                 
 
-                                // toca levantar una nueva Naruto_cookie
-                                let token = jsonwebtoken.sign(
-                                    {
-                                        user:C_L,
-                                        nombre:fields[0].nombre,
-                                        paterno:fields[0].apellidoP,
-                                        materno:fields[0].apellidoM,
-                                        correo:fields[0].email,
-                                        telefono:fields[0].telefono,
-                                        contraseña:contraseña_no_bytes,  // contrasena encriptada detro de la cookie
-                                        tipo:1,
-                                        imagen:fields[0].img,
-                                        calle:fields[0].calle,
-                                        colonia:fields[0].colonia,
-                                        numero:fields[0].numero,
-                                        postal:fields[0].codigoPostal,
-                                        nacimiento:fields[0].fechaNac
-            
-                                    },
-                                    process.env.JWT_SECRET,
-                                    {expiresIn:process.env.JWT_EXPIRATION}
-                                );
+                        // toca levantar una nueva Naruto_cookie
+                        let token = jsonwebtoken.sign(
+                            {
+                                user:C_L,
+                                nombre:fields[0].nombre,
+                                paterno:fields[0].apellidoP,
+                                materno:fields[0].apellidoM,
+                                correo:fields[0].email,
+                                telefono:fields[0].telefono,
+                                contraseña:contraseña_no_bytes,  // contrasena encriptada detro de la cookie
+                                tipo:1,
+                                imagen:fields[0].img,
+                                calle:fields[0].calle,
+                                colonia:fields[0].colonia,
+                                numero:fields[0].numero,
+                                postal:fields[0].codigoPostal,
+                                nacimiento:fields[0].fechaNac
+    
+                            },
+                            process.env.JWT_SECRET,
+                            {expiresIn:process.env.JWT_EXPIRATION}
+                        );
 
-                                let galleta = {
-                                    maxAge:1*1000*60*30, // 30 minutos
-                                    expires: new Date(Date.now() + process.env.JWT_COOKIE_EXPIRES * 24 * 60 * 60 * 1000),
-                                    path:'/'
-                                }
-            
-                                respuesta.cookie("Naruto_cookie",token,galleta);
-
-
-
-
-
-                                if(buzon.length > 0 &&   buzon==fields[0].email){
-                                    //toca mandar correo
-                                    let full_name = `${fields[0].nombre} ${fields[0].apellidoP} ${fields[0].apellidoM}`;
-                                    let sending = await servicios.Cambio_de_correo("token",full_name,fields[0].pkIdUsuario,fields[0].email);
-                                    console.log(sending);
-                                    respuesta.send({redirect:'/perfil/informacion'});
-                                }
-                                else{
-                                    console.log("como no modificaste tu correo, no se te mandara nada");
-                                    respuesta.send({redirect:'/perfil/informacion'});
-                                }
-
-
-                                // si los correos son iguales, significa que el usuario no cambio de correo
-                                // si buzon no tiene nada, logico sera diferente a nuestro correo, por eso verificamos el length de la variable buzon
-                                
+                        let galleta = {
+                            maxAge:1*1000*60*30, // 30 minutos
+                            expires: new Date(Date.now() + process.env.JWT_COOKIE_EXPIRES * 24 * 60 * 60 * 1000),
+                            path:'/'
                         }
-                        else{
-                            console.log("el error raro del try catch");
-                            respuesta.send({no_step:true});
-                        }
+            
+                        respuesta.cookie("Naruto_cookie",token,galleta);
 
                     }catch(error){
                         throw error;

@@ -12,6 +12,7 @@ export default function ServicioEstetica() {
   const [color2, setColor2] = useState("#F6B3B9");
   const [log, setLog] = useState(false);
   const [id, setId] = useState();
+  const [st, setSt] = useState(false);
 
   const [soon, setSoon] = useState(false);
   const toggleSoon = () => {
@@ -72,7 +73,7 @@ export default function ServicioEstetica() {
           });
       }, 3000);
     }
-  }, [id]);
+  }, [id, st]);
 
   //useEffect para obtener los servicios corporales
   useEffect(() => {
@@ -93,7 +94,7 @@ export default function ServicioEstetica() {
           });
       }, 3000);
     }
-  }, [id]);
+  }, [id, st]);
 
   const toggleService = (index) => {
     setToggleState(index);
@@ -105,6 +106,11 @@ export default function ServicioEstetica() {
       setColor1("#F6B3B9");
     }
   };
+
+  function changeSt() {
+    console.log(5);
+    setSt(!st);
+  }
 
   return (
     <>
@@ -146,9 +152,19 @@ export default function ServicioEstetica() {
       <div className="">
         <div>
           {toggleState == 1 ? (
-            <ServiciosYFiltro servicios={facial} log={log} idUser={id} />
+            <ServiciosYFiltro
+              servicios={facial}
+              log={log}
+              idUser={id}
+              st={changeSt}
+            />
           ) : (
-            <ServiciosYFiltro servicios={corpo} log={log} idUser={id} />
+            <ServiciosYFiltro
+              servicios={corpo}
+              log={log}
+              idUser={id}
+              st={changeSt}
+            />
           )}
           <main className="px-4 mx-auto max-w-7xl sm:px-6 lg:px-8">
             <div className="w-full mx-auto my-16 text-center">
