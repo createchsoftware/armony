@@ -15,8 +15,8 @@ function ReturnPuntos({ puntos }) {
                         <p className='text-sm'><span className="font-bold">Monto: </span> {puntos.monto}</p>
                     </div>
                 </div>
-                <div className='grid gap-2 p-2 '>
-                    <button className='px-10 py-1 text-white rounded-full bg-[#EB5765]'>Opinar</button>
+                <div className='grid content-center gap-2 p-2 '>
+                    <button className='w-48 h-max px-10 py-2 text-white rounded-full bg-[#EB5765]'>Opinar</button>
                 </div>
 
 
