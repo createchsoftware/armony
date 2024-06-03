@@ -48,6 +48,17 @@ async function vencimientoSuscripcion(direccion,token,full_name){
 }
 
 
+async function renovacionSuscripcion(direccion,token,full_name){
+    return await transporter.sendMail({
+        from:process.env.EMAIL_USER,
+        to:direccion,
+        subject:'Tu suscripcion ha sido renovada',
+        html:cuerpoRenovacion(token,full_name)
+    })
+}
+
+
+
 async function Cambio_de_correo(token,full_name,id,correo){
     return await transporter.sendMail({
         from:process.env.EMAIL_USER,
@@ -361,6 +372,49 @@ function cuerpoVencimiento(token,full_name){
 }
 
 
+function cuerpoRenovacion(token,full_name){
+    return `<!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <style>
+            *{
+                padding: 0;
+                margin: 0;
+            }
+
+            .body-email{
+                background-color: #82E0AA;
+                padding: 8px;
+                display: flex;
+                flex-direction: column;
+            }
+
+            .body-email .header{
+                position: relative;
+                width: 100%;
+                background-color: aliceblue;
+                font-size: 25px;
+                padding: 2px;
+            }
+            
+        </style>
+    </head>
+    <body>
+        <div class="body-email">
+        <div class="header">
+            <span>La suscripcion mensual ha sido cargada a tu cuenta.</span>
+        </div>
+        <div class="body">
+            <p>Estimad@ ${full_name}, le informamos que el cobro de la suscripcion mensual ya se realizo, el monto de la transaccion es de 199.00 pesos mexicanos, para ver mas detalle de la compra entre a la pagina de armony: link</p>
+        </div>
+            
+        </div>
+    </body>
+    </html>`;
+}
+
+
 
 
 
@@ -370,5 +424,6 @@ export const methods = {
     Codigo_de_Verificacion,
     Confirmacion_Contraseña,
     CancelacionSuscripcion,
-    vencimientoSuscripcion
+    vencimientoSuscripcion,
+    renovacionSuscripcion
 }
