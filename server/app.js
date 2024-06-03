@@ -240,10 +240,13 @@ app.get("/api/step1.5", async (solicitud, respuesta) => {
 });
 
 
-cron.schedule("2 0 0 * * *",()=>{
+
+cron.schedule("30 1 0 * * *",()=>{
   perfil.LectorRenovacionSuscripcion();
   perfil.Renovacion();
-}); // se ejecutara 2 minutos despues de las 0 horas
+}); // se ejecutara 1 minutos con 30 segundos despues de las 0 horas
+
+
 
 app.get("*", (solicitud, respuesta) => {
   respuesta.sendFile(path.join(_dirname, "../client/dist/index.html"));
