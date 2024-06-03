@@ -5,6 +5,7 @@ import Box from "@mui/material/Box";
 import { ChevronRight } from "lucide-react";
 import { styled } from "@mui/material/styles";
 import { useState } from "react";
+import { parse } from "@fortawesome/fontawesome-svg-core";
 
 const StyledRating = styled(Rating)({
   "& .MuiRating-iconFilled": {
@@ -64,7 +65,7 @@ function Especialista({ especialista }) {
       <div className="flex justify-center w-1/2 pt-4 m-auto">
         <Rating
           className=""
-          value={5}
+          value={Math.floor(parseFloat(especialista.valoracion))}
           unratedColor="amber"
           readOnly
           ratedColor="amber"
