@@ -1031,6 +1031,7 @@ async function getSuscripcion(solicitud,respuesta){
 
                 objeto_respuesta.fechaExpiracion = `${aE}-${mE}-${dE}`;
                 objeto_respuesta.fechaInicio  = `${aI}-${mI}-${dI}`;
+
             }
             
 
@@ -1154,6 +1155,49 @@ async function LectorRenovacionSuscripcion(){
 
 
 
+async function Renovacion(){
+
+    let consulta = 'select * from clienteMembresia inner join cliente on clienteMembresia.fkCliente = cliente.fkUsuario where activo = 1 and fkMembresia = 1 and fechaInicio = curdate() and renovacion_auto = 1';
+
+    let [fields] = await conexion.query(mysql.format(consulta));
+
+    let f = fields;
+
+    let renovadores = [];
+
+    if(f != undefined){
+        for(let i in f){
+            renovadores.push(f[i].fkCliente); // anadir el id del cliente a la lista
+        }
+    }
+
+    for(let i in renovadores){
+        let consulta_correo = 'select * from usuario where pkIdUsuario = ?';
+
+        let [correo_usuario] = await conexion.query(mysql.format(consulta_correo,[renovadores[i]]));
+
+        let CE = correo_usuario[0].email;
+
+        let nU = correo_usuario[0].nombre;
+        let pU = correo_usuario[0].apellidoP;
+        let mU = correo_usuario[0].apellidoM;
+
+        let full_name = `${pU} ${mU} ${nU}`;
+
+        try{
+            //toca enviar al usuario un correo
+            await servicios.renovacionSuscripcion(CE,"token",full_name);
+        }catch(error){
+            console.log('no se pudo realizar el envio');
+            console.log(error);
+        }
+    }
+   
+}
+
+
+
+
 
 
 
@@ -1221,5 +1265,6 @@ export const methods = {
     getOpcionesPago,
     getSuscripcion,
     deleteSuscripcion,
-    LectorRenovacionSuscripcion
+    LectorRenovacionSuscripcion,
+    Renovacion
 }
