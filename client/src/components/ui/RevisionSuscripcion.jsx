@@ -13,6 +13,9 @@ function RevisionProductos({ restart }) {
     console.log(localStorage.getItem('puntosSuscripcion'))
     console.log(localStorage.getItem('totalSuscripcion'))
 
+    localStorage.setItem('tarjeta',null);
+    localStorage.setItem('monedero',-1);
+
     // console.log(localStorage.getItem('puntosSuscripcion'))
     // console.log(localStorage.getItem('totalSuscripcion'))
 

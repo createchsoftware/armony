@@ -325,13 +325,6 @@ routerProductos.get("/servicios/descuento/:id", async (req, res) => {
 
 routerProductos.post("/createVentaProduct", async (req, res) => {
   try {
-    // console.log(req.body.idCliente,
-    //   req.body.tarjeta,
-    //   req.body.monedero,
-    //    req.body.subtotal,
-    //    req.body.total,
-    //   req.body.impuesto
-    // )
     const resultado = await ventaProdOnline(conexion, {
       idCliente: req.body.idCliente,
       tarjeta: req.body.tarjeta,
@@ -354,11 +347,11 @@ routerProductos.post("/createVentaProduct", async (req, res) => {
 routerProductos.post("/detallesventa", async (req, res) => {
   // Datos de prueba de cita
 
-  console.log(req.body.idCliente,
-    req.body.idProducto,
-    req.body.idPromo,
-    req.body.cantidad,
-)
+//   console.log(req.body.idCliente,
+//     req.body.idProducto,
+//     req.body.idPromo,
+//     req.body.cantidad,
+// )
 
   const datosCita = {
     idCliente: req.body.idCliente,

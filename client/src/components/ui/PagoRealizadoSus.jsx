@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { jwtDecode } from "jwt-decode";
+
 
 function PagoRealizado({ cerrarPago, total, next }) {
 
@@ -16,87 +16,73 @@ function PagoRealizado({ cerrarPago, total, next }) {
 
 
 
-    // useEffect(() => {
-    //     const fetchCliente = async () => {
-    //         const storedCliente = localStorage.getItem('cliente');
-    //         console.log(storedCliente)
-    //         if (storedCliente) {
-    //             try {
-    //                 const parsedCliente = JSON.parse(storedCliente);
-    //                 const { ID, Nombre, telefono, monedero } = parsedCliente;
-    //                 setCliente({ ID, Nombre, telefono, monedero });
-    //             } catch (error) {
-    //                 console.error("Error al parsear el cliente:", error);
-    //             }
-    //         } else {
-    //             console.error("No se encontró el cliente en localStorage");
-    //         }
-    //     };
+    useEffect(() => {
+        const fetchCliente = async () => {
+            const storedCliente = localStorage.getItem('cliente');
+            console.log(storedCliente)
+            if (storedCliente) {
+                try {
+                    const parsedCliente = JSON.parse(storedCliente);
+                    const { ID, Nombre, telefono, monedero } = parsedCliente;
+                    setCliente({ ID, Nombre, telefono, monedero });
+                } catch (error) {
+                    console.error("Error al parsear el cliente:", error);
+                }
+            } else {
+                console.error("No se encontró el cliente en localStorage");
+            }
+        };
 
-    //     fetchCliente();
-    // }, []);
+        fetchCliente();
+    }, []);
 
-    // useEffect(() => {//cuando se muestre el popup se realizara la venta y en consecuente la cita
-    //     //se hara de esta forma para poderlo adaptar al uso de una api para cobrar
-    //     const realizarVentaYCita = async () => {
-    //         if (cliente) {
-    //             try {
-    //                 const responseVenta = await fetch("/api/admin/productos/createVentaProduct", {
-    //                     method: "POST",
-    //                     body: JSON.stringify({
-    //                         idCliente: cliente.ID,
-    //                         tarjeta: localStorage.getItem('tarjeta'),
-    //                         monedero: 0,
-    //                         subTotal: Number(localStorage.getItem('totalIva')),
-    //                         total: Number(localStorage.getItem('total')),
-    //                         impuesto: 18.00,
-    //                     }),
-    //                     headers: {
-    //                         "Content-Type": "application/json",
-    //                     },
-    //                 });
+    useEffect(() => {//cuando se muestre el popup se realizara la venta y en consecuente la cita
+        //se hara de esta forma para poderlo adaptar al uso de una api para cobrar
+        const realizarVentaSus = async () => {
+            if (cliente) {
+                let card;
+                let money;
+        
+                console.log(localStorage.getItem('monedero'),localStorage.getItem('tarjeta'))
+        
+                    if(Number(localStorage.getItem('monedero'))>0){
+                      money=1
+                      card=null;
+                    }
+                    else if(localStorage.getItem('tarjeta')!==null){
+                      card=localStorage.getItem('tarjeta')
+                      money=0;
+                    }
+                try {
+                    const responseVenta = await fetch("/api/admin/venta/createVentaSus", {
+                        method: "POST",
+                        body: JSON.stringify({
+                            idCliente: cliente.ID,
+                            tarjeta: card,
+                            monedero: money
+                        }),
+                        headers: {
+                            "Content-Type": "application/json",
+                        },
+                    });
 
-    //                 if (!responseVenta.ok) {
-    //                     throw new Error('Error en la respuesta de la red');
-    //                 }
+                    if (!responseVenta.ok) {
+                        throw new Error('Error en la respuesta de la red');
+                    }
 
-    //                 const dataVenta = await responseVenta.json();
-    //                 console.log('Respuesta de la venta:', dataVenta);
+                    const dataVenta = await responseVenta.json();
+                    console.log('Respuesta de la venta:', dataVenta);
 
-    //                 let carrito = JSON.parse(localStorage.getItem("cartItems")) || [];
+                    setCargando(false);
+                } catch (error) {
+                    console.error('Error en la venta suscripcion:', error);
+                    setCargando(false);
+                }
+            }
+        };
 
-    //                 for (let index = 0; index < carrito.length; index++) {
-    //                     const responseCita = await fetch(`/api/admin/productos/detallesventa`, {
-    //                         method: "POST",
-    //                         body: JSON.stringify({
-    //                             idCliente: cliente.ID,
-    //                             idPromo: 0,
-    //                             idProducto: carrito[index].id,
-    //                             cantidad: carrito[index].cantidad
-    //                         }),
-    //                         headers: {
-    //                             "Content-Type": "application/json",
-    //                         },
-    //                     });
-
-    //                     if (!responseCita.ok) {
-    //                         throw new Error('Error en la respuesta de la red');
-    //                     }
-
-    //                     const dataVenta = await responseCita.json();
-    //                     console.log('Respuesta de detallesVenta:', dataVenta);
-    //                 }
-
-    //                 setCargando(false);
-    //             } catch (error) {
-    //                 console.error('Error en la venta o en la cita:', error);
-    //                 setCargando(false);
-    //             }
-    //         }
-    //     };
-
-    //     realizarVentaYCita();
-    // }, [cliente]);
+        realizarVentaSus();
+    }, [cliente]);
 
 
 

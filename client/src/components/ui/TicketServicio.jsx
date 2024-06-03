@@ -12,7 +12,8 @@ const TicketServicio = () => {
   };
 
   var numTicket = 123456;
-  var value =localStorage.getItem('idventaCita')
+ var value = localStorage.getItem('idventaCita')
+
 
   var onImageDownload = () => {
     const svg = document.getElementById("QRCode");
