@@ -1,5 +1,5 @@
 import * as React from "react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { styled } from "@mui/material/styles";
 import Box from "@mui/material/Box";
 import Rating from "@mui/material/Rating";
@@ -30,8 +30,12 @@ function Servicio({
   valoracion,
   favorito,
   log,
+  st,
 }) {
+  const [login, setLogin] = useState(false);
+  const [serv, setServ] = useState(false);
   const data = {
+    idUser: idUser,
     id: pkIdPS,
     nombre: nombre,
     descripcion: descripcion,
@@ -40,8 +44,6 @@ function Servicio({
     valoracion: valoracion,
     favorito: favorito,
   };
-  const [login, setLogin] = useState(false);
-  const [serv, setServ] = useState(false);
   const [pData, setPData] = useState(data);
   const [fav, setFav] = useState(favorito);
   const navigate = useNavigate();
@@ -64,7 +66,7 @@ function Servicio({
     setPData(data);
     setServ(!serv);
   };
-  async function callFav() {
+  const callFav = async () => {
     if (idUser != 0) {
       try {
         const respuesta = await fetch("/api/admin/productos/setFavorito", {
@@ -75,24 +77,32 @@ function Servicio({
           body: JSON.stringify({
             id: idUser,
             idPS: pkIdPS,
-            estado: fav,
+            estado: favorito,
           }),
         });
 
-        respuestaJson = await respuesta.json();
-        if (respuestaJson.res == true) {
-          await setFav(!fav);
-        } else {
-          await setFav(fav);
+        let respuestaJson = await respuesta.json();
+        if ((await respuestaJson[0].res) == true) {
+          setFav(!fav);
         }
       } catch (error) {
         console.log(error, "error");
       }
     }
-  }
+  };
+
+  useEffect(() => {
+    if (fav !== favorito) {
+      st();
+    }
+  }, [fav]);
+
   return (
     <>
-      <div className="grid gap-4 m-4 text-center md:m-8">
+      <div
+        onLoad={() => console.log(favorito)}
+        className="grid gap-4 m-4 text-center md:m-8"
+      >
         <div
           className="relative p-6 rounded-lg aspect-square"
           style={{
@@ -116,7 +126,7 @@ function Servicio({
                   <StyledRating
                     onClick={() => callFav()}
                     name="customized-color"
-                    defaultValue={fav}
+                    value={fav}
                     max={1}
                     getLabelText={(value) =>
                       `${value} Heart${value !== 1 ? "s" : ""}`
@@ -187,6 +197,7 @@ function Servicio({
           cerrar={closeServ}
           check={toggleServ}
           update={setPData}
+          st={st}
         />
       )}
     </>
