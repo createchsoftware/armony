@@ -4,6 +4,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrash } from '@fortawesome/free-solid-svg-icons';
 import { Rating } from '@mui/material';
 import { faCircleMinus, faCirclePlus, faAngleLeft } from '@fortawesome/free-solid-svg-icons';
+import { useCarrito } from './Carrito';
 
 function RevisionProductos({ restart, producto, next }) {
     const [cartItems, setCartItems] = useState(() => {
@@ -17,26 +18,34 @@ function RevisionProductos({ restart, producto, next }) {
         }
     });
 
-    console.log(cartItems);
+    const { increaseQuantity } = useCarrito();
+    const { decreaseQuantity } = useCarrito();
+    const { eliminarDelCarrito } = useCarrito();
 
     //  ^^^ ES SOLO TEST PARA PROBAR LA FUNCIONALIDAD DEL RESUMEN DE CITAS
 
     //Para remover por completo un servicio.
-    const removeItem = (itemId) => {
+    const removeItemLocal = (itemId) => {
         setCartItems(cartItems.filter(item => item.id !== itemId));
+        eliminarDelCarrito(itemId);
     };
-    const increaseQuantity = (itemId) => {
+
+    const increaseQuantityLocal = (itemId) => {
         setCartItems(cartItems.map(item =>
             item.id === itemId ? { ...item, cantidad: item.cantidad + 1 } : item
         ));
+        increaseQuantity(itemId);
     };
-    const decreaseQuantity = (itemId, itemQuan) => {
+
+    const decreaseQuantityLocal = (itemId, itemQuan) => {
         if (itemQuan == 1) {
-            removeItem(itemId);
+            removeItemLocal(itemId);
+            eliminarDelCarrito(itemId);
         } else {
             setCartItems(cartItems.map(item =>
                 item.id === itemId ? { ...item, cantidad: Math.max(item.cantidad - 1, 1) } : item
             ));
+            decreaseQuantity(itemId, itemQuan);
         }
     };
 
@@ -57,23 +66,23 @@ function RevisionProductos({ restart, producto, next }) {
 
     async function callRango() {
         const respuesta3 = await fetch("/api/perfil/rangos", {
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-          },
+            method: "GET",
+            headers: {
+                "Content-Type": "application/json",
+            },
         });
-    
+
         if (!respuesta3.ok) {
-          return;
+            return;
         }
-    
+
         const respuesta3Json = await respuesta3.json();
-    
+
         if (respuesta3Json.informacion) {
-          setPuntosTotal(respuesta3Json.informacion[1]);
+            setPuntosTotal(respuesta3Json.informacion[1]);
         }
     }
-    
+
     useEffect(() => {
         callRango();
     }, []);
@@ -87,7 +96,7 @@ function RevisionProductos({ restart, producto, next }) {
                         <span className='mr-5 text-xl font-bold'>{item.nombre}</span>
                         <Rating className='' value={item.valoracion} readOnly unratedcolor="amber" ratedcolor="amber" />
                     </div>
-                    <button className='cart-remove' onClick={() => removeItem(item.id)}>
+                    <button className='cart-remove' onClick={() => removeItemLocal(item.id)}>
                         <FontAwesomeIcon icon={faTrash} />
                     </button>
                 </div>
@@ -96,11 +105,11 @@ function RevisionProductos({ restart, producto, next }) {
                 </div>
                 <div className="flex justify-between">
                     <div>
-                        <button className='ml-2 cart-quan' onClick={() => decreaseQuantity(item.id, item.cantidad)}>
+                        <button className='ml-2 cart-quan' onClick={() => decreaseQuantityLocal(item.id, item.cantidad)}>
                             <FontAwesomeIcon icon={faCircleMinus} />
                         </button>
                         <span className='ml-2'>{item.cantidad}</span>
-                        <button className='ml-2 cart-quan' onClick={() => increaseQuantity(item.id, item.cantidad)}>
+                        <button className='ml-2 cart-quan' onClick={() => increaseQuantityLocal(item.id, item.cantidad)}>
                             <FontAwesomeIcon icon={faCirclePlus} />
                         </button>
                     </div>
