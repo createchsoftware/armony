@@ -19,6 +19,7 @@ function Suscripciones() {
     const [diaFinal,setDiaFinal] = useState('');
     const [mesFinal,setMesFinal] = useState('');
     const [semanaFinal,setSemanaFinal] = useState('');
+    const [disFaltantes,setdisFaltantes] = useState('');
     
 
     async function recibido() {
@@ -61,6 +62,20 @@ function Suscripciones() {
         }
     }
 
+
+    //metodo para calcular los dias faltantes para que la suscripcion acabe 
+const calcularDiasFaltantes = async (fechaI, fechaF) => {
+        const fechaActual = new Date();
+    
+        if (fechaF > fechaActual) {
+            const fechaInicio = new Date(fechaI);
+            const fechaFin = new Date(fechaF);
+            let diferencia = fechaFin.getTime() - fechaInicio.getTime();
+            return diferencia / 1000 / 60 / 60 / 24;
+        }
+        
+        return 0; //si retorna 0 es que la fecha actual sobrepaso la fecha final  o ya no esta vigente la sus
+    }
 
     async function cancelarSuscripcion(){
         const respuesta2 = await fetch('/api/delete/suscripcion',{
