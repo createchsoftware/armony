@@ -271,7 +271,7 @@ export default function Filtros() {
 
     return (
         <>
-            <section className='grid grid-cols-4 gap-8 m-auto my-20 text-center'>
+            <section className='grid grid-cols-1 gap-8 m-auto my-20 text-center lg:grid-cols-4 md:grid-cols-2'>
                 <div onClick={handleClickFacial} className='grid items-center content-between justify-center max-w-xs grid-cols-1 gap-4 p-6 align-bottom transition duration-300 ease-in-out bg-white hover:cursor-pointer hover:scale-105 rounded-xl '>
                     <h1 className='m-auto text-xl '>Cuidado facial</h1>
                     <img className='h-64 m-auto rounded-xl border- w-60' src={'../../pictures/facial.png'} alt="" />
