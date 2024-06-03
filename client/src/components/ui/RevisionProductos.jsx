@@ -104,7 +104,7 @@ function RevisionProductos({ restart, producto, next }) {
                             <FontAwesomeIcon icon={faCirclePlus} />
                         </button>
                     </div>
-                    <span className='ml-5 font-bold text-[#036d63]'> ${item.precio.toFixed(2)}</span>
+                    <span className='ml-5 font-bold text-[#036d63]'> ${Number(item.precio).toFixed(2)}</span>
                 </div>
             </div>
         </li>

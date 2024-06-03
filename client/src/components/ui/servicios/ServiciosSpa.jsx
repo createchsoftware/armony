@@ -100,14 +100,9 @@ export default function ServicioEstetica() {
     if (index === 1) {
       setColor1("#EB5765");
       setColor2("#F6B3B9");
-      setAllProducts(facial);
-      //setToggleService(index);
     } else {
       setColor2("#EB5765");
       setColor1("#F6B3B9");
-      setAllProducts([]);
-      setAllProducts(corpo);
-      //setToggleService(index);
     }
   };
 

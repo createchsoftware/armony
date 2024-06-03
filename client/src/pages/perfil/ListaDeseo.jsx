@@ -362,7 +362,11 @@ function ListaDeseo() {
                 <Rating className='' value={producto.valoracion} readOnly unratedcolor="amber" ratedcolor="amber" />
                 <h3 className='mt-0 text-xl font-bold'>{producto.nombre}</h3>
                 <p className='mt-0 text-xs text-justify'>
-                    {producto.descripcion}
+                    {producto.descripcion.length > 147 ? (
+                        producto.descripcion.substring(0, 147) + '...'
+                    ):(
+                        producto.descripcion
+                    )}
                 </p>
             </div>
             <div className='grid mt-2'>
@@ -383,6 +387,18 @@ function ListaDeseo() {
             </div>
         </li>
     ))
+
+    const handleComprarTodo = () => {
+        const contProducts = contResumen
+        .filter(producto => producto.tipoProducto === 'venta')
+        .map(producto => ({
+            ...producto,
+            precio: typeof producto.precio === 'number' && !isNaN(producto.precio)
+                ? producto.precio
+                : 0
+        }));
+        navigate('/spa/comprar', { state: { producto: [contProducts] } });
+    };
 
     const precioTotal = contResumen
         .filter(producto => producto.tipoProducto === 'venta')
@@ -501,7 +517,7 @@ function ListaDeseo() {
                                         </div>
                                         <div className='grid'>
                                             {log ? (
-                                                <a href='/spa/comprar' className='bg-[#ec5766] p-2 text-center text-white mx-6 rounded-xl my-2 duration-200 hover:bg-[#ffb5a7]'>Comprar</a>
+                                                <button onClick={handleComprarTodo} className='bg-[#ec5766] p-2 text-center text-white mx-6 rounded-xl my-2 duration-200 hover:bg-[#ffb5a7]'>Comprar</button>
                                             ) : (
                                                 <button onClick={() => setLogin(!login)} className='bg-[#ec5766] p-2 text-center text-white mx-6 rounded-xl my-2 duration-200 hover:bg-[#ffb5a7]'>Comprar</button>
                                             )}

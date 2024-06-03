@@ -28,6 +28,16 @@ async function CrearCuentaEmail(direccion,token,full_name,userID){
 }
 
 
+async function CancelacionSuscripcion(direccion,token,full_name){
+    return await transporter.sendMail({
+        from:process.env.EMAIL_USER,
+        to:direccion,
+        subject:'Tu suscripcion ha sido cancelada',
+        html:cuerpoCancelacion(token,full_name)
+    })
+}
+
+
 async function Cambio_de_correo(token,full_name,id,correo){
     return await transporter.sendMail({
         from:process.env.EMAIL_USER,
@@ -116,8 +126,6 @@ function cuerpoCorreoNuevo(token,full_name,id,correo){
 }
 
 function cuerpoCorreo(token, full_name, userID){
-
-    console.log("mensaje de que llego hasta aqui");
     return `
     <!DOCTYPE html>
     <html lang="en">
@@ -257,6 +265,48 @@ function cuerpoConfirmacionContraseña(token){
     </html>`;
 }
 
+function cuerpoCancelacion(token,full_name){
+    return `<!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <style>
+            *{
+                padding: 0;
+                margin: 0;
+            }
+
+            .body-email{
+                background-color: #82E0AA;
+                padding: 8px;
+                display: flex;
+                flex-direction: column;
+            }
+
+            .body-email .header{
+                position: relative;
+                width: 100%;
+                background-color: aliceblue;
+                font-size: 25px;
+                padding: 2px;
+            }
+            
+        </style>
+    </head>
+    <body>
+        <div class="body-email">
+        <div class="header">
+            <span>Tu suscripcion ha sido exitosamente cancelada.</span>
+        </div>
+        <div class="body">
+            <p>Estimad@ ${full_name}, le informamos que al cancelar una suscripcion, no se hace ninguna clase de rembolso, ademas de que su renovacion automatica se desactiva, por lo que ya no se le volveran a hacer cargos mensuales de suscripcion de manera automatica, sin embargo, usted puede volver a adquirir una suscripcion en el futuro</p>
+        </div>
+            
+        </div>
+    </body>
+    </html>`;
+}
+
 
 
 
@@ -265,5 +315,6 @@ export const methods = {
     CrearCuentaEmail,
     Cambio_de_correo,
     Codigo_de_Verificacion,
-    Confirmacion_Contraseña
+    Confirmacion_Contraseña,
+    CancelacionSuscripcion
 }

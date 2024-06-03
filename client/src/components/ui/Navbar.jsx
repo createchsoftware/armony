@@ -337,7 +337,7 @@ function Navbar() {
             {cart && (
                 <div className="overflow-y-auto cart-fondo">
                     <div className="overflow-y-auto cart-fx">
-                        <Carrito cerrar={toggleCart} totalProductos={cantProductos} cartLogin={toggleLogin} />
+                        <Carrito cerrar={toggleCart} totalProductos={cantProductos} logCart={toggleLogin} />
                     </div>
                 </div>
             )}
