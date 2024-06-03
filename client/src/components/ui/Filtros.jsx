@@ -572,7 +572,7 @@ export default function Filtros() {
                                                                 aria-labelledby="input-slider"
                                                                 valueLabelDisplay="auto"
                                                                 min={0}
-                                                                max={1000}
+                                                                max={1500}
                                                                 className='text-red-600 '
                                                                 sx={{ color: '#ec5766' }}
                                                             />

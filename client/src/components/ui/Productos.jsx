@@ -100,9 +100,10 @@ function Productos({ productos }) {
     };
     return (
         <div className="w-2/3 m-auto md:w-auto">
-            <ul className='grid grid-cols-1 gap-2 md:grid-cols-4 md:ml-28'>
+            <ul className='grid grid-cols-1 gap-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 md:ml-28'>
                 {
                     productos.map(producto => (
+                        console.log(producto),
                         <li key={producto.id} className='border-4 bg-white grid content-between border-[#E2B3B7] p-6 py-2 rounded-xl'>
                             <div className='flex justify-end'>
                                 <Box className="float-right hover:cursor-pointer" onClick={() => toggleFavorite(producto.pkIdPS)}>
