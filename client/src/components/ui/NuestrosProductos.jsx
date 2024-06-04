@@ -89,16 +89,24 @@ function Productos() {
 
     //useEffect para obtener los productos con descuento
     useEffect(() => {
-        fetch(`/api/admin/productos/descuento/${id}`)
-            .then((response) => response.json())
-            .then((data) => {
-                // Acceder al array de objetos en la posición 0 del array dentro de data
-                setDescuentos(data.data);
-            })
-            .catch((error) => {
-                console.log("error", error);
-            });
-    }, []);
+        setTimeout(() => {
+            fetch(`/api/admin/productos/descuento/${id}`)
+                .then((response) => {
+                    if (!response.ok) {
+                        throw new Error("Error al obtener los descuentos");
+                    }
+                    return response.json();
+                })
+                .then((data) => {
+                    setDescuentos(data.data);
+                    console.log("descuentos", data.data);
+                })
+                .catch((error) => {
+                    console.log("error", error);
+                });
+        }, [1000])
+    }, [id]);
+
 
     return (
         <>
