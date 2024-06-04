@@ -122,6 +122,7 @@ const Carrito = ({ cerrar, totalProductos, logCart }) => {
     }, [])
 
     const handleComprar = () => {
+        // window.location.href = '/spa/comprar'
         navigate('/spa/comprar', { state: { producto: null } });
         // if (loginCart) {
         //     logCart();
@@ -142,7 +143,7 @@ const Carrito = ({ cerrar, totalProductos, logCart }) => {
             <div className='grid content-between w-3/4 mx-4'>
                 <div className='flex justify-between'>
                     <div className='grid'>
-                        <span className='mr-5 text-xl font-bold'>{item.nombre}</span>
+                        <span className='mr-5 text-xl font-bold truncate'>{item.nombre}</span>
                         <Rating className='' value={item.valoracion} readOnly unratedcolor="amber" ratedcolor="amber" />
                     </div>
                     <button className='cart-remove' onClick={() => removeItem(item.id)}>
@@ -185,7 +186,7 @@ const Carrito = ({ cerrar, totalProductos, logCart }) => {
                 <h4 className="mt-8 cart-empty">No hay artículos en el carrito.</h4>
             ) : (
                 <>
-                    <ul id="cart-items overflow-y-auto" className='overflow-y-auto h-[30rem]'>{cartList}</ul>
+                    <ul id="cart-items overflow-y-auto" className='overflow-y-auto h-[20rem]'>{cartList}</ul>
                     <div className='flex justify-between'>
                         <p>Envio:</p>
                         <span>$0.00</span>

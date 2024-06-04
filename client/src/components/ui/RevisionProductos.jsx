@@ -131,7 +131,7 @@ function RevisionProductos({ restart, producto, next }) {
                             <p className='py-2 text-lg text-white mr-[45%]'>Resumen</p>
                         </div>
                         {/* Contenido de los productos en carrito */}
-                        <div className='px-6 pt-6 overflow-y-auto h-full'>
+                        <div className='px-6 pt-6 overflow-y-auto h-[51rem]'>
                             {cartItems.length === 0 ? (
                                 <div className='grid'>
                                     <h4 className="mt-4 mb-10 text-xl font-bold justify-self-center">No hay productos en el carrito.</h4>

@@ -374,10 +374,10 @@ function ListaDeseo() {
             <div>
                 <p className='mt-2  text-[#0BC26A] text-lg'>{'$' + producto.precio + ' MXN'}</p>
                 <Rating className='' value={producto.valoracion} readOnly unratedcolor="amber" ratedcolor="amber" />
-                <h3 className='mt-0 text-xl font-bold'>{producto.nombre}</h3>
+                <h3 className='mt-0 text-xl font-bold truncate'>{producto.nombre}</h3>
                 <p className='mt-0 text-xs text-justify'>
-                    {producto.descripcion.length > 147 ? (
-                        producto.descripcion.substring(0, 147) + '...'
+                    {producto.descripcion.length > 120 ? (
+                        producto.descripcion.substring(0, 120) + '...'
                     ) : (
                         producto.descripcion
                     )}
