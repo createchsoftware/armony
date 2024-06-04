@@ -29,6 +29,7 @@ const StyledRating = styled(Rating)({
 });
 
 function ListaDeseo() {
+    
     const navigate = useNavigate();
 
     const [boton1, setBoton1] = useState('lista-boton');
@@ -45,7 +46,9 @@ function ListaDeseo() {
     const [log, setLog] = useState(false); //<<< PARA EL INICIO DE SESION
     const [login, setLogin] = useState(false);
    
-
+//  useEffect(()=>{
+//         localStorage.removeItem("favoritos")
+//             },[])
     async function recibido() {
         const respuesta = await fetch("/api/logueado", {
             method: "GET",
@@ -241,7 +244,7 @@ function ListaDeseo() {
     }
         }
         Prod()
-    },[])
+    },[Uid])
 
     function classNames(...classes) {
         return classes.filter(Boolean).join(' ');
@@ -372,9 +375,7 @@ function ListaDeseo() {
             return 0;
         }
     })
-    // useEffect(()=>{
-    //     localStorage.removeItem("favoritos")
-    //         },[])
+   
 
     const contenido = filteredProducts.map(producto => (
         <li key={producto.pkIdPS} className='grid border-4 bg-white border-[#E2B3B7] p-6 py-2 rounded-xl mx-6 mb-6'>
