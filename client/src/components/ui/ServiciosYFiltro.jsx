@@ -151,7 +151,7 @@ const ServiciosYFiltro = ({ servicios, log, idUser, st }) => {
     // Filtro por valoración
     if (rating) {
       updatedProducts = updatedProducts.filter(
-        (product) => product.valoracion == rating
+        (product) => Math.floor(parseFloat(product.valoracion)) == rating
       );
     }
 
