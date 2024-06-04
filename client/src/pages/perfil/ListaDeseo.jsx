@@ -228,9 +228,6 @@ function ListaDeseo() {
 
     useEffect(() => {
         const Prod = async () => {
-
-
-
             if (Uid) {
             try {
                     //este fetch traera todos los favoritos del cliente,solo incluyendo servicios y productos

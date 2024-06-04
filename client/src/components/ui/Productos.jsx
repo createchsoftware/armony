@@ -44,9 +44,9 @@ localStorage.removeItem("favoritos")
     useEffect(() => {
         const Prod = async () => {
             try {
-                if (Uid) {
+                if (uid) {
                     //este fetch traera todos los favoritos del cliente,solo incluyendo servicios y productos
-                    const response = await fetch(`/api/admin/favoritos/FavoritosbyId/${Uid}`)
+                    const response = await fetch(`/api/admin/favoritos/FavoritosbyId/${uid}`)
                     const data = await response.json();
                     setContResumen(data)
                     console.log(data)
@@ -56,7 +56,7 @@ localStorage.removeItem("favoritos")
             }
         }
         Prod()
-    }, [Uid])
+    }, [uid])
 
 
 
@@ -70,7 +70,7 @@ localStorage.removeItem("favoritos")
     const toggleFavorite = async (idProducto) => {
         const estaEnFavoritos = favorites[idProducto.pkIdPS];
 
-        if (Uid) {
+        if (uid) {
             try {
                 fetch('/api/admin/favoritos/invertirFav', {
                     method: "POST",
@@ -103,19 +103,6 @@ localStorage.removeItem("favoritos")
         favoritos = favoritos.filter((obj) => obj.pkIdPS !== idProducto.pkIdPS);
         localStorage.setItem("favoritos", JSON.stringify(favoritos));
         }
-       console.log(localStorage.getItem("favoritos"))
-
-            } catch (error) {
-                console.error('Error en la solicitud:', error);
-            }
-        } else {
-            // setFavorites(prev => ({
-            //     ...prev,
-            //     [idProducto]: !estaEnFavoritos
-            // }));
-            //  let favoritos = JSON.parse(localStorage.getItem("favoritos")) || [];
-            //         favoritos.push(idProducto);
-            //     localStorage.setItem("favoritos", JSON.stringify(favoritos));
         }
     };
 
