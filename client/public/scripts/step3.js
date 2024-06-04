@@ -144,7 +144,7 @@ document.getElementById('step3').addEventListener('click',async ()=>{
 
         if(respuestaJson.redirect = '/spa/signUp/Confirmacion'){
 
-            proximamente.innerHTML = `<img id="process-img" src="../../../../../../public/pictures/ArrowCut.png" />`;
+            proximamente.innerHTML = `<img id="process-img" src="../../pictures/ArrowCut.png" />`;
 
             await new Promise(resolve=> setTimeout(resolve, 1200));
 
