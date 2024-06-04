@@ -291,19 +291,12 @@ routerProductos.get("/servicios/descuento/:id", async (req, res) => {
   try {
     let servicios = [];
     let horario = [];
-    let favo;
-    let favUser;
-    const resultado = await serviciosDescuento(conexion);
+    const resultado = await serviciosDescuento(conexion, { id: req.params.id });
     for (let i = 0; i < resultado.length; i++) {
       horario[i] = resultado[i].tiempo;
     }
     const horasMostrar = await horasWithoutSeconds(horario); // Horas con formato HH:MM
     for (let i = 0; i < resultado.length; i++) {
-      favo = await isFav(conexion, {
-        idUser: req.params.id,
-        idProdServ: resultado[0].pkIdPS,
-      });
-      favUser = (await (favo && favo.length > 0)) ? true : false;
       servicios[i] = {
         descripcion: resultado[i].descripcion,
         estado: resultado[i].estado,
@@ -313,7 +306,7 @@ routerProductos.get("/servicios/descuento/:id", async (req, res) => {
         precio: resultado[i].precio,
         tiempo: horasMostrar[i],
         valoracion: resultado[i].valoracion,
-        favorito: favUser,
+        favorito: resultado[i].favorito,
       };
     }
     res.status(202).json(servicios);
