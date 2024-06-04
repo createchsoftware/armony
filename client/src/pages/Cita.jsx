@@ -155,12 +155,16 @@ export default function Cita() {
   const handleClick = () => {
     handleComplete();
     if (isLastStep() || activeStep === 6) {
-      window.location.href = "/perfil/agenda";
+      window.location.href = "/spa";
     }
     //     setTimeout(() => {
     //     iterateArray();
     // }, 1000);
   };
+
+  const handleAgenda = () => {
+    window.location.href = "/perfil/agenda";
+  }
 
   // const iterateArray = () => {
   //   let myArray = JSON.parse(localStorage.getItem('citas')) || [];
@@ -314,13 +318,9 @@ export default function Cita() {
                                 </Typography> */}
                 <div
                   className={
-                    "grid grid-cols-2 content-between"
-                    // activeStep === 0 ||
-                    // activeStep === 3 ||
-                    // activeStep === 4 ||
-                    // activeStep === 6
-                    // ? "grid grid-cols-2 content-between"
-                    // : "grid grid-cols-3 content-between"
+                    activeStep !== 6
+                    ? "grid grid-cols-2 content-between"
+                    : "grid grid-cols-3 content-between"
                   }
                 >
                   <button
@@ -341,10 +341,19 @@ export default function Cita() {
                     hidden={activeStep === 5}
                     onClick={activeStep === 6 ? restart : handleCancel}
                     className={
-                      "px-4 py-2 mx-auto text-xl text-white rounded-full bg-[#036C65] hover:bg-opacity-70"
+                      "px-4 py-2 mx-auto text-xl text-white rounded-full bg-[#036C65] hover:bg-[#45b59c] duration-200"
                     }
                   >
                     {activeStep === 6 ? "Agendar otra cita" : "Cancelar"}
+                  </button>
+                  <button
+                    hidden={activeStep !== 6}
+                    onClick={handleAgenda}
+                    className={
+                      "px-4 py-2 mx-auto text-xl text-white rounded-full bg-[#036C65] hover:bg-[#45b59c] duration-200 "
+                    }
+                  >
+                    Ver agenda
                   </button>
                   <button
                     hidden={
@@ -353,7 +362,7 @@ export default function Cita() {
                     // hidden={activeStep === 5 || activeStep === 4}
                     onClick={handleClick}
                     // disabled={activeStep === steps.length - 1}
-                    className="px-4 py-2 mx-auto text-xl text-white rounded-full bg-rose-400 hover:bg-red-200"
+                    className="px-4 py-2 mx-auto text-xl text-white rounded-full bg-rose-400 hover:bg-red-200 duration-200"
                   >
                     {nextButtonText}
                   </button>
