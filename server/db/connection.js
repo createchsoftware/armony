@@ -8,30 +8,38 @@ export const config = {
   database: conexionDB.DATABASE,
   user: conexionDB.USER,
   password: conexionDB.PASSWORD,
-  connectionLimit: 5000,
+  connectionLimit: 30,
   charset: "utf8mb4",
 };
+
+// Variable que almacenara la base de datos
+let pool;
 
 // Establecemos conexion con la base de datos
 export async function enableConnect() {
   try {
-    const connection = await mysql.createPool(config); // Creamos la conexion con la configuracion declarada anteriormente
-    await connection.query("USE armony;");
+    pool = mysql.createPool(config); // Creamos la conexion con la configuracion declarada anteriormente
+    await pool.query("USE armony;");
     console.log("CONNECT TO DATABASE!");
-    return connection; // Retornamos la conexion
+    return pool; // Retornamos la conexion
   } catch (err) {
     // Capturamos error de conexion
-    console.error("No pudo conectarse a la DB: ", err); // Mostramos error de conexion
-    setTimeout(enableConnect, 1000); // Reintenta la conexion con la base de datos con un tiempo de espera de un segundo
-    console.error(err);
-    // throw err; // Tiramos el error para detener ejecucion
+    throw err; // Tiramos el error para detener ejecucion
   }
 }
 
-export const conexion = await enableConnect(); // almacenamos la conexion
-
+/* Realizamos la conexion con la base de datos capturando cualquier error y mostrandolo por consola*/
+enableConnect().catch((err) => {
+  console.error(err);
+});
 // Cierre de conexion con la base de datos
 export async function endConnection() {
-  console.log("RELEASE CONNECTION");
-  conexion.releaseConnection(); // Cerramos la conexion
+  if (pool) {
+    console.log("RELEASE CONNECTION");
+    await pool.releaseConnection();
+  }
 }
+
+/* Exportamos la variable pool con el nombre conexion para evitar
+  incongruencias en el resto del codigo*/
+export { pool as conexion };

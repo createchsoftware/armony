@@ -73,7 +73,7 @@ const TarjetaDeServicio = ({ servicio, next }) => {
           />
         </div>
         <IoIosInformationCircle
-          className="relative float-right -top-[17rem] right-5"
+          className="relative hover:opacity-70 hover:cursor-pointer float-right -top-[17rem] right-5"
           style={{ fontSize: "32px", color: "#A0A0A0" }}
           onClick={toogleVista}
         />
