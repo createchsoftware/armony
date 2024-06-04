@@ -41,6 +41,26 @@ localStorage.removeItem("favoritos")
         }
     }, []);
 
+    useEffect(() => {
+        const Prod = async () => {
+            try {
+                if (Uid) {
+                    //este fetch traera todos los favoritos del cliente,solo incluyendo servicios y productos
+                    const response = await fetch(`/api/admin/favoritos/FavoritosbyId/${Uid}`)
+                    const data = await response.json();
+                    setContResumen(data)
+                    console.log(data)
+                }
+            } catch (error) {
+                console.error("hubo error :", error)
+            }
+        }
+        Prod()
+    }, [Uid])
+
+
+
+
     const obteneridCookie = (cookieName) => {
         const cookies = document.cookie.split(';');
         const cookie = cookies.find(c => c.trim().startsWith(cookieName + "="));
@@ -50,9 +70,9 @@ localStorage.removeItem("favoritos")
     const toggleFavorite = async (idProducto) => {
         const estaEnFavoritos = favorites[idProducto.pkIdPS];
 
-            if (uid) {
-                try {
-                    fetch('/api/admin/favoritos/invertirFav', {
+        if (Uid) {
+            try {
+                fetch('/api/admin/favoritos/invertirFav', {
                     method: "POST",
                     body: JSON.stringify({ idCliente: uid, IdProducto: idProducto.pkIdPS }),
                     headers: { "Content-Type": "application/json" },
@@ -84,9 +104,21 @@ localStorage.removeItem("favoritos")
         localStorage.setItem("favoritos", JSON.stringify(favoritos));
         }
        console.log(localStorage.getItem("favoritos"))
+
+            } catch (error) {
+                console.error('Error en la solicitud:', error);
+            }
+        } else {
+            // setFavorites(prev => ({
+            //     ...prev,
+            //     [idProducto]: !estaEnFavoritos
+            // }));
+            //  let favoritos = JSON.parse(localStorage.getItem("favoritos")) || [];
+            //         favoritos.push(idProducto);
+            //     localStorage.setItem("favoritos", JSON.stringify(favoritos));
         }
     };
-  
+
 
 
     const notify = () => toast("Producto agregado al carrito");
@@ -144,6 +176,7 @@ localStorage.removeItem("favoritos")
                                     <StyledRating
                                         name="customized-color"
                                         max={1}
+                                        // value={estaEnFavoritos || favorites[producto.pkIdPS] ? 1 : 0}
                                         value={favorites[producto.pkIdPS] ? 1 : 0}
                                         getLabelText={(value) => `${value} Heart${value !== 1 ? 's' : ''}`}
                                         precision={1}
