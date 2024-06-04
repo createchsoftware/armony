@@ -150,25 +150,25 @@ export default function Filtros() {
 
   const handleClickFacial = (e) => {
     e.preventDefault();
-    setCategories(["Facial"]);
+    setCategories(["Cremas faciales"]);
   };
 
   // Función para manejar cambios en las categorías
   const handleClickManicuraPedicura = (e) => {
     e.preventDefault();
-    setCategories(["Manicura y pedicura"]);
+    setCategories(["Cremas para pies"]);
   };
 
   // Función para manejar cambios en las categorías
   const handleClickCapilar = (e) => {
     e.preventDefault();
-    setCategories(["Cuidado capilar"]);
+    setCategories(["Cremas corporales"]);
   };
 
   // Función para manejar cambios en las categorías
   const handleClickAll = (e) => {
     e.preventDefault();
-    setCategories([]);
+    setCategories(["Shampoos", "Lociones", "Aceites", "Jabones", "Exfoliantes"]);
   };
 
   // Función para manejar cambios en el rating
@@ -401,7 +401,7 @@ export default function Filtros() {
           </button>
         </div>
         <div
-          onClick={handleClickCapilar}
+          onClick={handleClickAll}
           className="grid items-center content-between justify-center max-w-xs grid-cols-1 gap-4 p-6 align-bottom transition duration-300 ease-in-out bg-white hover:cursor-pointer hover:scale-105 rounded-xl "
         >
           <h1 className="m-auto text-xl ">Productos de spa</h1>
