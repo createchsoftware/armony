@@ -58,11 +58,9 @@ function RevisionProductos({ restart, producto, next }) {
     const subTotal = cartItems.reduce((acc, item) => acc + item.precio * item.cantidad, 0).toFixed(2);
     const ivaTotal = (subTotal * (.08)).toFixed(2);
     const total = (parseFloat(subTotal) + parseFloat(ivaTotal)).toFixed(2);
-    const [puntosTotal, setPuntosTotal] = useState(0); //<<< PUNTOS TOTALES\
-
-    const puntos = (parseFloat(total)) / 10;
-    //En caso de ser Socio VVV
-    //const puntos = (parseInt(totalIva))/5;
+    const [puntosTotal, setPuntosTotal] = useState(0); //<<< PUNTOS TOTALES
+    const [sus, setSus] = useState(false); //<<< CARACTERISTICA GRAFICA DE QUE EL USUARIO ES SOCIO
+    const puntos = (sus ? ((parseInt(sus))/5):((parseFloat(total)) / 10));
 
     async function callRango() {
         const respuesta3 = await fetch("/api/perfil/rangos", {
@@ -133,7 +131,7 @@ function RevisionProductos({ restart, producto, next }) {
                             <p className='py-2 text-lg text-white mr-[45%]'>Resumen</p>
                         </div>
                         {/* Contenido de los productos en carrito */}
-                        <div className='px-6 pt-6 overflow-y-auto h-[35rem]'>
+                        <div className='px-6 pt-6 overflow-y-auto h-full'>
                             {cartItems.length === 0 ? (
                                 <div className='grid'>
                                     <h4 className="mt-4 mb-10 text-xl font-bold justify-self-center">No hay productos en el carrito.</h4>

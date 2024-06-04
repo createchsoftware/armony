@@ -162,6 +162,7 @@ const InformacionBasica = () => {
                   <input
                     id="day"
                     type="text"
+                    maxLength={2}
                     placeholder="dd"
                     className="bg-slate-200 rounded-full w-[6rem] lg:w-[7.75rem] mb-1 mr-2 py-2 focus:outline-none focus:ring-1 focus:ring-slate-800 focus:border-transparent px-6"
                     
@@ -169,12 +170,14 @@ const InformacionBasica = () => {
                   <input
                     id="month"
                     type="text"
+                    maxLength={2}
                     placeholder="mm"
                     className="bg-slate-200 rounded-full w-[6rem] lg:w-[7.75rem] mb-1 mr-2 py-2 focus:outline-none focus:ring-1 focus:ring-slate-800 focus:border-transparent px-6"
                   />
                   <input
                     id="year"
                     type="text"
+                    maxLength={4}
                     placeholder="aaaa"
                     className="bg-slate-200 rounded-full w-[6rem] lg:w-[7.75rem] mb-1 mr-2 py-2 focus:outline-none focus:ring-1 focus:ring-slate-800 focus:border-transparent px-6"
                   />
