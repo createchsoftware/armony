@@ -12,6 +12,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import PopupLogin from "../../components/ui/Login/PopupLogin";
 import { useState } from 'react'
 import { useEffect } from 'react';
+import { jwtDecode } from "jwt-decode";
 
 const StyledRating = styled(Rating)({
     '& .MuiRating-iconFilled': {
@@ -141,6 +142,7 @@ function Ofertas({ producto, handleClickCarrito, noDesc }) {
                         precision={1}
                         icon={<FavoriteIcon fontSize="inherit" />}
                         emptyIcon={<FavoriteBorderIcon fontSize="inherit" />}
+                        onChange={() => toggleFavorite(producto)}
                     />
                 </Box>
             </div>

@@ -69,8 +69,8 @@ const Productos = () => {
           return response.json();
         })
         .then((data) => {
-          setDescuentos(data);
-          console.log("descuentos", data);
+          setDescuentos(data.data);
+          console.log("descuentos", data.data);
         })
         .catch((error) => {
           console.log("error", error);

@@ -46,13 +46,13 @@ const filters = [
     id: "Marca",
     name: "Marca",
     options: [
-      { value: "nivea", label: "Nivea", checked: false },
-      { value: "Eucerin", label: "Eucerin", checked: false },
-      { value: "neutrogena", label: "Neutrogena", checked: false },
+      { value: "ponds", label: "POND’S", checked: false },
+      { value: "hidraSense", label: "Hidra Sense", checked: false },
+      { value: "savasana", label: "Savasana", checked: false },
       { value: "ceraVe", label: "CeraVe", checked: false },
-      { value: "loreal", label: "Loreal", checked: false },
-      { value: "pantene", label: "Pantene", checked: false },
-      { value: "garnier", label: "Garnier", checked: false },
+      { value: "cetaphil", label: "Cetaphil", checked: false },
+      { value: "mizon", label: "Mizon", checked: false },
+      { value: "gojo", label: "Gojo", checked: false },
     ],
   },
 ];
@@ -68,7 +68,7 @@ export default function Filtros() {
   const [busqueda, setSearch] = useState("");
   const [rating, setRating] = useState(0);
   const [precio, setPrecio] = useState(null);
-  const [id, setId] = useState(0);
+  const [id, setId] = useState(null);
   const [soon, setSoon] = useState(false);
 
   async function getId() {
@@ -81,6 +81,7 @@ export default function Filtros() {
         },
       });
       respuestaJson = await respuesta.json();
+      console.log("id en uso: ", respuestaJson.clave);
       await setId(respuestaJson.clave);
     } catch (error) {
       console.log("Error");
@@ -97,6 +98,7 @@ export default function Filtros() {
 
   useEffect(() => {
     setTimeout(() => {
+      console.log("idFavoritos:", id);
       fetch(`/api/admin/favoritos/ProductFavoritosbyId/${id}`)
         .then((response) => {
           if (!response.ok) {
@@ -106,6 +108,7 @@ export default function Filtros() {
         })
         .then((data) => {
           setProductosFavorites(data);
+          console.log("favoritos" + data);
         })
         .catch((error) => {
           //setErrorSpa(error.message);
@@ -180,6 +183,7 @@ export default function Filtros() {
   //useEffect para obtener los productos
   useEffect(() => {
     setTimeout(() => {
+      console.log("idFinal:", id);
       fetch(`/api/admin/productos/getProducts/${id}`)
         .then((response) => {
           if (!response.ok) {
