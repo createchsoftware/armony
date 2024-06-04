@@ -27,6 +27,11 @@ function Productos({ productos }) {
     const navigate = useNavigate();
     const [favorites, setFavorites] = useState({});
     const [uid, setUid] = useState(null);
+  
+
+    useEffect(()=>{
+localStorage.removeItem("favoritos")
+    },[])
 
     useEffect(() => {
         const cookie = obteneridCookie('Naruto_cookie');
@@ -36,6 +41,26 @@ function Productos({ productos }) {
         }
     }, []);
 
+    useEffect(() => {
+        const Prod = async () => {
+            try {
+                if (uid) {
+                    //este fetch traera todos los favoritos del cliente,solo incluyendo servicios y productos
+                    const response = await fetch(`/api/admin/favoritos/FavoritosbyId/${uid}`)
+                    const data = await response.json();
+                    setContResumen(data)
+                    console.log(data)
+                }
+            } catch (error) {
+                console.error("hubo error :", error)
+            }
+        }
+        Prod()
+    }, [uid])
+
+
+
+
     const obteneridCookie = (cookieName) => {
         const cookies = document.cookie.split(';');
         const cookie = cookies.find(c => c.trim().startsWith(cookieName + "="));
@@ -43,27 +68,44 @@ function Productos({ productos }) {
     };
 
     const toggleFavorite = async (idProducto) => {
-        const estaEnFavoritos = favorites[idProducto];
-        const url = estaEnFavoritos ? '/api/admin/favoritos/delFavorito' : '/api/admin/favoritos/addfavorito';
+        const estaEnFavoritos = favorites[idProducto.pkIdPS];
 
-        try {
-            setTimeout(() => {
-                fetch(url, {
+        if (uid) {
+            try {
+                fetch('/api/admin/favoritos/invertirFav', {
                     method: "POST",
-                    body: JSON.stringify({ idCliente: uid, IdProducto: idProducto }),
+                    body: JSON.stringify({ idCliente: uid, IdProducto: idProducto.pkIdPS }),
                     headers: { "Content-Type": "application/json" },
                 });
-            }, [1000])
 
             setFavorites(prev => ({
                 ...prev,
-                [idProducto]: !estaEnFavoritos
+                [idProducto.pkIdPS]: !estaEnFavoritos
             }));
-            console.log('Favoritos:', favorites);
+
+       
         } catch (error) {
             console.error('Error en la solicitud:', error);
         }
+        }else{
+            setFavorites(prev => ({
+                ...prev,
+                [idProducto.pkIdPS]: !estaEnFavoritos
+            }));
+            let favoritos = JSON.parse(localStorage.getItem("favoritos")) || [];
+            const estaEnFavoritos = favoritos.some(fav => fav.pkIdPS ===  idProducto.pkIdPS);
+            if(!estaEnFavoritos){
+           
+            favoritos.push(idProducto);
+        localStorage.setItem("favoritos", JSON.stringify(favoritos));
+        }else{
+            let favoritos = JSON.parse(localStorage.getItem("favoritos")) || [];
+        favoritos = favoritos.filter((obj) => obj.pkIdPS !== idProducto.pkIdPS);
+        localStorage.setItem("favoritos", JSON.stringify(favoritos));
+        }
+        }
     };
+
 
 
     const notify = () => toast("Producto agregado al carrito");
@@ -121,12 +163,13 @@ function Productos({ productos }) {
                                     <StyledRating
                                         name="customized-color"
                                         max={1}
+                                        // value={estaEnFavoritos || favorites[producto.pkIdPS] ? 1 : 0}
                                         value={favorites[producto.pkIdPS] ? 1 : 0}
                                         getLabelText={(value) => `${value} Heart${value !== 1 ? 's' : ''}`}
                                         precision={1}
                                         icon={<FavoriteIcon fontSize="inherit" />}
                                         emptyIcon={<FavoriteBorderIcon fontSize="inherit" />}
-                                        onChange={() => toggleFavorite(producto.pkIdPS)}
+                                        onChange={() => toggleFavorite(producto)}
                                     />
                                 </Box>
                             </div>

@@ -7,14 +7,14 @@ import { useNavigate } from "react-router-dom";
 
 export const CarritoProvider = ({ children }) => {
 
-     localStorage.setItem('tarjeta',null)
-    localStorage.setItem('monedero',-1)
+    localStorage.setItem('tarjeta', null)
+    localStorage.setItem('monedero', -1)
 
     const [cartItems, setCartItems] = useState(() => {
         const savedCart = localStorage.getItem('cartItems');
         return savedCart ? JSON.parse(savedCart) : [];
     });
-    localStorage.clear();
+    //localStorage.clear();
     useEffect(() => {
         localStorage.setItem('cartItems', JSON.stringify(cartItems));
     }, [cartItems]);
@@ -122,6 +122,7 @@ const Carrito = ({ cerrar, totalProductos, logCart }) => {
     }, [])
 
     const handleComprar = () => {
+        // window.location.href = '/spa/comprar'
         navigate('/spa/comprar', { state: { producto: null } });
         // if (loginCart) {
         //     logCart();
@@ -142,7 +143,7 @@ const Carrito = ({ cerrar, totalProductos, logCart }) => {
             <div className='grid content-between w-3/4 mx-4'>
                 <div className='flex justify-between'>
                     <div className='grid'>
-                        <span className='mr-5 text-xl font-bold'>{item.nombre}</span>
+                        <span className='mr-5 text-xl font-bold truncate'>{item.nombre}</span>
                         <Rating className='' value={item.valoracion} readOnly unratedcolor="amber" ratedcolor="amber" />
                     </div>
                     <button className='cart-remove' onClick={() => removeItem(item.id)}>
@@ -185,7 +186,7 @@ const Carrito = ({ cerrar, totalProductos, logCart }) => {
                 <h4 className="mt-8 cart-empty">No hay artículos en el carrito.</h4>
             ) : (
                 <>
-                    <ul id="cart-items overflow-y-auto" className='overflow-y-auto h-[30rem]'>{cartList}</ul>
+                    <ul id="cart-items overflow-y-auto" className='overflow-y-auto h-[24rem]'>{cartList}</ul>
                     <div className='flex justify-between'>
                         <p>Envio:</p>
                         <span>$0.00</span>
@@ -198,7 +199,7 @@ const Carrito = ({ cerrar, totalProductos, logCart }) => {
                         <p>Total:</p>
                         <span className='font-bold'>${total}</span>
                     </div>
-                    <button className='m-auto w-full hover:bg-opacity-90 rounded-xl py-2 px-6 text-white bg-[#45B59C]' onClick={log ? (handleComprar):(logCart)}>
+                    <button className='m-auto w-full hover:bg-opacity-90 rounded-xl py-2 px-6 text-white bg-[#45B59C]' onClick={log ? (handleComprar) : (logCart)}>
                         Comprar
                     </button>
                 </>

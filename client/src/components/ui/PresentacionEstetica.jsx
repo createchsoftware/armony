@@ -20,10 +20,10 @@ function PresentacionEstetica() {
           </h1>
           <div className="grid grid-cols-2 mt-10 place-items-center">
             <div className="w-[14rem] md:w-[30rem] bg-white bg-opacity-50 rounded-xl text-center">
-              <p className="text-[#036C65] text-3xl md:text-5xl my-5 mx-8 text-left">
+              <p className="text-[#036C65] text-3xl md:text-5xl my-5 mx-8 text-justify">
                 Deja que tu cuerpo hable por tí
               </p>
-              <p className="text-[#FFFFFF] text-large md:text-2xl my-5 ml-8 mr-10 text-left">
+              <p className="text-[#FFFFFF] text-large md:text-2xl my-5 ml-8 mr-10 text-justify">
                 Permite que tu figura sea huella duradera
               </p>
               <a
@@ -36,7 +36,7 @@ function PresentacionEstetica() {
             </div>
             <div className="w-full my-auto text-center">
               <div className="flex flex-col w-[14rem] md:w-[30rem] bg-white bg-opacity-50 rounded-xl mx-auto">
-                <p className="text-[#036C65] text-2xl md:text-4xl my-3 md:my-5 mx-8 text-left">
+                <p className="text-[#036C65] text-2xl md:text-4xl my-3 md:my-5 mx-8 text-justify">
                   ¡Hey! También tenemos servicios de spa
                 </p>
                 <p className="text-[#FFFFFF] text-large md:text-2xl mb-5 ml-8 mr-10 text-left">

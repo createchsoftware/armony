@@ -20,6 +20,10 @@ function Suscripciones() {
     const [semanaFinal, setSemanaFinal] = useState('');
     const [diasFaltantes, setDiasFaltantes] = useState(0);
 
+    
+    
+
+
 
     async function recibido() {
         const respuesta = await fetch('/api/suscripcion', {
