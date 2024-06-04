@@ -11,7 +11,7 @@ const regex_apellidos = /[a-zA-Zá-úñ]{3,}/;
 const regex_lada = /^\+?\d{1,3}$/;
 const regex_telefono = /^(\d{9,10}|\d{2,3} \d{7}|\d{2,3} \d{3} \d{4}|\d{2,3}-\d{7}|\d{2,3}-\d{3}-\d{4})$/;
 const regex_postal = /^\d{5}$/;
-const regex_numero = /^\S{1,10}$/;
+const regex_numero = /^\S*$/;
 
 
 
@@ -137,60 +137,54 @@ async function paso1(solicitud,respuesta){
         // INICIO 2  CREAR UN ARREGLO QUE ALMACENARA CAMPOS SIN CONTESTAR
         let campos_faltantes = [];
 
-        if(!nombre){
+        if(!nombre || nombre==''){
           campos_faltantes.push([nombre_id,'tu nombre']);
         }
           
-        if(!apodo){
+        if(!apodo || apodo==''){
           campos_faltantes.push(apodo_id,'tu apodo');
         }
           
-        if(!paterno){
+        if(!paterno || paterno==''){
           campos_faltantes.push([paterno_id,'tu apellido paterno']);
         }
           
-        if(!materno){
+        if(!materno || materno==''){
           campos_faltantes.push([materno_id,'tu apellido materno']);
         }
           
-        if(!correo){
+        if(!correo || correo==''){
           campos_faltantes.push([correo_id,'tu correo']);
         }
           
-        if(!lada){
-          campos_faltantes.push([lada_id,'la lada de tu pais']);
+        if(!lada || lada==''){
+          campos_faltantes.push([lada_id,'la lada de tu país']);
         }
           
-        if(!telefono){
-          campos_faltantes.push([telefono_id,'tu telefono']);
+        if(!telefono || telefono==''){
+          campos_faltantes.push([telefono_id,'tu teléfono']);
         }
           
-        if(!dia){
-          campos_faltantes.push([dia_id,'el dia en que naciste']);
+        if(!año || año=='' || !mes || mes=='' || !dia || dia ==''){
+          campos_faltantes.push([dia_id,'']);
+          campos_faltantes.push([mes_id,'']);
+          campos_faltantes.push([año_id,'todos los campos correspondientes a fecha']);
         }
           
-        if(!mes){
-          campos_faltantes.push([mes_id,'el mes en que naciste']);
-        }
-          
-        if(!año){
-          campos_faltantes.push([año_id,' el año en que naciste']);
-        }
-          
-        if(!calle){
+        if(!calle || calle==''){
           campos_faltantes.push([calle_id,'tu calle']);
         }
           
-        if(!colonia){
+        if(!colonia || colonia==''){
           campos_faltantes.push([colonia_id,'tu colonia']);
         }
           
-        if(!numero){
-          campos_faltantes.push([numero_id,'el numero de tu casa']);
+        if(!numero || numero==''){
+          campos_faltantes.push([numero_id,'el número de tu casa']);
         }
           
-        if(!codigo_postal){
-          campos_faltantes.push([codigo_postal_id,'tu codigo postal']);
+        if(!codigo_postal || codigo_postal==''){
+          campos_faltantes.push([codigo_postal_id,'tu código postal']);
         }
           
 
@@ -224,46 +218,40 @@ async function paso1(solicitud,respuesta){
 
 
           if(nombre_valido == false){
-            campos_invalidos.push([nombre_id, 'tu nombre no es valido']);
+            campos_invalidos.push([nombre_id, 'Tu nombre no es válido']);
           }
           if(paterno_valido == false){
-            campos_invalidos.push([paterno_id,'tu apellido paterno no es valido']); 
+            campos_invalidos.push([paterno_id,'Tu apellido paterno no es válido']); 
           }
           if(materno_valido == false){
-            campos_invalidos.push([materno_id,'tu apellido materno no es valido']); 
+            campos_invalidos.push([materno_id,'Tu apellido materno no es válido']); 
           }
           if(correo_valido == false){
-            campos_invalidos.push([correo_id,'el correo ingresado no es valido']);
+            campos_invalidos.push([correo_id,'El correo ingresado no es válido']);
           }
           if(telefono_valido == false){
-            campos_invalidos.push([telefono_id,'el telefono no es valido']);
+            campos_invalidos.push([telefono_id,'El teléfono no es válido']);
           }
           if(lada_valida == false){
-            campos_invalidos.push([lada_id,'la lada de tu pais no es valida']);
+            campos_invalidos.push([lada_id,'La lada de tu país no es válida']);
           }
           if(regex_numero.test(numero) == false){
-            campos_invalidos.push([numero_id,'el numero de tu casa no es valido ']);
+            campos_invalidos.push([numero_id,'El número de tu casa no es válido']);
           } 
           if(postal_valido == false){
-            campos_invalidos.push([codigo_postal_id,'tu codigo postal no es valido']);
+            campos_invalidos.push([codigo_postal_id,'Tu código postal no es válido']);
           }
             
 
-          try{
-            var fecha = new Date(`${mes}/${dia}/${año}`);
 
-            if(isNaN(fecha.getTime())){
-              campos_invalidos.push([dia_id,'']);
-              campos_invalidos.push([mes_id,'']);
-              campos_invalidos.push([año_id,'']);
-            }
-            
-          }catch(error){
+          let fecha_boolean = ValidarFecha(dia,mes,año);
+          
+          if(fecha_boolean == false){
             campos_invalidos.push([dia_id,'']);
             campos_invalidos.push([mes_id,'']);
             campos_invalidos.push([año_id,'']);
           }
-
+         
           //FIN 3
 
           
@@ -291,10 +279,10 @@ async function paso1(solicitud,respuesta){
               let repetidos = [];
 
               if(fields.length > 0){
-                repetidos.push([correo_id,'ya hay una cuenta con este correo']);
+                repetidos.push([correo_id,'Ya hay una cuenta con este correo']);
               }
               if(fieldsTelefono.length > 0){
-                repetidos.push([telefono_id,'ya hay una cuenta con este telefono']);
+                repetidos.push([telefono_id,'Ya hay una cuenta con este teléfono']);
               }
 
               // FIN 4
@@ -404,7 +392,7 @@ async function paso2(solicitud,respuesta){
           if(campos_vacios.length > 0){
 
             respuesta.send({vacios:campos_vacios});
-            console.log("no contestaste todos los campos");
+            console.log("No contestaste todos los campos");
 
           }
           else{
@@ -433,7 +421,7 @@ async function paso2(solicitud,respuesta){
             if(campos_incorrectos.length > 0){
 
               respuesta.send({incorrectos:campos_incorrectos});
-              console.log("hubo campos incorrectos");
+              console.log("Hubo campos incorrectos");
 
             }else{
 
@@ -517,19 +505,19 @@ async function paso3(solicitud,respuesta){
             let regex_mayor = /\w{20,}/;
             
             if(regex_numero.test(contraseña)==false){
-              arreglo_regex.push("no tiene un numero");
+              arreglo_regex.push("no tiene un número");
             }
 
             if(regex_caracter_especial.test(contraseña)==false){
-              arreglo_regex.push("no tiene un caracter especial");
+              arreglo_regex.push("no tiene un carácter especial");
             }
 
             if(regex_Mayuscula.test(contraseña)==false){
-              arreglo_regex.push("no tiene una mayuscula");
+              arreglo_regex.push("no tiene una mayúscula");
             }
 
             if(regex_minuscula.test(contraseña)==false){
-              arreglo_regex.push("no tiene una minuscula");
+              arreglo_regex.push("no tiene una minúscula");
             }
 
             if(regex_mayor.test(contraseña)==true){
@@ -610,6 +598,101 @@ function eliminar(imagen){
   
 
 
+
+
+function añoBisiesto(year){
+
+  if(year%4==0){
+      //puede que sea bisiesto
+      if(year%100==0){
+
+          if(year%400==0){
+              return 29;
+          }
+          else{
+            return 28;
+          }
+      }
+      else{
+          return 29;
+      }
+  }
+  else{
+    return 28;
+  }
+
+}
+
+
+function ValidarFecha(dia,mes,año){
+
+  let month = parseInt(mes); // si recibimos '1' o '01' o '00001', de igual forma pasara a 0
+
+  if(isNaN(month)){
+    return false;
+  }
+  else{
+    month = month-1;
+  }
+
+
+  let year = parseInt(año);
+  if(isNaN(year)){
+    return false;
+  }
+
+
+  let day = parseInt(dia);
+
+  if(isNaN(day)){
+    return false;
+  }
+  
+
+  let days = añoBisiesto(year); // le debemos pasar un numero y no un string
+
+  let formato = [ 31,days,31,30,31,30,31,31,30,31,30,31 ];
+
+  if(year <= 0){
+    // significa que el usuario puso una año negativo, o que puso un año mayor al actual
+    return false;
+  }
+  else{
+      if((month +1) > formato.length || (month+1) <= 0){
+          // significa que la persona puso un mes menor a 0, o que puso un mes mayor a 12
+          return false;
+      }
+      else{
+          if(formato[month] < day || day <= 0){
+              //significa que la persona paso un dia mayor al limite o que puso en dia igual a 0 o negativo
+              return false;
+          }
+          else{
+              // por el momento todo bien, pero ahora toca verificar que la fecha que ingreso no sea mayor
+
+              let birthday = new Date(`${year}-${month+1}-${day}`);
+              let fa = new Date(Date.now());
+              let fecha_actual = new Date(`${fa.getFullYear()}-${fa.getMonth()+1}-${fa.getDate()}`);
+
+              if(birthday.getTime()>=fecha_actual.getTime()){
+                // la fecha de nacimiento es igual a la de hoy o mayor
+                return false;
+              }
+              else{
+                return true;
+              }
+          }
+      }
+  }
+  
+
+  
+
+
+  
+  
+
+}
 
 
 

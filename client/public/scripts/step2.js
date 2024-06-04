@@ -64,7 +64,7 @@ document.getElementById('step2').addEventListener('click', async ()=>{
             let toastBox = document.getElementById('toastBox');
             let div = document.createElement('div');
             div.classList.add('toast');
-            div.innerHTML = '<div id="texto">dejaste en blanco la pregunta '+arreglo[indice].slice(1);+'</div>   <div id="icono"><i class="fa-solid fa-circle-exclamation"></i></div>';
+            div.innerHTML = '<div id="texto">Dejaste en blanco la pregunta '+arreglo[indice].slice(1);+'</div>   <div id="icono"><i class="fa-solid fa-circle-exclamation"></i></div>';
             div.classList.add('orange');
             toastBox.appendChild(div);
             setTimeout(()=>{
@@ -84,7 +84,7 @@ document.getElementById('step2').addEventListener('click', async ()=>{
            let toastBox = document.getElementById('toastBox');
            let div = document.createElement('div');
            div.classList.add('toast');
-           div.innerHTML = '<div id="texto">se mas especifico en la pregunta '+arreglo[indice].slice(1);+', escribe mas al respecto</div>   <div id="icono"> <i class="fa-solid fa-circle-xmark"> </div>';
+           div.innerHTML = '<div id="texto">Se más específico en la pregunta '+arreglo[indice].slice(1);+', escribe más al respecto</div>   <div id="icono"> <i class="fa-solid fa-circle-xmark"> </div>';
            toastBox.appendChild(div);
            setTimeout(()=>{
                div.remove();
