@@ -44,26 +44,35 @@ function Productos({ productos }) {
 
     const toggleFavorite = async (idProducto) => {
         const estaEnFavoritos = favorites[idProducto];
-        const url = estaEnFavoritos ? '/api/admin/favoritos/delFavorito' : '/api/admin/favoritos/addfavorito';
 
-        try {
-            setTimeout(() => {
-                fetch(url, {
+            if (uid) {
+                try {
+                    fetch('/api/admin/favoritos/invertirFav', {
                     method: "POST",
                     body: JSON.stringify({ idCliente: uid, IdProducto: idProducto }),
                     headers: { "Content-Type": "application/json" },
                 });
-            }, [1000])
 
             setFavorites(prev => ({
                 ...prev,
                 [idProducto]: !estaEnFavoritos
             }));
-            console.log('Favoritos:', favorites);
+
+       
         } catch (error) {
             console.error('Error en la solicitud:', error);
         }
+        }else{
+            // setFavorites(prev => ({
+            //     ...prev,
+            //     [idProducto]: !estaEnFavoritos
+            // }));
+    //  let favoritos = JSON.parse(localStorage.getItem("favoritos")) || [];
+    //         favoritos.push(idProducto);
+    //     localStorage.setItem("favoritos", JSON.stringify(favoritos));
+        }
     };
+  
 
 
     const notify = () => toast("Producto agregado al carrito");
