@@ -7,7 +7,8 @@ import {
   ServiceFavoritosbyId,
   ServiceFavoritosEstetica,
   ServiceFavoritosSpa,
-  FavoritosbyId
+  FavoritosbyId,
+  invertirFav
 } from "../db/query/queryFavoritos.js";
 import { conexion } from "../db/connection.js";
 
@@ -94,4 +95,15 @@ routerFavoritos.get("/FavoritosbyId/:id", async (req, res) => {
     res.status(500).send({ error: "Hubo un problema", err });
   }
 });
+
+routerFavoritos.post("/invertirFav", async (req, res) => {
+  try {
+    const data = req.body;
+    await invertirFav(conexion, data);
+    res.status(201).send({ message: "Se elimino con exito" });
+  } catch (err) {
+    res.status(500).send({ error: "Hubo un problema", err });
+  }
+});
+
 

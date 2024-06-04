@@ -16,7 +16,6 @@ export async function addfavorito(connection, data) {
 
 export async function delFavorito(connection, data) {
   try {
-    console.log("hola");
     const call = "CALL delFav(?,?)"; // Procedimiento almacenado de la base de datos
     const query = mysql.format(call, [data.idCliente, data.IdProducto]); // Parametros necesarios para el procedimiento
     const [rows, fields] = await connection.query(query);
@@ -87,6 +86,20 @@ export async function FavoritosbyId(connection, data) {
     const [rows, fieds] = await connection.query(query); // Ejecutamos query y almacenamos los valores resultantes
     endConnection(); // Cerramos la conexion con la base de datos
     return rows[0]; // Retornamos los valores obtenidos en base al query
+  } catch (err) {
+    console.log("Ha ocurrido un error al ejecutar el query: ", err);
+    throw err;
+  }
+}
+
+
+export async function invertirFav(connection, data) {
+  try {
+    const call = "CALL favoritoCliente(?,?)"; // Procedimiento almacenado de la base de datos
+    const query = mysql.format(call, [data.idCliente, data.IdProducto]); // Parametros necesarios para el procedimiento
+    const [rows, fields] = await connection.query(query);
+    endConnection(); // Cerramos la conexion con la BD
+    return rows; // Cerramos la conexion con la base de datos
   } catch (err) {
     console.log("Ha ocurrido un error al ejecutar el query: ", err);
     throw err;

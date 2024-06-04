@@ -104,7 +104,7 @@ function Servicio({
         className="grid gap-4 m-4 text-center md:m-8"
       >
         <div
-          className="relative p-6 rounded-lg aspect-square"
+          className="relative p-6 mx-auto rounded-lg aspect-square"
           style={{
             backgroundImage: `url(${imagen})`,
             backgroundRepeat: "no-repeat",
@@ -126,7 +126,7 @@ function Servicio({
                   <StyledRating
                     onClick={() => callFav()}
                     name="customized-color"
-                    value={fav}
+                    defaultValue={fav}
                     max={1}
                     getLabelText={(value) =>
                       `${value} Heart${value !== 1 ? "s" : ""}`
