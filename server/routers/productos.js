@@ -172,9 +172,9 @@ routerProductos.delete("/delete", async (req, res) => {
   }
 });
 
-routerProductos.get("/getProducts", async (req, res) => {
+routerProductos.get("/getProducts/:id", async (req, res) => {
   try {
-    const resultado = await getProducts(conexion);
+    const resultado = await getProducts(conexion, { id: req.params.id });
     res.json(resultado);
   } catch (err) {
     console.error("Ha ocurrido un error: ", err);
@@ -333,7 +333,7 @@ routerProductos.post("/createVentaProduct", async (req, res) => {
       total: req.body.total,
       impuesto: req.body.impuesto,
     });
-    
+
     res.status(201).json({
       message: "se realizo la compra con exito",
       data: resultado,
@@ -347,11 +347,11 @@ routerProductos.post("/createVentaProduct", async (req, res) => {
 routerProductos.post("/detallesventa", async (req, res) => {
   // Datos de prueba de cita
 
-//   console.log(req.body.idCliente,
-//     req.body.idProducto,
-//     req.body.idPromo,
-//     req.body.cantidad,
-// )
+  //   console.log(req.body.idCliente,
+  //     req.body.idProducto,
+  //     req.body.idPromo,
+  //     req.body.cantidad,
+  // )
 
   const datosCita = {
     idCliente: req.body.idCliente,
@@ -385,7 +385,7 @@ routerProductos.post("/setFavorito", async (req, res) => {
 routerProductos.get("/idVentaProduct/:id", async (req, res) => {
   try {
     const idventa = await searchVentaProducto(conexion, {
-      idCliente: req.params.id
+      idCliente: req.params.id,
     });
     res.status(200).json(idventa);
   } catch (err) {

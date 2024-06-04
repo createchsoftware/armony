@@ -175,15 +175,16 @@ export async function ventaProducto(connection, data) {
   }
 }
 
-export async function getProducts(pool, data, res) {
+export async function getProducts(pool, data) {
   try {
     // const pages=data.pages||1;/*por defecto sera pagina 1 */
     // const limit =data.limit||5;/*capacidad por defecto de 5, esto cambiara dependiendo el front */
     // const offset=(pages-1)*limit;
-    const query = `SELECT *FROM  prodServ where tipoProducto='venta'`;
+    const prod = `CALL getProductos(?,?)`;
+    let query = mysql.format(prod, [2, data.id]);
     const [rows, fields] = await pool.query(query);
     endConnection();
-    return rows;
+    return rows[0];
   } catch (err) {
     console.log("Ha ocurrido un error al ejecutar el query: ", err);
     throw err;
@@ -361,9 +362,8 @@ export async function detalleVenta(connection, data) {
 
 export async function processVenta(connection, data) {
   try {
-    
     const getVenta = await searchVentaProducto(connection, {
-      idCliente: data.idCliente
+      idCliente: data.idCliente,
     }); // Buscamos el id de la venta recien hecha y lo almacenamos
     console.log(`Se encontro la venta con id: ${getVenta[0].pkIdVenta}`);
     // Verificamos que si encontrara la venta
