@@ -263,6 +263,10 @@ function Agenda({ restart, next }) {
                   ${totalIva}
                 </span>
               </div>
+              <div className='flex justify-between p-6 px-10 mb-4 border-2 shadow-md rounded-xl border-gray'>
+                <h4 className='text-xl font-bold'>Puntos obtenidos:</h4>
+                <span className='font-bold text-[rgb(3,109,99)] text-xl'>{parseInt(puntos)}</span>
+              </div>
             </div>
             <div className="flex justify-around mb-6">
               <button
