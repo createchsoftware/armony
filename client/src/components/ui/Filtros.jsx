@@ -176,7 +176,7 @@ export default function Filtros() {
     //useEffect para obtener los productos
     useEffect(() => {
         setTimeout(() => {
-            fetch("/api/admin/productos/getProducts")
+            fetch(`/api/admin/productos/getProducts/${id}`)
                 .then(response => response.json())
                 .then(data => {
                     setAllProducts(data);
