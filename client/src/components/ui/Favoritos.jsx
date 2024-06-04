@@ -80,10 +80,35 @@ function Favoritos() {
   const [estetica, setEstetica] = useState([]);
   const [color1, setColor1] = useState("#EB5765");
   const [color2, setColor2] = useState("#F6B3B9");
+  const [id, setId] = useState(0);
+  const [st, setSt] = useState(false);
+
+  let respuestaJson = null;
+  async function checkLogin() {
+    try {
+      const respuesta = await fetch("/api/logueado", {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+
+      respuestaJson = await respuesta.json();
+      if (respuestaJson.logueado == true) {
+        await setId(respuestaJson.clave);
+      }
+    } catch (error) {
+      setLog(false);
+    }
+  }
+
+  useEffect(() => {
+    checkLogin();
+  }, []);
 
   useEffect(() => {
     setTimeout(() => {
-      fetch("/api/admin/favoritos/ServiceFavoritosSpa")
+      fetch(`/api/admin/favoritos/ServiceFavoritosSpa/${id}`)
         .then((response) => {
           if (!response.ok) {
             throw new Error("Error al obtener los favoritos de spa");
@@ -97,11 +122,11 @@ function Favoritos() {
           console.log("error", error);
         });
     }, 3000);
-  }, []);
+  }, [id, st]);
 
   useEffect(() => {
     setTimeout(() => {
-      fetch("/api/admin/favoritos/ServiceFavoritosEstetica")
+      fetch(`/api/admin/favoritos/ServiceFavoritosEstetica/${id}`)
         .then((response) => {
           if (!response.ok) {
             throw new Error("Error al obtener los favoritos de estetica");
@@ -115,7 +140,7 @@ function Favoritos() {
           console.log("error", error);
         });
     }, 3000);
-  }, []);
+  }, [id, st]);
 
   const toggleService = (index) => {
     if (index === 1) {
@@ -155,6 +180,10 @@ function Favoritos() {
     }
   };
 
+  function changeSt() {
+    setSt(!st);
+  }
+
   return (
     <>
       <img
@@ -189,14 +218,16 @@ function Favoritos() {
                 return (
                   <TarjetaFavoritos
                     props={{
+                      id: id,
+                      ps: servicio.pkIdPS,
                       nombre: servicio.nombre,
                       descr: servicio.descripcion,
                       img: servicio.img,
                       precio: servicio.precio,
                       dur: servicio.tiempo,
                       rating: servicio.valoracion,
-                      //isFavorite: servicio.fav,
-                      isFavorite: true,
+                      favorito: servicio.favorito,
+                      st: changeSt,
                     }}
                   />
                 );
@@ -209,14 +240,16 @@ function Favoritos() {
                 return (
                   <TarjetaFavoritos
                     props={{
+                      id: id,
+                      ps: servicio.pkIdPS,
                       nombre: servicio.nombre,
                       descr: servicio.descripcion,
                       img: servicio.img,
                       precio: servicio.precio,
                       dur: servicio.tiempo,
                       rating: servicio.valoracion,
-                      //isFavorite: servicio.fav,
-                      isFavorite: true,
+                      favorito: servicio.favorito,
+                      st: changeSt,
                     }}
                   />
                 );
