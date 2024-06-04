@@ -13,7 +13,7 @@ const InformacionBasica = () => {
     <div>
       <HelmetProvider>
         <Helmet>
-            <script src="https://kit.fontawesome.com/c9a65ccec4.js" crossorigin="anonymous"></script>
+            <script src="https://kit.fontawesome.com/c9a65ccec4.js" crossOrigin="anonymous"></script>
         </Helmet>
       </HelmetProvider>
       <div className="md:h-20 h-[3.75rem] bg-white" />
@@ -127,7 +127,8 @@ const InformacionBasica = () => {
                     <input
                       id="lada"
                       type="text"
-                      placeholder="+52"
+                      maxLength={2}
+                      placeholder="52"
                       className="bg-slate-200 rounded-full w-[9rem] md:w-[9.25rem] lg:w-[12rem] mb-1 mr-2 py-2 focus:outline-none focus:ring-1 focus:ring-slate-800 focus:border-transparent px-6"
                       
                     />
@@ -144,7 +145,8 @@ const InformacionBasica = () => {
                     <input
                       id="phone"
                       type="text"
-                      placeholder="686-222-3344"
+                      maxLength={10}
+                      placeholder="6862223344"
                       className="bg-slate-200 rounded-full w-[9rem] md:w-[9.25rem] lg:w-[12rem] mb-1 mr-2 py-2 focus:outline-none focus:ring-1 focus:ring-slate-800 focus:border-transparent px-6"
                       
                     />
@@ -241,6 +243,7 @@ const InformacionBasica = () => {
                 <input
                   id="codigo_postal"
                   type="text"
+                  maxLength={5}
                   placeholder="12345"
                   className="bg-slate-200 rounded-full w-[19rem] lg:w-[24.75rem] mb-1 mx-0 py-2 focus:outline-none focus:ring-1 focus:ring-slate-800 focus:border-transparent px-6"
                   
