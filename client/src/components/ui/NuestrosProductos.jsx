@@ -61,7 +61,7 @@ function Productos() {
   // }, []);
 
   const [descuentos, setDescuentos] = useState([]);
-  const [id, setId] = useState(0);
+  const [id, setId] = useState();
 
   async function getId() {
     let respuestaJson = null;
@@ -76,6 +76,8 @@ function Productos() {
       if (respuestaJson.logueado == true) {
         //console.log("id en uso: ", respuestaJson.clave);
         await setId(respuestaJson.clave);
+      } else {
+        await setId(0);
       }
     } catch (error) {
       console.log("Error");
@@ -92,22 +94,24 @@ function Productos() {
 
   //useEffect para obtener los productos con descuento
   useEffect(() => {
-    setTimeout(() => {
-      fetch(`/api/admin/productos/descuento/${id}`)
-        .then((response) => {
-          if (!response.ok) {
-            throw new Error("Error al obtener los descuentos");
-          }
-          return response.json();
-        })
-        .then((data) => {
-          setDescuentos(data.data);
-          //console.log("descuentos", data.data);
-        })
-        .catch((error) => {
-          console.log("error", error);
-        });
-    }, [1000]);
+    if (id != undefined) {
+      setTimeout(() => {
+        fetch(`/api/admin/productos/descuento/${id}`)
+          .then((response) => {
+            if (!response.ok) {
+              throw new Error("Error al obtener los descuentos");
+            }
+            return response.json();
+          })
+          .then((data) => {
+            setDescuentos(data.data);
+            //console.log("descuentos", data.data);
+          })
+          .catch((error) => {
+            console.log("error", error);
+          });
+      }, [1000]);
+    }
   }, [id]);
 
   return (
