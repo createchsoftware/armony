@@ -1,6 +1,7 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faUser, faUserPen, faBagShopping, faCalendarDays, faMoneyBill ,faClockRotateLeft, faCreditCard, faArrowRightFromBracket } from '@fortawesome/free-solid-svg-icons';
+import { faUser, faUserPen, faBagShopping, faCalendarDays, faMoneyBill ,faClockRotateLeft, faCreditCard, faArrowRightFromBracket, faQrcode } from '@fortawesome/free-solid-svg-icons';
 import { Helmet, HelmetProvider } from "react-helmet-async";
+import { useEffect, useState } from 'react';
 
 // eslint-disable-next-line react/prop-types
 function MenuPerfil() {
@@ -9,6 +10,51 @@ function MenuPerfil() {
             <script src="../../../scripts/logout.js"></script>
         </Helmet>
     </HelmetProvider>
+
+    const [clave, setClave] = useState(false);
+    const [sus, setSus] = useState(false);
+
+    async function recibido() {
+        const respuesta = await fetch("/api/logueado", {
+            method: "GET",
+            headers: {
+                "Content-Type": "application/json",
+            },
+        });
+
+        if (!respuesta.ok) {
+            setClave(false);
+        }
+
+        let respuestaJson = await respuesta.json();
+
+        if (respuestaJson.logueado == true) {
+            setClave(respuestaJson.clave);
+        } else {
+            setClave(false);
+        }
+    }
+
+    useEffect(() => {
+        recibido();
+    }, []);
+    useEffect(() => {
+        
+        const Prod = async () => {
+            try {
+                if (clave) {
+    
+                    const response = await fetch(`/api/admin/cliente/StatusSus/${clave}`)
+                    const data = await response.json();
+                    setSus(data)
+                }
+            } catch (error) {
+                console.error("hubo error :", error)
+            }
+        }
+        Prod()
+    }, [clave])
+
     return (
         <div className="menu-perfil">
             <ul className="menu-nav-perfil">
@@ -54,6 +100,14 @@ function MenuPerfil() {
                         <p className='ml-5'>Tarjetas</p>
                     </a>
                 </li>
+                {sus && 
+                    <li className="menu-item-perfil">
+                        <a href="" className="menu-link-perfil">
+                            <FontAwesomeIcon icon={faQrcode} className='text-black' />
+                            <p className='ml-5'>Código QR</p>
+                        </a>
+                    </li>
+                }
                 <li className="menu-item-perfil">
                     <a href="/api/logout" className="menu-link-perfil">
                         <FontAwesomeIcon icon={faArrowRightFromBracket} className='text-black' />
