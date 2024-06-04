@@ -1,9 +1,8 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faUser, faUserPen, faBagShopping, faCalendarDays, faMoneyBill ,faClockRotateLeft, faCreditCard, faArrowRightFromBracket, faQrcode, faAngleLeft } from '@fortawesome/free-solid-svg-icons';
+import { faUser, faUserPen, faBagShopping, faCalendarDays, faMoneyBill ,faClockRotateLeft, faCreditCard, faArrowRightFromBracket, faQrcode, faAngleLeft, faDownload } from '@fortawesome/free-solid-svg-icons';
 import { Helmet, HelmetProvider } from "react-helmet-async";
 import { useEffect, useState } from 'react';
 import QrCode from "react-qr-code";
-import { CiSaveDown2 } from "react-icons/ci";
 
 // eslint-disable-next-line react/prop-types
 function MenuPerfil() {
@@ -173,13 +172,14 @@ function MenuPerfil() {
                                     onClick={onImageDownload}
                                     className="flex py-3 justify-center w-[10rem] h-[3rem] rounded-full shadow-[0_2px_10px_rgb(0,0,0,0.8)] text-sm font-[ABeeZee]"
                                 >
-                                    Guardar QR{" "}
-                                    <CiSaveDown2
-                                    style={{
-                                        color: "#919191",
-                                        fontSize: "20px",
-                                        marginLeft: "0.5rem",
-                                    }}
+                                    Guardar QR
+                                    <FontAwesomeIcon
+                                        icon={faDownload}
+                                        style={{
+                                            color: "#000000",
+                                            fontSize: "20px",
+                                            marginLeft: "0.5rem",
+                                        }}
                                     />
                                 </button>
                             </div>
