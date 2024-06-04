@@ -216,10 +216,12 @@ function ListaDeseo() {
         const Prod = async () => {
             try {
                 if (Uid) {
+                    console.log("Uid", Uid)
                     //este fetch traera todos los favoritos del cliente,solo incluyendo servicios y productos
                     const response = await fetch(`api/admin/favoritos/FavoritosbyId/${Uid}`)
                     const data = await response.json();
                     setContResumen(data)
+                    console.log("data", data)
                 }
             } catch (error) {
                 console.error("hubo error :", error)

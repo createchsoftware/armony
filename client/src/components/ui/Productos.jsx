@@ -24,47 +24,82 @@ const StyledRating = styled(Rating)({
 });
 
 function Productos({ productos }) {
+    const [log, setLog] = useState(false); //<<< PARA EL INICIO DE SESION
+    const [login, setLogin] = useState(false);
     const navigate = useNavigate();
     const [favorites, setFavorites] = useState({});
-    const [uid, setUid] = useState(null);
+
+    const [Uid, setUid] = useState(null)
+
+    async function recibido() {
+        const respuesta = await fetch("/api/logueado", {
+            method: "GET",
+            headers: {
+                "Content-Type": "application/json",
+            },
+        });
+
+        if (!respuesta.ok) {
+            setLog(false);
+        }
+
+        let respuestaJson = await respuesta.json();
+
+        if (respuestaJson.logueado == true) {
+            setLog(true);
+        } else {
+            setLog(false);
+        }
+    }
 
     useEffect(() => {
-        const cookie = obteneridCookie('Naruto_cookie');
-        if (cookie) {
-            const decoded = jwtDecode(cookie);
-            setUid(decoded.user);
-        }
+        recibido();
     }, []);
 
-    const obteneridCookie = (cookieName) => {
-        const cookies = document.cookie.split(';');
-        const cookie = cookies.find(c => c.trim().startsWith(cookieName + "="));
-        return cookie ? cookie.split('=')[1] : null;
-    };
+    const [contResumen, setContResumen] = useState([]);
 
-    const toggleFavorite = async (idProducto) => {
-        const estaEnFavoritos = favorites[idProducto];
-        const url = estaEnFavoritos ? '/api/admin/favoritos/delFavorito' : '/api/admin/favoritos/addfavorito';
+    useEffect(() => {
+        const getidUser = () => {// aqui veificamos si hay una cookie con este nombre 
+            const cookie = obteneridCookie('Naruto_cookie')
+            if (cookie) {
 
-        try {
-            setTimeout(() => {
-                fetch(url, {
-                    method: "POST",
-                    body: JSON.stringify({ idCliente: uid, IdProducto: idProducto }),
-                    headers: { "Content-Type": "application/json" },
-                });
-            }, [1000])
-
-            setFavorites(prev => ({
-                ...prev,
-                [idProducto]: !estaEnFavoritos
-            }));
-            console.log('Favoritos:', favorites);
-        } catch (error) {
-            console.error('Error en la solicitud:', error);
+                const decode = jwtDecode(cookie)//aqui decodificaremos la cokie
+                setUid(decode.user)
+            }
         }
-    };
+        getidUser()
+    }, [])
 
+
+    const obteneridCookie = (namecookie) => { //en este metodo lo que hacemos es destructurar la cokie para 
+        // obtener el user y luego el id
+        const cookies = document.cookie.split(';');
+        for (let cokie of cookies) {
+            const [key, value] = cokie.split('=')
+            if (key.trim() === namecookie) {
+                return value;//retornara el valor
+            }
+        }
+        return null;
+    }
+
+    useEffect(() => {
+        const Prod = async () => {
+            try {
+                if (Uid) {
+                    console.log("Uidddd", Uid)
+                    //este fetch traera todos los favoritos del cliente,solo incluyendo servicios y productos
+                    const response = await fetch(`/api/admin/favoritos/FavoritosbyId/${Uid}`)
+                    const data = await response.json();
+                    setContResumen(data)
+                    console.log(data)
+                }
+            } catch (error) {
+                console.error("hubo error :", error)
+            }
+        }
+        Prod()
+    }, [Uid])
 
     const notify = () => toast("Producto agregado al carrito");
     const { agregarAlCarrito } = useCarrito();
@@ -126,7 +161,6 @@ function Productos({ productos }) {
                                         precision={1}
                                         icon={<FavoriteIcon fontSize="inherit" />}
                                         emptyIcon={<FavoriteBorderIcon fontSize="inherit" />}
-                                        onChange={() => toggleFavorite(producto.pkIdPS)}
                                     />
                                 </Box>
                             </div>
