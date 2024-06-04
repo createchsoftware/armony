@@ -173,19 +173,19 @@ routerCitas.get("/disponibles/:idServ/:idEmp/:fecha", async (req, res) => {
 // Modificacion de las citas
 routerCitas.patch("/modify", async (req, res) => {
   try {
-    const newDatosCita = {
-      idCita: 20,
-      idEmp: 34,
-      nuevaFecha: "2024-12-30",
-      horaIn: "14:45:00",
-      descr: "Prueba de update de cita",
-    };
+    // const newDatosCita = {
+    //   idCita: 20,
+    //   idEmp: 34,
+    //   nuevaFecha: "2024-12-30",
+    //   horaIn: "14:45:00",
+    //   descr: "Prueba de update de cita",
+    // };
     const resultado = await updateCita(conexion, {
-      idCita: newDatosCita.idCita,
-      idEmp: newDatosCita.idEmp,
-      nuevaFecha: newDatosCita.nuevaFecha,
-      horaI: newDatosCita.horaIn,
-      descr: newDatosCita.descr,
+      idCita: req.body.idCita,
+      idEmp: req.body.idEmp,
+      nuevaFecha: req.body.nuevaFecha,
+      horaI: req.body.horaIn,
+      descr: req.body.descr,
     });
     if (resultado.affectedRows === 1)
       res

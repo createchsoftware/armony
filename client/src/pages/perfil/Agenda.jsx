@@ -19,6 +19,7 @@ import { Button } from "primereact/button";
 import { Dialog } from "primereact/dialog";
 import 'primereact/resources/themes/saga-blue/theme.css';
 import 'primereact/resources/primereact.min.css';
+import { redirect } from "react-router-dom";
 
 dayjs.extend(localizedFormat); // Extender dayjs con el plugin
 dayjs.locale("es"); // Usar locale español
@@ -125,6 +126,8 @@ function Agenda() {
   const requestAbortController = React.useRef(null);
   const [isLoading, setIsLoading] = React.useState(false);
   const [highlightedDays, setHighlightedDays] = React.useState([1, 2, 15]);
+  
+
 
   const fetchHighlightedDays = (date) => {
     const controller = new AbortController();
@@ -340,7 +343,7 @@ function Agenda() {
     let respuestaJson = await respuesta.json();
 
     if (respuestaJson.logueado === true) {
-      fetch(`/api/admin/citas/citasPendientes/${Uid}/pendiente`)
+      await fetch(`/api/admin/citas/citasPendientes/${Uid}/pendiente`)
         .then((response) => response.json())
         .then((data) => {
           console.log("Datos", data);
@@ -361,6 +364,35 @@ function Agenda() {
       recibido();
     }
   }, [Uid]);
+
+
+const updateCita= async (cita)=>{
+//   if(Uid){
+//     try {
+//       await fetch(`/api/admin/citas/modify`, {
+//         method: "PATCH",
+//         headers: {
+//           "Content-Type": "application/json",
+//         },
+//         body: JSON.stringify(
+//           {
+//             idCita: cita.ID_Cita,
+//             idEmp: ID_Empleado,
+//             nuevaFecha: nuevaFe,
+//             horaI: horaIn,
+//             descr: cita.descr,
+//           }
+
+//         ),
+//       });
+//     } catch (error) {
+//       console.log("error", error);
+//     }
+// }
+
+redirect('')
+}
+
 
   //use effect update citas pendientes when selected date changes
   // useEffect(() => {
@@ -449,12 +481,26 @@ function Agenda() {
   // };
 
   const [visible, setVisible] = useState(false);
+  const [citavisible, setcitavisible] = useState(false);
   const [selectedId, setSelectedId] = useState(null);
+
+  const [selectedcita, setselectedcita] = useState(null);
 
   const removeItem = (id) => {
     setVisible(true);
     setSelectedId(id);
   };
+
+  const updateItem = async  (cita) => {
+    setcitavisible(true);
+    setselectedcita(null);
+
+  };
+
+  const confirm = async () => {
+    window.location.href = "/spa/agendar";
+  }
+
 
   const confirmRemoval = async () => {
     const id = selectedId;
@@ -552,7 +598,8 @@ function Agenda() {
           </div>
         </div>
         <div className="flex gap-4 my-6">
-          <button>
+          <button onClick={()=>updateItem(cita)}>
+
             <svg
               width="28"
               height="28"
@@ -573,6 +620,7 @@ function Agenda() {
                 fill="#222222"
               />
             </svg>
+          
           </button>
           <button
             className="duration-200 hover:text-[#ec5766] text-2xl"
@@ -742,6 +790,23 @@ function Agenda() {
               <div className="flex gap-8 text-lg">
                 <button onClick={confirmRemoval} className="px-2 py-1 text-red-500 duration-200 rounded-md p-button-success p-mr-2 hover:bg-red-500 hover:text-white">Si, cancelar</button>
                 <button onClick={() => setVisible(false)} className="px-2 py-1 text-green-500 transition duration-200 rounded-md p-button-success p-mr-2 hover:bg-green-500 hover:text-white">No, mantener</button>
+                {/* <Button label="Si, cancelar " icon="pi pi-check" onClick={confirmRemoval} className="p-button-success p-mr-2 hover:text-red-500 hover:bg-white" /> */}
+                {/* <Button label="No, mantener" icon="pi pi-times" onClick={() => setVisible(false)} className="p-button-secondary hover:text-green-500 hover:bg-white" /> */}
+              </div>
+            </div>
+          </Dialog>
+
+          <Dialog header="" visible={citavisible} style={{ width: '50vw' }} onHide={() => setcitavisible(false)} className="rounded-3xl font-[abeatbykai]  overflow-hidden  border-[#ec5766]">
+            <div className="mb-8 ml-8 rounded-3xl">
+              <p className="m-0 mb-4 text-2xl font-bold">
+                Confirmación
+              </p>
+              <p className="m-0 mb-1 text-xl">
+                ¿Estás seguro de que deseas modificar tu cita?
+              </p>
+              <div className="flex gap-8 text-lg">
+                <button onClick={confirm} className="px-2 py-1 text-red-500 duration-200 rounded-md p-button-success p-mr-2 hover:bg-red-500 hover:text-white">Si, modificar</button>
+                <button onClick={() => setcitavisible(false)} className="px-2 py-1 text-green-500 transition duration-200 rounded-md p-button-success p-mr-2 hover:bg-green-500 hover:text-white">No, mantener</button>
                 {/* <Button label="Si, cancelar " icon="pi pi-check" onClick={confirmRemoval} className="p-button-success p-mr-2 hover:text-red-500 hover:bg-white" /> */}
                 {/* <Button label="No, mantener" icon="pi pi-times" onClick={() => setVisible(false)} className="p-button-secondary hover:text-green-500 hover:bg-white" /> */}
               </div>
