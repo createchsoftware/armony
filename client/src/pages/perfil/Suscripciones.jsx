@@ -4,12 +4,15 @@ import { IoIosArrowBack } from "react-icons/io";
 import { ToastContainer, toast } from 'react-toastify';
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCircleExclamation } from "@fortawesome/free-solid-svg-icons";
+import { faCircleExclamation, faX, faTriangleExclamation } from "@fortawesome/free-solid-svg-icons";
 
 function Suscripciones() {
     const [nombre, setNombre] = useState(false); //<<< PARA EL INICIO DE SESION
     const [correo, setCorreo] = useState(false); //<<< PARA EL INICIO DE SESION
     const [sus, setSus] = useState(false); //<<< PARA VERIFICAR SI ES MIEMBRO EL USUARIO
+    const [sure, setSure] = useState(false);
+    const [canceled, setCanceled] = useState(false);
+    const [succeed, setSucceed] = useState(false);
 
     const [diaInicio, setDiaInicio] = useState('');
     const [mesInicio, setMesInicio] = useState('');
@@ -20,7 +23,16 @@ function Suscripciones() {
     const [semanaFinal, setSemanaFinal] = useState('');
     const [diasFaltantes, setDiasFaltantes] = useState(0);
 
-    
+    const [cobro, setCobro] = useState(false);
+    const handleCobro = () => {
+        setCobro(!cobro);
+    }
+
+    const cancelar = () => {
+        setSure(!sure);
+        cancelarSuscripcion();
+        setCanceled(!canceled);
+    }
     
 
 
@@ -99,10 +111,12 @@ function Suscripciones() {
             if (respuesta2Json.suscripcion == false) {
                 // la suscripcion fue eliminada con exito
                 window.location.href = respuesta2Json.redirect;
+                setSucceed(true);
             }
             else {
                 // la suscripcion no fue eliminada, un toast que diga que no se pudo
                 toast(<div>{`Al parecer estamos teniendo problemas al cancelar tu suscripcion`}<FontAwesomeIcon icon={faCircleExclamation} /></div>);
+                setSucceed(false);
             }
         }
     }
@@ -171,6 +185,15 @@ function Suscripciones() {
                                 </div>
                             </div>
                             <button className='bg-[#EB5765] text-white mt-6 py-3 w-1/2 m-auto shadow-[0_3px_10px_rgb(0,0,0,0.2)] rounded-lg duration-200 hover:bg-[rgb(255,181,167)]'>Renovar suscripción</button>
+                            <div className="flex justify-end">
+                                <input
+                                    type="checkbox"
+                                    checked={cobro}
+                                    onChange={handleCobro}
+                                    className='cursor-pointer'
+                                />
+                                <label className="px-2 mr-5">Cobro automático</label>
+                            </div>
                         </div>
                     </section>
                 ) : (
@@ -202,7 +225,7 @@ function Suscripciones() {
                         {sus ? (
                             <>
                                 <p className='text-sm text-justify'>¿Estás seguro que quisieras cancelar tu suscripción? Una vez cancelada tu suscripción, los cambios son irreversibles.</p>
-                                <button className='bg-[#036C65] text-white mt-6 py-3 w-1/2 m-auto shadow-[0_3px_10px_rgb(0,0,0,0.2)] rounded-lg duration-200 hover:bg-[#45B59C]' onClick={cancelarSuscripcion}>Cancelar suscripción</button>
+                                <button className='bg-[#036C65] text-white mt-6 py-3 w-1/2 m-auto shadow-[0_3px_10px_rgb(0,0,0,0.2)] rounded-lg duration-200 hover:bg-[#45B59C]' onClick={() => setSure(!sure)}>Cancelar suscripción</button>
                             </>
                         ) : (
                             <>
@@ -213,6 +236,48 @@ function Suscripciones() {
                     <ToastContainer position={'bottom-right'} theme={'light'} />
                 </section>
             </main>
+            {sure && 
+                <div className='cart-fondo'>
+                    <div className='cart-fx'>
+                        <div className='grid mt-48 w-[40%] bg-white rounded-2xl p-2 m-auto'>
+                            <FontAwesomeIcon icon={faX} className=' justify-self-end cursor-pointer mr-2' onClick={() => setSure(!sure)}/>
+                            <div className='flex justify-self-center text-2xl items-center gap-1 mx-4'>
+                                <FontAwesomeIcon icon={faTriangleExclamation} className=' text-red-600 text-2xl'/>
+                                <h1 className='text-[#EB5765] text-justify'>¿Estás segura de cancelar la suscripción?</h1>
+                            </div>
+                            <p className='justify-self-center my-4'>Si da click en cancelar, no habrá retorno.</p>
+                            <button onClick={cancelar} className='w-max justify-self-center rounded-full bg-[#EB5765] text-white py-2 px-8 mb-4'>Aceptar</button>
+                        </div>
+                    </div>
+                </div>
+            }
+            {canceled && 
+                <div className='cart-fondo'>
+                    <div className='cart-fx'>
+                        <div className='grid mt-48 w-[40%] bg-white rounded-2xl p-10 m-auto gap-2'>
+                            {succeed ? (
+                                <div className='flex justify-self-center items-center gap-3 text-2xl'>
+                                    <svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img" className="iconify iconify--emojione w-1/6 h-auto" preserveAspectRatio="xMidYMid meet" fill="#000000">
+                                        <g id="SVGRepo_bgCarrier" strokeWidth="0"></g>
+                                        <g id="SVGRepo_tracerCarrier" strokeLinecap="round" strokeLinejoin="round"></g>
+                                        <g id="SVGRepo_iconCarrier">
+                                            <circle cx="32" cy="32" r="30" fill="#4bd37b"></circle>
+                                            <path fill="#ffffff" d="M46 14L25 35.6l-7-7.2l-7 7.2L25 50l28-28.8z"></path>
+                                        </g>
+                                    </svg>
+                                    <h1 className='text-[#EB5765] text-center'>¡Tu suscripción ha sido cancelada con éxito!</h1>
+                                </div>
+                            ) : (
+                                <div className='flex justify-self-center items-center gap-3 text-2xl'>
+                                    <FontAwesomeIcon icon={faCircleExclamation} className=' text-red-700' />
+                                    <h1 className='text-[#EB5765]'>Al parecer hubo un error a la hora de cancelar su suscripción</h1>
+                                </div>
+                            )}
+                            <button onClick={() => setCanceled(!canceled)} className='w-max justify-self-center bg-[#EB5765] rounded-full text-white py-2 px-8'>Aceptar</button>
+                        </div>
+                    </div>
+                </div>
+            }
         </LayoutPrincipal >
     );
 }

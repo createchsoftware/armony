@@ -273,9 +273,9 @@ routerProductos.get("/servicios/relacionados/:id", async (req, res) => {
 
 // OBTENER LOS PRODUCTOS CON DESCUENTO
 // FUNCIONAL
-routerProductos.get("/descuento", async (req, res) => {
+routerProductos.get("/descuento/:id", async (req, res) => {
   try {
-    const resultado = await productosDescuento(conexion);
+    const resultado = await productosDescuento(conexion, { id: req.params.id });
     res
       .status(200)
       .json({ message: "Los productos con descuento son : ", data: resultado });
