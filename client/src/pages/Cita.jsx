@@ -314,17 +314,18 @@ export default function Cita() {
                                 </Typography> */}
                 <div
                   className={
-                    activeStep === 0 ||
-                      activeStep === 3 ||
-                      activeStep === 4 ||
-                      activeStep === 6
-                      ? "grid grid-cols-2 content-between"
-                      : "grid grid-cols-3 content-between"
+                    "grid grid-cols-2 content-between"
+                    // activeStep === 0 ||
+                    // activeStep === 3 ||
+                    // activeStep === 4 ||
+                    // activeStep === 6
+                    // ? "grid grid-cols-2 content-between"
+                    // : "grid grid-cols-3 content-between"
                   }
                 >
                   <button
                     hidden={
-                      activeStep === 5 || activeStep === 6 || activeStep === 3
+                      activeStep === 5 || activeStep === 6
                     }
                     disabled={activeStep === 0}
                     onClick={handleBack}

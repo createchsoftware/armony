@@ -186,7 +186,7 @@ const Carrito = ({ cerrar, totalProductos, logCart }) => {
                 <h4 className="mt-8 cart-empty">No hay artículos en el carrito.</h4>
             ) : (
                 <>
-                    <ul id="cart-items overflow-y-auto" className='overflow-y-auto h-[20rem]'>{cartList}</ul>
+                    <ul id="cart-items overflow-y-auto" className='overflow-y-auto h-[24rem]'>{cartList}</ul>
                     <div className='flex justify-between'>
                         <p>Envio:</p>
                         <span>$0.00</span>
