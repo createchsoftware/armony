@@ -14,9 +14,9 @@ function Paquetes({ next }) {
     };
 
     const getPriceClass = (priceIndex) => {
-        let baseClass = "p-2 border-2 border-black hover:bg-purple-600 hover:text-white rounded-full cursor-pointer text-center shadow-[0_0px_5px_rgb(0,0,0,0.2)] shadow-purple-600";
+        let baseClass = "p-2 border-2 border-black hover:bg-[#036C65] hover:text-white rounded-xl cursor-pointer text-center shadow-[0_0px_5px_rgb(0,0,0,0.2)] shadow-[#036C65]";
         if (selectedPriceIndex === priceIndex) {
-            return `${baseClass} opacity-100 bg-purple-600 text-white`; // Cambia de color y opacidad al seleccionarse
+            return `${baseClass} opacity-100 bg-[#036C65] text-white`; // Cambia de color y opacidad al seleccionarse
         }
         return `${baseClass} `; // Opacidad de 50 para las no seleccionadas
     };
@@ -57,33 +57,43 @@ function Paquetes({ next }) {
             <div className='grid'>
                 <div className='mx-12 gap-28 md:flex '>
                     <div className='grid gap-4 p-0 text-center md:w-1/3'>
-                        <img className='w-3/4 m-auto rounded-2xl aspect-square' src={imagen} alt={servicio} />
-                        <div className='p-8 text-xs text-justify text-black border-4 border-rose-400 rounded-3xl bg-rose-200'>
+                        <img className='w-full m-auto shadow-xl rounded-2xl aspect-square' src={imagen} alt={servicio} />
+                        {/* <div className='p-8 text-xs text-justify text-black border-4 border-rose-400 rounded-3xl bg-rose-200'>
                             <h2 className='mb-4 text-xl font-bold text-center md:mb-0'>{servicio}</h2>
                             <p className='mt-4'>{descripcion}</p>
-                        </div>
+                        </div> */}
                     </div>
-                    <div className='md:w-[60%] text-sm md:text-md py-6  grid'>
-                        <div className='grid gap-4 text-xl place-items-center '>
-                            <div>
-                                <div className="flex gap-32 font-[abeatbykai]">
-                                    <div className='grid gap-6 '>
-                                        <div>1 Sesión</div>
-                                        <div className={getPriceClass(1)} onClick={() => handleClickPrice(1)}>
-                                            {'$ ' + parseFloat(precio).toFixed(0)}
+                    <div className='grid py-6 text-sm md:w-2/3 md:text-md'>
+                        <div className='grid gap-8 text-xl'>
+                            <div className='grid gap-2 overflow-hidden shadow-xl rounded-2xl'>
+                                <div className='bg-[#036C65] py-2 text-center text-white'>Descripción</div>
+                                <div className='p-8'>
+                                    <h2 className='text-2xl font-bold text-center md:mb-4'>{servicio}</h2>
+                                    <p className=''>{descripcion}</p>
+                                </div>
+                            </div>
+                            <div className='p-6'>
+                                <div className="flex font-[abeatbykai] shadow-xl justify-between rounded-2xl overflow-hidden w-full">
+                                    <div className="p-4 bg-[#036C65] grid items-center place-items-center content-center place-content-center text-center text-white"><p>Sesiones</p></div>
+                                    <div className='flex justify-around w-full gap-4 p-4'>
+                                        <div className='grid gap-2'>
+                                            <div>1 Sesión</div>
+                                            <div className={getPriceClass(1)} onClick={() => handleClickPrice(1)}>
+                                                {'$ ' + parseFloat(precio).toFixed(0)}
+                                            </div>
                                         </div>
-                                    </div>
-                                    <div className='grid gap-6 opacity-50'>
-                                        <div>5 Sesiones</div>
-                                        <button disabled className={getPriceClass(0) + "hover:cursor-not-allowed"} onClick={() => handleClickPrice(2)}>
-                                            {'$ ' + parseFloat(precio * 5).toFixed(0)}
-                                        </button>
-                                    </div>
-                                    <div className='grid gap-6 opacity-50 '>
-                                        <div>10 Sesiones</div>
-                                        <button disabled className={getPriceClass(3) + "hover:cursor-not-allowed"} onClick={() => handleClickPrice(3)}>
-                                            {'$ ' + parseFloat(precio * 10).toFixed(0)}
-                                        </button>
+                                        <div className='grid gap-2 opacity-50'>
+                                            <div>5 Sesiones</div>
+                                            <button disabled className={getPriceClass(0) + "hover:cursor-not-allowed"} onClick={() => handleClickPrice(2)}>
+                                                {'$ ' + parseFloat(precio * 5).toFixed(0)}
+                                            </button>
+                                        </div>
+                                        <div className='grid gap-2 opacity-50 '>
+                                            <div>10 Sesiones</div>
+                                            <button disabled className={getPriceClass(3) + "hover:cursor-not-allowed"} onClick={() => handleClickPrice(3)}>
+                                                {'$ ' + parseFloat(precio * 10).toFixed(0)}
+                                            </button>
+                                        </div>
                                     </div>
                                 </div>
                             </div>

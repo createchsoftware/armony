@@ -5,7 +5,8 @@ import ServiciosYFiltro from "../ServiciosYFiltro.jsx";
 export default function ServicioEstetica() {
   const [estetica, setEstetica] = useState([]);
   const [log, setLog] = useState(false);
-  const [id, setId] = useState();
+  const [id, setId] = useState(0);
+  const [st, setSt] = useState(false);
 
   let respuestaJson = null;
   async function checkLogin() {
@@ -22,7 +23,6 @@ export default function ServicioEstetica() {
         await setId(respuestaJson.clave);
         setLog(true);
       } else {
-        setId(0);
         setLog(false);
       }
     } catch (error) {
@@ -61,7 +61,11 @@ export default function ServicioEstetica() {
           });
       }, 3000);
     }
-  }, [id]);
+  }, [id, st]);
+
+  function changeSt() {
+    setSt(!st);
+  }
 
   return (
     <>
@@ -78,7 +82,12 @@ export default function ServicioEstetica() {
       </div>
       <div>
         <div>
-          <ServiciosYFiltro servicios={estetica} log={log} idUser={id} />
+          <ServiciosYFiltro
+            servicios={estetica}
+            log={log}
+            idUser={id}
+            st={changeSt}
+          />
           <main className="px-4 mx-auto max-w-7xl sm:px-6 lg:px-8">
             <div className="w-full mx-auto my-16 text-center">
               <p className="text-4xl md:text-6xl w-3/4 md:w-full my-10 mx-auto text-center font-[ILoveGlitter] text-[#036C65]">

@@ -28,6 +28,27 @@ function Ofertas({ producto, handleClickCarrito, noDesc }) {
     const notify = () => toast("Producto agregado al carrito");
     const { agregarAlCarrito } = useCarrito();
 
+    const [favorites, setFavorites] = useState({});
+    const [uid, setUid] = useState(null);
+
+    useEffect(() => {
+        localStorage.removeItem("favoritos")
+    }, [])
+
+    useEffect(() => {
+        const cookie = obteneridCookie('Naruto_cookie');
+        if (cookie) {
+            const decoded = jwtDecode(cookie);
+            setUid(decoded.user);
+        }
+    }, []);
+
+    const obteneridCookie = (cookieName) => {
+        const cookies = document.cookie.split(';');
+        const cookie = cookies.find(c => c.trim().startsWith(cookieName + "="));
+        return cookie ? cookie.split('=')[1] : null;
+    };
+
     const handleViewMore = (producto) => {
         // navigate to the product page with the product current id
         const product = {
@@ -63,6 +84,45 @@ function Ofertas({ producto, handleClickCarrito, noDesc }) {
         return Number(price).toFixed(2);
     }
 
+    const toggleFavorite = async (idProducto) => {
+        const estaEnFavoritos = favorites[idProducto.pkIdPS];
+
+        if (uid) {
+            try {
+                fetch('/api/admin/favoritos/invertirFav', {
+                    method: "POST",
+                    body: JSON.stringify({ idCliente: uid, IdProducto: idProducto.pkIdPS }),
+                    headers: { "Content-Type": "application/json" },
+                });
+
+                setFavorites(prev => ({
+                    ...prev,
+                    [idProducto.pkIdPS]: !estaEnFavoritos
+                }));
+
+
+            } catch (error) {
+                console.error('Error en la solicitud:', error);
+            }
+        } else {
+            setFavorites(prev => ({
+                ...prev,
+                [idProducto.pkIdPS]: !estaEnFavoritos
+            }));
+            let favoritos = JSON.parse(localStorage.getItem("favoritos")) || [];
+            const estaEnFavoritos = favoritos.some(fav => fav.pkIdPS === idProducto.pkIdPS);
+            if (!estaEnFavoritos) {
+
+                favoritos.push(idProducto);
+                localStorage.setItem("favoritos", JSON.stringify(favoritos));
+            } else {
+                let favoritos = JSON.parse(localStorage.getItem("favoritos")) || [];
+                favoritos = favoritos.filter((obj) => obj.pkIdPS !== idProducto.pkIdPS);
+                localStorage.setItem("favoritos", JSON.stringify(favoritos));
+            }
+        }
+    };
+
     return (
         <div className='my-2 mx-4 font-[abeatbyKai] grid  content-between h-[97%]'>
             <div className='flex justify-end'>
@@ -76,6 +136,7 @@ function Ofertas({ producto, handleClickCarrito, noDesc }) {
                         name="customized-color"
                         defaultValue={0}
                         max={1}
+                        value={producto.favorito || favorites[producto.pkIdPS] ? 1 : 0}
                         getLabelText={(value) => `${value} Heart${value !== 1 ? 's' : ''}`}
                         precision={1}
                         icon={<FavoriteIcon fontSize="inherit" />}

@@ -53,10 +53,10 @@ export async function ServiceFavoritosbyId(connection, data) {
   }
 }
 
-export async function ServiceFavoritosSpa(connection) {
+export async function ServiceFavoritosSpa(connection, data) {
   try {
-    const call = "CALL getFavoritosSpa()"; // Procedimiento almacenado de la base de datos
-    const query = mysql.format(call); // Parametros necesarios para el procedimiento
+    const call = "CALL getFavoritosSpa(?)"; // Procedimiento almacenado de la base de datos
+    const query = mysql.format(call, data.id); // Parametros necesarios para el procedimiento
     const [rows, fieds] = await connection.query(query); // Ejecutamos query y almacenamos los valores resultantes
     endConnection(); // Cerramos la conexion con la base de datos
     return rows[0]; // Retornamos los valores obtenidos en base al query
@@ -66,10 +66,10 @@ export async function ServiceFavoritosSpa(connection) {
   }
 }
 
-export async function ServiceFavoritosEstetica(connection) {
+export async function ServiceFavoritosEstetica(connection, data) {
   try {
-    const call = "CALL getFavoritosEstetica()"; // Procedimiento almacenado de la base de datos
-    const query = mysql.format(call); // Parametros necesarios para el procedimiento
+    const call = "CALL getFavoritosEstetica(?)"; // Procedimiento almacenado de la base de datos
+    const query = mysql.format(call, data.id); // Parametros necesarios para el procedimiento
     const [rows, fieds] = await connection.query(query); // Ejecutamos query y almacenamos los valores resultantes
     endConnection(); // Cerramos la conexion con la base de datos
     return rows[0]; // Retornamos los valores obtenidos en base al query
@@ -91,7 +91,6 @@ export async function FavoritosbyId(connection, data) {
     throw err;
   }
 }
-
 
 export async function invertirFav(connection, data) {
   try {

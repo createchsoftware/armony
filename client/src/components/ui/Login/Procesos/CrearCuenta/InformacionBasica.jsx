@@ -8,6 +8,14 @@ import React, { useState, useEffect } from "react";
 import '../../../../../txt.css';
 
 const InformacionBasica = () => {
+  const [selectedImage, setSelectedImage] = useState(null);
+
+    const handleImageChange = (e) => {
+        if (e.target.files && e.target.files[0]) {
+            const file = e.target.files[0];
+            setSelectedImage(URL.createObjectURL(file));
+        }
+    };
 
   return (
     <div>
@@ -127,7 +135,7 @@ const InformacionBasica = () => {
                     <input
                       id="lada"
                       type="text"
-                      maxLength={2}
+                      maxLength={3}
                       placeholder="52"
                       className="bg-slate-200 rounded-full w-[9rem] md:w-[9.25rem] lg:w-[12rem] mb-1 mr-2 py-2 focus:outline-none focus:ring-1 focus:ring-slate-800 focus:border-transparent px-6"
                       
@@ -145,7 +153,7 @@ const InformacionBasica = () => {
                     <input
                       id="phone"
                       type="text"
-                      maxLength={10}
+                      maxLength={12}
                       placeholder="6862223344"
                       className="bg-slate-200 rounded-full w-[9rem] md:w-[9.25rem] lg:w-[12rem] mb-1 mr-2 py-2 focus:outline-none focus:ring-1 focus:ring-slate-800 focus:border-transparent px-6"
                       
@@ -227,7 +235,6 @@ const InformacionBasica = () => {
                 <input
                   id="numero"
                   type="text"
-                  maxLength={5}
                   placeholder="#1234"
                   className="bg-slate-200 rounded-full w-[19rem] lg:w-[24.75rem] mb-1 mx-0 py-2 focus:outline-none focus:ring-1 focus:ring-slate-800 focus:border-transparent px-6"
                   
@@ -251,9 +258,16 @@ const InformacionBasica = () => {
               </div>
             </form>
             <div className="relative w-[8rem] h-[8rem] lg:w-[11rem] lg:h-[11rem] left-[5.75rem] top-[6rem] md:left-[0.25rem] md:top-[10rem] -mt-20 grid place-items-center rounded-full bg-white bg-clip-border ring-2 ring-gray-400">
-              <img src={user1} alt="" className="logo2 absolute h-full" />
+              <img src={selectedImage === null ? user1 : selectedImage} alt="" className="logo2 absolute h-full rounded-full aspect-square" />
               <div className="absolute w-[2.5rem] h-[2.5rem] lg:w-[3rem] lg:h-[3rem] bg-white rounded-full place-self-end ring-2 ring-gray-500">
-                <input type="file" id="imagen"/>
+                <input 
+                  type="file"
+                  id="imagen"
+                  accept="image/*"
+                  onChange={handleImageChange}
+                  placeholder=""
+                  className=" aspect-square rounded-full w-[3rem] h-[3rem]"
+                />
               </div>
             </div>
           </div>

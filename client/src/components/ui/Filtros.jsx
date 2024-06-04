@@ -81,7 +81,7 @@ export default function Filtros() {
         },
       });
       respuestaJson = await respuesta.json();
-      setId(respuestaJson.clave);
+      await setId(respuestaJson.clave);
     } catch (error) {
       console.log("Error");
     }
@@ -97,7 +97,6 @@ export default function Filtros() {
 
   useEffect(() => {
     setTimeout(() => {
-      console.log(id);
       fetch(`/api/admin/favoritos/ProductFavoritosbyId/${id}`)
         .then((response) => {
           if (!response.ok) {
@@ -107,7 +106,6 @@ export default function Filtros() {
         })
         .then((data) => {
           setProductosFavorites(data);
-          console.log("favoritos" + data);
         })
         .catch((error) => {
           //setErrorSpa(error.message);
@@ -196,7 +194,7 @@ export default function Filtros() {
           console.log("error", error);
         });
     }, [1000]);
-  }, []);
+  }, [id]);
 
   // Función para manejar la búsqueda
   const handleSearch = (e) => {

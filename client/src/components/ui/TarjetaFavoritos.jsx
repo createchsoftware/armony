@@ -1,7 +1,8 @@
 import { styled } from "@mui/material/styles";
+import { useState, useEffect } from "react";
 import Box from "@mui/material/Box";
 import { Rating } from "@mui/material";
-import { AiOutlineShoppingCart } from "react-icons/ai";
+import { RiCalendarTodoFill } from "react-icons/ri";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 
@@ -14,47 +15,104 @@ const StyledRating = styled(Rating)({
   },
 });
 
+function hr(hr) {
+  if (hr != undefined) {
+    let h = hr.charAt(1);
+    if (h[0] == "0") {
+      return hr + " min.";
+    } else if (h[0] == "1") {
+      return hr + " hr.";
+    } else {
+      return hr + " hrs.";
+    }
+  }
+}
+
 const TarjetaFavoritos = ({ props }) => {
+  const [login, setLogin] = useState(false);
+  const [fav, setFav] = useState(props.favorito);
+
+  const callFav = async () => {
+    if (props.id != 0) {
+      try {
+        const respuesta = await fetch("/api/admin/productos/setFavorito", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            id: props.id,
+            idPS: props.ps,
+            estado: props.favorito,
+          }),
+        });
+
+        let respuestaJson = await respuesta.json();
+        if ((await respuestaJson[0].res) == true) {
+          setFav(!fav);
+        }
+      } catch (error) {
+        console.log(error, "error");
+      }
+    }
+  };
+
+  useEffect(() => {
+    if (fav !== props.favorito) {
+      props.st();
+    }
+  }, [fav]);
+
   return (
-    <div>
+    <div className="grid place-content-between content-between">
       <div>
         <img
           className="relative m-auto aspect-square w-[60%] -bottom-6 rounded-3xl"
           src={props.img}
           alt=""
         />
-        <Box
-          className="relative right"
-          sx={{
-            "& > legend": { mt: 2 },
-          }}
-        >
-          <div className="object-bottom">
-            <div className="w-[60%] grid place-content-end mx-auto relative -left-4 -top-4">
-              <StyledRating
-                name="customized-color"
-                defaultValue={props.isFavorite ? 1 : 0}
-                max={1}
-                getLabelText={(value) =>
-                  `${value} Heart${value !== 1 ? "s" : ""}`
-                }
-                precision={1}
-                icon={<FavoriteIcon fontSize="inherit" />}
-                emptyIcon={
-                  <FavoriteBorderIcon
-                    style={{ color: "black" }}
-                    fontSize="inherit"
-                  />
-                }
-              />
-            </div>
+        <div className="grid grid-cols-[auto_auto]">
+          <div className="w-[60%]">
+            <button className="w-[1.75rem] h-[1.75rem] rounded-md grid place-content-end relative left-[7rem] md:left-[3rem] lg:left-[7rem] -top-4 bg-[#EB5765] hover:bg-[#F6B3B9] ">
+              <RiCalendarTodoFill style={{ fontSize: "26px" }} />
+            </button>
           </div>
-        </Box>
+          <Box
+            className="relative right"
+            sx={{
+              "& > legend": { mt: 2 },
+            }}
+          >
+            <div className="object-bottom">
+              <div className="w-[60%] grid place-content-end relative -left-4 -top-4">
+                <StyledRating
+                  onClick={() => callFav()}
+                  name="customized-color"
+                  defaultValue={props.favorito}
+                  max={1}
+                  getLabelText={(value) =>
+                    `${value} Heart${value !== 1 ? "s" : ""}`
+                  }
+                  precision={1}
+                  icon={<FavoriteIcon fontSize="inherit" />}
+                  emptyIcon={
+                    <FavoriteBorderIcon
+                      style={{ color: "#3F3F3F" }}
+                      fontSize="inherit"
+                    />
+                  }
+                />
+              </div>
+            </div>
+          </Box>
+        </div>
       </div>
       <div className="mt-6 text-[#036C65] bg-[#E8C3C6] rounded-3xl text-md md:text-xl text-center p-2 w-2/3 m-auto flex justify-center items-center">
         {props.nombre}
       </div>
-      <p className="w-2/3 mx-auto mt-2 text-center">{props.descr}</p>
+      <p className="w-2/3 mx-auto mt-2 text-center">
+        {props.descr.substring(0, 200) + "..."}
+      </p>
       <div className="grid mt-2 place-items-center">
         <Rating
           className=""
@@ -95,7 +153,7 @@ const TarjetaFavoritos = ({ props }) => {
             </g>
           </g>
         </svg>
-        <p className="pl-6">{props.dur} min</p>
+        <p className="pl-6">{hr(props.dur)}</p>
       </div>
       <div className="w-1/2  md:ml-[7vw] m-auto md:m-2 md:mt-6  text-center flex  mt-2 items-center">
         <svg
