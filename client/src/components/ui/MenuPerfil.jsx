@@ -122,14 +122,14 @@ function MenuPerfil() {
                         <p className='ml-5'>Tarjetas</p>
                     </a>
                 </li>
-                {/* {sus &&  */}
+                {sus && 
                     <li className="menu-item-perfil">
                         <a onClick={() => setQR(!qr)} className="menu-link-perfil">
                             <FontAwesomeIcon icon={faQrcode} className=' text-yellow-400' />
                             <p className='ml-5'>Código QR</p>
                         </a>
                     </li>
-                {/* } */}
+                }
                 <li className="menu-item-perfil">
                     <a href="/api/logout" className="menu-link-perfil">
                         <FontAwesomeIcon icon={faArrowRightFromBracket} className='text-black' />
