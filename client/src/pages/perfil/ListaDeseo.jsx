@@ -29,6 +29,7 @@ const StyledRating = styled(Rating)({
 });
 
 function ListaDeseo() {
+    
     const navigate = useNavigate();
 
     const [boton1, setBoton1] = useState('lista-boton');
@@ -44,7 +45,10 @@ function ListaDeseo() {
     const [sort, setSort] = useState('')
     const [log, setLog] = useState(false); //<<< PARA EL INICIO DE SESION
     const [login, setLogin] = useState(false);
-
+   
+//  useEffect(()=>{
+//         localStorage.removeItem("favoritos")
+//             },[])
     async function recibido() {
         const respuesta = await fetch("/api/logueado", {
             method: "GET",
@@ -73,7 +77,7 @@ function ListaDeseo() {
     const filtrar = (type) => {
         settipoProducto(type);
     }
-
+    
     const [contResumen, setContResumen] = useState([
         // CONTENIDO COMENTADO. ¡¡¡USAR SOLAMENTE PARA PRUEBAS ES CASO DE NO HABER AUN CONEXION FRONT-BACK!!!
         // {
@@ -213,34 +217,33 @@ function ListaDeseo() {
     }
 
     useEffect(() => {
-          iterateArray();
-      }, []);
-  
+        iterateArray();
+    }, []);
 
-      const iterateArray = async () => {
+
+    const iterateArray = async () => {
         let myArray = await JSON.parse(localStorage.getItem("favoritos")) || [];
         console.log(myArray);
-      };
+    };
 
     useEffect(() => {
         const Prod = async () => {
-
-    
             if (Uid) {
             try {
                     //este fetch traera todos los favoritos del cliente,solo incluyendo servicios y productos
                     const response = await fetch(`/api/admin/favoritos/FavoritosbyId/${Uid}`)
                     const data = await response.json();
                     setContResumen(data)
-                    console.log("hola")
-                    console.log(data)
             } catch (error) {
                 console.error("hubo error :", error)
             }
-        }
+        }else{
+        let myArray = await JSON.parse(localStorage.getItem("favoritos")) || [];
+        setContResumen(myArray)
+    }
         }
         Prod()
-    },[Uid])
+    }, [Uid])
 
     function classNames(...classes) {
         return classes.filter(Boolean).join(' ');
@@ -284,9 +287,19 @@ function ListaDeseo() {
     }
 
     const removeProducto = (itemId) => {
+        if(Uid){
         eliminarFav(itemId)
         setContResumen(contResumen.filter(item => item.pkIdPS !== itemId));
+    }else{
+        RLSFavoritos(itemId)
+        setContResumen(contResumen.filter(item => item.pkIdPS !== itemId));
+    }
     };
+    const RLSFavoritos = (id) => {
+        let favoritos = JSON.parse(localStorage.getItem("favoritos")) || [];
+        favoritos = favoritos.filter((obj) => obj.pkIdPS !== id);
+        localStorage.setItem("favoritos", JSON.stringify(favoritos));
+      };
 
     const eliminarFav = async (idProServ) => {
         try {
@@ -302,7 +315,7 @@ function ListaDeseo() {
 
     const resumenList = contResumen.map(item => (
         (item.tipoProducto === 'venta' &&
-            <li key={item.PKidPS} className='flex gap-2 justify-between mb-2'>
+            <li key={item.PKidPS} className='flex justify-between gap-2 mb-2'>
                 <h1 className='truncate'>{item.nombre}</h1>
                 <h1 className='text-[#036d63]'>${item.precio}</h1>
             </li>
@@ -361,6 +374,7 @@ function ListaDeseo() {
             return 0;
         }
     })
+   
 
     const contenido = filteredProducts.map(producto => (
         <li key={producto.pkIdPS} className='grid border-4 bg-white border-[#E2B3B7] p-6 py-2 rounded-xl mx-6 mb-6'>
@@ -381,7 +395,7 @@ function ListaDeseo() {
                     onClick={() => removeProducto(producto.pkIdPS)}
                 />
             </Box>
-            <img data-tooltip-id="ver" data-tooltip-content={producto.tipoProducto === "venta" ? "Ver produto" : "Ver servicio"} onClick={producto.tipo === "venta" ? () => handleViewMoreProduct(producto) : () => handleViewMoreService(producto)} className='w-4/5 m-auto mb-4 rounded-lg hover:cursor-pointer hover:opacity-60 justify-self-center aspect-square'
+            <img data-tooltip-id="ver" data-tooltip-content={producto.tipoProducto === "venta" ? "Ver produto" : "Ver servicio"} onClick={producto.tipoProducto === "venta" ? () => handleViewMoreProduct(producto) : () => handleViewMoreService(producto)} className='w-4/5 m-auto mb-4 rounded-lg hover:cursor-pointer hover:opacity-60 justify-self-center aspect-square'
                 src={producto.img}
                 alt={producto.nombre}
             />
@@ -485,9 +499,9 @@ function ListaDeseo() {
                                 </nav>
                             </aside>
                         </div>
-                        <div className='grid w-full h-full content-start menu-deseo'>
+                        <div className='grid content-start w-full h-full menu-deseo'>
                             <img src="../../../pictures/decoArmony1.png" alt="" className='absolute -rotate-90 -right-7 w-60 h-180 top-60' />
-                            <div className='flex h-max justify-center mt-5'>
+                            <div className='flex justify-center mt-5 h-max'>
                                 <form action="" className='flex h-10 items-center w-4/5 justify-center border-2 border-[rgb(255,181,167)] rounded-lg'>
                                     <input
                                         className='w-full h-full px-5 py-2 rounded-lg'
@@ -498,7 +512,7 @@ function ListaDeseo() {
                                     <FontAwesomeIcon icon={faMagnifyingGlass} className='mx-4 text-[rgb(255,181,167)] text-xl' />
                                 </form>
                             </div>
-                            <div className='flex h-max justify-end py-2 pr-24'>
+                            <div className='flex justify-end py-2 pr-24 h-max'>
                                 <div className="flex items-center">
                                     <Menu as="div" className="relative inline-block text-left">
                                         <div>
@@ -578,19 +592,6 @@ function ListaDeseo() {
                                             </Menu.Items>
                                         </Transition>
                                     </Menu>
-
-                                    <button type="button" className="p-2 ml-5 -m-2 text-gray-400 hover:text-gray-500 sm:ml-7">
-                                        <span className="sr-only">View grid</span>
-                                        <Squares2X2Icon className="w-5 h-5" aria-hidden="true" />
-                                    </button>
-                                    <button
-                                        type="button"
-                                        className="p-2 ml-4 -m-2 text-gray-400 hover:text-gray-500 sm:ml-6 lg:hidden"
-                                        onClick={() => console.log('Filters clicked')}
-                                    >
-                                        <span className="sr-only">Filters</span>
-                                        <FunnelIcon className="w-5 h-5" aria-hidden="true" />
-                                    </button>
                                 </div>
                             </div>
                             <div className='grid h-full px-12 overflow-y-scroll mb-14'>

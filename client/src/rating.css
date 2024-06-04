@@ -1,0 +1,6 @@
+.MuiRating-iconFilled {
+  color: #eb5765; /* Cambia el color de las estrellas llenas */
+}
+.MuiRating-iconEmpty {
+  color: gray; /* Cambia el color de las estrellas vacías */
+}

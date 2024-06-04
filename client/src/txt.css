@@ -1,16 +1,16 @@
 .toast{
     width: 300px;
-    height: 60px;
+    height: 44px;
     background: #fff;
-    margin: 10px 0;
+    margin: 3.5px 0;
     box-shadow: 0 0 20px rgba(0,0,0,0.3);
     display: flex;
-    font-size: 14px;
+    font-size: 13px;
     flex-direction: row;
     align-items: center;
     position: relative;
     border-radius: 5px;
-    padding: 2px;
+    padding: 0px 3px 0px 3px;
     font-family:Verdana,Tahoma, sans-serif;
 }
 
@@ -51,7 +51,9 @@
 
 .toast #texto{
     position: relative;
-    min-width: 80%;
+    width: 80%;
+    justify-content: center;
+    align-items: center;
 }
 
 
@@ -94,9 +96,9 @@
 }
 
 #toastBox{
-    position: absolute;
-    bottom: 30px;
-    right: 30px;
+    position: fixed;
+    bottom: 0;
+    right: 0;
     display: flex;
     align-items: flex-end;
     flex-direction: column;
@@ -113,10 +115,5 @@
     100%{
         width: 0;
     }
-}
-
-#cancelar:hover{
-    border-color: blue;
-    color: blue;
 }
 

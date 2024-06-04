@@ -75,17 +75,17 @@ document.getElementById('step-one').addEventListener('click',async ()=>{
            let temporal = document.getElementById(arreglo[indice][0]);
            temporal.style.borderColor='orange';
 
+           if(arreglo[indice][1] != ''){ // si el mensaje es un mensaje vacio, entonces no mostara ningun alert
             let toastBox = document.getElementById('toastBox');
             let div = document.createElement('div');
             div.classList.add('toast');
-            div.innerHTML = '<div id="texto">no pusiste '+arreglo[indice][1]+'</div>   <div id="icono"><i class="fa-solid fa-circle-exclamation"></i></div>';
+            div.innerHTML = '<div id="texto">No pusiste '+arreglo[indice][1]+'</div>   <div id="icono"><i class="fa-solid fa-circle-exclamation"></i></div>';
             div.classList.add('orange');
             toastBox.appendChild(div);
             setTimeout(()=>{
                 div.remove();
             },6000)
-
-           // 
+           }
         }
         return;
     }

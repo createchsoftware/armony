@@ -4,16 +4,16 @@ function PagoRealizado({ cerrarPago, total, next }) {
 
   // const total = localStorage.getItem('total')
   const [cargando, setCargando] = useState(true)
-  const [cliente, setCliente]= useState(null)
+  const [cliente, setCliente] = useState(null)
 
 
   const handleClick = () => {
     cerrarPago();
     next();
   };
-  
 
-  
+
+
 
   useEffect(() => {
     const fetchCliente = async () => {
@@ -42,16 +42,16 @@ function PagoRealizado({ cerrarPago, total, next }) {
         let card;
         let money;
 
-        console.log(localStorage.getItem('monedero'),localStorage.getItem('tarjeta'))
+        console.log(localStorage.getItem('monedero'), localStorage.getItem('tarjeta'))
 
-            if(Number(localStorage.getItem('monedero'))>0){
-              money=1
-              card=null;
-            }
-            else if(localStorage.getItem('tarjeta')!==null){
-              card=localStorage.getItem('tarjeta')
-              money=0;
-            }
+        if (Number(localStorage.getItem('monedero')) > 0) {
+          money = 1
+          card = null;
+        }
+        else if (localStorage.getItem('tarjeta') !== null) {
+          card = localStorage.getItem('tarjeta')
+          money = 0;
+        }
         try {
           const responseVenta = await fetch("/api/admin/productos/createVentaProduct", {
             method: "POST",
@@ -74,15 +74,15 @@ function PagoRealizado({ cerrarPago, total, next }) {
           const dataVenta = await responseVenta.json();
           console.log('Respuesta de la venta:', dataVenta);
 
-        
+
           await fetch(`/api/admin/productos/idVentaProduct/${cliente.ID}`)
-          .then(response => response.json())
-          .then(data => {
-            localStorage.setItem('idventaProduct',data[0].pkIdVenta);
-          })
-          .catch(error => {
+            .then(response => response.json())
+            .then(data => {
+              localStorage.setItem('idventaProduct', data[0].pkIdVenta);
+            })
+            .catch(error => {
               console.log('error', error);
-          });
+            });
 
 
           let carrito = JSON.parse(localStorage.getItem("cartItems")) || [];
@@ -91,11 +91,11 @@ function PagoRealizado({ cerrarPago, total, next }) {
             const responseCita = await fetch(`/api/admin/productos/detallesventa`, {
               method: "POST",
               body: JSON.stringify({
-                idCliente:cliente.ID,
-                idPromo:1,
-                idProducto:carrito[index].id,
-                cantidad:carrito[index].cantidad
-                            }),
+                idCliente: cliente.ID,
+                idPromo: 1,
+                idProducto: carrito[index].id,
+                cantidad: carrito[index].cantidad
+              }),
               headers: {
                 "Content-Type": "application/json",
               },
@@ -106,7 +106,7 @@ function PagoRealizado({ cerrarPago, total, next }) {
             }
 
             const dataVenta = await responseCita.json();
-            console.log('Respuesta de detallesVenta:',dataVenta);
+            console.log('Respuesta de detallesVenta:', dataVenta);
           }
 
           setCargando(false);
@@ -116,9 +116,9 @@ function PagoRealizado({ cerrarPago, total, next }) {
         }
       }
     };
-        
+
     realizarVentaYCita();
-    
+
   }, [cliente]);
 
 
