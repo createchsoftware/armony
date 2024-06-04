@@ -30,6 +30,28 @@ const CustomRightArrow = ({ onClick }) => {
 const Productos = () => {
   const [descuentos, setDescuentos] = useState([]);
   const [soon, setSoon] = useState(false);
+  const [id, setId] = useState(0);
+
+  async function getId() {
+    let respuestaJson = null;
+    try {
+      const respuesta = await fetch("/api/logueado", {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+      respuestaJson = await respuesta.json();
+      console.log("id en uso: ", respuestaJson.clave);
+      await setId(respuestaJson.clave);
+    } catch (error) {
+      console.log("Error");
+    }
+  }
+
+  useEffect(() => {
+    getId();
+  }, []);
 
   const toggleSoon = () => {
     setSoon(!soon)
@@ -38,18 +60,23 @@ const Productos = () => {
   //useEffect para obtener los productos con descuento
   useEffect(() => {
     setTimeout(() => {
-      fetch("/api/admin/productos/descuento")
-        .then((response) => response.json())
+      console.log("issssssssdd", id);
+      fetch(`/api/admin/productos/descuento/${id}`)
+        .then((response) => {
+          if (!response.ok) {
+            throw new Error("Error al obtener los descuentos");
+          }
+          return response.json();
+        })
         .then((data) => {
-          // Acceder al array de objetos en la posición 0 del array dentro de data
-          setDescuentos(data.data);
+          setDescuentos(data);
+          console.log("descuentos", data);
         })
         .catch((error) => {
           console.log("error", error);
         });
     }, [1000])
-  }, []);
-
+  }, [id]);
 
 
   return (
