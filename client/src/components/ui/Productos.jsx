@@ -27,11 +27,11 @@ function Productos({ productos }) {
     const navigate = useNavigate();
     const [favorites, setFavorites] = useState({});
     const [uid, setUid] = useState(null);
-  
 
-    useEffect(()=>{
-localStorage.removeItem("favoritos")
-    },[])
+
+    useEffect(() => {
+        localStorage.removeItem("favoritos")
+    }, [])
 
     useEffect(() => {
         const cookie = obteneridCookie('Naruto_cookie');
@@ -41,22 +41,22 @@ localStorage.removeItem("favoritos")
         }
     }, []);
 
-    useEffect(() => {
-        const Prod = async () => {
-            try {
-                if (uid) {
-                    //este fetch traera todos los favoritos del cliente,solo incluyendo servicios y productos
-                    const response = await fetch(`/api/admin/favoritos/FavoritosbyId/${uid}`)
-                    const data = await response.json();
-                    setContResumen(data)
-                    console.log(data)
-                }
-            } catch (error) {
-                console.error("hubo error :", error)
-            }
-        }
-        Prod()
-    }, [uid])
+    // useEffect(() => {
+    //     const Prod = async () => {
+    //         try {
+    //             if (uid) {
+    //                 //este fetch traera todos los favoritos del cliente,solo incluyendo servicios y productos
+    //                 const response = await fetch(`/api/admin/favoritos/FavoritosbyId/${uid}`)
+    //                 const data = await response.json();
+    //                 setContResumen(data)
+    //                 console.log(data)
+    //             }
+    //         } catch (error) {
+    //             console.error("hubo error :", error)
+    //         }
+    //     }
+    //     Prod()
+    // }, [uid])
 
 
 
@@ -78,31 +78,31 @@ localStorage.removeItem("favoritos")
                     headers: { "Content-Type": "application/json" },
                 });
 
-            setFavorites(prev => ({
-                ...prev,
-                [idProducto.pkIdPS]: !estaEnFavoritos
-            }));
+                setFavorites(prev => ({
+                    ...prev,
+                    [idProducto.pkIdPS]: !estaEnFavoritos
+                }));
 
-       
-        } catch (error) {
-            console.error('Error en la solicitud:', error);
-        }
-        }else{
+
+            } catch (error) {
+                console.error('Error en la solicitud:', error);
+            }
+        } else {
             setFavorites(prev => ({
                 ...prev,
                 [idProducto.pkIdPS]: !estaEnFavoritos
             }));
             let favoritos = JSON.parse(localStorage.getItem("favoritos")) || [];
-            const estaEnFavoritos = favoritos.some(fav => fav.pkIdPS ===  idProducto.pkIdPS);
-            if(!estaEnFavoritos){
-           
-            favoritos.push(idProducto);
-        localStorage.setItem("favoritos", JSON.stringify(favoritos));
-        }else{
-            let favoritos = JSON.parse(localStorage.getItem("favoritos")) || [];
-        favoritos = favoritos.filter((obj) => obj.pkIdPS !== idProducto.pkIdPS);
-        localStorage.setItem("favoritos", JSON.stringify(favoritos));
-        }
+            const estaEnFavoritos = favoritos.some(fav => fav.pkIdPS === idProducto.pkIdPS);
+            if (!estaEnFavoritos) {
+
+                favoritos.push(idProducto);
+                localStorage.setItem("favoritos", JSON.stringify(favoritos));
+            } else {
+                let favoritos = JSON.parse(localStorage.getItem("favoritos")) || [];
+                favoritos = favoritos.filter((obj) => obj.pkIdPS !== idProducto.pkIdPS);
+                localStorage.setItem("favoritos", JSON.stringify(favoritos));
+            }
         }
     };
 
@@ -141,6 +141,7 @@ localStorage.removeItem("favoritos")
         };
         agregarAlCarrito(productoParaCarrito);
     };
+
     return (
         <div className="w-2/3 m-auto md:w-auto">
             <ul className='grid grid-cols-1 gap-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 md:ml-28'>
@@ -154,6 +155,7 @@ localStorage.removeItem("favoritos")
                                         <FavoriteBorderIcon />
                                     }
                                 </Box> */}
+                                {console.log("esta en favoritos: ", producto.favorito)}
                                 <Box
                                     className="absolute flex justify-end float-right -mr-3"
                                     sx={{
@@ -163,8 +165,8 @@ localStorage.removeItem("favoritos")
                                     <StyledRating
                                         name="customized-color"
                                         max={1}
-                                        // value={estaEnFavoritos || favorites[producto.pkIdPS] ? 1 : 0}
-                                        value={favorites[producto.pkIdPS] ? 1 : 0}
+                                        value={producto.favorito || favorites[producto.pkIdPS] ? 1 : 0}
+                                        // value={favorites[producto.pkIdPS] ? 1 : 0}
                                         getLabelText={(value) => `${value} Heart${value !== 1 ? 's' : ''}`}
                                         precision={1}
                                         icon={<FavoriteIcon fontSize="inherit" />}
