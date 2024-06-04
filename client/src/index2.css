@@ -598,7 +598,7 @@ body {
   color: rgb(236, 87, 102);
 }
 .nav-cart:hover {
-  color: rgb(255, 181, 167);
+  color: #ffb5a6;
   transition: 0.25s;
 }
 

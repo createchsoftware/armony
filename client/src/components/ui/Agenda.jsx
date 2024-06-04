@@ -14,6 +14,7 @@ function Agenda({ restart, next }) {
   const [soon, setSoon] = useState(false);
   const [del, setDel] = useState(false);
   const [selectedCitaIndex, setSelectedCitaIndex] = useState(null);
+  const [sus, setSus] = useState(false); //<<< CARACTERISTICA GRAFICA DE QUE EL USUARIO ES SOCIO
 
   const handleModificar = () => {
     selectedCitaIndex === null && notify();
@@ -105,9 +106,7 @@ function Agenda({ restart, next }) {
   const iva = (total * 0.08).toFixed(2);
   const totalIva = (parseFloat(total) + parseFloat(iva)).toFixed(2);
 
-  const puntos = parseFloat(totalIva) / 10;
-  //En caso de ser Socio VVV
-  //const puntos = (parseInt(totalIva))/5;
+  const puntos = (sus ? ((parseInt(totalIva))/5):((parseFloat(totalIva)) / 10));
 
   localStorage.setItem("total", total);
   localStorage.setItem("totalIva", totalIva);
@@ -263,6 +262,10 @@ function Agenda({ restart, next }) {
                 <span className="font-bold text-[rgb(3,109,99)] text-xl">
                   ${totalIva}
                 </span>
+              </div>
+              <div className='flex justify-between p-6 px-10 mb-4 border-2 shadow-md rounded-xl border-gray'>
+                <h4 className='text-xl font-bold'>Puntos obtenidos:</h4>
+                <span className='font-bold text-[rgb(3,109,99)] text-xl'>{parseInt(puntos)}</span>
               </div>
             </div>
             <div className="flex justify-around mb-6">

@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import Carousel from 'react-multi-carousel';
+//import Carousel from 'react-multi-carousel';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrash } from '@fortawesome/free-solid-svg-icons';
 import { Rating } from '@mui/material';
@@ -60,7 +60,7 @@ function RevisionProductos({ restart, producto, next }) {
     const total = (parseFloat(subTotal) + parseFloat(ivaTotal)).toFixed(2);
     const [puntosTotal, setPuntosTotal] = useState(0); //<<< PUNTOS TOTALES
     const [sus, setSus] = useState(false); //<<< CARACTERISTICA GRAFICA DE QUE EL USUARIO ES SOCIO
-    const puntos = (sus ? ((parseInt(sus))/5):((parseFloat(total)) / 10));
+    const puntos = (sus ? ((parseInt(total))/5):((parseFloat(total)) / 10));
 
     async function callRango() {
         const respuesta3 = await fetch("/api/perfil/rangos", {
