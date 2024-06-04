@@ -127,7 +127,7 @@ const InformacionBasica = () => {
                     <input
                       id="lada"
                       type="text"
-                      maxLength={2}
+                      maxLength={3}
                       placeholder="52"
                       className="bg-slate-200 rounded-full w-[9rem] md:w-[9.25rem] lg:w-[12rem] mb-1 mr-2 py-2 focus:outline-none focus:ring-1 focus:ring-slate-800 focus:border-transparent px-6"
                       
@@ -145,7 +145,7 @@ const InformacionBasica = () => {
                     <input
                       id="phone"
                       type="text"
-                      maxLength={10}
+                      maxLength={12}
                       placeholder="6862223344"
                       className="bg-slate-200 rounded-full w-[9rem] md:w-[9.25rem] lg:w-[12rem] mb-1 mr-2 py-2 focus:outline-none focus:ring-1 focus:ring-slate-800 focus:border-transparent px-6"
                       
@@ -227,7 +227,6 @@ const InformacionBasica = () => {
                 <input
                   id="numero"
                   type="text"
-                  maxLength={5}
                   placeholder="#1234"
                   className="bg-slate-200 rounded-full w-[19rem] lg:w-[24.75rem] mb-1 mx-0 py-2 focus:outline-none focus:ring-1 focus:ring-slate-800 focus:border-transparent px-6"
                   
