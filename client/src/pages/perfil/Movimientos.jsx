@@ -304,16 +304,16 @@ function Movimientos() {
               >
                 <Menu.Items className="absolute right-0 z-10 w-40 mt-2 origin-top-right bg-white rounded-md shadow-2xl ring-black ring-opacity-5 focus:outline-none">
                   <div className="py-1">
-                    {sortOptions2.map((option) => (
-                      <Menu.Item key={option.name}>
+                    {sortOptions2.map((option1) => (
+                      <Menu.Item key={option1.name}>
                         {({ active }) => (
                           <a
                             onClick={() => {
-                              handleSortOption2Click(option);
+                              handleSortOption2Click(option1);
                             }}
-                            href={option.href}
+                            href={option1.href}
                             className={classNames(
-                              option.current
+                              option1.current
                                 ? "font-medium text-gray-900 cursor-pointer"
                                 : "text-gray-500",
                               active
@@ -322,7 +322,7 @@ function Movimientos() {
                               "block px-4 py-2 text-sm cursor-pointer"
                             )}
                           >
-                            {option.name}
+                            {option1.name}
                           </a>
                         )}
                       </Menu.Item>

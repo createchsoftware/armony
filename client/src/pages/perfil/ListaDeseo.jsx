@@ -500,7 +500,7 @@ function ListaDeseo() {
                             </aside>
                         </div>
                         <div className='grid content-start w-full h-full menu-deseo'>
-                            <img src="../../../pictures/decoArmony1.png" alt="" className='absolute -rotate-90 -right-7 w-60 h-180 top-60' />
+                            <img src="../../../pictures/decoArmony1.png" alt="" className='absolute -rotate-90 -right-7 w-60 h-180 top-60 -z-10' />
                             <div className='flex justify-center mt-5 h-max'>
                                 <form action="" className='flex h-10 items-center w-4/5 justify-center border-2 border-[rgb(255,181,167)] rounded-lg'>
                                     <input
