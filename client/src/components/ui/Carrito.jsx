@@ -7,8 +7,8 @@ import { useNavigate } from "react-router-dom";
 
 export const CarritoProvider = ({ children }) => {
 
-     localStorage.setItem('tarjeta',null)
-    localStorage.setItem('monedero',-1)
+    localStorage.setItem('tarjeta', null)
+    localStorage.setItem('monedero', -1)
 
     const [cartItems, setCartItems] = useState(() => {
         const savedCart = localStorage.getItem('cartItems');
@@ -199,7 +199,7 @@ const Carrito = ({ cerrar, totalProductos, logCart }) => {
                         <p>Total:</p>
                         <span className='font-bold'>${total}</span>
                     </div>
-                    <button className='m-auto w-full hover:bg-opacity-90 rounded-xl py-2 px-6 text-white bg-[#45B59C]' onClick={log ? (handleComprar):(logCart)}>
+                    <button className='m-auto w-full hover:bg-opacity-90 rounded-xl py-2 px-6 text-white bg-[#45B59C]' onClick={log ? (handleComprar) : (logCart)}>
                         Comprar
                     </button>
                 </>
