@@ -304,7 +304,7 @@ function ListaDeseo() {
 
     const resumenList = contResumen.map(item => (
         (item.tipoProducto === 'venta' &&
-            <li key={item.PKidPS} className='flex gap-2 justify-between mb-2'>
+            <li key={item.PKidPS} className='flex justify-between gap-2 mb-2'>
                 <h1 className='truncate'>{item.nombre}</h1>
                 <h1 className='text-[#036d63]'>${item.precio}</h1>
             </li>
@@ -383,7 +383,7 @@ function ListaDeseo() {
                     onClick={() => removeProducto(producto.pkIdPS)}
                 />
             </Box>
-            <img data-tooltip-id="ver" data-tooltip-content={producto.tipoProducto === "venta" ? "Ver produto" : "Ver servicio"} onClick={producto.tipo === "venta" ? () => handleViewMoreProduct(producto) : () => handleViewMoreService(producto)} className='w-4/5 m-auto mb-4 rounded-lg hover:cursor-pointer hover:opacity-60 justify-self-center aspect-square'
+            <img data-tooltip-id="ver" data-tooltip-content={producto.tipoProducto === "venta" ? "Ver produto" : "Ver servicio"} onClick={producto.tipoProducto === "venta" ? () => handleViewMoreProduct(producto) : () => handleViewMoreService(producto)} className='w-4/5 m-auto mb-4 rounded-lg hover:cursor-pointer hover:opacity-60 justify-self-center aspect-square'
                 src={producto.img}
                 alt={producto.nombre}
             />
@@ -487,9 +487,9 @@ function ListaDeseo() {
                                 </nav>
                             </aside>
                         </div>
-                        <div className='grid w-full h-full content-start menu-deseo'>
+                        <div className='grid content-start w-full h-full menu-deseo'>
                             <img src="../../../pictures/decoArmony1.png" alt="" className='absolute -rotate-90 -right-7 w-60 h-180 top-60' />
-                            <div className='flex h-max justify-center mt-5'>
+                            <div className='flex justify-center mt-5 h-max'>
                                 <form action="" className='flex h-10 items-center w-4/5 justify-center border-2 border-[rgb(255,181,167)] rounded-lg'>
                                     <input
                                         className='w-full h-full px-5 py-2 rounded-lg'
@@ -500,7 +500,7 @@ function ListaDeseo() {
                                     <FontAwesomeIcon icon={faMagnifyingGlass} className='mx-4 text-[rgb(255,181,167)] text-xl' />
                                 </form>
                             </div>
-                            <div className='flex h-max justify-end py-2 pr-24'>
+                            <div className='flex justify-end py-2 pr-24 h-max'>
                                 <div className="flex items-center">
                                     <Menu as="div" className="relative inline-block text-left">
                                         <div>
