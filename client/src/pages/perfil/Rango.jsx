@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import LayoutPrincipal from "../../layouts/LayoutPrincipal";
 import { IoIosArrowBack } from "react-icons/io";
 import rangoPlatino from "../../../public/pictures/nuevoPlatino.png";
-import rangoVIP from "../../../public/pictures/nuevoVIP.png";
+import rangoVIP from "../../../public/pictures/rangoVIP2.png";
 import rangoOro from "../../../public/pictures/rangoOro.png";
 
 function Rango() {

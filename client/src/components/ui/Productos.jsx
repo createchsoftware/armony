@@ -26,7 +26,8 @@ const StyledRating = styled(Rating)({
 function Productos({ productos }) {
     const navigate = useNavigate();
     const [favorites, setFavorites] = useState({});
-    const [uid, setUid] = useState(null);
+    const [Uid, setUid] = useState(null);
+    const [contResumen, setContResumen] = useState([]);
 
     useEffect(() => {
         const cookie = obteneridCookie('Naruto_cookie');
@@ -35,6 +36,26 @@ function Productos({ productos }) {
             setUid(decoded.user);
         }
     }, []);
+
+    useEffect(() => {
+        const Prod = async () => {
+            try {
+                if (Uid) {
+                    //este fetch traera todos los favoritos del cliente,solo incluyendo servicios y productos
+                    const response = await fetch(`/api/admin/favoritos/FavoritosbyId/${Uid}`)
+                    const data = await response.json();
+                    setContResumen(data)
+                    console.log(data)
+                }
+            } catch (error) {
+                console.error("hubo error :", error)
+            }
+        }
+        Prod()
+    }, [Uid])
+
+
+
 
     const obteneridCookie = (cookieName) => {
         const cookies = document.cookie.split(';');
@@ -45,34 +66,34 @@ function Productos({ productos }) {
     const toggleFavorite = async (idProducto) => {
         const estaEnFavoritos = favorites[idProducto];
 
-            if (uid) {
-                try {
-                    fetch('/api/admin/favoritos/invertirFav', {
+        if (Uid) {
+            try {
+                fetch('/api/admin/favoritos/invertirFav', {
                     method: "POST",
-                    body: JSON.stringify({ idCliente: uid, IdProducto: idProducto }),
+                    body: JSON.stringify({ idCliente: Uid, IdProducto: idProducto }),
                     headers: { "Content-Type": "application/json" },
                 });
 
-            setFavorites(prev => ({
-                ...prev,
-                [idProducto]: !estaEnFavoritos
-            }));
+                setFavorites(prev => ({
+                    ...prev,
+                    [idProducto]: !estaEnFavoritos
+                }));
 
-       
-        } catch (error) {
-            console.error('Error en la solicitud:', error);
-        }
-        }else{
+
+            } catch (error) {
+                console.error('Error en la solicitud:', error);
+            }
+        } else {
             // setFavorites(prev => ({
             //     ...prev,
             //     [idProducto]: !estaEnFavoritos
             // }));
-    //  let favoritos = JSON.parse(localStorage.getItem("favoritos")) || [];
-    //         favoritos.push(idProducto);
-    //     localStorage.setItem("favoritos", JSON.stringify(favoritos));
+            //  let favoritos = JSON.parse(localStorage.getItem("favoritos")) || [];
+            //         favoritos.push(idProducto);
+            //     localStorage.setItem("favoritos", JSON.stringify(favoritos));
         }
     };
-  
+
 
 
     const notify = () => toast("Producto agregado al carrito");
@@ -130,6 +151,7 @@ function Productos({ productos }) {
                                     <StyledRating
                                         name="customized-color"
                                         max={1}
+                                        // value={estaEnFavoritos || favorites[producto.pkIdPS] ? 1 : 0}
                                         value={favorites[producto.pkIdPS] ? 1 : 0}
                                         getLabelText={(value) => `${value} Heart${value !== 1 ? 's' : ''}`}
                                         precision={1}

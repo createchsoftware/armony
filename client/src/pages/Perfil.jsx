@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import { useState, useEffect } from 'react'
 import LayoutPrincipal from '../layouts/LayoutPrincipal'
 import { IoIosArrowBack } from "react-icons/io";
 import { MdNavigateNext } from "react-icons/md";
@@ -137,7 +137,7 @@ function Perfil() {
                         </a>
                         <a href='/perfil/rango' className='flex justify-between p-5 duration-200 hover:bg-slate-200 hover:underline rounded-xl'>
                             <div className='flex gap-6'>
-                                <div className='rounded-full place-content-center md:bg-[#D9D9D9]'><img className='w-10 md:w-12' src="../../pictures/rango.png" alt="" /></div>
+                                <div className='rounded-full place-content-center md:bg-[#D9D9D9]'><img className='w-10 md:w-12' src="../../pictures/rangoVIP2.png" alt="" /></div>
                                 <div>
                                     <h2>Rango</h2>
                                     <p className='text-gray-500'>Mi nivel de rango</p>
