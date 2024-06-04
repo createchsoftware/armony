@@ -1,10 +1,4 @@
 import { useState, useEffect } from "react";
-import favorito1 from "../../../public/pictures/favorito1.png";
-import favorito2 from "../../../public/pictures/favorito4.png";
-import favorito3 from "../../../public/pictures/favorito3.png";
-import favorito4 from "../../../public/pictures/peluqueria.png";
-import favorito5 from "../../../public/pictures/pedicura.png";
-import favorito6 from "../../../public/pictures/manicuraserv.png";
 import greenLeft from "../../../public/pictures/greenLeft.png";
 import TarjetaFavoritos from "./TarjetaFavoritos";
 
@@ -80,6 +74,7 @@ function Favoritos() {
   const [estetica, setEstetica] = useState([]);
   const [color1, setColor1] = useState("#EB5765");
   const [color2, setColor2] = useState("#F6B3B9");
+  const [log, setLog] = useState(false);
   const [id, setId] = useState();
   const [st, setSt] = useState(false);
 
@@ -96,8 +91,10 @@ function Favoritos() {
       respuestaJson = await respuesta.json();
       if (respuestaJson.logueado == true) {
         await setId(respuestaJson.clave);
+        setLog(true);
       } else {
         await setId(0);
+        setLog(false);
       }
     } catch (error) {
       setLog(false);
@@ -223,6 +220,7 @@ function Favoritos() {
                   <TarjetaFavoritos
                     props={{
                       id: id,
+                      log: log,
                       ps: servicio.pkIdPS,
                       nombre: servicio.nombre,
                       descr: servicio.descripcion,
@@ -245,6 +243,7 @@ function Favoritos() {
                   <TarjetaFavoritos
                     props={{
                       id: id,
+                      log: log,
                       ps: servicio.pkIdPS,
                       nombre: servicio.nombre,
                       descr: servicio.descripcion,
