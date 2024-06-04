@@ -9,6 +9,7 @@ const AgendarServicios = ({ next }) => {
   const [favoritos, setFavoritos] = useState([]);
   const [descuentos, setDescuentos] = useState([]);
   const [id, setId] = useState();
+  const [st, setSt] = useState(false);
 
   async function getId() {
     let respuestaJson = null;
@@ -50,7 +51,7 @@ const AgendarServicios = ({ next }) => {
           //setErrorSpa(error.message);
         });
     }
-  }, [id]);
+  }, [id, st]);
 
   useEffect(() => {
     if (id != undefined) {
@@ -70,7 +71,7 @@ const AgendarServicios = ({ next }) => {
           });
       }, 3000);
     }
-  }, [id]);
+  }, [id, st]);
 
   useEffect(() => {
     if (id != undefined) {
@@ -90,7 +91,7 @@ const AgendarServicios = ({ next }) => {
           });
       }, 3000);
     }
-  }, [id]);
+  }, [id, st]);
 
   useEffect(() => {
     if (id != undefined) {
@@ -110,7 +111,11 @@ const AgendarServicios = ({ next }) => {
           });
       }, 3000);
     }
-  }, [id]);
+  }, [id, st]);
+
+  function changeSt() {
+    setSt(!st);
+  }
 
   const [toggleState, setToggleService] = useState(1);
   const [color1, setColor1] = useState("#80B5B0");
@@ -188,16 +193,31 @@ const AgendarServicios = ({ next }) => {
           </button>
         </div>
         <div className={toggleState === 1 ? "block" : "hidden"}>
-          <Carrusel servicios={spa} next={next} />
+          <Carrusel id={id} servicios={spa} next={next} update={changeSt} />
         </div>
         <div className={toggleState === 2 ? "block" : "hidden"}>
-          <Carrusel servicios={estetica} next={next} />
+          <Carrusel
+            id={id}
+            servicios={estetica}
+            next={next}
+            update={changeSt}
+          />
         </div>
         <div className={toggleState === 3 ? "block" : "hidden"}>
-          <Carrusel servicios={favoritos} next={next} />
+          <Carrusel
+            id={id}
+            servicios={favoritos}
+            next={next}
+            update={changeSt}
+          />
         </div>
         <div className={toggleState === 4 ? "block" : "hidden"}>
-          <Carrusel servicios={descuentos} next={next} />
+          <Carrusel
+            id={id}
+            servicios={descuentos}
+            next={next}
+            update={changeSt}
+          />
         </div>
       </div>
       {soon && (

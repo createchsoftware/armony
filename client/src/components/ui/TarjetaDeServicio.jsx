@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Rating } from "@mui/material";
 import { styled } from "@mui/material/styles";
 import Box from "@mui/material/Box";
@@ -17,9 +17,9 @@ const StyledRating = styled(Rating)({
   },
 });
 //FALTA HACER FUNCIONAR 'next'
-const TarjetaDeServicio = ({ servicio, next }) => {
+const TarjetaDeServicio = ({ id, servicio, next, update }) => {
   const [vista, setVista] = useState(false);
-
+  const [fav, setFav] = useState(servicio.favorito);
   const [seleccionado, setSeleccionado] = useState(false);
 
   function hr(hr) {
@@ -34,6 +34,37 @@ const TarjetaDeServicio = ({ servicio, next }) => {
       }
     }
   }
+
+  const callFav = async () => {
+    if (id != 0) {
+      try {
+        const respuesta = await fetch("/api/admin/productos/setFavorito", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            id: id,
+            idPS: servicio.pkIdPS,
+            estado: servicio.favorito,
+          }),
+        });
+
+        let respuestaJson = await respuesta.json();
+        if ((await respuestaJson[0].res) == true) {
+          setFav(!fav);
+        }
+      } catch (error) {
+        console.log(error, "error");
+      }
+    }
+  };
+
+  useEffect(() => {
+    if (fav !== servicio.favorito) {
+      update();
+    }
+  }, [fav]);
 
   const agregarServ = (
     id,
@@ -100,6 +131,7 @@ const TarjetaDeServicio = ({ servicio, next }) => {
             }}
           >
             <StyledRating
+              onClick={() => callFav()}
               name="customized-color"
               defaultValue={0}
               max={1}

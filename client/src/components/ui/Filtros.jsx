@@ -31,12 +31,13 @@ const subCategories = [
     id: "categoria",
     name: "Categorias",
     options: [
-      { label: "Cosméticos", checked: false },
-      { label: "Facial", checked: false },
-      { label: "Crema", checked: false },
-      { label: "Spray", checked: false },
-      { label: "Serúm", checked: false },
-      { label: "Depilación", checked: false },
+      { label: "Cremas faciales", checked: false },
+      { label: "Shampoos", checked: false },
+      { label: "Cremas para pies", checked: false },
+      { label: "Lociones", checked: false },
+      { label: "Aceites", checked: false },
+      { label: "Jabones", checked: false },
+      { label: "Exfoliantes", checked: false },
     ],
   },
 ];
@@ -46,13 +47,13 @@ const filters = [
     id: "Marca",
     name: "Marca",
     options: [
-      { value: "ponds", label: "POND’S", checked: false },
-      { value: "hidraSense", label: "Hidra Sense", checked: false },
-      { value: "savasana", label: "Savasana", checked: false },
+      { value: "nivea", label: "Nivea", checked: false },
+      { value: "Eucerin", label: "Eucerin", checked: false },
+      { value: "neutrogena", label: "Neutrogena", checked: false },
       { value: "ceraVe", label: "CeraVe", checked: false },
-      { value: "cetaphil", label: "Cetaphil", checked: false },
-      { value: "mizon", label: "Mizon", checked: false },
-      { value: "gojo", label: "Gojo", checked: false },
+      { value: "loreal", label: "Loreal", checked: false },
+      { value: "pantene", label: "Pantene", checked: false },
+      { value: "garnier", label: "Garnier", checked: false },
     ],
   },
 ];
@@ -68,7 +69,7 @@ export default function Filtros() {
   const [busqueda, setSearch] = useState("");
   const [rating, setRating] = useState(0);
   const [precio, setPrecio] = useState(null);
-  const [id, setId] = useState(0);
+  const [id, setId] = useState(null);
   const [soon, setSoon] = useState(false);
 
   async function getId() {
@@ -81,6 +82,7 @@ export default function Filtros() {
         },
       });
       respuestaJson = await respuesta.json();
+      console.log("id en uso: ", respuestaJson.clave);
       await setId(respuestaJson.clave);
     } catch (error) {
       console.log("Error");
@@ -97,6 +99,7 @@ export default function Filtros() {
 
   useEffect(() => {
     setTimeout(() => {
+      console.log("idFavoritos:", id);
       fetch(`/api/admin/favoritos/ProductFavoritosbyId/${id}`)
         .then((response) => {
           if (!response.ok) {
@@ -106,6 +109,7 @@ export default function Filtros() {
         })
         .then((data) => {
           setProductosFavorites(data);
+          console.log("favoritos" + data);
         })
         .catch((error) => {
           //setErrorSpa(error.message);
@@ -146,25 +150,25 @@ export default function Filtros() {
 
   const handleClickFacial = (e) => {
     e.preventDefault();
-    setCategories(["Facial"]);
+    setCategories(["Cremas faciales"]);
   };
 
   // Función para manejar cambios en las categorías
   const handleClickManicuraPedicura = (e) => {
     e.preventDefault();
-    setCategories(["Manicura y pedicura"]);
+    setCategories(["Cremas para pies"]);
   };
 
   // Función para manejar cambios en las categorías
   const handleClickCapilar = (e) => {
     e.preventDefault();
-    setCategories(["Cuidado capilar"]);
+    setCategories(["Cremas corporales"]);
   };
 
   // Función para manejar cambios en las categorías
   const handleClickAll = (e) => {
     e.preventDefault();
-    setCategories([]);
+    setCategories(["Shampoos", "Lociones", "Aceites", "Jabones", "Exfoliantes"]);
   };
 
   // Función para manejar cambios en el rating
@@ -180,6 +184,7 @@ export default function Filtros() {
   //useEffect para obtener los productos
   useEffect(() => {
     setTimeout(() => {
+      console.log("idFinal:", id);
       fetch(`/api/admin/productos/getProducts/${id}`)
         .then((response) => {
           if (!response.ok) {
@@ -215,7 +220,7 @@ export default function Filtros() {
     // Filtro por categorías múltiples
     if (categories.length > 0) {
       updatedProducts = updatedProducts.filter((product) =>
-        categories.includes(product.categoria)
+        categories.includes(product.nombreCategoria)
       );
     }
 
@@ -271,6 +276,18 @@ export default function Filtros() {
       default:
         break;
     }
+
+    // Multifiltro de checkboxes de subcategorías
+    subCategories.forEach((section) => {
+      const selectedOptions = section.options
+        .filter((option) => option.checked)
+        .map((option) => option.label);
+      if (selectedOptions.length) {
+        updatedProducts = updatedProducts.filter((product) =>
+          selectedOptions.includes(product[section.id])
+        );
+      }
+    });
 
     // Multifiltro de checkboxes
     filters.forEach((filter) => {
@@ -384,7 +401,7 @@ export default function Filtros() {
           </button>
         </div>
         <div
-          onClick={handleClickCapilar}
+          onClick={handleClickAll}
           className="grid items-center content-between justify-center max-w-xs grid-cols-1 gap-4 p-6 align-bottom transition duration-300 ease-in-out bg-white hover:cursor-pointer hover:scale-105 rounded-xl "
         >
           <h1 className="m-auto text-xl ">Productos de spa</h1>
