@@ -80,7 +80,7 @@ function Favoritos() {
   const [estetica, setEstetica] = useState([]);
   const [color1, setColor1] = useState("#EB5765");
   const [color2, setColor2] = useState("#F6B3B9");
-  const [id, setId] = useState(0);
+  const [id, setId] = useState();
   const [st, setSt] = useState(false);
 
   let respuestaJson = null;
@@ -96,6 +96,8 @@ function Favoritos() {
       respuestaJson = await respuesta.json();
       if (respuestaJson.logueado == true) {
         await setId(respuestaJson.clave);
+      } else {
+        await setId(0);
       }
     } catch (error) {
       setLog(false);
@@ -107,21 +109,23 @@ function Favoritos() {
   }, []);
 
   useEffect(() => {
-    setTimeout(() => {
-      fetch(`/api/admin/favoritos/ServiceFavoritosSpa/${id}`)
-        .then((response) => {
-          if (!response.ok) {
-            throw new Error("Error al obtener los favoritos de spa");
-          }
-          return response.json();
-        })
-        .then((data) => {
-          setSpa(data);
-        })
-        .catch((error) => {
-          console.log("error", error);
-        });
-    }, 3000);
+    if (id != undefined) {
+      setTimeout(() => {
+        fetch(`/api/admin/favoritos/ServiceFavoritosSpa/${id}`)
+          .then((response) => {
+            if (!response.ok) {
+              throw new Error("Error al obtener los favoritos de spa");
+            }
+            return response.json();
+          })
+          .then((data) => {
+            setSpa(data);
+          })
+          .catch((error) => {
+            console.log("error", error);
+          });
+      }, 3000);
+    }
   }, [id, st]);
 
   useEffect(() => {
