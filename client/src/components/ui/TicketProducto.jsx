@@ -7,6 +7,8 @@ import { CiSaveDown2 } from "react-icons/ci";
 const TicketProducto = () => {
   const [soon, setSoon] = useState(false);
 
+  localStorage.removeItem('cartItems');
+
   const toggleSoon = () => {
     setSoon(!soon);
   };
