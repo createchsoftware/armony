@@ -291,9 +291,10 @@ export async function serviciosRelacionados(connection, data) {
 
 // OBTENER PRODUCTOS CON DESCUENTO
 // FUNCIONAL
-export async function productosDescuento(connection) {
+export async function productosDescuento(connection, data) {
   try {
-    let query = "CALL getProductosDesc()"; // Query del procedimiento almacenado
+    let desc = "CALL getProductosDesc(?)"; // Query del procedimiento almacenado
+    let query = mysql.format(desc, [data.id]);
     const [rows, fields] = await connection.query(query); // Ejecutamos le query y almacenamos los valores
     endConnection(); // Cerramos la conexion
     return rows[0]; // Retornamos los valores obtenidos
