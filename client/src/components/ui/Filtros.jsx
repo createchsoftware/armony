@@ -31,12 +31,13 @@ const subCategories = [
     id: "categoria",
     name: "Categorias",
     options: [
-      { label: "Cosméticos", checked: false },
-      { label: "Facial", checked: false },
-      { label: "Crema", checked: false },
-      { label: "Spray", checked: false },
-      { label: "Serúm", checked: false },
-      { label: "Depilación", checked: false },
+      { label: "Cremas faciales", checked: false },
+      { label: "Shampoos", checked: false },
+      { label: "Cremas para pies", checked: false },
+      { label: "Lociones", checked: false },
+      { label: "Aceites", checked: false },
+      { label: "Jabones", checked: false },
+      { label: "Exfoliantes", checked: false },
     ],
   },
 ];
@@ -46,13 +47,13 @@ const filters = [
     id: "Marca",
     name: "Marca",
     options: [
-      { value: "ponds", label: "POND’S", checked: false },
-      { value: "hidraSense", label: "Hidra Sense", checked: false },
-      { value: "savasana", label: "Savasana", checked: false },
+      { value: "nivea", label: "Nivea", checked: false },
+      { value: "Eucerin", label: "Eucerin", checked: false },
+      { value: "neutrogena", label: "Neutrogena", checked: false },
       { value: "ceraVe", label: "CeraVe", checked: false },
-      { value: "cetaphil", label: "Cetaphil", checked: false },
-      { value: "mizon", label: "Mizon", checked: false },
-      { value: "gojo", label: "Gojo", checked: false },
+      { value: "loreal", label: "Loreal", checked: false },
+      { value: "pantene", label: "Pantene", checked: false },
+      { value: "garnier", label: "Garnier", checked: false },
     ],
   },
 ];
@@ -219,7 +220,7 @@ export default function Filtros() {
     // Filtro por categorías múltiples
     if (categories.length > 0) {
       updatedProducts = updatedProducts.filter((product) =>
-        categories.includes(product.categoria)
+        categories.includes(product.nombreCategoria)
       );
     }
 
@@ -275,6 +276,18 @@ export default function Filtros() {
       default:
         break;
     }
+
+    // Multifiltro de checkboxes de subcategorías
+    subCategories.forEach((section) => {
+      const selectedOptions = section.options
+        .filter((option) => option.checked)
+        .map((option) => option.label);
+      if (selectedOptions.length) {
+        updatedProducts = updatedProducts.filter((product) =>
+          selectedOptions.includes(product[section.id])
+        );
+      }
+    });
 
     // Multifiltro de checkboxes
     filters.forEach((filter) => {
