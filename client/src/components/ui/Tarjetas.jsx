@@ -3,6 +3,7 @@ import platino from '../../../public/pictures/nuevoPlatino.png'
 import vip from '../../../public/pictures/nuevoVIP.png'
 import greenRight from '../../../public/pictures/greenRight.png'
 import greenLeft from '../../../public/pictures/greenLeft.png'
+import rangos from '../../../public/pictures/Rangos.png'
 
 function Tarjetas() {
     return (
@@ -13,7 +14,7 @@ function Tarjetas() {
                 {/* <h1 className="justify-self-center text-4xl md:text-6xl font-[iloveglitter] text-[#036C65]">¡Hazte socio!</h1> */}
                 <div className="items-center gap-0 text-center md:grid md:grid-cols-2 place-content-center">
                     <div>
-                        <img src={"../../../pictures/Rangos.png"} alt="Rangos, los tres rangos disponibles que se pueden alcanzar." className='w-5/6' />
+                        <img src={rangos} alt="Rangos, los tres rangos disponibles que se pueden alcanzar." className='w-5/6' />
                     </div>
                     <div className='p-8 mt-0 bg-gradient-to-b from-[#F6CFEE] via-[#FFF1DD] to-[#DDF3FA] rounded-xl'>
                         <h1 className="text-4xl md:text-6xl font-[iloveglitter] font-bold text-[#036C65]">Conoce el potencial de los rangos</h1>
