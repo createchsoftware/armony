@@ -22,22 +22,23 @@ const PopupServicio = ({ cerrar, check, datos, update, st }) => {
     {
       nombre: "Cargando...",
       descripcion: "Cargando...",
-      img: "../../../pictures/logoArmony.png",
+      img: "",
     },
     {
       nombre: "Cargando... ",
       descripcion: "Cargando...",
-      img: "../../../pictures/logoArmony.png",
+      img: "",
     },
     {
       nombre: "Cargando...  ",
       descripcion: "Cargando...",
-      img: "../../../pictures/logoArmony.png",
+      img: "",
     },
   ];
   const [similares, setSimilares] = useState(sim);
   const [indexItem, setIndexItem] = useState(0);
   const [renderItems, setRenderItems] = useState();
+  const [load, setLoad] = useState(false);
 
   useEffect(() => {
     setTimeout(() => {
@@ -50,6 +51,7 @@ const PopupServicio = ({ cerrar, check, datos, update, st }) => {
         })
         .then((data) => {
           setSimilares([]);
+          setLoad(true);
           setSimilares(changeOrder(data));
         })
         .catch((error) => {
@@ -222,7 +224,7 @@ const PopupServicio = ({ cerrar, check, datos, update, st }) => {
                 <StyledRating
                   onClick={callFav}
                   name="customized-color"
-                  value={datos.favorito}
+                  defaultValue={datos.favorito}
                   max={1}
                   getLabelText={(value) =>
                     `${value} Heart${value !== 1 ? "s" : ""}`
@@ -273,15 +275,25 @@ const PopupServicio = ({ cerrar, check, datos, update, st }) => {
             .map((similar) => (
               <div key={similar.nombre}>
                 <div className="grid grid-cols-[auto_auto]">
-                  <div className="w-[8rem] h-[8rem] md:w-[6rem] md:h-[6rem] lg:w-[8rem] lg:h-[8rem] m-[0.5rem]">
+                  <div
+                    className={
+                      load
+                        ? "w-[8rem] h-[8rem] md:w-[6rem] md:h-[6rem] lg:w-[8rem] lg:h-[8rem] m-[0.5rem]"
+                        : "loader mx-auto my-auto"
+                    }
+                  >
                     <img
                       src={similar.img}
                       alt=""
-                      className="w-full h-full ml-4 rounded-2xl bg-center"
+                      className={
+                        load
+                          ? "block w-full h-full ml-4 rounded-2xl bg-center"
+                          : "hidden"
+                      }
                     />
                   </div>
-                  <div className="my-auto ml-4">
-                    <p className="text-[#EB5765] text-lg md:text-base lg:text-lg">
+                  <div className="grid my-auto ml-8">
+                    <p className="text-[#EB5765] text-lg md:text-base lg:text-lg truncate">
                       {similar.nombre}
                     </p>
                     <p className="my-2 mr-12 text-base md:text-sm lg:text-base font-light text-justify">
@@ -289,32 +301,34 @@ const PopupServicio = ({ cerrar, check, datos, update, st }) => {
                         ? similar.descripcion.substring(0, 40) + "..."
                         : similar.descripcion}
                     </p>
-                    <button
-                      onClick={() => changeData(update, similar)}
-                      disabled={
-                        similar.descripcion === "Cargando..." ? true : false
-                      }
-                      className=" transition-all duration-300  m-auto hover:bg-[#036C65] hover:ring-2 hover:[#036C65] hover:ring-offset-1 group relative inline-flex h-10 md:h-8 lg:h-10 items-center justify-center overflow-hidden rounded-lg border-2 bg-[#EB5765] px-6 font-[abeatbykai] text-neutral-200"
-                    >
-                      <span>Ver </span>
-                      <div className="w-0 translate-x-[100%] pl-0 opacity-0 transition-all duration-200 group-hover:w-5 group-hover:translate-x-0 group-hover:pl-1 group-hover:opacity-100">
-                        <svg
-                          width="15"
-                          height="15"
-                          viewBox="0 0 15 15"
-                          fill="none"
-                          xmlns="http://www.w3.org/2000/svg"
-                          className="h-5 w-5"
-                        >
-                          <path
-                            d="M8.14645 3.14645C8.34171 2.95118 8.65829 2.95118 8.85355 3.14645L12.8536 7.14645C13.0488 7.34171 13.0488 7.65829 12.8536 7.85355L8.85355 11.8536C8.65829 12.0488 8.34171 12.0488 8.14645 11.8536C7.95118 11.6583 7.95118 11.3417 8.14645 11.1464L11.2929 8H2.5C2.22386 8 2 7.77614 2 7.5C2 7.22386 2.22386 7 2.5 7H11.2929L8.14645 3.85355C7.95118 3.65829 7.95118 3.34171 8.14645 3.14645Z"
-                            fill="currentColor"
-                            fillRule="evenodd"
-                            clipRule="evenodd"
-                          ></path>
-                        </svg>
-                      </div>
-                    </button>
+                    <div className="mb-2">
+                      <button
+                        onClick={() => changeData(update, similar)}
+                        disabled={
+                          similar.descripcion === "Cargando..." ? true : false
+                        }
+                        className=" transition-all duration-300  m-auto hover:bg-[#036C65] hover:ring-2 hover:[#036C65] hover:ring-offset-1 group relative inline-flex h-10 md:h-8 lg:h-10 items-center justify-center overflow-hidden rounded-lg border-2 bg-[#EB5765] px-6 font-[abeatbykai] text-neutral-200"
+                      >
+                        <span>Ver </span>
+                        <div className="w-0 translate-x-[100%] pl-0 opacity-0 transition-all duration-200 group-hover:w-5 group-hover:translate-x-0 group-hover:pl-1 group-hover:opacity-100">
+                          <svg
+                            width="15"
+                            height="15"
+                            viewBox="0 0 15 15"
+                            fill="none"
+                            xmlns="http://www.w3.org/2000/svg"
+                            className="h-5 w-5"
+                          >
+                            <path
+                              d="M8.14645 3.14645C8.34171 2.95118 8.65829 2.95118 8.85355 3.14645L12.8536 7.14645C13.0488 7.34171 13.0488 7.65829 12.8536 7.85355L8.85355 11.8536C8.65829 12.0488 8.34171 12.0488 8.14645 11.8536C7.95118 11.6583 7.95118 11.3417 8.14645 11.1464L11.2929 8H2.5C2.22386 8 2 7.77614 2 7.5C2 7.22386 2.22386 7 2.5 7H11.2929L8.14645 3.85355C7.95118 3.65829 7.95118 3.34171 8.14645 3.14645Z"
+                              fill="currentColor"
+                              fillRule="evenodd"
+                              clipRule="evenodd"
+                            ></path>
+                          </svg>
+                        </div>
+                      </button>
+                    </div>
                   </div>
                 </div>
               </div>

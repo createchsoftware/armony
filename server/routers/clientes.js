@@ -150,15 +150,22 @@ routerCliente.get('/StatusSus/:id', async (req, res) => {
     const idCliente = req.params.id;
     // Realizamos la consulta a la base de datos
     const resultado = await searchStatusSus(conexion, { idCliente });
+if(resultado[0]){
 
-    if (resultado[0]) {
+    if (resultado[0].pkIdVenta==1) {
       return res.status(404).send(true);
-    }else{
+    }else if(resultado[0].pkIdVenta==0){
+      return res.status(200).json(false);
+    }else {
     return res.status(200).json(false);
-  }
+  }}
   } catch (err) {
     // Capturamos errores y enviamos un mensaje de error al navegador
     console.error(messageError, err);
     return res.status(500).send(messageError);
   }
 });
+
+
+
+

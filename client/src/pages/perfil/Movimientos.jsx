@@ -237,7 +237,7 @@ function Movimientos() {
           <div className="flex items-center ">
             <Menu as="div" className="relative inline-block text-left">
               <div>
-                <Menu.Button className="inline-flex gap-1 justify-center items-center mr-6 text-md font-medium text-gray-700 group hover:text-gray-900">
+                <Menu.Button className="inline-flex items-center justify-center gap-1 mr-6 font-medium text-gray-700 text-md group hover:text-gray-900">
                   <FontAwesomeIcon icon={faSliders} />
                   Por fecha
                   <ChevronDownIcon
@@ -245,7 +245,7 @@ function Movimientos() {
                     aria-hidden="true"
                   />
                 </Menu.Button>
-                <Menu.Button className="inline-flex gap-1 justify-center items-center text-md font-medium text-gray-700 group hover:text-gray-900">
+                <Menu.Button className="inline-flex items-center justify-center gap-1 font-medium text-gray-700 text-md group hover:text-gray-900">
                   <FontAwesomeIcon icon={faSliders} />
                   Tipo de movimiento
                   <ChevronDownIcon
@@ -339,6 +339,7 @@ function Movimientos() {
         <div className="rounded-xl flex justify-start place-content-center place-items-center px-12 py-4 gap-96  shadow-[0_3px_10px_rgb(0,0,0,0.2)]">
           <h1 className="text-2xl text-rose-400">
             {label}
+            {" - "}
             {label2}
           </h1>
         </div>

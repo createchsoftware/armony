@@ -92,6 +92,10 @@ export default function Cita({ producto }) {
     LocalBase();
   };
 
+  const handleFinish = () => {
+    window.location.href = "/perfil/suscripciones"
+  };
+
   const handleReset = () => {
     setActiveStep(0);
     setCompleted({});
@@ -116,8 +120,9 @@ export default function Cita({ producto }) {
   const stepComponents = [
     <RevisionSuscripcion key={3} />,
     <Pago next={handleClick} key={4} />,
-    <FinalizacionPago next={handleClick} key={5} />,
-    <Ticket key={6} />,
+    <FinalizacionPago next={handleFinish} key={5} />
+    // ,
+    // <Ticket key={6} />,
   ];
 
   return (

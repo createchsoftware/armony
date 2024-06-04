@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { IoArrowForwardSharp } from "react-icons/io5";
+//import { IoArrowForwardSharp } from "react-icons/io5";
 import { useLocation, useNavigate } from "react-router-dom";
 
 const FinalizacionPagoProd = ({ producto, next }) => {
@@ -24,13 +24,18 @@ const FinalizacionPagoProd = ({ producto, next }) => {
 
     const subTotal = localStorage.getItem('totalSuscripcion');
     const puntos = localStorage.getItem('puntosSuscripcion');
-    const ivaTotal = (parseFloat(subTotal) * 0.08).toFixed(2);
-    const total = (parseFloat(subTotal) + parseFloat(ivaTotal)).toFixed(2);
+    // const ivaTotal = (parseFloat(subTotal) * 0.08).toFixed(2);
+    const total = (parseFloat(subTotal)).toFixed(2);
 
     console.log(subTotal);
     console.log(puntos);
-    console.log(ivaTotal);
+    // console.log(ivaTotal);
     console.log(total);
+
+    const [cobro, setCobro] = useState(false);
+    const handleCobro = () => {
+        setCobro(!cobro);
+    }
 
 
     return (
@@ -55,7 +60,7 @@ const FinalizacionPagoProd = ({ producto, next }) => {
                         </div>
                         {/* Contenido de los servicios pagados */}
 
-                        <div className="rounded-xl shadow-md overflow-y-auto w-[40rem] mx-auto my-5 h-[10rem] border-2 border-gray">
+                        <div className="rounded-xl shadow-md overflow-y-auto w-[40rem] mx-auto my-5 h-max border-2 border-gray">
                             <div>
                                 <div className="grid grid-cols-3 my-5 place-items-center">
                                     <p className="text-center">{1}</p>
@@ -64,39 +69,49 @@ const FinalizacionPagoProd = ({ producto, next }) => {
                                         ${total + ' MXN'}
                                     </p>
                                 </div>
-                                <div className="flex-grow border-b-2 border-[#ec5766] mx-5" />
+                                <div className="flex-grow border-b-2 border-black mx-5" />
                             </div>
                             <div>
                                 <div className="grid grid-cols-2 my-5 place-items-center place-content-between">
                                     <p className="text-center text-[#056761]">{'Puntos obtenidos:'}</p>
                                     <p className="text-center text-[#056761]">
-                                        ${puntos}
+                                        {parseInt(puntos)}
                                     </p>
                                 </div>
                             </div>
-                            <div className="flex-grow border-b-2 border-[#ec5766] mx-5" />
-                        </div>
-                        <div className="shadow-md w-[15rem] py-3 my-5 ml-[22rem] h-auto border-2 rounded-md border-gray">
-                            <div className="grid grid-cols-2 place-items-center">
-                                <p>Total</p>
-                                <p className="text-[rgb(3,109,99)] font-bold">${total}</p>
+                            <div className="flex-grow border-b-2 border-black mx-5" />
+                            <div className="grid grid-cols-2 my-2 place-items-center place-content-between">
+                                <h1 className="text-[rgb(3,109,99)] ml-2">Fecha de vencimiento: 00/00/00</h1>
+                                <div className="grid grid-cols-2 place-items-center">
+                                    <p>Total</p>
+                                    <p className="text-[rgb(3,109,99)] font-bold">${total}</p>
+                                </div>
                             </div>
                         </div>
                         <div>
-                            <div className="flex items-center justify-between mb-4">
-                                <div></div>
-                                <div className="">
+                            <div className="flex justify-end my-3">
+                                <input
+                                    type="checkbox"
+                                    checked={cobro}
+                                    onChange={handleCobro}
+                                />
+                                <label className="px-2 mr-5">Cobro automático</label>
+                            </div>
+                            <div className="flex items-center justify-around mb-4">
+                                <div className="grid justify-items-center text-center absolute right-1/2 transform translate-x-1/2">
                                     <p>TICKET DE VENTA</p>
                                     <p>{formatDate(new Date())}</p>
                                     <p>¡ GRACIAS POR SU COMPRA !</p>
                                 </div>
+                                <div className=" flex-grow"></div>
                                 <button
                                     onClick={() => next()}
-                                    className="bg-[#FFA3A3] text-white px-10 py-2 mr-10 rounded-full duration-200 hover:bg-[#ec5766]"
+                                    className="hover:bg-[#FFA3A3] text-white px-10 py-2 mr-10 rounded-full duration-200 bg-[#ec5766]"
                                 >
-                                    <IoArrowForwardSharp
+                                    Salir
+                                    {/* <IoArrowForwardSharp
                                         style={{ fontSize: "32px", color: "#000000" }}
-                                    />
+                                    /> */}
                                 </button>
                             </div>
                         </div>
