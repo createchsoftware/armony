@@ -305,9 +305,10 @@ export async function productosDescuento(connection) {
 
 // OBTENER SERVICIOS CON DESCUENTO
 // FUNCIONAL
-export async function serviciosDescuento(connection) {
+export async function serviciosDescuento(connection, data) {
   try {
-    let query = "CALL getServiciosDesc()"; // Query de procedimiento almacenado de la base de datos
+    let desc = "CALL getServiciosDesc(?)"; // Query de procedimiento almacenado de la base de datos
+    let query = mysql.format(desc, [data.id]); // Pasamos lo parametros necesarios para el procedimiento
     const [rows, fields] = await connection.query(query); // Ejecutamos el query y almacenamos los resultados
     endConnection(); // Cerramos la conexion con la base de datos
     return rows[0]; // Retornamos los valores obtenidos
