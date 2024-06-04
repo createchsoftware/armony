@@ -27,6 +27,11 @@ function Productos({ productos }) {
     const navigate = useNavigate();
     const [favorites, setFavorites] = useState({});
     const [uid, setUid] = useState(null);
+  
+
+    useEffect(()=>{
+localStorage.removeItem("favoritos")
+    },[])
 
     useEffect(() => {
         const cookie = obteneridCookie('Naruto_cookie');
@@ -43,19 +48,19 @@ function Productos({ productos }) {
     };
 
     const toggleFavorite = async (idProducto) => {
-        const estaEnFavoritos = favorites[idProducto];
+        const estaEnFavoritos = favorites[idProducto.pkIdPS];
 
             if (uid) {
                 try {
                     fetch('/api/admin/favoritos/invertirFav', {
                     method: "POST",
-                    body: JSON.stringify({ idCliente: uid, IdProducto: idProducto }),
+                    body: JSON.stringify({ idCliente: uid, IdProducto: idProducto.pkIdPS }),
                     headers: { "Content-Type": "application/json" },
                 });
 
             setFavorites(prev => ({
                 ...prev,
-                [idProducto]: !estaEnFavoritos
+                [idProducto.pkIdPS]: !estaEnFavoritos
             }));
 
        
@@ -63,13 +68,22 @@ function Productos({ productos }) {
             console.error('Error en la solicitud:', error);
         }
         }else{
-            // setFavorites(prev => ({
-            //     ...prev,
-            //     [idProducto]: !estaEnFavoritos
-            // }));
-    //  let favoritos = JSON.parse(localStorage.getItem("favoritos")) || [];
-    //         favoritos.push(idProducto);
-    //     localStorage.setItem("favoritos", JSON.stringify(favoritos));
+            setFavorites(prev => ({
+                ...prev,
+                [idProducto.pkIdPS]: !estaEnFavoritos
+            }));
+            let favoritos = JSON.parse(localStorage.getItem("favoritos")) || [];
+            const estaEnFavoritos = favoritos.some(fav => fav.pkIdPS ===  idProducto.pkIdPS);
+            if(!estaEnFavoritos){
+           
+            favoritos.push(idProducto);
+        localStorage.setItem("favoritos", JSON.stringify(favoritos));
+        }else{
+            let favoritos = JSON.parse(localStorage.getItem("favoritos")) || [];
+        favoritos = favoritos.filter((obj) => obj.pkIdPS !== idProducto.pkIdPS);
+        localStorage.setItem("favoritos", JSON.stringify(favoritos));
+        }
+       console.log(localStorage.getItem("favoritos"))
         }
     };
   
@@ -135,7 +149,7 @@ function Productos({ productos }) {
                                         precision={1}
                                         icon={<FavoriteIcon fontSize="inherit" />}
                                         emptyIcon={<FavoriteBorderIcon fontSize="inherit" />}
-                                        onChange={() => toggleFavorite(producto.pkIdPS)}
+                                        onChange={() => toggleFavorite(producto)}
                                     />
                                 </Box>
                             </div>

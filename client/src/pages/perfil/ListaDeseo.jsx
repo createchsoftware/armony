@@ -44,6 +44,7 @@ function ListaDeseo() {
     const [sort, setSort] = useState('')
     const [log, setLog] = useState(false); //<<< PARA EL INICIO DE SESION
     const [login, setLogin] = useState(false);
+   
 
     async function recibido() {
         const respuesta = await fetch("/api/logueado", {
@@ -73,7 +74,7 @@ function ListaDeseo() {
     const filtrar = (type) => {
         settipoProducto(type);
     }
-
+    
     const [contResumen, setContResumen] = useState([
         // CONTENIDO COMENTADO. ¡¡¡USAR SOLAMENTE PARA PRUEBAS ES CASO DE NO HABER AUN CONEXION FRONT-BACK!!!
         // {
@@ -225,22 +226,22 @@ function ListaDeseo() {
     useEffect(() => {
         const Prod = async () => {
 
-    
             if (Uid) {
             try {
                     //este fetch traera todos los favoritos del cliente,solo incluyendo servicios y productos
                     const response = await fetch(`/api/admin/favoritos/FavoritosbyId/${Uid}`)
                     const data = await response.json();
                     setContResumen(data)
-                    console.log("hola")
-                    console.log(data)
             } catch (error) {
                 console.error("hubo error :", error)
             }
-        }
+        }else{
+        let myArray = await JSON.parse(localStorage.getItem("favoritos")) || [];
+        setContResumen(myArray)
+    }
         }
         Prod()
-    },[Uid])
+    },[])
 
     function classNames(...classes) {
         return classes.filter(Boolean).join(' ');
@@ -284,9 +285,19 @@ function ListaDeseo() {
     }
 
     const removeProducto = (itemId) => {
+        if(Uid){
         eliminarFav(itemId)
         setContResumen(contResumen.filter(item => item.pkIdPS !== itemId));
+    }else{
+        RLSFavoritos(itemId)
+        setContResumen(contResumen.filter(item => item.pkIdPS !== itemId));
+    }
     };
+    const RLSFavoritos = (id) => {
+        let favoritos = JSON.parse(localStorage.getItem("favoritos")) || [];
+        favoritos = favoritos.filter((obj) => obj.pkIdPS !== id);
+        localStorage.setItem("favoritos", JSON.stringify(favoritos));
+      };
 
     const eliminarFav = async (idProServ) => {
         try {
@@ -361,6 +372,9 @@ function ListaDeseo() {
             return 0;
         }
     })
+    // useEffect(()=>{
+    //     localStorage.removeItem("favoritos")
+    //         },[])
 
     const contenido = filteredProducts.map(producto => (
         <li key={producto.pkIdPS} className='grid border-4 bg-white border-[#E2B3B7] p-6 py-2 rounded-xl mx-6 mb-6'>
