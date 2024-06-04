@@ -111,23 +111,15 @@ routerCategoria.delete("/delete", async (req, res) => {
 
 routerCategoria.get("/getServicesSpa/:id", async (req, res) => {
   try {
-    const resultado = await getServicesSpa(conexion);
+    const resultado = await getServicesSpa(conexion, { id: req.params.id });
     const horario = [];
     let servicios = [];
-    let favo;
-    let favUser;
     let i;
     for (i = 0; i < resultado.length; i++) {
       horario[i] = resultado[i].tiempo;
     }
     const horasMostrar = await horasWithoutSeconds(horario); // Horas con formato HH:MM
     for (i = 0; i < resultado.length; i++) {
-      favo = await isFav(conexion, {
-        idUser: req.params.id,
-        idProdServ: resultado[i].pkIdPS,
-      }); // Verificamos si el servicio ya es un favorito del cliente
-
-      favUser = (await (favo && favo.length > 0)) ? true : false; // En caso de que el array no este vacio el servicio si es un favorito del cliente, caso contrario no lo es
       servicios[i] = {
         descripcion: resultado[i].descripcion,
         estado: resultado[i].estado,
@@ -137,7 +129,7 @@ routerCategoria.get("/getServicesSpa/:id", async (req, res) => {
         precio: resultado[i].precio,
         tiempo: horasMostrar[i],
         valoracion: resultado[i].valoracion,
-        favorito: favUser,
+        favorito: resultado[i].favorito,
       };
     }
     res.status(202).json(servicios);
@@ -149,23 +141,15 @@ routerCategoria.get("/getServicesSpa/:id", async (req, res) => {
 
 routerCategoria.get("/getServicesFacial/:id", async (req, res) => {
   try {
-    const resultado = await getServicesFacial(conexion);
+    const resultado = await getServicesFacial(conexion, { id: req.params.id });
     const horario = [];
     let servicios = [];
-    let favo;
-    let favUser;
     let i;
     for (i = 0; i < resultado.length; i++) {
       horario[i] = resultado[i].tiempo;
     }
     const horasMostrar = await horasWithoutSeconds(horario); // Horas con formato HH:MM
     for (i = 0; i < resultado.length; i++) {
-      favo = await isFav(conexion, {
-        idUser: req.params.id,
-        idProdServ: resultado[i].pkIdPS,
-      }); // Verificamos si el servicio ya es un favorito del cliente
-
-      favUser = (await (favo && favo.length > 0)) ? true : false; // En caso de que el array no este vacio el servicio si es un favorito del cliente, caso contrario no lo es
       servicios[i] = {
         descripcion: resultado[i].descripcion,
         estado: resultado[i].estado,
@@ -175,7 +159,7 @@ routerCategoria.get("/getServicesFacial/:id", async (req, res) => {
         precio: resultado[i].precio,
         tiempo: horasMostrar[i],
         valoracion: resultado[i].valoracion,
-        favorito: favUser,
+        favorito: resultado[i].favorito,
       };
     }
     res.status(202).json(servicios);
@@ -187,23 +171,15 @@ routerCategoria.get("/getServicesFacial/:id", async (req, res) => {
 
 routerCategoria.get("/getServicesCorporal/:id", async (req, res) => {
   try {
-    const resultado = await getServicesCorpo(conexion);
+    const resultado = await getServicesCorpo(conexion, { id: req.params.id });
     const horario = [];
     let servicios = [];
-    let favo;
-    let favUser;
     let i;
     for (i = 0; i < resultado.length; i++) {
       horario[i] = resultado[i].tiempo;
     }
     const horasMostrar = await horasWithoutSeconds(horario); // Horas con formato HH:MM
     for (i = 0; i < resultado.length; i++) {
-      favo = await isFav(conexion, {
-        idUser: req.params.id,
-        idProdServ: resultado[i].pkIdPS,
-      }); // Verificamos si el servicio ya es un favorito del cliente
-
-      favUser = (await (favo && favo.length > 0)) ? true : false; // En caso de que el array no este vacio el servicio si es un favorito del cliente, caso contrario no lo es
       servicios[i] = {
         descripcion: resultado[i].descripcion,
         estado: resultado[i].estado,
@@ -213,7 +189,7 @@ routerCategoria.get("/getServicesCorporal/:id", async (req, res) => {
         precio: resultado[i].precio,
         tiempo: horasMostrar[i],
         valoracion: resultado[i].valoracion,
-        favorito: favUser,
+        favorito: resultado[i].favorito,
       };
     }
     res.status(202).json(servicios);
@@ -225,22 +201,17 @@ routerCategoria.get("/getServicesCorporal/:id", async (req, res) => {
 
 routerCategoria.get("/getServicesEstetica/:id", async (req, res) => {
   try {
-    const resultado = await getServicesEstetica(conexion);
+    const resultado = await getServicesEstetica(conexion, {
+      id: req.params.id,
+    });
     const horario = [];
     let servicios = [];
-    let favo;
-    let favUser;
     let i;
     for (i = 0; i < resultado.length; i++) {
       horario[i] = resultado[i].tiempo;
     }
     const horasMostrar = await horasWithoutSeconds(horario); // Horas con formato HH:MM
     for (i = 0; i < resultado.length; i++) {
-      favo = await isFav(conexion, {
-        idUser: req.params.id,
-        idProdServ: resultado[i].pkIdPS,
-      });
-      favUser = (await (favo && favo.length > 0)) ? true : false;
       servicios[i] = {
         descripcion: resultado[i].descripcion,
         estado: resultado[i].estado,
@@ -250,7 +221,7 @@ routerCategoria.get("/getServicesEstetica/:id", async (req, res) => {
         precio: resultado[i].precio,
         tiempo: horasMostrar[i],
         valoracion: resultado[i].valoracion,
-        favorito: favUser,
+        favorito: resultado[i].favorito,
       };
     }
     res.status(202).json(servicios);

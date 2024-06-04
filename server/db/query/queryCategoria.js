@@ -82,10 +82,10 @@ export async function deleteCategoria(connection, data) {
   }
 }
 
-export async function getServicesSpa(connection) {
+export async function getServicesSpa(connection, data) {
   try {
-    let searchCatId = "CALL getServiciosSpa()"; // Procedimiento de la DB
-    let query = mysql.format(searchCatId); // Parametros para el procedimiento
+    let searchCatId = "CALL getServiciosSpa(?)"; // Procedimiento de la DB
+    let query = mysql.format(searchCatId, data.id); // Parametros para el procedimiento
     const [rows, fields] = await connection.query(query); // Ejecucion de query y almacenamiento de resultado
     // endConnection(); // Cierre de conexion
     return rows[0]; // Retorno de valores
@@ -95,10 +95,10 @@ export async function getServicesSpa(connection) {
   }
 }
 
-export async function getServicesFacial(connection) {
+export async function getServicesFacial(connection, data) {
   try {
-    let searchCatId = "CALL getServiciosFaciales()"; // Procedimiento de la DB
-    let query = mysql.format(searchCatId); // Parametros para el procedimiento
+    let searchCatId = "CALL getServiciosFaciales(?)"; // Procedimiento de la DB
+    let query = mysql.format(searchCatId, data.id); // Parametros para el procedimiento
     const [rows, fields] = await connection.query(query); // Ejecucion de query y almacenamiento de resultado
     // endConnection(); // Cierre de conexion
     return rows[0]; // Retorno de valores
@@ -108,10 +108,10 @@ export async function getServicesFacial(connection) {
   }
 }
 
-export async function getServicesCorpo(connection) {
+export async function getServicesCorpo(connection, data) {
   try {
-    let searchCatId = "CALL getServiciosCorporales()"; // Procedimiento de la DB
-    let query = mysql.format(searchCatId); // Parametros para el procedimiento
+    let searchCatId = "CALL getServiciosCorporales(?)"; // Procedimiento de la DB
+    let query = mysql.format(searchCatId, data.id); // Parametros para el procedimiento
     const [rows, fields] = await connection.query(query); // Ejecucion de query y almacenamiento de resultado
     // endConnection(); // Cierre de conexion
     return rows[0]; // Retorno de valores
@@ -121,10 +121,10 @@ export async function getServicesCorpo(connection) {
   }
 }
 
-export async function getServicesEstetica(connection) {
+export async function getServicesEstetica(connection, data) {
   try {
-    let searchCatId = "CALL getServiciosEstetica()";
-    let query = mysql.format(searchCatId); // Parametros para el procedimiento
+    let searchCatId = "CALL getServiciosEstetica(?)";
+    let query = mysql.format(searchCatId, data.id); // Parametros para el procedimiento
     const [rows, fields] = await connection.query(query); // Ejecucion de query y almacenamiento de resultado
     //endConnection(); // Cierre de conexion
     return rows[0]; // Retorno de valores
