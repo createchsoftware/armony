@@ -59,6 +59,29 @@ function Productos() {
 
 
     const [descuentos, setDescuentos] = useState([]);
+    const [id, setId] = useState(0);
+
+    async function getId() {
+        let respuestaJson = null;
+        try {
+            const respuesta = await fetch("/api/logueado", {
+                method: "GET",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+            });
+            respuestaJson = await respuesta.json();
+            console.log("id en uso: ", respuestaJson.clave);
+            await setId(respuestaJson.clave);
+        } catch (error) {
+            console.log("Error");
+        }
+    }
+
+    useEffect(() => {
+        getId();
+    }, []);
+
 
     // const toggleSoon = () => {
     //     setSoon(!soon)
@@ -66,7 +89,7 @@ function Productos() {
 
     //useEffect para obtener los productos con descuento
     useEffect(() => {
-        fetch("/api/admin/productos/descuento")
+        fetch(`/api/admin/productos/descuento/${id}`)
             .then((response) => response.json())
             .then((data) => {
                 // Acceder al array de objetos en la posición 0 del array dentro de data
