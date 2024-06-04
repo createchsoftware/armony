@@ -3,12 +3,13 @@
 // import Typography from '@mui/material/Typography';
 import flowes from '../../../public/pictures/flowers.png'
 import Rating from '@mui/material/Rating';
+import '../../rating.css'
 
 function Comentarios() {
     return (
         <>
             <div className=' bg-[image:var(--image-url)] bg-cover' style={{ '--image-url': `url(${flowes})`, }} >
-                <div className='mb-0 h-32 bg-gradient-to-b from-white to-transparent'></div>
+                <div className='h-32 mb-0 bg-gradient-to-b from-white to-transparent'></div>
                 <div className="w-[80%] m-auto  grid gap-6 selection:bg-[#EB5765] selection:text-white">
                     <div className="">
                         <h1 className="text-center font-[iloveglitter] text-5xl md:text-6xl text-white mt-12">Comentarios destacados de nuestras clientas</h1>
@@ -16,7 +17,7 @@ function Comentarios() {
                     <div className="font-[abeatbykai] md:text-lg text-xs text-[#036C65] grid items-center grid-cols-1 gap-4 md:grid-cols-3 place-content-center p-6">
                         <div className="p-6 border-4 border-[#036C65]  rounded-xl  bg-[#FFE4E1]  divide-[#EB5765]">
                             <div>
-                                <Rating name="read-only" value={5} readOnly />
+                                <Rating name="read-only" value={5} readOnly color='#EB5765' />
                             </div>
                             <div className="text-justify">
                                 <p className="mt-4">Es un lugar muy limpio y lindo, perfecto para relajarse. El personal es super amable. Me hiso sentir muy comoda.</p>
