@@ -291,7 +291,7 @@ function InformacionPersonal() {
                                                 rango === 3 ? (
                                                     <>
                                                         <h1 className="font-bold text-2xl text-center text-purple-950 drop-shadow-[1px_1px_var(--tw-shadow-color)] shadow-[black] ">Rango VIP</h1>
-                                                        <img className='m-auto md:w-1/3' src={`../../../pictures/nuevoVIP.png`} alt="" />
+                                                        <img className='m-auto md:w-1/3' src={`../../../pictures/rangoVIP2.png`} alt="" />
                                                     </>
                                                 ) : (
                                                     <>
