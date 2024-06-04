@@ -27,6 +27,7 @@ import {
   faAngleLeft,
   faAngleRight,
 } from "@fortawesome/free-solid-svg-icons";
+import { Helmet, HelmetProvider } from "react-helmet-async";
 
 const steps = ["Productos", "Pago", "Confirmación", "Ticket"];
 
@@ -283,6 +284,11 @@ export default function Cita({ producto }) {
 
   return (
     <LayoutPrincipal>
+      <HelmetProvider>
+        <Helmet>
+            <script src="../../scripts/index.js"></script>
+        </Helmet>
+      </HelmetProvider>
       <div className="p-24">
         <Box sx={{ width: "100%" }}>
           <Stepper

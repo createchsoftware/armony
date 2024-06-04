@@ -270,7 +270,7 @@ function Navbar() {
                                                 ) : (
                                                     rango === 3 ? (
                                                         <img
-                                                            src="../../../pictures/nuevoVIP.png"
+                                                            src="../../../pictures/rangoVIP2.png"
                                                             alt="Eres rango VIP."
                                                             className="w-4 h-auto m-auto ml-2"
                                                         />

@@ -304,7 +304,7 @@ function ListaDeseo() {
 
     const resumenList = contResumen.map(item => (
         (item.tipoProducto === 'venta' &&
-            <li key={item.PKidPS} className='flex justify-between mb-2'>
+            <li key={item.PKidPS} className='flex gap-2 justify-between mb-2'>
                 <h1 className='truncate'>{item.nombre}</h1>
                 <h1 className='text-[#036d63]'>${item.precio}</h1>
             </li>
@@ -390,10 +390,10 @@ function ListaDeseo() {
             <div>
                 <p className='mt-2  text-[#0BC26A] text-lg'>{'$' + producto.precio + ' MXN'}</p>
                 <Rating className='' value={producto.valoracion} readOnly unratedcolor="amber" ratedcolor="amber" />
-                <h3 className='mt-0 text-xl font-bold'>{producto.nombre}</h3>
+                <h3 className='mt-0 text-xl font-bold truncate'>{producto.nombre}</h3>
                 <p className='mt-0 text-xs text-justify'>
-                    {producto.descripcion.length > 147 ? (
-                        producto.descripcion.substring(0, 147) + '...'
+                    {producto.descripcion.length > 120 ? (
+                        producto.descripcion.substring(0, 120) + '...'
                     ) : (
                         producto.descripcion
                     )}
@@ -487,9 +487,9 @@ function ListaDeseo() {
                                 </nav>
                             </aside>
                         </div>
-                        <div className='grid w-full h-full menu-deseo'>
+                        <div className='grid w-full h-full content-start menu-deseo'>
                             <img src="../../../pictures/decoArmony1.png" alt="" className='absolute -rotate-90 -right-7 w-60 h-180 top-60' />
-                            <div className='flex justify-center mt-5'>
+                            <div className='flex h-max justify-center mt-5'>
                                 <form action="" className='flex h-10 items-center w-4/5 justify-center border-2 border-[rgb(255,181,167)] rounded-lg'>
                                     <input
                                         className='w-full h-full px-5 py-2 rounded-lg'
@@ -500,7 +500,7 @@ function ListaDeseo() {
                                     <FontAwesomeIcon icon={faMagnifyingGlass} className='mx-4 text-[rgb(255,181,167)] text-xl' />
                                 </form>
                             </div>
-                            <div className='flex justify-end py-2 pr-24'>
+                            <div className='flex h-max justify-end py-2 pr-24'>
                                 <div className="flex items-center">
                                     <Menu as="div" className="relative inline-block text-left">
                                         <div>
@@ -595,13 +595,16 @@ function ListaDeseo() {
                                 {showProduct && contResumen.filter(producto => producto.tipoProducto === 'venta').length === 0 &&
                                     <p className='m-auto'>No se encontraron productos.</p>
                                 }
+                                {boton2 === 'lista-boton-on' && contResumen.filter(producto => producto.tipoProducto === null).length === 0 &&
+                                    <p className='m-auto'>No se encontraron servicios.</p>
+                                }
                             </div>
                         </div>
                     </div>
                     <div className={resumen}>
                         <div className={width}>
                             {/* {contResumen.filter(producto => producto.tipoProducto === 'venta').length === 0 ? ( */}
-                            {contResumen.length === 0 ? (
+                            {contResumen.filter(producto => producto.tipoProducto === 'venta').length === 0 ? (
                                 <h1 className='py-6 text-xl text-center'>No hay productos</h1>
                             ) : (
                                 <>
