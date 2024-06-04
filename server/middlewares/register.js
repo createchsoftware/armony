@@ -9,7 +9,7 @@ dotenv.config();
 
 async function InsertUser(solicitud,respuesta,siguiente){
     if(solicitud.headers.cookie == undefined){
-        respuesta.send({megumin_cookie:false});
+        return respuesta.send({megumin_cookie:false});
     }
     else{
         let galletas = solicitud.headers.cookie.split("; ");

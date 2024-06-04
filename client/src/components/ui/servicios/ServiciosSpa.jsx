@@ -108,7 +108,6 @@ export default function ServicioEstetica() {
   };
 
   function changeSt() {
-    console.log(5);
     setSt(!st);
   }
 
@@ -151,21 +150,22 @@ export default function ServicioEstetica() {
       </div>
       <div className="">
         <div>
-          {toggleState == 1 ? (
+          <div className={toggleState == 1 ? "block" : "hidden"}>
             <ServiciosYFiltro
               servicios={facial}
               log={log}
               idUser={id}
               st={changeSt}
             />
-          ) : (
+          </div>
+          <div className={toggleState == 2 ? "block" : "hidden"}>
             <ServiciosYFiltro
               servicios={corpo}
               log={log}
               idUser={id}
               st={changeSt}
             />
-          )}
+          </div>
           <main className="px-4 mx-auto max-w-7xl sm:px-6 lg:px-8">
             <div className="w-full mx-auto my-16 text-center">
               <p className="text-4xl md:text-6xl w-3/4 md:w-full my-10 mx-auto text-center font-[ILoveGlitter] text-[#036C65]">

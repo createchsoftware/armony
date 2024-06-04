@@ -14,7 +14,7 @@ proximamente.innerHTML = `<h1 className="soon-title">
 </h1>
 <h4 className="soon-desc">
      La contraseña esta <br />
-     siendo procesada  <br />
+     siendo procesada.  <br />
 </h4>`;
 
 
@@ -56,7 +56,7 @@ document.getElementById('step3').addEventListener('click',async ()=>{
         let toastBox = document.getElementById('toastBox');
         let div = document.createElement('div');
         div.classList.add('toast');
-        div.innerHTML = '<div id="texto">Debes de aceptar las politicas</div><div id="icono"><i class="fa-solid fa-lock"></i></div>';
+        div.innerHTML = '<div id="texto">Debes de aceptar las políticas</div><div id="icono"><i class="fa-solid fa-lock"></i></div>';
         div.classList.add('blue');
         toastBox.appendChild(div);
         setTimeout(()=>{
@@ -129,7 +129,7 @@ document.getElementById('step3').addEventListener('click',async ()=>{
         for(let i in arreglo){
             let div = document.createElement('div');
             div.classList.add('toast');
-            div.innerHTML = '<div id="texto">tu contraseña '+arreglo[i]+'</div>    <div id="icono"><i class="fa-solid fa-circle-xmark"></i></div>';
+            div.innerHTML = '<div id="texto">Tu contraseña '+arreglo[i]+'</div>    <div id="icono"><i class="fa-solid fa-circle-xmark"></i></div>';
             toastBox.appendChild(div);
 
             setTimeout(()=>{
@@ -150,12 +150,12 @@ document.getElementById('step3').addEventListener('click',async ()=>{
 
             proximamente.innerHTML = `<h1 className="soon-title">
             <i id='alarm' class="fa-solid fa-user-plus"></i>
-            Insercion de Usuario
+            Inserción de Usuario
             <i id='alarm' class="fa-solid fa-user-plus"></i>
             </h1>
             <h4 className="soon-desc">
-                Felicidades, en un momento se creara tu cuenta <br />
-                este proceso puede tardar unos segundos, se paciente <br />
+                Felicidades, en un momento se creará tu cuenta. <br />
+                Este proceso puede tardar unos segundos, se paciente. <br />
             </h4>`;
         }
         

@@ -29,6 +29,7 @@ const StyledRating = styled(Rating)({
 });
 
 function ListaDeseo() {
+    
     const navigate = useNavigate();
 
     const [boton1, setBoton1] = useState('lista-boton');
@@ -44,7 +45,10 @@ function ListaDeseo() {
     const [sort, setSort] = useState('')
     const [log, setLog] = useState(false); //<<< PARA EL INICIO DE SESION
     const [login, setLogin] = useState(false);
-
+   
+//  useEffect(()=>{
+//         localStorage.removeItem("favoritos")
+//             },[])
     async function recibido() {
         const respuesta = await fetch("/api/logueado", {
             method: "GET",
@@ -73,7 +77,7 @@ function ListaDeseo() {
     const filtrar = (type) => {
         settipoProducto(type);
     }
-
+    
     const [contResumen, setContResumen] = useState([
         // CONTENIDO COMENTADO. ¡¡¡USAR SOLAMENTE PARA PRUEBAS ES CASO DE NO HABER AUN CONEXION FRONT-BACK!!!
         // {
@@ -224,22 +228,19 @@ function ListaDeseo() {
 
     useEffect(() => {
         const Prod = async () => {
-
-
             if (Uid) {
-                try {
-                    if (Uid) {
-                        console.log("Uid", Uid)
-                        //este fetch traera todos los favoritos del cliente,solo incluyendo servicios y productos
-                        const response = await fetch(`/api/admin/favoritos/FavoritosbyId/${Uid}`)
-                        const data = await response.json();
-                        setContResumen(data)
-                        console.log("data", data)
-                    }
-                } catch (error) {
-                    console.error("hubo error :", error)
-                }
+            try {
+                    //este fetch traera todos los favoritos del cliente,solo incluyendo servicios y productos
+                    const response = await fetch(`/api/admin/favoritos/FavoritosbyId/${Uid}`)
+                    const data = await response.json();
+                    setContResumen(data)
+            } catch (error) {
+                console.error("hubo error :", error)
             }
+        }else{
+        let myArray = await JSON.parse(localStorage.getItem("favoritos")) || [];
+        setContResumen(myArray)
+    }
         }
         Prod()
     }, [Uid])
@@ -286,9 +287,19 @@ function ListaDeseo() {
     }
 
     const removeProducto = (itemId) => {
+        if(Uid){
         eliminarFav(itemId)
         setContResumen(contResumen.filter(item => item.pkIdPS !== itemId));
+    }else{
+        RLSFavoritos(itemId)
+        setContResumen(contResumen.filter(item => item.pkIdPS !== itemId));
+    }
     };
+    const RLSFavoritos = (id) => {
+        let favoritos = JSON.parse(localStorage.getItem("favoritos")) || [];
+        favoritos = favoritos.filter((obj) => obj.pkIdPS !== id);
+        localStorage.setItem("favoritos", JSON.stringify(favoritos));
+      };
 
     const eliminarFav = async (idProServ) => {
         try {
@@ -363,6 +374,7 @@ function ListaDeseo() {
             return 0;
         }
     })
+   
 
     const contenido = filteredProducts.map(producto => (
         <li key={producto.pkIdPS} className='grid border-4 bg-white border-[#E2B3B7] p-6 py-2 rounded-xl mx-6 mb-6'>
