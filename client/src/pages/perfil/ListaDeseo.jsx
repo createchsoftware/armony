@@ -213,20 +213,34 @@ function ListaDeseo() {
     }
 
     useEffect(() => {
+          iterateArray();
+      }, []);
+  
+
+      const iterateArray = async () => {
+        let myArray = await JSON.parse(localStorage.getItem("favoritos")) || [];
+        console.log(myArray);
+      };
+
+    useEffect(() => {
         const Prod = async () => {
+
+    
+            if (Uid) {
             try {
-                if (Uid) {
                     //este fetch traera todos los favoritos del cliente,solo incluyendo servicios y productos
-                    const response = await fetch(`api/admin/favoritos/FavoritosbyId/${Uid}`)
+                    const response = await fetch(`/api/admin/favoritos/FavoritosbyId/${Uid}`)
                     const data = await response.json();
                     setContResumen(data)
-                }
+                    console.log("hola")
+                    console.log(data)
             } catch (error) {
                 console.error("hubo error :", error)
             }
         }
+        }
         Prod()
-    }, [Uid])
+    },[Uid])
 
     function classNames(...classes) {
         return classes.filter(Boolean).join(' ');
