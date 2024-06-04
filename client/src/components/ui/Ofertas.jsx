@@ -160,11 +160,9 @@ function Ofertas({ producto, handleClickCarrito, noDesc }) {
                     <p className='text-center'>{producto.descripcionOferta}</p>
                     <div className='mt-2'>
                         <button onClick={() => handleClick(producto)} className=" text-xs transition-all duration-300 px-2 m-auto hover:bg-[#036C65] hover:  hover:[#036C65] hover:ring-offset-1 group relative flex h-10 items-center justify-center overflow-hidden rounded-xl border-2 bg-[#EB5765] font-[abeatbykai] text-neutral-200">Agregar <IconoAgregarAlCarrito /> <div className="w-0 translate-x-[100%] pl-0 opacity-0 transition-all duration-200 group-hover:w-0 group-hover:translate-x-0 group-hover:pl-1 group-hover:opacity-100"></div></button>
-
                     </div>
                 </div>
-            </div >
-            )
+            </div>
         </>
     )
 }
