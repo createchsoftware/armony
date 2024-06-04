@@ -146,15 +146,17 @@ routerCliente.delete("/delete/cliente_patologia", async (req, res) => {
 
 routerCliente.get('/StatusSus/:id', async (req, res) => {
   try {
+
+    console.log('hola')
     // Obtenemos el ID del cliente desde los parámetros de la URL
     const idCliente = req.params.id;
     // Realizamos la consulta a la base de datos
     const resultado = await searchStatusSus(conexion, { idCliente });
 if(resultado[0]){
 
-    if (resultado[0].pkIdVenta==1) {
+    if (resultado[0].activo==1) {
       return res.status(404).send(true);
-    }else if(resultado[0].pkIdVenta==0){
+    }else if(resultado[0].activo==0){
       return res.status(200).json(false);
     }else {
     return res.status(200).json(false);
