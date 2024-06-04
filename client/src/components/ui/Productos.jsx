@@ -155,7 +155,6 @@ function Productos({ productos }) {
                                         <FavoriteBorderIcon />
                                     }
                                 </Box> */}
-                                {console.log("esta en favoritos: ", producto.favorito)}
                                 <Box
                                     className="absolute flex justify-end float-right -mr-3"
                                     sx={{

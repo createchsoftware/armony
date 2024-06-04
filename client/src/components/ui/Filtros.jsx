@@ -81,7 +81,6 @@ export default function Filtros() {
         },
       });
       respuestaJson = await respuesta.json();
-      console.log("id en uso: ", respuestaJson.clave);
       await setId(respuestaJson.clave);
     } catch (error) {
       console.log("Error");
@@ -98,7 +97,6 @@ export default function Filtros() {
 
   useEffect(() => {
     setTimeout(() => {
-      console.log("idFavoritos:", id);
       fetch(`/api/admin/favoritos/ProductFavoritosbyId/${id}`)
         .then((response) => {
           if (!response.ok) {
@@ -108,7 +106,6 @@ export default function Filtros() {
         })
         .then((data) => {
           setProductosFavorites(data);
-          console.log("favoritos" + data);
         })
         .catch((error) => {
           //setErrorSpa(error.message);
@@ -183,7 +180,6 @@ export default function Filtros() {
   //useEffect para obtener los productos
   useEffect(() => {
     setTimeout(() => {
-      console.log("idFinal:", id);
       fetch(`/api/admin/productos/getProducts/${id}`)
         .then((response) => {
           if (!response.ok) {
