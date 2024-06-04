@@ -231,7 +231,7 @@ export default function Filtros() {
     // Filtro por valoración
     if (rating) {
       updatedProducts = updatedProducts.filter(
-        (product) => product.valoracion === rating
+        (product) => Math.floor(parseFloat(product.valoracion)) === rating
       );
     }
 
