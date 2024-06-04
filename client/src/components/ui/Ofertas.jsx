@@ -151,7 +151,7 @@ function Ofertas({ producto, handleClickCarrito, noDesc }) {
             <div className='grid h-64 place-content-between'>
                 <p className='text-[#0BC26A] pt-4 text-lg text-center'>{'$' + Number(producto.precio) + ' MXN'} <span className='text-[#000000] line-through'>{'$' + formatPrice(Number(producto.precio) + 120)}</span></p>
                 <div className='flex justify-center'>
-                    <Rating className='' value={5} readOnly unratedcolor="amber" ratedcolor="amber" />
+                    <Rating className='' value={producto.valoracion} readOnly unratedcolor="amber" ratedcolor="amber" />
                 </div>
                 <h6 className='pt-2 text-xl font-bold text-center'>{producto.nombre.length > 27 ? producto.nombre.substring(0, 27) + '...' : producto.nombre}</h6>
                 <p className='text-center'>{producto.descripcionOferta}</p>
