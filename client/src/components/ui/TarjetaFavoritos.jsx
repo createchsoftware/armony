@@ -1,4 +1,5 @@
 import { styled } from "@mui/material/styles";
+import { useState, useEffect } from "react";
 import Box from "@mui/material/Box";
 import { Rating } from "@mui/material";
 import { RiCalendarTodoFill } from "react-icons/ri";
@@ -28,6 +29,40 @@ function hr(hr) {
 }
 
 const TarjetaFavoritos = ({ props }) => {
+  const [login, setLogin] = useState(false);
+  const [fav, setFav] = useState(props.favorito);
+
+  const callFav = async () => {
+    if (props.id != 0) {
+      try {
+        const respuesta = await fetch("/api/admin/productos/setFavorito", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            id: props.id,
+            idPS: props.ps,
+            estado: props.favorito,
+          }),
+        });
+
+        let respuestaJson = await respuesta.json();
+        if ((await respuestaJson[0].res) == true) {
+          setFav(!fav);
+        }
+      } catch (error) {
+        console.log(error, "error");
+      }
+    }
+  };
+
+  useEffect(() => {
+    if (fav !== props.favorito) {
+      props.st();
+    }
+  }, [fav]);
+
   return (
     <div className="grid place-content-between content-between">
       <div>
@@ -51,6 +86,7 @@ const TarjetaFavoritos = ({ props }) => {
             <div className="object-bottom">
               <div className="w-[60%] grid place-content-end relative -left-4 -top-4">
                 <StyledRating
+                  onClick={() => callFav()}
                   name="customized-color"
                   defaultValue={props.favorito}
                   max={1}
