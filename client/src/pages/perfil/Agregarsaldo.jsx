@@ -17,6 +17,10 @@ function AgregarSaldo() {
     const [confirm, setConfirm] = useState(false);
     const [ticket, setTicket] = useState(false);
 
+    const [card, setCard] = useState('0000 0000 0000 0000'); // parte de lo que se vera en el ticket
+    const [date, setDate] = useState('');
+    const [time,setTime] = useState('');
+
     function ModificarArray(number) {
 
         // cambiar el arreglo que se presenta en pantalla
@@ -68,6 +72,8 @@ function AgregarSaldo() {
 
         e.preventDefault();
 
+        setConfirm(!confirm);
+
         const respuesta = await fetch('/api/recargaSaldo', {
             method: 'POST',
             headers: {
@@ -80,23 +86,37 @@ function AgregarSaldo() {
         })
 
         if (!respuesta.ok) {
-            console.log('hubo un problema en la conexion servidor-cliente')
+            toast(<div>{'Al parecer hubo un problema al insertar saldo a tu monedero, intentelo mas tarde'}
+                <FontAwesomeIcon icon={faCircleExclamation} className='ml-2 text-red-700' />
+            </div>);
         }
 
         const respuestaJson = await respuesta.json();
 
 
         if (respuestaJson.mensaje) {
-            console.log(respuestaJson.mensaje);
+            toast(<div>{respuestaJson.mensaje}
+                <FontAwesomeIcon icon={faCircleExclamation} className='ml-2 text-red-700' />
+            </div>);
         }
 
-        // if(respuestaJson.redirect){
-        //     console.log('hola');
-        //     window.location.href = respuestaJson.redirect;
-        // }
 
-        setConfirm(!confirm)
-        setTicket(!ticket)
+
+        if(respuestaJson.redirect){
+            setCard(respuestaJson.card); 
+            setTime(respuestaJson.time);
+            setDate(respuestaJson.date);
+
+            setTicket(!ticket); // mostrar el ticket
+
+            await new Promise(resolve=> setTimeout(resolve, 5000)); // hacer que se espera unos segundos
+
+            window.location.href = respuestaJson.redirect;  // redireccionarlo al monedero
+        }
+
+
+        
+        
     }
 
     async function seleccionarTarjeta(tarjeta) {
@@ -226,8 +246,8 @@ function AgregarSaldo() {
                 <div className='cart-fondo'>
                     <div className='cart-fx'>
                         <div className='grid w-1/3 p-6 m-auto bg-white mt-60 rounded-2xl'>
-                            <h1 className='text-[#EB5765] text-2xl mb-8 justify-self-center text-center'>¿Estás segura?</h1>
-                            <h1 className='mb-8 text-center justify-self-center'>Da click es aceptar si deseas continuar con la compra.</h1>
+                            <h1 className='text-[#EB5765] text-2xl mb-8 justify-self-center text-center'>¿Estás segure?</h1>
+                            <h1 className='mb-8 text-center justify-self-center'>Da click en aceptar si deseas continuar con la compra.</h1>
                             <button onClick={handleSubmit} className='px-4 py-2 bg-[#EB5765] rounded-full text-white duration-200 hover:bg-[#ffb5a7]'>Aceptar</button>
                         </div>
                     </div>
@@ -248,17 +268,17 @@ function AgregarSaldo() {
                                 <div className='flex justify-between'>
                                     <h1>Tarjeta</h1>
                                     <p> . . . . . . . . . . . . </p>
-                                    <h1>412309359815</h1>
+                                    <h1>{card}</h1>
                                 </div>
                                 <div className='flex justify-between'>
                                     <h1>Fecha</h1>
                                     <p> . . . . . . . . . . . . </p>
-                                    <h1>08/05/2024</h1>
+                                    <h1>{date}</h1>
                                 </div>
                                 <div className='flex justify-between'>
                                     <h1>Hora</h1>
                                     <p> . . . . . . . . . . . . </p>
-                                    <h1>10:10 a.m.</h1>
+                                    <h1>{time}</h1>
                                 </div>
                             </div>
                             <button onClick={goMonedero} className='w-1/3 justify-self-center px-4 py-2 bg-[#EB5765] rounded-full text-white duration-200 hover:bg-[#ffb5a7]'>Regresar</button>
