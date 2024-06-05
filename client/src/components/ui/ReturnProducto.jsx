@@ -80,10 +80,10 @@ function Compras({ producto }) {
                                     <p>Sesiones</p>
                                     <p>{`1 x $${producto.precio}`}</p>
                                 </div>
-                                <div className="flex justify-between">
+                                {/* <div className="flex justify-between">
                                     <p>IVA:</p>
                                     <p>$0.00</p>
-                                </div>
+                                </div> */}
                                 <div className="flex justify-between">
                                     <p>Descuento</p>
                                     <p>$0.00</p>

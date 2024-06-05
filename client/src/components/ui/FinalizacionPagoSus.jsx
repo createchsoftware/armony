@@ -23,7 +23,7 @@ const FinalizacionPagoProd = ({ producto }) => {
     const navigate = useNavigate();
 
     const subTotal = localStorage.getItem('totalSuscripcion');
-    const puntos = localStorage.getItem('puntosSuscripcion');
+    const puntos = localStorage.getItem('puntos');
     // const ivaTotal = (parseFloat(subTotal) * 0.08).toFixed(2);
     const total = (parseFloat(subTotal)).toFixed(2);
 
@@ -38,7 +38,7 @@ const FinalizacionPagoProd = ({ producto }) => {
     }
 
     function exit() {
-        window.location.href = "/perfil";
+        window.location.href = "/spa";
     }
 
 
