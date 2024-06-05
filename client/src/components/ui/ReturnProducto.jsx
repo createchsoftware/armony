@@ -1,9 +1,31 @@
 import { useState } from "react"
-//import { useNavigate } from "react-router-dom";
+import { Rating } from '@mui/material';
+import { useNavigate } from "react-router-dom";
 
 function Compras({ producto }) {
     const [info, setInfo] = useState(false);
-    //const navigate = useNavigate();
+    const navigate = useNavigate();
+
+    const handleComprar = (productoComprar) => {
+        // navigate('/spa/comprar');
+        const productoBuy = {
+            id: productoComprar.id,
+            nombre: productoComprar.nombre,
+            precio: parseFloat(productoComprar.precio/productoComprar.cantidad),
+            cantidad: 1,
+            descripcion: productoComprar.descripcion,
+            valoracion: productoComprar.valoracion,
+            imagen: productoComprar.imagen,
+        };
+        navigate('/spa/comprar', { state: { producto: [productoBuy] } });
+    };
+
+    console.log(producto);
+    const date = new Date(producto.date);
+
+    const horas = date.getHours();
+    const minutos = date.getMinutes();
+    const segundos = date.getSeconds();
 
     return (
         <>
@@ -11,7 +33,7 @@ function Compras({ producto }) {
                 <div className="flex justify-between">
                     <div className="flex gap-4">
                         <p className="text-[#00000085]">{`${producto.day} de ${producto.month} de ${producto.year}`}</p>
-                        <p className="text-[#00000085]">{`Hora: ${producto.hora}`}</p>
+                        <p className="text-[#00000085]">{`Hora: ${horas}:${minutos}:${segundos}`}</p>
                     </div>
                     <p className="text-[#00000085]">Pedido #{producto.id_venta}</p>
                 </div>
@@ -42,10 +64,11 @@ function Compras({ producto }) {
                         <h1 className=" justify-self-center mb-5 text-xl">{`Fecha: ${producto.day} / ${producto.month} / ${producto.year}`}</h1>
                         <div className="flex justify-between px-12">
                             <div className="grid w-[35%] justify-items-center">
-                                <h1 className="text-2xl font-bold">{producto.nombre}</h1>
+                                <h1 className="text-2xl font-bold overflow-hidden">{producto.nombre}</h1>
                                 <img src={producto.imagen} alt="" className="w-full h-auto aspect-square rounded-2xl" />
                                 <h1 className="text-xl text-[#EB5765]">Calificación de los clientes:</h1>
                                 <h1 className="text-xl text-[rgb(3,109,99)]">Excelente</h1>
+                                <Rating className='' value={producto.valoracion} readOnly unratedcolor="amber" ratedcolor="amber" />
                             </div>
                             <div className="grid w-[55%]">
                                 <div className="flex justify-center items-center border-b border-t border-black py-1">
@@ -79,7 +102,7 @@ function Compras({ producto }) {
                         </div>
                         <div className="grid justify-items-center">
                             <button className='w-48 px-4 py-2 h-max mb-2 text-white rounded-full bg-[#EB5765] duration-200 hover:bg-[#ffb5a6]'>Dar una opinión</button>
-                            <button className='w-48 px-4 py-2 h-max mb-2 text-white rounded-full bg-[#EB5765] duration-200 hover:bg-[#ffb5a6]'>Volver a comprar</button>
+                            <button onClick={() => handleComprar(producto)} className='w-48 px-4 py-2 h-max mb-2 text-white rounded-full bg-[#EB5765] duration-200 hover:bg-[#ffb5a6]'>Volver a comprar</button>
                             <button onClick={() => setInfo(!info)} className='w-48 px-4 py-2 h-max mb-2 text-white rounded-full bg-[#EB5765] duration-200 hover:bg-[#ffb5a6]'>Cerrar</button>
                         </div>
                     </div>

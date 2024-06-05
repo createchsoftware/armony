@@ -3,7 +3,7 @@ import platino from '../../../public/pictures/nuevoPlatino.png'
 import vip from '../../../public/pictures/nuevoVIP.png'
 import greenRight from '../../../public/pictures/greenRight.png'
 import greenLeft from '../../../public/pictures/greenLeft.png'
-import rangos from '../../../public/pictures/Rangos.png'
+import rangos from '../../../public/pictures/rangos.png'
 
 function Tarjetas() {
     return (

@@ -128,7 +128,7 @@ function Perfil() {
                                 <div className='rounded-full place-content-center md:bg-[#D9D9D9]'><img className='w-10 md:w-12' src="../../pictures/suscripciones.png" alt="" /></div>
                                 <div>
                                     <h2>Suscripción</h2>
-                                    <p className='text-gray-500'>Mis membresía</p>
+                                    <p className='text-gray-500'>Mi membresía</p>
                                 </div>
                             </div>
                             <div className='flex items-center justify-end'>

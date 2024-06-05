@@ -1,4 +1,5 @@
 import { useState } from "react"
+import { Rating } from '@mui/material';
 
 function ReturnCitas({ citas }) {
     const [info, setInfo] = useState(false);
@@ -40,10 +41,11 @@ function ReturnCitas({ citas }) {
                             <h1 className=" justify-self-center mb-5 text-xl">{`Fecha: ${citas.day} / ${citas.month} / ${citas.year}`}</h1>
                             <div className="flex justify-between px-12">
                                 <div className="grid w-[35%] justify-items-center">
-                                    <h1 className="text-2xl font-bold">{citas.nombre}</h1>
+                                    <h1 className="text-2xl font-bold overflow-hidden">{citas.nombre}</h1>
                                     <img src={citas.imagen} alt="" className="w-full h-auto rounded-2xl" />
                                     <h1 className="text-xl text-[#EB5765]">Calificación de los clientes:</h1>
                                     <h1 className="text-xl text-[rgb(3,109,99)]">Excelente</h1>
+                                    <Rating className='' value={citas.valoracion} readOnly unratedcolor="amber" ratedcolor="amber" />
                                 </div>
                                 <div className="grid w-[55%]">
                                     <div className="flex justify-center items-center border-b border-t border-black py-1">
