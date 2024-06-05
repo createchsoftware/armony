@@ -61,7 +61,7 @@ const FinalizacionPagoProd = ({ producto, next }) => {
             </div>
             {/* Contenido de los servicios pagados */}
 
-            <div className="rounded-xl shadow-md overflow-y-auto w-[40rem] mx-auto my-5 h-[25rem] border-2 border-gray">
+            <div className="rounded-xl shadow-md overflow-y-auto w-[40rem] mx-auto my-5  border-2 border-gray">
               {allProducts.map((producto) => {
                 return (
                   <div>
