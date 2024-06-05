@@ -45,6 +45,17 @@ function ListaDeseo() {
     const [login, setLogin] = useState(false);
 
 
+
+    // Otras variables de estado y funciones
+    if (!localStorage.getItem('loaded3')) {
+        localStorage.setItem('loaded3', 'true');
+        window.location.reload();
+    }
+
+    localStorage.removeItem('loaded');
+    localStorage.removeItem('loaded2');
+
+
     async function recibido() {
         const respuesta = await fetch("/api/logueado", {
             method: "GET",

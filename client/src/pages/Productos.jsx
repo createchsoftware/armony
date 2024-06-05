@@ -36,6 +36,13 @@ const Productos = () => {
   const [sus, setSus] = useState(false); //<<< CARACTERISTICA GRAFICA DE QUE EL USUARIO ES SOCIO
   const [clave, setClave] = useState(false);
 
+  localStorage.removeItem('loaded');
+  localStorage.removeItem('loaded2');
+  localStorage.removeItem('loaded3');
+  localStorage.removeItem('loaded4');
+
+
+
   async function callRango() {
     const respuesta3 = await fetch("/api/perfil/rangos", {
       method: "GET",

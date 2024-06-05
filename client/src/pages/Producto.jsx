@@ -86,6 +86,11 @@ function Producto() {
         window.location.reload();
     }
 
+    localStorage.removeItem('loaded2');
+    localStorage.removeItem('loaded3');
+
+
+
     let respuestaJson = null;
     async function checkLogin() {
         try {

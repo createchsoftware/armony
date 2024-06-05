@@ -32,6 +32,17 @@ const sortOptions2 = [
 ];
 
 function Movimientos() {
+
+  // Otras variables de estado y funciones
+  if (!localStorage.getItem('loaded4')) {
+    localStorage.setItem('loaded4', 'true');
+    window.location.reload();
+  }
+
+  localStorage.removeItem('loaded');
+  localStorage.removeItem('loaded2');
+  localStorage.removeItem('loaded3');
+
   async function checkLogin() {
     let respuestaJson = null;
     try {

@@ -8,6 +8,11 @@ export default function ServicioEstetica() {
   const [id, setId] = useState(0);
   const [st, setSt] = useState(false);
 
+  localStorage.removeItem('loaded');
+  localStorage.removeItem('loaded2');
+  localStorage.removeItem('loaded3');
+  localStorage.removeItem('loaded4');
+
   let respuestaJson = null;
   async function checkLogin() {
     try {

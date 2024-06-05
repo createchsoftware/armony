@@ -18,7 +18,12 @@ const sortOptions = [
   { name: "1 año", current: true, value: 365 }, //365 dias
 ];
 
+
 function Pedidos() {
+
+  localStorage.removeItem('loaded');
+  localStorage.removeItem('loaded2');
+  localStorage.removeItem('loaded3');
   async function checkLogin() {
     let respuestaJson = null;
     try {

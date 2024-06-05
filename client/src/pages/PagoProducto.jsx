@@ -53,6 +53,11 @@ export default function Cita({ producto }) {
     window.location.reload();
   }
 
+  localStorage.removeItem('loaded');
+  localStorage.removeItem('loaded3');
+  localStorage.removeItem('loaded4');
+
+
   let respuestaJson = null;
   async function checkLogin() {
     try {
