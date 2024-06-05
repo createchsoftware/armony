@@ -104,16 +104,19 @@ btn.addEventListener('click', async()=>{
     //fecha
     if(dia.value && dia.value !=''){
         formData.append('dia_id',dia.id); formData.append('dia',dia.value);
+        console.log('si hubo un dia');
         cantidad++;
     }
        
     if(mes.value && mes.value !=''){
         formData.append('mes_id',mes.id); formData.append('mes',mes.value);
+        console.log('si hubo un mes');
         cantidad++;
     }
      
     if(año.value && año.value !=''){
-        formData.append('año_id',año.id); formData.append('año',año.value);
+        formData.append('year_id',año.id); formData.append('year',año.value);
+        console.log('si hubo un ano');
         cantidad++;
     }
 

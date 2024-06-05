@@ -110,7 +110,7 @@ export default function Cita() {
     // LocalBase()
   };
   const paso6 = () => {
-    removeLSPago(); 
+    removeLSPago();
   };
 
   const restart = () => {
@@ -211,7 +211,7 @@ export default function Cita() {
     localStorage.removeItem("Fecha seleccionada");
     localStorage.removeItem("NombreEspecialista");
 
-    
+
   };
 
   const removeLSPago = () => {
@@ -343,8 +343,8 @@ export default function Cita() {
                 <div
                   className={
                     activeStep !== 6
-                    ? "grid grid-cols-2 content-between"
-                    : "grid grid-cols-3 content-between"
+                      ? "grid grid-cols-2 content-between"
+                      : "grid grid-cols-3 content-between"
                   }
                 >
                   <button
@@ -386,7 +386,7 @@ export default function Cita() {
                     // hidden={activeStep === 5 || activeStep === 4}
                     onClick={handleClick}
                     // disabled={activeStep === steps.length - 1}
-                    className="px-4 py-2 mx-auto text-xl text-white rounded-full bg-rose-400 hover:bg-red-200 duration-200"
+                    className="px-4 py-2 mx-auto text-xl text-white duration-200 rounded-full bg-rose-400 hover:bg-red-200"
                   >
                     {nextButtonText}
                   </button>

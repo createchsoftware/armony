@@ -71,6 +71,33 @@ export default function Filtros() {
   const [precio, setPrecio] = useState(null);
   const [id, setId] = useState(null);
   const [soon, setSoon] = useState(false);
+  const [st, setSt] = useState(false);
+  const [log, setLog] = useState(false);
+
+  async function recibido() {
+    const respuesta = await fetch("/api/logueado", {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+
+    if (!respuesta.ok) {
+      setLog(false);
+    }
+
+    let respuestaJson = await respuesta.json();
+
+    if (respuestaJson.logueado == true) {
+      setLog(true);
+    } else {
+      setLog(false);
+    }
+  }
+
+  function changeSt() {
+    setSt(!st);
+  }
 
   async function getId() {
     let respuestaJson = null;
@@ -96,6 +123,25 @@ export default function Filtros() {
   useEffect(() => {
     getId();
   }, []);
+
+  // Función para resetear los filtros
+  const resetFilters = () => {
+    setSortOption(ordenamiento[0]);
+    setCategories([]);
+    setMarcas([]);
+    setSearch("");
+    setRating(0);
+    setPrecio(null);
+    // Resetear las opciones de subcategorías y filtros
+    subCategories.forEach(subCategory => {
+      subCategory.options.forEach(option => option.checked = false);
+    });
+    filters.forEach(filter => {
+      filter.options.forEach(option => option.checked = false);
+    });
+    setFilteredProducts(allProducts); // Mostrar todos los productos
+  };
+
 
   useEffect(() => {
     setTimeout(() => {
@@ -183,22 +229,33 @@ export default function Filtros() {
 
   //useEffect para obtener los productos
   useEffect(() => {
-    setTimeout(() => {
-      console.log("idFinal:", id);
-      fetch(`/api/admin/productos/getProducts/${id}`)
-        .then((response) => {
-          if (!response.ok) {
-            throw new Error("Error al obtener los productos");
-          }
-          return response.json();
-        })
-        .then((data) => {
+
+    const fetchProducts = async () => {
+      let response;
+      try {
+        if (id !== null && id !== 0 && id !== undefined) {
+          response = await fetch(`/api/admin/productos/getProducts/${id}`);
+          const data = await response.json();
           setAllProducts(data);
-        })
-        .catch((error) => {
-          console.log("error", error);
-        });
-    }, [1000]);
+        } else {
+          response = await fetch(`/api/admin/productos/getProductsAll`);
+          const data = await response.json();
+          setAllProducts(data);
+        }
+
+        if (!response.ok) {
+          throw new Error("Error al obtener los productos");
+        }
+
+      } catch (error) {
+        console.log("error", error);
+      }
+    };
+
+    const timeoutId = setTimeout(fetchProducts, 1000);
+
+    // Cleanup function to clear the timeout if the component unmounts or id changes
+    return () => clearTimeout(timeoutId);
   }, [id]);
 
   // Función para manejar la búsqueda
@@ -567,7 +624,7 @@ export default function Filtros() {
 
           <main className="px-4 mx-auto max-w-7xl sm:px-6 lg:px-8">
             <div className="grid justify-around gap-8 pt-24 pb-6 border-b border-gray-200 md:grid-cols-3 grid-cols2 ">
-              <h1 className="text-xl font-bold tracking-tight text-gray-900 md:text-4xl">
+              <h1 onClick={resetFilters} className="text-xl font-bold tracking-tight text-gray-900 hover:cursor-pointer md:text-4xl">
                 Filtrar por:
               </h1>
               <div className="flex items-center">
@@ -914,7 +971,7 @@ export default function Filtros() {
                   </Disclosure>
                 </form>
 
-                <ContenedorProductos products={filteredProducts} />
+                <ContenedorProductos products={filteredProducts} st={changeSt} log={log} idUser={id} />
               </div>
             </section>
             {soon && (
@@ -925,8 +982,8 @@ export default function Filtros() {
               </div>
             )}
           </main>
-        </div>
-      </div>
+        </div >
+      </div >
     </>
   );
 }

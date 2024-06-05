@@ -39,7 +39,7 @@ const TarjetaFavoritos = ({ props }) => {
 
   const checkFav = () => {
     if (props.log == true) {
-      console.log(10);
+      console.log(10); // CAMBIAR
     } else {
       toggleLogin();
     }

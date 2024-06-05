@@ -69,6 +69,9 @@ function Producto() {
     const product = location.state.product || {};
     const [log, setLog] = useState(false);
     const [login, setLogin] = useState(false);
+    const [uid, setUid] = useState(null);
+    const [st, setSt] = useState(false);
+    const [fav, setFav] = useState(product.favorito);
 
     let respuestaJson = null;
     async function checkLogin() {
@@ -92,6 +95,32 @@ function Producto() {
         }
     }
 
+    async function getId() {
+        let respuestaJson = null;
+        try {
+            const respuesta = await fetch("/api/logueado", {
+                method: "GET",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+            });
+            respuestaJson = await respuesta.json();
+            console.log("id en uso: ", respuestaJson.clave);
+            await setUid(respuestaJson.clave);
+        } catch (error) {
+            console.log("Error");
+        }
+    }
+
+    useEffect(() => {
+        getId();
+    }, []);
+
+    // go to top of the page when the component is mounted
+    useEffect(() => {
+        window.scrollTo(0, 0);
+    }, []);
+
     const toggleLoginPopup = () => {
         setLogin(!login);
     };
@@ -106,17 +135,39 @@ function Producto() {
 
     //useEffect para obtener los productos con descuento
     useEffect(() => {
-        fetch("/api/admin/productos/descuento")
-            .then((response) => response.json())
-            .then((data) => {
-                // Acceder al array de objetos en la posición 0 del array dentro de data
+        const fetchDescuentos = async () => {
+            let url;
+            if (uid !== null && uid !== 0 && uid !== undefined) {
+                url = `/api/admin/productos/descuento/${uid}`;
+            } else {
+                url = `/api/admin/productos/descuentoAll`;
+            }
+
+            try {
+                const response = await fetch(url);
+
+                if (!response.ok) {
+                    throw new Error("Error al obtener los descuentos");
+                }
+
+                const data = await response.json();
                 setDescuentos(data.data);
-                console.log(data.data);
-            })
-            .catch((error) => {
+                console.log("descuentos", data.data);
+            } catch (error) {
                 console.log("error", error);
-            });
-    }, []);
+            }
+        };
+
+        const timeoutId = setTimeout(fetchDescuentos, 1000);
+
+        // Cleanup function to clear the timeout if the component unmounts or id changes
+        return () => clearTimeout(timeoutId);
+    }, [uid]);
+
+    function changeSt() {
+        setSt(!st);
+    }
+
 
     const navigate = useNavigate();
     const notify = () => toast("Producto agregado al carrito");
@@ -126,8 +177,6 @@ function Producto() {
     const [selectedRatingIndex, setSelectedRatingIndex] = useState(null);
     const [generalRating, setGeneralRating] = useState(null);
     const [filteredReviews, setFilteredReviews] = useState(reseñas);
-    const [newReviewClicked, setNewReviewClicked] = useState(false);
-    const [reviewButtonMessage, setReviewButtonMessage] = useState('Escribir una reseña');
     const [reviewRating, setReviewRating] = useState(0);
 
     const { agregarAlCarrito } = useCarrito();
@@ -188,15 +237,6 @@ function Producto() {
         setReviewRating(event.target.value);
     };
 
-    const handleNewReview = () => {
-        setNewReviewClicked(!newReviewClicked);
-        if (newReviewClicked) {
-            setReviewButtonMessage('Escribir una reseña');
-        } else {
-            setReviewButtonMessage('Cancelar reseña nueva');
-        }
-    };
-
     const increaseQuantity = () => {
         setCantidad(cantidad + 1);
     };
@@ -218,6 +258,37 @@ function Producto() {
         }
         setFilteredReviews(reseñas.filter(reseña => reseña.calificacion === selectedRatingIndex));
     }, [selectedRatingIndex]);
+
+    const callFav = async () => {
+        if (product.uid != 0) {
+            try {
+                const respuesta = await fetch("/api/admin/productos/setFavorito", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify({
+                        id: product.uid,
+                        idPS: product.id,
+                        estado: product.favorito,
+                    }),
+                });
+
+                let respuestaJson = await respuesta.json();
+                if ((await respuestaJson[0].res) == true) {
+                    setFav(!fav);
+                }
+            } catch (error) {
+                console.log(error, "error");
+            }
+        }
+    };
+
+    useEffect(() => {
+        if (fav !== product.favorito) {
+            changeSt();
+        }
+    }, [fav]);
 
     return (
         <>
@@ -253,12 +324,13 @@ function Producto() {
                                 >
                                     <StyledRating
                                         name="customized-color"
-                                        defaultValue={0}
+                                        defaultValue={product.favorito}
                                         max={1}
                                         getLabelText={(value) => `${value} Heart${value !== 1 ? 's' : ''}`}
                                         precision={1}
                                         icon={<FavoriteIcon fontSize="inherit" />}
                                         emptyIcon={<FavoriteBorderIcon fontSize="inherit" />}
+                                        onClick={() => callFav()}
                                     />
                                 </Box>
                                 <h1 className="text-[#056761] text-3xl font-bold">{product.nombre}</h1>
@@ -372,7 +444,20 @@ function Producto() {
                                 // className=''
                                 >
                                     {descuentos.map(oferta => (
-                                        <Ofertas key={oferta.id} producto={oferta} />
+                                        <Ofertas
+                                            props={{
+                                                id: id,
+                                                log: log,
+                                                ps: oferta.pkIdPS,
+                                                nombre: oferta.nombre,
+                                                descripcionOferta: oferta.descripcionOferta,
+                                                img: oferta.img,
+                                                precio: oferta.precio,
+                                                valoracion: oferta.valoracion,
+                                                favorito: oferta.favorito,
+                                                st: changeSt,
+                                            }}
+                                        />
                                     ))}
 
                                 </Carousel>
@@ -404,31 +489,8 @@ function Producto() {
                                         ))}
                                     </div>
                                 </div>
-                                <button onClick={handleNewReview} className="text-[#EB5765] bg-opacity-30 bg-[#EB5765] hover:bg-opacity-90 hover:text-white rounded-3xl py-2 px-6 mr-12">{reviewButtonMessage}</button>
                             </div>
                             <div>
-                                {newReviewClicked ? (
-                                    <>
-                                        <main className='grid gap-4'>
-                                            <div className="flex items-center gap-4">
-                                                <form className="grid gap-1">
-                                                    <p>Selecciona una valoración:</p>
-                                                    <Rating className='' onChange={handleReviewRating} value={reviewRating} unratedColor="amber" ratedColor="amber" />
-                                                    <div className="flex gap-8 mt-4">
-                                                        <div className="flex items-start gap-4">
-                                                            <label className="pt-2">Titulo:</label>
-                                                            <input className="rounded-md resize-none" type="text" maxLength={20} placeholder="" />
-                                                        </div>
-                                                        <div className="flex items-start gap-4">
-                                                            <label className="pt-2">Comentario:</label>
-                                                            <textarea rows={4} cols={60} name="" maxLength={255} className="rounded-md resize-none " placeholder=""></textarea>
-                                                        </div>
-                                                    </div>
-                                                    <button className="text-[#EB5765] w-1/4 mt-6  m-auto bg-opacity-30 bg-[#EB5765] hover:bg-opacity-90 hover:text-white rounded-3xl py-2 px-6">Enviar</button>
-                                                </form>
-                                            </div>
-                                        </main>
-                                    </>) : null}
                                 {filteredReviews.map(reseña => (
                                     <Reseña key={reseña.id} reseña={reseña} />
                                 ))}
@@ -437,9 +499,9 @@ function Producto() {
                         </div>
                     </section>
                 </main>
-                <ToastContainer position={'bottom-right'} theme={'light'} />
             </LayoutPrincipal >
             {login && <PopupLogin cerrar={toggleLoginPopup} />}
+            <ToastContainer position={'top-right'} theme={'light'} />
         </>
     );
 }

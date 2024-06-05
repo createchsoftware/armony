@@ -4,12 +4,11 @@ import dotenv from 'dotenv';
 import {methods as servicios} from "../services/mail.service.js";
 import mysql from "mysql2";
 
-
-const regex_email = /^\S+@(gmail\.com|hotmail\.com|outlook\.com|icloud.com|itmexicali\.edu\.mx|bc\.conalep\.edu\.mx|cecytebc\.edu\.mx|miprepacetis(75|18)\.mx|cobachbc\.edu\.mx|)$/;
 const regex_telefono =/^(\d{9,10}|\d{2,3} \d{7}|\d{2,3} \d{3} \d{4}|\d{2,3}-\d{7}|\d{2,3}-\d{3}-\d{4})$/;
 const regex_n_a = /^[a-zA-Zá-úñ]{3,17}$/;
 const regex_postal = /^\d{5}$/;
 const regex_lada = /^\+?\d{1,3}$/;
+const regex_numero = /^\S{1,10}$/;
 
 
 async function change_data(solicitud,respuesta){
@@ -127,7 +126,7 @@ async function change_data(solicitud,respuesta){
         
             //direccion
             if(cuerpo['numero']){
-                if(cuerpo['numero'].length > 4)
+                if(regex_numero.test(cuerpo['numero']) == false)
                     campos_incorrectos.push([cuerpo['numero_id'],'el numero de tu casa es incorrecto']);
                 else{
                     consulta+="numero= ?,";
@@ -155,22 +154,31 @@ async function change_data(solicitud,respuesta){
             }
 
 
-            
+            let mes = cuerpo['mes'];
+            let dia = cuerpo['dia'];
+            let año = cuerpo['year'];
 
-            try{
+            if(!mes && !año && !dia){
+                // todo bien porque la persona no ingreso nada
+            }
+            else{
+                // significa que el usuario puso algun campo
 
-                if(cuerpo['mes'] && cuerpo['dia'] && cuerpo['año']){
-
-                    let mes = cuerpo['mes'];
-                    let dia = cuerpo['dia'];
-                    let año = cuerpo['año'];
-
-                    let fecha = new Date(`${mes}/${dia}/${año}`);
-
-                    if(isNaN(fecha.getTime())){
-                        campos_incorrectos.push(['dia','']);
-                        campos_incorrectos.push(['mes','']);
-                        campos_incorrectos.push(['año','']);
+                if(!año || año=='' || !mes || mes=='' || !dia || dia ==''){
+                    console.log('hubo datos faltantes');
+                    campos_incorrectos.push(['dia','']);
+                    campos_incorrectos.push(['mes','']);
+                    campos_incorrectos.push(['año','']);
+                }
+                else{
+                    //todos los campos fueron llenados
+                    let fecha_boolean = ValidarFecha(dia,mes,año);
+              
+                    if(fecha_boolean == false){
+                      console.log('la fecha no es correcta');
+                      campos_incorrectos.push(['dia','']);
+                      campos_incorrectos.push(['mes','']);
+                      campos_incorrectos.push(['año','']);
                     }
                     else{
                         let newStringFecha = `${año}-${mes}-${dia}`;
@@ -178,24 +186,11 @@ async function change_data(solicitud,respuesta){
                         paramteros.push(newStringFecha);
                     }
                 }
-                else{
-                    if(cuerpo['mes'] || cuerpo['dia'] || cuerpo['año']){
-                        campos_incorrectos.push(["dia",'']);  // el id del input
-                        campos_incorrectos.push(["mes",'']);  // el id del input
-                        campos_incorrectos.push(["año",'']);  // el id del input
-                    }
-                    //si no se cumplio el if de arriba es porque simplemente no se hizo una modificacion
-
-                }
-                
-                
-            }catch(error){
-                campos_incorrectos.push(["dia",'']);  // el id del input
-                campos_incorrectos.push(["mes",'']);  // el id del input
-                campos_incorrectos.push(["año",'']);  // el id del input
             }
 
             
+
+                
         
             if(campos_incorrectos.length > 0 ){
                 console.log(campos_incorrectos);
@@ -233,11 +228,39 @@ async function change_data(solicitud,respuesta){
                         //toca jalar la informacion
                         let ultima_consulta = 'select * from usuario where pkIdUsuario = ?';
 
-                        let [fields] = await solicitud.database.query(ultima_consulta, C_L)
+                        let [fields] = await solicitud.database.query(ultima_consulta, C_L);
+
+                        console.log(fields);
 
                         let contraseña_bytes = fields[0].pass; // contrasena en bytes desde la base de datos
                         let contraseña_no_bytes = contraseña_bytes.toString('utf-8'); //contrasena en string, pero sigue estando encriptada
                                 
+
+                        let MC = fields[0].fechaNac;
+
+                        let yy = MC.getFullYear();
+                        let mm = MC.getMonth()+1;
+                        let dd = MC.getDate(); //day
+
+
+                        let dia_input = dd.toString();;
+                        let mes_input = mm.toString();
+                        if(dd <= 10){
+                            dia_input = "0";
+                            dia_input+= dd.toString();
+                        }
+                        if(mm <=10){
+                            mes_input = "0";
+                            mes_input+= mm.toString();
+                        }
+                        let año_input = yy.toString();
+
+                        let to_birth = `${año_input}-${mes_input}-${dia_input}`;
+
+
+
+
+
 
                         // toca levantar una nueva Naruto_cookie
                         let token = jsonwebtoken.sign(
@@ -255,7 +278,7 @@ async function change_data(solicitud,respuesta){
                                 colonia:fields[0].colonia,
                                 numero:fields[0].numero,
                                 postal:fields[0].codigoPostal,
-                                nacimiento:fields[0].fechaNac
+                                nacimiento:to_birth
     
                             },
                             process.env.JWT_SECRET,
@@ -269,6 +292,8 @@ async function change_data(solicitud,respuesta){
                         }
             
                         respuesta.cookie("Naruto_cookie",token,galleta);
+
+                        return respuesta.send({redirect:'/perfil/informacion'});
 
                     }catch(error){
                         throw error;
@@ -289,12 +314,109 @@ async function change_data(solicitud,respuesta){
             respuesta.send({redirect:'/'});
         }
     }
-
-
-    
-
-    
+ 
 }
+
+
+
+
+function añoBisiesto(year){
+
+    if(year%4==0){
+        //puede que sea bisiesto
+        if(year%100==0){
+  
+            if(year%400==0){
+                return 29;
+            }
+            else{
+              return 28;
+            }
+        }
+        else{
+            return 29;
+        }
+    }
+    else{
+      return 28;
+    }
+  
+}
+  
+  
+function ValidarFecha(dia,mes,año){
+  
+    let month = parseInt(mes); // si recibimos '1' o '01' o '00001', de igual forma pasara a 0
+  
+    if(isNaN(month)){
+      return false;
+    }
+    else{
+      month = month-1;
+    }
+  
+  
+    let year = parseInt(año);
+    if(isNaN(year)){
+      return false;
+    }
+  
+  
+    let day = parseInt(dia);
+  
+    if(isNaN(day)){
+      return false;
+    }
+    
+  
+    let days = añoBisiesto(year); // le debemos pasar un numero y no un string
+  
+    let formato = [ 31,days,31,30,31,30,31,31,30,31,30,31 ];
+  
+    if(year <= 0){
+      // significa que el usuario puso una año negativo, o que puso un año mayor al actual
+      return false;
+    }
+    else{
+        if((month +1) > formato.length || (month+1) <= 0){
+            // significa que la persona puso un mes menor a 0, o que puso un mes mayor a 12
+            return false;
+        }
+        else{
+            if(formato[month] < day || day <= 0){
+                //significa que la persona paso un dia mayor al limite o que puso en dia igual a 0 o negativo
+                return false;
+            }
+            else{
+                // por el momento todo bien, pero ahora toca verificar que la fecha que ingreso no sea mayor
+  
+                let birthday = new Date(`${year}-${month+1}-${day}`);
+                let fa = new Date(Date.now());
+                let fecha_actual = new Date(`${fa.getFullYear()}-${fa.getMonth()+1}-${fa.getDate()}`);
+  
+                if(birthday.getTime()>=fecha_actual.getTime()){
+                  // la fecha de nacimiento es igual a la de hoy o mayor
+                  return false;
+                }
+                else{
+                  return true;
+                }
+            }
+        }
+    }
+    
+  
+    
+  
+  
+    
+    
+  
+}
+  
+
+
+
 
 
 

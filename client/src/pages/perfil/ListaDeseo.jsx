@@ -14,10 +14,8 @@ import { jwtDecode } from "jwt-decode";
 import { useNavigate } from "react-router-dom";
 import 'react-tooltip/dist/react-tooltip.css'
 import { Tooltip } from 'react-tooltip'
-import { Link } from 'react-router-dom';
-import { Dialog, Disclosure, Menu, Transition } from '@headlessui/react'
-import { XMarkIcon } from '@heroicons/react/24/outline'
-import { ChevronDownIcon, FunnelIcon, MinusIcon, PlusIcon, Squares2X2Icon } from '@heroicons/react/20/solid'
+import { Menu, Transition } from '@headlessui/react'
+import { ChevronDownIcon } from '@heroicons/react/20/solid'
 
 const StyledRating = styled(Rating)({
     '& .MuiRating-iconFilled': {
@@ -500,7 +498,7 @@ function ListaDeseo() {
                             </aside>
                         </div>
                         <div className='grid content-start w-full h-full menu-deseo'>
-                            <img src="../../../pictures/decoArmony1.png" alt="" className='absolute -rotate-90 -right-7 w-60 h-180 top-60' />
+                            <img src="../../../pictures/decoArmony1.png" alt="" className='absolute -rotate-90 -right-7 w-60 h-180 top-60 -z-10' />
                             <div className='flex justify-center mt-5 h-max'>
                                 <form action="" className='flex h-10 items-center w-4/5 justify-center border-2 border-[rgb(255,181,167)] rounded-lg'>
                                     <input
@@ -597,7 +595,7 @@ function ListaDeseo() {
                             <div className='grid h-full px-12 overflow-y-scroll mb-14'>
                                 {/* Contenido */}
                                 {contResumen.length === 0 ? (
-                                    !showProduct &&
+                                    !showProduct && boton2 !== 'lista-boton-on' &&
                                     <p className='m-auto'>No se encontraron artículos</p>
                                 ) : (
                                     <ul className={'grid h-max gap-2 duration-200 ' + cols}>

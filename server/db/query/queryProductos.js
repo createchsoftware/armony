@@ -191,6 +191,22 @@ export async function getProducts(pool, data) {
   }
 }
 
+export async function getProductsAll(pool, data) {
+  try {
+    // const pages=data.pages||1;/*por defecto sera pagina 1 */
+    // const limit =data.limit||5;/*capacidad por defecto de 5, esto cambiara dependiendo el front */
+    // const offset=(pages-1)*limit;
+    const prod = `CALL getProductosAll(?)`;
+    let query = mysql.format(prod, [2]);
+    const [rows, fields] = await pool.query(query);
+    endConnection();
+    return rows[0];
+  } catch (err) {
+    console.log("Ha ocurrido un error al ejecutar el query: ", err);
+    throw err;
+  }
+}
+
 export async function ventaProdOnline(connection, data) {
   let ventaOnlineProd = "CALL addVentaProdOnline(?, ?, ?, ?, ?, ?)"; // Procedimiento almacenado de la base de datos
   let query = mysql.format(ventaOnlineProd, [
@@ -295,6 +311,20 @@ export async function productosDescuento(connection, data) {
   try {
     let desc = "CALL getProductosDesc(?)"; // Query del procedimiento almacenado
     let query = mysql.format(desc, [data.id]);
+    const [rows, fields] = await connection.query(query); // Ejecutamos le query y almacenamos los valores
+    endConnection(); // Cerramos la conexion
+    return rows[0]; // Retornamos los valores obtenidos
+  } catch (err) {
+    // Capturamos errores de ejecucion de query
+    console.error(messageError, err); // Mostramos errores por consola
+  }
+}
+// OBTENER PRODUCTOS CON DESCUENTO
+// FUNCIONAL
+export async function productosDescuentoAll(connection, data) {
+  try {
+    let desc = "CALL getProductosDescAll()"; // Query del procedimiento almacenado
+    let query = mysql.format(desc);
     const [rows, fields] = await connection.query(query); // Ejecutamos le query y almacenamos los valores
     endConnection(); // Cerramos la conexion
     return rows[0]; // Retornamos los valores obtenidos

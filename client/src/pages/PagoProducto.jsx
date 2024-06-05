@@ -41,6 +41,105 @@ export default function Cita({ producto }) {
   const [scrollPosition, setScrollPosition] = useState(0);
 
   const [descuentos, setDescuentos] = useState([]);
+  const [log, setLog] = useState(false);
+  const [login, setLogin] = useState(false);
+  const [uid, setUid] = useState(null);
+  const [st, setSt] = useState(false);
+
+  let respuestaJson = null;
+  async function checkLogin() {
+    try {
+      const respuesta = await fetch("/api/logueado", {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+
+      respuestaJson = await respuesta.json();
+
+      if (respuestaJson.logueado == true) {
+        setLog(true);
+      } else {
+        setLog(false);
+      }
+    } catch (error) {
+      setLog(false);
+    }
+  }
+
+  async function getId() {
+    let respuestaJson = null;
+    try {
+      const respuesta = await fetch("/api/logueado", {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+      respuestaJson = await respuesta.json();
+      console.log("id en uso: ", respuestaJson.clave);
+      await setUid(respuestaJson.clave);
+    } catch (error) {
+      console.log("Error");
+    }
+  }
+
+  useEffect(() => {
+    getId();
+  }, []);
+
+  // go to top of the page when the component is mounted
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
+  const toggleLoginPopup = () => {
+    setLogin(!login);
+  };
+
+
+  useEffect(() => {
+    checkLogin();
+  }, []);
+
+
+  //useEffect para obtener los productos con descuento
+  useEffect(() => {
+    const fetchDescuentos = async () => {
+      let url;
+      if (uid !== null && uid !== 0 && uid !== undefined) {
+        url = `/api/admin/productos/descuento/${uid}`;
+      } else {
+        url = `/api/admin/productos/descuentoAll`;
+      }
+
+      try {
+        const response = await fetch(url);
+
+        if (!response.ok) {
+          throw new Error("Error al obtener los descuentos");
+        }
+
+        const data = await response.json();
+        setDescuentos(data.data);
+        console.log("descuentos", data.data);
+      } catch (error) {
+        console.log("error", error);
+      }
+    };
+
+    const timeoutId = setTimeout(fetchDescuentos, 1000);
+
+    // Cleanup function to clear the timeout if the component unmounts or id changes
+    return () => clearTimeout(timeoutId);
+  }, [uid]);
+
+  function changeSt() {
+    setSt(!st);
+  }
+
+
 
   async function checkLogin() {
     let respuestaJson = null;
@@ -112,8 +211,8 @@ export default function Cita({ producto }) {
     const newActiveStep =
       isLastStep() && !allStepsCompleted()
         ? // It's the last step, but not all steps have been completed,
-          // find the first step that has been completed
-          steps.findIndex((step, i) => !(i in completed))
+        // find the first step that has been completed
+        steps.findIndex((step, i) => !(i in completed))
         : activeStep + 1;
     setActiveStep(newActiveStep);
   };
@@ -154,16 +253,16 @@ export default function Cita({ producto }) {
   const LocalBase = () => {
     console.log(
       localStorage.getItem("servicio") +
-        " " +
-        localStorage.getItem("paquete") +
-        " " +
-        localStorage.getItem("sesiones") +
-        " " +
-        localStorage.getItem("Especialista") +
-        " " +
-        localStorage.getItem("hora") +
-        " " +
-        localStorage.getItem("Fecha seleccionada")
+      " " +
+      localStorage.getItem("paquete") +
+      " " +
+      localStorage.getItem("sesiones") +
+      " " +
+      localStorage.getItem("Especialista") +
+      " " +
+      localStorage.getItem("hora") +
+      " " +
+      localStorage.getItem("Fecha seleccionada")
     );
   };
   const revisionProductosContent = (
@@ -240,8 +339,21 @@ export default function Cita({ producto }) {
                 />
               }
             >
-              {descuentos.map((oferta) => (
-                <Ofertas key={oferta.id} producto={oferta} />
+              {descuentos.map(oferta => (
+                <Ofertas
+                  props={{
+                    id: uid,
+                    log: log,
+                    ps: oferta.pkIdPS,
+                    nombre: oferta.nombre,
+                    descripcionOferta: oferta.descripcionOferta,
+                    img: oferta.img,
+                    precio: oferta.precio,
+                    valoracion: oferta.valoracion,
+                    favorito: oferta.favorito,
+                    st: changeSt,
+                  }}
+                />
               ))}
             </Carousel>
           </div>
@@ -286,7 +398,7 @@ export default function Cita({ producto }) {
     <LayoutPrincipal>
       <HelmetProvider>
         <Helmet>
-            <script src="../../scripts/index.js"></script>
+          <script src="../../scripts/index.js"></script>
         </Helmet>
       </HelmetProvider>
       <div className="p-24">
@@ -299,16 +411,16 @@ export default function Cita({ producto }) {
                 color: "#036C65", // circle color (COMPLETED)
               },
               "& .MuiStepLabel-label.Mui-completed.MuiStepLabel-alternativeLabel":
-                {
-                  color: "white", // Just text label (COMPLETED)
-                },
+              {
+                color: "white", // Just text label (COMPLETED)
+              },
               "& .MuiStepLabel-root .Mui-active": {
                 color: "#036C65", // circle color (ACTIVE)
               },
               "& .MuiStepLabel-label.Mui-active.MuiStepLabel-alternativeLabel":
-                {
-                  color: "white", // Just text label (ACTIVE)
-                },
+              {
+                color: "white", // Just text label (ACTIVE)
+              },
               "& .MuiStepLabel-root .Mui-active .MuiStepIcon-text": {
                 fill: "white", // circle's number (ACTIVE)
               },
@@ -381,11 +493,10 @@ export default function Cita({ producto }) {
                     disabled={activeStep === 0}
                     // hidden={activeStep === 0 || activeStep === 1 || activeStep === 2 || activeStep === 3 || activeStep === 4 || activeStep === 5}
                     onClick={handleBack}
-                    className={`${
-                      activeStep === 0
-                        ? "hover:bg-transparent opacity-30 hover:text-rose-400"
-                        : "hover:bg-red-50"
-                    } px-4 py-2 mx-auto text-xl bg-white rounded-full ring-1 text-rose-400 ring-rose-400`}
+                    className={`${activeStep === 0
+                      ? "hover:bg-transparent opacity-30 hover:text-rose-400"
+                      : "hover:bg-red-50"
+                      } px-4 py-2 mx-auto text-xl bg-white rounded-full ring-1 text-rose-400 ring-rose-400`}
                     sx={{ mr: 1 }}
                   >
                     Regresar

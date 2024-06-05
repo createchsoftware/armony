@@ -84,7 +84,6 @@ const toggleFavorite = async (especialista) => {
         >
           <StyledRating
             name="customized-color"
-            defaultValue={0}
             max={1}
             value={especialista.favorito || favorites[especialista.ID] ? 1 : 0}
             getLabelText={(value) => `${value} Heart${value !== 1 ? 's' : ''}`}
