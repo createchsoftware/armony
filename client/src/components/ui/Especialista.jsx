@@ -83,12 +83,12 @@ function Especialista({ especialista }) {
           <StyledRating
             name="customized-color"
             max={1}
-            value={especialista.favorito || especialista[producto.pkIdPS] ? 1 : 0}
+            // value={especialista.favorito || especialista[producto.pkIdPS] ? 1 : 0}
             getLabelText={(value) => `${value} Heart${value !== 1 ? 's' : ''}`}
             precision={1}
             icon={<FavoriteIcon fontSize="inherit" />}
             emptyIcon={<FavoriteBorderIcon fontSize="inherit" />}
-            onChange={() => toggleFavorite(producto)}
+          // onChange={() => toggleFavorite(producto)}
           />
         </Box>
       </div>

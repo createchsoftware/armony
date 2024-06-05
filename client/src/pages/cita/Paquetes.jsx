@@ -30,6 +30,7 @@ function Paquetes({ next }) {
     const handleClickPrice = (index) => {
         if (index === 1) {
             setSelectedPriceIndex(index);
+            localStorage.removeItem("citas")
             next();
             localStorage.setItem("precio", precio);
             localStorage.setItem("sesiones", 1);

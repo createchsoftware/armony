@@ -105,21 +105,21 @@ function Rango() {
 
 
   useEffect(() => {
-        
-    const Prod = async () => {
-        try {
-            if (clave) {
 
-                const response = await fetch(`/api/admin/cliente/StatusSus/${clave}`)
-                const data = await response.json();
-                setSus(data)
-            }
-        } catch (error) {
-            console.error("hubo error :", error)
+    const Prod = async () => {
+      try {
+        if (clave) {
+
+          const response = await fetch(`/api/admin/cliente/StatusSus/${clave}`)
+          const data = await response.json();
+          setSus(data)
         }
+      } catch (error) {
+        console.error("hubo error :", error)
+      }
     }
     Prod()
-}, [clave])
+  }, [clave])
 
 
   return (
@@ -134,15 +134,15 @@ function Rango() {
             <IoIosArrowBack className="" />
             Volver
           </a>
-          <div className="relative w-36 h-36 m-auto my-6 -mt-24 aspect-square align-middle items-center justify-center">
+          <div className="relative items-center justify-center m-auto my-6 -mt-24 align-middle w-36 h-36 aspect-square">
             {sus && (
               <img
-                  src="../../../pictures/marcoSuscripcion.png"
-                  alt=""
-                  className="absolute object-cover w-full h-full m-auto"
+                src="../../../pictures/marcoSuscripcion.png"
+                alt=""
+                className="absolute object-cover w-full h-full m-auto"
               />
             )}
-            <div className="flex w-full h-full items-center justify-center">
+            <div className="flex items-center justify-center w-full h-full">
               <img
                 src={
                   foto !== null
@@ -232,7 +232,7 @@ function Rango() {
                   en armony.
                 </p>
               </>
-            ):(
+            ) : (
               <>
                 <h2 className="text-[#036C65] text-lg">
                   Sube tu rango al siguiente nivel
@@ -359,67 +359,67 @@ function Rango() {
               puedes alcanzar en el próximo rango.
             </p>
             <div className="flex justify-center gap-6">
-            {rango === 1 ? (
-              <>
+              {rango === 1 ? (
+                <>
                   <div className='w-[46%] rounded-xl text-center bg-[#45B59C] mt-4 grid gap-4 my-auto  p-3'>
-                      <p className='grid p-2 py-4 bg-white rounded-lg'> Rango Oro
-                          <img className='w-24 m-auto mt-2' src={rangoOro} alt="" />
-                      </p>
-                      <p className='p-2 py-4 bg-white rounded-lg'> Envío prioritario </p>
-                      <p className='p-2 py-4 bg-white rounded-lg'> Promociones exclusivas </p>
+                    <p className='grid p-2 py-4 bg-white rounded-lg'> Rango Oro
+                      <img className='w-24 m-auto mt-2' src={rangoOro} alt="" />
+                    </p>
+                    <p className='p-2 py-4 bg-white rounded-lg'> Envío prioritario </p>
+                    <p className='p-2 py-4 bg-white rounded-lg'> Promociones exclusivas </p>
                   </div>
                   <div className='w-[46%] rounded-xl text-center bg-[#45B59C] mt-4 grid gap-4 my-auto  p-3'>
+                    <p className='grid p-2 py-4 bg-white rounded-lg'> Rango Platino
+                      <img className='w-24 m-auto mt-2' src={rangoPlatino} alt="" />
+                    </p>
+                    <p className='p-2 py-4 bg-white rounded-lg'> Regalos exclusivos </p>
+                    <p className='p-2 py-4 bg-white rounded-lg'> Descuentos generosos en spa </p>
+                    <p className='p-2 py-4 bg-white rounded-lg'> Acceso anticipado a ventas </p>
+                  </div>
+                </>
+              ) : (
+                rango === 2 ? (
+                  <>
+                    <div className='w-[46%] rounded-xl text-center bg-[#45B59C] mt-4 grid gap-4 my-auto  p-3'>
                       <p className='grid p-2 py-4 bg-white rounded-lg'> Rango Platino
-                          <img className='w-24 m-auto mt-2' src={rangoPlatino} alt="" />
+                        <img className='w-24 m-auto mt-2' src={rangoPlatino} alt="" />
                       </p>
                       <p className='p-2 py-4 bg-white rounded-lg'> Regalos exclusivos </p>
                       <p className='p-2 py-4 bg-white rounded-lg'> Descuentos generosos en spa </p>
                       <p className='p-2 py-4 bg-white rounded-lg'> Acceso anticipado a ventas </p>
-                  </div>
-              </>
-            ) : (
-                rango === 2 ? (
-                    <>
-                        <div className='w-[46%] rounded-xl text-center bg-[#45B59C] mt-4 grid gap-4 my-auto  p-3'>
-                            <p className='grid p-2 py-4 bg-white rounded-lg'> Rango Platino
-                                <img className='w-24 m-auto mt-2' src={rangoPlatino} alt="" />
-                            </p>
-                            <p className='p-2 py-4 bg-white rounded-lg'> Regalos exclusivos </p>
-                            <p className='p-2 py-4 bg-white rounded-lg'> Descuentos generosos en spa </p>
-                            <p className='p-2 py-4 bg-white rounded-lg'> Acceso anticipado a ventas </p>
-                        </div>
-                        <div className='w-[46%] rounded-xl text-center bg-[#45B59C] mt-4 grid gap-4 my-auto  p-3'>
-                            <p className='grid p-2 py-4 bg-white rounded-lg'> Rango VIP
-                                <img className='w-24 m-auto mt-2' src={rangoVIP} alt="" />
-                            </p>
-                            <p className='p-2 py-4 bg-white rounded-lg'> Invitaciones a eventos VIP de élite </p>
-                            <p className='p-2 py-4 bg-white rounded-lg'> Acceso anticipado a ventas exclusivas </p>
-                            <p className='p-2 py-4 bg-white rounded-lg'> Contenido premium ilimitado </p>
-                            <p className='p-2 py-4 bg-white rounded-lg'> Acceso a todos los servicios de nuestro spa </p>
-                        </div>
-                    </>
+                    </div>
+                    <div className='w-[46%] rounded-xl text-center bg-[#45B59C] mt-4 grid gap-4 my-auto  p-3'>
+                      <p className='grid p-2 py-4 bg-white rounded-lg'> Rango VIP
+                        <img className='w-24 m-auto mt-2' src={rangoVIP} alt="" />
+                      </p>
+                      <p className='p-2 py-4 bg-white rounded-lg'> Invitaciones a eventos VIP de élite </p>
+                      <p className='p-2 py-4 bg-white rounded-lg'> Acceso anticipado a ventas exclusivas </p>
+                      <p className='p-2 py-4 bg-white rounded-lg'> Contenido premium ilimitado </p>
+                      <p className='p-2 py-4 bg-white rounded-lg'> Acceso a todos los servicios de nuestro spa </p>
+                    </div>
+                  </>
                 ) : (
-                    rango === 3 ? (
-                        <div className='w-[46%] rounded-xl text-center bg-[#45B59C] mt-4 grid gap-4 my-auto  p-3'>
-                            <p className='grid p-2 py-4 bg-white rounded-lg'> Rango VIP
-                                <img className='w-24 m-auto mt-2' src={rangoVIP} alt="" />
-                            </p>
-                            <p className='p-2 py-4 bg-white rounded-lg'> Invitaciones a eventos VIP de élite </p>
-                            <p className='p-2 py-4 bg-white rounded-lg'> Acceso anticipado a ventas exclusivas </p>
-                            <p className='p-2 py-4 bg-white rounded-lg'> Contenido premium ilimitado </p>
-                            <p className='p-2 py-4 bg-white rounded-lg'> Acceso a todos los servicios de nuestro spa </p>
-                        </div>
-                    ) : (
-                        <div className='w-[46%] rounded-xl text-center bg-[#45B59C] mt-4 grid gap-4 my-auto  p-3'>
-                            <p className='grid p-2 py-4 bg-white rounded-lg'> Rango Oro
-                                <img className='w-24 m-auto mt-2' src={rangoOro} alt="" />
-                            </p>
-                            <p className='p-2 py-4 bg-white rounded-lg'> Envío prioritario </p>
-                            <p className='p-2 py-4 bg-white rounded-lg'> Promociones exclusivas </p>
-                        </div>
-                    )
+                  rango === 3 ? (
+                    <div className='w-[46%] rounded-xl text-center bg-[#45B59C] mt-4 grid gap-4 my-auto  p-3'>
+                      <p className='grid p-2 py-4 bg-white rounded-lg'> Rango VIP
+                        <img className='w-24 m-auto mt-2' src={rangoVIP} alt="" />
+                      </p>
+                      <p className='p-2 py-4 bg-white rounded-lg'> Invitaciones a eventos VIP de élite </p>
+                      <p className='p-2 py-4 bg-white rounded-lg'> Acceso anticipado a ventas exclusivas </p>
+                      <p className='p-2 py-4 bg-white rounded-lg'> Contenido premium ilimitado </p>
+                      <p className='p-2 py-4 bg-white rounded-lg'> Acceso a todos los servicios de nuestro spa </p>
+                    </div>
+                  ) : (
+                    <div className='w-[46%] rounded-xl text-center bg-[#45B59C] mt-4 grid gap-4 my-auto  p-3'>
+                      <p className='grid p-2 py-4 bg-white rounded-lg'> Rango Oro
+                        <img className='w-24 m-auto mt-2' src={rangoOro} alt="" />
+                      </p>
+                      <p className='p-2 py-4 bg-white rounded-lg'> Envío prioritario </p>
+                      <p className='p-2 py-4 bg-white rounded-lg'> Promociones exclusivas </p>
+                    </div>
+                  )
                 )
-            )}
+              )}
             </div>
           </div>
         </section>
