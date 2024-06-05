@@ -39,7 +39,9 @@ function Pago({ producto, next }) {
     const total = (parseFloat(subTotal) + parseFloat(ivaTotal)).toFixed(2);
     localStorage.setItem('total', total)
     localStorage.setItem('subTotal', subTotal)
-
+    // const ivaTotal = (parseFloat(subTotal) * 0.08).toFixed(2);
+    // const total = (parseFloat(subTotal) + parseFloat(ivaTotal)).toFixed(2);
+    //localStorage.setItem('total',total)
 
     useEffect(() => {
         const getidUser = () => {// aqui veificamos si hay una cookie con este nombre 

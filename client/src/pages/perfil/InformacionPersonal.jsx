@@ -5,24 +5,24 @@ function InformacionPersonal() {
     async function checkLogin() {
         let respuestaJson = null;
         try {
-            const respuesta = await fetch("/api/logueado", {
-                method: "GET",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-            });
-
-            respuestaJson = await respuesta.json();
-
-            if (respuestaJson.logueado != true) {
-                window.location.href = "/spa";
-            }
-        } catch (error) {
+          const respuesta = await fetch("/api/logueado", {
+            method: "GET",
+            headers: {
+              "Content-Type": "application/json",
+            },
+          });
+    
+          respuestaJson = await respuesta.json();
+    
+          if (respuestaJson.logueado != true) {
             window.location.href = "/spa";
+          }
+        } catch (error) {
+          window.location.href = "/spa";
         }
-    }
-
-    useEffect(() => checkLogin(), []);
+      }
+    
+      useEffect(() => checkLogin(), []);
 
     const [nombre, setNombre] = useState(false); //<<< PARA EL INICIO DE SESION
     const [correo, setCorreo] = useState(false); //<<< PARA EL INICIO DE SESION
@@ -99,20 +99,20 @@ function InformacionPersonal() {
 
     async function Rango() {
         const respuesta3 = await fetch("/api/perfil/rangos", {
-            method: "GET",
-            headers: {
-                "Content-Type": "application/json",
-            },
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+          },
         });
-
+    
         if (!respuesta3.ok) {
-            return;
+          return;
         }
-
+    
         const respuesta3Json = await respuesta3.json();
-
+    
         if (respuesta3Json.informacion) {
-            setRango(respuesta3Json.informacion[0]);
+          setRango(respuesta3Json.informacion[0]);
         }
     }
 
@@ -136,9 +136,9 @@ function InformacionPersonal() {
 
     }
 
-
-
-
+        
+    
+    
 
 
 
@@ -166,18 +166,18 @@ function InformacionPersonal() {
         recibido();
         Rango();
         Patologias();
-
+      
     }, []);
 
     useEffect(() => {
-        // console.log(clave)
+       // console.log(clave)
         const Prod = async () => {
             try {
                 if (clave) {
                     const response = await fetch(`/api/admin/cliente/StatusSus/${clave}`)
                     const data = await response.json();
                     setSus(data)
-
+                    
                 }
             } catch (error) {
                 console.error("hubo error :", error)
@@ -192,7 +192,7 @@ function InformacionPersonal() {
                 <main className='grid p-12 m-12 md:flex'>
                     <div className='grid gap-6 md:w-[80%] m-auto'>
                         <section className='grid text-center rounded-2xl w-[100%] p-6 shadow-[0_3px_10px_rgb(0,0,0,0.2)]'>
-                            <a className='flex w-max items-baseline text-md gap-x-4 relative cursor-pointer before:bg-black before:absolute before:-bottom-1 before:block before:h-[1px] before:w-full before:origin-bottom-right before:scale-x-0 before:transition before:duration-300 before:ease-in-out hover:before:origin-bottom-left hover:before:scale-x-100 hover:font-bold' href="/spa/perfil">
+                            <a className='flex w-max items-baseline text-md gap-x-4 relative cursor-pointer before:bg-black before:absolute before:-bottom-1 before:block before:h-[1px] before:w-full before:origin-bottom-right before:scale-x-0 before:transition before:duration-300 before:ease-in-out hover:before:origin-bottom-left hover:before:scale-x-100 hover:font-bold' href="/perfil">
                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-4 h-4">
                                     <path strokeLinecap="round" strokeLinejoin="round" d="M9 15 3 9m0 0 6-6M3 9h12a6 6 0 0 1 0 12h-3" />
                                 </svg> Volver
@@ -264,7 +264,7 @@ function InformacionPersonal() {
                                 </div>
                                 <aside className='w-[40%] my-8 '>
                                     <div className='grid grid-cols-1 gap-6 text-center '>
-                                        <div className='relative items-center justify-center w-40 m-auto mb-4 align-middle'>
+                                        <div className='relative w-40 m-auto mb-4 align-middle items-center justify-center'>
                                             {sus && (
                                                 <img
                                                     src="../../../pictures/marcoSuscripcion.png"
@@ -272,8 +272,8 @@ function InformacionPersonal() {
                                                     className="absolute object-cover w-full h-full m-auto"
                                                 />
                                             )}
-                                            <div className="flex items-center justify-center w-full h-full">
-                                                <img className='w-[85%] m-auto aspect-square rounded-full' src={imagen !== null ? `../../../pictures/avatares/${imagen}` : "../../../pictures/userDefault.png"} alt="" />
+                                            <div className="flex w-full h-full items-center justify-center">
+                                                <img className='w-[85%] m-auto aspect-square rounded-full' src={imagen !== null ? `../../../pictures/avatares/${imagen}`: "../../../pictures/userDefault.png"} alt="" />
                                             </div>
                                         </div>
                                         {rango === 1 ? (

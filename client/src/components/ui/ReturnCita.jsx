@@ -4,6 +4,8 @@ import { Rating } from '@mui/material';
 function ReturnCitas({ citas }) {
     const [info, setInfo] = useState(false);
 
+    console.log(citas);
+
     return (
 
         <div className='grid gap-4 p-6 rounded-xl shadow-[0_3px_10px_rgb(0,0,0,0.2)] '>
@@ -55,10 +57,10 @@ function ReturnCitas({ citas }) {
                                         <p>Sesiones</p>
                                         <p>{`1 x $${citas.precio}`}</p>
                                     </div>
-                                    <div className="flex justify-between">
+                                    {/* <div className="flex justify-between">
                                         <p>IVA:</p>
                                         <p>$0.00</p>
-                                    </div>
+                                    </div> */}
                                     <div className="flex justify-between">
                                         <p>Descuento</p>
                                         <p>$0.00</p>

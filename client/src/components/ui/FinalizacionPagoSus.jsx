@@ -2,7 +2,7 @@ import React, { useState } from "react";
 //import { IoArrowForwardSharp } from "react-icons/io5";
 import { useLocation, useNavigate } from "react-router-dom";
 
-const FinalizacionPagoProd = ({ producto, next }) => {
+const FinalizacionPagoProd = ({ producto }) => {
     const formatDate = (date) => {
         const options = {
             year: "numeric",
@@ -23,7 +23,7 @@ const FinalizacionPagoProd = ({ producto, next }) => {
     const navigate = useNavigate();
 
     const subTotal = localStorage.getItem('totalSuscripcion');
-    const puntos = localStorage.getItem('puntosSuscripcion');
+    const puntos = localStorage.getItem('puntos');
     // const ivaTotal = (parseFloat(subTotal) * 0.08).toFixed(2);
     const total = (parseFloat(subTotal)).toFixed(2);
 
@@ -35,6 +35,10 @@ const FinalizacionPagoProd = ({ producto, next }) => {
     const [cobro, setCobro] = useState(false);
     const handleCobro = () => {
         setCobro(!cobro);
+    }
+
+    function exit() {
+        window.location.href = "/spa";
     }
 
 
@@ -105,7 +109,7 @@ const FinalizacionPagoProd = ({ producto, next }) => {
                                 </div>
                                 <div className=" flex-grow"></div>
                                 <button
-                                    onClick={() => next()}
+                                    onClick={exit}
                                     className="hover:bg-[#FFA3A3] text-white px-10 py-2 mr-10 rounded-full duration-200 bg-[#ec5766]"
                                 >
                                     Salir

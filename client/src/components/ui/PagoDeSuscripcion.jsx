@@ -20,11 +20,11 @@ function Pago({ producto, next }) {
 
     const subTotal = localStorage.getItem('totalSuscripcion');
     const puntos = localStorage.getItem('puntosSuscripcion');
-    const ivaTotal = (parseFloat(subTotal) * 0.08).toFixed(2);
-    const total = (parseFloat(subTotal) + parseFloat(ivaTotal)).toFixed(2);
-    localStorage.setItem('total',total)
-    localStorage.setItem('subTotal',subTotal)
-    console.log(subTotal, puntos, ivaTotal, total);
+    // const ivaTotal = (parseFloat(subTotal) * 0.08).toFixed(2);
+    // const total = (parseFloat(subTotal) + parseFloat(ivaTotal)).toFixed(2);
+    localStorage.setItem('total',subTotal)
+    localStorage.setItem('puntos',puntos)
+    //console.log(subTotal, puntos, ivaTotal, total);
 
     useEffect(() => {
         const getidUser = () => {// aqui veificamos si hay una cookie con este nombre 
@@ -211,10 +211,10 @@ function Pago({ producto, next }) {
                                     <h1 className='font-bold'>Envío</h1>
                                     <span className="text-[rgb(3,109,99)] font-bold">$0.00</span>
                                 </div>
-                                <div className='flex justify-between px-6 pt-6'>
+                                {/* <div className='flex justify-between px-6 pt-6'>
                                     <h1 className='font-bold'>IVA</h1>
                                     <span className="text-[rgb(3,109,99)] font-bold">${ivaTotal}</span>
-                                </div>
+                                </div> */}
                                 <div className='flex justify-between px-6 pt-6'>
                                     <h1 className='font-bold'>Cupón</h1>
                                     <span className="text-[rgb(3,109,99)] font-bold">$0.00</span>
@@ -222,7 +222,7 @@ function Pago({ producto, next }) {
                             </div>
                             <div className='flex justify-between p-6 px-10 mb-4 border-2 shadow-md rounded-xl border-gray'>
                                 <h4 className='text-xl font-bold'>Total:</h4>
-                                <span className='font-bold text-[rgb(3,109,99)] text-xl'>${total}</span>
+                                <span className='font-bold text-[rgb(3,109,99)] text-xl'>${subTotal}</span>
                             </div>
                         </div>
                     </div>
@@ -249,7 +249,7 @@ function Pago({ producto, next }) {
             {pagoRealizado && (
                 <div className='soon-fondo'>
                     <div className='soon-fx'>
-                        <PagoRealizado cerrarPago={togglePago} total={total} next={next} />
+                        <PagoRealizado cerrarPago={togglePago} total={subTotal} next={next} />
                     </div>
                 </div>
             )}

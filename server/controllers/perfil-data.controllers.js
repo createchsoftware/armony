@@ -232,7 +232,6 @@ async function InsertarTarjeta(solicitud,respuesta){
             let tipo = solicitud.body.tipo;
 
 
-
             let faltantes = [];
 
             if(!titular[0] || titular[0]==''){
@@ -268,7 +267,7 @@ async function InsertarTarjeta(solicitud,respuesta){
 
                 let regex_cvv = /^\d{3}$/;
                 let only_numbers = /^\d+$/;  // verificar que sean puros numeros
-                let regex_titular = /^([a-zA-Zá-úÁ-ÚñÑ]{3,12}(?: [a-zA-Zá-úÁ-ÚñÑ]{3,12})?)$/;  // verificar que sea un nombre valido
+                let regex_titular = /^([a-zA-Zá-úÁ-ÚñÑ]{3,15})( [a-zA-Zá-úÁ-ÚñÑ]{3,15})( [a-zA-Zá-úÁ-ÚñÑ]{3,15})?( [a-zA-Zá-úÁ-ÚñÑ]{3,15})?$/;  // verificar que sea un nombre valido
 
 
                 //cvv sea valido
@@ -409,19 +408,19 @@ async function InsertarTarjeta(solicitud,respuesta){
                     let buscar_predeterminada ='select * from tarjeta where predeterminada = 1 and fkCliente = ?';
 
                     let [fields_predeterminada] = await solicitud.database.query(mysql.format(buscar_predeterminada,[decodificada.user]));
-                    
-                    let objeto_predeterminada = fields_predeterminada[0][0];
 
-                    if(!objeto_predeterminada){
+                    if(fields_predeterminada.length==0){
+                        console.log('se ejecuto esto');
                         // no existe ningun usuario con la tarjeta predeterminada
-
                         // aunque el usuario no haya puesto que es predeterminada, al ser la primer tarjeta sera la predeterminada
                         predeterminada = 1;
                     }
                     else{
                         // supongamos que ya existe una tarjeta predeterminada, pero si el usuario puso que esta iba a ser la nueva predeterminada, entonces 
+                        console.log("oh oh, ya existia una tarjeta predeterminada");
+                        let objeto_predeterminada = fields_predeterminada[0];
 
-                        if(principal==true){
+                        if(principal[0]==true){
                         
                             try{
                                 // tenemos que actualizar la anterior tarjeta predeterminada
@@ -436,6 +435,9 @@ async function InsertarTarjeta(solicitud,respuesta){
                                 console.log('no se pudo quitar como predeterminada la tarjeta anterior');
                             }
      
+                        }
+                        else{
+                            console.log('vaya, no pusiste como predeterminada esta ultima tarjeta');
                         }
                     }
                     
@@ -453,6 +455,7 @@ async function InsertarTarjeta(solicitud,respuesta){
                         console.log('La Insercion fue exitosa');
                         return respuesta.send({redirect:'/perfil/tarjetas'});
                     }catch(error){
+                        console.log(error);
                         console.log('No se pudo insertar la tarjeta');
                         return respuesta.send({fallo:true});
                     }
