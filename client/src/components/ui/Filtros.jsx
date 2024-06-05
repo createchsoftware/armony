@@ -95,6 +95,10 @@ export default function Filtros() {
     }
   }
 
+  useEffect(() => {
+    recibido();
+  }, []);
+
   function changeSt() {
     setSt(!st);
   }
