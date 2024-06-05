@@ -222,7 +222,7 @@ const Start = () => {
             {/* ¿Quiénes somos? */}
             <div className="somos" id="nosotros">
                 <img src="../../../pictures/logoArmony.png" alt="Logotipo de armony" id="logo1" />
-                <h1 id="titulo">realza tu belleza interior.</h1>
+                <h1 id="titulo">Realza tu belleza interior.</h1>
                 <div className="somos-div">
                     <section className="somos-arm">
                         <h3 id="somos-text">
@@ -262,20 +262,20 @@ const Start = () => {
                         <div className="pilar no1" rel={0}>
                             <a href="#servicios" className="pilar-btn" onClick={toggleSoon}>
                                 <h3 className="pilar-text">Cafetería Cultura &amp; Art</h3>
-                                <img src="../../../pictures/1cafeteria.jpg" alt="Pilar Cafetería & Cultura" className="pilar-photo"/>
+                                <img src="../../../pictures/1cafeteria.jpg" alt="Pilar Cafetería & Cultura" className="pilar-photo" />
                                 <div className="deg2" />
                             </a>
                         </div>
                         <div className="pilar no2" rel={1}>
                             <a href="#servicios" className="pilar-btn" onClick={toggleSoon}>
                                 <h3 className="pilar-text">Wellness Hábitos saludables</h3>
-                                <img src="../../../pictures/2wellness.jpg" alt="Pilar Wellness, Hábitos salidables" className="pilar-photo"/>
+                                <img src="../../../pictures/2wellness.jpg" alt="Pilar Wellness, Hábitos salidables" className="pilar-photo" />
                                 <div className="deg2" />
                             </a>
                         </div>
                         <div className="pilar no7 no3" rel={2}>
                             <a href="/spa" className="pilar-btn">
-                                <h3 className="pilar-text">Spa<br/>Salon &amp; Beauty</h3>
+                                <h3 className="pilar-text">Spa<br />Salon &amp; Beauty</h3>
                                 <img src="../../../pictures/7spa.jpg" alt="Pilar Spa, Salon & Beauty" className="pilar-photo" />
                                 <div className="deg2" />
                             </a>
@@ -304,7 +304,7 @@ const Start = () => {
                         <div className="pilar no7" rel={6}>
                             <a href="#servicios" className="pilar-btn" onClick={toggleSoon}>
                                 <h3 className="pilar-text">Clínica</h3>
-                                <img src="../../../pictures/6clinica.jpg" alt="Pilar Clínica"  className="pilar-photo"/>
+                                <img src="../../../pictures/6clinica.jpg" alt="Pilar Clínica" className="pilar-photo" />
                                 <div className="deg2" />
                             </a>
                         </div>
