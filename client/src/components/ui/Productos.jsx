@@ -110,7 +110,7 @@ function Productos({ productos, st, log, idUser }) {
                     ))
                 }
             </ul>
-            <ToastContainer position={'top-right'} theme={'light'} />
+            <ToastContainer position={'bottom-right'} theme={'light'} />
         </div>
     )
 }

@@ -510,7 +510,7 @@ function Producto() {
                 </main>
             </LayoutPrincipal >
             {login && <PopupLogin cerrar={toggleLoginPopup} />}
-            <ToastContainer position={'top-right'} theme={'light'} />
+            <ToastContainer position={'bottom-right'} theme={'light'} />
         </>
     );
 }

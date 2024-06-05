@@ -293,14 +293,14 @@ function Pedidos() {
           <button onClick={() => setPoliticas(!politicas)} className='w-2/5 justify-self-center px-4 py-2 mb-2 bg-[#EB5765] rounded-full text-white duration-200 hover:bg-[#ffb5a7]'>Política de devoluciones</button>
         </div>
       </main>
-      {politicas && 
+      {politicas &&
         <div className='cart-fondo'>
           <div className='cart-fx'>
-            <div className='grid mt-32 w-1/3 bg-white rounded-2xl py-8 px-12 m-auto'>
+            <div className='grid w-1/3 px-12 py-8 m-auto mt-32 bg-white rounded-2xl'>
               <button onClick={() => setPoliticas(!politicas)} className='flex w-max items-baseline text-md gap-x-4 relative cursor-pointer before:bg-black before:absolute before:-bottom-1 before:block before:h-[1px] before:w-full before:origin-bottom-right before:scale-x-0 before:transition before:duration-300 before:ease-in-out hover:before:origin-bottom-left hover:before:scale-x-100 hover:font-bold' href={document.referrer}>
-                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-4 h-4">
-                      <path strokeLinecap="round" strokeLinejoin="round" d="M9 15 3 9m0 0 6-6M3 9h12a6 6 0 0 1 0 12h-3" />
-                  </svg>
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-4 h-4">
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M9 15 3 9m0 0 6-6M3 9h12a6 6 0 0 1 0 12h-3" />
+                </svg>
               </button>
               <h1 className="text-[#EB5765] text-2xl justify-self-center">Políticas de devoluciones</h1>
               <div className="justify-self-center my-2 w-[95%] border border-black" />
