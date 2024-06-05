@@ -376,8 +376,10 @@ export async function processVenta(connection, data) {
         cantidad: data.cantidad,
       }); // Ejecutamos el alta de la cita
       console.log("detallesVenta creada correctamente");
+      endConnection();
       return true; // Retornamos true como referencia que si se realizo la cita
     }
+    endConnection();
     return false; // Retornamos false como referencia que no se realizo la cita
   } catch (err) {
     // Capturamos errores de ejecucion de query

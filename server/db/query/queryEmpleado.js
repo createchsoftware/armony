@@ -71,6 +71,7 @@ export async function readEmpAct(connection, data) {
     let searchEmpAct = "CALL searchEmpAct(?)"; // Procedimiento de la DB
     let query = mysql.format(searchEmpAct, [data.activo]); // Parametros para el procedimiento
     const [rows, fields] = await connection.query(query); // Ejecutamos y almacenamos valores
+    endConnection();
     return rows; // Retornamos valores
   } catch (err) {
     // Capturamos errores de query en caso que exista
@@ -143,8 +144,8 @@ export async function getEmpFav(connection, data) {
 
 export async function diasInhabiles(connection, data) {
   try {
-    let diasInhabil = "CALL (?)";
-    let query = mysql.format(diasInhabil, [data.idEmpleado]);
+    let diasInhabil = "CALL getDiasInhabiles(?, ?)";
+    let query = mysql.format(diasInhabil, [data.idEmpleado, data.mes]);
     const [rows, fields] = await connection.query(query);
     endConnection();
     return rows[0];
