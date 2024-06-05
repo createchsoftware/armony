@@ -49,7 +49,7 @@ const TarjetaFavoritos = ({ props }) => {
       localStorage.setItem("descripcion", props.descr);
       localStorage.setItem("tiempo", props.tiempo);
       localStorage.setItem("imagen", props.img);
-      navigate("/spa/agendar");
+      window.location.href = "/spa/agendar";
     } else {
       toggleLogin();
     }
@@ -92,12 +92,14 @@ const TarjetaFavoritos = ({ props }) => {
 
     // Verificar si el producto ya está en favoritos
     let favoritos = JSON.parse(localStorage.getItem("favoritos")) || [];
-    const estaEnFavoritos = favoritos.some(fav => fav.pkIdPS === idProducto.ps);
+    const estaEnFavoritos = favoritos.some(
+      (fav) => fav.pkIdPS === idProducto.ps
+    );
 
     // Actualizar el estado de favoritos en React
-    setFavorites(prev => ({
+    setFavorites((prev) => ({
       ...prev,
-      [idProducto.ps]: !estaEnFavoritos
+      [idProducto.ps]: !estaEnFavoritos,
     }));
 
     if (!estaEnFavoritos) {
@@ -106,12 +108,12 @@ const TarjetaFavoritos = ({ props }) => {
       favoritos.push(nuevoFavorito);
     } else {
       // Eliminar el producto del localStorage
-      favoritos = favoritos.filter(fav => fav.pkIdPS !== idProducto.ps);
+      favoritos = favoritos.filter((fav) => fav.pkIdPS !== idProducto.ps);
     }
 
     // Guardar la lista actualizada en localStorage
     localStorage.setItem("favoritos", JSON.stringify(favoritos));
-  }
+  };
 
   return (
     <>
@@ -132,47 +134,65 @@ const TarjetaFavoritos = ({ props }) => {
               </button>
             </div>
             {console.log("props", props.log)}
-            {props.log ?
-              (<Box
+            {props.log ? (
+              <Box
                 className="relative right"
                 sx={{
-                  '& > legend': { mt: 2 },
+                  "& > legend": { mt: 2 },
                 }}
               >
-                <StyledRating
-                  name="customized-color"
-                  max={1}
-                  value={fav ? 1 : 0}
-
-                  // value={uid ? (producto.favorito || favorites[producto.pkIdPS]) ? 1 : 0 : JSON.parse(localStorage.getItem("favoritos"))?.some(fav => fav.pkIdPS === producto.pkIdPS) ? 1 : 0}
-                  // value={uid ? favorites[producto.pkIdPS] ? 1 : 0 : JSON.parse(localStorage.getItem("favoritos"))?.some(fav => fav.pkIdPS === producto.pkIdPS) ? 1 : 0}
-                  getLabelText={(value) => `${value} Heart${value !== 1 ? 's' : ''}`}
-                  precision={1}
-                  defaultValue={props.favorito}
-                  icon={<FavoriteIcon fontSize="inherit" />}
-                  emptyIcon={<FavoriteBorderIcon fontSize="inherit" />}
-                  onClick={() => callFav()}
-                />
-              </Box>)
-              :
-              (<Box
+                <div className="w-[60%] grid place-content-end relative -left-4 -top-4">
+                  <StyledRating
+                    name="customized-color"
+                    max={1}
+                    value={fav ? 1 : 0}
+                    // value={uid ? (producto.favorito || favorites[producto.pkIdPS]) ? 1 : 0 : JSON.parse(localStorage.getItem("favoritos"))?.some(fav => fav.pkIdPS === producto.pkIdPS) ? 1 : 0}
+                    // value={uid ? favorites[producto.pkIdPS] ? 1 : 0 : JSON.parse(localStorage.getItem("favoritos"))?.some(fav => fav.pkIdPS === producto.pkIdPS) ? 1 : 0}
+                    getLabelText={(value) =>
+                      `${value} Heart${value !== 1 ? "s" : ""}`
+                    }
+                    precision={1}
+                    defaultValue={props.favorito}
+                    icon={<FavoriteIcon fontSize="inherit" />}
+                    emptyIcon={<FavoriteBorderIcon fontSize="inherit" />}
+                    onClick={() => callFav()}
+                  />
+                </div>
+              </Box>
+            ) : (
+              <Box
                 className="relative right"
                 sx={{
-                  '& > legend': { mt: 2 },
+                  "& > legend": { mt: 2 },
                 }}
               >
-                <StyledRating
-                  name="customized-color"
-                  max={1}
-                  value={localStorage.getItem("favoritos") ? JSON.parse(localStorage.getItem("favoritos")).some(fav => fav.pkIdPS === props.ps) ? 1 : 0 : favorites[props.ps] ? 1 : 0}
-                  // value={favorites[producto.pkIdPS] ? 1 : 0}
-                  getLabelText={(value) => `${value} Heart${value !== 1 ? 's' : ''}`}
-                  precision={1}
-                  icon={<FavoriteIcon fontSize="inherit" />}
-                  emptyIcon={<FavoriteBorderIcon fontSize="inherit" />}
-                  onChange={() => toggleFavorite(props)}
-                />
-              </Box>)}
+                <div className="w-[60%] grid place-content-end relative -left-4 -top-4">
+                  <StyledRating
+                    name="customized-color"
+                    max={1}
+                    value={
+                      localStorage.getItem("favoritos")
+                        ? JSON.parse(localStorage.getItem("favoritos")).some(
+                            (fav) => fav.pkIdPS === props.ps
+                          )
+                          ? 1
+                          : 0
+                        : favorites[props.ps]
+                        ? 1
+                        : 0
+                    }
+                    // value={favorites[producto.pkIdPS] ? 1 : 0}
+                    getLabelText={(value) =>
+                      `${value} Heart${value !== 1 ? "s" : ""}`
+                    }
+                    precision={1}
+                    icon={<FavoriteIcon fontSize="inherit" />}
+                    emptyIcon={<FavoriteBorderIcon fontSize="inherit" />}
+                    onChange={() => toggleFavorite(props)}
+                  />
+                </div>
+              </Box>
+            )}
           </div>
         </div>
         <div className="mt-6 text-[#036C65] bg-[#E8C3C6] rounded-3xl text-md md:text-xl text-center p-2 w-2/3 m-auto flex justify-center items-center">
