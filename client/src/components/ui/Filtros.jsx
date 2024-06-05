@@ -13,6 +13,8 @@ import { Slider, Box } from "@mui/material";
 //import { products } from '../../data/productos.json'
 import Rating from "@mui/material/Rating";
 import Soon from "./Proximamente";
+import 'react-tooltip/dist/react-tooltip.css'
+import { Tooltip } from 'react-tooltip'
 
 function classNames(...clases) {
   return clases.filter(Boolean).join(" ");
@@ -652,7 +654,7 @@ export default function Filtros() {
 
           <main className="px-4 mx-auto max-w-7xl sm:px-6 lg:px-8">
             <div className="grid justify-around gap-8 pt-24 pb-6 border-b border-gray-200 md:grid-cols-3 grid-cols2 ">
-              <h1 onClick={resetFilters} className="text-xl font-bold tracking-tight text-gray-900 hover:cursor-pointer md:text-4xl">
+              <h1 data-tooltip-id="ver" data-tooltip-content="Restablecer filtros" onClick={resetFilters} className="text-xl font-bold tracking-tight text-gray-900 hover:cursor-pointer md:text-4xl">
                 Filtrar por:
               </h1>
               <div className="flex items-center">
@@ -1012,6 +1014,7 @@ export default function Filtros() {
           </main>
         </div >
       </div >
+      <Tooltip id="ver" />
     </>
   );
 }
