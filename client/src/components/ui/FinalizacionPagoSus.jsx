@@ -41,6 +41,19 @@ const FinalizacionPagoProd = ({ producto }) => {
         window.location.href = "/spa";
     }
 
+    const obtenerFechaConUnMesMas = () => {
+        const fechaActual = new Date();
+        const nuevaFecha = new Date(fechaActual);
+        nuevaFecha.setMonth(fechaActual.getMonth() + 1);
+
+        const day = nuevaFecha.getDate().toString().padStart(2, '0');
+        const month = (nuevaFecha.getMonth() + 1).toString().padStart(2, '0');
+        const year = nuevaFecha.getFullYear(2);
+
+        return `${day}/${month}/${year}`; // Formato: DD/MM/YYYY
+    };
+
+    const vencimiento = obtenerFechaConUnMesMas();
 
     return (
         <>
@@ -85,7 +98,7 @@ const FinalizacionPagoProd = ({ producto }) => {
                             </div>
                             <div className="flex-grow border-b-2 border-black mx-5" />
                             <div className="grid grid-cols-2 my-2 place-items-center place-content-between">
-                                <h1 className="text-[rgb(3,109,99)] ml-2">Fecha de vencimiento: 00/00/00</h1>
+                                <h1 className="text-[rgb(3,109,99)] ml-2">Fecha de vencimiento: {vencimiento}</h1>
                                 <div className="grid grid-cols-2 place-items-center">
                                     <p>Total</p>
                                     <p className="text-[rgb(3,109,99)] font-bold">${total}</p>
@@ -98,6 +111,7 @@ const FinalizacionPagoProd = ({ producto }) => {
                                     type="checkbox"
                                     checked={cobro}
                                     onChange={handleCobro}
+                                    className="cursor-pointer"
                                 />
                                 <label className="px-2 mr-5">Cobro automático</label>
                             </div>

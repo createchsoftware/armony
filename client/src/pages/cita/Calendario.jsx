@@ -309,6 +309,50 @@ function Calendario({ next }) {
     const [selectedDate, setSelectedDate] = useState(initialValue);
     const [horasDisponibles, setHorasDisponibles] = useState([]);
 
+    const Fecha = async () => {
+        if (localStorage.getItem("Evaluando")===true || localStorage.getItem("Evaluando")){
+
+            
+            setSelectedDate(localStorage.getItem("Fecha seleccionada"));
+        } else {
+            alert('ya escogiste una hora')
+        }
+    }
+
+    useEffect(() => {
+
+Fecha()
+}, [localStorage.getItem("Evaluando")]);
+
+
+
+  
+  
+const updateCita= async (cita)=>{
+  if(Uid){
+    try {
+      await fetch(`/api/admin/citas/modify`, {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(
+          {
+            idCita: localStorage.getItem("idcita"),
+            idEmp:  localStorage.getItem("Especialista"),
+            nuevaFecha: localStorage.getItem("hora"),
+            horaI: localStorage.getItem("hora"),
+            descr: 'emmm sip',
+          }
+
+        ),
+      });
+    } catch (error) {
+      console.log("error", error);
+    }
+}
+
+}
 
     // const EmpsFavoritos= async () => {
        

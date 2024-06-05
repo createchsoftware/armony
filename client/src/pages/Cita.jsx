@@ -11,7 +11,7 @@ import { fa1, faCircle } from "@fortawesome/free-solid-svg-icons";
 import { Navigate, useNavigate } from "react-router-dom";
 import { CSSTransition, TransitionGroup } from "react-transition-group";
 import { Link } from "react-router-dom";
-import { useLocation } from 'react-router-dom';
+import { useLocation } from "react-router-dom";
 import Paquetes from "./cita/Paquetes";
 import Calendario from "./cita/Calendario";
 import Pago from "../components/ui/Pago";
@@ -32,8 +32,6 @@ const steps = [
 ];
 
 export default function Cita() {
- 
-
   const navigate = useNavigate();
   const [activeStep, setActiveStep] = useState(0);
   const location = useLocation();
@@ -42,22 +40,26 @@ export default function Cita() {
   const nextButtonText =
     activeStep === steps.length - 1 ? "Finalizar" : "Siguiente";
 
-    useEffect(() => {
-      if(localStorage.getItem('citaModify')!==null){
-        setActiveStep(2);
-        let cita=localStorage.getItem('citaModify')
-        localStorage.setItem("Especialista",cita.ID_Empleado);
-    localStorage.setItem("hora",cita);
-    localStorage.setItem("Fecha seleccionada",cita.fecha);
-     }
-    }, [ localStorage.getItem('citaModify')]);
-    
-    useEffect(() => {
-      //cuando el usuario llegue al paso 4  se ajecutara
-      if (activeStep === 0) {
-        localStorage.removeItem("citaModify");
-      }
-    }, [activeStep]);
+  useEffect(() => {
+    if (localStorage.getItem("citaModify") !== null) {
+      setActiveStep(2);
+      let cita = localStorage.getItem("citaModify");
+      localStorage.setItem("Evaluando", true);
+
+      localStorage.setItem("idcita", cita.ID_Cita);
+      localStorage.setItem("servicio", 1);
+      localStorage.setItem("Especialista", cita.ID_Empleado);
+      localStorage.setItem("hora", cita.hora_Inicio);
+      localStorage.setItem("Fecha seleccionada", cita.fecha);
+    }
+  }, [localStorage.getItem("citaModify")]);
+
+  useEffect(() => {
+    //cuando el usuario llegue al paso 4  se ajecutara
+    if (activeStep === 0) {
+      localStorage.removeItem("citaModify");
+    }
+  }, [activeStep]);
 
   // const citasAgregadas = [];
   // localStorage.setItem('citas', JSON.stringify(citasAgregadas));
@@ -65,8 +67,7 @@ export default function Cita() {
   //   localStorage.clear();
   // }, []); // Se ejecutará una vez al montar el component
 
- 
- // Actualiza el activeStep basado en el estado pasado a través de location.state
+  // Actualiza el activeStep basado en el estado pasado a través de location.state
 
   async function checkLogin() {
     let respuestaJson = null;
@@ -147,8 +148,8 @@ export default function Cita() {
     const newActiveStep =
       isLastStep() && !allStepsCompleted()
         ? // It's the last step, but not all steps have been completed,
-        // find the first step that has been completed
-        steps.findIndex((step, i) => !(i in completed))
+          // find the first step that has been completed
+          steps.findIndex((step, i) => !(i in completed))
         : activeStep + 1;
     setActiveStep(newActiveStep);
   };
@@ -161,7 +162,7 @@ export default function Cita() {
   const handleCancel = () => {
     // setActiveStep(0);
     // setCompleted({});
-    window.location.href = '/spa';
+    window.location.href = "/spa";
   };
 
   const handleStep = (step) => () => {
@@ -188,7 +189,17 @@ export default function Cita() {
 
   const handleAgenda = () => {
     window.location.href = "/perfil/agenda";
-  }
+  };
+
+  useEffect(() => {
+    console.log(localStorage.getItem("step1"));
+    if (localStorage.getItem("step1") == "true") {
+      console.log("hola");
+      //setActiveStep(1);
+      handleClick();
+      localStorage.setItem("step1", false);
+    }
+  }, []);
 
   // const iterateArray = () => {
   //   let myArray = JSON.parse(localStorage.getItem('citas')) || [];
@@ -210,8 +221,6 @@ export default function Cita() {
     localStorage.removeItem("hora");
     localStorage.removeItem("Fecha seleccionada");
     localStorage.removeItem("NombreEspecialista");
-
-
   };
 
   const removeLSPago = () => {
@@ -242,26 +251,26 @@ export default function Cita() {
   const LocalBase = () => {
     console.log(
       localStorage.getItem("servicio") +
-      " " +
-      localStorage.getItem("nombre") +
-      " " +
-      localStorage.getItem("precio") +
-      " " +
-      localStorage.getItem("tiempo") +
-      " " +
-      localStorage.getItem("imagen") +
-      " " +
-      localStorage.getItem("paquete") +
-      " " +
-      localStorage.getItem("sesiones") +
-      " " +
-      localStorage.getItem("Especialista") +
-      " " +
-      localStorage.getItem("hora") +
-      " " +
-      localStorage.getItem("Fecha seleccionada") +
-      " " +
-      localStorage.getItem("NombreEspecialista")
+        " " +
+        localStorage.getItem("nombre") +
+        " " +
+        localStorage.getItem("precio") +
+        " " +
+        localStorage.getItem("tiempo") +
+        " " +
+        localStorage.getItem("imagen") +
+        " " +
+        localStorage.getItem("paquete") +
+        " " +
+        localStorage.getItem("sesiones") +
+        " " +
+        localStorage.getItem("Especialista") +
+        " " +
+        localStorage.getItem("hora") +
+        " " +
+        localStorage.getItem("Fecha seleccionada") +
+        " " +
+        localStorage.getItem("NombreEspecialista")
     );
   };
   const stepComponents = [
@@ -286,16 +295,16 @@ export default function Cita() {
                 color: "#036C65", // circle color (COMPLETED)
               },
               "& .MuiStepLabel-label.Mui-completed.MuiStepLabel-alternativeLabel":
-              {
-                color: "white", // Just text label (COMPLETED)
-              },
+                {
+                  color: "white", // Just text label (COMPLETED)
+                },
               "& .MuiStepLabel-root .Mui-active": {
                 color: "#036C65", // circle color (ACTIVE)
               },
               "& .MuiStepLabel-label.Mui-active.MuiStepLabel-alternativeLabel":
-              {
-                color: "white", // Just text label (ACTIVE)
-              },
+                {
+                  color: "white", // Just text label (ACTIVE)
+                },
               "& .MuiStepLabel-root .Mui-active .MuiStepIcon-text": {
                 fill: "white", // circle's number (ACTIVE)
               },
@@ -348,15 +357,14 @@ export default function Cita() {
                   }
                 >
                   <button
-                    hidden={
-                      activeStep === 5 || activeStep === 6
-                    }
+                    hidden={activeStep === 5 || activeStep === 6}
                     disabled={activeStep === 0}
                     onClick={handleBack}
-                    className={`${activeStep === 0
-                      ? "hover:bg-transparent opacity-30 hover:text-rose-400"
-                      : "hover:bg-red-50"
-                      } px-4 py-2 mx-auto text-xl bg-white rounded-full ring-1 text-rose-400 ring-rose-400`}
+                    className={`${
+                      activeStep === 0
+                        ? "hover:bg-transparent opacity-30 hover:text-rose-400"
+                        : "hover:bg-red-50"
+                    } px-4 py-2 mx-auto text-xl bg-white rounded-full ring-1 text-rose-400 ring-rose-400`}
                     sx={{ mr: 1 }}
                   >
                     Regresar
@@ -381,7 +389,12 @@ export default function Cita() {
                   </button>
                   <button
                     hidden={
-                      activeStep === 3 || activeStep === 4 || activeStep === 5 || activeStep === 0 || activeStep === 1 || activeStep === 2
+                      activeStep === 3 ||
+                      activeStep === 4 ||
+                      activeStep === 5 ||
+                      activeStep === 0 ||
+                      activeStep === 1 ||
+                      activeStep === 2
                     }
                     // hidden={activeStep === 5 || activeStep === 4}
                     onClick={handleClick}
