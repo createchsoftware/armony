@@ -4,8 +4,9 @@ import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import Box from "@mui/material/Box";
 import { ChevronRight } from "lucide-react";
 import { styled } from "@mui/material/styles";
-import { useState } from "react";
+import { useState,useEffect } from "react";
 import { parse } from "@fortawesome/fontawesome-svg-core";
+import { jwtDecode } from "jwt-decode";
 
 const StyledRating = styled(Rating)({
   "& .MuiRating-iconFilled": {
@@ -16,7 +17,10 @@ const StyledRating = styled(Rating)({
   },
 });
 
+
 function Especialista({ especialista }) {
+  const [uid, setUid] = useState(null);
+  const [favorites, setFavorites] = useState({});
   const [seleccionado, setSeleccionado] = useState(false);
   function exp(xp) {
     return xp == 1 ? xp + " año" : xp + " años";
@@ -31,6 +35,44 @@ function Especialista({ especialista }) {
       alert("ya escogiste un especialista");
     }
   };
+
+  useEffect(() => {
+    const cookie = obteneridCookie('Naruto_cookie');
+    if (cookie) {
+        const decoded = jwtDecode(cookie);
+        setUid(decoded.user);
+    }
+}, []);
+
+
+const obteneridCookie = (cookieName) => {
+    const cookies = document.cookie.split(';');
+    const cookie = cookies.find(c => c.trim().startsWith(cookieName + "="));
+    return cookie ? cookie.split('=')[1] : null;
+};
+
+
+const toggleFavorite = async (especialista) => {
+  const estaEnFavoritos = favorites[especialista];
+  if (uid) {
+      try {
+          fetch('/api/admin/favoritos/invertirFavEmp', {
+              method: "POST",
+              body: JSON.stringify({ idCliente: uid, IdEmp: especialista }),
+              headers: { "Content-Type": "application/json" },
+          });
+          setFavorites(prev => ({
+            ...prev,
+            [especialista]: !estaEnFavoritos
+        }));
+
+      } catch (error) {
+          console.error('Error en la solicitud:', error);
+      }
+  }
+};
+
+
   return (
     <div className="md:px-8 md:py-2 rounded-3xl font-[abeatbyKai]  w-2/3 m-auto bg-rose-200">
       <div className='flex justify-end'>
@@ -44,10 +86,12 @@ function Especialista({ especialista }) {
             name="customized-color"
             defaultValue={0}
             max={1}
+            value={especialista.favorito || favorites[especialista.ID] ? 1 : 0}
             getLabelText={(value) => `${value} Heart${value !== 1 ? 's' : ''}`}
             precision={1}
             icon={<FavoriteIcon fontSize="inherit" />}
             emptyIcon={<FavoriteBorderIcon fontSize="inherit" />}
+            onChange={() => toggleFavorite(especialista.ID)}
           />
         </Box>
       </div>

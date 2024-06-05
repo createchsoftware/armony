@@ -101,7 +101,18 @@ function Calendario({ next }) {
     const handleGeneral = () => {
         setFavoritosSelected(false);
     }
-
+    // useEffect(() => {
+    //     if (id) {
+    //         fetch(`/api/admin/favoritos/EmpFavoritosbyId/${id}`)
+    //             .then(response => response.json())
+    //             .then(data => {
+    //         setFavoritosSelected(data);
+    //             })
+    //             .catch(error => {
+    //                 console.log(error);
+    //             });
+    //     }
+    // }, [id]);
 
     // useEffect for diferent fetch (when favoritosSelected is true fetch favoritos, when is false fetch general)
     // useEffect(() => {
@@ -298,8 +309,25 @@ function Calendario({ next }) {
     const [selectedDate, setSelectedDate] = useState(initialValue);
     const [horasDisponibles, setHorasDisponibles] = useState([]);
 
-    //metodo para obtener horas disponibles de un empleado
-    //este metodo se llamara cada vez que el estado de id empleado o el estado de fecha cambie
+
+    // const EmpsFavoritos= async () => {
+       
+    //     if (id) {
+    //         try {
+    //             const response = await fetch(`/api/admin/favoritos/EmpFavoritosbyId/${id}`, {
+    //                 method: 'GET',
+    //                 headers: {
+    //                     'Content-Type': 'application/json'
+    //                 }
+    //             });
+    //             const data = await response.json();
+    //             setHorasDisponibles(data);
+    //             setIsLoad(false);
+    //         } catch (error) {
+    //             console.error('Error de red o servidor:', error.message);
+    //         }
+    //     }
+    // };
 
 
 
@@ -445,8 +473,7 @@ function Calendario({ next }) {
             try {
                 let response;
                 if (favoritosSelected) {
-                    const idServicio = localStorage.getItem('servicio');
-                    response = await fetch(`/api/admin/empleado/favoritos/:' ${id}`);
+                    response = await fetch(`/api/admin/empleado/favoritos/${id}`);
                 } else {
                     const idServicio = localStorage.getItem('servicio');
                     response = await fetch(`/api/admin/empleado/getEmpServicio/${idServicio}`);

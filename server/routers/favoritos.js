@@ -10,7 +10,8 @@ import {
   ServiceFavoritosSpa,
   FavoritosbyId,
   invertirFav,
-  invertirFavEmp
+  invertirFavEmp,
+  getFavEmp
 } from "../db/query/queryFavoritos.js";
 import { conexion } from "../db/connection.js";
 
@@ -150,7 +151,7 @@ routerFavoritos.post("/invertirFav", async (req, res) => {
   }
 });
 
-routerFavoritos.post("/invertirFav", async (req, res) => {
+routerFavoritos.post("/invertirFavEmp", async (req, res) => {
   try {
     const data = req.body;
     await invertirFavEmp(conexion, data);
@@ -160,3 +161,13 @@ routerFavoritos.post("/invertirFav", async (req, res) => {
   }
 });
 
+routerFavoritos.get("/EmpFavoritosbyId/:id", async (req, res) => {
+  try {
+    const resultado = await getFavEmp(conexion, {
+      idCliente: req.params.id,
+    });
+    res.send(JSON.stringify(resultado));
+  } catch (err) {
+    res.status(500).send({ error: "Hubo un problema", err });
+  }
+});

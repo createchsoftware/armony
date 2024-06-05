@@ -497,13 +497,17 @@ redirect('')
 
   const updateItem = async  (cita) => {
     setcitavisible(true);
-    setselectedcita(null);
+    setselectedcita(cita);
 
   };
 
-  const confirm = async (cita) => {
+  const confirm = async () => {
+
+    //console.log(selectedcita)
+    localStorage.setItem('citaModify',JSON.stringify(selectedcita))
    
-    navigate('/spa/agendar', {state: 2 });
+   // navigate('/spa/agendar', { state: { step: 2 } });
+   window.location.href='/spa/agendar';
   }
 
 
