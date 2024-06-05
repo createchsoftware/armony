@@ -19,7 +19,9 @@ import { Button } from "primereact/button";
 import { Dialog } from "primereact/dialog";
 import 'primereact/resources/themes/saga-blue/theme.css';
 import 'primereact/resources/primereact.min.css';
-import { redirect } from "react-router-dom";
+import { Navigate, redirect, useNavigate } from "react-router-dom";
+
+
 
 dayjs.extend(localizedFormat); // Extender dayjs con el plugin
 dayjs.locale("es"); // Usar locale español
@@ -96,6 +98,8 @@ function ServerDay(props) {
 }
 
 function Agenda() {
+
+  const navigate =useNavigate()
   async function checkLogin() {
     let respuestaJson = null;
     try {
@@ -497,8 +501,9 @@ redirect('')
 
   };
 
-  const confirm = async () => {
-    window.location.href = "/spa/agendar";
+  const confirm = async (cita) => {
+   
+    navigate('/spa/agendar', {state: 2 });
   }
 
 

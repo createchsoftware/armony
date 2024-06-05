@@ -44,6 +44,11 @@ export default function Cita() {
   //   localStorage.clear();
   // }, []); // Se ejecutará una vez al montar el component
 
+
+
+  if(location.state.step){
+activeStep=2
+  }
   async function checkLogin() {
     let respuestaJson = null;
     try {

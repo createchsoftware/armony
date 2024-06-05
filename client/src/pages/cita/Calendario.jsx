@@ -30,6 +30,8 @@ function getRandomNumber(min, max) {
     return Math.round(Math.random() * (max - min) + min);
 }
 
+
+
 /**
  * Mimic fetch with abort controller https://developer.mozilla.org/en-US/docs/Web/API/AbortController/abort
  * ⚠️ No IE11 support
@@ -73,6 +75,7 @@ function ServerDay(props) {
 }
 
 function Calendario({ next }) {
+
     const [especialistas, setEspecialistas] = React.useState([]);
     const [selectedHourIndex, setSelectedHourIndex] = useState(null);
     const requestAbortController = React.useRef(null);
