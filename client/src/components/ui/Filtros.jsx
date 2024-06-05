@@ -183,22 +183,33 @@ export default function Filtros() {
 
   //useEffect para obtener los productos
   useEffect(() => {
-    setTimeout(() => {
-      console.log("idFinal:", id);
-      fetch(`/api/admin/productos/getProducts/${id}`)
-        .then((response) => {
-          if (!response.ok) {
-            throw new Error("Error al obtener los productos");
-          }
-          return response.json();
-        })
-        .then((data) => {
+
+    const fetchProducts = async () => {
+      let response;
+      try {
+        if (id !== null && id !== 0 && id !== undefined) {
+          response = await fetch(`/api/admin/productos/getProducts/${id}`);
+          const data = await response.json();
           setAllProducts(data);
-        })
-        .catch((error) => {
-          console.log("error", error);
-        });
-    }, [1000]);
+        } else {
+          response = await fetch(`/api/admin/productos/getProductsAll`);
+          const data = await response.json();
+          setAllProducts(data);
+        }
+
+        if (!response.ok) {
+          throw new Error("Error al obtener los productos");
+        }
+
+      } catch (error) {
+        console.log("error", error);
+      }
+    };
+
+    const timeoutId = setTimeout(fetchProducts, 1000);
+
+    // Cleanup function to clear the timeout if the component unmounts or id changes
+    return () => clearTimeout(timeoutId);
   }, [id]);
 
   // Función para manejar la búsqueda
@@ -914,6 +925,7 @@ export default function Filtros() {
                   </Disclosure>
                 </form>
 
+                {console.log("producto11111111111s", filteredProducts)}
                 <ContenedorProductos products={filteredProducts} />
               </div>
             </section>
