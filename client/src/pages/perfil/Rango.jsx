@@ -251,7 +251,7 @@ function Rango() {
                   <img className="w-24" src={rangoOro} alt="" />
                   <div className="w-full bg-gray-200 rounded-full h-2.5 mb-4 dark:bg-gray-700">
                     <div
-                      className=" bg-[#036C65] h-1.5 rounded-full dark:bg-gray-300"
+                      className=" bg-[#036C65] h-1.5 mt-[2px] rounded-full dark:bg-gray-300"
                       style={{ width: porcentaje + "%" }}
                     ></div>
                   </div>
