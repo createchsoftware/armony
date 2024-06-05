@@ -10,14 +10,15 @@ import { CSSTransition, TransitionGroup } from "react-transition-group";
 import Pago from "../components/ui/PagoDeSuscripcion";
 import RevisionSuscripcion from "../components/ui/RevisionSuscripcion";
 import FinalizacionPago from "../components/ui/FinalizacionPagoSus";
-import Ticket from "../components/ui/TicketServicio";
+//import Ticket from "../components/ui/TicketServicio";
 import "./cita/Transiciones.css";
 
 const steps = [
   "Revisión",
   "Pago",
-  "Confirmación",
-  "Ticket"
+  "Confirmación"
+  // ,
+  // "Ticket"
 ];
 
 export default function Cita({ producto }) {
