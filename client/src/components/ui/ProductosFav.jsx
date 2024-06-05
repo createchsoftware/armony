@@ -13,6 +13,7 @@ import { useState, useEffect } from 'react';
 import { jwtDecode } from "jwt-decode";
 import 'react-tooltip/dist/react-tooltip.css'
 import { Tooltip } from 'react-tooltip'
+import { useLocation } from 'react-router-dom';
 
 const StyledRating = styled(Rating)({
     '& .MuiRating-iconFilled': {
@@ -26,6 +27,7 @@ const StyledRating = styled(Rating)({
 
 
 function ProductosFav({ props }) {
+    const location = useLocation();
     const navigate = useNavigate();
     const [fav, setFav] = useState(props.favorito);
     const [login, setLogin] = useState(false);

@@ -64,6 +64,8 @@ const reseñas = [
 
 
 function Producto() {
+
+
     const { id } = useParams();
     const location = useLocation();
     const product = location.state.product || {};
@@ -72,6 +74,13 @@ function Producto() {
     const [uid, setUid] = useState(null);
     const [st, setSt] = useState(false);
     const [fav, setFav] = useState(product.favorito);
+
+    console.log("id", id);
+    console.log("productoooooooooooooooo", product);
+
+    const [loaded, setLoaded] = useState(false); // Estado para controlar si ya se ha cargado el componente
+
+    // Otras variables de estado y funciones
 
     let respuestaJson = null;
     async function checkLogin() {

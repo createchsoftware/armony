@@ -1,10 +1,51 @@
-import { Navigate, useNavigate } from "react-router-dom";
-import { useState, useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 function Compras({ compras, entregado }) {
     const entrega = entregado;
     const [info, setInfo] = useState(false);
     const navigate = useNavigate();
+    const [id, setId] = useState(null);
+
+    useEffect(() => {
+        getId();
+    }, []);
+
+    async function getId() {
+        let respuestaJson = null;
+        try {
+            const respuesta = await fetch("/api/logueado", {
+                method: "GET",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+            });
+            respuestaJson = await respuesta.json();
+            console.log("id en uso: ", respuestaJson.clave);
+            await setId(respuestaJson.clave);
+        } catch (error) {
+            console.log("Error");
+        }
+    }
+
+    const handleViewMore = (producto) => {
+        // Validaciones u otras lógicas aquí...
+
+        console.log(producto);
+
+        const product = {
+            id: producto.id,
+            nombre: producto.nombre,
+            precio: parseFloat(producto.precio),
+            descripcion: producto.descripcion,
+            valoracion: producto.valoracion || 0,
+            imagen: producto.imagen,
+            uid: id,
+            favorito: producto.favorito || 0,
+        };
+        console.log(product);
+        navigate(`/spa/producto/${product.id}`, { state: { product } });
+    }
 
     const handleComprar = (productoComprar) => {
         if (!productoComprar || !productoComprar.id || typeof productoComprar.precio !== 'number') {
@@ -23,25 +64,6 @@ function Compras({ compras, entregado }) {
         };
         navigate('/spa/comprar', { state: { producto: [productoBuy] } });
     };
-
-    const handleViewMore = (producto) => {
-        // if (!producto || !producto.pkIdPS || typeof producto.precio !== 'number') {
-        //     console.error('Producto no válido para ver más', producto);
-        //     return;
-        // }
-
-        const product = {
-            id: producto.id,
-            nombre: producto.nombre,
-            precio: parseFloat(producto.precio),
-            descripcion: producto.descripcion,
-            valoracion: producto.valoracion || 0,
-            imagen: producto.imagen,
-            favorito: producto.favorito,
-        };
-        console.log(product);
-        navigate(`/spa/producto/${product.id}`, { state: { product } });
-    }
 
     return (
         <>
@@ -114,4 +136,4 @@ function Compras({ compras, entregado }) {
     )
 }
 
-export default Compras
+export default Compras;
