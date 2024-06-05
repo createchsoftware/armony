@@ -30,7 +30,6 @@ function Productos({ productos }) {
 
 
     useEffect(() => {
-        localStorage.removeItem("favoritos")
     }, [])
 
     useEffect(() => {
@@ -164,8 +163,9 @@ function Productos({ productos }) {
                                     <StyledRating
                                         name="customized-color"
                                         max={1}
+                                        // value={uid ? (producto.favorito || favorites[producto.pkIdPS]) ? 1 : 0 : JSON.parse(localStorage.getItem("favoritos"))?.some(fav => fav.pkIdPS === producto.pkIdPS) ? 1 : 0}
+                                        // value={uid ? favorites[producto.pkIdPS] ? 1 : 0 : JSON.parse(localStorage.getItem("favoritos"))?.some(fav => fav.pkIdPS === producto.pkIdPS) ? 1 : 0}
                                         value={producto.favorito || favorites[producto.pkIdPS] ? 1 : 0}
-                                        // value={favorites[producto.pkIdPS] ? 1 : 0}
                                         getLabelText={(value) => `${value} Heart${value !== 1 ? 's' : ''}`}
                                         precision={1}
                                         icon={<FavoriteIcon fontSize="inherit" />}

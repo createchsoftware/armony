@@ -12,13 +12,9 @@ function AgregarSaldo(){
     const [array_toShow, setArray_toShow] = useState([]);
     const [monto_a_recargar, setMonto] = useState('0.0');
     const [addTarjeta, setAddTarjeta] = useState(false);
+    const [isSelected, setIsSelecetd] = useState(false);
     const [confirm, setConfirm] = useState(false);
     const [ticket, setTicket] = useState(false);
-
-    async function seleccionarTarjeta(tarjeta){
-        setsTarjeta(tarjeta);
-        ModificarArray(sTarjeta.numero_tarjeta);
-    }
 
     function ModificarArray(number){
 
@@ -26,7 +22,7 @@ function AgregarSaldo(){
         setArray_toShow(
             array.map(tarjeta=> {
 
-                if(tarjeta.numero_tarjeta == number){
+                if(tarjeta.numero_tarjeta === number){
                     tarjeta.predeterminada = 1;
                 }
                 else{
@@ -102,6 +98,12 @@ function AgregarSaldo(){
         setTicket(!ticket)
     }
 
+    async function seleccionarTarjeta(tarjeta){
+        setIsSelecetd(!isSelected);
+        setsTarjeta(tarjeta);
+        ModificarArray(sTarjeta.numero_tarjeta);
+    }
+
     const tarjeta = array_toShow.map(tarjetas => (
         <div key={tarjetas.vista_tarjeta} className='flex px-10 py-2 items-center rounded-2xl my-3 shadow-md justify-between border border-gray-400'>
             <img src={`../../../pictures/${tarjetas.imagen}`}
@@ -112,10 +114,10 @@ function AgregarSaldo(){
                 <h1 className="text-xl">****{tarjetas.numero_tarjeta.slice(0, 4)}</h1>
             </div>
             <div className='grid gap-2 p-2'>
-                {seleccionarTarjeta? (
-                    <button onClick={()=> seleccionarTarjeta(tarjetas)} className='px-4 py-2 bg-[#EB5765] rounded-full text-white duration-200 hover:bg-[#ffb5a7]'>Seleccionar</button>
+                {isSelected ? (
+                    <button onClick={()=> seleccionarTarjeta(tarjetas)} className='px-4 py-2 bg-[#036C65] rounded-full text-white duration-200 hover:bg-[#4bcdc4]'>Seleccionado</button>
                 ):(
-                    <span>Seleccionado</span>
+                    <button onClick={()=> seleccionarTarjeta(tarjetas)} className='px-4 py-2 bg-[#EB5765] rounded-full text-white duration-200 hover:bg-[#ffb5a7]'>Seleccionar</button>
                 )}
             </div>
         </div>
