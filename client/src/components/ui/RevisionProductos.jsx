@@ -18,6 +18,7 @@ function RevisionProductos({ restart, producto, next }) {
         }
     });
 
+
     const { increaseQuantity } = useCarrito();
     const { decreaseQuantity } = useCarrito();
     const { eliminarDelCarrito } = useCarrito();
@@ -62,7 +63,7 @@ function RevisionProductos({ restart, producto, next }) {
     const [puntosTotal, setPuntosTotal] = useState(0); //<<< PUNTOS TOTALES
     const [clave, setClave] = useState(false);
     const [sus, setSus] = useState(false); //<<< CARACTERISTICA GRAFICA DE QUE EL USUARIO ES SOCIO
-    const puntos = (sus ? ((parseInt(subTotal))/5):((parseFloat(subTotal)) / 10));
+    const puntos = (sus ? ((parseInt(subTotal)) / 5) : ((parseFloat(subTotal)) / 10));
 
     async function callRango() {
         const respuesta3 = await fetch("/api/perfil/rangos", {
@@ -110,11 +111,11 @@ function RevisionProductos({ restart, producto, next }) {
     }, []);
 
     useEffect(() => {
-        
+
         const Prod = async () => {
             try {
                 if (clave) {
-    
+
                     const response = await fetch(`/api/admin/cliente/StatusSus/${clave}`)
                     const data = await response.json();
                     setSus(data)

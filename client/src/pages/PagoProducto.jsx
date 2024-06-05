@@ -46,6 +46,13 @@ export default function Cita({ producto }) {
   const [uid, setUid] = useState(null);
   const [st, setSt] = useState(false);
 
+
+  // Otras variables de estado y funciones
+  if (!localStorage.getItem('loaded2')) {
+    localStorage.setItem('loaded2', 'true');
+    window.location.reload();
+  }
+
   let respuestaJson = null;
   async function checkLogin() {
     try {

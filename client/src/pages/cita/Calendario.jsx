@@ -85,10 +85,14 @@ function Calendario({ next }) {
     const [log, setLog] = useState(false);
     const [login, setLogin] = useState(false);
     const [favoritosSelected, setFavoritosSelected] = useState(false);
+    const [st, setSt] = useState(false);
 
     const [id, setId] = useState(null); // Para el inicio de sesión
 
 
+    function changeSt() {
+        setSt(!st);
+    }
 
     const toggleLogin = () => {
         setLogin(!login);
@@ -515,6 +519,7 @@ function Calendario({ next }) {
             setIsLoad(true); // Establecer isLoading a true al comenzar la solicitud
 
             try {
+                console.log("iiiiiiiiiiid", id)
                 let response;
                 if (favoritosSelected) {
                     response = await fetch(`/api/admin/empleado/favoritos/${id}`);
@@ -711,7 +716,20 @@ function Calendario({ next }) {
                                 />}
                             >
                                 {especialistas.length > 0 ? (especialistas.map((especialista) => (
-                                    <Especialista key={especialista.id} especialista={especialista} />
+                                    // <Especialista key={especialista.id} especialista={especialista} />
+                                    <Especialista
+                                        props={{
+                                            id: id,
+                                            nombre: especialista.Nombre,
+                                            experiencia: especialista.experiencia,
+                                            valoracion: especialista.valoracion,
+                                            img: especialista.img,
+                                            favorito: especialista.favorito,
+                                            log: log,
+                                            ps: especialista.ID,
+                                            st: changeSt
+                                        }}
+                                    />
                                 ))) : (<div></div>)}
                             </Carousel>
                             {/* <CarruselServicios servicios={especialistas} itemsDesktop={1} itemsMobile={1} itemsTablet={1}/>

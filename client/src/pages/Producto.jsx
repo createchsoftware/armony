@@ -81,6 +81,10 @@ function Producto() {
     const [loaded, setLoaded] = useState(false); // Estado para controlar si ya se ha cargado el componente
 
     // Otras variables de estado y funciones
+    if (!localStorage.getItem('loaded')) {
+        localStorage.setItem('loaded', 'true');
+        window.location.reload();
+    }
 
     let respuestaJson = null;
     async function checkLogin() {
