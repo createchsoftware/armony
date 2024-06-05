@@ -101,18 +101,38 @@ function Pago({ producto, next }) {
     }
 
 
+    // const togglePago = (tarjeta, mone) => {
+    //     console.log("MONE", mone)
+    //     console.log("TOTAL", subTotal)
+    //     if (mone < subTotal) {
+    //         setPagoRealizado(false);
+    //         alert('No tienes suficiente saldo en tu monedero')
+    //         return
+    //     }
+    //     else {
+    //         setPagoRealizado(true);
+    //         localStorage.setItem('tarjeta', tarjeta);
+    //         localStorage.setItem('monedero', mone);
+    //     }
+    // }
+
     const togglePago = (tarjeta, mone) => {
-        console.log("MONE", mone)
-        console.log("TOTAL", total)
-        if (mone > total) {
-            setPagoRealizado(false);
-            alert('No tienes suficiente saldo en tu monedero')
-            return
-        }
-        else {
+        if (tarjeta) {
             setPagoRealizado(true);
             localStorage.setItem('tarjeta', tarjeta);
-            localStorage.setItem('monedero', mone);
+        } else {
+            console.log("MONE", mone)
+            console.log("TOTAL", subTotal)
+            if (mone < subTotal) {
+                setPagoRealizado(false);
+                alert('No tienes suficiente saldo en tu monedero')
+                return
+            }
+            else {
+                setPagoRealizado(true);
+                localStorage.setItem('tarjeta', tarjeta);
+                localStorage.setItem('monedero', mone);
+            }
         }
     }
     // const datosRecibidos = (nuevaTarjeta) => {

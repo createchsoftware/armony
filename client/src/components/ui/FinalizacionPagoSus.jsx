@@ -86,17 +86,17 @@ const FinalizacionPagoProd = ({ producto }) => {
                                         ${total + ' MXN'}
                                     </p>
                                 </div>
-                                <div className="flex-grow border-b-2 border-black mx-5" />
+                                <div className="flex-grow mx-5 border-b-2 border-black" />
                             </div>
                             <div>
                                 <div className="grid grid-cols-2 my-5 place-items-center place-content-between">
                                     <p className="text-center text-[#056761]">{'Puntos obtenidos:'}</p>
                                     <p className="text-center text-[#056761]">
-                                        {parseInt(puntos)}
+                                        {parseFloat(puntos).toFixed(2) + ' puntos'}
                                     </p>
                                 </div>
                             </div>
-                            <div className="flex-grow border-b-2 border-black mx-5" />
+                            <div className="flex-grow mx-5 border-b-2 border-black" />
                             <div className="grid grid-cols-2 my-2 place-items-center place-content-between">
                                 <h1 className="text-[rgb(3,109,99)] ml-2">Fecha de vencimiento: {vencimiento}</h1>
                                 <div className="grid grid-cols-2 place-items-center">
@@ -116,12 +116,12 @@ const FinalizacionPagoProd = ({ producto }) => {
                                 <label className="px-2 mr-5">Cobro automático</label>
                             </div>
                             <div className="flex items-center justify-around mb-4">
-                                <div className="grid justify-items-center text-center absolute right-1/2 transform translate-x-1/2">
+                                <div className="absolute grid text-center transform translate-x-1/2 justify-items-center right-1/2">
                                     <p>TICKET DE VENTA</p>
                                     <p>{formatDate(new Date())}</p>
                                     <p>¡ GRACIAS POR SU COMPRA !</p>
                                 </div>
-                                <div className=" flex-grow"></div>
+                                <div className="flex-grow "></div>
                                 <button
                                     onClick={exit}
                                     className="hover:bg-[#FFA3A3] text-white px-10 py-2 mr-10 rounded-full duration-200 bg-[#ec5766]"

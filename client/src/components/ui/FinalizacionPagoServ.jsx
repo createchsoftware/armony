@@ -26,7 +26,7 @@ const FinalizacionPagoServ = ({ next }) => {
 
   //En caso de ser Socio VVV
   //const puntos = (parseInt(totalIva))/5;
-  let sm = "sesiones";
+  let sm = "1 sesión";
   return (
     <>
       <div className="grid">
@@ -54,7 +54,7 @@ const FinalizacionPagoServ = ({ next }) => {
                 if (servicio.sesiones === 1) {
                   sm = "sesión";
                 } else {
-                  sm = "sesiones";
+                  sm = "1 sesión";
                 }
                 return (
                   <div key={servicio.nombreServicio}>
@@ -71,7 +71,7 @@ const FinalizacionPagoServ = ({ next }) => {
               })}
               <div className="shadow-md w-[18rem] py-3 my-5 ml-[21rem] h-auto border-2 rounded-md border-gray">
                 <div className="grid grid-cols-2 overflow-hidden place-items-center">
-                  <p>Total + IVA</p>
+                  <p>Total</p>
                   <p className="text-[rgb(3,109,99)] font-bold">${subTotal}</p>
                 </div>
               </div>

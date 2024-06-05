@@ -19,24 +19,24 @@ function Agenda({ restart, next }) {
 
   async function recibido() {
     const respuesta = await fetch("/api/logueado", {
-        method: "GET",
-        headers: {
-            "Content-Type": "application/json",
-        },
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
     });
 
     if (!respuesta.ok) {
-        setClave(false);
+      setClave(false);
     }
 
     let respuestaJson = await respuesta.json();
 
     if (respuestaJson.logueado == true) {
-        setClave(respuestaJson.clave);
+      setClave(respuestaJson.clave);
     } else {
-        setClave(false);
+      setClave(false);
     }
-}
+  }
 
   const handleModificar = () => {
     selectedCitaIndex === null && notify();
@@ -74,18 +74,18 @@ function Agenda({ restart, next }) {
     recibido();
   }, [])
 
-  useEffect(() => { 
+  useEffect(() => {
     const Prod = async () => {
-        try {
-            if (clave) {
+      try {
+        if (clave) {
 
-                const response = await fetch(`/api/admin/cliente/StatusSus/${clave}`)
-                const data = await response.json();
-                setSus(data)
-            }
-        } catch (error) {
-            console.error("hubo error :", error)
+          const response = await fetch(`/api/admin/cliente/StatusSus/${clave}`)
+          const data = await response.json();
+          setSus(data)
         }
+      } catch (error) {
+        console.error("hubo error :", error)
+      }
     }
     Prod()
   }, [clave])
@@ -116,18 +116,19 @@ function Agenda({ restart, next }) {
     setCitasItems(myArray);
   };
 
-  const RLSCitas = (id) => {
+  const RLSCitas = (index) => {
     let citas = JSON.parse(localStorage.getItem("citas")) || [];
-    citas = citas.filter((obj) => obj.id !== id);
+    citas.splice(index, 1); // Elimina el elemento en la posición 'index'
     localStorage.setItem("citas", JSON.stringify(citas));
   };
 
   //Para remover por completo un servicio.
-  const removeItem = (itemId) => {
-    //setDel(!del);
-    setCitasItems(citasItems.filter((item) => item.idServicio !== itemId)); //este lo elimina de la vista carrito
-    RLSCitas(itemId); //este elimina el item de locaStorage
+  //Para remover por completo un servicio.
+  const removeItem = (index) => {
+    setCitasItems(citasItems.filter((_, i) => i !== index)); // este lo elimina de la vista carrito
+    RLSCitas(index); // este elimina el item de localStorage
   };
+
 
   const [descuento, setDescuento] = useState("");
   const handleChange = (event) => {
@@ -149,7 +150,7 @@ function Agenda({ restart, next }) {
   // const iva = (total * 0.08).toFixed(2);
   // const totalIva = (parseFloat(total) + parseFloat(iva)).toFixed(2);
 
-  const puntos = (sus ? ((parseInt(total))/5):((parseFloat(total)) / 10));
+  const puntos = (sus ? ((parseInt(total)) / 5) : ((parseFloat(total)) / 10));
 
   localStorage.setItem("total", total);
   localStorage.setItem("puntos", puntos);
@@ -184,8 +185,8 @@ function Agenda({ restart, next }) {
       </div>
       <button
         className="duration-200 hover:text-[#ec5766] text-2xl"
-        onClick={() => removeItem(item.idServicio)}
-        // onClick={toggleDel}
+        onClick={() => removeItem(index)}
+      // onClick={toggleDel}
       >
         <FontAwesomeIcon icon={faTrash} />
       </button>
@@ -339,11 +340,11 @@ function Agenda({ restart, next }) {
         <div className="soon-fondo">
           <div className="text-black soon-fx">
             <div className="rounded-md bg-white ring-4 ring-[#E40000]">
-              <div className="grid place-content-center my-2">
+              <div className="grid my-2 place-content-center">
                 <IoIosWarning style={{ fontSize: "52px", color: "#E40000" }} />
               </div>
-              <p className="text-2xl text-center my-2">¡Advertencia!</p>
-              <p className="text-lg text-center my-2 mx-4">
+              <p className="my-2 text-2xl text-center">¡Advertencia!</p>
+              <p className="mx-4 my-2 text-lg text-center">
                 ¿Está seguro que desea eliminar este producto?
               </p>
               <div className="grid grid-cols-[30%_30%] place-content-center my-4">

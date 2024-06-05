@@ -69,7 +69,7 @@ const FinalizacionPagoProd = ({ producto, next }) => {
                       <p className="text-center">{producto.cantidad}</p>
                       <p className="text-center">{producto.nombre}</p>
                       <p className="text-center">
-                        ${producto.precio * producto.cantidad}
+                        ${(producto.precio * producto.cantidad).toFixed(2)}
                       </p>
                     </div>
                     <div className="flex-grow border-b-2 border-[#ec5766] mx-5" />
