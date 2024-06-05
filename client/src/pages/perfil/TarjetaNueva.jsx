@@ -79,7 +79,7 @@ function TarjetaNueva() {
     año:'',
     cvv:'',
     recordar:false,
-    principal:true,
+    principal:false,
     tipo:''
   });
 
@@ -111,6 +111,7 @@ function TarjetaNueva() {
       [name]: value
     }));
   }
+
 
   async function llamadaBackend(evento){
 
@@ -180,7 +181,7 @@ function TarjetaNueva() {
     }
 
     if(respuestaJson.fallo){
-      console.log("hubo un problema en la insercion de la tarjeta");
+      toast(<div>{`Hubo un error al registrar su tarjeta, intente el proceso más tarde`}<FontAwesomeIcon icon={faCircleXmark} /></div>);
       return;
     }
 
@@ -388,7 +389,7 @@ function TarjetaNueva() {
                         Código de seguridad
                       </label>
                       <input
-                        type="text"
+                        type="password"
                         id="cvv"
                         name="cvv"
                         value={objeto.cvv}
@@ -416,13 +417,23 @@ function TarjetaNueva() {
 
                   <div className="grid mt-4">
                     <div>
-                      <input type="checkbox" id="recordar" name="recordar" value={objeto.recordar} onChange={change}/>
+                      <input type="checkbox" id="recordar" name="recordar" value={objeto.recordar} onChange={(e) =>
+                            setObjeto((prevState) => ({
+                              ...prevState,
+                              recordar: e.target.checked,
+                            }))
+                          }/>
                       <label htmlFor="recordar" className="ml-2">
                         Recordar tarjeta
                       </label>
                     </div>
                     <div>
-                      <input type="checkbox" id="principal" name="principal" value={objeto.principal} onChange={change}/>
+                      <input type="checkbox" id="principal" name="principal" value={objeto.principal} onChange={(e) =>
+                            setObjeto((prevState) => ({
+                              ...prevState,
+                              principal: e.target.checked,
+                            }))
+                          }/>
                       <label htmlFor="principal" className="ml-2">
                         Poner como tarjeta principal
                       </label>
