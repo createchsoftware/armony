@@ -30,7 +30,34 @@ const CustomRightArrow = ({ onClick }) => {
 const Productos = () => {
   const [descuentos, setDescuentos] = useState([]);
   const [soon, setSoon] = useState(false);
-  const [id, setId] = useState(0);
+  const [id, setId] = useState(null);
+  const [st, setSt] = useState(false);
+  const [log, setLog] = useState(false);
+
+  async function recibido() {
+    const respuesta = await fetch("/api/logueado", {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+
+    if (!respuesta.ok) {
+      setLog(false);
+    }
+
+    let respuestaJson = await respuesta.json();
+
+    if (respuestaJson.logueado == true) {
+      setLog(true);
+    } else {
+      setLog(false);
+    }
+  }
+
+  function changeSt() {
+    setSt(!st);
+  }
 
   async function getId() {
     let respuestaJson = null;
@@ -49,13 +76,14 @@ const Productos = () => {
     }
   }
 
+  const toggleSoon = () => {
+    setSoon(!soon);
+  };
+
   useEffect(() => {
     getId();
   }, []);
 
-  const toggleSoon = () => {
-    setSoon(!soon)
-  };
 
   //useEffect para obtener los productos con descuento
   // useEffect(() => {
@@ -238,7 +266,21 @@ const Productos = () => {
                 {
                   descuentos.map((oferta, index) => (
                     <div className="">
-                      <Ofertas producto={oferta} />
+                      <Ofertas
+                        props={{
+                          id: id,
+                          log: log,
+                          ps: oferta.pkIdPS,
+                          nombre: oferta.nombre,
+                          descripcion: oferta.descripcion,
+                          descripcionOferta: oferta.descripcionOferta,
+                          img: oferta.img,
+                          precio: oferta.precio,
+                          valoracion: oferta.valoracion,
+                          favorito: oferta.favorito,
+                          st: changeSt,
+                        }}
+                      />
                     </div>))}
               </Carousel>
             </div>
