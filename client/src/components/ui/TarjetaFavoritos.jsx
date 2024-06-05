@@ -34,6 +34,7 @@ const TarjetaFavoritos = ({ props }) => {
   const navigate = useNavigate();
   const [login, setLogin] = useState(false);
   const [fav, setFav] = useState(props.favorito);
+  const [favorites, setFavorites] = useState({});
 
   const toggleLogin = () => {
     setLogin(!login);
@@ -55,27 +56,26 @@ const TarjetaFavoritos = ({ props }) => {
   };
 
   const callFav = async () => {
-    if (props.id != 0) {
-      try {
-        const respuesta = await fetch("/api/admin/productos/setFavorito", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            id: props.id,
-            idPS: props.ps,
-            estado: props.favorito,
-          }),
-        });
+    try {
+      console.log("no deberia entrar");
+      const respuesta = await fetch("/api/admin/productos/setFavorito", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          id: props.id,
+          idPS: props.ps,
+          estado: props.favorito,
+        }),
+      });
 
-        let respuestaJson = await respuesta.json();
-        if ((await respuestaJson[0].res) == true) {
-          setFav(!fav);
-        }
-      } catch (error) {
-        console.log(error, "error");
+      let respuestaJson = await respuesta.json();
+      if ((await respuestaJson[0].res) == true) {
+        setFav(!fav);
       }
+    } catch (error) {
+      console.log(error, "error");
     }
   };
 
@@ -85,9 +85,37 @@ const TarjetaFavoritos = ({ props }) => {
     }
   }, [fav]);
 
+  console.log("favsssssssssoritos", localStorage.getItem("favoritos"));
+
+  const toggleFavorite = async (idProducto) => {
+    console.log("entrando a toggleFavorite", idProducto);
+
+    // Verificar si el producto ya está en favoritos
+    let favoritos = JSON.parse(localStorage.getItem("favoritos")) || [];
+    const estaEnFavoritos = favoritos.some(fav => fav.pkIdPS === idProducto.ps);
+
+    // Actualizar el estado de favoritos en React
+    setFavorites(prev => ({
+      ...prev,
+      [idProducto.ps]: !estaEnFavoritos
+    }));
+
+    if (!estaEnFavoritos) {
+      // Agregar el producto con pkIdPS al localStorage
+      const nuevoFavorito = { ...idProducto, pkIdPS: idProducto.ps };
+      favoritos.push(nuevoFavorito);
+    } else {
+      // Eliminar el producto del localStorage
+      favoritos = favoritos.filter(fav => fav.pkIdPS !== idProducto.ps);
+    }
+
+    // Guardar la lista actualizada en localStorage
+    localStorage.setItem("favoritos", JSON.stringify(favoritos));
+  }
+
   return (
     <>
-      <div className="grid place-content-between content-between">
+      <div className="grid content-between place-content-between">
         <div>
           <img
             className="relative m-auto aspect-square w-[60%] -bottom-6 rounded-3xl"
@@ -103,34 +131,48 @@ const TarjetaFavoritos = ({ props }) => {
                 <RiCalendarTodoFill style={{ fontSize: "26px" }} />
               </button>
             </div>
-            <Box
-              className="relative right"
-              sx={{
-                "& > legend": { mt: 2 },
-              }}
-            >
-              <div className="object-bottom">
-                <div className="w-[60%] grid place-content-end relative -left-4 -top-4">
-                  <StyledRating
-                    onClick={() => callFav()}
-                    name="customized-color"
-                    defaultValue={props.favorito}
-                    max={1}
-                    getLabelText={(value) =>
-                      `${value} Heart${value !== 1 ? "s" : ""}`
-                    }
-                    precision={1}
-                    icon={<FavoriteIcon fontSize="inherit" />}
-                    emptyIcon={
-                      <FavoriteBorderIcon
-                        style={{ color: "#3F3F3F" }}
-                        fontSize="inherit"
-                      />
-                    }
-                  />
-                </div>
-              </div>
-            </Box>
+            {console.log("props", props.log)}
+            {props.log ?
+              (<Box
+                className="relative right"
+                sx={{
+                  '& > legend': { mt: 2 },
+                }}
+              >
+                <StyledRating
+                  name="customized-color"
+                  max={1}
+                  value={fav ? 1 : 0}
+
+                  // value={uid ? (producto.favorito || favorites[producto.pkIdPS]) ? 1 : 0 : JSON.parse(localStorage.getItem("favoritos"))?.some(fav => fav.pkIdPS === producto.pkIdPS) ? 1 : 0}
+                  // value={uid ? favorites[producto.pkIdPS] ? 1 : 0 : JSON.parse(localStorage.getItem("favoritos"))?.some(fav => fav.pkIdPS === producto.pkIdPS) ? 1 : 0}
+                  getLabelText={(value) => `${value} Heart${value !== 1 ? 's' : ''}`}
+                  precision={1}
+                  defaultValue={props.favorito}
+                  icon={<FavoriteIcon fontSize="inherit" />}
+                  emptyIcon={<FavoriteBorderIcon fontSize="inherit" />}
+                  onClick={() => callFav()}
+                />
+              </Box>)
+              :
+              (<Box
+                className="relative right"
+                sx={{
+                  '& > legend': { mt: 2 },
+                }}
+              >
+                <StyledRating
+                  name="customized-color"
+                  max={1}
+                  value={localStorage.getItem("favoritos") ? JSON.parse(localStorage.getItem("favoritos")).some(fav => fav.pkIdPS === props.ps) ? 1 : 0 : favorites[props.ps] ? 1 : 0}
+                  // value={favorites[producto.pkIdPS] ? 1 : 0}
+                  getLabelText={(value) => `${value} Heart${value !== 1 ? 's' : ''}`}
+                  precision={1}
+                  icon={<FavoriteIcon fontSize="inherit" />}
+                  emptyIcon={<FavoriteBorderIcon fontSize="inherit" />}
+                  onChange={() => toggleFavorite(props)}
+                />
+              </Box>)}
           </div>
         </div>
         <div className="mt-6 text-[#036C65] bg-[#E8C3C6] rounded-3xl text-md md:text-xl text-center p-2 w-2/3 m-auto flex justify-center items-center">

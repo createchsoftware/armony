@@ -74,9 +74,36 @@ function Favoritos() {
   const [estetica, setEstetica] = useState([]);
   const [color1, setColor1] = useState("#EB5765");
   const [color2, setColor2] = useState("#F6B3B9");
-  const [log, setLog] = useState(false);
   const [id, setId] = useState();
   const [st, setSt] = useState(false);
+
+  const [log, setLog] = useState(false);
+
+  async function recibido() {
+    const respuesta = await fetch("/api/logueado", {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+
+    if (!respuesta.ok) {
+      setLog(false);
+    }
+
+    let respuestaJson = await respuesta.json();
+
+    if (respuestaJson.logueado == true) {
+      setLog(true);
+    } else {
+      setLog(false);
+    }
+  }
+
+  useEffect(() => {
+    recibido();
+  }, []);
+
 
   let respuestaJson = null;
   async function checkLogin() {
