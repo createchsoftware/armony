@@ -8,6 +8,14 @@ function Foot() {
 
     const [soon, setSoon] = useState(false);
 
+    const scrollTop = () => {
+        window.scrollTo({
+            top: 0,
+            behavior: 'smooth',
+            duration: 2000
+        });
+    }
+
     const toggleSoon = () => {
         setSoon(!soon)
     };
@@ -135,9 +143,9 @@ function Foot() {
                         </div>
                     </div>
                     <div className="grid">
-                        <a href="#" className="rounded-full justify-self-center">
+                        <bottom onClick={scrollTop} className="rounded-full justify-self-center">
                             <FontAwesomeIcon icon={faCircleArrowUp} className="pb-8 text-6xl duration-300 cursor-pointer text-gray-500/50 justify-self-center hover:text-gray-200/75" />
-                        </a>
+                        </bottom>
                     </div>
                     <hr />
                     <div className="px-4 py-6 md:p-0 md:flex md:items-center md:justify-between">
