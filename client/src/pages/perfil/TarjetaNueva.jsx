@@ -68,6 +68,16 @@ function TarjetaNueva() {
       });
   }, []);
 
+  const [codigo, setCodigo] = useState('');
+  const [cvv, setCVV] = useState('');
+  const handleChange = (event) => {
+      const inputValue = event.target.value;
+      setCVV(inputValue);
+      const censoredValue = inputValue.replace(/./g, '*');
+      //if (/^\d*$/.test(inputValue)) {
+          setCodigo(censoredValue);
+      //}
+  }
 
 
 
@@ -77,7 +87,7 @@ function TarjetaNueva() {
     numero:'',
     mes:'',
     año:'',
-    cvv:'',
+    cvv: cvv,
     recordar:false,
     principal:true,
     tipo:''
@@ -391,10 +401,10 @@ function TarjetaNueva() {
                         type="text"
                         id="cvv"
                         name="cvv"
-                        value={objeto.cvv}
+                        value={codigo}
+                        onChange={handleChange}
                         style={{borderColor:colores.cvv}}
                         maxLength={3}
-                        onChange={change}
                         className="w-20 text-center rounded shadow-md justify-self-center"
                       />
                     </div>
