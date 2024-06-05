@@ -58,24 +58,54 @@ const Productos = () => {
   };
 
   //useEffect para obtener los productos con descuento
+  // useEffect(() => {
+  //   setTimeout(() => {
+  //     console.log("issssssssdd", id);
+  //     fetch(`/api/admin/productos/descuento/${id}`)
+  //       .then((response) => {
+  //         if (!response.ok) {
+  //           throw new Error("Error al obtener los descuentos");
+  //         }
+  //         return response.json();
+  //       })
+  //       .then((data) => {
+  //         setDescuentos(data.data);
+  //         console.log("descuentos", data.data);
+  //       })
+  //       .catch((error) => {
+  //         console.log("error", error);
+  //       });
+  //   }, [1000])
+  // }, [id]);
+
   useEffect(() => {
-    setTimeout(() => {
-      console.log("issssssssdd", id);
-      fetch(`/api/admin/productos/descuento/${id}`)
-        .then((response) => {
-          if (!response.ok) {
-            throw new Error("Error al obtener los descuentos");
-          }
-          return response.json();
-        })
-        .then((data) => {
-          setDescuentos(data.data);
-          console.log("descuentos", data.data);
-        })
-        .catch((error) => {
-          console.log("error", error);
-        });
-    }, [1000])
+    const fetchDescuentos = async () => {
+      let url;
+      if (id !== null && id !== 0 && id !== undefined) {
+        url = `/api/admin/productos/descuento/${id}`;
+      } else {
+        url = `/api/admin/productos/descuentoAll`;
+      }
+
+      try {
+        const response = await fetch(url);
+
+        if (!response.ok) {
+          throw new Error("Error al obtener los descuentos");
+        }
+
+        const data = await response.json();
+        setDescuentos(data.data);
+        console.log("descuentos", data.data);
+      } catch (error) {
+        console.log("error", error);
+      }
+    };
+
+    const timeoutId = setTimeout(fetchDescuentos, 1000);
+
+    // Cleanup function to clear the timeout if the component unmounts or id changes
+    return () => clearTimeout(timeoutId);
   }, [id]);
 
 

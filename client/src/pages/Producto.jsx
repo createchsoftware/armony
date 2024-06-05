@@ -106,17 +106,34 @@ function Producto() {
 
     //useEffect para obtener los productos con descuento
     useEffect(() => {
-        fetch("/api/admin/productos/descuento")
-            .then((response) => response.json())
-            .then((data) => {
-                // Acceder al array de objetos en la posición 0 del array dentro de data
+        const fetchDescuentos = async () => {
+            let url;
+            if (id !== null && id !== 0 && id !== undefined) {
+                url = `/api/admin/productos/descuento/${id}`;
+            } else {
+                url = `/api/admin/productos/descuentoAll`;
+            }
+
+            try {
+                const response = await fetch(url);
+
+                if (!response.ok) {
+                    throw new Error("Error al obtener los descuentos");
+                }
+
+                const data = await response.json();
                 setDescuentos(data.data);
-                console.log(data.data);
-            })
-            .catch((error) => {
+                console.log("descuentos", data.data);
+            } catch (error) {
                 console.log("error", error);
-            });
-    }, []);
+            }
+        };
+
+        const timeoutId = setTimeout(fetchDescuentos, 1000);
+
+        // Cleanup function to clear the timeout if the component unmounts or id changes
+        return () => clearTimeout(timeoutId);
+    }, [id]);
 
     const navigate = useNavigate();
     const notify = () => toast("Producto agregado al carrito");
