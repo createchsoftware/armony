@@ -7,7 +7,7 @@ import {
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faAngleLeft, faSliders } from "@fortawesome/free-solid-svg-icons";
 
-import Compras from "../../components/ui/Compras";
+import ReturnProducto from "../../components/ui/ReturnProducto";
 import ReturnCitas from "../../components/ui/ReturnCita";
 import ReturnMonederos from "../../components/ui/ReturnMonedero";
 import ReturnPuntos from "../../components/ui/ReturnPunto";
@@ -351,7 +351,7 @@ function Movimientos() {
             }
 
             if (objeto.tipo == "producto") {
-              return <Compras key="1" compras={objeto} />;
+              return <ReturnProducto key="1" producto={objeto} />;
             }
 
             if (objeto.tipo == "Añadir puntos") {

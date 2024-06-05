@@ -201,7 +201,7 @@ function Suscripciones() {
                                 Previo a la fecha de vencimiento, se te hará llegar una notificación a tu correo electrónico.</p>
                             <div className='flex items-center justify-between gap-4 px-3'>
                                 <div className="w-full bg-gray-200 rounded-full h-2.5 mb-4 dark:bg-gray-700">
-                                    <div className=" bg-[#036C65] h-1.5 rounded-full dark:bg-gray-300" style={{ width: (parseInt(100 * ((30 - diasFaltantes)/30))) + '%' }}></div>
+                                    <div className=" bg-[#036C65] h-1.5 rounded-full dark:bg-gray-300" style={{ width: (parseInt(100 * ((31 - diasFaltantes)/30))) + '%' }}></div>
                                 </div>
                             </div>
                             <div className='flex items-center justify-between text-gray-500'>

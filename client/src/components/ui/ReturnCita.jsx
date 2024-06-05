@@ -6,9 +6,12 @@ function ReturnCitas({ citas }) {
     return (
 
         <div className='grid gap-4 p-6 rounded-xl shadow-[0_3px_10px_rgb(0,0,0,0.2)] '>
-            <div className="flex gap-4">
-                <p className="text-[#00000085]">{`${citas.day} de ${citas.month} del ${citas.year}`}</p>
-                <p className="text-[#00000085]">{`Hora: ${citas.hora}`}</p>
+            <div className="flex justify-between">
+                <div>
+                    <p className="text-[#00000085]">{`${citas.day} de ${citas.month} del ${citas.year}`}</p>
+                    <p className="text-[#00000085]">{`Hora: ${citas.hora}`}</p>
+                </div>
+                <p className="text-[#00000085]">Pedido #{citas.id_cita}</p>
             </div>
             <hr />
             <div className="flex justify-between w-full">
