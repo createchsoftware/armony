@@ -81,6 +81,10 @@ function Servicio({
           }),
         });
 
+        setFavorites(prev => ({
+                    ...prev,
+                    [idProducto.pkIdPS]: !estaEnFavoritos
+                }));
         let respuestaJson = await respuesta.json();
         if ((await respuestaJson[0].res) == true) {
           setFav(!fav);
@@ -88,7 +92,23 @@ function Servicio({
       } catch (error) {
         console.log(error, "error");
       }
-    }
+    }else {
+      setFavorites(prev => ({
+          ...prev,
+          [idProducto.pkIdPS]: !estaEnFavoritos
+      }));
+      let favoritos = JSON.parse(localStorage.getItem("favoritos")) || [];
+      const estaEnFavoritos = favoritos.some(fav => fav.pkIdPS === idProducto.pkIdPS);
+      if (!estaEnFavoritos) {
+
+          favoritos.push(idProducto);
+          localStorage.setItem("favoritos", JSON.stringify(favoritos));
+      } else {
+          let favoritos = JSON.parse(localStorage.getItem("favoritos")) || [];
+          favoritos = favoritos.filter((obj) => obj.pkIdPS !== idProducto.pkIdPS);
+          localStorage.setItem("favoritos", JSON.stringify(favoritos));
+      }
+  }
   };
 
   useEffect(() => {

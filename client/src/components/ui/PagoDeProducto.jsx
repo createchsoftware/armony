@@ -34,9 +34,9 @@ function Pago({ producto, next }) {
     const totalProductos = cartItems.reduce((sum, producto) => sum + (producto.precio * producto.cantidad), 0).toFixed(2);
     const cantidadProductos = cartItems.reduce((sum, producto) => sum + producto.cantidad, 0);
     const subTotal = cartItems.reduce((acc, item) => acc + item.precio * item.cantidad, 0).toFixed(2);
-    const ivaTotal = (parseFloat(subTotal) * 0.08).toFixed(2);
-    const total = (parseFloat(subTotal) + parseFloat(ivaTotal)).toFixed(2);
-    localStorage.setItem('total',total)
+    // const ivaTotal = (parseFloat(subTotal) * 0.08).toFixed(2);
+    // const total = (parseFloat(subTotal) + parseFloat(ivaTotal)).toFixed(2);
+    //localStorage.setItem('total',total)
     localStorage.setItem('subTotal',subTotal)
 
 
@@ -126,7 +126,7 @@ function Pago({ producto, next }) {
 
     const cardList = tarjetas.length > 0 ? (tarjetas.map(item => {
         if(item.tipo != 'monedero'){
-            return (
+            return(
                 <li key={item.id} className="flex items-center justify-between gap-4 px-4 mb-4 border-2 shadow-md rounded-3xl border-gray">
                     <img src={"../../../pictures/" + item.imagen} className="w-1/5 h-auto" />
                     <h1 className="text-xl truncate">{item.empresa}</h1>
@@ -223,10 +223,10 @@ function Pago({ producto, next }) {
                                     <h1 className='font-bold'>Envío</h1>
                                     <span className="text-[rgb(3,109,99)] font-bold">$0.00</span>
                                 </div>
-                                <div className='flex justify-between px-6 pt-6'>
+                                {/* <div className='flex justify-between px-6 pt-6'>
                                     <h1 className='font-bold'>IVA</h1>
                                     <span className="text-[rgb(3,109,99)] font-bold">${ivaTotal}</span>
-                                </div>
+                                </div> */}
                                 <div className='flex justify-between px-6 pt-6'>
                                     <h1 className='font-bold'>Cupón</h1>
                                     <span className="text-[rgb(3,109,99)] font-bold">$0.00</span>
@@ -234,7 +234,7 @@ function Pago({ producto, next }) {
                             </div>
                             <div className='flex justify-between p-6 px-10 mb-4 border-2 shadow-md rounded-xl border-gray'>
                                 <h4 className='text-xl font-bold'>Total:</h4>
-                                <span className='font-bold text-[rgb(3,109,99)] text-xl'>${total}</span>
+                                <span className='font-bold text-[rgb(3,109,99)] text-xl'>${subTotal}</span>
                             </div>
                         </div>
                     </div>
@@ -261,7 +261,7 @@ function Pago({ producto, next }) {
             {pagoRealizado && (
                 <div className='soon-fondo'>
                     <div className='soon-fx'>
-                        <PagoRealizado cerrarPago={togglePago} total={total} next={next} />
+                        <PagoRealizado cerrarPago={togglePago} total={subTotal} next={next} />
                     </div>
                 </div>
             )}

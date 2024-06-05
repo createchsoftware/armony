@@ -7,7 +7,7 @@ function RevisionProductos({ restart }) {
     const suscripcion = 199
 
 
-    localStorage.setItem('puntosSuscripcion', suscripcion / 10)
+    //localStorage.setItem('puntosSuscripcion', suscripcion / 10)
     localStorage.setItem('totalSuscripcion', suscripcion)
 
     console.log(localStorage.getItem('puntosSuscripcion'))
@@ -19,7 +19,7 @@ function RevisionProductos({ restart }) {
     // console.log(localStorage.getItem('puntosSuscripcion'))
     // console.log(localStorage.getItem('totalSuscripcion'))
 
-    const puntos = suscripcion / 10;
+    var puntos = JSON.parse(localStorage.getItem("puntos")) || [];
     //En caso de ser Socio VVV
     //const puntos = (parseInt(totalIva))/5;
 
@@ -68,10 +68,10 @@ function RevisionProductos({ restart }) {
                                     <span>1 Producto(s)</span>
                                     <h1 className='font-bold'>${suscripcion.toFixed(2)}</h1>
                                 </div>
-                                <div className='flex justify-between'>
+                                {/* <div className='flex justify-between'>
                                     <h1>Envío</h1>
                                     <h1 className='font-bold'>$0.00</h1>
-                                </div>
+                                </div> */}
                                 <div className='flex justify-between'>
                                     <h1>Cupón</h1>
                                     <h1 className='font-bold'>$0.00</h1>

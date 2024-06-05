@@ -13,9 +13,6 @@ function PagoRealizado({ cerrarPago, total, next }) {
         next();
     };
 
-
-
-
     useEffect(() => {
         const fetchCliente = async () => {
             const storedCliente = localStorage.getItem('cliente');

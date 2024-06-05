@@ -6,6 +6,8 @@ import PopupLogin from "../components/ui/Login/PopupLogin";
 const Suscripcion = () => {
     const [log, setLog] = useState(false); //<<< PARA EL INICIO DE SESION
     const [login, setLogin] = useState(false);
+    const [clave, setClave] = useState(false);
+    const [sus, setSus] = useState(false); //<<< CARACTERISTICA GRAFICA DE QUE EL USUARIO ES SOCIO
 
     async function recibido() {
         const respuesta = await fetch("/api/logueado", {
@@ -23,6 +25,7 @@ const Suscripcion = () => {
 
         if (respuestaJson.logueado == true) {
             setLog(true);
+            setClave(respuestaJson.clave);
         } else {
             setLog(false);
         }
@@ -31,6 +34,27 @@ const Suscripcion = () => {
     useEffect(() => {
         recibido();
     }, []);
+
+    useEffect(() => {
+        
+        const Prod = async () => {
+            try {
+                if (clave) {
+    
+                    const response = await fetch(`/api/admin/cliente/StatusSus/${clave}`)
+                    const data = await response.json();
+                    setSus(data)
+                }
+            } catch (error) {
+                console.error("hubo error :", error)
+            }
+        }
+        Prod()
+    }, [clave])
+
+    const handleCompra = () => {
+        window.location.href = "/suscripcion/compra";
+    }
 
     return (
         <>
@@ -77,7 +101,17 @@ const Suscripcion = () => {
                         </div>
                     </div>
                     { log ? (
-                        <a href="/suscripcion/compra" className='justify-self-center text-2xl bg-[#ec5766] p-2 px-8 text-white mx-6 rounded-xl mt-6 duration-200 hover:bg-[#ffb5a7]'>Comprar</a>
+                        <button
+                            onClick={handleCompra}
+                            disabled={sus === true}
+                            className={
+                                sus ? 
+                                'justify-self-center text-2xl border-2 border-[#ec5766] bg-white p-2 px-8 text-[#ec5766] mx-6 rounded-xl mt-6'
+                                : 
+                                'justify-self-center text-2xl bg-[#ec5766] p-2 px-8 text-white mx-6 rounded-xl mt-6 duration-200 hover:bg-[#ffb5a7]'}
+                        >
+                            Comprar
+                        </button>
                     ):(
                         <button onClick={() => setLogin(!login)} className='justify-self-center text-2xl bg-[#ec5766] p-2 px-8 text-white mx-6 rounded-xl mt-6 duration-200 hover:bg-[#ffb5a7]'>Comprar</button>
                     )}

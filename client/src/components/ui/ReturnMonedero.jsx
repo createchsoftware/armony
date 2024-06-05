@@ -1,7 +1,9 @@
+import React, { useState } from 'react'
+
 function ReturnMonederos({ monederos }) {
 
     const [info, setInfo] = useState(false);
-    
+
     return (
 
         <div className='grid gap-4 p-6 rounded-xl shadow-[0_3px_10px_rgb(0,0,0,0.2)] '>

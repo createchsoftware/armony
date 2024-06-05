@@ -11,7 +11,7 @@ import { fa1, faCircle } from "@fortawesome/free-solid-svg-icons";
 import { Navigate, useNavigate } from "react-router-dom";
 import { CSSTransition, TransitionGroup } from "react-transition-group";
 import { Link } from "react-router-dom";
-
+import { useLocation } from 'react-router-dom';
 import Paquetes from "./cita/Paquetes";
 import Calendario from "./cita/Calendario";
 import Pago from "../components/ui/Pago";
@@ -32,18 +32,41 @@ const steps = [
 ];
 
 export default function Cita() {
+ 
 
   const navigate = useNavigate();
   const [activeStep, setActiveStep] = useState(0);
+  const location = useLocation();
   const [completed, setCompleted] = useState({});
   const [scrollPosition, setScrollPosition] = useState(0);
   const nextButtonText =
     activeStep === steps.length - 1 ? "Finalizar" : "Siguiente";
+
+    useEffect(() => {
+      if(localStorage.getItem('citaModify')!==null){
+        setActiveStep(2);
+        let cita=localStorage.getItem('citaModify')
+        localStorage.setItem("Especialista",cita.ID_Empleado);
+    localStorage.setItem("hora",cita);
+    localStorage.setItem("Fecha seleccionada",cita.fecha);
+     }
+    }, [ localStorage.getItem('citaModify')]);
+    
+    useEffect(() => {
+      //cuando el usuario llegue al paso 4  se ajecutara
+      if (activeStep === 0) {
+        localStorage.removeItem("citaModify");
+      }
+    }, [activeStep]);
+
   // const citasAgregadas = [];
   // localStorage.setItem('citas', JSON.stringify(citasAgregadas));
   // useEffect(() => {
   //   localStorage.clear();
   // }, []); // Se ejecutará una vez al montar el component
+
+ 
+ // Actualiza el activeStep basado en el estado pasado a través de location.state
 
   async function checkLogin() {
     let respuestaJson = null;

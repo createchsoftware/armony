@@ -20,12 +20,14 @@ function Compras({ producto }) {
         navigate('/spa/comprar', { state: { producto: [productoBuy] } });
     };
 
-    console.log(producto);
+    //console.log(producto);
     const date = new Date(producto.date);
 
-    const horas = date.getHours();
-    const minutos = date.getMinutes();
-    const segundos = date.getSeconds();
+    const horaFormateada = date.toLocaleTimeString('es-MX', {
+        hour: '2-digit',
+        minute: '2-digit',
+        hour12: false
+    });
 
     return (
         <>
@@ -33,7 +35,7 @@ function Compras({ producto }) {
                 <div className="flex justify-between">
                     <div className="flex gap-4">
                         <p className="text-[#00000085]">{`${producto.day} de ${producto.month} de ${producto.year}`}</p>
-                        <p className="text-[#00000085]">{`Hora: ${horas}:${minutos}:${segundos}`}</p>
+                        <p className="text-[#00000085]">{`Hora: ${horaFormateada}`}</p>
                     </div>
                     <p className="text-[#00000085]">Pedido #{producto.id_venta}</p>
                 </div>
@@ -78,10 +80,10 @@ function Compras({ producto }) {
                                     <p>Sesiones</p>
                                     <p>{`1 x $${producto.precio}`}</p>
                                 </div>
-                                <div className="flex justify-between">
+                                {/* <div className="flex justify-between">
                                     <p>IVA:</p>
                                     <p>$0.00</p>
-                                </div>
+                                </div> */}
                                 <div className="flex justify-between">
                                     <p>Descuento</p>
                                     <p>$0.00</p>

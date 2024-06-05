@@ -36,8 +36,8 @@ const FinalizacionPagoProd = ({ producto, next }) => {
   const subTotal = allProducts
     .reduce((acc, item) => acc + item.precio * item.cantidad, 0)
     .toFixed(2);
-  const ivaTotal = (parseFloat(subTotal) * 0.08).toFixed(2);
-  const total = (parseFloat(subTotal) + parseFloat(ivaTotal)).toFixed(2);
+  // const ivaTotal = (parseFloat(subTotal) * 0.08).toFixed(2);
+  // const total = (parseFloat(subTotal) + parseFloat(ivaTotal)).toFixed(2);
 
   return (
     <>
@@ -61,10 +61,10 @@ const FinalizacionPagoProd = ({ producto, next }) => {
             </div>
             {/* Contenido de los servicios pagados */}
 
-            <div className="rounded-xl shadow-md overflow-y-auto w-[40rem] mx-auto my-5 h-[25rem] border-2 border-gray">
+            <div className="rounded-xl shadow-md overflow-y-auto w-[40rem] mx-auto my-5 h-max border-2 border-gray">
               {allProducts.map((producto) => {
                 return (
-                  <div>
+                  <div key={producto.nombre}>
                     <div className="grid grid-cols-3 my-5 place-items-center">
                       <p className="text-center">{producto.cantidad}</p>
                       <p className="text-center">{producto.nombre}</p>
@@ -80,7 +80,7 @@ const FinalizacionPagoProd = ({ producto, next }) => {
             <div className="shadow-md w-[15rem] py-3 my-5 ml-[22rem] h-auto border-2 rounded-md border-gray">
               <div className="grid grid-cols-2 place-items-center">
                 <p>Total</p>
-                <p className="text-[rgb(3,109,99)] font-bold">${total}</p>
+                <p className="text-[rgb(3,109,99)] font-bold">${subTotal}</p>
               </div>
             </div>
             {/* Botones */}
