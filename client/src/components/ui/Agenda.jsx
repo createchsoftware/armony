@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrash } from "@fortawesome/free-solid-svg-icons";
 import Soon from "./Proximamente";
-import Eliminar from "./EliminarAdvertencia";
+import { IoIosWarning } from "react-icons/io";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { useRef } from "react";
@@ -14,6 +14,29 @@ function Agenda({ restart, next }) {
   const [soon, setSoon] = useState(false);
   const [del, setDel] = useState(false);
   const [selectedCitaIndex, setSelectedCitaIndex] = useState(null);
+  const [clave, setClave] = useState(false);
+  const [sus, setSus] = useState(false); //<<< CARACTERISTICA GRAFICA DE QUE EL USUARIO ES SOCIO
+
+  async function recibido() {
+    const respuesta = await fetch("/api/logueado", {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+
+    if (!respuesta.ok) {
+      setClave(false);
+    }
+
+    let respuestaJson = await respuesta.json();
+
+    if (respuestaJson.logueado == true) {
+      setClave(respuestaJson.clave);
+    } else {
+      setClave(false);
+    }
+  }
 
   const handleModificar = () => {
     selectedCitaIndex === null && notify();
@@ -47,6 +70,26 @@ function Agenda({ restart, next }) {
     };
   }, []);
 
+  useEffect(() => {
+    recibido();
+  }, [])
+
+  useEffect(() => {
+    const Prod = async () => {
+      try {
+        if (clave) {
+
+          const response = await fetch(`/api/admin/cliente/StatusSus/${clave}`)
+          const data = await response.json();
+          setSus(data)
+        }
+      } catch (error) {
+        console.error("hubo error :", error)
+      }
+    }
+    Prod()
+  }, [clave])
+
   const toggleSoon = () => {
     setSoon(!soon);
   };
@@ -73,17 +116,19 @@ function Agenda({ restart, next }) {
     setCitasItems(myArray);
   };
 
-  const RLSCitas = (id) => {
+  const RLSCitas = (index) => {
     let citas = JSON.parse(localStorage.getItem("citas")) || [];
-    citas = citas.filter((obj) => obj.id !== id);
+    citas.splice(index, 1); // Elimina el elemento en la posición 'index'
     localStorage.setItem("citas", JSON.stringify(citas));
   };
 
   //Para remover por completo un servicio.
-  const removeItem = (itemId) => {
-    setCitasItems(citasItems.filter((item) => item.idServicio !== itemId)); //este lo elimina de la vista carrito
-    RLSCitas(itemId); //este elimina el item de locaStorage
+  //Para remover por completo un servicio.
+  const removeItem = (index) => {
+    setCitasItems(citasItems.filter((_, i) => i !== index)); // este lo elimina de la vista carrito
+    RLSCitas(index); // este elimina el item de localStorage
   };
+
 
   const [descuento, setDescuento] = useState("");
   const handleChange = (event) => {
@@ -102,15 +147,13 @@ function Agenda({ restart, next }) {
     )
     .toFixed(2);
 
-  const iva = (total * 0.08).toFixed(2);
-  const totalIva = (parseFloat(total) + parseFloat(iva)).toFixed(2);
+  // const iva = (total * 0.08).toFixed(2);
+  // const totalIva = (parseFloat(total) + parseFloat(iva)).toFixed(2);
 
-  const puntos = parseFloat(totalIva) / 10;
-  //En caso de ser Socio VVV
-  //const puntos = (parseInt(totalIva))/5;
+  const puntos = (sus ? ((parseInt(total)) / 5) : ((parseFloat(total)) / 10));
 
   localStorage.setItem("total", total);
-  localStorage.setItem("totalIva", totalIva);
+  localStorage.setItem("puntos", puntos);
   const citasList = citasItems.map((item, index) => (
     <li
       key={index}
@@ -142,8 +185,8 @@ function Agenda({ restart, next }) {
       </div>
       <button
         className="duration-200 hover:text-[#ec5766] text-2xl"
-        /*onClick={() => removeItem(item.idServicio)}*/
-        onClick={toggleDel}
+        onClick={() => removeItem(index)}
+      // onClick={toggleDel}
       >
         <FontAwesomeIcon icon={faTrash} />
       </button>
@@ -217,10 +260,10 @@ function Agenda({ restart, next }) {
                   <span>{totalCitas} Servicio(s)</span>
                   <h1 className="font-bold">${total}</h1>
                 </div>
-                <div className="flex justify-between mb-2">
+                {/* <div className="flex justify-between mb-2">
                   <h1>IVA</h1>
                   <h1 className="font-bold">${iva}</h1>
-                </div>
+                </div> */}
                 <div className="flex justify-between">
                   <h1>Descuento por membresía</h1>
                   <h1 className="font-bold">$0.00</h1>
@@ -261,8 +304,12 @@ function Agenda({ restart, next }) {
               <div className="flex justify-between p-6 px-10 mb-4 border-2 shadow-md rounded-xl border-gray">
                 <h4 className="text-xl font-bold">Total:</h4>
                 <span className="font-bold text-[rgb(3,109,99)] text-xl">
-                  ${totalIva}
+                  ${total}
                 </span>
+              </div>
+              <div className='flex justify-between p-6 px-10 mb-4 border-2 shadow-md rounded-xl border-gray'>
+                <h4 className='text-xl font-bold'>Puntos obtenidos:</h4>
+                <span className='font-bold text-[rgb(3,109,99)] text-xl'>{parseInt(puntos)}</span>
               </div>
             </div>
             <div className="flex justify-around mb-6">
@@ -291,8 +338,24 @@ function Agenda({ restart, next }) {
       )}
       {del && (
         <div className="soon-fondo">
-          <div className="text-black soon-fx" onClick={toggleDel}>
-            <Eliminar />
+          <div className="text-black soon-fx">
+            <div className="rounded-md bg-white ring-4 ring-[#E40000]">
+              <div className="grid my-2 place-content-center">
+                <IoIosWarning style={{ fontSize: "52px", color: "#E40000" }} />
+              </div>
+              <p className="my-2 text-2xl text-center">¡Advertencia!</p>
+              <p className="mx-4 my-2 text-lg text-center">
+                ¿Está seguro que desea eliminar este producto?
+              </p>
+              <div className="grid grid-cols-[30%_30%] place-content-center my-4">
+                <button onClick={() => removeItem()} className="w-[4rem] mx-auto text-white bg-[#E40000] hover:bg-[#BC0000] rounded-sm">
+                  Sí
+                </button>
+                <button onClick={() => setDel(!del)} className="w-[4rem] mx-auto bg-white text-[#E40000] ring-2 ring-[#E40000] hover:bg-[#F2F2F2] hover:text-[#BC0000] hover:ring-[#BC0000] rounded-sm">
+                  No
+                </button>
+              </div>
+            </div>
           </div>
         </div>
       )}

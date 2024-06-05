@@ -7,7 +7,7 @@ import {
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faAngleLeft, faSliders } from "@fortawesome/free-solid-svg-icons";
 
-import Compras from "../../components/ui/Compras";
+import ReturnProducto from "../../components/ui/ReturnProducto";
 import ReturnCitas from "../../components/ui/ReturnCita";
 import ReturnMonederos from "../../components/ui/ReturnMonedero";
 import ReturnPuntos from "../../components/ui/ReturnPunto";
@@ -32,6 +32,17 @@ const sortOptions2 = [
 ];
 
 function Movimientos() {
+
+  // Otras variables de estado y funciones
+  if (!localStorage.getItem('loaded4')) {
+    localStorage.setItem('loaded4', 'true');
+    window.location.reload();
+  }
+
+  localStorage.removeItem('loaded');
+  localStorage.removeItem('loaded2');
+  localStorage.removeItem('loaded3');
+
   async function checkLogin() {
     let respuestaJson = null;
     try {
@@ -234,20 +245,13 @@ function Movimientos() {
               />
             </div>
           </div>
-          <div className="flex items-center ">
+
+          <div className="flex items-center">
             <Menu as="div" className="relative inline-block text-left">
               <div>
                 <Menu.Button className="inline-flex items-center justify-center gap-1 mr-6 font-medium text-gray-700 text-md group hover:text-gray-900">
                   <FontAwesomeIcon icon={faSliders} />
                   Por fecha
-                  <ChevronDownIcon
-                    className="flex-shrink-0 w-5 h-5 text-gray-400 group-hover:text-gray-500"
-                    aria-hidden="true"
-                  />
-                </Menu.Button>
-                <Menu.Button className="inline-flex items-center justify-center gap-1 font-medium text-gray-700 text-md group hover:text-gray-900">
-                  <FontAwesomeIcon icon={faSliders} />
-                  Tipo de movimiento
                   <ChevronDownIcon
                     className="flex-shrink-0 w-5 h-5 text-gray-400 group-hover:text-gray-500"
                     aria-hidden="true"
@@ -274,15 +278,7 @@ function Movimientos() {
                               handleSortOptionClick(option);
                             }}
                             href={option.href}
-                            className={classNames(
-                              option.current
-                                ? "font-medium text-gray-900 cursor-pointer"
-                                : "text-gray-500",
-                              active
-                                ? "bg-gray-100 cursor-pointer"
-                                : "cursor-pointer",
-                              "block px-4 py-2 text-sm cursor-pointer"
-                            )}
+                            className={`block px-4 py-2 text-sm cursor-pointer ${option.current ? 'font-medium text-gray-900' : 'text-gray-500'} ${active ? 'bg-gray-100' : ''}`}
                           >
                             {option.name}
                           </a>
@@ -292,6 +288,21 @@ function Movimientos() {
                   </div>
                 </Menu.Items>
               </Transition>
+            </Menu>
+          </div>
+
+          <div className="flex items-center">
+            <Menu as="div" className="relative inline-block text-left">
+              <div>
+                <Menu.Button className="inline-flex items-center justify-center gap-1 font-medium text-gray-700 text-md group hover:text-gray-900">
+                  <FontAwesomeIcon icon={faSliders} />
+                  Tipo de movimiento
+                  <ChevronDownIcon
+                    className="flex-shrink-0 w-5 h-5 text-gray-400 group-hover:text-gray-500"
+                    aria-hidden="true"
+                  />
+                </Menu.Button>
+              </div>
 
               <Transition
                 as={Fragment}
@@ -312,15 +323,7 @@ function Movimientos() {
                               handleSortOption2Click(option);
                             }}
                             href={option.href}
-                            className={classNames(
-                              option.current
-                                ? "font-medium text-gray-900 cursor-pointer"
-                                : "text-gray-500",
-                              active
-                                ? "bg-gray-100 cursor-pointer"
-                                : "cursor-pointer",
-                              "block px-4 py-2 text-sm cursor-pointer"
-                            )}
+                            className={`block px-4 py-2 text-sm cursor-pointer ${option.current ? 'font-medium text-gray-900' : 'text-gray-500'} ${active ? 'bg-gray-100' : ''}`}
                           >
                             {option.name}
                           </a>
@@ -332,6 +335,7 @@ function Movimientos() {
               </Transition>
             </Menu>
           </div>
+
           <p className="place-content-center">
             {arrayPresent.length} Transacciones
           </p>
@@ -351,7 +355,7 @@ function Movimientos() {
             }
 
             if (objeto.tipo == "producto") {
-              return <Compras key="1" compras={objeto} />;
+              return <ReturnProducto key="1" producto={objeto} />;
             }
 
             if (objeto.tipo == "Añadir puntos") {

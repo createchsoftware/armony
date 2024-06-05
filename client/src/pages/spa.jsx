@@ -11,6 +11,11 @@ import Promociones from '../components/ui/Promociones.jsx'
 import Membresias from '../components/ui/Membresias.jsx'
 
 const Spa = () => {
+  localStorage.removeItem('loaded');
+  localStorage.removeItem('loaded2');
+  localStorage.removeItem('loaded3');
+  localStorage.removeItem('loaded4');
+
   return (
     <>
       {/*Pagina SPA */}

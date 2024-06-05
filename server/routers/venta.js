@@ -172,6 +172,11 @@ routerVenta.post("/createVentaSus", async (req, res) => {
       tarjeta: req.body.tarjeta,
       monedero: req.body.monedero
     });
+
+    res
+      .status(202)
+      .json({ message: "Venta realizada", data: resultado});
+
   } catch (err) {
     // Capturamos errores
     console.error(messageError, err); // Mostramos errores por consola

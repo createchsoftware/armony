@@ -30,6 +30,8 @@ function getRandomNumber(min, max) {
     return Math.round(Math.random() * (max - min) + min);
 }
 
+
+
 /**
  * Mimic fetch with abort controller https://developer.mozilla.org/en-US/docs/Web/API/AbortController/abort
  * ⚠️ No IE11 support
@@ -73,6 +75,7 @@ function ServerDay(props) {
 }
 
 function Calendario({ next }) {
+
     const [especialistas, setEspecialistas] = React.useState([]);
     const [selectedHourIndex, setSelectedHourIndex] = useState(null);
     const requestAbortController = React.useRef(null);
@@ -82,10 +85,14 @@ function Calendario({ next }) {
     const [log, setLog] = useState(false);
     const [login, setLogin] = useState(false);
     const [favoritosSelected, setFavoritosSelected] = useState(false);
+    const [st, setSt] = useState(false);
 
     const [id, setId] = useState(null); // Para el inicio de sesión
 
 
+    function changeSt() {
+        setSt(!st);
+    }
 
     const toggleLogin = () => {
         setLogin(!login);
@@ -98,7 +105,18 @@ function Calendario({ next }) {
     const handleGeneral = () => {
         setFavoritosSelected(false);
     }
-
+    // useEffect(() => {
+    //     if (id) {
+    //         fetch(`/api/admin/favoritos/EmpFavoritosbyId/${id}`)
+    //             .then(response => response.json())
+    //             .then(data => {
+    //         setFavoritosSelected(data);
+    //             })
+    //             .catch(error => {
+    //                 console.log(error);
+    //             });
+    //     }
+    // }, [id]);
 
     // useEffect for diferent fetch (when favoritosSelected is true fetch favoritos, when is false fetch general)
     // useEffect(() => {
@@ -295,8 +313,69 @@ function Calendario({ next }) {
     const [selectedDate, setSelectedDate] = useState(initialValue);
     const [horasDisponibles, setHorasDisponibles] = useState([]);
 
-    //metodo para obtener horas disponibles de un empleado
-    //este metodo se llamara cada vez que el estado de id empleado o el estado de fecha cambie
+    const Fecha = async () => {
+        if (localStorage.getItem("Evaluando") === true || localStorage.getItem("Evaluando")) {
+
+
+            setSelectedDate(localStorage.getItem("Fecha seleccionada"));
+        } else {
+            // alert('ya escogiste una hora')
+        }
+    }
+
+    useEffect(() => {
+
+        Fecha()
+    }, [localStorage.getItem("Evaluando")]);
+
+
+
+
+
+    const updateCita = async (cita) => {
+        if (Uid) {
+            try {
+                await fetch(`/api/admin/citas/modify`, {
+                    method: "PATCH",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify(
+                        {
+                            idCita: localStorage.getItem("idcita"),
+                            idEmp: localStorage.getItem("Especialista"),
+                            nuevaFecha: localStorage.getItem("hora"),
+                            horaI: localStorage.getItem("hora"),
+                            descr: 'emmm sip',
+                        }
+
+                    ),
+                });
+            } catch (error) {
+                console.log("error", error);
+            }
+        }
+
+    }
+
+    // const EmpsFavoritos= async () => {
+
+    //     if (id) {
+    //         try {
+    //             const response = await fetch(`/api/admin/favoritos/EmpFavoritosbyId/${id}`, {
+    //                 method: 'GET',
+    //                 headers: {
+    //                     'Content-Type': 'application/json'
+    //                 }
+    //             });
+    //             const data = await response.json();
+    //             setHorasDisponibles(data);
+    //             setIsLoad(false);
+    //         } catch (error) {
+    //             console.error('Error de red o servidor:', error.message);
+    //         }
+    //     }
+    // };
 
 
 
@@ -440,10 +519,10 @@ function Calendario({ next }) {
             setIsLoad(true); // Establecer isLoading a true al comenzar la solicitud
 
             try {
+                console.log("iiiiiiiiiiid", id)
                 let response;
                 if (favoritosSelected) {
-                    const idServicio = localStorage.getItem('servicio');
-                    response = await fetch(`/api/admin/empleado/favoritos/:' ${id}`);
+                    response = await fetch(`/api/admin/empleado/favoritos/${id}`);
                 } else {
                     const idServicio = localStorage.getItem('servicio');
                     response = await fetch(`/api/admin/empleado/getEmpServicio/${idServicio}`);
@@ -637,7 +716,20 @@ function Calendario({ next }) {
                                 />}
                             >
                                 {especialistas.length > 0 ? (especialistas.map((especialista) => (
-                                    <Especialista key={especialista.id} especialista={especialista} />
+                                    // <Especialista key={especialista.id} especialista={especialista} />
+                                    <Especialista
+                                        props={{
+                                            id: id,
+                                            nombre: especialista.Nombre,
+                                            experiencia: especialista.experiencia,
+                                            valoracion: especialista.valoracion,
+                                            img: especialista.img,
+                                            favorito: especialista.favorito,
+                                            log: log,
+                                            ps: especialista.ID,
+                                            st: changeSt
+                                        }}
+                                    />
                                 ))) : (<div></div>)}
                             </Carousel>
                             {/* <CarruselServicios servicios={especialistas} itemsDesktop={1} itemsMobile={1} itemsTablet={1}/>

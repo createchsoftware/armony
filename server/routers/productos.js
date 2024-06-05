@@ -18,6 +18,8 @@ import {
   serviciosRelacionados,
   ventaProdOnline,
   favoritosGeneral,
+  getProductsAll,
+  productosDescuentoAll,
   processVenta,
   setFavorito,
 } from "../db/query/queryProductos.js";
@@ -182,6 +184,17 @@ routerProductos.get("/getProducts/:id", async (req, res) => {
   }
 });
 
+
+routerProductos.get("/getProductsAll", async (req, res) => {
+  try {
+    const resultado = await getProductsAll(conexion);
+    res.json(resultado);
+  } catch (err) {
+    console.error("Ha ocurrido un error: ", err);
+    res.status(500).send("Ha ocurrido un error al procesar tu solicitud");
+  }
+});
+
 routerProductos.get("/ProductsPromo", async (req, res) => {
   try {
     const resultado = await productosPromo(conexion);
@@ -273,9 +286,22 @@ routerProductos.get("/servicios/relacionados/:id", async (req, res) => {
 
 // OBTENER LOS PRODUCTOS CON DESCUENTO
 // FUNCIONAL
-routerProductos.get("/descuento", async (req, res) => {
+routerProductos.get("/descuento/:id", async (req, res) => {
   try {
-    const resultado = await productosDescuento(conexion);
+    const resultado = await productosDescuento(conexion, { id: req.params.id });
+    res
+      .status(200)
+      .json({ message: "Los productos con descuento son : ", data: resultado });
+  } catch (err) {
+    console.error("Ha ocurrido un error: ", err);
+    res.status(500).send("Ha ocurrido un error al procesar tu solicitud");
+  }
+});
+// OBTENER LOS PRODUCTOS CON DESCUENTO SIN ID
+// FUNCIONAL
+routerProductos.get("/descuentoAll", async (req, res) => {
+  try {
+    const resultado = await productosDescuentoAll(conexion);
     res
       .status(200)
       .json({ message: "Los productos con descuento son : ", data: resultado });

@@ -11,7 +11,7 @@ const regex_apellidos = /[a-zA-Zá-úñ]{3,}/;
 const regex_lada = /^\+?\d{1,3}$/;
 const regex_telefono = /^(\d{9,10}|\d{2,3} \d{7}|\d{2,3} \d{3} \d{4}|\d{2,3}-\d{7}|\d{2,3}-\d{3}-\d{4})$/;
 const regex_postal = /^\d{5}$/;
-const regex_numero = /^\S*$/;
+const regex_numero = /^\S{1,10}$/;
 
 
 

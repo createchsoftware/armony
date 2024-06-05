@@ -53,10 +53,10 @@ export async function ServiceFavoritosbyId(connection, data) {
   }
 }
 
-export async function ServiceFavoritosSpa(connection) {
+export async function ServiceFavoritosSpa(connection, data) {
   try {
-    const call = "CALL getFavoritosSpa()"; // Procedimiento almacenado de la base de datos
-    const query = mysql.format(call); // Parametros necesarios para el procedimiento
+    const call = "CALL getFavoritosSpa(?)"; // Procedimiento almacenado de la base de datos
+    const query = mysql.format(call, data.id); // Parametros necesarios para el procedimiento
     const [rows, fieds] = await connection.query(query); // Ejecutamos query y almacenamos los valores resultantes
     endConnection(); // Cerramos la conexion con la base de datos
     return rows[0]; // Retornamos los valores obtenidos en base al query
@@ -66,10 +66,10 @@ export async function ServiceFavoritosSpa(connection) {
   }
 }
 
-export async function ServiceFavoritosEstetica(connection) {
+export async function ServiceFavoritosEstetica(connection, data) {
   try {
-    const call = "CALL getFavoritosEstetica()"; // Procedimiento almacenado de la base de datos
-    const query = mysql.format(call); // Parametros necesarios para el procedimiento
+    const call = "CALL getFavoritosEstetica(?)"; // Procedimiento almacenado de la base de datos
+    const query = mysql.format(call, data.id); // Parametros necesarios para el procedimiento
     const [rows, fieds] = await connection.query(query); // Ejecutamos query y almacenamos los valores resultantes
     endConnection(); // Cerramos la conexion con la base de datos
     return rows[0]; // Retornamos los valores obtenidos en base al query
@@ -92,11 +92,35 @@ export async function FavoritosbyId(connection, data) {
   }
 }
 
-
 export async function invertirFav(connection, data) {
   try {
     const call = "CALL favoritoCliente(?,?)"; // Procedimiento almacenado de la base de datos
     const query = mysql.format(call, [data.idCliente, data.IdProducto]); // Parametros necesarios para el procedimiento
+    const [rows, fields] = await connection.query(query);
+    endConnection(); // Cerramos la conexion con la BD
+    return rows; // Cerramos la conexion con la base de datos
+  } catch (err) {
+    console.log("Ha ocurrido un error al ejecutar el query: ", err);
+    throw err;
+  }
+}
+
+export async function invertirFavEmp(connection, data) {
+  try {
+    const call = "CALL EmfavoritoCliente( ?, ?)"; // Procedimiento almacenado de la base de datos
+    const query = mysql.format(call, [data.idCliente, data.IdEmp]); // Parametros necesarios para el procedimiento
+    const [rows, fields] = await connection.query(query);
+    endConnection(); // Cerramos la conexion con la BD
+    return rows; // Cerramos la conexion con la base de datos
+  } catch (err) {
+    console.log("Ha ocurrido un error al ejecutar el query: ", err);
+    throw err;
+  }
+}
+export async function getFavEmp(connection, data) {
+  try {
+    const call = "CALL getEmpFav(?)"; // Procedimiento almacenado de la base de datos
+    const query = mysql.format(call, [data.idCliente]); // Parametros necesarios para el procedimiento
     const [rows, fields] = await connection.query(query);
     endConnection(); // Cerramos la conexion con la BD
     return rows; // Cerramos la conexion con la base de datos

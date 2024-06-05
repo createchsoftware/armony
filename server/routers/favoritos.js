@@ -1,5 +1,6 @@
 import express from "express";
 export const routerFavoritos = express.Router();
+import { horasWithoutSeconds } from "../db/query/queryCitas.js";
 import {
   addfavorito,
   delFavorito,
@@ -8,7 +9,9 @@ import {
   ServiceFavoritosEstetica,
   ServiceFavoritosSpa,
   FavoritosbyId,
-  invertirFav
+  invertirFav,
+  invertirFavEmp,
+  getFavEmp
 } from "../db/query/queryFavoritos.js";
 import { conexion } from "../db/connection.js";
 
@@ -65,10 +68,31 @@ routerFavoritos.get("/ServiceFavoritosbyId/:id", async (req, res) => {
 
 // FUNCIONAL
 // OBTIENE LOS SERVICIOS FAVORITOS DEL CLIENTE
-routerFavoritos.get("/ServiceFavoritosSpa", async (req, res) => {
+routerFavoritos.get("/ServiceFavoritosSpa/:id", async (req, res) => {
   try {
-    const resultado = await ServiceFavoritosSpa(conexion);
-    res.send(JSON.stringify(resultado));
+    const resultado = await ServiceFavoritosSpa(conexion, {
+      id: req.params.id,
+    });
+    const horario = [];
+    let servicios = [];
+    for (let i = 0; i < resultado.length; i++) {
+      horario[i] = resultado[i].tiempo;
+    }
+    const horasMostrar = await horasWithoutSeconds(horario); // Horas con formato HH:MM
+    for (let i = 0; i < resultado.length; i++) {
+      servicios[i] = {
+        descripcion: resultado[i].descripcion,
+        estado: resultado[i].estado,
+        img: resultado[i].img,
+        nombre: resultado[i].nombre,
+        pkIdPS: resultado[i].pkIdPS,
+        precio: resultado[i].precio,
+        tiempo: horasMostrar[i],
+        valoracion: resultado[i].valoracion,
+        favorito: resultado[i].favorito,
+      };
+    }
+    res.status(202).json(servicios);
   } catch (err) {
     res.status(500).send({ error: "Hubo un problema", err });
   }
@@ -76,10 +100,31 @@ routerFavoritos.get("/ServiceFavoritosSpa", async (req, res) => {
 
 // FUNCIONAL
 // OBTIENE LOS SERVICIOS FAVORITOS DEL CLIENTE
-routerFavoritos.get("/ServiceFavoritosEstetica", async (req, res) => {
+routerFavoritos.get("/ServiceFavoritosEstetica/:id", async (req, res) => {
   try {
-    const resultado = await ServiceFavoritosEstetica(conexion);
-    res.send(JSON.stringify(resultado));
+    const resultado = await ServiceFavoritosEstetica(conexion, {
+      id: req.params.id,
+    });
+    const horario = [];
+    let servicios = [];
+    for (let i = 0; i < resultado.length; i++) {
+      horario[i] = resultado[i].tiempo;
+    }
+    const horasMostrar = await horasWithoutSeconds(horario); // Horas con formato HH:MM
+    for (let i = 0; i < resultado.length; i++) {
+      servicios[i] = {
+        descripcion: resultado[i].descripcion,
+        estado: resultado[i].estado,
+        img: resultado[i].img,
+        nombre: resultado[i].nombre,
+        pkIdPS: resultado[i].pkIdPS,
+        precio: resultado[i].precio,
+        tiempo: horasMostrar[i],
+        valoracion: resultado[i].valoracion,
+        favorito: resultado[i].favorito,
+      };
+    }
+    res.status(202).json(servicios);
   } catch (err) {
     res.status(500).send({ error: "Hubo un problema", err });
   }
@@ -106,4 +151,23 @@ routerFavoritos.post("/invertirFav", async (req, res) => {
   }
 });
 
+routerFavoritos.post("/invertirFavEmp", async (req, res) => {
+  try {
+    const data = req.body;
+    await invertirFavEmp(conexion, data);
+    res.status(201).send({ message: "Se elimino con exito" });
+  } catch (err) {
+    res.status(500).send({ error: "Hubo un problema", err });
+  }
+});
 
+routerFavoritos.get("/EmpFavoritosbyId/:id", async (req, res) => {
+  try {
+    const resultado = await getFavEmp(conexion, {
+      idCliente: req.params.id,
+    });
+    res.send(JSON.stringify(resultado));
+  } catch (err) {
+    res.status(500).send({ error: "Hubo un problema", err });
+  }
+});

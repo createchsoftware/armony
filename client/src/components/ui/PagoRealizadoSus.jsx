@@ -13,13 +13,9 @@ function PagoRealizado({ cerrarPago, total, next }) {
         next();
     };
 
-
-
-
     useEffect(() => {
         const fetchCliente = async () => {
             const storedCliente = localStorage.getItem('cliente');
-            console.log(storedCliente)
             if (storedCliente) {
                 try {
                     const parsedCliente = JSON.parse(storedCliente);
@@ -43,8 +39,6 @@ function PagoRealizado({ cerrarPago, total, next }) {
                 let card;
                 let money;
         
-                console.log(localStorage.getItem('monedero'),localStorage.getItem('tarjeta'))
-        
                     if(Number(localStorage.getItem('monedero'))>0){
                       money=1
                       card=null;
@@ -54,7 +48,7 @@ function PagoRealizado({ cerrarPago, total, next }) {
                       money=0;
                     }
                 try {
-                    const responseVenta = await fetch("/api/admin/venta/createVentaSus", {
+                    const responseVenta = await fetch("/api/admin/ventas/createVentaSus", {
                         method: "POST",
                         body: JSON.stringify({
                             idCliente: cliente.ID,
@@ -72,6 +66,10 @@ function PagoRealizado({ cerrarPago, total, next }) {
 
                     const dataVenta = await responseVenta.json();
                     console.log('Respuesta de la venta:', dataVenta);
+
+                    const response = await fetch(`/api/admin/cliente/StatusSus/${clave}`)
+                    const data = await response.json();
+                    localStorage.setItem('fechaExp',data.fechaExpiracion)
 
                     setCargando(false);
                 } catch (error) {

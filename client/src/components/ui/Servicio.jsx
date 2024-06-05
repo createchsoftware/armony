@@ -46,6 +46,7 @@ function Servicio({
   };
   const [pData, setPData] = useState(data);
   const [fav, setFav] = useState(favorito);
+
   const navigate = useNavigate();
 
   const toggleLogin = () => {
@@ -66,28 +67,29 @@ function Servicio({
     setPData(data);
     setServ(!serv);
   };
-  const callFav = async () => {
-    if (idUser != 0) {
-      try {
-        const respuesta = await fetch("/api/admin/productos/setFavorito", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            id: idUser,
-            idPS: pkIdPS,
-            estado: favorito,
-          }),
-        });
+  const [favorites, setFavorites] = useState({});
 
-        let respuestaJson = await respuesta.json();
-        if ((await respuestaJson[0].res) == true) {
-          setFav(!fav);
-        }
-      } catch (error) {
-        console.log(error, "error");
+  const callFav = async () => {
+    try {
+      console.log("no deberia entrar");
+      const respuesta = await fetch("/api/admin/productos/setFavorito", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          id: idUser,
+          idPS: pkIdPS,
+          estado: favorito,
+        }),
+      });
+
+      let respuestaJson = await respuesta.json();
+      if ((await respuestaJson[0].res) == true) {
+        setFav(!fav);
       }
+    } catch (error) {
+      console.log(error, "error");
     }
   };
 
@@ -96,6 +98,33 @@ function Servicio({
       st();
     }
   }, [fav]);
+
+  const toggleFavorite = async (idProducto) => {
+    console.log("entrando a toggleFavorite", idProducto);
+
+    // Verificar si el producto ya está en favoritos
+    let favoritos = JSON.parse(localStorage.getItem("favoritos")) || [];
+    const estaEnFavoritos = favoritos.some(fav => fav.pkIdPS === idProducto.id);
+
+    // Actualizar el estado de favoritos en React
+    setFavorites(prev => ({
+      ...prev,
+      [idProducto.id]: !estaEnFavoritos
+    }));
+
+    if (!estaEnFavoritos) {
+      // Agregar el producto con pkIdPS al localStorage
+      const nuevoFavorito = { ...idProducto, pkIdPS: idProducto.id };
+      favoritos.push(nuevoFavorito);
+    } else {
+      // Eliminar el producto del localStorage
+      favoritos = favoritos.filter(fav => fav.pkIdPS !== idProducto.id);
+    }
+
+    // Guardar la lista actualizada en localStorage
+    localStorage.setItem("favoritos", JSON.stringify(favoritos));
+  }
+
 
   return (
     <>
@@ -116,7 +145,7 @@ function Servicio({
         >
           <div className="absolute inset-0 bg-black rounded-lg opacity-25"></div>
           <div className="relative top-[9rem]">
-            <Box
+            {/* <Box
               sx={{
                 "& > legend": { mt: 2 },
               }}
@@ -142,7 +171,46 @@ function Servicio({
                   />
                 </div>
               </div>
-            </Box>
+            </Box> */}
+            {log ?
+              (<Box
+                className="absolute flex justify-end float-right -mr-3"
+                sx={{
+                  '& > legend': { mt: 2 },
+                }}
+              >
+                <StyledRating
+                  name="customized-color"
+                  max={1}
+                  // value={uid ? (producto.favorito || favorites[producto.pkIdPS]) ? 1 : 0 : JSON.parse(localStorage.getItem("favoritos"))?.some(fav => fav.pkIdPS === producto.pkIdPS) ? 1 : 0}
+                  // value={uid ? favorites[producto.pkIdPS] ? 1 : 0 : JSON.parse(localStorage.getItem("favoritos"))?.some(fav => fav.pkIdPS === producto.pkIdPS) ? 1 : 0}
+                  getLabelText={(value) => `${value} Heart${value !== 1 ? 's' : ''}`}
+                  precision={1}
+                  defaultValue={fav}
+                  icon={<FavoriteIcon fontSize="inherit" />}
+                  emptyIcon={<FavoriteBorderIcon fontSize="inherit" />}
+                  onClick={() => callFav()}
+                />
+              </Box>)
+              :
+              (<Box
+                className="absolute flex justify-end float-right -mr-3"
+                sx={{
+                  '& > legend': { mt: 2 },
+                }}
+              >
+                <StyledRating
+                  name="customized-color"
+                  max={1}
+                  value={localStorage.getItem("favoritos") ? JSON.parse(localStorage.getItem("favoritos")).some(fav => fav.pkIdPS === pkIdPS) ? 1 : 0 : favorites[pkIdPS] ? 1 : 0}
+                  // value={favorites[producto.pkIdPS] ? 1 : 0}
+                  getLabelText={(value) => `${value} Heart${value !== 1 ? 's' : ''}`}
+                  precision={1}
+                  icon={<FavoriteIcon fontSize="inherit" />}
+                  emptyIcon={<FavoriteBorderIcon fontSize="inherit" />}
+                  onChange={() => toggleFavorite(data)}
+                />
+              </Box>)}
           </div>
           <div className="relative bottom-[2rem]">
             <h1 className="mt-3 font-extrabold text-white">{nombre}</h1>

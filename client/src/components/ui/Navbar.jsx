@@ -33,20 +33,20 @@ function Navbar() {
 
     async function callRango() {
         const respuesta3 = await fetch("/api/perfil/rangos", {
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-          },
+            method: "GET",
+            headers: {
+                "Content-Type": "application/json",
+            },
         });
-    
+
         if (!respuesta3.ok) {
-          return;
+            return;
         }
-    
+
         const respuesta3Json = await respuesta3.json();
-    
+
         if (respuesta3Json.informacion) {
-          setRango(respuesta3Json.informacion[0]);
+            setRango(respuesta3Json.informacion[0]);
         }
     }
 
@@ -102,13 +102,13 @@ function Navbar() {
         callRango();
         recibido();
     }, []);
-    
+
     useEffect(() => {
-        
+
         const Prod = async () => {
             try {
                 if (clave) {
-    
+
                     const response = await fetch(`/api/admin/cliente/StatusSus/${clave}`)
                     const data = await response.json();
                     setSus(data)
@@ -184,7 +184,7 @@ function Navbar() {
                                                 Agendar
                                             </a>
                                         ) : (
-                                            <a href="#" className="menu-link" onClick={toggleLogin}>
+                                            <a className="menu-link" onClick={toggleLogin}>
                                                 Agendar
                                             </a>
                                         )}
@@ -220,7 +220,7 @@ function Navbar() {
                                                 Agendar
                                             </a>
                                         ) : (
-                                            <a href="#" className="menu-link" onClick={toggleLogin}>
+                                            <a className="menu-link" onClick={toggleLogin}>
                                                 Agendar
                                             </a>
                                         )}
@@ -241,7 +241,7 @@ function Navbar() {
                                                         className="absolute object-cover w-full h-full m-auto"
                                                     />
                                                 )}
-                                                <div className="flex w-full h-full items-center justify-center">
+                                                <div className="flex items-center justify-center w-full h-full">
                                                     <img
                                                         src={imagen !== null ? (
                                                             `../../../pictures/avatares/${imagen}`

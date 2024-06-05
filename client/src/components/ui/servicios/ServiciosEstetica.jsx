@@ -5,8 +5,13 @@ import ServiciosYFiltro from "../ServiciosYFiltro.jsx";
 export default function ServicioEstetica() {
   const [estetica, setEstetica] = useState([]);
   const [log, setLog] = useState(false);
-  const [id, setId] = useState();
+  const [id, setId] = useState(0);
   const [st, setSt] = useState(false);
+
+  localStorage.removeItem('loaded');
+  localStorage.removeItem('loaded2');
+  localStorage.removeItem('loaded3');
+  localStorage.removeItem('loaded4');
 
   let respuestaJson = null;
   async function checkLogin() {
@@ -23,7 +28,6 @@ export default function ServicioEstetica() {
         await setId(respuestaJson.clave);
         setLog(true);
       } else {
-        setId(0);
         setLog(false);
       }
     } catch (error) {

@@ -12,7 +12,7 @@ const TicketServicio = () => {
   };
 
   var value = localStorage.getItem('idventaCita')
-
+  localStorage.removeItem('citas');
 
   var onImageDownload = () => {
     const svg = document.getElementById("QRCode");

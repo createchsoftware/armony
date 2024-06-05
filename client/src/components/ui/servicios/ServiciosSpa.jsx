@@ -14,6 +14,12 @@ export default function ServicioEstetica() {
   const [id, setId] = useState();
   const [st, setSt] = useState(false);
 
+  localStorage.removeItem('loaded');
+  localStorage.removeItem('loaded2');
+  localStorage.removeItem('loaded3');
+  localStorage.removeItem('loaded4');
+
+
   const [soon, setSoon] = useState(false);
   const toggleSoon = () => {
     setSoon(!soon);

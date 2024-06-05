@@ -13,6 +13,8 @@ import { Slider, Box } from "@mui/material";
 //import { products } from '../../data/productos.json'
 import Rating from "@mui/material/Rating";
 import Soon from "./Proximamente";
+import 'react-tooltip/dist/react-tooltip.css'
+import { Tooltip } from 'react-tooltip'
 
 function classNames(...clases) {
   return clases.filter(Boolean).join(" ");
@@ -31,12 +33,13 @@ const subCategories = [
     id: "categoria",
     name: "Categorias",
     options: [
-      { label: "Cosméticos", checked: false },
-      { label: "Facial", checked: false },
-      { label: "Crema", checked: false },
-      { label: "Spray", checked: false },
-      { label: "Serúm", checked: false },
-      { label: "Depilación", checked: false },
+      { label: "Cremas faciales", checked: false },
+      { label: "Shampoos", checked: false },
+      { label: "Cremas para pies", checked: false },
+      { label: "Lociones", checked: false },
+      { label: "Aceites", checked: false },
+      { label: "Jabones", checked: false },
+      { label: "Exfoliantes", checked: false },
     ],
   },
 ];
@@ -46,13 +49,13 @@ const filters = [
     id: "Marca",
     name: "Marca",
     options: [
-      { value: "ponds", label: "POND’S", checked: false },
-      { value: "hidraSense", label: "Hidra Sense", checked: false },
-      { value: "savasana", label: "Savasana", checked: false },
+      { value: "nivea", label: "Nivea", checked: false },
+      { value: "Eucerin", label: "Eucerin", checked: false },
+      { value: "neutrogena", label: "Neutrogena", checked: false },
       { value: "ceraVe", label: "CeraVe", checked: false },
-      { value: "cetaphil", label: "Cetaphil", checked: false },
-      { value: "mizon", label: "Mizon", checked: false },
-      { value: "gojo", label: "Gojo", checked: false },
+      { value: "loreal", label: "Loreal", checked: false },
+      { value: "pantene", label: "Pantene", checked: false },
+      { value: "garnier", label: "Garnier", checked: false },
     ],
   },
 ];
@@ -68,8 +71,39 @@ export default function Filtros() {
   const [busqueda, setSearch] = useState("");
   const [rating, setRating] = useState(0);
   const [precio, setPrecio] = useState(null);
-  const [id, setId] = useState(0);
+  const [id, setId] = useState(null);
   const [soon, setSoon] = useState(false);
+  const [st, setSt] = useState(false);
+  const [log, setLog] = useState(false);
+
+  async function recibido() {
+    const respuesta = await fetch("/api/logueado", {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+
+    if (!respuesta.ok) {
+      setLog(false);
+    }
+
+    let respuestaJson = await respuesta.json();
+
+    if (respuestaJson.logueado == true) {
+      setLog(true);
+    } else {
+      setLog(false);
+    }
+  }
+
+  useEffect(() => {
+    recibido();
+  }, []);
+
+  function changeSt() {
+    setSt(!st);
+  }
 
   async function getId() {
     let respuestaJson = null;
@@ -81,7 +115,8 @@ export default function Filtros() {
         },
       });
       respuestaJson = await respuesta.json();
-      setId(respuestaJson.clave);
+      console.log("id en uso: ", respuestaJson.clave);
+      await setId(respuestaJson.clave);
     } catch (error) {
       console.log("Error");
     }
@@ -95,9 +130,28 @@ export default function Filtros() {
     getId();
   }, []);
 
+  // Función para resetear los filtros
+  const resetFilters = () => {
+    setSortOption(ordenamiento[0]);
+    setCategories([]);
+    setMarcas([]);
+    setSearch("");
+    setRating(0);
+    setPrecio(null);
+    // Resetear las opciones de subcategorías y filtros
+    subCategories.forEach(subCategory => {
+      subCategory.options.forEach(option => option.checked = false);
+    });
+    filters.forEach(filter => {
+      filter.options.forEach(option => option.checked = false);
+    });
+    setFilteredProducts(allProducts); // Mostrar todos los productos
+  };
+
+
   useEffect(() => {
     setTimeout(() => {
-      console.log(id);
+      console.log("idFavoritos:", id);
       fetch(`/api/admin/favoritos/ProductFavoritosbyId/${id}`)
         .then((response) => {
           if (!response.ok) {
@@ -148,25 +202,49 @@ export default function Filtros() {
 
   const handleClickFacial = (e) => {
     e.preventDefault();
-    setCategories(["Facial"]);
+    setCategories(["Cremas faciales"]);
+    //scroll down 100 pixels
+    window.scrollBy({
+      top: 600,
+      behavior: "smooth",
+      duration: 3000,
+    });
   };
 
   // Función para manejar cambios en las categorías
   const handleClickManicuraPedicura = (e) => {
     e.preventDefault();
-    setCategories(["Manicura y pedicura"]);
+    setCategories(["Cremas para pies"]);
+    //scroll down 100 pixels
+    window.scrollBy({
+      top: 600,
+      behavior: "smooth",
+      duration: 3000,
+    });
   };
 
   // Función para manejar cambios en las categorías
   const handleClickCapilar = (e) => {
     e.preventDefault();
-    setCategories(["Cuidado capilar"]);
+    setCategories(["Cremas corporales"]);
+    //scroll down 100 pixels
+    window.scrollBy({
+      top: 600,
+      behavior: "smooth",
+      duration: 3000,
+    });
   };
 
   // Función para manejar cambios en las categorías
   const handleClickAll = (e) => {
     e.preventDefault();
-    setCategories([]);
+    setCategories(["Shampoos", "Lociones", "Aceites", "Jabones", "Exfoliantes"]);
+    //scroll down 100 pixels
+    window.scrollBy({
+      top: 600,
+      behavior: "smooth",
+      duration: 3000,
+    });
   };
 
   // Función para manejar cambios en el rating
@@ -181,22 +259,34 @@ export default function Filtros() {
 
   //useEffect para obtener los productos
   useEffect(() => {
-    setTimeout(() => {
-      fetch(`/api/admin/productos/getProducts/${id}`)
-        .then((response) => {
-          if (!response.ok) {
-            throw new Error("Error al obtener los productos");
-          }
-          return response.json();
-        })
-        .then((data) => {
+
+    const fetchProducts = async () => {
+      let response;
+      try {
+        if (id !== null && id !== 0 && id !== undefined) {
+          response = await fetch(`/api/admin/productos/getProducts/${id}`);
+          const data = await response.json();
           setAllProducts(data);
-        })
-        .catch((error) => {
-          console.log("error", error);
-        });
-    }, [1000]);
-  }, []);
+        } else {
+          response = await fetch(`/api/admin/productos/getProductsAll`);
+          const data = await response.json();
+          setAllProducts(data);
+        }
+
+        if (!response.ok) {
+          throw new Error("Error al obtener los productos");
+        }
+
+      } catch (error) {
+        console.log("error", error);
+      }
+    };
+
+    const timeoutId = setTimeout(fetchProducts, 1000);
+
+    // Cleanup function to clear the timeout if the component unmounts or id changes
+    return () => clearTimeout(timeoutId);
+  }, [id]);
 
   // Función para manejar la búsqueda
   const handleSearch = (e) => {
@@ -217,7 +307,7 @@ export default function Filtros() {
     // Filtro por categorías múltiples
     if (categories.length > 0) {
       updatedProducts = updatedProducts.filter((product) =>
-        categories.includes(product.categoria)
+        categories.includes(product.nombreCategoria)
       );
     }
 
@@ -273,6 +363,18 @@ export default function Filtros() {
       default:
         break;
     }
+
+    // Multifiltro de checkboxes de subcategorías
+    subCategories.forEach((section) => {
+      const selectedOptions = section.options
+        .filter((option) => option.checked)
+        .map((option) => option.label);
+      if (selectedOptions.length) {
+        updatedProducts = updatedProducts.filter((product) =>
+          selectedOptions.includes(product[section.id])
+        );
+      }
+    });
 
     // Multifiltro de checkboxes
     filters.forEach((filter) => {
@@ -386,7 +488,7 @@ export default function Filtros() {
           </button>
         </div>
         <div
-          onClick={handleClickCapilar}
+          onClick={handleClickAll}
           className="grid items-center content-between justify-center max-w-xs grid-cols-1 gap-4 p-6 align-bottom transition duration-300 ease-in-out bg-white hover:cursor-pointer hover:scale-105 rounded-xl "
         >
           <h1 className="m-auto text-xl ">Productos de spa</h1>
@@ -552,7 +654,7 @@ export default function Filtros() {
 
           <main className="px-4 mx-auto max-w-7xl sm:px-6 lg:px-8">
             <div className="grid justify-around gap-8 pt-24 pb-6 border-b border-gray-200 md:grid-cols-3 grid-cols2 ">
-              <h1 className="text-xl font-bold tracking-tight text-gray-900 md:text-4xl">
+              <h1 data-tooltip-id="ver" data-tooltip-content="Restablecer filtros" onClick={resetFilters} className="text-xl font-bold tracking-tight text-gray-900 hover:cursor-pointer md:text-4xl">
                 Filtrar por:
               </h1>
               <div className="flex items-center">
@@ -899,7 +1001,7 @@ export default function Filtros() {
                   </Disclosure>
                 </form>
 
-                <ContenedorProductos products={filteredProducts} />
+                <ContenedorProductos products={filteredProducts} st={changeSt} log={log} idUser={id} />
               </div>
             </section>
             {soon && (
@@ -910,8 +1012,9 @@ export default function Filtros() {
               </div>
             )}
           </main>
-        </div>
-      </div>
+        </div >
+      </div >
+      <Tooltip id="ver" />
     </>
   );
 }

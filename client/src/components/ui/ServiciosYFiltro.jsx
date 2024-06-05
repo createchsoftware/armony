@@ -11,6 +11,8 @@ import {
 import { Slider, Box } from "@mui/material";
 import Rating from "@mui/material/Rating";
 import Servicio from "./Servicio.jsx";
+import 'react-tooltip/dist/react-tooltip.css'
+import { Tooltip } from 'react-tooltip'
 
 function classNames(...clases) {
   return clases.filter(Boolean).join(" ");
@@ -35,36 +37,35 @@ const subCategories = [
   },
 ];
 
-const filters = [
+/*const filters = [
   {
     id: "Marca",
     name: "Tipo de servicio",
     options: [
-      { value: "ponds", label: "Masajes", checked: false },
-      { value: "hidraSense", label: "Faciales", checked: false },
-      { value: "savasana", label: "Maquillaje", checked: false },
-      { value: "ceraVe", label: "Servicio tradicional", checked: false },
-      { value: "cetaphil", label: "Servicio con tecnología", checked: false },
-      { value: "mizon", label: "Rejuvenecimiento", checked: false },
+      { value: "Maquillaje", label: "Maquillaje", checked: false },
+      { value: "Bronceado", label: "Bronceado", checked: false },
+      {
+        value: "Tratamientos capilares",
+        label: "Tratamientos capilares",
+        checked: false,
+      },
+      { value: "Manos y Pies", label: "Manos y Pies", checked: false },
+      { value: "Peinados", label: "Peinados", checked: false },
+      {
+        value: "Cuidado de Cejas y Pestañas",
+        label: "Cuidado de Cejas y Pestañas",
+        checked: false,
+      },
     ],
   },
-  {
-    id: "Ofertas",
-    name: "Ofertas",
-    options: [
-      { value: "ponds", label: "Ofertas de tiempo limitado", checked: false },
-      { value: "hidraSense", label: "Descuentos", checked: false },
-      { value: "savasana", label: "Producto nuevo", checked: false },
-      { value: "ceraVe", label: "Rebajas", checked: false },
-    ],
-  },
-];
+];*/
 
 const ServiciosYFiltro = ({ servicios, log, idUser, st }) => {
   const [mobileFiltersOpen, setMobileFiltersOpen] = useState(false);
   const [sortOption, setSortOption] = useState(ordenamiento[0]);
   const [allProducts, setAllProducts] = useState([]);
   const [filteredProducts, setFilteredProducts] = useState([]);
+  const [filters, setFilters] = useState([]);
   const [categories, setCategories] = useState([]);
   const [marcas, setMarcas] = useState([]);
   const [busqueda, setSearch] = useState("");
@@ -79,6 +80,55 @@ const ServiciosYFiltro = ({ servicios, log, idUser, st }) => {
   //         .then(data => setProducts(data))
   //         .catch(err => console.log(err))
   // }, [])
+
+  // Función para resetear los filtros
+  const resetFilters = () => {
+    setSortOption(ordenamiento[0]);
+    setCategories([]);
+    setMarcas([]);
+    setSearch("");
+    setRating(0);
+    setPrecio(null);
+    // Resetear las opciones de subcategorías y filtros
+    subCategories.forEach(subCategory => {
+      subCategory.options.forEach(option => option.checked = false);
+    });
+    filters.forEach(filter => {
+      filter.options.forEach(option => option.checked = false);
+    });
+    setFilteredProducts(allProducts); // Mostrar todos los productos
+  };
+
+  useEffect(() => {
+    if (servicios.length != 0) {
+      let cat = [];
+      for (let i = 0; i < servicios.length; i++) {
+        cat[i] = servicios[i].categoria;
+      }
+      cat = new Set(cat);
+
+      // Eliminar duplicados usando Set
+      const uniqueCategories = Array.from(cat);
+
+      // Crear opciones basadas en las categorías
+      const options = uniqueCategories.map((categoria) => ({
+        value: categoria,
+        label: categoria,
+        checked: false,
+      }));
+
+      // El array base con las opciones mapeadas
+      const categorias = [
+        {
+          id: "Categories",
+          name: "Tipo de servicio",
+          options: options,
+        },
+      ];
+
+      setFilters(categorias);
+    }
+  }, [servicios]);
 
   // Función para manejar cambios en las categorías
   const handleCategoryChange = (label, isChecked) => {
@@ -259,18 +309,18 @@ const ServiciosYFiltro = ({ servicios, log, idUser, st }) => {
                   >
                     {log
                       ? subCategories.map((category) => (
-                          <li key={category.name}>
-                            <a
-                              href={category.href}
-                              onClick={() => {
-                                setCategory(category.label);
-                              }}
-                              className="block px-2 py-3 cursor-pointer"
-                            >
-                              {category.name}
-                            </a>
-                          </li>
-                        ))
+                        <li key={category.name}>
+                          <a
+                            href={category.href}
+                            onClick={() => {
+                              setCategory(category.label);
+                            }}
+                            className="block px-2 py-3 cursor-pointer"
+                          >
+                            {category.name}
+                          </a>
+                        </li>
+                      ))
                       : null}
                   </ul>
 
@@ -341,7 +391,7 @@ const ServiciosYFiltro = ({ servicios, log, idUser, st }) => {
 
       <main className="px-4 mx-auto max-w-7xl sm:px-6 lg:px-8">
         <div className="grid justify-around gap-8 pt-24 pb-6 border-b border-gray-200 md:grid-cols-3 grid-cols2 ">
-          <h1 className="text-xl font-bold tracking-tight text-gray-900 md:text-4xl">
+          <h1 data-tooltip-id="ver" data-tooltip-content="Restablecer filtros" onClick={resetFilters} className="text-xl font-bold tracking-tight text-gray-900 hover:cursor-pointer md:text-4xl">
             Filtrar por:
           </h1>
           <div className="flex items-center">
@@ -453,68 +503,68 @@ const ServiciosYFiltro = ({ servicios, log, idUser, st }) => {
             <form className="hidden w-64 lg:block">
               {log
                 ? subCategories.map((section) => (
-                    <Disclosure
-                      as="div"
-                      key={section.id}
-                      className="py-6 border-b border-gray-200"
-                    >
-                      {({ open }) => (
-                        <>
-                          <h3 className="flow-root -my-3">
-                            <Disclosure.Button className="flex items-center justify-between w-full py-3 text-sm text-gray-400 hover:text-gray-500">
-                              <span className="font-medium text-gray-900">
-                                {section.name}
-                              </span>
-                              <span className="flex items-center ml-6">
-                                {open ? (
-                                  <MinusIcon
-                                    className="w-5 h-5"
-                                    aria-hidden="true"
-                                  />
-                                ) : (
-                                  <PlusIcon
-                                    className="w-5 h-5"
-                                    aria-hidden="true"
-                                  />
-                                )}
-                              </span>
-                            </Disclosure.Button>
-                          </h3>
-                          <Disclosure.Panel className="pt-6">
-                            <div className="space-y-4">
-                              {section.options.map((option, optionIdx) => (
-                                <div
-                                  key={option.value}
-                                  className="flex items-center"
+                  <Disclosure
+                    as="div"
+                    key={section.id}
+                    className="py-6 border-b border-gray-200"
+                  >
+                    {({ open }) => (
+                      <>
+                        <h3 className="flow-root -my-3">
+                          <Disclosure.Button className="flex items-center justify-between w-full py-3 text-sm text-gray-400 hover:text-gray-500">
+                            <span className="font-medium text-gray-900">
+                              {section.name}
+                            </span>
+                            <span className="flex items-center ml-6">
+                              {open ? (
+                                <MinusIcon
+                                  className="w-5 h-5"
+                                  aria-hidden="true"
+                                />
+                              ) : (
+                                <PlusIcon
+                                  className="w-5 h-5"
+                                  aria-hidden="true"
+                                />
+                              )}
+                            </span>
+                          </Disclosure.Button>
+                        </h3>
+                        <Disclosure.Panel className="pt-6">
+                          <div className="space-y-4">
+                            {section.options.map((option, optionIdx) => (
+                              <div
+                                key={option.value}
+                                className="flex items-center"
+                              >
+                                <input
+                                  onChange={(e) =>
+                                    handleCategoryChange(
+                                      option.label,
+                                      e.target.checked
+                                    )
+                                  }
+                                  id={`filter-${section.id}-${optionIdx}`}
+                                  name={`${section.id}[]`}
+                                  defaultValue={option.value}
+                                  type="checkbox"
+                                  defaultChecked={option.checked}
+                                  className="w-4 h-4 border-gray-300 rounded text-rose-400 focus:ring-rose-400 "
+                                />
+                                <label
+                                  htmlFor={`filter-${section.id}-${optionIdx}`}
+                                  className="ml-3 text-sm text-gray-600"
                                 >
-                                  <input
-                                    onChange={(e) =>
-                                      handleCategoryChange(
-                                        option.label,
-                                        e.target.checked
-                                      )
-                                    }
-                                    id={`filter-${section.id}-${optionIdx}`}
-                                    name={`${section.id}[]`}
-                                    defaultValue={option.value}
-                                    type="checkbox"
-                                    defaultChecked={option.checked}
-                                    className="w-4 h-4 border-gray-300 rounded text-rose-400 focus:ring-rose-400 "
-                                  />
-                                  <label
-                                    htmlFor={`filter-${section.id}-${optionIdx}`}
-                                    className="ml-3 text-sm text-gray-600"
-                                  >
-                                    {option.label}
-                                  </label>
-                                </div>
-                              ))}
-                            </div>
-                          </Disclosure.Panel>
-                        </>
-                      )}
-                    </Disclosure>
-                  ))
+                                  {option.label}
+                                </label>
+                              </div>
+                            ))}
+                          </div>
+                        </Disclosure.Panel>
+                      </>
+                    )}
+                  </Disclosure>
+                ))
                 : null}
 
               <Disclosure as="div" className="py-6 border-b border-gray-200">
@@ -543,7 +593,7 @@ const ServiciosYFiltro = ({ servicios, log, idUser, st }) => {
                             aria-labelledby="input-slider"
                             valueLabelDisplay="auto"
                             min={0}
-                            max={1000}
+                            max={5000}
                             className="text-red-600 "
                             sx={{ color: "#ec5766" }}
                           />
@@ -586,7 +636,6 @@ const ServiciosYFiltro = ({ servicios, log, idUser, st }) => {
                   </>
                 )}
               </Disclosure>
-
               {filters.map((section) => (
                 <Disclosure
                   as="div"
@@ -628,7 +677,7 @@ const ServiciosYFiltro = ({ servicios, log, idUser, st }) => {
                                 defaultValue={option.value}
                                 type="checkbox"
                                 onChange={(e) =>
-                                  handleMarcaChange(
+                                  handleCategoryChange(
                                     option.label,
                                     e.target.checked
                                   )
@@ -671,7 +720,7 @@ const ServiciosYFiltro = ({ servicios, log, idUser, st }) => {
 
             <div className="grid grid-cols-2 md:grid-cols-3 md:content-start w-[90%] md:w-[100%] rounded-lg ring-4 ring-[#E2B3B7] mx-auto mb-10">
               {filteredProducts.length === 0 ? (
-                <p className="flex justify-center w-full col-span-3 m-auto mt-40">
+                <p className="flex justify-center w-full col-span-3 my-20">
                   {msg}
                 </p>
               ) : (
@@ -693,6 +742,7 @@ const ServiciosYFiltro = ({ servicios, log, idUser, st }) => {
             </div>
           </div>
         </section>
+        <Tooltip id="ver" />
       </main>
     </>
   );

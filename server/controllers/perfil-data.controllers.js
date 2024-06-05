@@ -232,7 +232,6 @@ async function InsertarTarjeta(solicitud,respuesta){
             let tipo = solicitud.body.tipo;
 
 
-
             let faltantes = [];
 
             if(!titular[0] || titular[0]==''){
@@ -268,7 +267,7 @@ async function InsertarTarjeta(solicitud,respuesta){
 
                 let regex_cvv = /^\d{3}$/;
                 let only_numbers = /^\d+$/;  // verificar que sean puros numeros
-                let regex_titular = /^([a-zA-Zá-úÁ-ÚñÑ]{3,12}(?: [a-zA-Zá-úÁ-ÚñÑ]{3,12})?)$/;  // verificar que sea un nombre valido
+                let regex_titular = /^([a-zA-Zá-úÁ-ÚñÑ]{3,15})( [a-zA-Zá-úÁ-ÚñÑ]{3,15})( [a-zA-Zá-úÁ-ÚñÑ]{3,15})?( [a-zA-Zá-úÁ-ÚñÑ]{3,15})?$/;  // verificar que sea un nombre valido
 
 
                 //cvv sea valido
@@ -409,19 +408,19 @@ async function InsertarTarjeta(solicitud,respuesta){
                     let buscar_predeterminada ='select * from tarjeta where predeterminada = 1 and fkCliente = ?';
 
                     let [fields_predeterminada] = await solicitud.database.query(mysql.format(buscar_predeterminada,[decodificada.user]));
-                    
-                    let objeto_predeterminada = fields_predeterminada[0][0];
 
-                    if(!objeto_predeterminada){
+                    if(fields_predeterminada.length==0){
+                        console.log('se ejecuto esto');
                         // no existe ningun usuario con la tarjeta predeterminada
-
                         // aunque el usuario no haya puesto que es predeterminada, al ser la primer tarjeta sera la predeterminada
                         predeterminada = 1;
                     }
                     else{
                         // supongamos que ya existe una tarjeta predeterminada, pero si el usuario puso que esta iba a ser la nueva predeterminada, entonces 
+                        console.log("oh oh, ya existia una tarjeta predeterminada");
+                        let objeto_predeterminada = fields_predeterminada[0];
 
-                        if(principal==true){
+                        if(principal[0]==true){
                         
                             try{
                                 // tenemos que actualizar la anterior tarjeta predeterminada
@@ -436,6 +435,9 @@ async function InsertarTarjeta(solicitud,respuesta){
                                 console.log('no se pudo quitar como predeterminada la tarjeta anterior');
                             }
      
+                        }
+                        else{
+                            console.log('vaya, no pusiste como predeterminada esta ultima tarjeta');
                         }
                     }
                     
@@ -453,6 +455,7 @@ async function InsertarTarjeta(solicitud,respuesta){
                         console.log('La Insercion fue exitosa');
                         return respuesta.send({redirect:'/perfil/tarjetas'});
                     }catch(error){
+                        console.log(error);
                         console.log('No se pudo insertar la tarjeta');
                         return respuesta.send({fallo:true});
                     }
@@ -663,11 +666,9 @@ async function getTransacciones(solicitud,respuesta){
 
 
             // las transacciones de tipo monedero
-            let monedero_consulta = 'call monederos(?)';
+            let monedero_consulta = 'call finalMonedero(?)';
             let [fields_monedero] = await  solicitud.database.query(mysql.format(monedero_consulta,[decodificada.user]));
-
             let arreglo_monederos = fields_monedero[0];
-
 
             for(let i in arreglo_monederos){
                 let temporal = {};
@@ -678,6 +679,10 @@ async function getTransacciones(solicitud,respuesta){
                 temporal.month = arreglo_meses[temporal.date.getMonth()];
                 temporal.day = temporal.date.getDate();
 
+                temporal.venta_id = arreglo_monederos[i].pkIdTransVenta; // id venta
+            
+
+                temporal.puntos = arreglo_monederos[i].monto / 10; // los puntos que obtuvo
                 temporal.monto = arreglo_monederos[i].monto;
                 temporal.imagen = 'monedero.jpg';
                 temporal.tipo = arreglo_monederos[i].tipo;
@@ -688,10 +693,18 @@ async function getTransacciones(solicitud,respuesta){
 
 
 
-            // las transacciones de tipo anadir puntos
-            let puntos_consulta = 'call puntos(?)';
-            let [fields_puntos] = await  solicitud.database.query(mysql.format(puntos_consulta,[decodificada.user]));
+            
 
+
+
+
+
+
+
+
+            // las transacciones de tipo anadir puntos
+            let puntos_consulta = 'call finalPuntos(?)';
+            let [fields_puntos] = await  solicitud.database.query(mysql.format(puntos_consulta,[decodificada.user]));
             let arreglo_puntos = fields_puntos[0];
 
             for(let i in arreglo_puntos){
@@ -703,6 +716,9 @@ async function getTransacciones(solicitud,respuesta){
                 temporal.month = arreglo_meses[temporal.date.getMonth()];
                 temporal.day = temporal.date.getDate();
 
+                temporal.venta_id = arreglo_puntos[i].pkIdTransVenta;  // id de la venta
+                
+                
                 temporal.monto = arreglo_puntos[i].monto;
                 temporal.puntos = arreglo_puntos[i].monto / 10; // los puntos que obtuvo
                 temporal.imagen = 'point.jpg';
@@ -710,6 +726,13 @@ async function getTransacciones(solicitud,respuesta){
                 temporal.type = 'Puntos';
                 arreglo_general.push(temporal);
             }
+
+
+            
+
+
+
+
 
 
 
@@ -814,36 +837,71 @@ async function Insert_to_Monedero(solicitud,respuesta){
 
             let monto = solicitud.body.monto;
 
+
             console.log(`el numero es: ${numeroTarjeta}`);
             console.log(`el monto es: ${monto}`);
 
             let numero_valido = /^\d*\.?\d+$/;
+            let minimo = 1.0;
 
-            if(numero_valido.test(monto)){
-                //como el monto es un numero valido, ahora podemos hacer esto
-            
-                monto = parseFloat(monto);
-
-                try{
-                    let consulta = 'call addVentaRecargarSaldo(?,?,?)';
-                    let parametros = [decodificada.user,numeroTarjeta,monto];
-                    let [fields] = await solicitud.database.query(mysql.format(consulta,parametros))
-
-                    console.log(fields); //para ver que es lo que nos dio
-                    respuesta.send({redirect:'/perfil/monedero'});
-
-                }catch(error){
-                    console.log(error);
-                    respuesta.send({mensaje:'hubo un error en la insercion'});
-                }
-
-                    
-            
-                
-            }else{
-                // el monto no es un numero valido
-                respuesta.send({mensaje:'debes de poner un monto valido'});
+            if(numeroTarjeta == undefined || numeroTarjeta==''){
+                return respuesta.send({mensaje:`Por favor, seleccione un metodo de pago`});
             }
+            else{
+                if(numero_valido.test(monto)){
+                    //como el monto es un numero valido, ahora podemos hacer esto
+    
+                    if(monto<minimo){
+                        // primero verificamos que el monto no sea menor al minimo
+                        return respuesta.send({mensaje:`El valor minimo a depositar es de: ${minimo}`});
+                    }
+                    else{
+                        monto = parseFloat(monto);
+    
+                        try{
+                            let consulta = 'call addVentaRecargarSaldo(?,?,?)';
+                            let parametros = [decodificada.user,numeroTarjeta,monto];
+                            let [fields] = await solicitud.database.query(mysql.format(consulta,parametros))
+        
+                            console.log(fields); //para ver que es lo que nos dio
+    
+    
+                            let time = new Date(Date.now());
+                            let minutes = time.getMinutes();
+                            let hours = time.getHours();
+                            let day = time.getDate();
+                            let month = time.getMonth()+1;
+                            let year = time.getFullYear();
+    
+                            let fecha_a_presentar = `${day}-${month}-${year}`;
+                            
+                            let hora_a_presentar = formatoAMPM(minutes,hours);
+    
+                            let cortar = numeroTarjeta.length - 4;
+                            let tarjeta_oculta='****';
+                            //for(let i = 1; i<=cortar; i++){  tarjeta_oculta+="*";  }
+                            tarjeta_oculta+=numeroTarjeta.slice(cortar);
+    
+                            respuesta.send({redirect:'/perfil/monedero',dinero:monto,card:tarjeta_oculta,time:hora_a_presentar,date:fecha_a_presentar});
+        
+                        }catch(error){
+                            console.log(error);
+                            respuesta.send({mensaje:'hubo un error en la insercion'});
+                        }
+                    }
+                
+                    
+    
+                        
+                
+                    
+                }else{
+                    // el monto no es un numero valido
+                    respuesta.send({mensaje:'debes de poner un monto valido'});
+                }
+            }
+
+            
 
         }
         else{
@@ -1249,6 +1307,39 @@ function par(e){
 
     return module;
 }
+
+
+
+
+
+
+
+function formatoAMPM(minuto,hora){
+    let ext;
+    if(hora>12){
+        // la hora es PM
+        hora=hora -12;
+        ext='PM';
+    }
+    else{
+        if(hora==12){
+            // la hora tambien es PM
+            ext='PM';
+        }
+        else{
+            // la hora es AM
+            ext='AM';
+            if(hora==0){
+                hora=12;
+            }
+        }
+    }
+
+    return `${hora}:${minuto} ${ext}`;
+
+}
+
+
 
 
 
