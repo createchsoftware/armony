@@ -6,6 +6,7 @@ import { RiCalendarTodoFill } from "react-icons/ri";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import PopupLogin from "./Login/PopupLogin";
+import { useNavigate } from "react-router-dom";
 
 const StyledRating = styled(Rating)({
   "& .MuiRating-iconFilled": {
@@ -30,6 +31,7 @@ function hr(hr) {
 }
 
 const TarjetaFavoritos = ({ props }) => {
+  const navigate = useNavigate();
   const [login, setLogin] = useState(false);
   const [fav, setFav] = useState(props.favorito);
 
@@ -39,7 +41,14 @@ const TarjetaFavoritos = ({ props }) => {
 
   const checkFav = () => {
     if (props.log == true) {
-      console.log(10); // CAMBIAR
+      localStorage.setItem("step1", true);
+      localStorage.setItem("servicio", props.ps);
+      localStorage.setItem("precio", props.precio);
+      localStorage.setItem("nombre", props.nombre);
+      localStorage.setItem("descripcion", props.descr);
+      localStorage.setItem("tiempo", props.tiempo);
+      localStorage.setItem("imagen", props.img);
+      navigate("/spa/agendar");
     } else {
       toggleLogin();
     }
@@ -86,10 +95,10 @@ const TarjetaFavoritos = ({ props }) => {
             alt=""
           />
           <div className="grid grid-cols-[auto_auto]">
-            <div className="w-[60%]">
+            <div className="w-[52%] grid place-content-end">
               <button
                 onClick={checkFav}
-                className="w-[1.75rem] h-[1.75rem] rounded-md grid place-content-end relative left-[7rem] md:left-[3rem] lg:left-[7rem] -top-4 bg-[#EB5765] hover:bg-[#F6B3B9] "
+                className="w-[1.75rem] h-[1.75rem] rounded-md grid place-content-end relative left-4 -top-4 bg-[#EB5765] hover:bg-[#F6B3B9] "
               >
                 <RiCalendarTodoFill style={{ fontSize: "26px" }} />
               </button>
