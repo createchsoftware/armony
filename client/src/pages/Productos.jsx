@@ -33,6 +33,27 @@ const Productos = () => {
   const [id, setId] = useState(null);
   const [st, setSt] = useState(false);
   const [log, setLog] = useState(false);
+  const [sus, setSus] = useState(false); //<<< CARACTERISTICA GRAFICA DE QUE EL USUARIO ES SOCIO
+  const [clave, setClave] = useState(false);
+
+  async function callRango() {
+    const respuesta3 = await fetch("/api/perfil/rangos", {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+
+    if (!respuesta3.ok) {
+      return;
+    }
+
+    const respuesta3Json = await respuesta3.json();
+
+    if (respuesta3Json.informacion) {
+      setRango(respuesta3Json.informacion[0]);
+    }
+  }
 
   async function recibido() {
     const respuesta = await fetch("/api/logueado", {
@@ -54,6 +75,29 @@ const Productos = () => {
       setLog(false);
     }
   }
+
+  useEffect(() => {
+    callRango();
+    recibido();
+  }, []);
+
+  useEffect(() => {
+
+    const Prod = async () => {
+      try {
+        if (clave) {
+
+          const response = await fetch(`/api/admin/cliente/StatusSus/${clave}`)
+          const data = await response.json();
+          setSus(data)
+        }
+      } catch (error) {
+        console.error("hubo error :", error)
+      }
+    }
+    Prod()
+  }, [clave])
+
 
   function changeSt() {
     setSt(!st);
@@ -168,32 +212,133 @@ const Productos = () => {
             </div>
           </section>
 
-          <section className=" grid grid-cols-2 w-[80%] m-auto rounded-xl overflow-hidden ">
-            <div>
-              <img src="../../pictures/ofertas.png" alt="" />
-            </div>
-            <div className="grid">
-              <div className="absolute bg-[#036C65]">
-                <img
-                  className="w-36"
-                  src="../../pictures/decoIzquierda.png"
-                  alt=""
-                />
-              </div>
-              <div className="grid gap-5 text-white text-center py-32 pt-40 pb-36 bg-[#036C65]">
-                <p className="text-3xl">
-                  CONOCE NUESTRAS OFERTAS ÚNICAS HASTA 50% OFF
-                </p>
-                <a className="hover:cursor-pointer" onClick={toggleSoon}>Ver más {">"} </a>
-              </div>
-              {/* <div className='-translate-y-36'>
+          {sus ? (
+            <>
+              <section className=" grid grid-cols-2 w-[80%] m-auto rounded-xl overflow-hidden ">
+                <div>
+                  <img src="../../pictures/ofertas.png" alt="" />
+                </div>
+                <div className="grid">
+                  <div className="absolute bg-[#036C65]">
+                    <img
+                      className="w-36"
+                      src="../../pictures/decoIzquierda.png"
+                      alt=""
+                    />
+                  </div>
+                  <div className="grid gap-5 text-white text-center py-32 pt-40 pb-36 bg-[#036C65]">
+                    <p className="text-3xl">
+                      CONOCE NUESTRAS OFERTAS ÚNICAS HASTA 50% OFF
+                    </p>
+                    <a className="hover:cursor-pointer" onClick={toggleSoon}>Ver más {">"} </a>
+                  </div>
+                  {/* <div className='-translate-y-36'>
                                 <img className='float-right w-28' src="../../pictures/decoDerecha.png" alt="" />
                             </div> */}
 
-            </div>
-          </section>
+                </div>
+              </section>
+              <section className="my-20 w-[80%] m-auto grid grid-cols rounded-xl">
+                <div className="p-6 text-xl text-center bg-white rounded-xl ">
+                  <h2>Promociones del día</h2>
+                </div>
+                <div className="grid grid-cols-2 gap-2 md:grid-cols-3 ">
+                  <div className="grid bg-white ">
+                    <img src="../../pictures/ofertas1.png" alt="" />
+                    <div className="grid gap-2 p-6">
+                      <h3 className="font-bold">Para este día de las madres</h3>
+                      <p className="text-xs text-gray-500">
+                        Encuentra las mejores ofertas para la mejor madre del
+                        planeta.
+                      </p>
+                      <button onClick={toggleSoon} className="m-auto transition-all mt-2 duration-300   hover:bg-[#036C65] hover:ring-2 hover:[#036C65] hover:ring-offset-1 group relative inline-flex h-10 items-center justify-center overflow-hidden rounded-xl border-2 bg-[#EB5765] p-4 font-[abeatbykai] text-neutral-200">
+                        <span>Ver productos</span>
+                        <div className="w-0 translate-x-[100%] pl-0 opacity-0 transition-all duration-200 group-hover:w-5 group-hover:translate-x-0 group-hover:pl-1 group-hover:opacity-100">
+                          <svg
+                            width="15"
+                            height="15"
+                            viewBox="0 0 15 15"
+                            fill="none"
+                            xmlns="http://www.w3.org/2000/svg"
+                            className="w-5 h-5"
+                          >
+                            <path
+                              d="M8.14645 3.14645C8.34171 2.95118 8.65829 2.95118 8.85355 3.14645L12.8536 7.14645C13.0488 7.34171 13.0488 7.65829 12.8536 7.85355L8.85355 11.8536C8.65829 12.0488 8.34171 12.0488 8.14645 11.8536C7.95118 11.6583 7.95118 11.3417 8.14645 11.1464L11.2929 8H2.5C2.22386 8 2 7.77614 2 7.5C2 7.22386 2.22386 7 2.5 7H11.2929L8.14645 3.85355C7.95118 3.65829 7.95118 3.34171 8.14645 3.14645Z"
+                              fill="currentColor"
+                              fillRule="evenodd"
+                              clipRule="evenodd"
+                            ></path>
+                          </svg>
+                        </div>
+                      </button>
+                    </div>
+                  </div>
+                  <div className="grid bg-white rounded-xl ">
+                    <img src="../../pictures/ofertas2.png" alt="" />
+                    <div className="grid gap-2 p-6">
+                      <h3 className="font-bold">Para este día de las madres</h3>
+                      <p className="text-xs text-gray-500">
+                        Encuentra las mejores ofertas para la mejor madre del
+                        planeta.
+                      </p>
+                      <button onClick={toggleSoon} className="m-auto transition-all mt-2 duration-300   hover:bg-[#036C65] hover:ring-2 hover:[#036C65] hover:ring-offset-1 group relative inline-flex h-10 items-center justify-center overflow-hidden rounded-xl border-2 bg-[#EB5765] p-4 font-[abeatbykai] text-neutral-200">
+                        <span>Ver productos</span>
+                        <div className="w-0 translate-x-[100%] pl-0 opacity-0 transition-all duration-200 group-hover:w-5 group-hover:translate-x-0 group-hover:pl-1 group-hover:opacity-100">
+                          <svg
+                            width="15"
+                            height="15"
+                            viewBox="0 0 15 15"
+                            fill="none"
+                            xmlns="http://www.w3.org/2000/svg"
+                            className="w-5 h-5"
+                          >
+                            <path
+                              d="M8.14645 3.14645C8.34171 2.95118 8.65829 2.95118 8.85355 3.14645L12.8536 7.14645C13.0488 7.34171 13.0488 7.65829 12.8536 7.85355L8.85355 11.8536C8.65829 12.0488 8.34171 12.0488 8.14645 11.8536C7.95118 11.6583 7.95118 11.3417 8.14645 11.1464L11.2929 8H2.5C2.22386 8 2 7.77614 2 7.5C2 7.22386 2.22386 7 2.5 7H11.2929L8.14645 3.85355C7.95118 3.65829 7.95118 3.34171 8.14645 3.14645Z"
+                              fill="currentColor"
+                              fillRule="evenodd"
+                              clipRule="evenodd"
+                            ></path>
+                          </svg>
+                        </div>
+                      </button>
+                    </div>
+                  </div>
+                  <div className="grid bg-white rounded-xl ">
+                    <img src="../../pictures/ofertas3.png" alt="" />
+                    <div className="grid gap-2 p-6">
+                      <h3 className="font-bold">Para este día de las madres</h3>
+                      <p className="text-xs text-gray-500">
+                        Encuentra las mejores ofertas para la mejor madre del
+                        planeta.
+                      </p>
+                      <button onClick={toggleSoon} className="m-auto transition-all mt-2 duration-300   hover:bg-[#036C65] hover:ring-2 hover:[#036C65] hover:ring-offset-1 group relative inline-flex h-10 items-center justify-center overflow-hidden rounded-xl border-2 bg-[#EB5765] p-4 font-[abeatbykai] text-neutral-200">
+                        <span>Ver productos</span>
+                        <div className="w-0 translate-x-[100%] pl-0 opacity-0 transition-all duration-200 group-hover:w-5 group-hover:translate-x-0 group-hover:pl-1 group-hover:opacity-100">
+                          <svg
+                            width="15"
+                            height="15"
+                            viewBox="0 0 15 15"
+                            fill="none"
+                            xmlns="http://www.w3.org/2000/svg"
+                            className="w-5 h-5"
+                          >
+                            <path
+                              d="M8.14645 3.14645C8.34171 2.95118 8.65829 2.95118 8.85355 3.14645L12.8536 7.14645C13.0488 7.34171 13.0488 7.65829 12.8536 7.85355L8.85355 11.8536C8.65829 12.0488 8.34171 12.0488 8.14645 11.8536C7.95118 11.6583 7.95118 11.3417 8.14645 11.1464L11.2929 8H2.5C2.22386 8 2 7.77614 2 7.5C2 7.22386 2.22386 7 2.5 7H11.2929L8.14645 3.85355C7.95118 3.65829 7.95118 3.34171 8.14645 3.14645Z"
+                              fill="currentColor"
+                              fillRule="evenodd"
+                              clipRule="evenodd"
+                            ></path>
+                          </svg>
+                        </div>
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </section>
+            </>
+          ) : (null)}
 
-          <section className="my-20 w-[80%] bg-white m-auto overflow-visible py-6 px-0 rounded-xl border-8 border-[#E2B3B7]">
+          {log ? (<section className="my-20 w-[80%] bg-white m-auto overflow-visible py-6 px-0 rounded-xl border-8 border-[#E2B3B7]">
             <h1 className="pb-4 text-xl ml-28">Ofertas en descuento</h1>
             <hr />
             <div className="mx-auto md:px-0 px-2 md:mx-0 selection:bg-[#EB5765] overflow-visible selection:text-white">
@@ -284,7 +429,7 @@ const Productos = () => {
                     </div>))}
               </Carousel>
             </div>
-          </section>
+          </section>) : (null)}
 
 
 
@@ -292,103 +437,7 @@ const Productos = () => {
             <Filtros />
           </section>
 
-          <section className="my-20 w-[80%] m-auto grid grid-cols rounded-xl">
-            <div className="p-6 text-xl text-center bg-white rounded-xl ">
-              <h2>Promociones del día</h2>
-            </div>
-            <div className="grid grid-cols-2 gap-2 md:grid-cols-3 ">
-              <div className="grid bg-white ">
-                <img src="../../pictures/ofertas1.png" alt="" />
-                <div className="grid gap-2 p-6">
-                  <h3 className="font-bold">Para este día de las madres</h3>
-                  <p className="text-xs text-gray-500">
-                    Encuentra las mejores ofertas para la mejor madre del
-                    planeta.
-                  </p>
-                  <button onClick={toggleSoon} className="m-auto transition-all mt-2 duration-300   hover:bg-[#036C65] hover:ring-2 hover:[#036C65] hover:ring-offset-1 group relative inline-flex h-10 items-center justify-center overflow-hidden rounded-xl border-2 bg-[#EB5765] p-4 font-[abeatbykai] text-neutral-200">
-                    <span>Ver productos</span>
-                    <div className="w-0 translate-x-[100%] pl-0 opacity-0 transition-all duration-200 group-hover:w-5 group-hover:translate-x-0 group-hover:pl-1 group-hover:opacity-100">
-                      <svg
-                        width="15"
-                        height="15"
-                        viewBox="0 0 15 15"
-                        fill="none"
-                        xmlns="http://www.w3.org/2000/svg"
-                        className="w-5 h-5"
-                      >
-                        <path
-                          d="M8.14645 3.14645C8.34171 2.95118 8.65829 2.95118 8.85355 3.14645L12.8536 7.14645C13.0488 7.34171 13.0488 7.65829 12.8536 7.85355L8.85355 11.8536C8.65829 12.0488 8.34171 12.0488 8.14645 11.8536C7.95118 11.6583 7.95118 11.3417 8.14645 11.1464L11.2929 8H2.5C2.22386 8 2 7.77614 2 7.5C2 7.22386 2.22386 7 2.5 7H11.2929L8.14645 3.85355C7.95118 3.65829 7.95118 3.34171 8.14645 3.14645Z"
-                          fill="currentColor"
-                          fillRule="evenodd"
-                          clipRule="evenodd"
-                        ></path>
-                      </svg>
-                    </div>
-                  </button>
-                </div>
-              </div>
-              <div className="grid bg-white rounded-xl ">
-                <img src="../../pictures/ofertas2.png" alt="" />
-                <div className="grid gap-2 p-6">
-                  <h3 className="font-bold">Para este día de las madres</h3>
-                  <p className="text-xs text-gray-500">
-                    Encuentra las mejores ofertas para la mejor madre del
-                    planeta.
-                  </p>
-                  <button onClick={toggleSoon} className="m-auto transition-all mt-2 duration-300   hover:bg-[#036C65] hover:ring-2 hover:[#036C65] hover:ring-offset-1 group relative inline-flex h-10 items-center justify-center overflow-hidden rounded-xl border-2 bg-[#EB5765] p-4 font-[abeatbykai] text-neutral-200">
-                    <span>Ver productos</span>
-                    <div className="w-0 translate-x-[100%] pl-0 opacity-0 transition-all duration-200 group-hover:w-5 group-hover:translate-x-0 group-hover:pl-1 group-hover:opacity-100">
-                      <svg
-                        width="15"
-                        height="15"
-                        viewBox="0 0 15 15"
-                        fill="none"
-                        xmlns="http://www.w3.org/2000/svg"
-                        className="w-5 h-5"
-                      >
-                        <path
-                          d="M8.14645 3.14645C8.34171 2.95118 8.65829 2.95118 8.85355 3.14645L12.8536 7.14645C13.0488 7.34171 13.0488 7.65829 12.8536 7.85355L8.85355 11.8536C8.65829 12.0488 8.34171 12.0488 8.14645 11.8536C7.95118 11.6583 7.95118 11.3417 8.14645 11.1464L11.2929 8H2.5C2.22386 8 2 7.77614 2 7.5C2 7.22386 2.22386 7 2.5 7H11.2929L8.14645 3.85355C7.95118 3.65829 7.95118 3.34171 8.14645 3.14645Z"
-                          fill="currentColor"
-                          fillRule="evenodd"
-                          clipRule="evenodd"
-                        ></path>
-                      </svg>
-                    </div>
-                  </button>
-                </div>
-              </div>
-              <div className="grid bg-white rounded-xl ">
-                <img src="../../pictures/ofertas3.png" alt="" />
-                <div className="grid gap-2 p-6">
-                  <h3 className="font-bold">Para este día de las madres</h3>
-                  <p className="text-xs text-gray-500">
-                    Encuentra las mejores ofertas para la mejor madre del
-                    planeta.
-                  </p>
-                  <button onClick={toggleSoon} className="m-auto transition-all mt-2 duration-300   hover:bg-[#036C65] hover:ring-2 hover:[#036C65] hover:ring-offset-1 group relative inline-flex h-10 items-center justify-center overflow-hidden rounded-xl border-2 bg-[#EB5765] p-4 font-[abeatbykai] text-neutral-200">
-                    <span>Ver productos</span>
-                    <div className="w-0 translate-x-[100%] pl-0 opacity-0 transition-all duration-200 group-hover:w-5 group-hover:translate-x-0 group-hover:pl-1 group-hover:opacity-100">
-                      <svg
-                        width="15"
-                        height="15"
-                        viewBox="0 0 15 15"
-                        fill="none"
-                        xmlns="http://www.w3.org/2000/svg"
-                        className="w-5 h-5"
-                      >
-                        <path
-                          d="M8.14645 3.14645C8.34171 2.95118 8.65829 2.95118 8.85355 3.14645L12.8536 7.14645C13.0488 7.34171 13.0488 7.65829 12.8536 7.85355L8.85355 11.8536C8.65829 12.0488 8.34171 12.0488 8.14645 11.8536C7.95118 11.6583 7.95118 11.3417 8.14645 11.1464L11.2929 8H2.5C2.22386 8 2 7.77614 2 7.5C2 7.22386 2.22386 7 2.5 7H11.2929L8.14645 3.85355C7.95118 3.65829 7.95118 3.34171 8.14645 3.14645Z"
-                          fill="currentColor"
-                          fillRule="evenodd"
-                          clipRule="evenodd"
-                        ></path>
-                      </svg>
-                    </div>
-                  </button>
-                </div>
-              </div>
-            </div>
-          </section>
+
 
           {/*<section className='w-[80%] m-auto mt-12'>
                         <ContenedorProductos />

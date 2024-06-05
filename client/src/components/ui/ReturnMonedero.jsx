@@ -1,4 +1,8 @@
+import React, { useState } from 'react'
+
 function ReturnMonederos({ monederos }) {
+
+    const [info, setInfo] = useState(false);
 
     return (
 

@@ -114,14 +114,14 @@ const CambiarContrasena = ({ volver, close, next }) => {
                 </div>
                 <div className="relative">
                   <InputContrasena
-                  id={'contraseña'}
-                  value={contrasena}
-                  onChange={cambiarContrasena}
-                  texto= "Ingresa tu contraseña"
-                  className=
-                    "bg-slate-200 md:text-sm lg:text-base rounded-full w=[15rem] md:w-96 mb-3 mt-2 mx-3 py-2 focus:outline-none focus:ring-1 focus:ring-[#EB5765] focus:border-transparent px-6"
-                  classEye=
-                    "relative float-right justify-end right-[3rem] top-[1rem]"
+                    id={'contraseña'}
+                    value={contrasena}
+                    onChange={cambiarContrasena}
+                    texto= "Ingresa tu contraseña"
+                    className=
+                      "bg-slate-200 md:text-sm lg:text-base rounded-full w-[85%] mb-3 mt-2 mx-3 py-2 focus:outline-none focus:ring-1 focus:ring-[#EB5765] focus:border-transparent px-6"
+                    classEye=
+                      "relative float-right justify-end right-[4rem] top-[1rem] cursor-pointer hover:text-black"
                   />
                 </div>
                 <div>
@@ -133,15 +133,15 @@ const CambiarContrasena = ({ volver, close, next }) => {
                   </label>
                 </div>
                 <div className="relative">
-                <InputContrasena
-                  id={'confirmacion'}
-                  value={contrasena_confirmacion}
-                  onChange={cambiarConfirmacion}
-                  texto= "Ingresa tu contraseña"
-                  className=
-                    "bg-slate-200 md:text-sm lg:text-base rounded-full w=[15rem] md:w-96 mb-3 mt-2 mx-3 py-2 focus:outline-none focus:ring-1 focus:ring-[#EB5765] focus:border-transparent px-6"
-                  classEye=
-                    "relative float-right justify-end right-[3rem] top-[1rem]"
+                  <InputContrasena
+                    id={'confirmacion'}
+                    value={contrasena_confirmacion}
+                    onChange={cambiarConfirmacion}
+                    texto= "Ingresa tu contraseña"
+                    className=
+                      "bg-slate-200 md:text-sm lg:text-base rounded-full w-[85%] mb-3 mt-2 mx-3 py-2 focus:outline-none focus:ring-1 focus:ring-[#EB5765] focus:border-transparent px-6"
+                    classEye=
+                      "relative float-right justify-end right-[4rem] top-[1rem] cursor-pointer hover:text-black"
                   />
                 </div>
               </form>

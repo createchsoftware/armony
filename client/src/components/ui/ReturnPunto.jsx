@@ -1,4 +1,8 @@
+import React, { useState } from 'react'
+
 function ReturnPuntos({ puntos }) {
+
+    const [info, setInfo] = useState(false);
 
     return (
 
@@ -16,7 +20,7 @@ function ReturnPuntos({ puntos }) {
                     </div>
                 </div>
                 <div className='grid content-center gap-2 p-2 '>
-                    <button className='w-48 h-max px-10 py-2 text-white rounded-full bg-[#EB5765]'>Opinar</button>
+                    <button onClick={() => setInfo(!info)} className='w-48 h-max px-10 py-2 text-white rounded-full bg-[#EB5765]'>Ver información</button>
                 </div>
 
 
