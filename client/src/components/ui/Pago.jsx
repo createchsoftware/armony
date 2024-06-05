@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import InforTarjeta from "./InfoTarjeta";
 import PagoRealizado from "./PagoRealizado";
 import { jwtDecode } from "jwt-decode";
+import { Fragment } from "react";
 
 
 
@@ -35,7 +36,7 @@ function Pago({ producto, next }) {
             .then((response) => response.json())
             .then((data) => {
                 if (data.data) {
-                setMonedero(data.data[0].monedero);
+                    setMonedero(data.data[0].monedero);
                 }
             })
             .catch((error) => {
@@ -60,7 +61,7 @@ function Pago({ producto, next }) {
 
     useEffect(() => {
         setTimeout(() => {
-            fetch("/api/tarjetas/1.5")
+            fetch("/api/tarjetas/1.5.2")
                 .then(response => response.json())
                 .then(data => {
                     setTarjetas(data.array);
@@ -100,10 +101,19 @@ function Pago({ producto, next }) {
     }
 
 
-    const togglePago = (tarjeta,mone) => {
-        setPagoRealizado(!pagoRealizado);
-        localStorage.setItem('tarjeta', tarjeta);
-        localStorage.setItem('monedero', mone);
+    const togglePago = (tarjeta, mone) => {
+        console.log("MONE", mone)
+        console.log("TOTAL", total)
+        if (mone > total) {
+            setPagoRealizado(false);
+            alert('No tienes suficiente saldo en tu monedero')
+            return
+        }
+        else {
+            setPagoRealizado(true);
+            localStorage.setItem('tarjeta', tarjeta);
+            localStorage.setItem('monedero', mone);
+        }
     }
     // const datosRecibidos = (nuevaTarjeta) => {
     //     setTarjetas([...tarjetas, {id: 3, noTarjeta: {nuevaTarjeta}, tipo: "Débito", banco: "BBVA", code: "****"}]);
@@ -119,16 +129,73 @@ function Pago({ producto, next }) {
 
 
 
-    const cardList = tarjetas.length > 0 ? (tarjetas.map(item => (
-        <li key={item.id} className="flex items-center justify-between gap-4 px-4 py-1 mb-4 border-2 shadow-md rounded-3xl border-gray">
-            <img src={"../../../pictures/" + item.imagen} className="w-1/5 h-auto" />
-            <h1 className="text-xl truncate">{item.empresa}</h1>
-            <h1 className="text-xl">{item.tipo}</h1>
-            {/* <h1 className="text-xl">{item.code}</h1> */}
-            <h1 className="text-xl">****{item.numero_tarjeta.slice(0, 4)}</h1>
-            <button onClick={()=>togglePago(item.numero_tarjeta,null)} className='bg-[#ec5766] text-xl text-white px-10 py-2 rounded-full duration-200 hover:bg-[#ffb5a7]'>Continuar</button>
-        </li>
-    ))) : (<div></div>)
+    const cardList = tarjetas.length > 0 ? (
+        <>
+            {/* Mapeo para tarjetas que no sean de tipo "monedero" */}
+            {tarjetas.map(item => {
+                if (item.tipo !== 'monedero') {
+                    return (
+                        <li key={item.id} className="flex items-center justify-between gap-4 px-4 mb-4 border-2 shadow-md rounded-3xl border-gray">
+                            <img src={"../../../pictures/" + item.imagen} className="w-1/5 h-auto" />
+                            <h1 className="text-xl truncate">{item.empresa}</h1>
+                            <h1 className="text-xl">{item.tipo}</h1>
+                            <h1 className="text-xl">{item.numero_tarjeta.slice(0, 4)}</h1>
+                            <button onClick={() => togglePago(item.numero_tarjeta, null)} className='bg-[#ec5766] text-xl text-white px-10 py-2 rounded-full duration-200 hover:bg-[#ffb5a7]'>Continuar</button>
+                        </li>
+                    );
+                } else {
+                    return null; // Si es una tarjeta de tipo "monedero", no renderizar nada aquí
+                }
+            })}
+            <ul>
+                <li className="flex items-center justify-between gap-4 px-4 mb-4 border-2 shadow-md rounded-3xl border-gray">
+                    <svg className='w-16' fill="#000000" version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink" viewBox="0 0 459.669 459.669" xmlSpace="preserve">
+                        <g id="SVGRepo_bgCarrier" strokeWidth="0"></g>
+                        <g id="SVGRepo_tracerCarrier" strokeLinecap="round" strokeLinejoin="round"></g>
+                        <g id="SVGRepo_iconCarrier"> <g> <g>
+                            <path d="M404.723,76.087H54.948C24.649,76.087,0,100.735,0,131.035v197.599c0,30.298,24.649,54.948,54.948,54.948h349.774 c30.298,0,54.947-24.65,54.947-54.948V131.035C459.67,100.735,435.021,76.087,404.723,76.087z M429.267,328.633 c0,13.534-11.011,24.544-24.544,24.544H54.948c-13.534,0-24.545-11.01-24.545-24.544V196.214h398.863L429.267,328.633 L429.267,328.633z M429.267,152.839l-398.863,0.029v-21.834c0-13.534,11.011-24.545,24.545-24.545h349.774 c13.533,0,24.544,11.011,24.544,24.545V152.839z"></path>
+                            <path d="M68.136,324.98h83.23c2.98,0,5.398-2.416,5.398-5.396v-16.421c0-2.981-2.418-5.397-5.398-5.397h-83.23 c-2.981,0-5.398,2.416-5.398,5.397v16.421C62.737,322.564,65.154,324.98,68.136,324.98z"></path>
+                            <path d="M337.963,324.98h24.756c14.288,0,25.87-11.582,25.87-25.869v-24.756c0-14.287-11.582-25.869-25.87-25.869h-24.756 c-14.287,0-25.869,11.582-25.869,25.869v24.756C312.094,313.398,323.676,324.98,337.963,324.98z"></path> </g> </g>
+                        </g>
+                    </svg>
+                    <h1 className="text-xl">Nueva tarjeta de crédito</h1>
+                    <button onClick={toggleTarjeta} className='bg-[#ec5766] text-xl text-white px-10 py-2 rounded-full duration-200 hover:bg-[#ffb5a7]'>Continuar</button>
+                </li>
+                <li className="flex items-center justify-between gap-4 px-4 mb-4 border-2 shadow-md rounded-3xl border-gray">
+                    <svg className="w-16" fill="#000000" version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink" viewBox="0 0 442.979 442.979" xmlSpace="preserve">
+                        <g id="SVGRepo_bgCarrier" strokeWidth="0"></g><g id="SVGRepo_tracerCarrier" strokeLinecap="round" strokeLinejoin="round"></g><g id="SVGRepo_iconCarrier"> <g> <g>
+                            <path d="M327.93,139.923H33.462C14.982,139.923,0,154.904,0,173.384v166.355c0,18.481,14.981,33.462,33.462,33.462h294.47 c18.479,0,33.461-14.98,33.461-33.462V173.384C361.393,154.904,346.41,139.923,327.93,139.923z M53.441,210.654 c0-11.284,9.147-20.432,20.432-20.432h19.553c11.284,0,20.432,9.147,20.432,20.432v19.553c0,11.284-9.147,20.432-20.432,20.432 H73.873c-11.284,0-20.432-9.147-20.432-20.432V210.654z M154.241,319.293c0,3.159-2.561,5.719-5.719,5.719H60.341 c-3.158,0-5.72-2.561-5.72-5.719v-17.398c0-3.158,2.562-5.719,5.72-5.719h88.182c3.158,0,5.719,2.561,5.719,5.719L154.241,319.293 L154.241,319.293z M306.77,319.293c0,3.159-2.562,5.719-5.721,5.719h-88.18c-3.158,0-5.72-2.561-5.72-5.719v-17.398 c0-3.158,2.562-5.719,5.72-5.719h88.18c3.158,0,5.721,2.561,5.721,5.719V319.293z"></path>
+                            <path d="M409.516,69.777H115.048c-18.48,0-33.462,14.981-33.462,33.462v9.04h246.346c33.691,0,61.104,27.412,61.104,61.105v25.874 h53.943v-96.019C442.979,84.758,427.996,69.777,409.516,69.777z"></path>
+                            <path d="M389.035,303.057h20.48c18.48,0,33.463-14.981,33.463-33.463v-37.16h-53.943V303.057z"></path> </g> </g>
+                        </g>
+                    </svg>
+                    <h1 className="text-xl">Nueva tarjeta de débito</h1>
+                    <button onClick={toggleTarjeta} className='bg-[#ec5766] text-xl text-white px-10 py-2 rounded-full duration-200 hover:bg-[#ffb5a7]'>Continuar</button>
+                </li>
+            </ul>
+            {/* Mapeo para tarjetas de tipo "monedero" */}
+            {tarjetas.map(item => {
+                if (item.tipo === 'monedero') {
+                    return (
+                        <Fragment key={item.id}>
+                            <h1 className="ml-2 text-2xl font-bold">Otras formas de pago</h1>
+                            <div className="flex items-center justify-between gap-4 px-4 mb-4 border-2 shadow-md rounded-3xl border-gray">
+                                <img src="../../../pictures/wallet.png" alt="" className="w-16" />
+                                <div className="grid">
+                                    <h1 className="text-xl">Pago con monedero</h1>
+                                    <h1 className="text-l">Saldo disponible: ${item.monedero}</h1>
+                                </div>
+                                <button onClick={() => togglePago(null, item.monedero)} className='bg-[#ec5766] text-xl text-white px-10 py-2 rounded-full duration-200 hover:bg-[#ffb5a7]'>Continuar</button>
+                            </div>
+                        </Fragment>
+                    );
+                } else {
+                    return null; // Si no es una tarjeta de tipo "monedero", no renderizar nada aquí
+                }
+            })}
+        </>
+    ) : (<div></div>);
+
     return (
         <>
             <div className='flex justify-between mx-16'>
@@ -146,43 +213,6 @@ function Pago({ producto, next }) {
                                 {cardList}
                             </ul>
                         )}
-                        <ul>
-                            <li className="flex items-center justify-between gap-4 px-4 mb-4 border-2 shadow-md rounded-3xl border-gray">
-                                <svg className='w-16' fill="#000000" version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink" viewBox="0 0 459.669 459.669" xmlSpace="preserve">
-                                    <g id="SVGRepo_bgCarrier" strokeWidth="0"></g>
-                                    <g id="SVGRepo_tracerCarrier" strokeLinecap="round" strokeLinejoin="round"></g>
-                                    <g id="SVGRepo_iconCarrier"> <g> <g>
-                                        <path d="M404.723,76.087H54.948C24.649,76.087,0,100.735,0,131.035v197.599c0,30.298,24.649,54.948,54.948,54.948h349.774 c30.298,0,54.947-24.65,54.947-54.948V131.035C459.67,100.735,435.021,76.087,404.723,76.087z M429.267,328.633 c0,13.534-11.011,24.544-24.544,24.544H54.948c-13.534,0-24.545-11.01-24.545-24.544V196.214h398.863L429.267,328.633 L429.267,328.633z M429.267,152.839l-398.863,0.029v-21.834c0-13.534,11.011-24.545,24.545-24.545h349.774 c13.533,0,24.544,11.011,24.544,24.545V152.839z"></path>
-                                        <path d="M68.136,324.98h83.23c2.98,0,5.398-2.416,5.398-5.396v-16.421c0-2.981-2.418-5.397-5.398-5.397h-83.23 c-2.981,0-5.398,2.416-5.398,5.397v16.421C62.737,322.564,65.154,324.98,68.136,324.98z"></path>
-                                        <path d="M337.963,324.98h24.756c14.288,0,25.87-11.582,25.87-25.869v-24.756c0-14.287-11.582-25.869-25.87-25.869h-24.756 c-14.287,0-25.869,11.582-25.869,25.869v24.756C312.094,313.398,323.676,324.98,337.963,324.98z"></path> </g> </g>
-                                    </g>
-                                </svg>
-                                <h1 className="text-xl">Nueva tarjeta de crédito</h1>
-                                <button onClick={toggleTarjeta} className='bg-[#ec5766] text-xl text-white px-10 py-2 rounded-full duration-200 hover:bg-[#ffb5a7]'>Continuar</button>
-                            </li>
-                            <li className="flex items-center justify-between gap-4 px-4 mb-4 border-2 shadow-md rounded-3xl border-gray">
-                                <svg className="w-16" fill="#000000" version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink" viewBox="0 0 442.979 442.979" xmlSpace="preserve">
-                                    <g id="SVGRepo_bgCarrier" strokeWidth="0"></g><g id="SVGRepo_tracerCarrier" strokeLinecap="round" strokeLinejoin="round"></g><g id="SVGRepo_iconCarrier"> <g> <g>
-                                        <path d="M327.93,139.923H33.462C14.982,139.923,0,154.904,0,173.384v166.355c0,18.481,14.981,33.462,33.462,33.462h294.47 c18.479,0,33.461-14.98,33.461-33.462V173.384C361.393,154.904,346.41,139.923,327.93,139.923z M53.441,210.654 c0-11.284,9.147-20.432,20.432-20.432h19.553c11.284,0,20.432,9.147,20.432,20.432v19.553c0,11.284-9.147,20.432-20.432,20.432 H73.873c-11.284,0-20.432-9.147-20.432-20.432V210.654z M154.241,319.293c0,3.159-2.561,5.719-5.719,5.719H60.341 c-3.158,0-5.72-2.561-5.72-5.719v-17.398c0-3.158,2.562-5.719,5.72-5.719h88.182c3.158,0,5.719,2.561,5.719,5.719L154.241,319.293 L154.241,319.293z M306.77,319.293c0,3.159-2.562,5.719-5.721,5.719h-88.18c-3.158,0-5.72-2.561-5.72-5.719v-17.398 c0-3.158,2.562-5.719,5.72-5.719h88.18c3.158,0,5.721,2.561,5.721,5.719V319.293z"></path>
-                                        <path d="M409.516,69.777H115.048c-18.48,0-33.462,14.981-33.462,33.462v9.04h246.346c33.691,0,61.104,27.412,61.104,61.105v25.874 h53.943v-96.019C442.979,84.758,427.996,69.777,409.516,69.777z"></path>
-                                        <path d="M389.035,303.057h20.48c18.48,0,33.463-14.981,33.463-33.463v-37.16h-53.943V303.057z"></path> </g> </g>
-                                    </g>
-                                </svg>
-                                <h1 className="text-xl">Nueva tarjeta de débito</h1>
-                                <button onClick={toggleTarjeta} className='bg-[#ec5766] text-xl text-white px-10 py-2 rounded-full duration-200 hover:bg-[#ffb5a7]'>Continuar</button>
-                            </li>
-                            <li className=" mt-3">
-                                <h1 className="text-2xl">Otras formas de pago </h1>
-                                <div className="flex items-center justify-between gap-4 px-4 mb-4 border-2 shadow-md rounded-3xl border-gray">
-                                    <img src="../../../pictures/wallet.png" alt="" className="w-16" />
-                                    <div className="grid">
-                                        <h1 className="text-xl">Pago con monedero</h1>
-                                        <h1 className="text-l">Saldo disponible: ${monedero}</h1>
-                                    </div>
-                                    <button className='bg-[#ec5766] text-xl text-white px-10 py-2 rounded-full duration-200 hover:bg-[#ffb5a7]'>Continuar</button>
-                                </div>
-                            </li>
-                        </ul>
                     </div>
                 </div>
                 {/* Sección derecha */}
@@ -218,10 +248,10 @@ function Pago({ producto, next }) {
                         <div className='grid bg-[rgb(3,109,99)] rounded-t-xl'>
                             <p className='py-2 ml-8 text-2xl text-white'>Aceptamos</p>
                         </div>
-                        <div className='flex justify-between items-center px-6 py-2 gap-2'>
-                            <img className="w-28 h-auto" src="../../../pictures/Visa.png" alt="" />
-                            <img className="w-28 h-auto" src="../../../pictures/MasterCard.png" alt="" />
-                            <img className="w-28 h-auto" src="../../../pictures/AmericanExpress.png" alt="" />
+                        <div className='flex items-center justify-between gap-2 px-6 py-2'>
+                            <img className="h-auto w-28" src="../../../pictures/Visa.png" alt="" />
+                            <img className="h-auto w-28" src="../../../pictures/MasterCard.png" alt="" />
+                            <img className="h-auto w-28" src="../../../pictures/AmericanExpress.png" alt="" />
                         </div>
                     </div>
                 </div>
