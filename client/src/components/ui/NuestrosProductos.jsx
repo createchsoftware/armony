@@ -62,6 +62,37 @@ function Productos() {
 
   const [descuentos, setDescuentos] = useState([]);
   const [id, setId] = useState();
+  const [st, setSt] = useState(false);
+  const [log, setLog] = useState(false);
+
+  async function recibido() {
+    const respuesta = await fetch("/api/logueado", {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+
+    if (!respuesta.ok) {
+      setLog(false);
+    }
+
+    let respuestaJson = await respuesta.json();
+
+    if (respuestaJson.logueado == true) {
+      setLog(true);
+    } else {
+      setLog(false);
+    }
+  }
+
+  function changeSt() {
+    setSt(!st);
+  }
+
+  useEffect(() => {
+    recibido();
+  }, []);
 
   async function getId() {
     let respuestaJson = null;
@@ -94,26 +125,34 @@ function Productos() {
 
   //useEffect para obtener los productos con descuento
   useEffect(() => {
-    if (id != undefined) {
-      setTimeout(() => {
-        fetch(`/api/admin/productos/descuento/${id}`)
-          .then((response) => {
-            if (!response.ok) {
-              throw new Error("Error al obtener los descuentos");
-            }
-            return response.json();
-          })
-          .then((data) => {
-            setDescuentos(data.data);
-            //console.log("descuentos", data.data);
-          })
-          .catch((error) => {
-            console.log("error", error);
-          });
-      }, [1000]);
-    }
-  }, [id]);
+    const fetchDescuentos = async () => {
+      let url;
+      if (id !== null && id !== 0 && id !== undefined) {
+        url = `/api/admin/productos/descuento/${id}`;
+      } else {
+        url = `/api/admin/productos/descuentoAll`;
+      }
 
+      try {
+        const response = await fetch(url);
+
+        if (!response.ok) {
+          throw new Error("Error al obtener los descuentos");
+        }
+
+        const data = await response.json();
+        setDescuentos(data.data);
+        console.log("descuentos", data.data);
+      } catch (error) {
+        console.log("error", error);
+      }
+    };
+
+    const timeoutId = setTimeout(fetchDescuentos, 1000);
+
+    // Cleanup function to clear the timeout if the component unmounts or id changes
+    return () => clearTimeout(timeoutId);
+  }, [id]);
   return (
     <>
       <img
@@ -197,10 +236,25 @@ function Productos() {
                 className="absolute cursor-pointer top-1/2 transform -translate-y-1/2 -right-0 text-3xl text-primary-900 bg-[#e6e6e6] rounded-full aspect-square text-[#036C65] p-3 hover:opacity-90 overflow-visible z-10"
               />
             }
-            // className=''
+          // className=''
           >
             {descuentos.map((oferta) => (
-              <Ofertas key={oferta.id} noDesc={true} producto={oferta} />
+
+              <Ofertas
+                props={{
+                  id: id,
+                  log: log,
+                  ps: oferta.pkIdPS,
+                  nombre: oferta.nombre,
+                  descripcion: oferta.descripcion,
+                  descripcionOferta: oferta.descripcionOferta,
+                  img: oferta.img,
+                  precio: oferta.precio,
+                  valoracion: oferta.valoracion,
+                  favorito: oferta.favorito,
+                  st: changeSt,
+                }}
+              />
               // <Ofertas key={oferta.id} producto={oferta} handleClickCarrito={handleClickCarrito} />
             ))}
           </Carousel>
