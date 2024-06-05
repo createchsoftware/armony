@@ -56,11 +56,13 @@ function RevisionProductos({ restart, producto, next }) {
 
     const totalProductos = cartItems.reduce((total, item) => total + item.cantidad, 0);
     const subTotal = cartItems.reduce((acc, item) => acc + item.precio * item.cantidad, 0).toFixed(2);
-    const ivaTotal = (subTotal * (.08)).toFixed(2);
-    const total = (parseFloat(subTotal) + parseFloat(ivaTotal)).toFixed(2);
+    // const ivaTotal = (subTotal * (.08)).toFixed(2);
+    // const total = (parseFloat(subTotal) + parseFloat(ivaTotal)).toFixed(2);
+
     const [puntosTotal, setPuntosTotal] = useState(0); //<<< PUNTOS TOTALES
+    const [clave, setClave] = useState(false);
     const [sus, setSus] = useState(false); //<<< CARACTERISTICA GRAFICA DE QUE EL USUARIO ES SOCIO
-    const puntos = (sus ? ((parseInt(total))/5):((parseFloat(total)) / 10));
+    const puntos = (sus ? ((parseInt(subTotal))/5):((parseFloat(subTotal)) / 10));
 
     async function callRango() {
         const respuesta3 = await fetch("/api/perfil/rangos", {
@@ -81,9 +83,48 @@ function RevisionProductos({ restart, producto, next }) {
         }
     }
 
+    async function recibido() {
+        const respuesta = await fetch("/api/logueado", {
+            method: "GET",
+            headers: {
+                "Content-Type": "application/json",
+            },
+        });
+
+        if (!respuesta.ok) {
+            setClave(false);
+        }
+
+        let respuestaJson = await respuesta.json();
+
+        if (respuestaJson.logueado == true) {
+            setClave(respuestaJson.clave);
+        } else {
+            setClave(false);
+        }
+    }
+
     useEffect(() => {
         callRango();
+        recibido();
     }, []);
+
+    useEffect(() => {
+        
+        const Prod = async () => {
+            try {
+                if (clave) {
+    
+                    const response = await fetch(`/api/admin/cliente/StatusSus/${clave}`)
+                    const data = await response.json();
+                    setSus(data)
+                }
+            } catch (error) {
+                console.error("hubo error :", error)
+            }
+        }
+        Prod()
+    }, [clave])
 
     const cartList = cartItems.map(item => (
         <li key={item.id} className="flex p-4 mb-4 border-2 shadow-md rounded-xl border-gray">
@@ -152,12 +193,12 @@ function RevisionProductos({ restart, producto, next }) {
                             <div className='grid p-6 mb-4 border-2 shadow-md rounded-xl border-gray'>
                                 <div className='flex justify-between'>
                                     <span>{totalProductos} Producto(s)</span>
-                                    <h1 className='font-bold'>${total}</h1>
+                                    <h1 className='font-bold'>${subTotal}</h1>
                                 </div>
-                                <div className='flex justify-between'>
+                                {/* <div className='flex justify-between'>
                                     <h1>IVA</h1>
                                     <h1 className='font-bold'>${ivaTotal}</h1>
-                                </div>
+                                </div> */}
                                 <div className='flex justify-between'>
                                     <h1>Envío</h1>
                                     <h1 className='font-bold'>$0.00</h1>
@@ -169,7 +210,7 @@ function RevisionProductos({ restart, producto, next }) {
                             </div>
                             <div className='flex justify-between p-6 px-10 mb-4 border-2 shadow-md rounded-xl border-gray'>
                                 <h4 className='text-xl font-bold'>Total:</h4>
-                                <span className='font-bold text-[rgb(3,109,99)] text-xl'>${total}</span>
+                                <span className='font-bold text-[rgb(3,109,99)] text-xl'>${subTotal}</span>
                             </div>
                             <div className='flex justify-between p-6 px-10 mb-4 border-2 shadow-md rounded-xl border-gray'>
                                 <h4 className='text-xl font-bold'>Puntos obtenidos:</h4>
