@@ -7,7 +7,7 @@ import InforTarjeta from '../../components/ui/InfoTarjeta';
 import { Helmet, HelmetProvider } from 'react-helmet-async';
 import { ToastContainer, toast } from 'react-toastify';
 
-function AgregarSaldo(){
+function AgregarSaldo() {
     const [sTarjeta, setsTarjeta] = useState({});
     const [array, setArray] = useState([]);
     const [array_toShow, setArray_toShow] = useState([]);
@@ -17,16 +17,16 @@ function AgregarSaldo(){
     const [confirm, setConfirm] = useState(false);
     const [ticket, setTicket] = useState(false);
 
-    function ModificarArray(number){
+    function ModificarArray(number) {
 
         // cambiar el arreglo que se presenta en pantalla
         setArray_toShow(
-            array.map(tarjeta=> {
+            array.map(tarjeta => {
 
-                if(tarjeta.numero_tarjeta === number){
+                if (tarjeta.numero_tarjeta === number) {
                     tarjeta.predeterminada = 1;
                 }
-                else{
+                else {
                     tarjeta.predeterminada = 0;
                 }
 
@@ -35,58 +35,58 @@ function AgregarSaldo(){
         )
     }
 
-    useEffect(()=>{
+    useEffect(() => {
         fetch("/api/tarjetas/1.5")
-           .then(response=> response.json())
-           .then(data => {
-              if(data.array){
-                setArray(data.array);
-                setArray_toShow(data.array);
+            .then(response => response.json())
+            .then(data => {
+                if (data.array) {
+                    setArray(data.array);
+                    setArray_toShow(data.array);
 
-                let tp = data.array.find(tarjeta=> tarjeta.predeterminada == 1);
-                setsTarjeta(tp);
-              }
-           })
-           .catch(error=>{
-               console.log(error);
-           });
-     },[])
+                    let tp = data.array.find(tarjeta => tarjeta.predeterminada == 1);
+                    setsTarjeta(tp);
+                }
+            })
+            .catch(error => {
+                console.log(error);
+            });
+    }, [])
 
-    useEffect(()=>{
-        if(sTarjeta && Object.keys(sTarjeta).length != 0){
+    useEffect(() => {
+        if (sTarjeta && Object.keys(sTarjeta).length != 0) {
             ModificarArray(sTarjeta.numero_tarjeta);
         }
-    },[sTarjeta]);
+    }, [sTarjeta]);
 
-    useEffect(()=>{},[monto_a_recargar]);
-    
-    function obtenerValorEnTiempoReal(e){
+    useEffect(() => { }, [monto_a_recargar]);
+
+    function obtenerValorEnTiempoReal(e) {
         setMonto(e.target.value);
     }
 
-    const handleSubmit = async(e)=>{
-        
-        e.preventDefault();        
+    const handleSubmit = async (e) => {
 
-        const respuesta = await fetch('/api/recargaSaldo',{
-            method:'POST',
-            headers:{
-                "Content-Type":"application/json",
+        e.preventDefault();
+
+        const respuesta = await fetch('/api/recargaSaldo', {
+            method: 'POST',
+            headers: {
+                "Content-Type": "application/json",
             },
-            body:JSON.stringify({
-                numero_tarjeta:sTarjeta.numero_tarjeta,
-                monto:monto_a_recargar
+            body: JSON.stringify({
+                numero_tarjeta: sTarjeta.numero_tarjeta,
+                monto: monto_a_recargar
             })
         })
 
-        if(!respuesta.ok){
+        if (!respuesta.ok) {
             console.log('hubo un problema en la conexion servidor-cliente')
         }
 
         const respuestaJson = await respuesta.json();
 
 
-        if(respuestaJson.mensaje){
+        if (respuestaJson.mensaje) {
             console.log(respuestaJson.mensaje);
         }
 
@@ -99,16 +99,16 @@ function AgregarSaldo(){
         setTicket(!ticket)
     }
 
-    async function seleccionarTarjeta(tarjeta){
+    async function seleccionarTarjeta(tarjeta) {
         setIsSelecetd(!isSelected);
         setsTarjeta(tarjeta);
         ModificarArray(sTarjeta.numero_tarjeta);
     }
 
     const tarjeta = array_toShow.map(tarjetas => (
-        <div key={tarjetas.vista_tarjeta} className='flex px-10 py-2 items-center rounded-2xl my-3 shadow-md justify-between border border-gray-400'>
+        <div key={tarjetas.vista_tarjeta} className='flex items-center justify-between px-10 py-2 my-3 border border-gray-400 shadow-md rounded-2xl'>
             <img src={`../../../pictures/${tarjetas.imagen}`}
-                    alt={tarjetas.empresa} className='w-auto h-12' />
+                alt={tarjetas.empresa} className='w-auto h-12' />
             <div className="flex items-center gap-4">
                 <h1 className="text-xl truncate">{tarjetas.empresa}</h1>
                 <h1 className="text-xl">{tarjetas.tipo}</h1>
@@ -116,9 +116,9 @@ function AgregarSaldo(){
             </div>
             <div className='grid gap-2 p-2'>
                 {isSelected ? (
-                    <button onClick={()=> seleccionarTarjeta(tarjetas)} className='px-4 py-2 bg-[#036C65] rounded-full text-white duration-200 hover:bg-[#4bcdc4]'>Seleccionado</button>
-                ):(
-                    <button onClick={()=> seleccionarTarjeta(tarjetas)} className='px-4 py-2 bg-[#EB5765] rounded-full text-white duration-200 hover:bg-[#ffb5a7]'>Seleccionar</button>
+                    <button onClick={() => seleccionarTarjeta(tarjetas)} className='px-4 py-2 bg-[#036C65] rounded-full text-white duration-200 hover:bg-[#4bcdc4]'>Seleccionado</button>
+                ) : (
+                    <button onClick={() => seleccionarTarjeta(tarjetas)} className='px-4 py-2 bg-[#EB5765] rounded-full text-white duration-200 hover:bg-[#ffb5a7]'>Seleccionar</button>
                 )}
             </div>
         </div>
@@ -130,11 +130,11 @@ function AgregarSaldo(){
 
     const confirmar = () => {
         monto_a_recargar === null || monto_a_recargar === '' || monto_a_recargar === '0.0' || monto_a_recargar === 0.0 ?
-        toast(<div>{`Favor de ingresar un monto a recargar.`}
-            <FontAwesomeIcon icon={faCircleExclamation} className='text-red-700 ml-2'/>
-        </div>)
-        :
-        setConfirm(!confirm)
+            toast(<div>{`Favor de ingresar un monto a recargar.`}
+                <FontAwesomeIcon icon={faCircleExclamation} className='ml-2 text-red-700' />
+            </div>)
+            :
+            setConfirm(!confirm)
     }
 
     const goMonedero = () => {
@@ -155,7 +155,7 @@ function AgregarSaldo(){
                         className="w-full text-sm items-center lg:text-base justify-self-start relative cursor-pointer before:bg-black before:absolute before:-bottom-1 before:block before:h-[1px] before:w-full before:origin-bottom-right before:scale-x-0 before:transition before:duration-300 before:ease-in-out hover:before:origin-bottom-left hover:before:scale-x-100 hover:font-bold"
                         aria-label="Volver"
                         href='/perfil/monedero'
-                        >
+                    >
                         <FontAwesomeIcon
                             style={{ fontSize: "22px" }}
                             icon={faAngleLeft}
@@ -164,11 +164,11 @@ function AgregarSaldo(){
                     </a>
                 </div>
                 <div className='grid px-8 pb-8'>
-                    <h1 className='text-3xl justify-self-center my-2'>Recarga monedero</h1>
+                    <h1 className='my-2 text-3xl justify-self-center'>Recarga monedero</h1>
                     <img className='w-24 h-auto justify-self-center' src="../../../pictures/logoArmony.png" alt="" />
                     <label htmlFor="monto" className='my-6 text-2xl justify-self-center'>Monto de Recarga:</label>
                     <input
-                        type="text"
+                        type="number"
                         name='monto'
                         id='monto'
                         minLength={1}
@@ -176,12 +176,12 @@ function AgregarSaldo(){
                         className='bg-[#036C65] text-white text-2xl text-center w-full rounded-2xl'
                         onChange={obtenerValorEnTiempoReal}
                     />
-                    <h1 className='text-2xl my-4'>Métodos de pago:</h1>
-                    <div className='rounded-xl shadow-md'>
+                    <h1 className='my-4 text-2xl'>Métodos de pago:</h1>
+                    <div className='shadow-md rounded-xl'>
                         <div className='h-8 bg-[#036C65] rounded-t-xl' />
-                        <div className='py-4 px-10'>
-                            { tarjeta }
-                            <div className="flex px-10 py-2 rounded-2xl items-center my-3 shadow-md justify-between border border-gray-400">
+                        <div className='px-10 py-4'>
+                            {tarjeta}
+                            <div className="flex items-center justify-between px-10 py-2 my-3 border border-gray-400 shadow-md rounded-2xl">
                                 <svg className='w-auto h-12' fill="#000000" version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink" viewBox="0 0 459.669 459.669" xmlSpace="preserve">
                                     <g id="SVGRepo_bgCarrier" strokeWidth="0"></g>
                                     <g id="SVGRepo_tracerCarrier" strokeLinecap="round" strokeLinejoin="round"></g>
@@ -194,7 +194,7 @@ function AgregarSaldo(){
                                 <h1 className="text-xl">Nueva tarjeta de crédito</h1>
                                 <button onClick={toggleTarjeta} className='px-4 py-2 bg-[#EB5765] rounded-full text-white duration-200 hover:bg-[#ffb5a7]'>Seleccionar</button>
                             </div>
-                            <div className="flex px-10 py-2 rounded-2xl items-center my-3 shadow-md justify-between border border-gray-400">
+                            <div className="flex items-center justify-between px-10 py-2 my-3 border border-gray-400 shadow-md rounded-2xl">
                                 <svg className="w-auto h-12" fill="#000000" version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink" viewBox="0 0 442.979 442.979" xmlSpace="preserve">
                                     <g id="SVGRepo_bgCarrier" strokeWidth="0"></g><g id="SVGRepo_tracerCarrier" strokeLinecap="round" strokeLinejoin="round"></g><g id="SVGRepo_iconCarrier"> <g> <g>
                                         <path d="M327.93,139.923H33.462C14.982,139.923,0,154.904,0,173.384v166.355c0,18.481,14.981,33.462,33.462,33.462h294.47 c18.479,0,33.461-14.98,33.461-33.462V173.384C361.393,154.904,346.41,139.923,327.93,139.923z M53.441,210.654 c0-11.284,9.147-20.432,20.432-20.432h19.553c11.284,0,20.432,9.147,20.432,20.432v19.553c0,11.284-9.147,20.432-20.432,20.432 H73.873c-11.284,0-20.432-9.147-20.432-20.432V210.654z M154.241,319.293c0,3.159-2.561,5.719-5.719,5.719H60.341 c-3.158,0-5.72-2.561-5.72-5.719v-17.398c0-3.158,2.562-5.719,5.72-5.719h88.182c3.158,0,5.719,2.561,5.719,5.719L154.241,319.293 L154.241,319.293z M306.77,319.293c0,3.159-2.562,5.719-5.721,5.719h-88.18c-3.158,0-5.72-2.561-5.72-5.719v-17.398 c0-3.158,2.562-5.719,5.72-5.719h88.18c3.158,0,5.721,2.561,5.721,5.719V319.293z"></path>
@@ -225,9 +225,9 @@ function AgregarSaldo(){
             {confirm && (
                 <div className='cart-fondo'>
                     <div className='cart-fx'>
-                        <div className='grid mt-60 w-1/3 bg-white rounded-2xl p-6 m-auto'>
+                        <div className='grid w-1/3 p-6 m-auto bg-white mt-60 rounded-2xl'>
                             <h1 className='text-[#EB5765] text-2xl mb-8 justify-self-center text-center'>¿Estás segura?</h1>
-                            <h1 className='mb-8 justify-self-center text-center'>Da click es aceptar si deseas continuar con la compra.</h1>
+                            <h1 className='mb-8 text-center justify-self-center'>Da click es aceptar si deseas continuar con la compra.</h1>
                             <button onClick={handleSubmit} className='px-4 py-2 bg-[#EB5765] rounded-full text-white duration-200 hover:bg-[#ffb5a7]'>Aceptar</button>
                         </div>
                     </div>
@@ -236,9 +236,9 @@ function AgregarSaldo(){
             {ticket && (
                 <div className='cart-fondo'>
                     <div className='cart-fx'>
-                        <div className='grid mt-60 w-1/3 bg-white rounded-2xl p-8 m-auto'>
+                        <div className='grid w-1/3 p-8 m-auto bg-white mt-60 rounded-2xl'>
                             <h1 className='text-[#EB5765] text-2xl mb-4 justify-self-center text-center'>¡Recarga exitosa!</h1>
-                            <img src="../../../pictures/logoArmony.png" className='justify-self-center w-1/4 h-auto mb-4' alt="" />
+                            <img src="../../../pictures/logoArmony.png" className='w-1/4 h-auto mb-4 justify-self-center' alt="" />
                             <div className='mb-4'>
                                 <div className='flex justify-between'>
                                     <h1>Total</h1>
