@@ -2,7 +2,7 @@ import React, { useState } from "react";
 //import { IoArrowForwardSharp } from "react-icons/io5";
 import { useLocation, useNavigate } from "react-router-dom";
 
-const FinalizacionPagoProd = ({ producto, next }) => {
+const FinalizacionPagoProd = ({ producto }) => {
     const formatDate = (date) => {
         const options = {
             year: "numeric",
@@ -23,7 +23,7 @@ const FinalizacionPagoProd = ({ producto, next }) => {
     const navigate = useNavigate();
 
     const subTotal = localStorage.getItem('totalSuscripcion');
-    const puntos = localStorage.getItem('puntosSuscripcion');
+    const puntos = localStorage.getItem('puntos');
     // const ivaTotal = (parseFloat(subTotal) * 0.08).toFixed(2);
     const total = (parseFloat(subTotal)).toFixed(2);
 
@@ -37,6 +37,23 @@ const FinalizacionPagoProd = ({ producto, next }) => {
         setCobro(!cobro);
     }
 
+    function exit() {
+        window.location.href = "/spa";
+    }
+
+    const obtenerFechaConUnMesMas = () => {
+        const fechaActual = new Date();
+        const nuevaFecha = new Date(fechaActual);
+        nuevaFecha.setMonth(fechaActual.getMonth() + 1);
+
+        const day = nuevaFecha.getDate().toString().padStart(2, '0');
+        const month = (nuevaFecha.getMonth() + 1).toString().padStart(2, '0');
+        const year = nuevaFecha.getFullYear(2);
+
+        return `${day}/${month}/${year}`; // Formato: DD/MM/YYYY
+    };
+
+    const vencimiento = obtenerFechaConUnMesMas();
 
     return (
         <>
@@ -81,7 +98,7 @@ const FinalizacionPagoProd = ({ producto, next }) => {
                             </div>
                             <div className="flex-grow border-b-2 border-black mx-5" />
                             <div className="grid grid-cols-2 my-2 place-items-center place-content-between">
-                                <h1 className="text-[rgb(3,109,99)] ml-2">Fecha de vencimiento: 00/00/00</h1>
+                                <h1 className="text-[rgb(3,109,99)] ml-2">Fecha de vencimiento: {vencimiento}</h1>
                                 <div className="grid grid-cols-2 place-items-center">
                                     <p>Total</p>
                                     <p className="text-[rgb(3,109,99)] font-bold">${total}</p>
@@ -94,6 +111,7 @@ const FinalizacionPagoProd = ({ producto, next }) => {
                                     type="checkbox"
                                     checked={cobro}
                                     onChange={handleCobro}
+                                    className="cursor-pointer"
                                 />
                                 <label className="px-2 mr-5">Cobro automático</label>
                             </div>
@@ -105,7 +123,7 @@ const FinalizacionPagoProd = ({ producto, next }) => {
                                 </div>
                                 <div className=" flex-grow"></div>
                                 <button
-                                    onClick={() => next()}
+                                    onClick={exit}
                                     className="hover:bg-[#FFA3A3] text-white px-10 py-2 mr-10 rounded-full duration-200 bg-[#ec5766]"
                                 >
                                     Salir

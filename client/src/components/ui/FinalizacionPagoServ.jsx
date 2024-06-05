@@ -16,13 +16,13 @@ const FinalizacionPagoServ = ({ next }) => {
     .toFixed(2);
 
   // Calcular IVA
-  const ivaTotal = (parseFloat(subTotal) * 0.08).toFixed(2);
+  // const ivaTotal = (parseFloat(subTotal) * 0.08).toFixed(2);
 
-  // Calcular total
-  const total = (parseFloat(subTotal) + parseFloat(ivaTotal)).toFixed(2);
+  // // Calcular total
+  // const total = (parseFloat(subTotal) + parseFloat(ivaTotal)).toFixed(2);
 
   // Calcular puntos
-  const puntos = (parseFloat(total) / 10).toFixed(0);
+  var puntos = JSON.parse(localStorage.getItem("puntos")) || [];
 
   //En caso de ser Socio VVV
   //const puntos = (parseInt(totalIva))/5;
@@ -57,7 +57,7 @@ const FinalizacionPagoServ = ({ next }) => {
                   sm = "sesiones";
                 }
                 return (
-                  <div>
+                  <div key={servicio.nombreServicio}>
                     <div className="grid grid-cols-3 my-5 place-items-center">
                       <p className="text-center">{servicio.nombreServicio}</p>
                       <p className="text-center">
@@ -72,7 +72,7 @@ const FinalizacionPagoServ = ({ next }) => {
               <div className="shadow-md w-[18rem] py-3 my-5 ml-[21rem] h-auto border-2 rounded-md border-gray">
                 <div className="grid grid-cols-2 overflow-hidden place-items-center">
                   <p>Total + IVA</p>
-                  <p className="text-[rgb(3,109,99)] font-bold">${total}</p>
+                  <p className="text-[rgb(3,109,99)] font-bold">${subTotal}</p>
                 </div>
               </div>
             </div>
@@ -80,7 +80,7 @@ const FinalizacionPagoServ = ({ next }) => {
             <div>
               <div className="flex justify-end mb-4 mr-8">
                 <p className="text-[#056761] text-xl">
-                  Puntos obtenidos: {puntos}
+                  Puntos obtenidos: {parseInt(puntos)}
                 </p>
               </div>
               <div className="flex justify-end mb-4">

@@ -2,7 +2,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUser, faUserPen, faBagShopping, faCalendarDays, faMoneyBill ,faClockRotateLeft, faCreditCard, faArrowRightFromBracket, faQrcode, faAngleLeft, faDownload } from '@fortawesome/free-solid-svg-icons';
 import { Helmet, HelmetProvider } from "react-helmet-async";
 import { useEffect, useState } from 'react';
-import QrCode from "react-qr-code";
+//import QrCode from "react-qr-code";
 
 // eslint-disable-next-line react/prop-types
 function MenuPerfil() {
@@ -14,26 +14,26 @@ function MenuPerfil() {
 
     const [clave, setClave] = useState(false);
     const [sus, setSus] = useState(false);
-    const [qr, setQR] = useState(false);
+    // const [qr, setQR] = useState(false);
 
-    var onImageDownload = () => {
-        const svg = document.getElementById("QRCode");
-        const svgData = new XMLSerializer().serializeToString(svg);
-        const canvas = document.createElement("canvas");
-        const ctx = canvas.getContext("2d");
-        const img = new Image();
-        img.onload = () => {
-            canvas.width = img.width;
-            canvas.height = img.height;
-            ctx.drawImage(img, 0, 0);
-            const pngFile = canvas.toDataURL("image/png");
-            const downloadLink = document.createElement("a");
-            downloadLink.download = "QRCode";
-            downloadLink.href = `${pngFile}`;
-            downloadLink.click();
-        };
-        img.src = `data:image/svg+xml;base64,${btoa(svgData)}`;
-    };
+    // var onImageDownload = () => {
+    //     const svg = document.getElementById("QRCode");
+    //     const svgData = new XMLSerializer().serializeToString(svg);
+    //     const canvas = document.createElement("canvas");
+    //     const ctx = canvas.getContext("2d");
+    //     const img = new Image();
+    //     img.onload = () => {
+    //         canvas.width = img.width;
+    //         canvas.height = img.height;
+    //         ctx.drawImage(img, 0, 0);
+    //         const pngFile = canvas.toDataURL("image/png");
+    //         const downloadLink = document.createElement("a");
+    //         downloadLink.download = "QRCode";
+    //         downloadLink.href = `${pngFile}`;
+    //         downloadLink.click();
+    //     };
+    //     img.src = `data:image/svg+xml;base64,${btoa(svgData)}`;
+    // };
 
     async function recibido() {
         const respuesta = await fetch("/api/logueado", {
@@ -121,14 +121,14 @@ function MenuPerfil() {
                         <p className='ml-5'>Tarjetas</p>
                     </a>
                 </li>
-                {sus && 
+                {/* {sus && 
                     <li className="menu-item-perfil">
                         <a onClick={() => setQR(!qr)} className="menu-link-perfil">
                             <FontAwesomeIcon icon={faQrcode} className=' text-yellow-400' />
                             <p className='ml-5'>Código QR</p>
                         </a>
                     </li>
-                }
+                } */}
                 <li className="menu-item-perfil">
                     <a href="/api/logout" className="menu-link-perfil">
                         <FontAwesomeIcon icon={faArrowRightFromBracket} className='text-black' />
@@ -136,7 +136,7 @@ function MenuPerfil() {
                     </a>
                 </li>
             </ul>
-            {qr && 
+            {/* {qr && 
                 <div className='cart-fondo'>
                     <div className='cart-fx'>
                         <div className='grid mt-28 w-[40%] bg-white rounded-2xl m-auto gap-2'>
@@ -186,7 +186,7 @@ function MenuPerfil() {
                         </div>
                     </div>
                 </div>
-            }
+            } */}
         </div>
     );
 }

@@ -91,7 +91,7 @@ const ValidarIdentidad = ({ volver, close, next }) => {
                 className=
                   "bg-slate-200 md:text-sm lg:text-base rounded-full w=[15rem] md:w-96 mb-3 mt-2 mx-3 py-2 focus:outline-none focus:ring-1 focus:ring-[#EB5765] focus:border-transparent px-6"
                 classEye=
-                  "relative float-right justify-end right-[3rem] top-[1rem]"
+                  "relative float-right justify-end right-[3rem] top-[1rem] cursor-pointer"
               
             />
           </form>

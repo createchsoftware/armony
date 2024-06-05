@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import { useState, useEffect } from 'react'
 import LayoutPrincipal from '../../layouts/LayoutPrincipal'
 import { IoIosArrowBack } from "react-icons/io";
 import { ToastContainer, toast } from 'react-toastify';
@@ -144,6 +144,9 @@ function Suscripciones() {
         }
     }
 
+    const handleRenovar = () => {
+        window.location.href = "/suscripcion/compra";
+    }
 
 
     useEffect(() => {
@@ -201,7 +204,7 @@ function Suscripciones() {
                                 Previo a la fecha de vencimiento, se te hará llegar una notificación a tu correo electrónico.</p>
                             <div className='flex items-center justify-between gap-4 px-3'>
                                 <div className="w-full bg-gray-200 rounded-full h-2.5 mb-4 dark:bg-gray-700">
-                                    <div className=" bg-[#036C65] h-1.5 rounded-full dark:bg-gray-300" style={{ width: (parseInt(100 * ((31 - diasFaltantes)/30))) + '%' }}></div>
+                                    <div className=" bg-[#036C65] h-1.5 mt-[2px] px-[2px] rounded-full dark:bg-gray-300" style={{ width: (parseInt(100 * ((31 - diasFaltantes)/30))) + '%' }}></div>
                                 </div>
                             </div>
                             <div className='flex items-center justify-between text-gray-500'>
@@ -214,7 +217,7 @@ function Suscripciones() {
                                     <p className='text-gray-500'>{semanaFinal} - {diaFinal}</p>
                                 </div>
                             </div>
-                            <button className='bg-[#EB5765] text-white mt-6 py-3 w-1/2 m-auto shadow-[0_3px_10px_rgb(0,0,0,0.2)] rounded-lg duration-200 hover:bg-[rgb(255,181,167)]'>Renovar suscripción</button>
+                            <button onClick={handleRenovar} className='bg-[#EB5765] text-white mt-6 py-3 w-1/2 m-auto shadow-[0_3px_10px_rgb(0,0,0,0.2)] rounded-lg duration-200 hover:bg-[rgb(255,181,167)]'>Renovar suscripción</button>
                             <div className="flex justify-end">
                                 <input
                                     type="checkbox"

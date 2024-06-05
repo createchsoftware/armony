@@ -1,10 +1,11 @@
 import { useEffect, useState } from 'react'
 // import TarjetasPago from '../../components/ui/Tarjetas_de_pago';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faAngleLeft } from "@fortawesome/free-solid-svg-icons";
+import { faAngleLeft, faCircleExclamation } from "@fortawesome/free-solid-svg-icons";
 import Navbar from '../../components/ui/Navbar'
 import InforTarjeta from '../../components/ui/InfoTarjeta';
 import { Helmet, HelmetProvider } from 'react-helmet-async';
+import { ToastContainer, toast } from 'react-toastify';
 
 function AgregarSaldo(){
     const [sTarjeta, setsTarjeta] = useState({});
@@ -89,10 +90,10 @@ function AgregarSaldo(){
             console.log(respuestaJson.mensaje);
         }
 
-        if(respuestaJson.redirect){
-            console.log('hola');
-            window.location.href = respuestaJson.redirect;
-        }
+        // if(respuestaJson.redirect){
+        //     console.log('hola');
+        //     window.location.href = respuestaJson.redirect;
+        // }
 
         setConfirm(!confirm)
         setTicket(!ticket)
@@ -127,6 +128,19 @@ function AgregarSaldo(){
         setAddTarjeta(!addTarjeta);
     }
 
+    const confirmar = () => {
+        monto_a_recargar === null || monto_a_recargar === '' || monto_a_recargar === '0.0' || monto_a_recargar === 0.0 ?
+        toast(<div>{`Favor de ingresar un monto a recargar.`}
+            <FontAwesomeIcon icon={faCircleExclamation} className='text-red-700 ml-2'/>
+        </div>)
+        :
+        setConfirm(!confirm)
+    }
+
+    const goMonedero = () => {
+        window.location.href = '/perfil/monedero';
+    }
+
     return (
         <>
             <HelmetProvider>
@@ -153,7 +167,15 @@ function AgregarSaldo(){
                     <h1 className='text-3xl justify-self-center my-2'>Recarga monedero</h1>
                     <img className='w-24 h-auto justify-self-center' src="../../../pictures/logoArmony.png" alt="" />
                     <label htmlFor="monto" className='my-6 text-2xl justify-self-center'>Monto de Recarga:</label>
-                    <input type="text" name='monto' id='monto' placeholder='0.0' className='bg-[#036C65] text-white text-2xl text-center w-full rounded-2xl' onChange={obtenerValorEnTiempoReal}/>
+                    <input
+                        type="text"
+                        name='monto'
+                        id='monto'
+                        minLength={1}
+                        placeholder='0.0'
+                        className='bg-[#036C65] text-white text-2xl text-center w-full rounded-2xl'
+                        onChange={obtenerValorEnTiempoReal}
+                    />
                     <h1 className='text-2xl my-4'>Métodos de pago:</h1>
                     <div className='rounded-xl shadow-md'>
                         <div className='h-8 bg-[#036C65] rounded-t-xl' />
@@ -185,10 +207,13 @@ function AgregarSaldo(){
                             </div>
                         </div>
                     </div>
-                    <button onClick={() => setConfirm(!confirm)} className='w-full mt-4 px-4 py-2 bg-[#EB5765] rounded-full text-white duration-200 hover:bg-[#ffb5a7]'>
+                    <button
+                        onClick={confirmar}
+                        className='w-1/3 justify-self-center mt-4 px-4 py-2 bg-[#EB5765] rounded-full text-white duration-200 hover:bg-[#ffb5a7]'>
                         Confirmar
                     </button>
                 </div>
+                <ToastContainer position={'bottom-right'} theme={'light'} />
             </div>
             {addTarjeta && (
                 <div className='soon-fondo'>
@@ -218,7 +243,7 @@ function AgregarSaldo(){
                                 <div className='flex justify-between'>
                                     <h1>Total</h1>
                                     <p> . . . . . . . . . . . . </p>
-                                    <h1>${monto_a_recargar}</h1>
+                                    <h1>${parseFloat(monto_a_recargar).toFixed(2)}</h1>
                                 </div>
                                 <div className='flex justify-between'>
                                     <h1>Tarjeta</h1>
@@ -236,7 +261,7 @@ function AgregarSaldo(){
                                     <h1>10:10 a.m.</h1>
                                 </div>
                             </div>
-                            <button onClick={() => setTicket(!ticket)} className='w-1/3 justify-self-center px-4 py-2 bg-[#EB5765] rounded-full text-white duration-200 hover:bg-[#ffb5a7]'>Regresar</button>
+                            <button onClick={goMonedero} className='w-1/3 justify-self-center px-4 py-2 bg-[#EB5765] rounded-full text-white duration-200 hover:bg-[#ffb5a7]'>Regresar</button>
                         </div>
                     </div>
                 </div>
