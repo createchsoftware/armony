@@ -44,8 +44,12 @@ export default function Cita() {
     if (localStorage.getItem("citaModify") !== null) {
       setActiveStep(2);
       let cita = localStorage.getItem("citaModify");
+      localStorage.setItem("Evaluando", true);
+
+      localStorage.setItem("idcita", cita.ID_Cita);
+      localStorage.setItem("servicio", 1);
       localStorage.setItem("Especialista", cita.ID_Empleado);
-      localStorage.setItem("hora", cita);
+      localStorage.setItem("hora", cita.hora_Inicio);
       localStorage.setItem("Fecha seleccionada", cita.fecha);
     }
   }, [localStorage.getItem("citaModify")]);

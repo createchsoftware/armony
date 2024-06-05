@@ -30,9 +30,9 @@ function Productos({ productos, st, log, idUser }) {
     const [uid, setUid] = useState(null);
 
 
-    useEffect(() => {
-    }, [])
-
+     useEffect(()=>{
+            localStorage.removeItem("favoritos")
+                },[])
 
     // useEffect(() => {
     //     const Prod = async () => {

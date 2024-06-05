@@ -103,14 +103,14 @@ const Suscripcion = () => {
                     { log ? (
                         <button
                             onClick={handleCompra}
-                            disabled={sus === true}
+                            //disabled={sus === true}
                             className={
                                 sus ? 
-                                'justify-self-center text-2xl border-2 border-[#ec5766] bg-white p-2 px-8 text-[#ec5766] mx-6 rounded-xl mt-6'
+                                'justify-self-center text-2xl border-2 border-[#ec5766] bg-white p-2 px-8 text-[#ec5766] mx-6 rounded-xl mt-6 duration-200 hover:font-bold hover:border-[#ffb5a7] hover:text-[#ffb5a7]'
                                 : 
                                 'justify-self-center text-2xl bg-[#ec5766] p-2 px-8 text-white mx-6 rounded-xl mt-6 duration-200 hover:bg-[#ffb5a7]'}
                         >
-                            Comprar
+                            {sus ? 'Renovar':'Comprar'}
                         </button>
                     ):(
                         <button onClick={() => setLogin(!login)} className='justify-self-center text-2xl bg-[#ec5766] p-2 px-8 text-white mx-6 rounded-xl mt-6 duration-200 hover:bg-[#ffb5a7]'>Comprar</button>

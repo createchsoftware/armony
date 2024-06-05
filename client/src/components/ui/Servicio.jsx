@@ -46,6 +46,7 @@ function Servicio({
   };
   const [pData, setPData] = useState(data);
   const [fav, setFav] = useState(favorito);
+ 
   const navigate = useNavigate();
 
   const toggleLogin = () => {
@@ -66,7 +67,10 @@ function Servicio({
     setPData(data);
     setServ(!serv);
   };
+  const [favorites, setFavorites] = useState({});
   const callFav = async () => {
+    const estaEnFavoritos = favorites[idProducto.pkIdPS];
+
     if (idUser != 0) {
       try {
         const respuesta = await fetch("/api/admin/productos/setFavorito", {

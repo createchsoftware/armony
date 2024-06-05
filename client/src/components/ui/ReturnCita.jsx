@@ -4,10 +4,9 @@ import { Rating } from '@mui/material';
 function ReturnCitas({ citas }) {
     const [info, setInfo] = useState(false);
 
-    console.log(citas);
+    //console.log(citas);
 
     return (
-
         <div className='grid gap-4 p-6 rounded-xl shadow-[0_3px_10px_rgb(0,0,0,0.2)] '>
             <div className="flex justify-between">
                 <div>
@@ -38,13 +37,13 @@ function ReturnCitas({ citas }) {
                 <div className='cart-fondo z-30'>
                     <div className='cart-fx'>
                         <div className='grid mt-16 w-[60%] bg-white rounded-2xl m-auto py-4'>
-                            <h1 className="justify-self-center text-3xl text-[#EB5765]">Servicio</h1>
+                            <h1 className="justify-self-center font-bold text-3xl text-[#EB5765]">Servicio</h1>
                             <div className=" justify-self-center w-1/2 border border-black my-3" />
                             <h1 className=" justify-self-center mb-5 text-xl">{`Fecha: ${citas.day} / ${citas.month} / ${citas.year}`}</h1>
                             <div className="flex justify-between px-12">
                                 <div className="grid w-[35%] justify-items-center">
-                                    <h1 className="text-2xl font-bold overflow-hidden">{citas.nombre}</h1>
-                                    <img src={citas.imagen} alt="" className="w-full h-auto rounded-2xl" />
+                                    <h1 className="text-2xl font-bold text-center overflow-hidden">{citas.nombre}</h1>
+                                    <img src={citas.imagen} alt="" className="w-[90%] h-auto rounded-2xl" />
                                     <h1 className="text-xl text-[#EB5765]">Calificación de los clientes:</h1>
                                     <h1 className="text-xl text-[rgb(3,109,99)]">Excelente</h1>
                                     <Rating className='' value={citas.valoracion} readOnly unratedcolor="amber" ratedcolor="amber" />

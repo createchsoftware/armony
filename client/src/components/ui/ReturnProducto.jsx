@@ -21,6 +21,7 @@ function Compras({ producto }) {
     };
 
     //console.log(producto);
+    console.log(producto.valoracion);
     const date = new Date(producto.date);
 
     const horaFormateada = date.toLocaleTimeString('es-MX', {
@@ -61,13 +62,13 @@ function Compras({ producto }) {
                 <div className='cart-fondo z-30'>
                 <div className='cart-fx'>
                     <div className='grid mt-16 w-[60%] bg-white rounded-2xl m-auto py-4'>
-                        <h1 className="justify-self-center text-3xl text-[#EB5765]">Producto</h1>
+                        <h1 className="justify-self-center font-bold text-3xl text-[#EB5765]">Producto</h1>
                         <div className=" justify-self-center w-1/2 border border-black my-3" />
                         <h1 className=" justify-self-center mb-5 text-xl">{`Fecha: ${producto.day} / ${producto.month} / ${producto.year}`}</h1>
                         <div className="flex justify-between px-12">
                             <div className="grid w-[35%] justify-items-center">
-                                <h1 className="text-2xl font-bold overflow-hidden">{producto.nombre}</h1>
-                                <img src={producto.imagen} alt="" className="w-full h-auto aspect-square rounded-2xl" />
+                                <h1 className="text-2xl font-bold text-center overflow-hidden">{producto.nombre}</h1>
+                                <img src={producto.imagen} alt="" className="w-[90%] h-auto aspect-square rounded-2xl" />
                                 <h1 className="text-xl text-[#EB5765]">Calificación de los clientes:</h1>
                                 <h1 className="text-xl text-[rgb(3,109,99)]">Excelente</h1>
                                 <Rating className='' value={producto.valoracion} readOnly unratedcolor="amber" ratedcolor="amber" />
