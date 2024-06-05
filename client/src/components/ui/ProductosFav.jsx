@@ -70,6 +70,18 @@ function ProductosFav({ props }) {
             } catch (error) {
                 console.log(error, "error");
             }
+        } else {
+            let favoritos = JSON.parse(localStorage.getItem("favoritos")) || [];
+            const estaEnFavoritos = favoritos.some(fav => fav.ps === props.ps);
+
+            if (!estaEnFavoritos) {
+                favoritos.push(props);
+            } else {
+                favoritos = favoritos.filter(fav => fav.ps !== props.ps);
+            }
+
+            localStorage.setItem("favoritos", JSON.stringify(favoritos));
+            setFav(!fav);
         }
     };
 
@@ -135,6 +147,8 @@ function ProductosFav({ props }) {
                     <StyledRating
                         name="customized-color"
                         max={1}
+                        value={fav ? 1 : 0}
+
                         // value={uid ? (producto.favorito || favorites[producto.pkIdPS]) ? 1 : 0 : JSON.parse(localStorage.getItem("favoritos"))?.some(fav => fav.pkIdPS === producto.pkIdPS) ? 1 : 0}
                         // value={uid ? favorites[producto.pkIdPS] ? 1 : 0 : JSON.parse(localStorage.getItem("favoritos"))?.some(fav => fav.pkIdPS === producto.pkIdPS) ? 1 : 0}
                         getLabelText={(value) => `${value} Heart${value !== 1 ? 's' : ''}`}

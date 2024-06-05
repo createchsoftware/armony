@@ -44,9 +44,7 @@ function ListaDeseo() {
     const [log, setLog] = useState(false); //<<< PARA EL INICIO DE SESION
     const [login, setLogin] = useState(false);
 
-    //  useEffect(()=>{
-    //         localStorage.removeItem("favoritos")
-    //             },[])
+    
     async function recibido() {
         const respuesta = await fetch("/api/logueado", {
             method: "GET",

@@ -70,6 +70,10 @@ function PagoRealizado({ cerrarPago, total, next }) {
                     const dataVenta = await responseVenta.json();
                     console.log('Respuesta de la venta:', dataVenta);
 
+                    const response = await fetch(`/api/admin/cliente/StatusSus/${clave}`)
+                    const data = await response.json();
+                    localStorage.setItem('fechaExp',data.fechaExpiracion)
+
                     setCargando(false);
                 } catch (error) {
                     console.error('Error en la venta suscripcion:', error);

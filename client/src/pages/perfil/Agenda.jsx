@@ -370,7 +370,7 @@ function Agenda() {
   }, [Uid]);
 
 
-const updateCita= async (cita)=>{
+// const updateCita= async (cita)=>{
 //   if(Uid){
 //     try {
 //       await fetch(`/api/admin/citas/modify`, {
@@ -394,8 +394,8 @@ const updateCita= async (cita)=>{
 //     }
 // }
 
-redirect('')
-}
+// redirect('')
+// }
 
 
   //use effect update citas pendientes when selected date changes
