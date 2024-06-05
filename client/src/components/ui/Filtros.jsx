@@ -201,24 +201,48 @@ export default function Filtros() {
   const handleClickFacial = (e) => {
     e.preventDefault();
     setCategories(["Cremas faciales"]);
+    //scroll down 100 pixels
+    window.scrollBy({
+      top: 600,
+      behavior: "smooth",
+      duration: 3000,
+    });
   };
 
   // Función para manejar cambios en las categorías
   const handleClickManicuraPedicura = (e) => {
     e.preventDefault();
     setCategories(["Cremas para pies"]);
+    //scroll down 100 pixels
+    window.scrollBy({
+      top: 600,
+      behavior: "smooth",
+      duration: 3000,
+    });
   };
 
   // Función para manejar cambios en las categorías
   const handleClickCapilar = (e) => {
     e.preventDefault();
     setCategories(["Cremas corporales"]);
+    //scroll down 100 pixels
+    window.scrollBy({
+      top: 600,
+      behavior: "smooth",
+      duration: 3000,
+    });
   };
 
   // Función para manejar cambios en las categorías
   const handleClickAll = (e) => {
     e.preventDefault();
     setCategories(["Shampoos", "Lociones", "Aceites", "Jabones", "Exfoliantes"]);
+    //scroll down 100 pixels
+    window.scrollBy({
+      top: 600,
+      behavior: "smooth",
+      duration: 3000,
+    });
   };
 
   // Función para manejar cambios en el rating
