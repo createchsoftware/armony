@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import Productos from '../ui/Productos';
 import Paginacion from '../ui/Paginacion';
 
-function ContenedorProductos({ products }) {
+function ContenedorProductos({ products, st, log, idUser }) {
     // const [products2, setProducts] = useState([]);
     const [currentPage, setCurrentPage] = useState(1);
     const [productsPerPage] = useState(12); // Cambia esto según la cantidad de productos por página que desees mostrar    
@@ -15,7 +15,7 @@ function ContenedorProductos({ products }) {
 
     return (
         <div className='grid  w-[100%] gap-2 place-content-center '>
-            <Productos productos={currentProducts} />
+            <Productos productos={currentProducts} st={st} log={log} idUser={idUser} />
             <Paginacion
                 currentPage={currentPage}
                 totalProducts={products.length}

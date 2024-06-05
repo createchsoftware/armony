@@ -31,6 +31,46 @@ function Especialista({ especialista }) {
       alert("ya escogiste un especialista");
     }
   };
+
+  const toggleFavorite = async (idProducto) => {
+    const estaEnFavoritos = favorites[idProducto.pkIdPS];
+
+    if (uid) {
+      try {
+        fetch('/api/admin/favoritos/invertirFav', {
+          method: "POST",
+          body: JSON.stringify({ idCliente: uid, IdProducto: idProducto.pkIdPS }),
+          headers: { "Content-Type": "application/json" },
+        });
+
+        setFavorites(prev => ({
+          ...prev,
+          [idProducto.pkIdPS]: !estaEnFavoritos
+        }));
+
+
+      } catch (error) {
+        console.error('Error en la solicitud:', error);
+      }
+    } else {
+      setFavorites(prev => ({
+        ...prev,
+        [idProducto.pkIdPS]: !estaEnFavoritos
+      }));
+      let favoritos = JSON.parse(localStorage.getItem("favoritos")) || [];
+      const estaEnFavoritos = favoritos.some(fav => fav.pkIdPS === idProducto.pkIdPS);
+      if (!estaEnFavoritos) {
+
+        favoritos.push(idProducto);
+        localStorage.setItem("favoritos", JSON.stringify(favoritos));
+      } else {
+        let favoritos = JSON.parse(localStorage.getItem("favoritos")) || [];
+        favoritos = favoritos.filter((obj) => obj.pkIdPS !== idProducto.pkIdPS);
+        localStorage.setItem("favoritos", JSON.stringify(favoritos));
+      }
+    }
+  };
+
   return (
     <div className="md:px-8 md:py-2 rounded-3xl font-[abeatbyKai]  w-2/3 m-auto bg-rose-200">
       <div className='flex justify-end'>
@@ -42,12 +82,13 @@ function Especialista({ especialista }) {
         >
           <StyledRating
             name="customized-color"
-            defaultValue={0}
             max={1}
+            value={especialista.favorito || especialista[producto.pkIdPS] ? 1 : 0}
             getLabelText={(value) => `${value} Heart${value !== 1 ? 's' : ''}`}
             precision={1}
             icon={<FavoriteIcon fontSize="inherit" />}
             emptyIcon={<FavoriteBorderIcon fontSize="inherit" />}
+            onChange={() => toggleFavorite(producto)}
           />
         </Box>
       </div>
