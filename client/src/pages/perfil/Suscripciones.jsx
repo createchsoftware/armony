@@ -22,6 +22,7 @@ function Suscripciones() {
     const [mesFinal, setMesFinal] = useState('');
     const [semanaFinal, setSemanaFinal] = useState('');
     const [diasFaltantes, setDiasFaltantes] = useState(0);
+    //const [porcDias, setPorcDias] = useState(0);
 
     const [cobro, setCobro] = useState(false);
     const handleCobro = () => {
@@ -34,8 +35,20 @@ function Suscripciones() {
         setCanceled(!canceled);
     }
     
-
-
+    const monthMapping = {
+        "Enero": 0,
+        "Febrero": 1,
+        "Marzo": 2,
+        "Abril": 3,
+        "Mayo": 4,
+        "Junio": 5,
+        "Julio": 6,
+        "Agosto": 7,
+        "Septiembre": 8,
+        "Octubre": 9,
+        "Noviembre": 10,
+        "Diciembre": 11
+    };
 
     async function recibido() {
         const respuesta = await fetch('/api/suscripcion', {
@@ -67,6 +80,17 @@ function Suscripciones() {
                 setMesFinal(ob.mE);
                 setSemanaFinal(ob.sE);
 
+                const diaFinalInt = parseInt(ob.dE, 10);
+                // const diaFinalInt = 23;  <<< PRUEBA
+                const mesFinalInt = monthMapping[ob.mE];
+                // const mesFinalInt = 6;   <<< PRUEBA
+                const fechaF = new Date(new Date().getFullYear(), mesFinalInt - 1, diaFinalInt);
+
+                // console.log('Día final: ' + fechaF);
+                
+                setDiasFaltantes(calcular(fechaF));
+
+                //setPorcDias(parseInt(100 * ((30 - diasFaltantes)/30)));
             }
             setNombre(respuestaJson.nombre);
             setCorreo(respuestaJson.email);
@@ -77,20 +101,19 @@ function Suscripciones() {
         }
     }
 
-
     //metodo para calcular los dias faltantes para que la suscripcion acabe 
-    const calcularDiasFaltantes = async (fechaI, fechaF) => {
+    const calcular = (fechaF) => {
         const fechaActual = new Date();
 
         if (fechaF > fechaActual) {
-            const fechaInicio = new Date(fechaI);
-            const fechaFin = new Date(fechaF);
-            let diferencia = fechaFin.getTime() - fechaInicio.getTime();
-            return diferencia / 1000 / 60 / 60 / 24;
+            const diferencia = fechaF.getTime() - fechaActual.getTime();
+            return Math.ceil(diferencia / (1000 * 60 * 60 * 24));
         }
 
         return 0; //si retorna 0 es que la fecha actual sobrepaso la fecha final o ya no esta vigente la sus
     }
+    
+    
 
     async function cancelarSuscripcion() {
         const respuesta2 = await fetch('/api/delete/suscripcion', {
@@ -124,9 +147,16 @@ function Suscripciones() {
 
 
     useEffect(() => {
-        recibido()
-        setDiasFaltantes(parseInt(100 * ((30 - calcularDiasFaltantes) / 30)));
+        recibido();
     }, []);
+
+
+    // console.log('Días faltantes: ' + diasFaltantes);
+    // console.log('Paso 1: ' + (30 - diasFaltantes))
+    // console.log('Paso 2: ' + ((30 - diasFaltantes)/30));
+    // console.log('Paso 3: ' + (100 * ((30 - diasFaltantes)/30)));
+    // console.log('Paso final: ' + (parseInt(100 * ((30 - diasFaltantes)/30))));
+    // console.log('Porcentaje: ' + porcDias);
 
     return (
         <LayoutPrincipal>
@@ -171,7 +201,7 @@ function Suscripciones() {
                                 Previo a la fecha de vencimiento, se te hará llegar una notificación a tu correo electrónico.</p>
                             <div className='flex items-center justify-between gap-4 px-3'>
                                 <div className="w-full bg-gray-200 rounded-full h-2.5 mb-4 dark:bg-gray-700">
-                                    <div className=" bg-[#036C65] h-1.5 rounded-full dark:bg-gray-300" style={{ width: diasFaltantes + '%' }}></div>
+                                    <div className=" bg-[#036C65] h-1.5 rounded-full dark:bg-gray-300" style={{ width: (parseInt(100 * ((30 - diasFaltantes)/30))) + '%' }}></div>
                                 </div>
                             </div>
                             <div className='flex items-center justify-between text-gray-500'>

@@ -235,6 +235,7 @@ const InformacionBasica = () => {
                 <input
                   id="numero"
                   type="text"
+                  maxLength={5}
                   placeholder="#1234"
                   className="bg-slate-200 rounded-full w-[19rem] lg:w-[24.75rem] mb-1 mx-0 py-2 focus:outline-none focus:ring-1 focus:ring-slate-800 focus:border-transparent px-6"
                   
