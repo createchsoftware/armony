@@ -1,5 +1,7 @@
 function ReturnPuntos({ puntos }) {
 
+    const [info, setInfo] = useState(false);
+
     return (
 
         <div className='grid gap-4 p-6 rounded-xl shadow-[0_3px_10px_rgb(0,0,0,0.2)] '>
@@ -16,9 +18,9 @@ function ReturnPuntos({ puntos }) {
                     </div>
                 </div>
                 <div className='grid content-center gap-2 p-2 '>
-                    <button className='w-48 h-max px-10 py-2 text-white rounded-full bg-[#EB5765]'>Opinar</button>
+                    <button onClick={() => setInfo(!info)} className='w-48 h-max px-10 py-2 text-white rounded-full bg-[#EB5765]'>Ver información</button>
                 </div>
-
+                
 
             </div>
         </div>

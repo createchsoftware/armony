@@ -665,9 +665,7 @@ async function getTransacciones(solicitud,respuesta){
             // las transacciones de tipo monedero
             let monedero_consulta = 'call monederos(?)';
             let [fields_monedero] = await  solicitud.database.query(mysql.format(monedero_consulta,[decodificada.user]));
-
             let arreglo_monederos = fields_monedero[0];
-
 
             for(let i in arreglo_monederos){
                 let temporal = {};
@@ -678,6 +676,11 @@ async function getTransacciones(solicitud,respuesta){
                 temporal.month = arreglo_meses[temporal.date.getMonth()];
                 temporal.day = temporal.date.getDate();
 
+                temporal.venta_id = arreglo_monederos[i].pkIdTransVenta; // id venta
+                temporal.numeroTarjeta = arreglo_monederos[i].fkNumTarjeta; // numero de la tarjeta
+                temporal.tipoPago = arreglo_monederos[i].tipoPago; // tipoPago
+
+                temporal.puntos = arreglo_monederos[i].monto / 10; // los puntos que obtuvo
                 temporal.monto = arreglo_monederos[i].monto;
                 temporal.imagen = 'monedero.jpg';
                 temporal.tipo = arreglo_monederos[i].tipo;
@@ -688,10 +691,42 @@ async function getTransacciones(solicitud,respuesta){
 
 
 
+            // las transacciones de tipo monedero sin Tarjeta
+            let monederosinTarjeta_consulta = 'call monedero_sinTarjeta(?)';
+            let [fields_monederosinTarjeta] = await  solicitud.database.query(mysql.format(monederosinTarjeta_consulta,[decodificada.user]));
+            let monederosinTarjeta = fields_monederosinTarjeta[0];
+
+            for(let i in monederosinTarjeta){
+                let temporal = {};
+
+                temporal.date = monederosinTarjeta[i].fechaTransaccion;
+
+                temporal.year = temporal.date.getFullYear();
+                temporal.month = arreglo_meses[temporal.date.getMonth()];
+                temporal.day = temporal.date.getDate();
+
+                temporal.venta_id = monederosinTarjeta[i].pkIdTransVenta; // id venta
+                temporal.tipoPago = monederosinTarjeta[i].tipoPago; // tipo pago que en teoria no deberia de ser tarjeta, sino algun otro tipo de pago, pero eso ya depende de que hay en la base de datos
+
+                temporal.puntos = monederosinTarjeta[i].monto / 10; // los puntos que obtuvo
+
+                temporal.monto = monederosinTarjeta[i].monto;
+                temporal.imagen = 'monedero.jpg';
+                temporal.tipo = monederosinTarjeta[i].tipo;
+                temporal.type = 'Monedero';
+                arreglo_general.push(temporal);
+            }
+
+
+
+
+
+
+
+
             // las transacciones de tipo anadir puntos
             let puntos_consulta = 'call puntos(?)';
             let [fields_puntos] = await  solicitud.database.query(mysql.format(puntos_consulta,[decodificada.user]));
-
             let arreglo_puntos = fields_puntos[0];
 
             for(let i in arreglo_puntos){
@@ -703,6 +738,10 @@ async function getTransacciones(solicitud,respuesta){
                 temporal.month = arreglo_meses[temporal.date.getMonth()];
                 temporal.day = temporal.date.getDate();
 
+                temporal.venta_id = arreglo_puntos[i].pkIdTransVenta;  // id de la venta
+                temporal.numeroTarjeta = arreglo_puntos[i].fkNumTarjeta; // numero de la tarjeta
+                temporal.tipoPago = arreglo_puntos[i].tipoPago; // tipo de pago, en este caso siempre deberia ser tarjeta, deberia...
+
                 temporal.monto = arreglo_puntos[i].monto;
                 temporal.puntos = arreglo_puntos[i].monto / 10; // los puntos que obtuvo
                 temporal.imagen = 'point.jpg';
@@ -710,6 +749,36 @@ async function getTransacciones(solicitud,respuesta){
                 temporal.type = 'Puntos';
                 arreglo_general.push(temporal);
             }
+
+
+            // las transacciones de tipo anadir puntos sin tarjeta
+            let puntosinTarjeta_consulta = 'call puntos_sinTarjeta(?)';
+            let [fields_puntos_sinTarjeta] = await  solicitud.database.query(mysql.format(puntosinTarjeta_consulta,[decodificada.user]));
+            let puntosinTarjeta = fields_puntos_sinTarjeta[0];
+
+            for(let i in puntosinTarjeta){
+                let temporal = {};
+
+                temporal.date = puntosinTarjeta[i].fechaTransaccion;
+
+                temporal.year = temporal.date.getFullYear();
+                temporal.month = arreglo_meses[temporal.date.getMonth()];
+                temporal.day = temporal.date.getDate();
+
+                temporal.venta_id = puntosinTarjeta[i].pkIdTransVenta;  // id de la venta
+                temporal.tipoPago = puntosinTarjeta[i].tipoPago; // tipo de pago, en este caso siempre deberia ser tarjeta, deberia...
+
+                temporal.monto = puntosinTarjeta[i].monto;
+                temporal.puntos = puntosinTarjeta[i].monto / 10; // los puntos que obtuvo
+                temporal.imagen = 'point.jpg';
+                temporal.tipo = puntosinTarjeta[i].tipo;
+                temporal.type = 'Puntos';
+                arreglo_general.push(temporal);
+            }
+
+
+
+
 
 
 
