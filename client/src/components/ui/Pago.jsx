@@ -93,8 +93,8 @@ function Pago({ producto, next }) {
 
     // ADD IVA TO TOTAL
     const subTotal = localStorage.getItem('total')
-    const ivaTotal = (parseFloat(subTotal) * 0.08).toFixed(2);
-    const total = (parseFloat(subTotal) + parseFloat(ivaTotal)).toFixed(2);
+    // const ivaTotal = (parseFloat(subTotal) * 0.08).toFixed(2);
+    // const total = (parseFloat(subTotal) + parseFloat(ivaTotal)).toFixed(2);
     const toggleTarjeta = () => {
         setTarjeta(!tarjeta);
     }
@@ -209,7 +209,7 @@ function Pago({ producto, next }) {
                             </div>
                             <div className='flex justify-between p-6 px-10 mb-4 border-2 shadow-md rounded-xl border-gray'>
                                 <h4 className='text-xl font-bold'>Total:</h4>
-                                <span className='font-bold text-[rgb(3,109,99)] text-xl'>${total}</span>
+                                <span className='font-bold text-[rgb(3,109,99)] text-xl'>${subTotal}</span>
                             </div>
                         </div>
                     </div>
@@ -236,7 +236,7 @@ function Pago({ producto, next }) {
             {pagoRealizado && (
                 <div className='soon-fondo'>
                     <div className='soon-fx'>
-                        <PagoRealizado cerrarPago={togglePago} total={total} next={next} />
+                        <PagoRealizado cerrarPago={togglePago} total={subTotal} next={next} />
                     </div>
                 </div>
             )}

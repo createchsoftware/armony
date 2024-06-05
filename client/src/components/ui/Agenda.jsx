@@ -14,7 +14,29 @@ function Agenda({ restart, next }) {
   const [soon, setSoon] = useState(false);
   const [del, setDel] = useState(false);
   const [selectedCitaIndex, setSelectedCitaIndex] = useState(null);
+  const [clave, setClave] = useState(false);
   const [sus, setSus] = useState(false); //<<< CARACTERISTICA GRAFICA DE QUE EL USUARIO ES SOCIO
+
+  async function recibido() {
+    const respuesta = await fetch("/api/logueado", {
+        method: "GET",
+        headers: {
+            "Content-Type": "application/json",
+        },
+    });
+
+    if (!respuesta.ok) {
+        setClave(false);
+    }
+
+    let respuestaJson = await respuesta.json();
+
+    if (respuestaJson.logueado == true) {
+        setClave(respuestaJson.clave);
+    } else {
+        setClave(false);
+    }
+}
 
   const handleModificar = () => {
     selectedCitaIndex === null && notify();
@@ -47,6 +69,26 @@ function Agenda({ restart, next }) {
       document.removeEventListener("mousedown", handleClickOutside);
     };
   }, []);
+
+  useEffect(() => {
+    recibido();
+  }, [])
+
+  useEffect(() => { 
+    const Prod = async () => {
+        try {
+            if (clave) {
+
+                const response = await fetch(`/api/admin/cliente/StatusSus/${clave}`)
+                const data = await response.json();
+                setSus(data)
+            }
+        } catch (error) {
+            console.error("hubo error :", error)
+        }
+    }
+    Prod()
+  }, [clave])
 
   const toggleSoon = () => {
     setSoon(!soon);
@@ -82,7 +124,7 @@ function Agenda({ restart, next }) {
 
   //Para remover por completo un servicio.
   const removeItem = (itemId) => {
-    setDel(!del);
+    //setDel(!del);
     setCitasItems(citasItems.filter((item) => item.idServicio !== itemId)); //este lo elimina de la vista carrito
     RLSCitas(itemId); //este elimina el item de locaStorage
   };
@@ -104,13 +146,13 @@ function Agenda({ restart, next }) {
     )
     .toFixed(2);
 
-  const iva = (total * 0.08).toFixed(2);
-  const totalIva = (parseFloat(total) + parseFloat(iva)).toFixed(2);
+  // const iva = (total * 0.08).toFixed(2);
+  // const totalIva = (parseFloat(total) + parseFloat(iva)).toFixed(2);
 
-  const puntos = (sus ? ((parseInt(totalIva))/5):((parseFloat(totalIva)) / 10));
+  const puntos = (sus ? ((parseInt(total))/5):((parseFloat(total)) / 10));
 
   localStorage.setItem("total", total);
-  localStorage.setItem("totalIva", totalIva);
+  localStorage.setItem("puntos", puntos);
   const citasList = citasItems.map((item, index) => (
     <li
       key={index}
@@ -217,10 +259,10 @@ function Agenda({ restart, next }) {
                   <span>{totalCitas} Servicio(s)</span>
                   <h1 className="font-bold">${total}</h1>
                 </div>
-                <div className="flex justify-between mb-2">
+                {/* <div className="flex justify-between mb-2">
                   <h1>IVA</h1>
                   <h1 className="font-bold">${iva}</h1>
-                </div>
+                </div> */}
                 <div className="flex justify-between">
                   <h1>Descuento por membresía</h1>
                   <h1 className="font-bold">$0.00</h1>
@@ -261,7 +303,7 @@ function Agenda({ restart, next }) {
               <div className="flex justify-between p-6 px-10 mb-4 border-2 shadow-md rounded-xl border-gray">
                 <h4 className="text-xl font-bold">Total:</h4>
                 <span className="font-bold text-[rgb(3,109,99)] text-xl">
-                  ${totalIva}
+                  ${total}
                 </span>
               </div>
               <div className='flex justify-between p-6 px-10 mb-4 border-2 shadow-md rounded-xl border-gray'>
