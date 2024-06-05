@@ -345,7 +345,7 @@ function Producto() {
                                 <h1 className="text-[#056761] text-3xl font-bold">{product.nombre}</h1>
                                 <hr className="my-4 text-black bg-black border-2 rounded-full border-gray" />
                                 <div className="flex mb-4 justify-items-center">
-                                    <Rating className='' value={product.valoracion} readOnly unratedColor="amber" ratedColor="amber" />
+                                    <Rating className='' value={Math.floor(parseFloat(product.valoracion))} readOnly unratedColor="amber" ratedColor="amber" />
                                     <p>Valoraciones</p>
                                 </div>
                                 <p className="text-[#056761] my-6 text-2xl font-bold">{'$' + product.precio + ' MXN'}</p>
