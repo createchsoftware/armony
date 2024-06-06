@@ -222,10 +222,11 @@ function TarjetaNueva() {
                 // eslint-disable-next-line react/jsx-key
                 array.map((objeto, index) => (
                   <TarjetasPagoEstatica
+                    key={array.numero_tarjeta}
                     tarjetas={objeto}
                     isFirst={index === 0}
                     show={editarTarjeta}
-                    clearSelection={clearSelection}
+                    //clearSelection={clearSelection}
                   />
                 ))
               )}
