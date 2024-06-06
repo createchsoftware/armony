@@ -6,6 +6,10 @@ const AgendarServicios = ({ next }) => {
   const [soon, setSoon] = useState(false);
   const [spa, setSpa] = useState([]);
   const [estetica, setEstetica] = useState([]);
+  const [fSpa, setFSpa] = useState([]);
+  const [fEstetica, setFEstetica] = useState([]);
+  const [filtrosSpa, setFiltrosSpa] = useState([]);
+  const [filtrosEstetica, setFiltrosEstetica] = useState([]);
   const [favoritos, setFavoritos] = useState([]);
   const [descuentos, setDescuentos] = useState([]);
   const [id, setId] = useState();
@@ -46,6 +50,7 @@ const AgendarServicios = ({ next }) => {
         })
         .then((data) => {
           setSpa(data);
+          filtroSpa(data);
         })
         .catch((error) => {
           //setErrorSpa(error.message);
@@ -65,6 +70,7 @@ const AgendarServicios = ({ next }) => {
           })
           .then((data) => {
             setEstetica(data);
+            filtroEstetica(data);
           })
           .catch((error) => {
             // setErrorEstetica(error.message);
@@ -116,6 +122,119 @@ const AgendarServicios = ({ next }) => {
   function changeSt() {
     setSt(!st);
   }
+
+  function filtroSpa(data) {
+    let cat = ["General"];
+    for (let i = 0; i < data.length; i++) {
+      cat[i + 1] = data[i].categoria;
+    }
+    cat = new Set(cat);
+
+    // Eliminar duplicados usando Set
+    const uniqueCategories = Array.from(cat);
+
+    // Crear opciones basadas en las categorías
+    const res = uniqueCategories.map((categoria, index) => ({
+      label: categoria,
+      checked: index == 0 ? true : false,
+    }));
+
+    console.log(res);
+
+    setFiltrosSpa(res);
+  }
+
+  function filtroEstetica(data) {
+    let cat = ["General"];
+    for (let i = 0; i < data.length; i++) {
+      cat[i + 1] = data[i].categoria;
+    }
+    cat = new Set(cat);
+
+    // Eliminar duplicados usando Set
+    const uniqueCategories = Array.from(cat);
+
+    // Crear opciones basadas en las categorías
+    const res = uniqueCategories.map((categoria, index) => ({
+      label: categoria,
+      checked: index == 0 ? true : false,
+    }));
+
+    console.log(res);
+    setFiltrosEstetica(res);
+  }
+
+  const handleBSClick = (index) => {
+    setFiltrosSpa((prevFiltros) =>
+      prevFiltros.map((button, i) =>
+        i === index
+          ? { ...button, checked: true }
+          : { ...button, checked: false }
+      )
+    );
+  };
+
+  const handleBEClick = (index) => {
+    setFiltrosEstetica((prevFiltros) =>
+      prevFiltros.map((button, i) =>
+        i === index
+          ? { ...button, checked: true }
+          : { ...button, checked: false }
+      )
+    );
+  };
+
+  useEffect(() => {
+    let servicios = [];
+    let x = 0;
+    let cat = "";
+    for (let i = 0; i < filtrosSpa.length; i++) {
+      if (filtrosSpa[i].checked == true) {
+        x = i;
+        cat = filtrosSpa[i].label;
+        break;
+      }
+    }
+    if (x == 0) {
+      setFSpa(spa);
+    } else {
+      let j = 0;
+      for (let i = 0; i < spa.length; i++) {
+        if (spa[i].categoria == cat) {
+          servicios[j] = spa[i];
+          j++;
+        }
+      }
+      setFSpa(servicios);
+      console.log(fSpa);
+    }
+  }, [filtrosSpa]);
+
+  useEffect(() => {
+    let servicios = [];
+    let x = 0;
+    let cat = "";
+    for (let i = 0; i < filtrosEstetica.length; i++) {
+      if (filtrosEstetica[i].checked == true) {
+        x = i;
+        cat = filtrosEstetica[i].label;
+        break;
+      }
+    }
+    if (x == 0) {
+      setFEstetica(estetica);
+    } else {
+      let j = 0;
+      for (let i = 0; i < estetica.length; i++) {
+        if (estetica[i].categoria == cat) {
+          servicios[j] = estetica[i];
+          j++;
+        }
+      }
+      setFEstetica(servicios);
+      console.log(fEstetica);
+    }
+  }, [filtrosEstetica]);
 
   const [toggleState, setToggleService] = useState(1);
   const [color1, setColor1] = useState("#80B5B0");
@@ -193,12 +312,47 @@ const AgendarServicios = ({ next }) => {
           </button>
         </div>
         <div className={toggleState === 1 ? "block" : "hidden"}>
-          <Carrusel id={id} servicios={spa} next={next} update={changeSt} />
+          {spa.length != 0 ? (
+            <div className="mt-4 flex flex-wrap justify-center">
+              {filtrosSpa.map((button, index) => (
+                <button
+                  className={`text-sm ring-1 ring-[#EB5765] rounded-full px-4 py-2 m-2 ${
+                    button.checked ? "bg-[#F6ABB0]" : "bg-white"
+                  }`}
+                  key={index}
+                  onClick={() => handleBSClick(index)}
+                >
+                  {button.label}
+                </button>
+              ))}
+            </div>
+          ) : (
+            <div />
+          )}
+          <Carrusel id={id} servicios={fSpa} next={next} update={changeSt} />
         </div>
         <div className={toggleState === 2 ? "block" : "hidden"}>
+          {estetica.length != 0 ? (
+            <div className="mt-4 flex flex-wrap justify-center">
+              {filtrosEstetica.map((button, index) => (
+                <button
+                  className={`text-sm ring-1 ring-[#EB5765] rounded-full px-4 py-2 m-2 ${
+                    button.checked ? "bg-[#F6ABB0]" : "bg-white"
+                  }`}
+                  key={index}
+                  onClick={() => handleBEClick(index)}
+                >
+                  {button.label}
+                </button>
+              ))}
+            </div>
+          ) : (
+            <div />
+          )}
+
           <Carrusel
             id={id}
-            servicios={estetica}
+            servicios={fEstetica}
             next={next}
             update={changeSt}
           />
