@@ -9,6 +9,7 @@ import {
   deleteEmpleadoById,
   getEmpServicio,
   getEmpFav,
+  diasInhabiles,
 } from "../db/query/queryEmpleado.js";
 
 // Router
@@ -173,6 +174,30 @@ routerEmpleado.get("/favoritos/:id", async (req, res) => {
       idCliente: req.params.id,
     });
     res.status(200).json({ message: "Empleados favoritos: ", data: resultado });
+  } catch (err) {
+    // Capturamos errores
+    console.error(messageError, err); // Mostramos errores por consola
+    res.status(500).send(messageError); // Enviamos un error INTERNAL SERVER ERROR y el error al navegador
+  }
+});
+
+routerEmpleado.get("/diaInhabil/:id", async (req, res) => {
+  try {
+    let fechas = [];
+    let str;
+    const resultado = await diasInhabiles(conexion, {
+      idEmpleado: req.params.id,
+      mes: req.body.mes,
+    }); // El mes debe de ser un numero entero [1-12]
+
+    // for (let i = 0; i < resultado.length; i++) {
+    //   str = resultado[i].fecha;
+    //   fechas[i] = str.substring(0, 10);
+    // }
+    str = resultado[0].fecha;
+    str = str.toString();
+    // const fecha = new Date(str);
+    res.status(202).json(str);
   } catch (err) {
     // Capturamos errores
     console.error(messageError, err); // Mostramos errores por consola
