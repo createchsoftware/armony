@@ -41,26 +41,24 @@ const Productos = () => {
   localStorage.removeItem('loaded3');
   localStorage.removeItem('loaded4');
 
+  // async function callRango() {
+  //   const respuesta3 = await fetch("/api/perfil/rangos", {
+  //     method: "GET",
+  //     headers: {
+  //       "Content-Type": "application/json",
+  //     },
+  //   });
 
+  //   if (!respuesta3.ok) {
+  //     return;
+  //   }
 
-  async function callRango() {
-    const respuesta3 = await fetch("/api/perfil/rangos", {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
+  //   const respuesta3Json = await respuesta3.json();
 
-    if (!respuesta3.ok) {
-      return;
-    }
-
-    const respuesta3Json = await respuesta3.json();
-
-    if (respuesta3Json.informacion) {
-      setRango(respuesta3Json.informacion[0]);
-    }
-  }
+  //   if (respuesta3Json.informacion) {
+  //     setRango(respuesta3Json.informacion[0]);
+  //   }
+  // }
 
   async function recibido() {
     const respuesta = await fetch("/api/logueado", {
@@ -72,19 +70,22 @@ const Productos = () => {
 
     if (!respuesta.ok) {
       setLog(false);
+      setClave(null);
     }
 
     let respuestaJson = await respuesta.json();
 
     if (respuestaJson.logueado == true) {
       setLog(true);
+      setClave(respuestaJson.clave);
     } else {
       setLog(false);
+      setClave(null);
     }
   }
 
   useEffect(() => {
-    callRango();
+    //callRango();
     recibido();
   }, []);
 
@@ -219,7 +220,7 @@ const Productos = () => {
             </div>
           </section>
 
-          {log ? (
+          {sus ? (
             <>
               <section className=" grid grid-cols-2 w-[80%] m-auto rounded-xl overflow-hidden ">
                 <div>
@@ -417,7 +418,7 @@ const Productos = () => {
               >
                 {
                   descuentos.map((oferta, index) => (
-                    <div className="">
+                    <div key={oferta.pkIsPS} className="">
                       <Ofertas
                         props={{
                           id: id,

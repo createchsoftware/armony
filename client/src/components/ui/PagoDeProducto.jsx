@@ -3,7 +3,9 @@ import InforTarjeta from "./InfoTarjeta";
 import PagoRealizado from "./PagoRealizadoProducto";
 import { jwtDecode } from "jwt-decode";
 import { Fragment } from "react";
-
+import EliminarAdvertenicia from "../ui/EliminarAdvertencia";
+import SinSaldo from "../ui/SinSaldo";
+import { Dialog } from "primereact/dialog";
 
 
 function Pago({ producto, next }) {
@@ -12,7 +14,9 @@ function Pago({ producto, next }) {
     const [Uid, setUid] = useState(null);
     const [descuento, setDescuento] = useState('');
     const [monedero, setMonedero] = useState(null);
-
+    const [citavisible, setcitavisible] = useState(false);
+    const [sinSaldo, setSinSaldo] = useState(null);
+    const [visible, setVisible] = useState(false);
 
     const [cartItems, setCartItems] = useState(() => {
         if (producto) {
@@ -124,7 +128,8 @@ function Pago({ producto, next }) {
             console.log("TOTAL", total)
             if (mone < total) {
                 setPagoRealizado(false);
-                alert('No tienes suficiente saldo en tu monedero')
+                setSinSaldo(1);
+                setcitavisible(true)
                 return
             }
             else {
@@ -286,6 +291,21 @@ function Pago({ producto, next }) {
                     </div>
                 </div>
             )}
+            <Dialog header="" visible={citavisible} style={{ width: '50vw' }} onHide={() => setcitavisible(false)} className="rounded-3xl font-[abeatbykai]  overflow-hidden  border-[#ec5766]">
+                <div className="mb-8 ml-8 rounded-3xl">
+                    <p className="m-0 mb-4 text-2xl font-bold">
+                        Hubo en error
+                    </p>
+                    <p className="m-0 mb-1 text-xl">
+                        No tienes suficiente saldo en tu monedero
+                    </p>
+                    <div className="flex gap-8 text-lg">
+                        <button onClick={() => setcitavisible(false)} className="px-2 py-1 text-red-500 duration-200 rounded-md p-button-success p-mr-2 hover:bg-red-500 hover:text-white">Aceptar</button>
+                        {/* <Button label="Si, cancelar " icon="pi pi-check" onClick={confirmRemoval} className="p-button-success p-mr-2 hover:text-red-500 hover:bg-white" /> */}
+                        {/* <Button label="No, mantener" icon="pi pi-times" onClick={() => setVisible(false)} className="p-button-secondary hover:text-green-500 hover:bg-white" /> */}
+                    </div>
+                </div>
+            </Dialog>
         </>
     )
 }
