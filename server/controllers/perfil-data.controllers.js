@@ -666,7 +666,7 @@ async function getTransacciones(solicitud,respuesta){
 
 
             // las transacciones de tipo monedero
-            let monedero_consulta = 'call monederos(?)';
+            let monedero_consulta = 'call finalMonedero(?)';
             let [fields_monedero] = await  solicitud.database.query(mysql.format(monedero_consulta,[decodificada.user]));
             let arreglo_monederos = fields_monedero[0];
 
@@ -680,8 +680,7 @@ async function getTransacciones(solicitud,respuesta){
                 temporal.day = temporal.date.getDate();
 
                 temporal.venta_id = arreglo_monederos[i].pkIdTransVenta; // id venta
-                temporal.numeroTarjeta = arreglo_monederos[i].fkNumTarjeta; // numero de la tarjeta
-                temporal.tipoPago = arreglo_monederos[i].tipoPago; // tipoPago
+            
 
                 temporal.puntos = arreglo_monederos[i].monto / 10; // los puntos que obtuvo
                 temporal.monto = arreglo_monederos[i].monto;
@@ -694,31 +693,7 @@ async function getTransacciones(solicitud,respuesta){
 
 
 
-            // las transacciones de tipo monedero sin Tarjeta
-            let monederosinTarjeta_consulta = 'call monedero_sinTarjeta(?)';
-            let [fields_monederosinTarjeta] = await  solicitud.database.query(mysql.format(monederosinTarjeta_consulta,[decodificada.user]));
-            let monederosinTarjeta = fields_monederosinTarjeta[0];
-
-            for(let i in monederosinTarjeta){
-                let temporal = {};
-
-                temporal.date = monederosinTarjeta[i].fechaTransaccion;
-
-                temporal.year = temporal.date.getFullYear();
-                temporal.month = arreglo_meses[temporal.date.getMonth()];
-                temporal.day = temporal.date.getDate();
-
-                temporal.venta_id = monederosinTarjeta[i].pkIdTransVenta; // id venta
-                temporal.tipoPago = monederosinTarjeta[i].tipoPago; // tipo pago que en teoria no deberia de ser tarjeta, sino algun otro tipo de pago, pero eso ya depende de que hay en la base de datos
-
-                temporal.puntos = monederosinTarjeta[i].monto / 10; // los puntos que obtuvo
-
-                temporal.monto = monederosinTarjeta[i].monto;
-                temporal.imagen = 'monedero.jpg';
-                temporal.tipo = monederosinTarjeta[i].tipo;
-                temporal.type = 'Monedero';
-                arreglo_general.push(temporal);
-            }
+            
 
 
 
@@ -728,7 +703,7 @@ async function getTransacciones(solicitud,respuesta){
 
 
             // las transacciones de tipo anadir puntos
-            let puntos_consulta = 'call puntos(?)';
+            let puntos_consulta = 'call finalPuntos(?)';
             let [fields_puntos] = await  solicitud.database.query(mysql.format(puntos_consulta,[decodificada.user]));
             let arreglo_puntos = fields_puntos[0];
 
@@ -742,9 +717,8 @@ async function getTransacciones(solicitud,respuesta){
                 temporal.day = temporal.date.getDate();
 
                 temporal.venta_id = arreglo_puntos[i].pkIdTransVenta;  // id de la venta
-                temporal.numeroTarjeta = arreglo_puntos[i].fkNumTarjeta; // numero de la tarjeta
-                temporal.tipoPago = arreglo_puntos[i].tipoPago; // tipo de pago, en este caso siempre deberia ser tarjeta, deberia...
-
+                
+                
                 temporal.monto = arreglo_puntos[i].monto;
                 temporal.puntos = arreglo_puntos[i].monto / 10; // los puntos que obtuvo
                 temporal.imagen = 'point.jpg';
@@ -754,30 +728,7 @@ async function getTransacciones(solicitud,respuesta){
             }
 
 
-            // las transacciones de tipo anadir puntos sin tarjeta
-            let puntosinTarjeta_consulta = 'call puntos_sinTarjeta(?)';
-            let [fields_puntos_sinTarjeta] = await  solicitud.database.query(mysql.format(puntosinTarjeta_consulta,[decodificada.user]));
-            let puntosinTarjeta = fields_puntos_sinTarjeta[0];
-
-            for(let i in puntosinTarjeta){
-                let temporal = {};
-
-                temporal.date = puntosinTarjeta[i].fechaTransaccion;
-
-                temporal.year = temporal.date.getFullYear();
-                temporal.month = arreglo_meses[temporal.date.getMonth()];
-                temporal.day = temporal.date.getDate();
-
-                temporal.venta_id = puntosinTarjeta[i].pkIdTransVenta;  // id de la venta
-                temporal.tipoPago = puntosinTarjeta[i].tipoPago; // tipo de pago, en este caso siempre deberia ser tarjeta, deberia...
-
-                temporal.monto = puntosinTarjeta[i].monto;
-                temporal.puntos = puntosinTarjeta[i].monto / 10; // los puntos que obtuvo
-                temporal.imagen = 'point.jpg';
-                temporal.tipo = puntosinTarjeta[i].tipo;
-                temporal.type = 'Puntos';
-                arreglo_general.push(temporal);
-            }
+            
 
 
 
@@ -886,36 +837,71 @@ async function Insert_to_Monedero(solicitud,respuesta){
 
             let monto = solicitud.body.monto;
 
+
             console.log(`el numero es: ${numeroTarjeta}`);
             console.log(`el monto es: ${monto}`);
 
             let numero_valido = /^\d*\.?\d+$/;
+            let minimo = 1.0;
 
-            if(numero_valido.test(monto)){
-                //como el monto es un numero valido, ahora podemos hacer esto
-            
-                monto = parseFloat(monto);
-
-                try{
-                    let consulta = 'call addVentaRecargarSaldo(?,?,?)';
-                    let parametros = [decodificada.user,numeroTarjeta,monto];
-                    let [fields] = await solicitud.database.query(mysql.format(consulta,parametros))
-
-                    console.log(fields); //para ver que es lo que nos dio
-                    respuesta.send({redirect:'/perfil/monedero'});
-
-                }catch(error){
-                    console.log(error);
-                    respuesta.send({mensaje:'hubo un error en la insercion'});
-                }
-
-                    
-            
-                
-            }else{
-                // el monto no es un numero valido
-                respuesta.send({mensaje:'debes de poner un monto valido'});
+            if(numeroTarjeta == undefined || numeroTarjeta==''){
+                return respuesta.send({mensaje:`Por favor, seleccione un metodo de pago`});
             }
+            else{
+                if(numero_valido.test(monto)){
+                    //como el monto es un numero valido, ahora podemos hacer esto
+    
+                    if(monto<minimo){
+                        // primero verificamos que el monto no sea menor al minimo
+                        return respuesta.send({mensaje:`El valor minimo a depositar es de: ${minimo}`});
+                    }
+                    else{
+                        monto = parseFloat(monto);
+    
+                        try{
+                            let consulta = 'call addVentaRecargarSaldo(?,?,?)';
+                            let parametros = [decodificada.user,numeroTarjeta,monto];
+                            let [fields] = await solicitud.database.query(mysql.format(consulta,parametros))
+        
+                            console.log(fields); //para ver que es lo que nos dio
+    
+    
+                            let time = new Date(Date.now());
+                            let minutes = time.getMinutes();
+                            let hours = time.getHours();
+                            let day = time.getDate();
+                            let month = time.getMonth()+1;
+                            let year = time.getFullYear();
+    
+                            let fecha_a_presentar = `${day}-${month}-${year}`;
+                            
+                            let hora_a_presentar = formatoAMPM(minutes,hours);
+    
+                            let cortar = numeroTarjeta.length - 4;
+                            let tarjeta_oculta='****';
+                            //for(let i = 1; i<=cortar; i++){  tarjeta_oculta+="*";  }
+                            tarjeta_oculta+=numeroTarjeta.slice(cortar);
+    
+                            respuesta.send({redirect:'/perfil/monedero',dinero:monto,card:tarjeta_oculta,time:hora_a_presentar,date:fecha_a_presentar});
+        
+                        }catch(error){
+                            console.log(error);
+                            respuesta.send({mensaje:'hubo un error en la insercion'});
+                        }
+                    }
+                
+                    
+    
+                        
+                
+                    
+                }else{
+                    // el monto no es un numero valido
+                    respuesta.send({mensaje:'debes de poner un monto valido'});
+                }
+            }
+
+            
 
         }
         else{
@@ -1321,6 +1307,39 @@ function par(e){
 
     return module;
 }
+
+
+
+
+
+
+
+function formatoAMPM(minuto,hora){
+    let ext;
+    if(hora>12){
+        // la hora es PM
+        hora=hora -12;
+        ext='PM';
+    }
+    else{
+        if(hora==12){
+            // la hora tambien es PM
+            ext='PM';
+        }
+        else{
+            // la hora es AM
+            ext='AM';
+            if(hora==0){
+                hora=12;
+            }
+        }
+    }
+
+    return `${hora}:${minuto} ${ext}`;
+
+}
+
+
 
 
 

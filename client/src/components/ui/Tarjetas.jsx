@@ -8,7 +8,7 @@ import rangos from '../../../public/pictures/rangos.png'
 function Tarjetas() {
     return (
         <>
-            <img src={greenLeft} alt="" className='absolute w-[12%] right-0 rotate-180 translate-x-[3rem] translate-y-[-6rem]' />
+            <img src={greenLeft} alt="" className='absolute w-[12%] right-0 rotate-180  translate-y-[-6rem]' />
             <img src={greenRight} alt="" className='absolute w-[12%] right-0 translate-y-[60rem] ' />
             <div className="selection:text-white selection:bg-[#EB5765] m-auto mt-10 w-[70%] grid place-content-center ">
                 {/* <h1 className="justify-self-center text-4xl md:text-6xl font-[iloveglitter] text-[#036C65]">¡Hazte socio!</h1> */}

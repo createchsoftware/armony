@@ -8,7 +8,7 @@ export const config = {
   database: conexionDB.DATABASE,
   user: conexionDB.USER,
   password: conexionDB.PASSWORD,
-  connectionLimit: 30,
+  connectionLimit: 100,
   charset: "utf8mb4",
 };
 
@@ -19,7 +19,6 @@ let pool;
 export async function enableConnect() {
   try {
     pool = mysql.createPool(config); // Creamos la conexion con la configuracion declarada anteriormente
-    await pool.query("USE armony;");
     console.log("CONNECT TO DATABASE!");
     return pool; // Retornamos la conexion
   } catch (err) {
@@ -34,9 +33,10 @@ enableConnect().catch((err) => {
 });
 // Cierre de conexion con la base de datos
 export async function endConnection() {
+  // Verificamos que exista una conexion
   if (pool) {
     console.log("RELEASE CONNECTION");
-    await pool.releaseConnection();
+    await pool.release();
   }
 }
 

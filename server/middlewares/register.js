@@ -68,16 +68,24 @@ async function InsertUser(solicitud,respuesta,siguiente){
                     let [fields] = await solicitud.database.query(mysql.format(consulta,parametros));
 
                     console.log(fields);
+
+                    //await new Promise(resolve=> setTimeout(resolve, 1500)); // esperar un tiempo mientras se hace la insercion en MYSQL
                            
                     // ahora buscaremos el id que corresponde al correo
                     let busca = 'select pkIdUsuario from usuario where email = ?';
                     let [busqueda] = await solicitud.database.query(mysql.format(busca,[decodificada1.correo]));
 
+                    console.log(busqueda);
 
                     // toca insertar las patologias con el cliente
                     let patologia_consulta = 'call addClientePato(?,?,?)';
+
+                    console.log(decodificada2); // solo para ver los datos
                     
+
+                    // ya verifique que esto no se ejecuta si no pusiste ninguna patologia, lo cual es correcto
                     for(let i=1; i<=decodificada2.cantidad;i++){
+                        console.log('Insertando las patologias......');
                         // inicamos en uno para brincarnos el key cantidad
                         let id_pato = decodificada2[`patologia${i}`][0];
                         let desc_pato = decodificada2[`patologia${i}`][1];
@@ -85,27 +93,30 @@ async function InsertUser(solicitud,respuesta,siguiente){
                         
                     }
 
-                    try{
 
-                        // toca crear un nuevo usuario en stripe
-                        const stripe = new Stripe(process.env.STRIPE_SECRET);
+                    // LO DE ABAJO ES PARA UNA API, POR EL MOMENTO NO SE OCUPA, EN UN FUTURO CUANDO SIGA EL PROYECTO SE PUEDE DESCOMENTAR
 
-                        const cliente = await stripe.customers.create({
-                            email:decodificada1.correo,
-                            name:`${decodificada1.nombre} ${decodificada1.paterno} ${decodificada1.materno}`,
-                            address:{
-                                postal_code:decodificada1.codigo_postal,
-                            },
-                            phone:`+${telefono_completo}`,
-                            metadata:{
-                                usuario_id:busqueda[0].pkIdUsuario,
-                            }
-                        })
+                    // try{
 
-                    }catch(error){
-                        console.log('hubo un error al crear un usuario en stripe');
-                        console.log(error);
-                    }
+                    //     // toca crear un nuevo usuario en stripe
+                    //     const stripe = new Stripe(process.env.STRIPE_SECRET);
+
+                    //     const cliente = await stripe.customers.create({
+                    //         email:decodificada1.correo,
+                    //         name:`${decodificada1.nombre} ${decodificada1.paterno} ${decodificada1.materno}`,
+                    //         address:{
+                    //             postal_code:decodificada1.codigo_postal,
+                    //         },
+                    //         phone:`+${telefono_completo}`,
+                    //         metadata:{
+                    //             usuario_id:busqueda[0].pkIdUsuario,
+                    //         }
+                    //     })
+
+                    // }catch(error){
+                    //     console.log('hubo un error al crear un usuario en stripe');
+                    //     console.log(error);
+                    // }
 
 
                         let token = jsonwebtoken.sign(
@@ -157,6 +168,9 @@ async function InsertUser(solicitud,respuesta,siguiente){
                         respuesta.clearCookie('Megumin_cookie', { path: '/' });
                         respuesta.clearCookie('Nakano_Itsuki', { path: '/' });
                         respuesta.clearCookie('Rem_cookie', { path: '/' });
+
+
+                        await new Promise(resolve=> setTimeout(resolve, 1500)); // esto es solo para seguranos que se levanta la cookie Naruto
     
                         return siguiente();
                     

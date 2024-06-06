@@ -22,7 +22,6 @@ function Suscripciones() {
     const [mesFinal, setMesFinal] = useState('');
     const [semanaFinal, setSemanaFinal] = useState('');
     const [diasFaltantes, setDiasFaltantes] = useState(0);
-    //const [porcDias, setPorcDias] = useState(0);
 
     const [cobro, setCobro] = useState(false);
     const handleCobro = () => {
@@ -153,14 +152,6 @@ function Suscripciones() {
         recibido();
     }, []);
 
-
-    // console.log('Días faltantes: ' + diasFaltantes);
-    // console.log('Paso 1: ' + (30 - diasFaltantes))
-    // console.log('Paso 2: ' + ((30 - diasFaltantes)/30));
-    // console.log('Paso 3: ' + (100 * ((30 - diasFaltantes)/30)));
-    // console.log('Paso final: ' + (parseInt(100 * ((30 - diasFaltantes)/30))));
-    // console.log('Porcentaje: ' + porcDias);
-
     return (
         <LayoutPrincipal>
             <main className='grid gap-12 my-24'>
@@ -200,15 +191,16 @@ function Suscripciones() {
                     <section className='w-[60%] m-auto'>
                         <h2 className='text-[#036C65] text-2xl ml-12 mb-4'>Fecha de renovación</h2>
                         <div className='rounded-2xl  m-auto grid gap-4 p-12 shadow-[0_3px_10px_rgb(0,0,0,0.2)]'>
-                            <p className='text-sm text-justify'>Recuerda que tu suscripción se renueva automáticamente
-                                Previo a la fecha de vencimiento, se te hará llegar una notificación a tu correo electrónico.</p>
+                            <p className='text-sm text-justify'>Recuerda que, en caso de tener la renovación habilitada,
+                                tu suscripción se renueva automáticamente. <br /> Previo a la fecha de vencimiento, 
+                                se te hará llegar una notificación a tu correo electrónico.</p>
                             <div className='flex items-center justify-between gap-4 px-3'>
                                 <div className="w-full bg-gray-200 rounded-full h-2.5 mb-4 dark:bg-gray-700">
                                     <div className=" bg-[#036C65] h-1.5 mt-[2px] px-[2px] rounded-full dark:bg-gray-300" style={{ width: (parseInt(100 * ((31 - diasFaltantes)/30))) + '%' }}></div>
                                 </div>
                             </div>
                             <div className='flex items-center justify-between text-gray-500'>
-                                <div className='px-10 text-center '>
+                                <div className='text-center '>
                                     <p className='text-gray-500'>{mesInicio}</p>
                                     <p className='text-gray-500'>{semanaInicio} - {diaInicio}</p>
                                 </div>

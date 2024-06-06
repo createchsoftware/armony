@@ -12,7 +12,7 @@ const Rangos = () => {
             <LayoutPrincipal>
                 <div className="flex bg-gradient-to-bl from-[#FED4CE] to-[#FF9D90] h-screen p-20">
                     <div className="grid w-3/5 items-center content-center pr-6">
-                        <h1 className="font-[ILoveGlitter] text-white text-center text-7xl font-bold justify-self-center drop-shadow-[2px_2px_var(--tw-shadow-color)] shadow-[gray]">Hazte miembro de armony</h1>
+                        <h1 className="font-[ILoveGlitter] text-white text-center text-7xl font-bold justify-self-center drop-shadow-[2px_2px_var(--tw-shadow-color)] shadow-[gray]">Conoce los rangos de armony</h1>
                         <p className="text-4xl text-center text-white justify-self-center mt-4 drop-shadow-[1px_1px_var(--tw-shadow-color)] shadow-[gray]">Conoce los beneficios que cada rango tiene para ti</p>
                     </div>
                     <div className="grid w-2/5 items-center">
