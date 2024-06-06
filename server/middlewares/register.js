@@ -55,9 +55,9 @@ async function InsertUser(solicitud,respuesta,siguiente){
     
                     let insertar_ruta = '';
 
-                    if(decodificada1.imagen != undefined){
-                        insertar_ruta = decodificada1.imagen.filename;
-                    }
+                    // if(decodificada1.imagen != undefined){
+                    //     insertar_ruta = decodificada1.imagen.filename;
+                    // }
                     
     
                     let parametros = [decodificada1.nombre,decodificada1.paterno,decodificada1.materno,decodificada1.correo,telefono_completo,hashPassword,insertar_ruta,decodificada1.calle,decodificada1.colonia,decodificada1.numero,decodificada1.codigo_postal,decodificada1.apodo,nacimiento];
