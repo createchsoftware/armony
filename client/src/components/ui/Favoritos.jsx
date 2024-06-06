@@ -79,7 +79,7 @@ function Favoritos() {
 
   const [log, setLog] = useState(false);
 
-  async function recibido() {
+  /*async function recibido() {
     const respuesta = await fetch("/api/logueado", {
       method: "GET",
       headers: {
@@ -102,10 +102,9 @@ function Favoritos() {
 
   useEffect(() => {
     recibido();
-  }, []);
+  }, []);*/
 
-
-  let respuestaJson = null;
+  //let respuestaJson = null;
   async function checkLogin() {
     try {
       const respuesta = await fetch("/api/logueado", {
@@ -115,7 +114,7 @@ function Favoritos() {
         },
       });
 
-      respuestaJson = await respuesta.json();
+      let respuestaJson = await respuesta.json();
       if (respuestaJson.logueado == true) {
         await setId(respuestaJson.clave);
         setLog(true);
