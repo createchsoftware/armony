@@ -123,7 +123,7 @@ function Pago({ producto, next }) {
         } else {
             console.log("MONE", mone)
             console.log("TOTAL", subTotal)
-            if (mone < subTotal) {
+            if (mone > subTotal) {
                 setPagoRealizado(false);
                 alert('No tienes suficiente saldo en tu monedero')
                 return

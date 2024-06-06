@@ -36,7 +36,7 @@ export async function endConnection() {
   // Verificamos que exista una conexion
   if (pool) {
     console.log("RELEASE CONNECTION");
-    await pool.release();
+    await pool.releaseConnection();
   }
 }
 

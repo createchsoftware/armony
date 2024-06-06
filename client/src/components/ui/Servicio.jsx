@@ -25,6 +25,7 @@ function Servicio({
   pkIdPS,
   nombre,
   descripcion,
+  tiempo,
   precio,
   imagen,
   valoracion,
@@ -39,6 +40,7 @@ function Servicio({
     id: pkIdPS,
     nombre: nombre,
     descripcion: descripcion,
+    tiempo: tiempo,
     precio: precio,
     img: imagen,
     valoracion: valoracion,
@@ -56,6 +58,13 @@ function Servicio({
     if (log == true) {
       setPData(data);
       setServ(!serv);
+      localStorage.setItem("step1", true);
+      localStorage.setItem("servicio", pkIdPS);
+      localStorage.setItem("precio", precio);
+      localStorage.setItem("nombre", nombre);
+      localStorage.setItem("descripcion", descripcion);
+      localStorage.setItem("tiempo", tiempo);
+      localStorage.setItem("imagen", imagen);
       window.location.href = "/spa/agendar";
     } else {
       setPData(data);
@@ -104,12 +113,14 @@ function Servicio({
 
     // Verificar si el producto ya está en favoritos
     let favoritos = JSON.parse(localStorage.getItem("favoritos")) || [];
-    const estaEnFavoritos = favoritos.some(fav => fav.pkIdPS === idProducto.id);
+    const estaEnFavoritos = favoritos.some(
+      (fav) => fav.pkIdPS === idProducto.id
+    );
 
     // Actualizar el estado de favoritos en React
-    setFavorites(prev => ({
+    setFavorites((prev) => ({
       ...prev,
-      [idProducto.id]: !estaEnFavoritos
+      [idProducto.id]: !estaEnFavoritos,
     }));
 
     if (!estaEnFavoritos) {
@@ -118,13 +129,12 @@ function Servicio({
       favoritos.push(nuevoFavorito);
     } else {
       // Eliminar el producto del localStorage
-      favoritos = favoritos.filter(fav => fav.pkIdPS !== idProducto.id);
+      favoritos = favoritos.filter((fav) => fav.pkIdPS !== idProducto.id);
     }
 
     // Guardar la lista actualizada en localStorage
     localStorage.setItem("favoritos", JSON.stringify(favoritos));
-  }
-
+  };
 
   return (
     <>
@@ -172,11 +182,11 @@ function Servicio({
                 </div>
               </div>
             </Box> */}
-            {log ?
-              (<Box
+            {log ? (
+              <Box
                 className="absolute flex justify-end float-right -mr-3"
                 sx={{
-                  '& > legend': { mt: 2 },
+                  "& > legend": { mt: 2 },
                 }}
               >
                 <StyledRating
@@ -184,33 +194,48 @@ function Servicio({
                   max={1}
                   // value={uid ? (producto.favorito || favorites[producto.pkIdPS]) ? 1 : 0 : JSON.parse(localStorage.getItem("favoritos"))?.some(fav => fav.pkIdPS === producto.pkIdPS) ? 1 : 0}
                   // value={uid ? favorites[producto.pkIdPS] ? 1 : 0 : JSON.parse(localStorage.getItem("favoritos"))?.some(fav => fav.pkIdPS === producto.pkIdPS) ? 1 : 0}
-                  getLabelText={(value) => `${value} Heart${value !== 1 ? 's' : ''}`}
+                  getLabelText={(value) =>
+                    `${value} Heart${value !== 1 ? "s" : ""}`
+                  }
                   precision={1}
                   defaultValue={fav}
                   icon={<FavoriteIcon fontSize="inherit" />}
                   emptyIcon={<FavoriteBorderIcon fontSize="inherit" />}
                   onClick={() => callFav()}
                 />
-              </Box>)
-              :
-              (<Box
+              </Box>
+            ) : (
+              <Box
                 className="absolute flex justify-end float-right -mr-3"
                 sx={{
-                  '& > legend': { mt: 2 },
+                  "& > legend": { mt: 2 },
                 }}
               >
                 <StyledRating
                   name="customized-color"
                   max={1}
-                  value={localStorage.getItem("favoritos") ? JSON.parse(localStorage.getItem("favoritos")).some(fav => fav.pkIdPS === pkIdPS) ? 1 : 0 : favorites[pkIdPS] ? 1 : 0}
+                  value={
+                    localStorage.getItem("favoritos")
+                      ? JSON.parse(localStorage.getItem("favoritos")).some(
+                          (fav) => fav.pkIdPS === pkIdPS
+                        )
+                        ? 1
+                        : 0
+                      : favorites[pkIdPS]
+                      ? 1
+                      : 0
+                  }
                   // value={favorites[producto.pkIdPS] ? 1 : 0}
-                  getLabelText={(value) => `${value} Heart${value !== 1 ? 's' : ''}`}
+                  getLabelText={(value) =>
+                    `${value} Heart${value !== 1 ? "s" : ""}`
+                  }
                   precision={1}
                   icon={<FavoriteIcon fontSize="inherit" />}
                   emptyIcon={<FavoriteBorderIcon fontSize="inherit" />}
                   onChange={() => toggleFavorite(data)}
                 />
-              </Box>)}
+              </Box>
+            )}
           </div>
           <div className="relative bottom-[2rem]">
             <h1 className="mt-3 font-extrabold text-white">{nombre}</h1>
