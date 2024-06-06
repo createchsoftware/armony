@@ -13,7 +13,7 @@ function AgregarSaldo() {
     const [array_toShow, setArray_toShow] = useState([]);
     const [monto_a_recargar, setMonto] = useState('0.0');
     const [addTarjeta, setAddTarjeta] = useState(false);
-    const [isSelected, setIsSelecetd] = useState(false);
+    const [isSelected, setIsSelecetd] = useState(null);
     const [confirm, setConfirm] = useState(false);
     const [ticket, setTicket] = useState(false);
 
@@ -120,10 +120,12 @@ function AgregarSaldo() {
     }
 
     async function seleccionarTarjeta(tarjeta) {
-        setIsSelecetd(!isSelected);
+        setIsSelecetd(tarjeta.numero_tarjeta);
         setsTarjeta(tarjeta);
         ModificarArray(sTarjeta.numero_tarjeta);
     }
+
+    console.log(array_toShow);
 
     const tarjeta = array_toShow.map(tarjetas => (
         <div key={tarjetas.vista_tarjeta} className='flex items-center justify-between px-10 py-2 my-3 border border-gray-400 shadow-md rounded-2xl'>
@@ -135,8 +137,8 @@ function AgregarSaldo() {
                 <h1 className="text-xl">****{tarjetas.numero_tarjeta.slice(0, 4)}</h1>
             </div>
             <div className='grid gap-2 p-2'>
-                {isSelected ? (
-                    <button onClick={() => seleccionarTarjeta(tarjetas)} className='px-4 py-2 bg-[#036C65] rounded-full text-white duration-200 hover:bg-[#4bcdc4]'>Seleccionado</button>
+                {isSelected === tarjetas.numero_tarjeta ? (
+                    <button onClick={() => seleccionarTarjeta(null)} className='px-4 py-2 bg-[#036C65] rounded-full text-white duration-200 hover:bg-[#4bcdc4]'>Seleccionado</button>
                 ) : (
                     <button onClick={() => seleccionarTarjeta(tarjetas)} className='px-4 py-2 bg-[#EB5765] rounded-full text-white duration-200 hover:bg-[#ffb5a7]'>Seleccionar</button>
                 )}
@@ -246,7 +248,7 @@ function AgregarSaldo() {
                 <div className='cart-fondo'>
                     <div className='cart-fx'>
                         <div className='grid w-1/3 p-6 m-auto bg-white mt-60 rounded-2xl'>
-                            <h1 className='text-[#EB5765] text-2xl mb-8 justify-self-center text-center'>¿Estás segure?</h1>
+                            <h1 className='text-[#EB5765] text-2xl mb-8 justify-self-center text-center'>¿Estás segura?</h1>
                             <h1 className='mb-8 text-center justify-self-center'>Da click en aceptar si deseas continuar con la compra.</h1>
                             <button onClick={handleSubmit} className='px-4 py-2 bg-[#EB5765] rounded-full text-white duration-200 hover:bg-[#ffb5a7]'>Aceptar</button>
                         </div>
@@ -275,7 +277,7 @@ function AgregarSaldo() {
                                     <p> . . . . . . . . . . . . </p>
                                     <h1>{date}</h1>
                                 </div>
-                                <div className='flex justify-between'>
+                              s  <div className='flex justify-between'>
                                     <h1>Hora</h1>
                                     <p> . . . . . . . . . . . . </p>
                                     <h1>{time}</h1>

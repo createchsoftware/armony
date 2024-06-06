@@ -92,8 +92,10 @@ export async function citaOnline(connection, data) {
         promo: data.promo,
       }); // Ejecutamos el alta de la cita
       console.log("Cita creada correctamente");
+      endConnection();
       return true; // Retornamos true como referencia que si se realizo la cita
     }
+    endConnection();
     return false; // Retornamos false como referencia que no se realizo la cita
   } catch (err) {
     // Capturamos errores de ejecucion de query
@@ -215,6 +217,7 @@ export async function duracionTotal(connection, data) {
     let duracionTotalQuery = "CALL duracionTotalServ(?)"; // Procedimiento almacenado de la base de datos
     let query = mysql.format(duracionTotalQuery, [data.idServ]); // Parametros necesarios para el procedimiento
     const [rows, fields] = await connection.query(query); // Ejecutamos el query y almacenamos los resultados
+    endConnection();
     return rows[0]; // Retornamos los resultado
   } catch (err) {
     // Capturamos errores de ejecucion de query

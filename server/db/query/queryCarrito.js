@@ -6,6 +6,7 @@ export async function addCarrito(connection, data) {
     const call = "CALL addCarrito(?,?,?)";
     const query = mysql.format(call, [data.idCliente, data.IdProducto, 1]);
     await connection.query(query);
+    endConnection();
   } catch (err) {
     console.log("Ha ocurrido un error al ejecutar el query: ", err);
     throw err;
@@ -38,13 +39,17 @@ export async function getCarritoCliente(connection, data) {
   }
 }
 
-
 //este funcion sera para actualizar la cantidad de producto ene la carrito
 export async function modifyCarrito(connection, data) {
   try {
     const call = "CALL updCarrito(?,?,?)";
-    const query = mysql.format(call, [data.idCliente, data.IdProducto,data.cantidad]);
+    const query = mysql.format(call, [
+      data.idCliente,
+      data.IdProducto,
+      data.cantidad,
+    ]);
     await connection.query(query);
+    endConnection();
   } catch (err) {
     console.log("Ha ocurrido un error al ejecutar el query: ", err);
     throw err;
