@@ -219,7 +219,7 @@ const Productos = () => {
             </div>
           </section>
 
-          {sus ? (
+          {log ? (
             <>
               <section className=" grid grid-cols-2 w-[80%] m-auto rounded-xl overflow-hidden ">
                 <div>
