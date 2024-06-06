@@ -1,53 +1,14 @@
 var contraseña = document.getElementById('contraseña');
 var confirmacion = document.getElementById('nueva-contraseña');
 var politicas = document.getElementById('state');
-var proximamente = document.getElementById('oculto');
-proximamente.style.position = 'fixed';
-proximamente.style.top = '50%'; 
-proximamente.style.left = '50%';
-proximamente.style.transform = 'translate(-50%, -50%)';
-proximamente.style.zIndex = '50';
-proximamente.innerHTML = `<h1 className="soon-title">
-<i id='alarm' class="fa-solid fa-spinner"></i>
-    ¡Procesando datos!
-<i id='alarm' class="fa-solid fa-spinner"></i>
-</h1>
-<h4 className="soon-desc">
-     La contraseña esta <br />
-     siendo procesada.  <br />
-</h4>`;
 
 
-var ejecutandose = false;
-
-proximamente.style.display = 'none';
 contraseña.addEventListener('input',()=>{if(contraseña.value.length > 0) contraseña.style.borderColor='#ccc';});
 confirmacion.addEventListener('input',()=>{if(confirmacion.value.length > 0) confirmacion.style.borderColor='#ccc';});
 
 
-function ShowSoon(id){
-  let mostrar = document.getElementById(id);
-
-  if(mostrar.style.display == 'none'){
-    mostrar.style.display = 'inline-block';
-  }
-  else{
-    mostrar.style.display = 'none';
-  }
-}
-
-
 
 document.getElementById('step3').addEventListener('click',async ()=>{
-
-    if(ejecutandose == true){
-        // el usuario le dio en continuar, pero la vez pasada que le dio continuar aun no termina
-        return;
-    }
-    else{
-        // si estaba en false, ahora la funcion se ejecutara, y activaremos el estado de ejecucion como true
-        ejecutandose = true;
-    }
 
 
     document.cookie = "Rem_cookie=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;"; 
@@ -63,13 +24,9 @@ document.getElementById('step3').addEventListener('click',async ()=>{
             div.remove();
         },6000);
         // el proceso termino y el estado vuelve a false, y se hace un return para salir de la funcion
-        ejecutandose = false;
+        
         return;
     }
-       
-    ShowSoon('oculto');
-
-    await new Promise(resolve=> setTimeout(resolve, 2000));
 
 
     const respuesta = await fetch("/api/step3",{
@@ -84,8 +41,6 @@ document.getElementById('step3').addEventListener('click',async ()=>{
     })
 
     if(!respuesta.ok){
-        ShowSoon('oculto');
-        ejecutandose = false;
         return;
     }
       
@@ -94,7 +49,6 @@ document.getElementById('step3').addEventListener('click',async ()=>{
 
 
     if(respuestaJson.confirmar){
-        ShowSoon('oculto');
 
         // ambas contraseñas no concuerdan
         contraseña.value = '';
@@ -111,13 +65,10 @@ document.getElementById('step3').addEventListener('click',async ()=>{
         setTimeout(()=>{
             div.remove();
         },6000);
-        ejecutandose = false;
         return;
     }
 
     if(respuestaJson.invalidas){
-        ShowSoon('oculto');
-
         // ambas contraseñas si concuerdan, pero no son validas
         contraseña.value = '';
         contraseña.style.borderColor = 'red';
@@ -136,39 +87,11 @@ document.getElementById('step3').addEventListener('click',async ()=>{
                 div.remove();
             },6000)
         }
-        ejecutandose = false;
         return;
     }
 
     if(respuestaJson.redirect){
-
-        if(respuestaJson.redirect = '/spa/signUp/Confirmacion'){
-
-            proximamente.innerHTML = `<img id="process-img" src="../../pictures/ArrowCut.png" />`;
-
-            await new Promise(resolve=> setTimeout(resolve, 1200));
-
-            proximamente.innerHTML = `<h1 className="soon-title">
-            <i id='alarm' class="fa-solid fa-user-plus"></i>
-            Inserción de Usuario
-            <i id='alarm' class="fa-solid fa-user-plus"></i>
-            </h1>
-            <h4 className="soon-desc">
-                Felicidades, en un momento se creará tu cuenta. <br />
-                Este proceso puede tardar unos segundos, se paciente. <br />
-            </h4>`;
-
-            await new Promise(resolve=> setTimeout(resolve, 1200));
-
-            ShowSoon('oculto');
-
-            window.location.href = respuestaJson.redirect;
-        }
-        else{
-            window.location.href = respuestaJson.redirect;
-        }
-        
-        
+        window.location.href = respuestaJson.redirect;
     }
 
 })

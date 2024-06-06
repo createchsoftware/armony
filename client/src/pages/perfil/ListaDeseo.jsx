@@ -518,7 +518,7 @@ function ListaDeseo() {
       localStorage.setItem("servicio", producto.ps);
       localStorage.setItem("precio", producto.precio);
       localStorage.setItem("nombre", producto.nombre);
-      localStorage.setItem("descripcion", producto.descr);
+      localStorage.setItem("descripcion", producto.descripcion);
       localStorage.setItem("tiempo", producto.tiempo);
       localStorage.setItem("imagen", producto.img);
       window.location.href = "/spa/agendar";
