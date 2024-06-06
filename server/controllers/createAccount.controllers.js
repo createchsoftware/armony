@@ -307,7 +307,7 @@ async function paso1(solicitud,respuesta){
                       correo:correo,
                       lada:lada,
                       telefono:telefono,
-                      imagen:imagen,
+                      imagen:'imagen.png',
                       calle:calle,
                       colonia:colonia,
                       numero:numero,
