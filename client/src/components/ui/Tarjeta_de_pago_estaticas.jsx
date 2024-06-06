@@ -1,27 +1,28 @@
 import { useState } from "react"
 
 // eslint-disable-next-line react/prop-types
-function TarjetasPagoEstatica({ tarjetas, isFirst, show, clearSelection }) {
-    const [select, setSelect] = useState('border-b border-gray-400')
-    const [isSelect, setIsSelect] = useState(false)
+function TarjetasPagoEstatica({ tarjetas, isFirst, show }) {
+    const [isSelect, setIsSelect] = useState(null)
 
-    const selected = () => {
-        clearSelection()
-        setIsSelect(!isSelect)
-        isSelect ? (
-            setSelect('border-b border-gray-400')
-        ):(
-            isFirst ? (
-                setSelect('border-2 border-red-600 rounded-t-2xl')
-            ):(
-                setSelect('border-2 border-red-600')
-            )  
-        )
+    function selected(card) {
+        //clearSelection()
+        setIsSelect(card.numero_tarjeta)
         show(tarjetas)
     }
 
+    console.log(tarjetas);
+
     return (
-        <div className={'grid overflow-hidden ' + select}>
+        <div className={'grid overflow-hidden ' + 
+            `${isSelect === tarjetas.numero_tarjeta ? 
+                isFirst ? 
+                    'border-2 border-red-600 rounded-t-2xl'
+                :
+                    'border-2 border-red-600'
+                
+            : 
+                'border-b border-gray-400'}`
+        }>
             { tarjetas.predeterminada === 1 && (
                 isFirst ? (
                     <div className="grid w-[40%] justify-self-end rounded-tr-2xl rounded-bl-2xl bg-[#056761]">
@@ -37,7 +38,11 @@ function TarjetasPagoEstatica({ tarjetas, isFirst, show, clearSelection }) {
                 <div className="grid justify-center">
                     <img src={`../../../pictures/${tarjetas.imagen}`}
                         alt={tarjetas.empresa} className='w-16 h-auto aspect-square rounded-full justify-self-center' />
-                    <button onClick={selected} className='px-8 py-1 text-[#EB5765] rounded-full hover:font-bold'>Editar</button>
+                    {isSelect === tarjetas.numero_tarjeta ? (
+                        <button onClick={() => selected('')} className='px-8 py-1 text-[#EB5765] rounded-full hover:font-bold'>Cerrar</button>
+                    ) : (
+                        <button onClick={() => selected(tarjetas)} className='px-8 py-1 text-[#EB5765] rounded-full hover:font-bold'>Editar</button>
+                    )}
                 </div>
                 <div className="grid place-content-center">
                     <h1 className="text-lg font-bold">Terminada en {tarjetas.vista_tarjeta}</h1>
