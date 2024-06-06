@@ -302,7 +302,7 @@ const InformacionBasica = () => {
               <button
                 id="cancelar"
                 aria-label="Cancelar"
-                className="bg-white text-rose-400 text-xl rounded-full px-4 py-2 mx-auto hover:bg-red-50 ring-2 ring-rose-400"
+                className="bg-white text-rose-400 text-xl rounded-full px-4 py-2 mx-auto duration-200 hover:bg-red-50 ring-2 ring-rose-400"
               >
                 Cancelar
               </button>
@@ -311,7 +311,7 @@ const InformacionBasica = () => {
               <button
                 id="step-one"
                 aria-label="Continuar"
-                className="bg-rose-400 text-white text-xl rounded-full px-4 py-2 mx-auto hover:bg-red-200"
+                className="bg-rose-400 text-white text-xl rounded-full px-4 py-2 mx-auto duration-200 hover:bg-red-200"
               >
                 Continuar
               </button>
