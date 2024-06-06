@@ -184,56 +184,62 @@ function Servicio({
             </Box> */}
             {log ? (
               <Box
-                className="absolute flex justify-end float-right -mr-3"
                 sx={{
                   "& > legend": { mt: 2 },
                 }}
               >
-                <StyledRating
-                  name="customized-color"
-                  max={1}
-                  // value={uid ? (producto.favorito || favorites[producto.pkIdPS]) ? 1 : 0 : JSON.parse(localStorage.getItem("favoritos"))?.some(fav => fav.pkIdPS === producto.pkIdPS) ? 1 : 0}
-                  // value={uid ? favorites[producto.pkIdPS] ? 1 : 0 : JSON.parse(localStorage.getItem("favoritos"))?.some(fav => fav.pkIdPS === producto.pkIdPS) ? 1 : 0}
-                  getLabelText={(value) =>
-                    `${value} Heart${value !== 1 ? "s" : ""}`
-                  }
-                  precision={1}
-                  defaultValue={fav}
-                  icon={<FavoriteIcon fontSize="inherit" />}
-                  emptyIcon={<FavoriteBorderIcon fontSize="inherit" />}
-                  onClick={() => callFav()}
-                />
+                <div className="object-bottom">
+                  <div className="grid place-content-end">
+                    <StyledRating
+                      name="customized-color"
+                      max={1}
+                      // value={uid ? (producto.favorito || favorites[producto.pkIdPS]) ? 1 : 0 : JSON.parse(localStorage.getItem("favoritos"))?.some(fav => fav.pkIdPS === producto.pkIdPS) ? 1 : 0}
+                      // value={uid ? favorites[producto.pkIdPS] ? 1 : 0 : JSON.parse(localStorage.getItem("favoritos"))?.some(fav => fav.pkIdPS === producto.pkIdPS) ? 1 : 0}
+                      getLabelText={(value) =>
+                        `${value} Heart${value !== 1 ? "s" : ""}`
+                      }
+                      precision={1}
+                      defaultValue={fav}
+                      icon={<FavoriteIcon fontSize="inherit" />}
+                      emptyIcon={<FavoriteBorderIcon fontSize="inherit" />}
+                      onClick={() => callFav()}
+                    />
+                  </div>
+                </div>
               </Box>
             ) : (
               <Box
-                className="absolute flex justify-end float-right -mr-3"
                 sx={{
                   "& > legend": { mt: 2 },
                 }}
               >
-                <StyledRating
-                  name="customized-color"
-                  max={1}
-                  value={
-                    localStorage.getItem("favoritos")
-                      ? JSON.parse(localStorage.getItem("favoritos")).some(
-                          (fav) => fav.pkIdPS === pkIdPS
-                        )
-                        ? 1
-                        : 0
-                      : favorites[pkIdPS]
-                      ? 1
-                      : 0
-                  }
-                  // value={favorites[producto.pkIdPS] ? 1 : 0}
-                  getLabelText={(value) =>
-                    `${value} Heart${value !== 1 ? "s" : ""}`
-                  }
-                  precision={1}
-                  icon={<FavoriteIcon fontSize="inherit" />}
-                  emptyIcon={<FavoriteBorderIcon fontSize="inherit" />}
-                  onChange={() => toggleFavorite(data)}
-                />
+                <div className="object-bottom">
+                  <div className="grid place-content-end">
+                    <StyledRating
+                      name="customized-color"
+                      max={1}
+                      value={
+                        localStorage.getItem("favoritos")
+                          ? JSON.parse(localStorage.getItem("favoritos")).some(
+                              (fav) => fav.pkIdPS === pkIdPS
+                            )
+                            ? 1
+                            : 0
+                          : favorites[pkIdPS]
+                          ? 1
+                          : 0
+                      }
+                      // value={favorites[producto.pkIdPS] ? 1 : 0}
+                      getLabelText={(value) =>
+                        `${value} Heart${value !== 1 ? "s" : ""}`
+                      }
+                      precision={1}
+                      icon={<FavoriteIcon fontSize="inherit" />}
+                      emptyIcon={<FavoriteBorderIcon fontSize="inherit" />}
+                      onChange={() => toggleFavorite(data)}
+                    />
+                  </div>
+                </div>
               </Box>
             )}
           </div>
