@@ -64,12 +64,12 @@ const InformacionBasica = () => {
             index={1}
           />
           <div className="absolute mt-5">
-            <a className="ml-3" href="/">
+            <a className="flex w-max gap-2 items-center ml-6 text-black relative cursor-pointer before:bg-black before:absolute before:-bottom-1 before:block before:h-[1px] before:w-full before:origin-bottom-right before:scale-x-0 before:transition before:duration-300 before:ease-in-out hover:before:origin-bottom-left hover:before:scale-x-100 hover:font-bold" href="/">
               <FontAwesomeIcon
                 style={{ fontSize: "22px" }}
                 icon={faAngleLeft}
               />{" "}
-              Regresar
+              <p>Regresar</p>
             </a>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-[auto_auto] mx-10">
@@ -302,7 +302,7 @@ const InformacionBasica = () => {
               <button
                 id="cancelar"
                 aria-label="Cancelar"
-                className="bg-white text-rose-400 text-xl rounded-full px-4 py-2 mx-auto hover:bg-red-50 ring-2 ring-rose-400"
+                className="bg-white text-rose-400 text-xl rounded-full px-4 py-2 mx-auto duration-200 hover:bg-red-50 ring-2 ring-rose-400"
               >
                 Cancelar
               </button>
@@ -311,7 +311,7 @@ const InformacionBasica = () => {
               <button
                 id="step-one"
                 aria-label="Continuar"
-                className="bg-rose-400 text-white text-xl rounded-full px-4 py-2 mx-auto hover:bg-red-200"
+                className="bg-rose-400 text-white text-xl rounded-full px-4 py-2 mx-auto duration-200 hover:bg-red-200"
               >
                 Continuar
               </button>
