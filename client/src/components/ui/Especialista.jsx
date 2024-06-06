@@ -131,51 +131,48 @@ function Especialista({ props }) {
   //   }
   // };
 
+  // const toggleFavorite = async (especialista) => {
+  //   const estaEnFavoritos = favorites[especialista];
+  //   if (uid) {
+  //     try {
+  //       fetch('/api/admin/favoritos/invertirFavEmp', {
+  //         method: "POST",
+  //         body: JSON.stringify({ idCliente: uid, IdEmp: especialista }),
+  //         headers: { "Content-Type": "application/json" },
+  //       });
+  //       setFavorites(prev => ({
+  //         ...prev,
+  //         [especialista]: !estaEnFavoritos
+  //       }));
+
+  //     } catch (error) {
+  //       console.error('Error en la solicitud:', error);
+  //     }
+  //   }
+  // };
 
   return (
     <div className="md:px-8 md:py-2 rounded-3xl font-[abeatbyKai]  w-2/3 m-auto bg-rose-200">
       <div className='flex justify-end'>
-        {props.log ?
-          (<Box
-            className="absolute flex justify-end float-right -mr-3"
-            sx={{
-              '& > legend': { mt: 2 },
-            }}
-          >
-            <StyledRating
-              name="customized-color"
-              max={1}
-              value={fav ? 1 : 0}
 
-              // value={uid ? (producto.favorito || favorites[producto.pkIdPS]) ? 1 : 0 : JSON.parse(localStorage.getItem("favoritos"))?.some(fav => fav.pkIdPS === producto.pkIdPS) ? 1 : 0}
-              // value={uid ? favorites[producto.pkIdPS] ? 1 : 0 : JSON.parse(localStorage.getItem("favoritos"))?.some(fav => fav.pkIdPS === producto.pkIdPS) ? 1 : 0}
-              getLabelText={(value) => `${value} Heart${value !== 1 ? 's' : ''}`}
-              precision={1}
-              defaultValue={props.favorito}
-              icon={<FavoriteIcon fontSize="inherit" />}
-              emptyIcon={<FavoriteBorderIcon fontSize="inherit" />}
-              onClick={() => callFav()}
-            />
-          </Box>)
-          :
-          (<Box
-            className="absolute flex justify-end float-right -mr-3"
-            sx={{
-              '& > legend': { mt: 2 },
-            }}
-          >
-            <StyledRating
-              name="customized-color"
-              max={1}
-              value={localStorage.getItem("favoritos") ? JSON.parse(localStorage.getItem("favoritos")).some(fav => fav.pkIdPS === props.ps) ? 1 : 0 : favorites[props.ps] ? 1 : 0}
-              // value={favorites[producto.pkIdPS] ? 1 : 0}
-              getLabelText={(value) => `${value} Heart${value !== 1 ? 's' : ''}`}
-              precision={1}
-              icon={<FavoriteIcon fontSize="inherit" />}
-              emptyIcon={<FavoriteBorderIcon fontSize="inherit" />}
-              onChange={() => toggleFavorite(props)}
-            />
-          </Box>)}
+        <Box
+          className="absolute flex justify-end float-right -mr-3"
+          sx={{
+            '& > legend': { mt: 2 },
+          }}
+        >
+          <StyledRating
+            name="customized-color"
+            max={1}
+            value={localStorage.getItem("favoritos") ? JSON.parse(localStorage.getItem("favoritos")).some(fav => fav.pkIdPS === props.ps) ? 1 : 0 : favorites[props.ps] ? 1 : 0}
+            // value={favorites[producto.pkIdPS] ? 1 : 0}
+            getLabelText={(value) => `${value} Heart${value !== 1 ? 's' : ''}`}
+            precision={1}
+            icon={<FavoriteIcon fontSize="inherit" />}
+            emptyIcon={<FavoriteBorderIcon fontSize="inherit" />}
+            onChange={() => toggleFavorite(props)}
+          />
+        </Box>
         {/* <Box
           className="absolute z-20 flex justify-end float-right"
           sx={{

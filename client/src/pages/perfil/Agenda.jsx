@@ -99,7 +99,7 @@ function ServerDay(props) {
 
 function Agenda() {
 
-  const navigate =useNavigate()
+  const navigate = useNavigate()
   async function checkLogin() {
     let respuestaJson = null;
     try {
@@ -130,7 +130,7 @@ function Agenda() {
   const requestAbortController = React.useRef(null);
   const [isLoading, setIsLoading] = React.useState(false);
   const [highlightedDays, setHighlightedDays] = React.useState([1, 2, 15]);
-  
+
 
 
   const fetchHighlightedDays = (date) => {
@@ -370,32 +370,32 @@ function Agenda() {
   }, [Uid]);
 
 
-// const updateCita= async (cita)=>{
-//   if(Uid){
-//     try {
-//       await fetch(`/api/admin/citas/modify`, {
-//         method: "PATCH",
-//         headers: {
-//           "Content-Type": "application/json",
-//         },
-//         body: JSON.stringify(
-//           {
-//             idCita: cita.ID_Cita,
-//             idEmp: ID_Empleado,
-//             nuevaFecha: nuevaFe,
-//             horaI: horaIn,
-//             descr: cita.descr,
-//           }
+  // const updateCita= async (cita)=>{
+  //   if(Uid){
+  //     try {
+  //       await fetch(`/api/admin/citas/modify`, {
+  //         method: "PATCH",
+  //         headers: {
+  //           "Content-Type": "application/json",
+  //         },
+  //         body: JSON.stringify(
+  //           {
+  //             idCita: cita.ID_Cita,
+  //             idEmp: ID_Empleado,
+  //             nuevaFecha: nuevaFe,
+  //             horaI: horaIn,
+  //             descr: cita.descr,
+  //           }
 
-//         ),
-//       });
-//     } catch (error) {
-//       console.log("error", error);
-//     }
-// }
+  //         ),
+  //       });
+  //     } catch (error) {
+  //       console.log("error", error);
+  //     }
+  // }
 
-// redirect('')
-// }
+  // redirect('')
+  // }
 
 
   //use effect update citas pendientes when selected date changes
@@ -495,7 +495,7 @@ function Agenda() {
     setSelectedId(id);
   };
 
-  const updateItem = async  (cita) => {
+  const updateItem = async (cita) => {
     setcitavisible(true);
     setselectedcita(cita);
 
@@ -504,10 +504,10 @@ function Agenda() {
   const confirm = async () => {
 
     //console.log(selectedcita)
-    localStorage.setItem('citaModify',JSON.stringify(selectedcita))
-   
-   // navigate('/spa/agendar', { state: { step: 2 } });
-   window.location.href='/spa/agendar';
+    console.log("Hoalaaaaaa")
+    // navigate('/spa/agendar', { state: { step: 2 } });
+    window.location.href = '/spa/agendar';
+    // navigate('/spa/agendar');
   }
 
 
@@ -607,7 +607,7 @@ function Agenda() {
           </div>
         </div>
         <div className="flex gap-4 my-6">
-          <button onClick={()=>updateItem(cita)}>
+          <button onClick={() => updateItem(cita)}>
 
             <svg
               width="28"
@@ -629,7 +629,7 @@ function Agenda() {
                 fill="#222222"
               />
             </svg>
-          
+
           </button>
           <button
             className="duration-200 hover:text-[#ec5766] text-2xl"

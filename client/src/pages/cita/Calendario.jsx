@@ -185,6 +185,9 @@ function Calendario({ next }) {
         return baseClass;
     };
 
+    localStorage.getItem('Fecha seleccionada');
+    localStorage.getItem('Especialista');
+
 
     const fetchHighlightedDays = (date) => {
         const controller = new AbortController();
@@ -206,9 +209,28 @@ function Calendario({ next }) {
     };
 
     React.useEffect(() => {
-        fetchHighlightedDays(initialValue);
-        // abort request on unmount
-        return () => requestAbortController.current?.abort();
+
+        setTimeout(() => {
+            fetch(`/api/admin/empleados/diaInhabil/${id}`)
+                .then((response) => {
+                    if (!response.ok) {
+                        throw new Error("Error al obtener los dias inhabiles");
+                    }
+                    return response.json();
+                })
+                .then((data) => {
+                    console.log("initial", initialValue)
+                    console.log("data", data);
+                    // setHighlightedDays(data);
+                })
+                .catch((error) => {
+                    console.log("error", error);
+                });
+        }, 3000);
+
+        // fetchHighlightedDays(initialValue);
+        // // abort request on unmount
+        // return () => requestAbortController.current?.abort();
     }, []);
 
     const handleMonthChange = (date) => {

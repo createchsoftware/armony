@@ -74,6 +74,8 @@ function Producto() {
     const [uid, setUid] = useState(null);
     const [st, setSt] = useState(false);
     const [fav, setFav] = useState(product.favorito);
+    const [newReviewClicked, setNewReviewClicked] = useState(false);
+    const [reviewButtonMessage, setReviewButtonMessage] = useState('Escribir una reseña');
 
     console.log("id", id);
     console.log("productoooooooooooooooo", product);
@@ -150,6 +152,19 @@ function Producto() {
 
     const [descuentos, setDescuentos] = useState([]);
 
+    const handleNewReview = () => {
+        if (log === true) { setNewReviewClicked(!newReviewClicked) }
+        else {
+            toggleLoginPopup()
+            return
+        };
+        setNewReviewClicked(!newReviewClicked);
+        if (newReviewClicked) {
+            setReviewButtonMessage('Escribir una reseña');
+        } else {
+            setReviewButtonMessage('Cancelar reseña nueva');
+        }
+    };
 
     //useEffect para obtener los productos con descuento
     useEffect(() => {
@@ -507,8 +522,31 @@ function Producto() {
                                         ))}
                                     </div>
                                 </div>
+                                <button onClick={handleNewReview} className="text-[#EB5765] bg-opacity-30 bg-[#EB5765] hover:bg-opacity-90 hover:text-white rounded-3xl py-2 px-6 mr-12">{reviewButtonMessage}</button>
                             </div>
                             <div>
+                                {newReviewClicked ? (
+                                    <>
+                                        <main className='grid gap-4'>
+                                            <div className="flex items-center gap-4">
+                                                <form className="grid gap-1">
+                                                    <p>Selecciona una valoración:</p>
+                                                    <Rating className='' onChange={handleReviewRating} value={reviewRating} unratedColor="amber" ratedColor="amber" />
+                                                    <div className="flex gap-8 mt-4">
+                                                        <div className="flex items-start gap-4">
+                                                            <label className="pt-2">Titulo:</label>
+                                                            <input className="rounded-md resize-none" type="text" maxLength={20} placeholder="" />
+                                                        </div>
+                                                        <div className="flex items-start gap-4">
+                                                            <label className="pt-2">Comentario:</label>
+                                                            <textarea rows={4} cols={60} name="" maxLength={255} className="rounded-md resize-none " placeholder=""></textarea>
+                                                        </div>
+                                                    </div>
+                                                    <button className="text-[#EB5765] w-1/4 mt-6  m-auto bg-opacity-30 bg-[#EB5765] hover:bg-opacity-90 hover:text-white rounded-3xl py-2 px-6">Enviar</button>
+                                                </form>
+                                            </div>
+                                        </main>
+                                    </>) : null}
                                 {filteredReviews.map(reseña => (
                                     <Reseña key={reseña.id} reseña={reseña} />
                                 ))}
@@ -520,6 +558,7 @@ function Producto() {
             </LayoutPrincipal >
             {login && <PopupLogin cerrar={toggleLoginPopup} />}
             <ToastContainer position={'bottom-right'} theme={'light'} />
+
         </>
     );
 }
