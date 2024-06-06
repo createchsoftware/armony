@@ -33,7 +33,7 @@ const Contrasena = () => {
             index={3}
           />
           <div className="absolute mt-5">
-            <a className="ml-3" href="/spa/signUp/Patologia">
+            <a className="flex w-max gap-2 items-center ml-6 text-black relative cursor-pointer before:bg-black before:absolute before:-bottom-1 before:block before:h-[1px] before:w-full before:origin-bottom-right before:scale-x-0 before:transition before:duration-300 before:ease-in-out hover:before:origin-bottom-left hover:before:scale-x-100 hover:font-bold" href="/spa/signUp/Patologia">
               <FontAwesomeIcon
                 style={{ fontSize: "22px" }}
                 icon={faAngleLeft}
@@ -141,9 +141,9 @@ const Contrasena = () => {
             </div>
           </div>
         </div>
-        <div className="soon" id='oculto'>
+        {/* <div className="soon" id='oculto'>
 
-        </div>
+        </div> */}
         <div id="toastBox"/>
       </div>
     </div>
