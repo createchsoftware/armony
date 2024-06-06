@@ -113,10 +113,6 @@ function AgregarSaldo() {
 
             window.location.href = respuestaJson.redirect;  // redireccionarlo al monedero
         }
-
-
-        
-        
     }
 
     async function seleccionarTarjeta(tarjeta) {
@@ -125,7 +121,7 @@ function AgregarSaldo() {
         ModificarArray(sTarjeta.numero_tarjeta);
     }
 
-    console.log(array_toShow);
+    //console.log(array_toShow);
 
     const tarjeta = array_toShow.map(tarjetas => (
         <div key={tarjetas.vista_tarjeta} className='flex items-center justify-between px-10 py-2 my-3 border border-gray-400 shadow-md rounded-2xl'>
