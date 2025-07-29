@@ -15,7 +15,7 @@
 </div>
 <hr>
 
-<b>⚠️ AVISO: Este código se archivó el día miércoles 5 de junio a las 20:00 hrs. No será modificado ni se retomará en el futuro. Gracias. ⚠️</b>
+<b>⚠️<u>AVISO</u>: Este código se archivó el día miércoles 5 de junio a las 20:00 hrs. No será modificado ni se retomará en el futuro. Gracias. ⚠️</b>
 
 # Licencia
 El código íntegro de este proyecto se distribuye bajo la licencia de <a href="https://github.com/createchsoftware/armony/blob/main/LICENSE">The Unlicense</a> dado a que es un proyecto escolar. Algunas imagenes son propiedad de <a href="https://www.irasutoya.com/">Irasutoya</a> o están distribuidas bajo licencias Creative Commons.
