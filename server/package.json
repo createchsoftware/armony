@@ -137,12 +137,12 @@
   "dependencies": {
     "bcryptjs": "^2.4.3",
     "body-parser": "^1.20.2",
-    "cookie-parser": "^1.4.6",
+    "cookie-parser": "^1.4.7",
     "cors": "^2.8.5",
     "dotenv": "^16.4.5",
     "email-verifier": "^0.4.1",
     "email-verifier-node": "^0.0.2",
-    "express": "^4.19.2",
+    "express": "^4.21.2",
     "graphql-yoga": "^5.3.1",
     "http": "^0.0.1-security",
     "https": "^1.0.0",
@@ -153,7 +153,7 @@
     "node-fetch": "^3.3.2",
     "nodemailer": "^6.9.13",
     "sharp": "^0.33.4",
-    "socket.io": "^4.7.5",
+    "socket.io": "^4.8.1",
     "stripe": "^15.7.0",
     "twilio": "^5.0.4",
     "url": "^0.11.3"
